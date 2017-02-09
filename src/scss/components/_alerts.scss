@@ -1,0 +1,46 @@
+//Fixed alerts
+
+.alert__error,
+.alert__warning,
+.alert__message {
+  color: $darkbg__primary;
+  padding: 1em;
+  margin: .5em 0;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  .close {
+    color: $lightbg__primary;
+    position: absolute;
+    right: 0%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5em;
+    padding: 1em;
+    box-sizing: border-box;
+    line-height: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background: transparent;
+    border: 0px;
+    margin: 0;
+    &:hover {
+      color: $lightbg__accent;
+    }
+  }
+}
+
+.alert__error {
+  background: $alert__error;
+
+}
+
+.alert__warning {
+  background: $alert__warning;
+
+}
+.alert__message {
+  background: $alert__message;
+}

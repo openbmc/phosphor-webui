@@ -1,0 +1,69 @@
+.inline {
+  display: inline-block;
+}
+
+.disabled {
+  color: $lightbg__grey;
+}
+
+.float-right {
+  float: right;
+}
+.clear-float {
+  clear: both;
+}
+.error {
+  color: $error-color;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.close {
+  color: $lightbg__primary;
+  font-size: 1.5em;
+  padding: 1em;
+  box-sizing: border-box;
+  line-height: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background: transparent;
+  border: 0px;
+  margin: 0;
+  &:hover {
+    color: $lightbg__accent;
+    background: transparent;
+  }
+}
+
+.fixed {
+  position:fixed;
+  top:130px;
+  z-index:200;
+}
+
+.no-margin {
+  margin: 0px !important;
+}
+
+.no-padding {
+  padding:0px !important;
+}
+
+.no-bottom-margin {
+  margin-bottom: 0px !important;
+}
+
+.no-top-margin {
+  margin-top: 0px !important;
+}
+
+.transitionAll {
+  transition: all .5s ease;
+}

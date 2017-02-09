@@ -1,0 +1,134 @@
+// Power Operations SCSS
+
+#power-operations {
+
+  .h4 {
+    font-weight: bold;
+  }
+
+  // Power op time stamp
+  .power__status-log {
+    color: $darkgrey;
+  }
+
+  // Power Curernt status wrapper
+  .power__current-status {
+    border-bottom: 1px solid $lightbg__grey;
+    margin: 2.625em 0 1.2em 0;
+    .h4 {
+      padding: 0;
+      margin: 0 0 .5em 0;
+    }
+  }
+
+  // Power state indicator on/off
+  .power__state {
+    span:before {
+      content: '\25CF';
+      display: inline-block;
+      font-size: 1.2em;
+      color: $darkgrey;
+      margin-right: .3em;
+      @include slowTransition-all;
+    }
+  }
+
+  // Power bar indicator
+  .power__indicator-bar {
+    font-weight: bold;
+    padding: 1.4em 3em;
+    margin-bottom: 3.750em;
+    background-size: 200% 100%;
+    background-image: linear-gradient(to right, $status-ok-light 50%, $lightgrey 50%);
+    background-position: 100%;
+    transition: background-position 2s ease;
+    p {
+      padding: 0;
+      margin: 0;
+    }
+    &.power__state-on {
+      background-position: -200%;
+      .power__state {
+        span:before {
+          color: $status-ok;
+        }
+      }
+    }
+    &.power__state-off {
+      background-position: -100%;
+      color: $darkgrey;
+      .power__state {
+        span:before {
+          color: $darkgrey;
+        }
+      }
+    }
+  }
+
+  // Power button options
+  .power-option {
+    border-top: 1px solid $lightgrey;
+    padding: 1.8em 0 1em 1.8em;
+    position: relative;
+    overflow: hidden;
+    min-height: 1px;
+    .btn-secondary {
+      margin-bottom: .5em;
+    }
+    // Confirmation message for power option
+    .power__confirm {
+      position: absolute;
+      top: 0;
+      transform: translateY(-100%);
+      width: 100%;
+      margin-left: -1.8em;
+      z-index: 5;
+      background: $darkbg__primary;
+      color: $white;
+      padding: 2em 2em 1.55em 2em;
+      &.active {
+        transform: translateY(0);
+        @include fastTransition-all;
+      }
+    }
+    &.disabled {
+      @include fastTransition-all;
+      p {opacity: .4;}
+    }
+  }
+}
+
+// Power confirmation buttons
+.power__confirm-buttons {
+  .btn-primary {
+    background: transparent;
+    border: 2px solid $white;
+    padding: 1em 2.2em;
+    margin: 0 10px;
+    border-radius: 4px;
+    &:focus,
+    &:hover {
+      background: $primebtn__bg;
+      border: 2px solid $primebtn__bg;
+    }
+  }
+  @include mediaQuery(large) {
+    float: right;
+  }
+}
+
+// Power confirmation message
+.power__confirm-message {
+  display: inline-block;
+}
+
+// Power confirmation message icon
+.power__confirm-message i::before {
+  content: '\26A0';
+  color: $white;
+  display: inline-block;
+  font-size: 2em;
+  vertical-align: middle;
+  font-style: normal;
+  margin-right: 15px;
+}
