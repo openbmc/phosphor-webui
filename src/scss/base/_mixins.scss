@@ -1,0 +1,66 @@
+
+$lightbg__grey: #b8c1c1;
+$lightbg__accent: #3c6df0;
+$lightbg__primary: #19273c;
+
+//Breakpoints mixin
+@mixin mediaQuery($breakpoint) {
+  @if $breakpoint == "x-small" {
+    @media (min-width: 25.000em) { //400px
+      @content;
+    }
+  }
+  @if $breakpoint == "small" {
+    @media (min-width: 47.938em) { //767px
+      @content;
+    }
+  }
+
+  @else if $breakpoint == "medium" {
+    @media (min-width: 64.000em) { //1024px
+      @content;
+    }
+  }
+
+  @else if $breakpoint == "large" {
+    @media (min-width: 85.375em) { //1366px
+      @content;
+    }
+  }
+
+  @else if $breakpoint == "x-large" {
+    @media (min-width: 100.000em) { //1600px
+      @content;
+    }
+  }
+}
+
+//Fonts mixin
+@mixin fontFamily {
+  font-family: Arial, Verdana, sans-serif;
+  font-weight: 200;
+}
+
+//Transitions mixin
+@mixin fastTransition-all {
+  transition: all .5s ease;
+}
+
+@mixin slowTransition-all {
+  transition: all 1.5s ease;
+}
+
+//Custom SVG arrow
+@mixin bgImage__arrowDown-primary {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: #19273c'></polygon></svg>");
+}
+
+@mixin bgImage__arrowDown-accent {
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: #3c6df0'></polygon></svg>");
+}
+
+@mixin bgImage__arrowDown-grey {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: #b8c1c1'></polygon></svg>");
+}
+
+

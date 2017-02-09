@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>openBMC</title>
+    <link rel="icon" href="favicon.ico?v=2"/>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/vendor.min.js"></script>
+    <script>
+        var user = 'root';
+        var password = '0penBmc';
+        var ip = 'https://9.3.164.177';
+
+        function getList(){
+            console.log('get list');
+            $.ajax({
+                type: "GET",
+                url: ip + "/org/openbmc/control/list",
+                dataType: "json",
+                async: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function(response){
+                    var json = JSON.stringify(response);
+                    var content = JSON.parse(json);
+                    //console.log(content.data);
+
+                    for (var i = 0; i < content.data.length; i++) {
+                        var item = content.data[i];
+                        console.log(item);
+                        $('.container').append('<p>' + item + '</p>');
+                    }
+                },
+                error: function(xhr, textStatus, errorThrown){
+                    console.log("not a successful request!")
+                    console.log(xhr, textStatus, errorThrown)
+                }
+            });
+        }
+
+        var login = {
+            "type": "POST",
+            "url": ip + "/login",
+            "dataType": "json",
+            "async": true,
+            "headers": {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            "xhrFields": {
+                withCredentials: true
+            },
+            "data": JSON.stringify({"data": [user, password]}),
+            "success": function(response){
+                console.log(response);
+                getList();
+            },
+            "error": function(xhr, textStatus, errorThrown){
+                console.log("not a successful request!")
+                console.log(xhr, textStatus, errorThrown)
+            }
+        };
+    </script>
+</head>
+<body>
+
+    <!-- Header & Navigation includes -->
+    <div id="header__wrapper"></div>
+    <div id="navigation"></div>
+    <div class="container">
+        <div class="row">
+            <div class="column">
+
+                <!-- Main content -->
+                <script>$.ajax(login)</script>
+                <div id="data"></div>
+
+                <p>Donec sollicitudin molestie malesuada. Pellentesque in ipsum id orci porta dapibus. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vivamus suscipit tortor eget felis porttitor volutpat. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus nibh. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vivamus suscipit tortor eget felis porttitor volutpat. Vivamus suscipit tortor eget felis porttitor volutpat. Nulla porttitor accumsan tincidunt.</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="js/app.min.js"></script>
+
+
+</html>

@@ -1,0 +1,76 @@
+.login__wrapper {
+  position: relative;
+  padding-top: 1em;
+  color: $black;
+  .row {max-width: 1040px;}
+  @include mediaQuery(small){
+    left: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: -50%;
+  }
+  @include mediaQuery(medium){
+    left: 0;
+    margin-left: 0;
+  }
+  .login__logo {
+    max-width: 200px;
+    display: block;
+    margin-bottom: 2em;
+    @include mediaQuery(small) {
+      margin-bottom: 4em;
+    }
+  }
+  @include fastTransition-all;
+}
+
+#login__form {
+  color: $black;
+  background: $white;
+  padding: 1em 0;
+  display: block;
+  overflow: hidden;
+  @include mediaQuery(small){
+    max-width: 50%;
+  }
+  @include mediaQuery(medium){
+    padding: 0 0 0 5em;
+    border-left: 1px solid $lightbg__grey;
+    max-width:100%;
+  }
+  @include fastTransition-all;
+}
+
+
+
+.login__desc {
+  text-align: left;
+  h1 {
+    font-size: 2em;
+    margin-bottom: 0em;
+  }
+}
+
+.login__server-info {
+  margin-top: 2em;
+  p {margin-bottom: 0;}
+  h3 {margin-bottom: .3rem;}
+}
+
+.login__status {
+  color: $status-ok;
+  &.error {color: $error;}
+}
+
+.login__error-msg {
+  background: $alert__error;
+  padding: 1em;
+  text-align: center;
+  font-size: .95em;
+  border: 1px solid $error;
+
+
+  @include mediaQuery(medium){
+    max-width:100%;
+  }
+}

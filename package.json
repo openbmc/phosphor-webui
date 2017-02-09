@@ -28,8 +28,6 @@
     "browser-sync": "^2.18.6",
     "html-minifier": "^3.3.0",
     "imagemin-cli": "^3.0.0",
-    "milligram": "^1.2.4",
-    "mustache": "^2.3.0",
     "node-sass": "^4.3.0",
     "onchange": "^3.2.1",
     "parallelshell": "^2.0.0",

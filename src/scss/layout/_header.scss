@@ -1,0 +1,51 @@
+
+$logoHeight: 40px;
+$logoMaxHeight: 100px;
+$logoMaxWidth: 125px;
+
+#header__wrapper {
+  position: fixed;
+  top:0;
+  left: 0;
+  right:0;
+  z-index: 100;
+}
+.app__version {
+  margin-left: 1em;
+  display: none;
+  @include mediaQuery(x-small) {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+header {
+  position: relative;
+  background: $black;
+  color: $white;
+  padding: .8em;
+
+  .logo__wrapper {
+    display: inline-block;
+  }
+
+  #header__logo {
+    vertical-align: middle;
+    margin-right: 1em;
+    float: left;
+    height:$logoHeight; //required for <SVG> logos - can remove if using img
+    max-height: $logoMaxHeight;
+    max-width: $logoMaxWidth;
+    width: auto;
+  }
+
+}
+
+.header__functions-wrapper {
+  color: $white;
+  background: green;
+  padding: 1em 1.1em;
+  box-sizing: border-box;
+  display: block;
+}

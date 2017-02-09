@@ -1,0 +1,47 @@
+html, body {
+  height: 100%;
+  @include fontFamily;
+  font-size: 16px;
+  color: $black;
+}
+
+.container {
+  max-width: 1440px;
+}
+
+p {
+  margin-bottom: .8em;
+  @include fastTransition-all;
+}
+
+button, .button, input[type="submit"] {
+  color: $white;
+  background: $lightbg__primary;
+  border: 1px solid $lightbg__primary;
+  font-weight: normal;
+  font-size: 1em;
+  text-transform: none;
+  border-radius: 0;
+  padding: .5rem 2rem;
+  height: auto;
+  line-height: 2.5em;
+  &:hover {
+    background: $lightbg__accent;
+    //box-shadow: inset 0 0 0 2px $lightbg__primary;
+    cursor: pointer;
+    @include fastTransition-all;
+  }
+}
+
+a {
+  color: $links;
+  &:visited {
+    color: $links__visited;
+  }
+  &:hover {
+    color: $links__hover;
+  }
+  focus {
+    color: $links;
+  }
+}

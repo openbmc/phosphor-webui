@@ -1,0 +1,28 @@
+// Global
+$white: #fff;
+$black: #333;
+$field__disabled: #F4F8F8;
+$error: #FF5C49;
+$status-ok: #098145;
+
+// Dark background
+$darkbg__grey: #E3ECEC;
+$darkbg__accent: #79a6f6;
+$darkbg__primary: #1d3458;
+$active: #648FFF;
+
+// White Background
+$lightbg__grey: #b8c1c1;
+$lightbg__accent: #3c6df0;
+$lightbg__primary: #19273c;
+
+// Alerts
+$alert__error: rgba(230, 35, 37, 0.3);
+$alert__warning: rgba(255, 127, 0, 0.3);
+$alert__message: rgba(203, 221, 235, 0.5);
+
+// Links
+$links: #648FFF;
+$links__hover: $lightbg__accent;
+$links__visited: #5A3EC8;
+$links__disabled: rgba(27, 40, 52, 0.70);
