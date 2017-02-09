@@ -1,0 +1,130 @@
+$logoHeight: 30px;
+$logoMaxHeight: 100px;
+$logoMaxWidth: 125px;
+
+#header__wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.app__version {
+  margin-left: 1em;
+  display: none;
+  @include mediaQuery(x-small) {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+header {
+  position: relative;
+  background: #000;
+  color: $white;
+  overflow: hidden;
+}
+
+.header__logout {
+  float: right;
+  display: inline-block;
+  color: $white;
+  font-size: .9em;
+  text-decoration: none;
+  padding: 1em;
+  &:visited {
+    color: $white;
+  }
+}
+
+.header__functions-wrapper {
+  color: $white;
+  background: $lightbg__primary;
+  padding: 0 1.1em;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  min-height: 5em;
+  .logo__wrapper {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  #header__logo {
+    vertical-align: middle;
+    margin: 1em;
+    float: left;
+    height: $logoHeight; //required for <SVG> logos - can remove if using img
+    max-height: $logoMaxHeight;
+    max-width: $logoMaxWidth;
+    width: auto;
+  }
+
+  .header__functions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: $darkbg__primary;
+    span {
+      display: block;
+      color: $white;
+      font-size: 1em;
+      &.status-light__disabled {
+        color: $darkgrey;
+        &::before {
+          @include status-light__disabled;
+        }
+      }
+      &.status-light__good{
+        &::before {
+          @include status-light__good;
+        }
+      }
+      &.status-light__error{
+        color: $error-color;
+        &::before {
+          @include status-light__error;
+        }
+      }
+    }
+    a,  p, button {
+      display: block;
+      float: left;
+      text-decoration: none;
+      border-left: 1px solid #384456;
+      color: $lightgrey;
+      margin: 0;
+      padding: 1.250em 1.688em;
+      height: 100%;
+      font-size: 0.875em;
+      line-height: 1.3;
+      > span {font-size: 1rem;
+        font-weight: bold;}
+    }
+  }
+  .header__functions {
+    .header__refresh {
+      color: $lightgrey;
+      line-height: 1.6;
+    }
+  }
+  .header__server-power,
+  .header__page-refresh{
+    &:hover {
+      background: rgba(60,109,240,.4);
+    }
+  }
+  .header__page-refresh {
+    img {
+      stroke: $white;
+      height: 22px;
+      width: 24px;
+    }
+  }
+}// end header__functions-wrapper

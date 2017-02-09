@@ -1,0 +1,140 @@
+$nav__toplvlWidth: 120px;
+$nav__seclvlWidth: 240px;
+
+// Top level navigation
+#nav__top-level {
+  background: $nav__top-level-color;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 99;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: $nav__toplvlWidth;
+  li {
+    margin: 0;
+  }
+  .button, button, a {
+    background: transparent;
+    height: auto;
+    border: 0;
+    color: $white;
+    fill: $white;
+    width: 100%;
+    padding: 1em;
+    display: block;
+    text-align: center;
+    margin-bottom: 0;
+    white-space: normal;
+    border-radius: 0;
+    .nav__icon {
+      color: $white;
+      max-height: 40px;
+      stroke-width: .5;
+      margin-bottom: -.5em;
+    }
+    a {
+      margin-bottom: 5px;
+    }
+    span {
+      margin: 1em 0 0 0;
+      display: block;
+      font-size: .9em;
+      font-weight: normal;
+      line-height: 1rem;
+    }
+
+    .nav__icon-help__outer {
+      fill: transparent;
+      stroke: $white;
+      stroke-miterlimit: 10;
+      stroke-width: 1px;
+    }
+    .nav__icon-help__Inner {
+      fill: $white;
+    }
+    &:hover {
+      background: $nav__second-level-color;
+      fill: $black;
+      color: $black;
+      padding: 1em;
+      border-radius: 0;
+      .nav__icon-help__outer {
+        stroke: $black;
+      }
+      .nav__icon-help__inner {
+        fill: $lightbg__primary;
+      }
+    }
+  }
+  .opened {
+    background: $nav__second-level-color;
+    fill: $black;
+    color: $black;
+    .nav__icon-help__outer {
+      stroke: $lightbg__primary;
+    }
+  }
+}
+
+// Second Level Navigation
+.nav__second-level {
+  position: fixed;
+  background: $nav__second-level-color;
+  top: 0;
+  bottom: 0;
+  left: -$nav__toplvlWidth;
+  width: $nav__seclvlWidth;
+  z-index: 97;
+  padding: 0;
+  margin: 0;
+  display: none;
+  list-style-type: none;
+  transition: left .5s ease;
+  @include mediaQuery(medium) {
+    left: $nav__toplvlWidth;
+  }
+  &.btn-overview {
+    display: block;
+  }
+  &.opened {
+    left: $nav__toplvlWidth;
+    display: block;
+    @include fastTransition-all;
+  }
+  a {
+    padding: 1.2em .6em 1.2em 1em;
+    display: block;
+    color: $black;
+    text-decoration: none;
+    position: relative;
+    font-weight: 400;
+  }
+
+  li {
+    a:after{
+      content: '\203A';
+      position: absolute;
+      font-size: 2em;
+      font-weight: 700;
+      top: 50%;
+      right: .6em;
+      transform: translateY(-59%);
+      color: #4b5d78;
+      opacity: 0;
+    }
+    &.active {background: $white;}
+    &.active,
+    &:hover {
+      a {color: #4b5d78;}
+      a:after {
+        opacity: 1;
+        right: .3em;
+        @include fastTransition-all;
+      }
+    }
+  }
+}

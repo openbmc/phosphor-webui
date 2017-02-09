@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>openBMC</title>
+    <link rel="icon" href="favicon.ico?v=2"/>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/vendor.min.js"></script>
+</head>
+<body>
+
+<!-- Header & Navigation includes -->
+<div id="header__wrapper"></div>
+<div id="navigation"></div>
+
+<!-- Power Operations Content -->
+<main id="power-operations" class="content__container" role="main">
+    <div class="row column">
+        <h1>Server power operations</h1>
+    </div>
+
+    <!-- Current status and bar display the state of the server. Class 'power__state-off' is applied to bar and 'power__state' text switches to say "off"-->
+    <div class="row column">
+        <div class="power__current-status">
+            <p class="inline h4">Current status</p>
+            <span class="power__status-log inline float-right">Server last reset at 01:41:24 on 02/17/17</span>
+        </div>
+    </div>
+    <div class="row column">
+        <div id="power-indicator-bar" class="power__indicator-bar">
+            <p class="inline">Server BLZ_109284.209.01</p>
+            <p class="power__state inline float-right h3"><span>On</span></p>
+        </div>
+    </div>
+    <div class="row column">
+        <div class="row column">
+            <h3 class="h4">Select a power operation</h3>
+        </div>
+
+        <!-- Power on displays only when server is shutdown -->
+        <div class="row column power-option">
+            <button id="power__power-on" class="btn-secondary">Power On</button>
+            <p>Attempts to power on the server</p>
+        </div>
+
+        <!-- Power reboot/shutdown options : when server is off all of these are hidden. When one option is selected, the others are disabled. -->
+        <div class="row column power-option">
+            <button id="power__warm-boot" class="btn-secondary">Warm reboot</button>
+            <p>Attempts to perform an orderly shutdown before restarting the server</p>
+        </div>
+        <div class="row column power-option">
+            <button id="power__cold-boot" class="btn-secondary">Cold reboot</button>
+            <p>Shuts down the server immediately, then restarts it</p>
+        </div>
+        <div class="row column power-option">
+            <button id="power__soft-shutdown" class="btn-secondary">Orderly shutdown</button>
+            <p>Attempts to stop all software on the server before removing power</p>
+        </div>
+        <div class="row column power-option">
+            <button id="power__hard-shutdown" class="btn-secondary">Immediate shutdown</button>
+            <p>Removes power from the server without waiting for software to stop</p>
+
+            <!-- Confirmation message - to accommodate the message for smaller screens we need to grab the height of the message and apply that height to "power-option" row
+
+            var msgheight = $(this).parent().find('.power__confirm').height();
+            $(this).parent().addClass('transitionAll').css("minHeight", msgheight).removeClass('disabled');
+            -->
+
+            <div class="power__confirm">
+                <div class="power__confirm-message">
+                    <p class="h3"><i></i>Are you sure you want to <strong>warm reboot?</strong></p>
+                    <p>Removes power from the server without waiting for software to stop</p>
+                </div>
+                <div class="power__confirm-buttons">
+                    <button class="btn-primary active">Yes</button>
+                    <button class="btn-primary">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+<script src="js/app.min.js"></script>
+<!-- FOR DEMO ONLY __ DO NOT COPY BELOW 
+<script>
+    $('#power__hard-shutdown').on('click', function () {
+        var msgheight = $(this).parent().find('.power__confirm').height();
+
+        $(this).parents('#power-operations').find('.power__confirm').addClass('active');
+        $(this).parents('#power-operations').find('.power-option').addClass('disabled');
+        $(this).parent().addClass('transitionAll').css("minHeight", msgheight).removeClass('disabled');
+        $(this).parents('#power-operations').find('.power-option.disabled button').attr("disabled", true).addClass('disabled');
+    });
+
+    $('.btn-primary').on('click', function(){
+        $(this).parents('#power-operations').find('.power__indicator-bar').toggleClass('power__state-off');
+        $(this).parents('#power-operations').find('.power__confirm').removeClass('active');
+        $(this).parent().addClass('disabled');
+        $(this).parents('.power-option').addClass('disabled');
+        $(this).parents('#power-operations').find('.power__state span').html('Off');
+    });
+</script>-->
+</html>
