@@ -6,13 +6,13 @@
     <link rel="icon" href="favicon.ico?v=2"/>
     <link rel="stylesheet" href="css/main.css">
     <script src="js/vendor/vendor.min.js"></script>
-
 </head>
 <body>
+
 <div class="login__wrapper">
     <div class="row">
         <div class="columns large-6">
-            <img src="img/logo.svg" class="login__logo" alt="IBM"/>
+            <img src="img/logo.svg" class="login__logo" alt="IBM logo" role="img"/>
         </div>
         <div class="columns large-6">
         </div>
@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="columns large-6">
-            <form id="login__form">
+            <form id="login__form" role="form">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required>
 
@@ -38,6 +38,9 @@
 
                 <input id="login__submit" type="submit" value="Log in" role="button">
 
+                <p class="login__error-msg hide" role="alert">Invalid login attempt</p>
+                <!-- if login is invalid remove "hide" class to pop error -->
+            </form>
         </div>
     </div>
 </div>
