@@ -59,7 +59,7 @@
 
 .login__status {
   color: $status-ok;
-  &.error {color: $error;}
+  &.error {color: $error-color;}
 }
 
 .login__error-msg {
@@ -67,7 +67,7 @@
   padding: 1em;
   text-align: center;
   font-size: .95em;
-  border: 1px solid $error;
+  border: 1px solid $error-color;
 
 
   @include mediaQuery(medium){

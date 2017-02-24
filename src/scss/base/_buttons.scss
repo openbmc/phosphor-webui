@@ -1,0 +1,40 @@
+button, .button, input[type="submit"] {
+  font-weight: bold;
+  font-size: 1em;
+  text-transform: none;
+  border-radius: 3px;
+  padding: .8rem 3.5rem;
+  height: auto;
+  &:hover {
+    cursor: pointer;
+  }
+  &.disabled {
+    border: 2px solid $lightgrey;
+    color: $lightgrey;
+  }
+}
+
+.disabled {
+  button, .button, input[type="submit"] {
+    opacity: 0.2;
+    &:hover {
+      cursor: default;
+      background: transparent;
+    }
+  }
+}
+
+.btn-primary {
+  color: $primebtn__text;
+  background: $primebtn__bg;
+}
+.btn-secondary {
+  color: $secbtn__text;
+  background: transparent;
+  border: 2px solid $secbtn__border;
+  &:hover {
+    background: $lightbg__accent;
+    cursor: pointer;
+    background: $secbtn__bg;
+  }
+}

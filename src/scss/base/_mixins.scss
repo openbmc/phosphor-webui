@@ -1,8 +1,3 @@
-
-$lightbg__grey: #b8c1c1;
-$lightbg__accent: #3c6df0;
-$lightbg__primary: #19273c;
-
 //Breakpoints mixin
 @mixin mediaQuery($breakpoint) {
   @if $breakpoint == "x-small" {

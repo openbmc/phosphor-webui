@@ -9,13 +9,13 @@
     <script>
         var user = 'root';
         var password = '0penBmc';
-        var ip = 'https://9.3.164.177';
+        var ip = 'https://9.3.164.147';
 
         function getList(){
-            console.log('get list');
+
             $.ajax({
                 type: "GET",
-                url: ip + "/org/openbmc/control/list",
+                url: ip + "/xyz/openbmc_project/list",
                 dataType: "json",
                 async: true,
                 xhrFields: {
@@ -37,7 +37,7 @@
                     }
                 },
                 error: function(xhr, textStatus, errorThrown){
-                    console.log("not a successful request!")
+                    console.log("not a successful request!");
                     console.log(xhr, textStatus, errorThrown)
                 }
             });
@@ -61,7 +61,7 @@
                 getList();
             },
             "error": function(xhr, textStatus, errorThrown){
-                console.log("not a successful request!")
+                console.log("not a successful request!");
                 console.log(xhr, textStatus, errorThrown)
             }
         };
@@ -72,7 +72,7 @@
     <!-- Header & Navigation includes -->
     <div id="header__wrapper"></div>
     <div id="navigation"></div>
-    <div class="container">
+    <main class="content__container" role="main">
         <div class="row">
             <div class="column">
 
@@ -83,10 +83,8 @@
                 <p>Donec sollicitudin molestie malesuada. Pellentesque in ipsum id orci porta dapibus. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vivamus suscipit tortor eget felis porttitor volutpat. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus nibh. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vivamus suscipit tortor eget felis porttitor volutpat. Vivamus suscipit tortor eget felis porttitor volutpat. Nulla porttitor accumsan tincidunt.</p>
             </div>
         </div>
-    </div>
+    </main>
 
 </body>
 <script src="js/app.min.js"></script>
-
-
 </html>

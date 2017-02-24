@@ -34,7 +34,7 @@ textarea {
     border: 1px solid $lightbg__grey;
   }
   &.input__error {
-    border-color: $error;
+    border-color: $error-color;
     background: rgba(230, 35, 37, 0.1);
   }
 }

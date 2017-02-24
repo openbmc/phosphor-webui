@@ -1,0 +1,10 @@
+// Content layout styles
+
+.content__container {
+  padding-top: 3.75em;
+  margin-left: $nav__toplvlWidth;
+  @include fastTransition-all;
+  @include mediaQuery(medium){
+    margin-left: $nav__toplvlWidth + $nav__seclvlWidth;
+  }
+}

@@ -1,56 +1,31 @@
-(function() {
-    // var user = 'root';
-    // var password = '0penBmc';
-    // var ip = 'https://9.3.164.177';
-    //
-    // var login = {
-    //     "type": "POST",
-    //     "url": ip + "/login",
-    //     "dataType": "json",
-    //     "async": false,
-    //     "headers": {
-    //         'Accept': 'application/json',
-    //         'Content-Type': 'application/json'
-    //     },
-    //     "xhrFields": {
-    //         withCredentials: true
-    //     },
-    //     "data": JSON.stringify({"data": [user, password]}),
-    //     "success": function(response){
-    //         console.log(response);
-    //     },
-    //     "error": function(xhr, textStatus, errorThrown){
-    //         console.log("not a successful request!")
-    //         console.log(xhr, textStatus, errorThrown)
-    //     }
-    // };
-    //
-    // $.ajax(login);
+(function () {
 
     // Init functions
     header();
     nav();
 
     // Load logo
-    function loadLogo(){
-        $('.logo__wrapper').load('logo.html', function(){
+    function loadLogo() {
+        $('.logo__wrapper').load('logo.html', function () {
 
             // Grab logo if has ID or not
             var logoID = document.getElementById("header__logo");
             var logo = document.querySelectorAll("img, svg");
 
             // Has ID - call header height
-            if(logoID && logoID !== null) {
+            if (logoID && logoID !== null) {
                 getHeaderHeight();
 
-            // If logo exists but no ID - call header height
-            } else if (logo !== null && logo.length == 1){
-                   $('img, svg').on('load', function(){
-                       getHeaderHeight();
-                   })
+                // If logo exists but no ID - call header height
+            } else if (logo !== null && logo.length == 1) {
+                $('img, svg').on('load', function () {
+                    getHeaderHeight();
+                });
 
-            // If no logo at all - call header height
-            } else { getHeaderHeight(); }
+                // If no logo at all - call header height
+            } else {
+                getHeaderHeight();
+            }
         });
     }
 
@@ -65,6 +40,7 @@
 
         nav(headerHeight);
     }
+
     // Include header
     function header() {
         $('#header__wrapper').load('header.html', function () {
@@ -79,12 +55,9 @@
         $('#navigation').load('navigation.html', function (headerHeight) {
 
             var nav = document.getElementById("nav__top-level");
-            var navWidth = nav.offsetWidth; // Get navigation width
             var subnav = document.getElementsByClassName("nav__second-level");
             var navBtn = document.querySelectorAll('#nav__top-level button');
 
-            // Add body padding to compensate for fixed nav
-            document.body.style.paddingLeft = navWidth + 'px';
 
             // Bump down nav to compensate for fixed header
             nav.style.top = height + 'px';
@@ -94,38 +67,37 @@
                 subnav[i].style.top = height + 'px';
             }
 
-            // Loop over nav buttons
+            //Loop over nav buttons
             for (var i = 0, len = navBtn.length; i < len; i++) {
 
                 // Click event for each nav button
-                navBtn[i].addEventListener('click', function(){
+                navBtn[i].addEventListener('click', function () {
                     var parent = $(this).parents("#navigation");
                     var btnId = $(this).attr("class").match(/btn[\w-]*\b/);
                     var subnavClass = $('.nav__second-level.' + btnId);
 
-                    // Remove opened class from buttons
+                    //Remove opened class from buttons
                     parent.find('.opened').removeClass('opened');
 
                     // Add opened class to clicked button
                     this.classList.add("opened");
 
-                    // Close all sub panels and remove opened class
-                    parent.find('.nav__second-level').css("left", '-' + navWidth + "px").removeClass('opened');
+                    //Close all sub panels and remove opened class
+                    parent.find('.nav__second-level').css("display", "none").removeClass('opened');
 
-                    // Open sub panels that matches clicked button and add opened class
-                    parent.find(subnavClass).addClass('opened').css("left", navWidth);
-                })
+                    //Open sub panels that matches clicked button and add opened class
+                    parent.find(subnavClass).css("display", "block").addClass('opened');
+
+                    // var pgurl = window.location.href.substr(window.location.href.lastIndexOf("/")+1);
+                    //
+                    // $('.nav__second-level a').each(function(){
+                    //     console.log(pgurl);
+                    //     if($(this).attr("href") == pgurl || $(this).attr("href") == '' )
+                    //         $('.nav__second-level li').addClass("active");
+                    // })
+                });
 
             }
-
-            // Temp solution to close subnav - TODO: better way to close
-            for (var i = 0, len = subnav.length; i < len; i++) {
-                subnav[i].addEventListener('click', function(){
-                    this.classList.remove("opened");
-                    this.style.left = "-" + navWidth + "px";
-                })
-            }
-
         });
     }
 
