@@ -43,6 +43,37 @@
             });
         }
 
+        function getPowerStatus(){
+
+            $.ajax({
+                type: "GET",
+                url: ip + "/xyz/openbmc_project/state/host0",
+                dataType: "json",
+                async: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function(response){
+                    var json = JSON.stringify(response);
+                    var content = JSON.parse(json);
+                    //console.log(content.data);
+                    var currentHostState = content.data.CurrentHostState;
+                    if(currentHostState == "xyz.openbmc_project.State.Host.HostState.Off"){
+                        $('#app-user').removeClass('on off').addClass('off');
+                    }else{
+                        $('#app-user').removeClass('on off').addClass('on');
+                    }
+                },
+                error: function(xhr, textStatus, errorThrown){
+                    console.log("not a successful request!");
+                    console.log(xhr, textStatus, errorThrown)
+                }
+            });
+        }
         var login = {
             "type": "POST",
             "url": ip + "/login",
@@ -58,7 +89,8 @@
             "data": JSON.stringify({"data": [user, password]}),
             "success": function(response){
                 console.log(response);
-                getList();
+                //getList();
+                getPowerStatus();
             },
             "error": function(xhr, textStatus, errorThrown){
                 console.log("not a successful request!");
