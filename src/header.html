@@ -1,11 +1,17 @@
+<!-- HEADER -->
+<!-- Class of status-light__good has 3 states: status-light__good, status-light__error, status-light__disabled -->
+<!-- Server Power buttton links to 'server power operations' page; Server Status may link to event log page. TBD.-->
+
 <header id="header">
-    <div class="logo__wrapper"></div>
-    <span class="app__version">openBMC V.0.0.1</span>
-    <div id="app-user" class="float-right">
-        <span class="app-user__indicator inline"></span>
-        <span class="app-user__name inline">SysAdmin</span>
-    </div>
+    <span class="app__version float-left">openBMC V.0.0.1</span>
+    <a href="index.html" class="header__logout">Log out</a>
 </header>
 <div class="header__functions-wrapper">
-    header functions here
+    <div class="logo__wrapper"></div>
+    <div class="header__functions">
+        <a href="">Server health<span class="status-light__error">Error</span></a>
+        <a href="power-operations.html" class="header__server-power">Server power<span class="status-light__good">On</span></a>
+        <p class="header__refresh">Page last refreshed <span>3:20:12 Feb 12 2017</span></p>
+        <button class="header__page-refresh"><img src="img/icon-refresh-white.svg" /></button>
+    </div>
 </div>

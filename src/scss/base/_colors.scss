@@ -1,10 +1,11 @@
 // Global
-$white: #fff;
+$white: #ffffff;
 $black: #333;
 $darkgrey: #666;
 $lightgrey: #ccc;
 $field__disabled: #F4F8F8;
-
+$btn__disabled-txt: #a6a5a6;
+$btn__disabled-bg: #d8d8d8;
 
 // Dark background
 $darkbg__grey: #E3ECEC;
@@ -25,6 +26,7 @@ $primebtn__text: $white;
 $secbtn__bg: #ebf0fc;
 $secbtn__border: #3f71ec;
 $secbtn__text: #3f71ec;
+
 
 // Alerts
 $alert__error: rgba(230, 35, 37, 0.3);

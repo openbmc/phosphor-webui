@@ -42,6 +42,12 @@
   }
 }
 
+.fixed {
+  position:fixed;
+  top:130px;
+  z-index:200;
+}
+
 .no-margin {
   margin: 0px !important;
 }

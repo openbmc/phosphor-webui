@@ -5,18 +5,16 @@ button, .button, input[type="submit"] {
   border-radius: 3px;
   padding: .8rem 3.5rem;
   height: auto;
+  border: 0px;
   &:hover {
     cursor: pointer;
-  }
-  &.disabled {
-    border: 2px solid $lightgrey;
-    color: $lightgrey;
   }
 }
 
 .disabled {
   button, .button, input[type="submit"] {
     opacity: 0.2;
+    color: $btn__disabled-txt;
     &:hover {
       cursor: default;
       background: transparent;
@@ -27,6 +25,18 @@ button, .button, input[type="submit"] {
 .btn-primary {
   color: $primebtn__text;
   background: $primebtn__bg;
+  &:hover {
+    background: rgba(60,109,240,.8);
+    @include fastTransition-all;
+  }
+  &.disabled {
+    background: $btn__disabled-bg;
+    color: $btn__disabled-txt;
+    @include fastTransition-all;
+    &:hover {
+      cursor: default;
+    }
+  }
 }
 .btn-secondary {
   color: $secbtn__text;
@@ -36,5 +46,14 @@ button, .button, input[type="submit"] {
     background: $lightbg__accent;
     cursor: pointer;
     background: $secbtn__bg;
+    @include fastTransition-all;
+  }
+  &.disabled {
+    border: 2px solid $lightgrey;
+    background: $btn__disabled-bg;
+    @include fastTransition-all;
+    &:hover {
+      background: $btn__disabled-bg;
+    }
   }
 }

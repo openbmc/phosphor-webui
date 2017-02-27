@@ -39,10 +39,12 @@ $nav__seclvlWidth: 240px;
     a {
       margin-bottom: 5px;
     }
-    p {
-      margin: 0;
+    span {
+      margin: 1em 0 0 0;
+      display: block;
       font-size: .9em;
-      line-height: 1.2rem;
+      font-weight: normal;
+      line-height: 1rem;
     }
 
     .nav__icon-help__outer {
@@ -87,27 +89,29 @@ $nav__seclvlWidth: 240px;
   left: -$nav__toplvlWidth;
   width: $nav__seclvlWidth;
   z-index: 97;
-  display: none;
   padding: 0;
   margin: 0;
+  display: none;
   list-style-type: none;
   transition: left .5s ease;
   @include mediaQuery(medium) {
     left: $nav__toplvlWidth;
   }
-  &.btn-dashboard {
+  &.btn-overview {
     display: block;
   }
   &.opened {
     left: $nav__toplvlWidth;
+    display: block;
     @include fastTransition-all;
   }
   a {
-    padding: 1.2em .6em 1.2em 1.9em;
+    padding: 1.2em .6em 1.2em 1em;
     display: block;
     color: $black;
     text-decoration: none;
     position: relative;
+    font-weight: 400;
   }
 
   li {
@@ -117,19 +121,19 @@ $nav__seclvlWidth: 240px;
       font-size: 2em;
       font-weight: 700;
       top: 50%;
-      right: 2em;
+      right: .6em;
       transform: translateY(-59%);
       color: #4b5d78;
       opacity: 0;
     }
+    &.active {background: $white;}
     &.active,
     &:focus,
     &:hover {
-      background: $white;
-      a {font-weight: bold; color: #4b5d78;}
+      a {color: #4b5d78;}
       a:after {
         opacity: 1;
-        right: .5em;
+        right: .3em;
         @include fastTransition-all;
       }
     }

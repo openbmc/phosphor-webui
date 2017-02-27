@@ -85,16 +85,9 @@
                     //Close all sub panels and remove opened class
                     parent.find('.nav__second-level').css("display", "none").removeClass('opened');
 
-                    //Open sub panels that matches clicked button and add opened class
+                    // add opened class
                     parent.find(subnavClass).css("display", "block").addClass('opened');
 
-                    // var pgurl = window.location.href.substr(window.location.href.lastIndexOf("/")+1);
-                    //
-                    // $('.nav__second-level a').each(function(){
-                    //     console.log(pgurl);
-                    //     if($(this).attr("href") == pgurl || $(this).attr("href") == '' )
-                    //         $('.nav__second-level li').addClass("active");
-                    // })
                 });
 
             }
