@@ -63,9 +63,9 @@
                     //console.log(content.data);
                     var currentHostState = content.data.CurrentHostState;
                     if(currentHostState == "xyz.openbmc_project.State.Host.HostState.Off"){
-                        $('#app-user').removeClass('on off').addClass('off');
+                        $('#power-indicator-bar').removeClass('power__state-off power__state-on').addClass('power__state-off');
                     }else{
-                        $('#app-user').removeClass('on off').addClass('on');
+                        $('#power-indicator-bar').removeClass('power__state-off power__state-on').addClass('power__state-on');
                     }
                 },
                 error: function(xhr, textStatus, errorThrown){
