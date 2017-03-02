@@ -52,28 +52,46 @@
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: #b8c1c1'></polygon></svg>");
 }
 
-@mixin status-light {
-  content: '\25CF';
-  display: inline-block;
-  font-size: 1.4em;
-  color: $status-ok;
-  margin-right: .3em;
-}
+@mixin indeterminate-bar {
+  background-image: repeating-linear-gradient(-45deg, rgba(251, 234, 174, 0.35), rgba(251, 234, 174, 0.35) 25px, rgba(244, 176, 0, 0.45) 25px, rgba(244, 176, 0, 0.45) 50px);
+  -webkit-animation: progress 2s linear infinite;
+  -moz-animation: progress 2s linear infinite;
+  animation: progress 2s linear infinite;
+  background-size: 130% 100%;
 
-@mixin status-light__good {
-  @include status-light;
-  color: $status-ok;
+  @-webkit-keyframes progress {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: -70px 0;
+    }
+  }
 
-}
+  @-moz-keyframes progress {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: -70px 0;
+    }
+  }
 
-@mixin status-light__error {
-  @include status-light;
-  color: $error-color;
+  @-ms-keyframes progress {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: -70px 0;
+    }
+  }
 
-}
-
-@mixin status-light__disabled {
-  @include status-light;
-  color: $darkgrey;
-
+  @keyframes progress {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: -70px 0;
+    }
+  }
 }

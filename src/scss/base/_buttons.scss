@@ -1,11 +1,11 @@
-button, .button, input[type="submit"] {
+button, .button, input[type="submit"], .submit {
   font-weight: bold;
   font-size: 1em;
   text-transform: none;
   border-radius: 3px;
-  padding: .8rem 3.5rem;
+  padding: .8rem 3.5rem .5rem;
   height: auto;
-  border: 0px;
+  border: 0;
   &:hover {
     cursor: pointer;
   }
@@ -22,11 +22,13 @@ button, .button, input[type="submit"] {
   }
 }
 
-.btn-primary {
+.btn-primary,
+input[type="submit"] {
   color: $primebtn__text;
   background: $primebtn__bg;
+  min-height: 50px;
   &:hover {
-    background: rgba(60,109,240,.8);
+    background: lighten($primebtn__bg, 8%);
     @include fastTransition-all;
   }
   &.disabled {
@@ -37,11 +39,24 @@ button, .button, input[type="submit"] {
       cursor: default;
     }
   }
+  i { // button symbol
+    font-style: normal;
+    text-transform: none;
+    font-size: 1.5em;
+    transform: rotate(80deg);
+    display: inline-block;
+  }
+  img{
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+  }
 }
 .btn-secondary {
   color: $secbtn__text;
   background: transparent;
   border: 2px solid $secbtn__border;
+  min-height: 50px;
   &:hover {
     background: $lightbg__accent;
     cursor: pointer;
@@ -55,5 +70,21 @@ button, .button, input[type="submit"] {
     &:hover {
       background: $btn__disabled-bg;
     }
+  }
+  i { // button symbol
+    font-style: normal;
+    font-weight: 400;
+    text-transform: none;
+    font-size: 1.5em;
+    transform: rotate(80deg) translate(-2px);
+    display: inline-block;
+    vertical-align: middle;
+  }
+  img{
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    margin-right: .5em;
+    margin-top: -3px;
   }
 }

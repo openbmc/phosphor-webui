@@ -1,35 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>openBMC</title>
-    <link rel="icon" href="favicon.ico?v=2"/>
-    <link rel="stylesheet" href="css/main.css">
-    <script src="js/vendor/vendor.min.js"></script>
-</head>
-<body>
+<div id="power-operations">
 
-<!-- Header & Navigation includes -->
-<div id="header__wrapper"></div>
-<div id="navigation"></div>
-
-<!-- Power Operations Content -->
-<main id="power-operations" class="content__container" role="main">
     <div class="row column">
         <h1>Server power operations</h1>
     </div>
 
     <!-- Current status and bar display the state of the server. Class 'power__state-off' is applied to bar and 'power__state' text switches to say "off"-->
     <div class="row column">
-        <div class="power__current-status">
-            <p class="inline h4">Current status</p>
-            <span class="power__status-log inline float-right">Server last reset at 01:41:24 on 02/17/17</span>
+        <div class="power__current-status ">
+            <h2 class="inline h4">Current status</h2>
+            <span class="power__status-log inline float-right">Server last reset at {{dataService.last_updated |date:'h:mm:ss on MM/dd/yyyy'}}</span>
         </div>
     </div>
     <div class="row column">
-        <div id="power-indicator-bar" class="power__indicator-bar">
-            <p class="inline">Server BLZ_109284.209.01</p>
-            <p class="power__state inline float-right h3"><span>On</span></p>
+        <div id="power-indicator-bar" class="power__indicator-bar " ng-class="{'power__state-on': dataService.server_state == 'On', 'power__state-off': dataService.server_state == 'Off', 'power__state-indet' : dataService.server_state == 'Booting' }">
+            <p class="inline">{{dataService.server_id}}</p>
+            <h3 class="power__state inline float-right h3"><span>{{dataService.server_state}}</span></h3>
         </div>
     </div>
     <div class="row column">
@@ -38,67 +23,33 @@
         </div>
 
         <!-- Power on displays only when server is shutdown -->
-        <div class="row column power-option">
-            <button id="power__power-on" class="btn-secondary">Power On</button>
+        <div class="row column power-option" ng-hide="dataService.server_state == 'On'" ng-class="{disabled: confirm && !power_confirm, transitionAll: confirm && power_confirm}">
+            <button id="power__power-on" class="btn-secondary" ng-click="powerOnConfirm()" role="button"><img src="img/icon-power.svg" />Power On</button>
             <p>Attempts to power on the server</p>
+
+            <confirm title="power on" message="Power on the server" confirm="power_confirm" callback="togglePower"></confirm>
         </div>
 
         <!-- Power reboot/shutdown options : when server is off all of these are hidden. When one option is selected, the others are disabled. -->
-        <div class="row column power-option">
-            <button id="power__warm-boot" class="btn-secondary">Warm reboot</button>
+        <div class="row column power-option" ng-hide="dataService.server_state == 'Off'" ng-class="{disabled: confirm && !warmboot_confirm, transitionAll: confirm && warmboot_confirm}">
+            <button id="power__warm-boot" class="btn-secondary" ng-click="warmRebootConfirm()" role="button"><i>&#x21BB</i> Warm reboot</button>
             <p>Attempts to perform an orderly shutdown before restarting the server</p>
+            <confirm title="Warm Reboot" message="perform an orderly shutdown" confirm="warmboot_confirm" callback="warmReboot"></confirm>
         </div>
-        <div class="row column power-option">
-            <button id="power__cold-boot" class="btn-secondary">Cold reboot</button>
+        <div class="row column power-option" ng-hide="dataService.server_state == 'Off'" ng-class="{disabled: confirm && !coldboot_confirm, transitionAll: confirm && coldboot_confirm}">
+            <button id="power__cold-boot" class="btn-secondary" ng-click="coldRebootConfirm()" role="button"><i>&#x21BB</i> Cold reboot</button>
             <p>Shuts down the server immediately, then restarts it</p>
+            <confirm title="Cold Reboot" message="Shutdown server immediately." confirm="coldboot_confirm" cancel="coldbootCancel" callback="toggleState"></confirm>
         </div>
-        <div class="row column power-option">
-            <button id="power__soft-shutdown" class="btn-secondary">Orderly shutdown</button>
+        <div class="row column power-option" ng-hide="dataService.server_state == 'Off'" ng-class="{disabled: confirm && !orderly_confirm, transitionAll: confirm && orderly_confirm}">
+            <button id="power__soft-shutdown" class="btn-secondary" ng-click="orderlyShutdownConfirm()" role="button"><img src="img/icon-power.svg" />Orderly shutdown</button>
             <p>Attempts to stop all software on the server before removing power</p>
+            <confirm title="Orderly shutdown" message="Attempts to stop all software orderly." confirm="orderly_confirm" cancel="orderlyShutdownCancel" callback="toggleState"></confirm>
         </div>
-        <div class="row column power-option">
-            <button id="power__hard-shutdown" class="btn-secondary">Immediate shutdown</button>
+        <div class="row column power-option" ng-hide="dataService.server_state == 'Off'" ng-class="{disabled: confirm && !immediately_confirm, transitionAll: confirm && immediately_confirm}">
+            <button id="power__hard-shutdown" class="btn-secondary" ng-click="immediateShutdownConfirm()" role="button"><img src="img/icon-power.svg" />Immediate shutdown</button>
             <p>Removes power from the server without waiting for software to stop</p>
-
-            <!-- Confirmation message - to accommodate the message for smaller screens we need to grab the height of the message and apply that height to "power-option" row
-
-            var msgheight = $(this).parent().find('.power__confirm').height();
-            $(this).parent().addClass('transitionAll').css("minHeight", msgheight).removeClass('disabled');
-            -->
-
-            <div class="power__confirm">
-                <div class="power__confirm-message">
-                    <p class="h3"><i></i>Are you sure you want to <strong>warm reboot?</strong></p>
-                    <p>Removes power from the server without waiting for software to stop</p>
-                </div>
-                <div class="power__confirm-buttons">
-                    <button class="btn-primary active">Yes</button>
-                    <button class="btn-primary">No</button>
-                </div>
-            </div>
+            <confirm title="Immediate shutdown" message="Removes power from the server immediately." confirm="immediately_confirm" cancel="immediatelyShutdownCancel" callback="toggleState"></confirm>
         </div>
     </div>
-</main>
-
-</body>
-<script src="js/app.min.js"></script>
-<!-- FOR DEMO ONLY __ DO NOT COPY BELOW 
-<script>
-    $('#power__hard-shutdown').on('click', function () {
-        var msgheight = $(this).parent().find('.power__confirm').height();
-
-        $(this).parents('#power-operations').find('.power__confirm').addClass('active');
-        $(this).parents('#power-operations').find('.power-option').addClass('disabled');
-        $(this).parent().addClass('transitionAll').css("minHeight", msgheight).removeClass('disabled');
-        $(this).parents('#power-operations').find('.power-option.disabled button').attr("disabled", true).addClass('disabled');
-    });
-
-    $('.btn-primary').on('click', function(){
-        $(this).parents('#power-operations').find('.power__indicator-bar').toggleClass('power__state-off');
-        $(this).parents('#power-operations').find('.power__confirm').removeClass('active');
-        $(this).parent().addClass('disabled');
-        $(this).parents('.power-option').addClass('disabled');
-        $(this).parents('#power-operations').find('.power__state span').html('Off');
-    });
-</script>-->
-</html>
+</div>
