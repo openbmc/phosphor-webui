@@ -9,6 +9,7 @@
   // Power op time stamp
   .power__status-log {
     color: $darkgrey;
+    font-weight:500;
   }
 
   // Power Curernt status wrapper
@@ -23,12 +24,16 @@
 
   // Power state indicator on/off
   .power__state {
+    font-weight: 700;
+    margin-top: -.3em;
     span:before {
       content: '\25CF';
       display: inline-block;
-      font-size: 1.2em;
+      font-size: 1.8em;
       color: $darkgrey;
-      margin-right: .3em;
+      margin-right: .1em;
+      vertical-align: middle;
+      transform: translateY(-4px);
       @include slowTransition-all;
     }
   }
