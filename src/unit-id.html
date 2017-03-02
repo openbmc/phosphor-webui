@@ -1,0 +1,27 @@
+<div id="uid-switch">
+    <div class="row column">
+        <h1>Unit ID Indicator</h1>
+    </div>
+
+    <div class="row column">
+        <h2 class="h4">Unit ID control</h2>
+    </div>
+
+    <div class="row column">
+        <div class="btm-border-grey">
+            <div class="toggle inline" ng-init="indicatorState = 'off'">
+                <input id="toggle__switch-round"
+                       class="toggle-switch toggle-switch__round-flat"
+                       type="checkbox"
+                       tabindex="0"
+                       ng-click="indicatorState = { 'on': 'off', 'off':'on'}[indicatorState]"
+                       >
+                <label for="toggle__switch-round" tabindex="0">Unit ID indicator is <span class="uid-switch__status">{{indicatorState}}</span></label>
+            </div>
+            <div class="uid-switch__label inline">
+                <p>Unit ID indicator is <span class="uid-switch__status">{{indicatorState}}</span></p>
+                <p>Control unit indicator to identify server unit.</p>
+            </div>
+        </div>
+    </div>
+</div>

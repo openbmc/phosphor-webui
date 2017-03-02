@@ -1,15 +1,24 @@
+#login {
+  @include mediaQuery(medium) {
+    background: linear-gradient(to right, #FFFFFF 49.999%, #e6e9ed 50%);
+    @include fastTransition-all;
+  }
+}
+
 .login__wrapper {
   position: relative;
   padding-top: 1em;
   color: $black;
-  .row {max-width: 1040px;}
-  @include mediaQuery(small){
+  .row {
+    max-width: 1040px;
+  }
+  @include mediaQuery(small) {
     left: 50%;
     top: 50%;
     transform: translateY(-50%);
     margin-left: -50%;
   }
-  @include mediaQuery(medium){
+  @include mediaQuery(medium) {
     left: 0;
     margin-left: 0;
   }
@@ -30,47 +39,77 @@
   padding: 1em 0;
   display: block;
   overflow: hidden;
-  @include mediaQuery(small){
+  @include mediaQuery(small) {
     max-width: 50%;
   }
-  @include mediaQuery(medium){
+  @include mediaQuery(medium) {
     padding: 0 0 0 5em;
-    border-left: 1px solid $lightbg__grey;
-    max-width:100%;
+    max-width: 100%;
   }
   @include fastTransition-all;
 }
-
-
 
 .login__desc {
   text-align: left;
   h1 {
     font-size: 2em;
-    margin-bottom: 0em;
+    margin-bottom: 0;
+    font-weight: bold;
+    @include mediaQuery(small) {
+      max-width: 50%;
+    }
+    @include mediaQuery(medium) {
+      max-width: 100%;
+    }
   }
 }
 
 .login__server-info {
   margin-top: 2em;
-  p {margin-bottom: 0;}
-  h3 {margin-bottom: .3rem;}
+  margin-left: 0;
+  padding-left: 0;
+  list-style-type: none;
+  @include mediaQuery(small) {
+    max-width: 50%;
+  }
+  @include mediaQuery(medium) {
+    max-width: 90%;
+  }
+  li {
+    padding: 1em 0;
+    border-top: 1px solid $lightgrey;
+  }
+  p {
+    margin-bottom: 0;
+    display: inline-block;
+    font-family: courier, monospace, helvetica, arial, sans-serif;
+    font-weight: 700;
+  }
+  .login__info-label {
+    display: inline-block;
+    min-width: 200px;
+    @include fontFamily;
+  }
 }
 
 .login__status {
   color: $status-ok;
-  &.error {color: $error-color;}
+  &.error {
+    color: $error-color;
+  }
 }
 
 .login__error-msg {
-  background: $alert__error;
+  background: lighten($error-color, 20%);
   padding: 1em;
   text-align: center;
-  font-size: .95em;
+  font-size: 1em;
   border: 1px solid $error-color;
+  color: $black;
+  font-family: Courier, monospace, Helvetica, Arial, sans-serif;
+  font-weight: 700;
 
-
-  @include mediaQuery(medium){
-    max-width:100%;
+  @include mediaQuery(medium) {
+    max-width: 100%;
   }
 }

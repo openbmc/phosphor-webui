@@ -1,0 +1,85 @@
+@mixin marginTransition {
+  -webkit-transition: margin 0.4s, background 0.4s;
+  -moz-transition: margin 0.4s, background 0.4s;
+  -o-transition: margin 0.4s, background 0.4s;
+  transition: margin 0.4s, background 0.4s;
+}
+
+@mixin borderRadius {
+  -webkit-border-radius: 60px;
+  -moz-border-radius: 60px;
+  border-radius: 60px;
+}
+
+.toggle-switch {
+  position: absolute;
+  left: 20px;
+  height: 1px;
+  width: 1px;
+  opacity: 0;
+}
+
+.toggle-switch + label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.toggle label {
+  text-indent: -9999px;
+  transform: translateY(-50%); // keeps switch centered
+}
+
+input.toggle-switch__round-flat + label {
+  padding: 2px;
+  width: 50px;
+  height: 30px;
+  background-color: $lightgrey;
+  @include borderRadius;
+  @include marginTransition;
+}
+
+input.toggle-switch__round-flat:focus + label {
+  box-shadow: 0 0 4px 4px $darkbg__accent;
+}
+input.toggle-switch__round-flat + label:before, input.toggle-switch__round-flat + label:after {
+  display: block;
+  position: absolute;
+  content: "";
+}
+input.toggle-switch__round-flat + label:before {
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  right: 2px;
+  background-color: $white;
+  @include borderRadius;
+  @include marginTransition;
+}
+input.toggle-switch__round-flat + label:after {
+  top: 4px;
+  left: 4px;
+  bottom: 4px;
+  width: 20px;
+  background-color: $lightgrey;
+  -webkit-border-radius: 52px;
+  -moz-border-radius: 52px;
+  -ms-border-radius: 52px;
+  border-radius: 52px;
+  @include marginTransition;
+}
+input.toggle-switch__round-flat:checked + label {
+  background-color: $primebtn__bg;
+}
+input.toggle-switch__round-flat:checked + label:before {
+  background-color: $lightbg__accent;
+}
+input.toggle-switch__round-flat:checked + label:after {
+  margin-left: 20px;
+  background-color: $primebtn__bg;
+}

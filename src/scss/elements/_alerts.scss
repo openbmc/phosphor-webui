@@ -44,3 +44,24 @@
 .alert__message {
   background: $alert__message;
 }
+
+// Power confirmation buttons
+.power__confirm-buttons {
+  .btn-primary {
+    background: transparent;
+    border: 2px solid $white;
+    padding: 1em 2.2em;
+    margin: 0 10px;
+    border-radius: 4px;
+    &:focus,
+    &:hover {
+      background: $primebtn__bg;
+      border: 2px solid $primebtn__bg;
+    }
+  }
+  @include mediaQuery(large) {
+    float: right;
+  }
+}
+
+

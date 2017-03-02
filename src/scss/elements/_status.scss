@@ -1,0 +1,61 @@
+//status light states
+@mixin status-light {
+  content: '\25CF';
+  display: inline-block;
+  font-size: 2em;
+  color: $status-ok;
+  margin-right: .1em;
+  transform: translateY(2px);
+  @include slowTransition-all;
+}
+
+@mixin status-light__good {
+  @include status-light;
+  color: $status-ok;
+
+}
+
+@mixin status-light__error {
+  @include status-light;
+  color: $error-color;
+
+}
+
+@mixin status-light__disabled {
+  @include status-light;
+  color: $darkgrey;
+
+}
+
+@mixin status-light__warn {
+  @include status-light;
+  color: $status-warn;
+
+}
+
+.status-light__disabled {
+  color: $darkgrey;
+  &::before {
+    @include status-light__disabled;
+  }
+}
+
+.status-light__good {
+  &::before {
+    @include status-light__good;
+  }
+}
+
+.status-light__error {
+  color: $error-color;
+  &::before {
+    @include status-light__error;
+  }
+}
+
+.status-light__warn {
+  color: $status-warn;
+  &::before {
+    @include status-light__warn;
+  }
+}
