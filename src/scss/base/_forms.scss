@@ -19,15 +19,15 @@ input[type='url'],
 input[type='text'],
 textarea {
   border-radius: 0px;
-  border: 1px solid $lightbg__grey;
+  border: 1px solid $lightgrey;
   height: 3.1em;
-  transition: all 1s ease;
   margin: 0 0 1em 0;
-  background: $lightbg__grey;
-  box-shadow: 0px 0px 0px;
+  background: $white;
+  box-shadow: 0 0 0;
+  transition: none !important;
   &:focus {
     border-color: $lightbg__accent;
-    box-shadow: 0px 0px 0px;
+    border-bottom: 5px solid $lightbg__primary;
   }
   &:disabled, .disabled {
     background: $field__disabled;
@@ -35,7 +35,6 @@ textarea {
   }
   &.input__error {
     border-color: $error-color;
-    background: rgba(230, 35, 37, 0.1);
   }
 }
 

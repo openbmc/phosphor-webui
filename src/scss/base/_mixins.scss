@@ -51,29 +51,3 @@
 @mixin bgImage__arrowDown-grey {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: #b8c1c1'></polygon></svg>");
 }
-
-@mixin status-light {
-  content: '\25CF';
-  display: inline-block;
-  font-size: 1.4em;
-  color: $status-ok;
-  margin-right: .3em;
-}
-
-@mixin status-light__good {
-  @include status-light;
-  color: $status-ok;
-
-}
-
-@mixin status-light__error {
-  @include status-light;
-  color: $error-color;
-
-}
-
-@mixin status-light__disabled {
-  @include status-light;
-  color: $darkgrey;
-
-}

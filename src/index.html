@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="css/main.css">
     <script src="js/vendor/vendor.min.js"></script>
 </head>
-<body>
-
+<body id="login">
 <div class="login__wrapper">
     <div class="row">
         <div class="columns large-6">
@@ -19,14 +18,15 @@
     </div>
     <div class="row">
         <div class="columns large-6 login__desc">
-            <h1>BMC Advanced System Management</h1>
-            <p>Build Version: 1.00.102</p>
-            <div class="login__server-info">
-                <h3>Server ID: 29000000166668</h3>
-                <p>Power SL-22LC</p>
-                <p>Server status: <span class="login__status">Operational</span></p>
-                <!-- if status is not operational add "error" class and change text -->
-            </div>
+            <h1>OpenBMC Advanced System Management</h1>
+            <ul class="login__server-info">
+                <li><p class="login__info-label">Build version</p><p>1.00.102</p></li>
+                <li><p class="login__info-label">Server ID</p><p>29000000166668</p></li>
+                <li><p class="login__info-label">Server model</p><p>Power SL-22LC</p></li>
+                <!-- ping server to see if powered on. Change status-light and txt accordingly. Status message is planned to be hardcoded message were display via local JS.  -->
+                <li><p class="login__info-label">Server power</p><p class="status-light__disabled">Off</p></li>
+                <li><p class="login__info-label">Status message</p><p>BMC was reset by user</p></li>
+            </ul>
         </div>
         <div class="columns large-6">
             <form id="login__form" role="form">
@@ -34,12 +34,11 @@
                 <input type="text" id="username" name="username" required>
 
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" class="input__error" required>
 
                 <input id="login__submit" class="btn-primary" type="submit" value="Log in" role="button">
 
-                <p class="login__error-msg hide" role="alert">Invalid login attempt</p>
-                <!-- if login is invalid remove "hide" class to pop error -->
+                <p class="login__error-msg" role="alert">Incorrect username or password</p>
             </form>
         </div>
     </div>

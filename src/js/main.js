@@ -4,6 +4,7 @@
     header();
     nav();
 
+
     // Load logo
     function loadLogo() {
         $('.logo__wrapper').load('logo.html', function () {
@@ -47,7 +48,7 @@
 
             // include logo into header
             loadLogo();
-        })
+        });
     }
 
     // load navigation - pass in header height
@@ -89,7 +90,6 @@
                     parent.find(subnavClass).css("display", "block").addClass('opened');
 
                 });
-
             }
         });
     }
