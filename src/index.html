@@ -6,6 +6,111 @@
     <link rel="icon" href="favicon.ico?v=2"/>
     <link rel="stylesheet" href="css/main.css">
     <script src="js/vendor/vendor.min.js"></script>
+    <script>
+
+//        var user = 'root';
+//        var password = '0penBmc';
+//        var ip = 'https://9.3.164.147';
+
+        function getList(){
+
+            $.ajax({
+                type: "GET",
+                url: ip + "/xyz/openbmc_project/list",
+                dataType: "json",
+                async: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function(response){
+                    var json = JSON.stringify(response);
+                    var content = JSON.parse(json);
+                    //console.log(content.data);
+
+                    for (var i = 0; i < content.data.length; i++) {
+                        var item = content.data[i];
+                        console.log(item);
+                        $('.container').append('<p>' + item + '</p>');
+                    }
+                },
+                error: function(xhr, textStatus, errorThrown){
+                    console.log("not a successful request!");
+                    console.log(xhr, textStatus, errorThrown)
+                }
+            });
+        }
+
+        function getPowerStatus(){
+
+            $.ajax({
+                type: "GET",
+                url: ip + "/xyz/openbmc_project/state/host0",
+                dataType: "json",
+                async: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function(response){
+                    var json = JSON.stringify(response);
+                    var content = JSON.parse(json);
+                    //console.log(content.data);
+                    var currentHostState = content.data.CurrentHostState;
+                    if(currentHostState == "xyz.openbmc_project.State.Host.HostState.Off"){
+                        $('#power-indicator-bar').removeClass('power__state-off power__state-on').addClass('power__state-off');
+                    }else{
+                        $('#power-indicator-bar').removeClass('power__state-off power__state-on').addClass('power__state-on');
+                    }
+                },
+                error: function(xhr, textStatus, errorThrown){
+                    console.log("not a successful request!");
+                    console.log(xhr, textStatus, errorThrown)
+                }
+            });
+        }
+
+        function login() {
+            console.log('login!');
+
+            var user = 'root';
+            var password = '0penBmc';
+            var ip = 'https://9.3.164.147';
+
+            $.ajax({
+                "type": "POST",
+                "url": ip + "/login",
+                "dataType": "json",
+                "async": true,
+                "headers": {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                "xhrFields": {
+                    withCredentials: true
+                },
+                "data": JSON.stringify({"data": [user, password]}),
+                "success": function (response) {
+                    console.log(response);
+                    //getList();
+                    //getPowerStatus();
+                    alert(JSON.stringify(response));
+                    window.location.replace("system-overview.html");
+
+                },
+                "error": function (xhr, textStatus, errorThrown) {
+                    console.log("not a successful request!");
+                    console.log(xhr, textStatus, errorThrown)
+                }
+            });
+        }
+    </script>
 </head>
 <body id="login">
 <div class="login__wrapper">
@@ -24,19 +129,19 @@
                 <li><p class="login__info-label">Server ID</p><p>29000000166668</p></li>
                 <li><p class="login__info-label">Server model</p><p>Power SL-22LC</p></li>
                 <!-- ping server to see if powered on. Change status-light and txt accordingly. Status message is planned to be hardcoded message were display via local JS.  -->
-                <li><p class="login__info-label">Server power</p><p class="status-light__disabled">Off</p></li>
-                <li><p class="login__info-label">Status message</p><p>BMC was reset by user</p></li>
+                <li><p class="login__info-label">Server power</p><p class="status-light__good">On</p></li>
+                <li><p class="login__info-label">Status message</p><!--<p>BMC was reset by user</p>--></li>
             </ul>
         </div>
         <div class="columns large-6">
-            <form id="login__form" role="form">
+            <form id="login__form" role="form" action="" >
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required>
 
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" class="input__error" required>
+                <input type="password" id="password" name="password" class="" required>
 
-                <input id="login__submit" class="btn-primary" type="submit" value="Log in" role="button">
+                <input id="login__submit" class="btn-primary" type="submit" value="Log in" role="button" onclick="login();">
 
                 <p class="login__error-msg" role="alert">Incorrect username or password</p>
             </form>

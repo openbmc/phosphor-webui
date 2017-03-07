@@ -68,7 +68,7 @@
 
             <div class="power__confirm">
                 <div class="power__confirm-message">
-                    <p class="h3"><i></i>Are you sure you want to <strong>warm reboot?</strong></p>
+                    <p class="h3"><i></i>Are you sure you want to <strong>immediate shutdown?</strong></p>
                     <p>Removes power from the server without waiting for software to stop</p>
                 </div>
                 <div class="power__confirm-buttons">
@@ -85,21 +85,58 @@
 
 <!-- FOR DEMO ONLY __ DO NOT COPY BELOW -->
 <script>
-    $('#power__hard-shutdown').on('click', function () {
-        var msgheight = $(this).parent().find('.power__confirm').height();
 
-        $(this).parents('#power-operations').find('.power__confirm').addClass('active');
-        $(this).parents('#power-operations').find('.power-option').addClass('disabled');
+    var pwrOn = $("#power__power-on"),
+        endTransition = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend',
+        pwrOps = '#power-operations';
+
+    pwrOn.parent().hide();
+
+    $('#power__hard-shutdown').on('click', function () {
+
+        var msgheight = $(this).parent().find('.power__confirm').height();
+        $(this).addClass('disabled');
+        $(this).parents(pwrOps).find('.power__confirm').addClass('active');
+        $(this).parents(pwrOps).find('.power-option, .btn-secondary').addClass('disabled');
         $(this).parent().addClass('transitionAll').css("minHeight", msgheight).removeClass('disabled');
-        $(this).parents('#power-operations').find('.power-option.disabled button').attr("disabled", true).addClass('disabled');
+        $(this).parents(pwrOps).find('.power-option.disabled button').attr("disabled", true).addClass('disabled');
+    });
+
+    pwrOn.on('click', function () {
+        var srvrPwr = $(".header__server-power");
+
+        $(this).parents(pwrOps).find('.power__indicator-bar').toggleClass('power__state-off');
+        $(this).parents(pwrOps).find('.power-option').show();
+        $(this).parents(".power-option").hide();
+        $(".power__state span").one(endTransition,
+            function() {
+                $(this).parents(pwrOps).find('.power__state span').html('On');
+                $(this).parents(pwrOps).find('.power-option.disabled').show();
+                $(this).parents(pwrOps).find('.power-option.disabled button').removeAttr("disabled", true).removeClass('disabled');
+                $(".power-option, .power__confirm-buttons").removeClass("disabled");
+                srvrPwr.find(".status-light__disabled").removeClass("status-light__disabled").addClass("status-light__good");
+                srvrPwr.find("span").text('On');
+            });
     });
 
     $('.btn-primary').on('click', function(){
-        $(this).parents('#power-operations').find('.power__indicator-bar').toggleClass('power__state-off');
-        $(this).parents('#power-operations').find('.power__confirm').removeClass('active');
+
+        var srvrPwr = $(".header__server-power"),
+            pwrOnDisabl = $("#power__power-on.disabled");
+
+        $(this).parents(pwrOps).find('.power__indicator-bar').toggleClass('power__state-off');
+        $(this).parents(pwrOps).find('.power__confirm').removeClass('active');
         $(this).parent().addClass('disabled');
         $(this).parents('.power-option').addClass('disabled');
-        $(this).parents('#power-operations').find('.power__state span').html('Off');
+        $(".power__state span").one(endTransition,
+            function(e) {
+                $(this).parents(pwrOps).find('.power__state span').html('Off');
+                $(this).parents(pwrOps).find('.power-option.disabled').hide();
+                pwrOnDisabl.parent().show().removeClass('disabled');
+                pwrOnDisabl.removeAttr("disabled").removeClass('disabled');
+                srvrPwr.find(".status-light__good").removeClass("status-light__good").addClass("status-light__disabled");
+                srvrPwr.find("span").text('Off');
+            });
     });
 </script>
 </html>

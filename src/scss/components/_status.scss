@@ -6,6 +6,7 @@
   color: $status-ok;
   margin-right: .1em;
   transform: translateY(2px);
+  @include slowTransition-all;
 }
 
 @mixin status-light__good {

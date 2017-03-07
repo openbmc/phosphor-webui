@@ -4,7 +4,6 @@
     header();
     nav();
 
-
     // Load logo
     function loadLogo() {
         $('.logo__wrapper').load('logo.html', function () {
@@ -59,23 +58,36 @@
             var subnav = document.getElementsByClassName("nav__second-level");
             var navBtn = document.querySelectorAll('#nav__top-level button');
 
-
             // Bump down nav to compensate for fixed header
             nav.style.top = height + 'px';
 
             // Bump second level nav down for fixed header
             for (var i = 0; i < subnav.length; i++) {
                 subnav[i].style.top = height + 'px';
+
             }
+
+            // Set link that matches page url to active
+            var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
+            $('.nav__second-level li a').each(function() {
+                if (this.href === path) {
+                    $(this).parent().addClass('active');
+                }
+            });
 
             //Loop over nav buttons
             for (var i = 0, len = navBtn.length; i < len; i++) {
 
                 // Click event for each nav button
                 navBtn[i].addEventListener('click', function () {
+
                     var parent = $(this).parents("#navigation");
                     var btnId = $(this).attr("class").match(/btn[\w-]*\b/);
                     var subnavClass = $('.nav__second-level.' + btnId);
+
+                    if(this && this.classList.contains("opened")){
+                        parent.find(subnavClass).removeClass("opened");
+                    }
 
                     //Remove opened class from buttons
                     parent.find('.opened').removeClass('opened');
@@ -83,11 +95,8 @@
                     // Add opened class to clicked button
                     this.classList.add("opened");
 
-                    //Close all sub panels and remove opened class
-                    parent.find('.nav__second-level').css("display", "none").removeClass('opened');
-
                     // add opened class
-                    parent.find(subnavClass).css("display", "block").addClass('opened');
+                    parent.find(subnavClass).toggleClass('opened');
 
                 });
             }

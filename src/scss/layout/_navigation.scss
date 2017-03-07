@@ -96,15 +96,16 @@ $nav__seclvlWidth: 240px;
   transition: left .5s ease;
   @include mediaQuery(medium) {
     left: $nav__toplvlWidth;
-  }
-  &.btn-overview {
-    display: block;
+    &.btn-overview {
+      display: block;
+    }
   }
   &.opened {
     left: $nav__toplvlWidth;
     display: block;
     @include fastTransition-all;
   }
+
   a {
     padding: 1.2em 1em 1.2em 1em;
     display: block;
