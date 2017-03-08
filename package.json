@@ -6,7 +6,7 @@
     "prebuild": "npm run clean -s",
     "scss": "node-sass --output-style compressed -o dist/css src/scss/",
     "autoprefixer": "postcss -u autoprefixer -r dist/css/*",
-    "uglify": "mkdir -p dist/js && uglifyjs src/js/*.js -m -o dist/js/app.min.js && mkdir -p dist/js/vendor && uglifyjs node_modules/zepto/dist/zepto.js -m -o dist/js/vendor/vendor.min.js",
+    "uglify": "mkdir -p dist/js && cat src/js/*.js > dist/js/app.min.js && uglifyjs dist/js/app.min.js -m -o dist/js/app.min.js && mkdir -p dist/js/vendor && cat node_modules/angular/angular.js node_modules/angular-route/angular-route.js node_modules/zepto/dist/zepto.js > dist/js/vendor/vendor.min.js && uglifyjs dist/js/vendor/vendor.min.js -m -o dist/js/vendor/vendor.min.js",
     "imagemin": "imagemin src/img/* --out-dir=dist/img/",
     "serve": "browser-sync start --server 'dist' --files 'dist/css/*.css, dist/js/*.js, dist/*.html'",
     "build:css": "npm run scss && npm run autoprefixer",
@@ -24,6 +24,8 @@
     "gzip": "tar -czf openBMC.tar.gz dist"
   },
   "devDependencies": {
+    "angular": "^1.5.6",
+    "angular-route": "^1.5.6",
     "autoprefixer": "^6.6.1",
     "browser-sync": "^2.18.6",
     "html-minifier": "^3.3.0",
