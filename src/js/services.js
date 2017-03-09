@@ -241,4 +241,28 @@ angular
         }
     };
     return SERVICE;
+ }])
+ .factory('userModel',['APIUtils',function(APIUtils){
+    return {
+        login : function(username, password){
+            if(username == APIUtils.LOGIN_CREDENTIALS.username &&
+               password == APIUtils.LOGIN_CREDENTIALS.password){
+                sessionStorage.setItem('LOGIN_ID', username);
+                return true;
+            }else{
+                return false;
+            }
+        },
+        isLoggedIn : function(){
+            if(sessionStorage.getItem('LOGIN_ID') === null){
+                return false;
+            }
+
+            return true;
+        },
+        logout : function(){
+            sessionStorage.removeItem('LOGIN_ID');
+            return true;
+        }
+    };
  }]);

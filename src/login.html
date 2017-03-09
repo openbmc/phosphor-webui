@@ -22,10 +22,10 @@ Add a comment to this line
         <div class="columns large-6">
             <form id="login__form" role="form" action="" >
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" required ng-model="username" ng-class="{error: error}">
+                <input type="text" id="username" name="username" required ng-model="username" ng-class="{error: error}" ng-keydown="tryLogin(username, password, $event)">
 
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" class="" required ng-model="password">
+                <input type="password" id="password" name="password" class="" required ng-model="password" ng-keydown="tryLogin(username, password, $event)">
 
                 <input id="login__submit" class="btn-primary submit" type="button" value="Log in" role="button" ng-click="login(username, password)" ng-class="{error: error}">
 

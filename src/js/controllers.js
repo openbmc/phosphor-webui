@@ -1,20 +1,23 @@
  angular
  .module('app.controllers', [])
-   .controller('loginController', ['$scope', '$window', 'APIUtils', 'dataService', function($scope, $window, APIUtils, dataService){
+   .controller('loginController', ['$scope', '$window', 'APIUtils', 'dataService', 'userModel', function($scope, $window, APIUtils, dataService, userModel){
+    $scope.dataService = dataService;
+
+    $scope.tryLogin = function(username, password, event){
+        if(event.keyCode === 13){
+            $scope.login(username, password);
+        }
+    };
     $scope.login = function(username, password){
         $scope.error = false;
-        $scope.dataService = dataService;
         if(!username || username == "" ||
            !password || password == ""){
             return false;
         }else{
-            //@TODO: service should handle
-            if(username == APIUtils.LOGIN_CREDENTIALS.username &&
-               password == APIUtils.LOGIN_CREDENTIALS.password){
-                $window.location.hash = '#/dashboard';
+            if(userModel.login(username, password)){
+                $window.location.hash = '#/system-overview';
             }else{
                 $scope.error = true;
-                //@TODO: show error message
             }
         }
     }

@@ -10,7 +10,7 @@ angular
         'scope': {
             'path': '='
         },
-        'controller': ['$scope','dataService', function($scope, dataService){
+        'controller': ['$scope','dataService', 'userModel', '$location', function($scope, dataService, userModel, $location){
             $scope.server_status = 01;
             $scope.dataService = dataService;
             APIUtils.login(function(){
@@ -24,6 +24,11 @@ angular
                     }
                 });
             });
+
+            $scope.logout = function(){
+                userModel.logout();
+                $location.path('/logout');
+            }
 
             $scope.refresh = function(){
                 console.log("--refresh status--");

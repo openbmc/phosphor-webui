@@ -10,19 +10,18 @@ angular
     $routeProvider
       .when('/login', {
         'templateUrl': 'login.html',
-        'controller': 'loginController'
-      })
-      .when('/dashboard', {
-        'templateUrl': 'dashboard.html',
-        'controller': 'dashboardController'
+        'controller': 'loginController',
+         authenticated: false
       })
       .when('/power-operations', {
         'templateUrl': 'power-operations.html',
-        'controller': 'powerOperationsController'
+        'controller': 'powerOperationsController',
+         authenticated: true
       })
       .when('/system-overview', {
         'templateUrl': 'system-overview.html',
-        'controller': 'systemOverviewController'
+        'controller': 'systemOverviewController',
+         authenticated: true
       })
       .when('/unit-id', {
         'templateUrl': 'unit-id.html',
@@ -38,10 +37,31 @@ angular
         'redirectTo': '/login'
       });
  }])
- .run(['$rootScope', '$location', 'dataService',
-    function($rootScope, $location, dataService){
+ .run(['$rootScope', '$location', 'dataService', 'userModel',
+    function($rootScope, $location, dataService, userModel){
     $rootScope.dataService = dataService;
     dataService.path = $location.path();
+    $rootScope.$on('$routeChangeStart', function(event, next, current){
+
+      if(next.$$route == null || next.$$route == undefined) return;
+
+      if(next.$$route.authenticated){
+        if(!userModel.isLoggedIn()){
+          $location.path('/login');
+        }
+      }
+
+      if(next.$$route.originalPath == '/' ||
+        next.$$route.originalPath == '/login'){
+         if(userModel.isLoggedIn()){
+            if(current){
+              $location.path(current.$$route.originalPath);
+            }else{
+              $location.path('/system-overview');
+            }
+         }
+      }
+    });
     $rootScope.$on('$locationChangeSuccess', function(event){
         var path = $location.path();
         dataService.path = path;
