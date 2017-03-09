@@ -1,0 +1,19 @@
+// UI Light
+
+#uid-switch {
+  .switch {margin-left: 1.7em;}
+  .uid-switch__label {
+    padding-bottom: 1.5em;
+  }
+  .uid-switch__label p {
+    margin: 0;
+    &:first-child {font-weight: 700;}
+  }
+  .h4 {
+    border-bottom: 1px solid $lightbg__grey;
+    margin: 2.625em 0 1.2em 0;
+    padding: 0 0 .85em;
+    font-weight: 700;
+  }
+
+}

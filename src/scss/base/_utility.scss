@@ -64,6 +64,10 @@
   margin-top: 0px !important;
 }
 
+.btm-border-grey {
+  border-bottom: 1px solid $lightbg__grey;
+}
+
 .transitionAll {
   transition: all .5s ease;
 }

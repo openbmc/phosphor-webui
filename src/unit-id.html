@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>openBMC</title>
+    <link rel="icon" href="favicon.ico?v=2"/>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/vendor.min.js"></script>
+</head>
+<body>
+
+<!-- Header & Navigation includes -->
+<div id="header__wrapper"></div>
+<div id="navigation"></div>
+
+<!-- Power Operations Content -->
+<main id="uid-switch" class="content__container" role="main">
+    <div class="row column">
+        <h1>Unit ID Indicator</h1>
+    </div>
+
+    <div class="row column">
+        <h2 class="h4">Unit ID control</h2>
+    </div>
+
+    <div class="row column">
+        <div class="btm-border-grey">
+            <div class="switch inline">
+                <input id="toggle__round" class="toggle-switch toggle-switch__round-flat" type="checkbox" tabindex="0">
+                <label for="toggle__round"></label>
+            </div>
+            <div class="uid-switch__label inline">
+                <p>Unit ID indicator is <span class="uid-switch__status">off</span></p>
+                <p>Control unit indicator to identify server unit.</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+<script src="js/app.min.js"></script>
+
+<!-- FOR DEMO ONLY __ DO NOT COPY BELOW -->
+<script>
+    $('.toggle-switch').on('click', function(){
+        console.log($(this).parents('.row'));
+       $(this).parents('.row').find('.uid-switch__status').html('on');
+    });
+</script>
+</html>
