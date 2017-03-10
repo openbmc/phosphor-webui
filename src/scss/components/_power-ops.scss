@@ -69,6 +69,15 @@
         }
       }
     }
+    &.power__state-indet {
+      color: $darkgrey;
+      @include indeterminate-bar;
+      .power__state {
+        span:before {
+          color: $status-warn;
+        }
+      }
+    }
   }
 
   // Power button options

@@ -9,19 +9,19 @@
 
     <div class="row column">
         <div class="btm-border-grey">
-            <div class="switch inline">
-                <input id="toggle__switch-round" class="toggle-switch toggle-switch__round-flat" type="checkbox" tabindex="0">
-                <label for="toggle__switch-round" tabindex="0"></label>
+            <div class="toggle inline" ng-init="indicatorState = 'off'">
+                <input id="toggle__switch-round"
+                       class="toggle-switch toggle-switch__round-flat"
+                       type="checkbox"
+                       tabindex="0"
+                       ng-click="indicatorState = { 'on': 'off', 'off':'on'}[indicatorState]"
+                       >
+                <label for="toggle__switch-round" tabindex="0">Unit ID indicator is <span class="uid-switch__status">{{indicatorState}}</span></label>
             </div>
             <div class="uid-switch__label inline">
-                <p>Unit ID indicator is <span class="uid-switch__status">off</span></p>
+                <p>Unit ID indicator is <span class="uid-switch__status">{{indicatorState}}</span></p>
                 <p>Control unit indicator to identify server unit.</p>
             </div>
         </div>
     </div>
 </div>
-<!-- FOR DEMO ONLY __ DO NOT COPY BELOW -->
-<script>
-
-</script>
-

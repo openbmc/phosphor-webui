@@ -12,7 +12,7 @@ angular
  .module('app.services', [])
  .service('dataService', function(){
     this.app_version = "openBMC V.0.0.1";
-    this.server_health = 'Error';
+    this.server_health = 'Good';
     this.server_state = 'On';
     this.chassis_state = 'On';
     this.server_id = "Server BLZ_109284.209.01";

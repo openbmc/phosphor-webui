@@ -93,7 +93,7 @@ $nav__seclvlWidth: 240px;
   margin: 0;
   display: none;
   list-style-type: none;
-  transition: left .5s ease;
+  @include fastTransition-all;
   @include mediaQuery(medium) {
     left: $nav__toplvlWidth;
     &.btn-overview {
