@@ -46,7 +46,7 @@
     //@TODO: call api and get proper state
     $scope.toggleState = function(){
         dataService.server_state = (dataService.server_state == 'On') ? 'Off': 'On';
-    }
+    };
 
     $scope.togglePower = function(){
         var method = (dataService.server_state == 'On') ? 'chassisPowerOff' : 'chassisPowerOn';

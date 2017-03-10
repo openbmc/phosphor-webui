@@ -14,8 +14,10 @@
 
 .toggle-switch {
   position: absolute;
-  margin-left: -9999px;
-  visibility: hidden;
+  left: 20px;
+  height: 1px;
+  width: 1px;
+  opacity: 0;
 }
 .toggle-switch + label {
   display: block;
@@ -35,6 +37,10 @@ input.toggle-switch__round-flat + label {
   background-color: $lightgrey;
   @include borderRadius;
   @include marginTransition;
+}
+
+input.toggle-switch__round-flat:focus + label {
+  box-shadow: 0 0 4px 4px $darkbg__accent;
 }
 input.toggle-switch__round-flat + label:before, input.toggle-switch__round-flat + label:after {
   display: block;

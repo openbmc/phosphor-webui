@@ -1,4 +1,4 @@
-
+<div id="uid-switch">
     <div class="row column">
         <h1>Unit ID Indicator</h1>
     </div>
@@ -10,8 +10,8 @@
     <div class="row column">
         <div class="btm-border-grey">
             <div class="switch inline">
-                <input id="toggle__round" class="toggle-switch toggle-switch__round-flat" type="checkbox" tabindex="0">
-                <label for="toggle__round"></label>
+                <input id="toggle__switch-round" class="toggle-switch toggle-switch__round-flat" type="checkbox" tabindex="0">
+                <label for="toggle__switch-round" tabindex="0"></label>
             </div>
             <div class="uid-switch__label inline">
                 <p>Unit ID indicator is <span class="uid-switch__status">off</span></p>
@@ -19,14 +19,9 @@
             </div>
         </div>
     </div>
-
-<script src="js/app.min.js"></script>
-
+</div>
 <!-- FOR DEMO ONLY __ DO NOT COPY BELOW -->
 <script>
-    $('.toggle-switch').on('click', function(){
-        console.log($(this).parents('.row'));
-       $(this).parents('.row').find('.uid-switch__status').html('on');
-    });
+
 </script>
 
