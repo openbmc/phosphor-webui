@@ -13,17 +13,23 @@ angular
         'controller': ['$scope','dataService', 'userModel', '$location', function($scope, dataService, userModel, $location){
             $scope.server_status = 01;
             $scope.dataService = dataService;
-            APIUtils.login(function(){
-                APIUtils.getHostState(function(status){
-                    if(status == 'xyz.openbmc_project.State.Host.HostState.Off'){
-                        $scope.server_status = -1;
-                    }else if(status == 'xyz.openbmc_project.State.Host.HostState.Running'){
-                        $scope.server_status = 1;
-                    }else{
-                        $scope.server_status = 0;
-                    }
+
+            $scope.loadServerStatus = function(){
+                $scope.dataService.loading = true;
+                APIUtils.login(function(){
+                    APIUtils.getHostState(function(status){
+                        if(status == 'xyz.openbmc_project.State.Host.HostState.Off'){
+                            dataService.setPowerOffState();
+                        }else if(status == 'xyz.openbmc_project.State.Host.HostState.Running'){
+                            dataService.setPowerOnState();
+                        }else{
+                            dataService.setBootingState();
+                        }
+                        dataService.loading = false;
+                    });
                 });
-            });
+            }
+            $scope.loadServerStatus();
 
             $scope.logout = function(){
                 userModel.logout();
@@ -31,7 +37,7 @@ angular
             };
 
             $scope.refresh = function(){
-                console.log("--refresh status--");
+                $scope.loadServerStatus();
             }
         }]
     };

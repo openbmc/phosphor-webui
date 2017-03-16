@@ -10,24 +10,46 @@ shutdown
 **/
 angular
  .module('app.services', [])
- .service('dataService', function(){
+ .service('dataService', ['APIUtils', function(APIUtils){
     this.app_version = "openBMC V.0.0.1";
-    this.server_health = 'Good';
-    this.server_state = 'On';
+    this.server_health = 'Error';
+    this.server_state = 'Unreachable';
+    this.server_status = -2;
     this.chassis_state = 'On';
-    this.server_id = "Server BLZ_109284.209.01";
+    this.server_id = "Server 9.3.164.147";
     this.last_updated = new Date();
-
+    
+    this.loading = false;
+    this.loading_message = "";
     this.showNavigation = false;
     this.bodyStyle = {};
     this.path = '';
 
- })
+    this.setPowerOnState = function(){
+        this.server_state = APIUtils.HOST_STATE_TEXT.on;
+        this.server_status = APIUtils.HOST_STATE.on;
+    },
+
+    this.setPowerOffState = function(){
+        this.server_state = APIUtils.HOST_STATE_TEXT.off;
+        this.server_status = APIUtils.HOST_STATE.off;
+    },
+
+    this.setBootingState = function(){
+        this.server_state = APIUtils.HOST_STATE_TEXT.booting;
+        this.server_status = APIUtils.HOST_STATE.booting;
+    },
+
+    this.setUnreachableState = function(){
+        this.server_state = APIUtils.HOST_STATE_TEXT.unreachable;
+        this.server_status = APIUtils.HOST_STATE.unreachable;
+    }
+ }])
  .factory('APIUtils', ['$http', function($http){
     var SERVICE = {
         LOGIN_CREDENTIALS: {
-            username: "test",
-            password: "testpass",
+            username: "root",
+            password: "0penBmc",
         },
         API_CREDENTIALS: {
             user: 'root',
@@ -38,10 +60,17 @@ angular
             on: 'On',
             off: 'Off'
         },
-        HOST_STATE: {
+        HOST_STATE_TEXT: {
             on: 'Running',
             off: 'Off',
-            booting: 'Quiesced'
+            booting: 'Quiesced',
+            unreachable: 'Unreachable'
+        },
+        HOST_STATE: {
+            on: 1,
+            off: -1,
+            booting: 0,
+            unreachable: -2
         },
         getChassisState: function(callback){
           $http({
@@ -144,20 +173,26 @@ angular
           });
         },
         hostPowerOn: function(callback){
+          /**
+          curl -c cjar -b cjar -k -H "Content-Type: application/json" -d 
+          "{\"data\": \"xyz.openbmc_project.State.Host.Transition.Off\"}" 
+          -X PUT  
+          https://9.3.164.147/xyz/openbmc_project/state/host0/attr/RequestedHostTransition 
+          **/
           $http({
-            method: 'POST',
-            url: SERVICE.API_CREDENTIALS.host + "xyz/openbmc_project/state/host0/attr/RequestedHostTransition",
+            method: 'PUT',
+            url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/state/host0/attr/RequestedHostTransition",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             withCredentials: true,
-            data: JSON.stringify({"data": "xyz.openbmc_project.State.Host.Transition.Off"})
+            data: JSON.stringify({"data": "xyz.openbmc_project.State.Host.Transition.On"})
           }).success(function(response){
                 var json = JSON.stringify(response);
                 var content = JSON.parse(json);
                 if(callback){
-                    return callback(content.data.CurrentHostState);
+                    return callback(content.status);
                 }
           }).error(function(error){
             if(callback){
@@ -169,19 +204,19 @@ angular
         },
         hostPowerOff: function(callback){
           $http({
-            method: 'POST',
-            url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/state/host0",
+            method: 'PUT',
+            url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/state/host0/attr/RequestedHostTransition",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             withCredentials: true,
-            data: JSON.stringify({"data": []}),
+            data: JSON.stringify({"data": "xyz.openbmc_project.State.Host.Transition.Off"})
           }).success(function(response){
                 var json = JSON.stringify(response);
                 var content = JSON.parse(json);
                 if(callback){
-                    return callback(content.data.CurrentHostState);
+                    return callback(content.status);
                 }
           }).error(function(error){
             if(callback){
