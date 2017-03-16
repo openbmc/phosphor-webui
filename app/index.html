@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <title>openBMC</title>
+    <link rel="icon" href="favicon.ico?v=2"/>
+    <!-- build:css styles/app.min.css -->
+    <link rel="stylesheet" href="styles/index.css">
+    <!-- endbuild -->
+</head>
+<body ng-style="dataService.bodyStyle" ng-attr-id="{{dataService.path == '/login' ? 'login': ''}}">
+
+    <app-header ng-if="dataService.showNavigation" path="dataService.path"></app-header>
+    <app-navigation ng-if="dataService.showNavigation" path="dataService.path" show-navigation="    dataService.showNavigation"></app-navigation>
+
+    <main ng-view ng-class="{'content__container': dataService.path != '/login', 'login__wrapper': dataService.path == '/login'}">
+    </main>
+
+	<!-- build:js scripts/vendor.min.js -->
+	<script src="../bower_components/angular/angular.min.js"></script>
+	<script src="../bower_components/angular-route/angular-route.min.js"></script>
+	<!-- endbuild -->
+
+	<!-- build:js scripts/app.min.js -->
+	<script src="index.js"></script>
+	<script src="templates.js"></script>
+	<script src="vendors.js"></script>
+
+	<script src="constants/index.js"></script>
+	<script src="constants/environment-constants.js"></script>
+
+	<script src="common/services/index.js"></script>
+	<script src="common/services/constants.js"></script>
+	<script src="common/services/dataService.js"></script>
+	<script src="common/services/api-utils.js"></script>
+	<script src="common/services/userModel.js"></script>
+	<script src="common/services/apiInterceptor.js"></script>
+
+	<script src="common/filters/index.js"></script>
+
+	<script src="common/directives/index.js"></script>
+	<script src="common/directives/app-header.js"></script>
+	<script src="common/directives/app-navigation.js"></script>
+	<script src="common/directives/confirm.js"></script>
+
+	<script src="login/index.js"></script>
+	<script src="login/controllers/login-controller.js"></script>
+	<script src="overview/index.js"></script>
+	<script src="overview/controllers/bmc-reboot-controller.js"></script>
+	<script src="overview/controllers/power-operations-controller.js"></script>
+	<script src="overview/controllers/system-overview-controller.js"></script>
+	<script src="overview/controllers/unit-id-controller.js"></script>
+	<script src="overview/controllers/log-controller.js"></script>
+	<!-- endbuild -->
+</body>
+
+</html>
