@@ -10,15 +10,21 @@
     }; 
     $scope.login = function(username, password){
         $scope.error = false;
+
         if(!username || username == "" ||
            !password || password == ""){
             return false;
         }else{
-            if(userModel.login(username, password)){
-                $window.location.hash = '#/system-overview';
-            }else{
-                $scope.error = true;
-            }
+            userModel.login(username, password, function(status, unreachable){
+                if(status){
+                    $scope.$emit('user-logged-in',{});
+                    $window.location.hash = '#/system-overview';
+                }else{
+                    if(!unreachable){
+                       $scope.error = true;
+                   }
+               };
+            });
         }
     }
  }])
@@ -75,34 +81,25 @@
     };
     $scope.warmReboot = function(){
         //@TODO:show progress
-        dataService.loading = true;
+        dataService.setBootingState();
         APIUtils.hostPowerOff(function(response){
             if(response){
-                dataService.setPowerOffState();
                 APIUtils.hostPowerOn(function(response){
                     if(response){
                         dataService.setPowerOnState();
                     }else{
                         //@TODO:show error message
                     }
-                    //@TODO:hide progress, set proper server state
-                    dataService.loading = false;
                 });
             }else{
-                //@TODO:hide progress & show error message
-                dataService.loading = false;
             }
         });
     };
     $scope.testState = function(){
-        //@TODO:show progress
-        dataService.loading = true;
-
         $timeout(function(){
             dataService.setPowerOffState();
             $timeout(function(){
                 dataService.setPowerOnState();
-                dataService.loading = false;
             }, 2000);
         }, 1000);
     };
@@ -127,14 +124,12 @@
 
     $scope.orderlyShutdown = function(){
         //@TODO:show progress
-        dataService.loading = true;
         APIUtils.hostPowerOff(function(response){
             if(response){
                 dataService.setPowerOffState();
             }else{
                 //@TODO:hide progress & show error message
             }
-            dataService.loading = false;
         });
     };
     $scope.orderlyShutdownConfirm = function(){

@@ -37,6 +37,10 @@ angular
         'redirectTo': '/login'
       });
  }])
+ .config(['$httpProvider', function($httpProvider){
+     //console.log($httpProvider.interceptors);
+     $httpProvider.interceptors.push('apiInterceptor');
+ }])
  .run(['$rootScope', '$location', 'dataService', 'userModel',
     function($rootScope, $location, dataService, userModel){
     $rootScope.dataService = dataService;
@@ -70,6 +74,11 @@ angular
         }else{
             dataService.showNavigation = false;
         }
+    });
+
+    $rootScope.$on('timedout-user', function(){
+      sessionStorage.removeItem('LOGIN_ID');
+      $location.path('/login');
     });
     }
  ]);

@@ -10,51 +10,49 @@ shutdown
 **/
 angular
  .module('app.services', [])
- .service('dataService', ['APIUtils', function(APIUtils){
-    this.app_version = "openBMC V.0.0.1";
-    this.server_health = 'Error';
-    this.server_state = 'Unreachable';
-    this.server_status = -2;
-    this.chassis_state = 'On';
-    this.server_id = "Server 9.3.164.147";
-    this.last_updated = new Date();
-    
-    this.loading = false;
-    this.loading_message = "";
-    this.showNavigation = false;
-    this.bodyStyle = {};
-    this.path = '';
+ .service('apiInterceptor', ['$q', '$rootScope', 'dataService', function($q, $rootScope, dataService){
+    return {
+        'request': function(config){
+            dataService.server_unreachable = false;
+            dataService.loading = true;
+            return config;
+        },
+        'response': function(response){
+            dataService.loading = false;
+            dataService.last_updated = new Date();
 
-    this.setPowerOnState = function(){
-        this.server_state = APIUtils.HOST_STATE_TEXT.on;
-        this.server_status = APIUtils.HOST_STATE.on;
-    },
+            if(response == null){
+                dataService.server_unreachable = true;
+            }
 
-    this.setPowerOffState = function(){
-        this.server_state = APIUtils.HOST_STATE_TEXT.off;
-        this.server_status = APIUtils.HOST_STATE.off;
-    },
+            if(response && response.status == 'error' &&
+               dataService.path != '/login'){
+                $rootScope.$emit('timedout-user', {});
+            }
 
-    this.setBootingState = function(){
-        this.server_state = APIUtils.HOST_STATE_TEXT.booting;
-        this.server_status = APIUtils.HOST_STATE.booting;
-    },
-
-    this.setUnreachableState = function(){
-        this.server_state = APIUtils.HOST_STATE_TEXT.unreachable;
-        this.server_status = APIUtils.HOST_STATE.unreachable;
-    }
+            return response;
+        },
+        'responseError': function(rejection){
+            dataService.server_unreachable = true;
+            dataService.loading = false;
+            return $q.reject(rejection);
+        }
+    };
  }])
- .factory('APIUtils', ['$http', function($http){
-    var SERVICE = {
+ .service('Constants', function(){
+    return {
         LOGIN_CREDENTIALS: {
-            username: "root",
-            password: "0penBmc",
+            username: "test",
+            password: "testpass",
         },
         API_CREDENTIALS: {
-            user: 'root',
-            password: '0penBmc',
             host: 'https://9.3.164.147'
+        },
+        API_RESPONSE: {
+            ERROR_STATUS: 'error',
+            ERROR_MESSAGE: '401 Unauthorized',
+            SUCCESS_STATUS: 'ok',
+            SUCCESS_MESSAGE: '200 OK'
         },
         CHASSIS_POWER_STATE: {
             on: 'On',
@@ -71,7 +69,53 @@ angular
             off: -1,
             booting: 0,
             unreachable: -2
-        },
+        }
+    };
+ })
+ .service('dataService', ['Constants', function(Constants){
+    this.app_version = "openBMC V.0.0.1";
+    this.server_health = 'Error';
+    this.server_state = 'Unreachable';
+    this.server_status = -2;
+    this.chassis_state = 'On';
+    this.server_id = "Server 9.3.164.147";
+    this.last_updated = new Date();
+
+    this.loading = false;
+    this.server_unreachable = false;
+    this.loading_message = "";
+    this.showNavigation = false;
+    this.bodyStyle = {};
+    this.path = '';
+
+    this.setPowerOnState = function(){
+        this.server_state = Constants.HOST_STATE_TEXT.on;
+        this.server_status = Constants.HOST_STATE.on;
+    },
+
+    this.setPowerOffState = function(){
+        this.server_state = Constants.HOST_STATE_TEXT.off;
+        this.server_status = Constants.HOST_STATE.off;
+    },
+
+    this.setBootingState = function(){
+        this.server_state = Constants.HOST_STATE_TEXT.booting;
+        this.server_status = Constants.HOST_STATE.booting;
+    },
+
+    this.setUnreachableState = function(){
+        this.server_state = Constants.HOST_STATE_TEXT.unreachable;
+        this.server_status = Constants.HOST_STATE.unreachable;
+    }
+ }])
+ .factory('APIUtils', ['$http', 'Constants', function($http, Constants){
+    var SERVICE = {
+        LOGIN_CREDENTIALS: Constants.LOGIN_CREDENTIALS,
+        API_CREDENTIALS: Constants.API_CREDENTIALS,
+        API_RESPONSE: Constants.API_RESPONSE,
+        CHASSIS_POWER_STATE: Constants.CHASSIS_POWER_STATE,
+        HOST_STATE_TEXT: Constants.HOST_STATE,
+        HOST_STATE: Constants.HOST_STATE,
         getChassisState: function(callback){
           $http({
             method: 'GET',
@@ -106,7 +150,7 @@ angular
             console.log(error);
           });
         },
-        login: function(callback){
+        login: function(username, password, callback){
           $http({
             method: 'POST',
             url: SERVICE.API_CREDENTIALS.host + "/login",
@@ -115,12 +159,36 @@ angular
                 'Content-Type': 'application/json'
             },
             withCredentials: true,
-            data: JSON.stringify({"data": [SERVICE.API_CREDENTIALS.user, SERVICE.API_CREDENTIALS.password]})
+            data: JSON.stringify({"data": [username, password]})
           }).success(function(response){
             if(callback){
                 callback(response);
             }
           }).error(function(error){
+            if(callback){
+                callback(null, true);
+            }
+            console.log(error);
+          });
+        },
+        logout: function(callback){
+          $http({
+            method: 'POST',
+            url: SERVICE.API_CREDENTIALS.host + "/logout",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true,
+            data: JSON.stringify({"data": []})
+          }).success(function(response){
+            if(callback){
+                callback(response);
+            }
+          }).error(function(error){
+            if(callback){
+                callback(null, error);
+            }
             console.log(error);
           });
         },
@@ -279,25 +347,33 @@ angular
  }])
  .factory('userModel',['APIUtils',function(APIUtils){
     return {
-        login : function(username, password){
-            if(username == APIUtils.LOGIN_CREDENTIALS.username &&
-               password == APIUtils.LOGIN_CREDENTIALS.password){
-                sessionStorage.setItem('LOGIN_ID', username);
-                return true;
-            }else{
-                return false;
-            }
+        login : function(username, password, callback){
+            APIUtils.login(username, password, function(response, error){
+                if(response && 
+                   response.status == APIUtils.API_RESPONSE.SUCCESS_STATUS){
+                    sessionStorage.setItem('LOGIN_ID', username);
+                    callback(true);
+                }else{
+                    callback(false, error);
+                }
+            });
         },
         isLoggedIn : function(){
             if(sessionStorage.getItem('LOGIN_ID') === null){
                 return false;
             }
-
             return true;
         },
-        logout : function(){
-            sessionStorage.removeItem('LOGIN_ID');
-            return true;
+        logout : function(callback){
+            APIUtils.logout(function(response, error){
+                if(response &&
+                   response.status == APIUtils.API_RESPONSE.SUCCESS_STATUS){
+                    sessionStorage.removeItem('LOGIN_ID');
+                    callback(true);
+                }else{
+                    callback(false, error);
+                }
+            });
         }
     };
  }]);

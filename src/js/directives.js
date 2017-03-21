@@ -10,35 +10,44 @@ angular
         'scope': {
             'path': '='
         },
-        'controller': ['$scope','dataService', 'userModel', '$location', function($scope, dataService, userModel, $location){
-            $scope.server_status = 01;
+        'controller': ['$rootScope', '$scope','dataService', 'userModel', '$location', function($rootScope, $scope, dataService, userModel, $location){
             $scope.dataService = dataService;
 
             $scope.loadServerStatus = function(){
-                $scope.dataService.loading = true;
-                APIUtils.login(function(){
-                    APIUtils.getHostState(function(status){
-                        if(status == 'xyz.openbmc_project.State.Host.HostState.Off'){
-                            dataService.setPowerOffState();
-                        }else if(status == 'xyz.openbmc_project.State.Host.HostState.Running'){
-                            dataService.setPowerOnState();
-                        }else{
-                            dataService.setBootingState();
-                        }
-                        dataService.loading = false;
-                    });
+
+                APIUtils.getHostState(function(status){
+                    if(status == 'xyz.openbmc_project.State.Host.HostState.Off'){
+                        dataService.setPowerOffState();
+                    }else if(status == 'xyz.openbmc_project.State.Host.HostState.Running'){
+                        dataService.setPowerOnState();
+                    }else{
+                        dataService.setBootingState();
+                    }
                 });
             }
             $scope.loadServerStatus();
 
             $scope.logout = function(){
-                userModel.logout();
-                $location.path('/logout');
-            };
+                userModel.logout(function(status, error){
+                    if(status){
+                       $location.path('/logout');
+                    }else{
+                        console.log(error);
+                    }
+                });
+            }
 
             $scope.refresh = function(){
                 $scope.loadServerStatus();
             }
+
+            var loginListener = $rootScope.$on('user-logged-in', function(event, arg){
+                $scope.loadServerStatus();
+            });
+
+            $scope.$on('$destroy', function(){
+                loginListener();
+            });
         }]
     };
  }])
@@ -53,8 +62,7 @@ angular
         },
         'controller': ['$scope', 'dataService', function($scope, dataService){
             $scope.$watch('showNavigation', function(){
-                var paddingTop = 0;
-                $scope.toggle = false;
+                var padingTop = 0;
                 $scope.firstLevel = 'overview';
                 $scope.secondLevel = 'system_overview';
                 if($scope.showNavigation){
@@ -63,7 +71,6 @@ angular
                 dataService.bodyStyle = {'padding-top': paddingTop + 'px'};
                 $scope.navStyle = {'top': paddingTop + 'px'};
             });
-
         }]
     };
  })
@@ -92,7 +99,7 @@ angular
             scope.$watch('confirm', function(){
                 if(scope.confirm){
                     $timeout(function(){
-                        angular.element(e[0].parentNode).css({'min-height': e[0].querySelector('.inline__confirm').offsetHeight + 'px'});
+                        angular.element(e[0].parentNode).css({'min-height': e[0].querySelector('.power__confirm').offsetHeight + 'px'});
                     }, 0);
                 }else{
                     angular.element(e[0].parentNode).css({'min-height': 0+ 'px'});

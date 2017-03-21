@@ -18,17 +18,18 @@
                 <li><p class="login__info-label">Status message</p><!--<p>BMC was reset by user</p>--></li>
             </ul>
         </div>
-        <div class="columns large-6">
+        <div class="columns large-6 disabled">
             <form id="login__form" role="form" action="" >
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" required ng-model="username" ng-class="{error: error}" ng-keydown="tryLogin(username, password, $event)">
+                <input type="text" id="username" name="username" required ng-model="username" ng-class="{error: error}" ng-keydown="tryLogin(username, password, $event)" ng-disabled="dataService.loading">
 
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" class="" required ng-model="password" ng-keydown="tryLogin(username, password, $event)">
+                <input type="password" id="password" name="password" class="" required ng-model="password" ng-keydown="tryLogin(username, password, $event)" ng-disabled="dataService.loading">
 
-                <input id="login__submit" class="btn-primary submit" type="button" value="Log in" role="button" ng-click="login(username, password)" ng-class="{error: error}">
+                <input id="login__submit" class="btn-primary submit" type="button" value="Log in" role="button" ng-click="login(username, password)" ng-class="{error: error}" ng-disabled="dataService.loading">
 
                 <p class="login__error-msg" role="alert" ng-if="error">Incorrect username or password</p>
+                <p class="login__error-msg" role="alert" ng-if="dataService.server_unreachable">Server Unreachable</p>
             </form>
         </div>
     </div>
