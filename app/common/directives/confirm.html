@@ -1,0 +1,10 @@
+<div class="inline__confirm" ng-class="{active: confirm}">
+    <div class="inline__confirm-message">
+        <p class="h3"><i></i>Are you sure you want to <strong>{{title}}?</strong></p>
+        <p>{{message}}</p>
+    </div>
+    <div class="inline__confirm-buttons">
+        <button class="btn-primary" ng-click="accept()">Yes</button>
+        <button class="btn-primary" ng-click="cancel()">No</button>
+    </div>
+</div>

@@ -1,43 +1,70 @@
 {
   "name": "openbmc-wires",
+  "description": "openbmc-wires",
   "version": "0.0.1",
+  "private": false,
   "scripts": {
-    "clean": "rimraf dist/*",
-    "prebuild": "npm run clean -s",
-    "scss": "node-sass --output-style compressed -o dist/css src/scss/",
-    "autoprefixer": "postcss -u autoprefixer -r dist/css/*",
-    "uglify": "mkdir -p dist/js && cat src/js/*.js > dist/js/app.min.js && uglifyjs dist/js/app.min.js -m -o dist/js/app.min.js && mkdir -p dist/js/vendor && cat node_modules/angular/angular.js node_modules/angular-route/angular-route.js node_modules/zepto/dist/zepto.js > dist/js/vendor/vendor.min.js && uglifyjs dist/js/vendor/vendor.min.js -m -o dist/js/vendor/vendor.min.js",
-    "imagemin": "imagemin src/img/* --out-dir=dist/img/",
-    "serve": "browser-sync start --server 'dist' --files 'dist/css/*.css, dist/js/*.js, dist/*.html'",
-    "build:css": "npm run scss && npm run autoprefixer",
-    "build:js": "npm run uglify",
-    "build:html": "html-minifier --input-dir ./src/ --output-dir ./dist --collapse-whitespace --remove-comments --file-ext html ",
-    "build:images": "npm run imagemin ",
-    "build:all": "npm run prebuild && npm run build:css && npm run build:js && npm run build:html && npm run build:images",
-    "watch:css": "onchange 'src/scss/' -- npm run build:css",
-    "watch:js": "onchange 'src/js/*.js' -- npm run build:js",
-    "watch:html": "onchange 'src/*.html' -- npm run build:html",
-    "watch:images": "onchange 'src/img/*.*' -- npm run build:images",
-    "watch:all": "parallelshell 'npm run serve' 'npm run watch:css' 'npm run watch:js' 'npm run watch:html'",
-    "postinstall": "npm run build:all && npm run watch:all",
-    "start": "npm run build:all && npm run watch:all",
-    "gzip": "tar -czf openBMC.tar.gz dist"
+    "bower": "node node_modules/bower/bin/bower",
+    "gulp": "node node_modules/gulp/bin/gulp.js",
+    "distribution": "npm run gulp distribution",
+    "serve": "npm run gulp server",
+    "shrinkwrap": "npm shrinkwrap --dev",
+    "start-dev": "npm run gulp server",
+    "webapp": "npm run gulp webapp",
+    "start": "npm run gulp server",
+    "postinstall": "bower install"
   },
+  "contributors": [
+    "Iftekharul Islam <iislam@us.ibm.com>"
+  ],
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "node"
+  ],
+  "dependencies": {
+  },
+  "peerDependencies": {},
   "devDependencies": {
     "angular": "^1.5.6",
     "angular-route": "^1.5.6",
+    "bower": "1.8.0",
+    "eslint-plugin-angular": "2.0.0",
+    "event-stream": "3.3.4",
+    "gulp": "3.9.1",
+    "gulp-angular-templatecache": "2.0.0",
+    "gulp-clean": "^0.3.2",
+    "gulp-connect": "5.0.0",
+    "gulp-eslint": "3.0.1",
+    "gulp-htmlparser": "^0.0.4",
+    "gulp-if": "^1.2.5",
+    "gulp-jsoncombine": "^1.0.3",
+    "gulp-load-tasks": "^0.8.3",
+    "gulp-clean-css": "^3.0.4",
+    "gulp-ng-annotate": "^1.1.0",
+    "gulp-ng-constant": "^0.3.0",
+    "gulp-nodemon": "^2.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-rev": "^0.4.0",
+    "gulp-rev-replace": "^0.4.2",
+    "gulp-sass": "^2.3.2",
+    "gulp-strip-debug": "^1.0.2",
+    "gulp-uglify": "^1.2.0",
+    "gulp-useref": "^1.2.0",
+    "gulp-util": "^3.0.6",
+    "gulp-imagemin": "^3.1.1",
     "autoprefixer": "^6.6.1",
-    "browser-sync": "^2.18.6",
     "html-minifier": "^3.3.0",
-    "imagemin-cli": "^3.0.0",
     "node-sass": "^4.3.0",
     "onchange": "^3.2.1",
     "parallelshell": "^2.0.0",
-    "postcss-cli": "^2.6.0",
-    "uglify-js": "^2.7.5",
-    "zepto": "^1.2.0"
+    "run-sequence": "^1.1.2"
   },
-  "dependencies": {
-    "imagemin": "^5.2.2"
-  }
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.11.13",
+    "npm": ">=1.4.28"
+  },
+  "author": ""
 }
