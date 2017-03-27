@@ -12,7 +12,7 @@
       &.first,
       &.last {
         border-radius: 3px;
-        
+
       }
     }
     .btn-primary {
@@ -29,23 +29,48 @@
   }
 
   //Timezone select
-  .event-log__timezone {
+  .event-log__timezone,
+  .event-log__timezone button {
+    position: relative;
     text-transform: uppercase;
     color: $lightbg__primary;
-    font-size: .8em;
+    font-size: .9em;
     font-weight: 700;
-    margin-top: -1em;
-    .event-log__tz-list {
-      display: inline-block;
-      padding-left: .5em;
-      margin-top: -3px;
-      li {list-style-type: none;}
-    }
+  }
+  .event-log__timezone .event-log__tz-select {
+    position: relative;
+    padding: 1em;
+    margin-top: 0px;
     &:after {
       content: '\25bC';
-      font-size: .8em;
       display: inline-block;
       margin-left: 5px;
+      font-size: .8em;
     }
   }
-} //end #event-log
+
+  .event-log__tz-list {
+    position: absolute;
+    right: 0;
+    background: $white;
+    padding: 0;
+    width: 100%;
+    border: 1px solid $lightbg__grey;
+    margin-top: -5px;
+    box-shadow: 0px 4px 10px -2px $lightgrey;
+    li {
+      list-style-type: none;
+    }
+    button {
+      padding: 1em;
+      text-align: left;
+      width: 100%;
+      &:hover {
+        background: $lightbg__accent;
+      }
+    }
+  }
+
+}
+
+//end #event-log
