@@ -1,0 +1,51 @@
+// Event Log SCSS
+
+#event-log {
+
+  #event-filter {
+    button {
+      margin: 3px -3px;
+      padding: .5em 2em;
+      min-height: 2em;
+      font-size: .9em;
+      border-radius: 0;
+      &.first,
+      &.last {
+        border-radius: 3px;
+        
+      }
+    }
+    .btn-primary {
+      border: 2px solid $primebtn__bg;
+    }
+    .filter-label {
+      color: darken($lightgrey, 10%);
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: .75em;
+      margin-bottom: 3px;
+
+    }
+  }
+
+  //Timezone select
+  .event-log__timezone {
+    text-transform: uppercase;
+    color: $lightbg__primary;
+    font-size: .8em;
+    font-weight: 700;
+    margin-top: -1em;
+    .event-log__tz-list {
+      display: inline-block;
+      padding-left: .5em;
+      margin-top: -3px;
+      li {list-style-type: none;}
+    }
+    &:after {
+      content: '\25bC';
+      font-size: .8em;
+      display: inline-block;
+      margin-left: 5px;
+    }
+  }
+} //end #event-log
