@@ -143,13 +143,31 @@ window.angular && (function (angular) {
                   }
                 });
               },
+              bmcReboot: function(callback){
+                $http({
+                  method: 'PUT',
+                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/state/bmc0/attr/RequestedBmcTransition",
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: true,
+                  data: JSON.stringify({"data": "xyz.openbmc_project.State.BMC.Transition.Reboot"})
+                }).success(function(response){
+                      var json = JSON.stringify(response);
+                      var content = JSON.parse(json);
+                      if(callback){
+                          return callback(content.status);
+                      }
+                }).error(function(error){
+                  if(callback){
+                      callback(error);
+                  }else{
+                      console.log(error);
+                  }
+                });
+              },
               hostPowerOn: function(callback){
-                /**
-                curl -c cjar -b cjar -k -H "Content-Type: application/json" -d 
-                "{\"data\": \"xyz.openbmc_project.State.Host.Transition.Off\"}" 
-                -X PUT  
-                https://9.3.164.147/xyz/openbmc_project/state/host0/attr/RequestedHostTransition 
-                **/
                 $http({
                   method: 'PUT',
                   url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/state/host0/attr/RequestedHostTransition",
