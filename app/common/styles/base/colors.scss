@@ -2,7 +2,10 @@
 $white: #ffffff;
 $black: #333;
 $darkgrey: #666;
+$medgrey: #d7dbe0;
 $lightgrey: #ccc;
+$lightblue: #f0f2f5;
+$purple: #5A3EC8;
 $field__disabled: #d8d8d8;
 $btn__disabled-txt: #a6a5a6;
 $btn__disabled-bg: #d8d8d8;
@@ -27,16 +30,18 @@ $secbtn__bg: #ebf0fc;
 $secbtn__border: #3f71ec;
 $secbtn__text: #3f71ec;
 
+// Dropdowns
+$dropdown__focus-bg: #e6e9ee;
 
 // Alerts
-$alert__error: rgba(230, 35, 37, 0.3);
-$alert__warning: rgba(255, 127, 0, 0.3);
-$alert__message: rgba(203, 221, 235, 0.5);
+$alert__error: rgb(230, 35, 37);
+$alert__warning: rgb(255, 127, 0);
+$alert__message: rgb(203, 221, 235);
 
 // Links
 $links: #648FFF;
 $links__hover: $lightbg__accent;
-$links__visited: #5A3EC8;
+$links__visited: $purple;
 $links__disabled: rgba(27, 40, 52, 0.70);
 
 // Navigation
@@ -44,7 +49,8 @@ $nav__top-level-color: #1a273b;
 $nav__second-level-color: #e6e9ed;
 
 // Status colors
-$error-color: #FF5C49;
+$error-color: #e62425;
 $status-ok: #34bc6e;
 $status-ok-light: #bcefce;
 $status-warn: #ffb000;
+

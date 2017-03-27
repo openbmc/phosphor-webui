@@ -24,7 +24,7 @@
 
         <!-- Power on displays only when server is shutdown -->
         <div class="row column power-option" ng-hide="dataService.server_state == 'Running'" ng-class="{disabled: (confirm && !power_confirm) || dataService.loading, transitionAll: confirm && power_confirm}">
-            <button id="power__power-on" class="btn-secondary" ng-click="togglePower()" role="button">Power On</button>
+            <button id="power__power-on" class="btn-secondary" ng-click="togglePower()" role="button"><img src="assets/images/icon-power.svg">Power On</button>
             <p>Attempts to power on the server</p>
 
             <!---<confirm title="power off" message="Power off the server" confirm="power_confirm" ng-show="power_confirm" callback="togglePower"></confirm>-->
