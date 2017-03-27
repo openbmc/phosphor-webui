@@ -5,7 +5,6 @@ var options = require('../gulp-options.js'),
 
 var runSequence = require('run-sequence');
 
-
 gulp.task('distribution', function (callback) {
     return distribution(callback);
 });
@@ -17,13 +16,15 @@ gulp.task('connect', function() {
   });
 });
 
-gulp.task('html', function () {
-  gulp.src('./app/*.html')
+gulp.task('livereload', function() {
+  gulp.src(['./dist/**/*.html','./dist/**/*.js','./dist/**/*.css'])
     .pipe(connect.reload());
 });
 
 gulp.task('watch', function () {
-  gulp.watch('./app/**/*', ['distribution']);
+  gulp.watch('./app/**/*', function(callback){
+    return runSequence('distribution', 'livereload');
+  });
 });
 
 module.exports = function (callback) {

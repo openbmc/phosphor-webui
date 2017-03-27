@@ -1,7 +1,7 @@
 <div id="power-operations">
 
     <div class="row column">
-        <h1>Server power operations</h1>
+        <h1>Server power operation</h1>
     </div>
 
     <!-- Current status and bar display the state of the server. Class 'power__state-off' is applied to bar and 'power__state' text switches to say "off"-->
@@ -34,7 +34,7 @@
         <div class="row column power-option" ng-hide="dataService.server_state == 'Off'" ng-class="{disabled: (confirm && !warmboot_confirm) || dataService.loading, transitionAll: confirm && warmboot_confirm}">
             <button id="power__warm-boot" class="btn-secondary" ng-click="warmRebootConfirm()" role="button"><i>&#x21BB</i> Warm reboot</button>
             <p>Attempts to perform an orderly shutdown before restarting the server</p>
-            <confirm title="Warm Reboot" message="perform an orderly shutdown" confirm="warmboot_confirm" callback="warmReboot"></confirm>
+            <confirm title="Warm Reboot" message="perform an orderly shutdown" confirm="warmboot_confirm" ng-show="warmboot_confirm" callback="warmReboot"></confirm>
         </div>
         <div class="row column power-option" ng-hide="dataService.server_state == 'Off'" ng-class="{disabled: (confirm && !coldboot_confirm) || dataService.loading, transitionAll: confirm && coldboot_confirm}">
             <button id="power__cold-boot" class="btn-secondary" ng-click="coldRebootConfirm()" role="button"><i>&#x21BB</i> Cold reboot</button>
