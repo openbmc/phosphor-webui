@@ -8,7 +8,7 @@
     </div>
 
     <div class="row column btm-border-grey bmc-reboot-option"
-         ng-class="{transitionAll: confirm && immediately_confirm}">
+         ng-class="{disabled: confirm || dataService.loading, transitionAll: confirm}">
         <ul>
             <li>Rebooting the BMC causes your browser to lose contact with the BMC for several minutes.</li>
             <li>When the BMC software has started, you can then log in again.</li>
@@ -16,10 +16,12 @@
                 BMC’s address and log in again.
             </li>
         </ul>
-        <button id="bmc__reboot" class="btn-secondary" ng-click="bmcRebootConfirm()"><i>&#x21BB</i> Reboot BMC
+        <button id="bmc__reboot" class="btn-secondary" ng-click="rebootConfirm()"><i>&#x21BB</i> Reboot BMC
         </button>
         <confirm title="Reboot the BMC"
                  message="Rebooting the BMC causes your browser to lose contact with the BMC for several minutes."
-                 confirm="bmcReboot_confirm" cancel="bmcRebootCancel"></confirm>
+                 confirm="confirm"
+                 ng-show="confirm"
+                 callback="reboot"></confirm>
     </div>
 </div>

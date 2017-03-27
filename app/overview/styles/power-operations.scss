@@ -80,6 +80,7 @@
     }
   }
 
+  // Power button options
   .power-option {
     border-top: 1px solid $lightgrey;
     padding: 1.8em 0 1em 0;
@@ -93,9 +94,8 @@
         min-width: 300px;
       }
     }
-    &.disabled {
-      @include fastTransition-all;
-      p {opacity: .4;}
+    @include mediaQuery(small){
+      padding: 1.8em 0 1em 1.8em;
     }
   }
 

@@ -17,8 +17,25 @@ window.angular && (function (angular) {
             '$window',
             'APIUtils',
             'dataService',
-            function($scope, $window, APIUtils, dataService, userModel){
+            function($scope, $window, APIUtils, dataService){
                 $scope.dataService = dataService;
+                $scope.confirm = false;
+                $scope.rebootConfirm = function(){
+                    if($scope.confirm) {
+                        return;
+                    }
+                    $scope.confirm = true;
+                };
+                $scope.reboot = function(){
+                    dataService.setBootingState();
+                    APIUtils.bmcReboot(function(response){
+                        if(response){
+                            dataService.setPowerOnState();
+                        }else{
+                            dataService.setUnreachableState();
+                        }
+                    });
+                };
             }
         ]
     );
