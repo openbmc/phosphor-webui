@@ -36,7 +36,7 @@ window.angular && (function (angular) {
                 });
         }])
         .config(['$httpProvider', function($httpProvider){
-            //console.log($httpProvider.interceptors);
+            $httpProvider.defaults.timeout = 10000;
             $httpProvider.interceptors.push('apiInterceptor');
         }])
         .run(['$rootScope', '$location', 'dataService', 'userModel',

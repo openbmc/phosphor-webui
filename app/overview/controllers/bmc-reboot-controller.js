@@ -29,11 +29,8 @@ window.angular && (function (angular) {
                 $scope.reboot = function(){
                     dataService.setBootingState();
                     APIUtils.bmcReboot(function(response){
-                        if(response){
-                            dataService.setPowerOnState();
-                        }else{
-                            dataService.setUnreachableState();
-                        }
+                        //@NOTE: using common event to reload server status, may be a better event listener name?
+                        $scope.$emit('user-logged-in',{});
                     });
                 };
             }

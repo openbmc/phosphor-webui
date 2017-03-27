@@ -38,6 +38,9 @@ window.angular && (function (angular) {
                 'responseError': function(rejection){
                     dataService.server_unreachable = true;
                     dataService.loading = false;
+                    if(dataService.path != '/login'){
+                        $rootScope.$emit('timedout-user', {});
+                    }
                     return $q.reject(rejection);
                 }
             };
