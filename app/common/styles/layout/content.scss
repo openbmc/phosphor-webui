@@ -1,17 +1,5 @@
 // Content layout styles
 
-// Page header
-.page-header {
-  position: relative;
-  border-bottom: 1px solid $lightbg__grey;
-  margin: 2.625em 0 1.2em 0;
-  .h4 {
-    padding: 0;
-    margin: 0 0 .5em 0;
-    font-weight: bold;
-  }
-}
-
 .content__container {
   margin-left: $nav__toplvlWidth;
   padding: 1em .1em;
