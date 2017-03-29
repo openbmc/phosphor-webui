@@ -1,0 +1,63 @@
+// Tags
+
+.tag {
+  font-size: .9em;
+  padding: .4em .8em .2em;
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+  padding-right: 60px;
+  border-radius: 3px;
+  line-height: 1.5;
+  overflow: hidden;
+  margin: .4em .3em;
+  min-width: 185px;
+  text-align: left;
+  &:hover {
+    cursor: pointer;
+  }
+  &:before { // close icon
+    content: '+';
+    font-size: 2em;
+    font-weight: 400;
+    transform: rotate(45deg);
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -18px;
+    color: $darkgrey;
+    height: 20px;
+    width: 20px;
+  }
+  &:after { // white separator
+    content: '';
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 40px;
+    border-left: 1px solid $white;
+  }
+}
+
+//Custom tag
+.tag.custom {
+  background: lighten($darkbg__primary, 65%);
+}
+
+//Event log tags
+.event__resolved {
+  background: lighten($purple, 40%);
+}
+.event__unresolved {
+  background: lighten($purple, 40%);
+}
+.event__high {
+  background: lighten($error-color, 30%);
+}
+.event__medium{
+  background: lighten($alert__warning, 30%);
+}
+.event__low {
+  background: lighten($lightbg__primary, 30%);
+}

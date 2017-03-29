@@ -1,11 +1,13 @@
 button, .button, input[type="submit"], .submit {
   font-weight: bold;
   font-size: 1em;
+  @include fontFamily;
   text-transform: none;
   border-radius: 3px;
   padding: .8rem 3.5rem .5rem;
   height: auto;
   border: 0;
+  overflow: hidden;
   &:hover {
     cursor: pointer;
   }
