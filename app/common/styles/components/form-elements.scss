@@ -1,0 +1,172 @@
+// Drop downs
+.dropdown__button {
+  position: relative;
+  padding: 1em;
+  margin-top: -10px;
+  &.active,
+  &:hover {
+    background: $dropdown__focus-bg;
+  }
+  &:after {
+    content: '\276F';
+    display: inline-block;
+    margin-left: 5px;
+    font-size: .8em;
+    transform: rotate(90deg);
+    color: $lightbg__primary;
+  }
+}
+
+.dropdown__wrapper {
+  position: relative;
+  display: inline-block;
+  float: left;
+}
+
+.dropdown__list {
+  position: absolute;
+  z-index: 100;
+  right: 0;
+  top: 100%;
+  background: $white;
+  padding: 0;
+  width: 100%;
+  border: 1px solid $lightbg__grey;
+  margin-top: -5px;
+  box-shadow: 0 4px 10px -2px $lightgrey;
+  li {
+    list-style-type: none;
+  }
+  button {
+    padding: 1em 1em 1em 1.8em;
+    text-align: left;
+    width: 100%;
+    &:hover {
+      background: $dropdown__focus-bg;
+    }
+  }
+}
+
+.dropdown__list {
+  min-width: 230px;
+}
+.dropdown__list.multi-select {
+  > .active {
+    position: relative;
+    &:before {
+      content: '\2713';
+      position: absolute;
+      display: inline-block;
+      top: 50%;
+      left: .6em;
+      color: $lightbg__primary;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.dropdown__date {
+  width: 430px;
+  .row {
+    padding: 1em;
+    margin-right: 0;
+  }
+  input {
+    max-width: 170px;
+    color: $darkgrey;
+  }
+}
+
+
+
+// Checkbox
+
+.control-check {
+  font-size: 18px;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 15px;
+  padding-left: 1em;
+  padding-top: 7px;
+  cursor: pointer;
+  line-height: .5;
+}
+
+.control-check input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.control__indicator {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background: $white;
+  border: 1px solid $lightgrey;
+}
+
+.control--radio .control__indicator {
+  border-radius: 50%;
+}
+
+/* Hover and focus states */
+.control-check:hover input ~ .control__indicator,
+.control-check input:focus ~ .control__indicator {
+  border: 1px solid $primebtn__bg;
+}
+
+/* Checked state */
+.control-check input:checked ~ .control__indicator {
+  background: $primebtn__bg;
+
+}
+
+/* Hover state whilst checked */
+.control-check:hover input:not([disabled]):checked ~ .control__indicator {
+  background: $primebtn__bg;
+}
+
+/* Disabled state */
+.control-check input:disabled ~ .control__indicator {
+  pointer-events: none;
+  opacity: .6;
+  background: #ccc;
+  border: 1px solid $white;
+}
+
+.control-check:hover > input:disabled ~ .control__indicator {
+  outline: 0;
+}
+
+/* Check mark */
+.control__indicator:after,
+.control-check input:not(:checked){
+  position: absolute;
+  display: none;
+  content: '';
+}
+
+/* Show check mark */
+.control-check input:checked ~ .control__indicator:after {
+  display: block;
+}
+
+/* Checkbox tick */
+.control-check .control__indicator:after {
+  top: 3px;
+  left: 7px;
+  width: 5px;
+  height: 10px;
+  transform: rotate(45deg);
+  border: solid $white;
+  border-width: 0 2px 2px 0;
+}
+
+/* Disabled tick colour */
+.control-check input:disabled ~ .control__indicator:after {
+  border-color: $white;
+  color: $white;
+}
