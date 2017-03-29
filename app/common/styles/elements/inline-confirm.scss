@@ -32,7 +32,7 @@
       border: 2px solid $primebtn__bg;
     }
   }
-  @include mediaQuery(large) {
+  @include mediaQuery(medium) {
     float: right;
   }
 }
