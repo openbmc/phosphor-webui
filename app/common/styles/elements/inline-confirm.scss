@@ -3,6 +3,7 @@
 .inline__confirm {
   position: absolute;
   top: 0;
+  right: 0;
   transform: translateY(-103%);
   width: 100%;
   height: 100%;
@@ -12,6 +13,7 @@
   color: $white;
   padding: 2em 2em 1.55em 2em;
   overflow: hidden;
+  @include fastTransition-all;
   &.active {
     transform: translateY(0);
     @include fastTransition-all;
@@ -20,6 +22,10 @@
 
 // Power confirmation buttons
 .inline__confirm-buttons {
+  position: absolute;
+  top: 50%;
+  right: 1em;
+  transform: translateY(-50%);
   .btn-primary {
     background: transparent;
     border: 2px solid $white;
@@ -32,7 +38,7 @@
       border: 2px solid $primebtn__bg;
     }
   }
-  @include mediaQuery(large) {
+  @include mediaQuery(medium) {
     float: right;
   }
 }
@@ -40,6 +46,7 @@
 // confirmation message
 .inline__confirm-message {
   display: inline-block;
+  max-width: 50%;
 }
 
 // Power confirmation message icon
