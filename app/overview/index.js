@@ -18,27 +18,12 @@ window.angular && (function (angular) {
         // Route configuration
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
-                .when('/overview/bmc-reboot', {
-                    'templateUrl': 'overview/controllers/bmc-reboot-controller.html',
-                    'controller': 'bmcRebootController',
-                    authenticated: true
-                })
-                .when('/overview/log', {
-                    'templateUrl': 'overview/controllers/log-controller.html',
-                    'controller': 'logController',
-                    authenticated: true
-                })
-                .when('/overview/power-operations', {
-                    'templateUrl': 'overview/controllers/power-operations-controller.html',
-                    'controller': 'powerOperationsController',
-                    authenticated: true
-                })
-                .when('/overview/unit-id', {
-                    'templateUrl': 'overview/controllers/unit-id-controller.html',
-                    'controller': 'unitIdController',
-                    authenticated: true
-                })
                 .when('/overview/system', {
+                    'templateUrl': 'overview/controllers/system-overview-controller.html',
+                    'controller': 'systemOverviewController',
+                    authenticated: true
+                })
+                .when('/overview', {
                     'templateUrl': 'overview/controllers/system-overview-controller.html',
                     'controller': 'systemOverviewController',
                     authenticated: true

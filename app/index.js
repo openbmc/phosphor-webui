@@ -16,6 +16,8 @@ window.angular && (function (angular) {
         .module('app', [
             // Dependencies
             'ngRoute',
+            'angular-clipboard',
+            'angularUtils.directives.dirPagination',
             // Basic resources
             'app.constants',
             'app.templates',
@@ -25,7 +27,12 @@ window.angular && (function (angular) {
             'app.common.filters',
             // Model resources
             'app.login',
-            'app.overview'
+            'app.overview',
+            'app.serverControl',
+            'app.serverHealth',
+            'app.configuration',
+            'app.firmware',
+            'app.users'
         ])
         // Route configuration
         .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
@@ -34,6 +41,9 @@ window.angular && (function (angular) {
                 .otherwise({
                     'redirectTo': '/login'
                 });
+        }])
+        .config(['$compileProvider', function ($compileProvider) {
+          $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|data|blob):/);
         }])
         .config(['$httpProvider', function($httpProvider){
             $httpProvider.defaults.timeout = 10000;

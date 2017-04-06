@@ -45,3 +45,25 @@ h5, .h5 {
   font-size: 1rem;
   letter-spacing: -.05rem;
 }
+
+.content-header {
+  font-weight: 700;
+  margin-bottom: 0;
+  margin-top: 2em;
+}
+
+.content-label {
+  color: darken($lightgrey, 10%);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: .75em;
+  margin-bottom: 3px;
+}
+
+.courier-normal {
+  font-family: "Courier New", monospace, Helvetica, arial, sans-serif;
+}
+.courier-bold {
+  font-family: "Courier New", monospace, Helvetica, arial, sans-serif;
+  font-weight: 700;
+}
