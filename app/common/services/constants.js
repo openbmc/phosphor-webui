@@ -20,7 +20,7 @@ window.angular && (function (angular) {
                     password: "testpass",
                 },
                 API_CREDENTIALS: {
-                    host: 'https://9.3.164.147'
+                    host: 'https://9.3.185.156'
                 },
                 API_RESPONSE: {
                     ERROR_STATUS: 'error',
@@ -43,6 +43,22 @@ window.angular && (function (angular) {
                     off: -1,
                     booting: 0,
                     unreachable: -2
+                },
+                LED_STATE: {
+                    on: true,
+                    off: false
+                },
+                LED_STATE_TEXT: {
+                    on: 'on',
+                    off: 'off'
+                },
+                SEVERITY_TO_PRIORITY_MAP:{
+                    Informational: 'Low',
+                    Error: 'High',
+                    Warning: 'Medium'
+                },
+                PAGINATION: {
+                    LOG_ITEMS_PER_PAGE: 4
                 }
             };
         });

@@ -29,7 +29,7 @@
                 <input id="login__submit" class="btn-primary submit" type="button" value="Log in" role="button" ng-click="login(username, password)" ng-class="{error: error}" ng-disabled="dataService.loading">
 
                 <p class="login__error-msg" role="alert" ng-if="error">Incorrect username or password</p>
-                <p class="login__error-msg" role="alert" ng-if="dataService.server_unreachable">Server Unreachable</p>
+                <p class="login__error-msg" role="alert" ng-if="server_unreachable">Server Unreachable</p>
             </form>
         </div>
     </div>

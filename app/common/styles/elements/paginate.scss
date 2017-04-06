@@ -11,6 +11,7 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  padding: 0 10px;
 }
 
 .pagination li { background-color: transparent; list-style-type: none; }
@@ -65,15 +66,15 @@
 }
 
 .pagination li:first-child a::before,
-.pagination li:last-child a::after { content: "\027A0"; }
+
 
 .pagination li:nth-of-type(2) a::before,
-.pagination li:nth-last-of-type(2) a::after { content: "\0279E"; }
+
 
 .pagination li:first-child a::before,
 .pagination li:nth-of-type(2) a::before { -webkit-transform: rotate(180deg); transform: rotate(180deg); }
 
-.pagination li.current a {
+.pagination li.current a, .pagination li.active a {
   padding-top:.25em;
   color: $white;
   background-color: $lightbg__primary;

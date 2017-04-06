@@ -1,14 +1,15 @@
 // Drop downs
 .dropdown__button {
   position: relative;
-  padding: 1em;
+  padding: .5em .8em;
   margin-top: -10px;
+  border: 1px solid $lightgrey;
   &.active,
   &:hover {
     background: $dropdown__focus-bg;
   }
   &:after {
-    content: '\276F';
+    content: '\25B8';
     display: inline-block;
     margin-left: 5px;
     font-size: .8em;
@@ -20,7 +21,6 @@
 .dropdown__wrapper {
   position: relative;
   display: inline-block;
-  float: left;
 }
 
 .dropdown__list {

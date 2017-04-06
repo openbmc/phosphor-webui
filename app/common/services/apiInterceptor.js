@@ -16,16 +16,23 @@ window.angular && (function (angular) {
         .service('apiInterceptor', ['$q', '$rootScope', 'dataService', function($q, $rootScope, dataService){
             return {
                 'request': function(config){
-                    dataService.server_unreachable = false;
                     dataService.loading = true;
+                    config.timeout = 10000;
                     return config;
                 },
                 'response': function(response){
                     dataService.loading = false;
-                    dataService.last_updated = new Date();
 
+                    //not interested in template requests
+                    if(!/^https?\:/i.test(response.config.url)){
+                        return response;
+                    }
+
+                    dataService.last_updated = new Date();
                     if(response == null){
                         dataService.server_unreachable = true;
+                    }else{
+                        dataService.server_unreachable = false;
                     }
 
                     if(response && response.status == 'error' &&

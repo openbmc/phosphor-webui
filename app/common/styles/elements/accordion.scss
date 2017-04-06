@@ -1,0 +1,64 @@
+
+// Accordion
+
+.header__actions-bar {
+  padding-top: 1em;
+  padding-right: 1em;
+  background: $darkpurple;
+  color: $white;
+  margin-left: 0;
+
+  .event__actions {
+    margin-top: 1em;
+    margin-right: 10px;
+    @include mediaQuery(medium) {
+      margin-top: 0;
+    }
+    @include mediaQuery(large) {
+      margin-right: -20px;
+    }
+  }
+
+}
+
+.accord-trigger {
+  transform: rotate(90deg);
+  font-size: 1.5em;
+  color: lighten($darkgrey, 10%);
+  padding: .3em;
+  display: block;
+  margin: 0 auto;
+  transition: all .2s ease;
+  &:after {
+    content: '\276F'
+  }
+  &.active {
+    transform: rotate(-90deg);
+    color: $darkbg__accent;
+  }
+  &:focus {
+    outline: 0;
+    color: $darkbg__accent;
+  }
+}
+
+// Single event log card
+.accord-row {
+  position: relative;
+  border: 1px solid $lightgrey;
+  padding: 1em 1em 1em 0em;
+  margin: .65em 0;
+  background: $white;
+  overflow: hidden;
+  &.active,
+  &.selected {
+    background: $lightblue;
+  }
+  &:hover {
+    background: $lightblue;
+    cursor: pointer;
+  }
+  &:last-child {
+    border-bottom: 1px solid $lightgrey;
+  }
+}

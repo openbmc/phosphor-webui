@@ -1,7 +1,7 @@
 /**
  * Controller for bmc-reboot
  *
- * @module app/overview
+ * @module app/serverControl
  * @exports bmcRebootController
  * @name bmcRebootController
  * @version 0.1.0
@@ -11,7 +11,7 @@ window.angular && (function (angular) {
     'use strict';
 
     angular
-        .module('app.overview')
+        .module('app.serverControl')
         .controller('bmcRebootController', [
             '$scope', 
             '$window', 

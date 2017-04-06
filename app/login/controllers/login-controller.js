@@ -25,7 +25,7 @@ window.angular && (function (angular) {
                 if($routeParams.fake_login &&
                    $routeParams.fake_login === 'fake_login'){
                     userModel.fakeLogin();
-                    $window.location.hash = '#/system-overview';
+                    $window.location.hash = '#/overview/system';
                 }
 
                 $scope.tryLogin = function(username, password, event){
@@ -35,6 +35,7 @@ window.angular && (function (angular) {
                 }; 
                 $scope.login = function(username, password){
                     $scope.error = false;
+                    $scope.server_unreachable = false;
 
                     if(!username || username == "" ||
                        !password || password == ""){
@@ -43,11 +44,13 @@ window.angular && (function (angular) {
                         userModel.login(username, password, function(status, unreachable){
                             if(status){
                                 $scope.$emit('user-logged-in',{});
-                                $window.location.hash = '#/system-overview';
+                                $window.location.hash = '#/overview/system';
                             }else{
-                                if(!unreachable){
-                                   $scope.error = true;
-                               }
+                                if(unreachable){
+                                   $scope.server_unreachable = true;
+                                }else{
+                                    $scope.error = true;
+                                }
                            };
                         });
                     }
