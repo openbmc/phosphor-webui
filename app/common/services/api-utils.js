@@ -19,6 +19,8 @@ window.angular && (function (angular) {
               CHASSIS_POWER_STATE: Constants.CHASSIS_POWER_STATE,
               HOST_STATE_TEXT: Constants.HOST_STATE,
               HOST_STATE: Constants.HOST_STATE,
+              LED_STATE: Constants.LED_STATE,
+              LED_STATE_TEXT: Constants.LED_STATE_TEXT,
               getChassisState: function(callback){
                 $http({
                   method: 'GET',
@@ -53,6 +55,23 @@ window.angular && (function (angular) {
                   console.log(error);
                 });
               },
+              getLEDState: function(callback){
+                $http({
+                  method: 'GET',
+                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/led/groups/enclosure_identify",
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: true
+                }).success(function(response){
+                      var json = JSON.stringify(response);
+                      var content = JSON.parse(json);
+                      callback(content.data.Asserted);
+                }).error(function(error){
+                  console.log(error);
+                });
+              },
               login: function(username, password, callback){
                 $http({
                   method: 'POST',
@@ -69,7 +88,11 @@ window.angular && (function (angular) {
                   }
                 }).error(function(error){
                   if(callback){
-                      callback(null, true);
+                      if(error && error.status && error.status == 'error'){
+                        callback(error);
+                      }else{
+                        callback(error, true);
+                      }
                   }
                   console.log(error);
                 });
@@ -134,6 +157,30 @@ window.angular && (function (angular) {
                       var content = JSON.parse(json);
                       if(callback){
                           return callback(content.data.CurrentPowerState);
+                      }
+                }).error(function(error){
+                  if(callback){
+                      callback(error);
+                  }else{
+                      console.log(error);
+                  }
+                });
+              },
+              setLEDState: function(state, callback){
+                $http({
+                  method: 'PUT',
+                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/led/groups/enclosure_identify/attr/Asserted",
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: true,
+                  data: JSON.stringify({"data": state})
+                }).success(function(response){
+                      var json = JSON.stringify(response);
+                      var content = JSON.parse(json);
+                      if(callback){
+                          return callback(content.status);
                       }
                 }).error(function(error){
                   if(callback){
@@ -261,6 +308,57 @@ window.angular && (function (angular) {
                   }else{
                       console.log(error);
                   }
+                });
+              },
+              getLogs: function(callback){
+                $http({
+                  method: 'GET',
+                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/logging/enumerate",
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: true
+                }).success(function(response){
+                      var json = JSON.stringify(response);
+                      var content = JSON.parse(json);
+                      var dataClone = JSON.parse(JSON.stringify(content.data));
+                      var data = [];
+                      var severityCode = '';
+                      var priority = '';
+                      var resolved = false;
+                      var relatedItems = [];
+
+                      for(var key in content.data){
+                        if(content.data.hasOwnProperty(key) && content.data[key].hasOwnProperty('Id')){
+                          var severityFlags = {low: false, medium: false, high: false};
+                          severityCode = content.data[key].Severity.split(".").pop();
+                          priority = Constants.SEVERITY_TO_PRIORITY_MAP[severityCode];
+                          severityFlags[priority.toLowerCase()] = true;
+                          relatedItems = [];
+                          content.data[key].associations.forEach(function(item){
+                            relatedItems.push(item[2]); //@TODO: better way to find the third item?
+                          });
+
+                          data.push(Object.assign({
+                            path: key,
+                            copied: false,
+                            priority: priority,
+                            severity_code: severityCode,
+                            severity_flags: severityFlags,
+                            additional_data: content.data[key].AdditionalData.join("\n"),
+                            selected: false,
+                            search_text: ("#" + content.data[key].Id + " " + severityCode + " " + content.data[key].Severity + " " + content.data[key].AdditionalData.join(" ")).toLowerCase(),
+                            meta: false,
+                            confirm: false,
+                            related_items: relatedItems,
+                            data: {key: key, value: content.data[key]}
+                          }, content.data[key]));
+                        }
+                      }
+                      callback(data, dataClone);
+                }).error(function(error){
+                  console.log(error);
                 });
               }
           };

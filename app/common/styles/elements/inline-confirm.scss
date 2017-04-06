@@ -12,6 +12,7 @@
   color: $white;
   padding: 2em 2em 1.55em 2em;
   overflow: hidden;
+  @include fastTransition-all;
   &.active {
     transform: translateY(0);
     @include fastTransition-all;

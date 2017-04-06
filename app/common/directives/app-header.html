@@ -8,7 +8,7 @@
 </header>
 <div class="header__functions-wrapper" role="heading">
     <div class="logo__wrapper"><img src="assets/images/logo.svg" id="header__logo"  alt="company logo"/></div>
-    <button id="header__server-name">{{dataService.server_id}}</button>
+    <button id="header__server-name">Server {{dataService.server_id}}</button>
     <div class="header__functions">
         <a href="" id="header__server-health">Server health<span class="status-light__error">{{dataService.server_health}}</span></a>
         <a href="#/overview/power-operations" class="header__server-power" role="button">Server power<span ng-class="{'status-light__error': dataService.server_state == 'Off', 'status-light__disabled': dataService.server_state == 'Unreachable', 'status-light__good': dataService.server_state == 'Running', 'status-light__warn': dataService.server_state == 'Quiesced'}">{{dataService.server_state}}</span></a>

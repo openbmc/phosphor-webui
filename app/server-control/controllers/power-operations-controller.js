@@ -1,7 +1,7 @@
 /**
  * Controller for power-operations
  *
- * @module app/overview
+ * @module app/serverControl
  * @exports powerOperationsController
  * @name powerOperationsController
  * @version 0.1.0
@@ -11,7 +11,7 @@ window.angular && (function (angular) {
     'use strict';
 
     angular
-        .module('app.overview')
+        .module('app.serverControl')
         .controller('powerOperationsController', [
             '$scope', 
             'APIUtils', 

@@ -1,5 +1,5 @@
 /**
- * Controller for system overview
+ * Controller for systemOverview
  *
  * @module app/overview
  * @exports systemOverviewController
@@ -19,6 +19,8 @@ window.angular && (function (angular) {
             'dataService',
             function($scope, $window, APIUtils, dataService, userModel){
                 $scope.dataService = dataService;
+
+                $scope.dropdown_selected = false;
             }
         ]
     );
