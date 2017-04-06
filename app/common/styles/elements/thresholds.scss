@@ -1,0 +1,84 @@
+// Thresholds graph
+
+$threshColorLighten: 5%;
+.threshold-chart__wrapper {
+  position: relative;
+  padding-bottom: 2em;
+  .threshold__label {
+    position: absolute;
+    top: 25%;
+    transform: translateY(-50%);
+    font-weight: 700;
+    &.low {
+      margin-left: 0;
+    }
+    &.high {
+      right: 5px;
+    }
+  }
+  @include mediaQuery(large) {
+    max-width: 1000px;
+  }
+}
+
+.threshold-chart {
+  position: relative;
+  line-height: 0;
+  padding: .8em 0 2em 3px;
+  margin: 0 2.5em;
+ //margin: 0 auto;
+  .threshold__marker {
+    position: absolute;
+    top: 13px;
+    bottom: -15px;
+    width: 4px;
+    background-color: $black;
+    @include slowTransition-all;
+    .threshold__value {
+      position: absolute;
+      bottom: 3px;
+      right: 5px;
+      margin: 0;
+      color: $black;
+      padding: 3px 6px;
+      font-weight: 400;
+      font-size: 1em;
+      white-space: nowrap;
+    }
+  }
+  .threshold__marker {
+    &.thresh__low-critical .threshold__value {
+      left: 0;
+      @include slowTransition-all;
+    }
+  }
+  .threshold {
+    display: inline-block;
+    background-color: $thresh-normal;
+    min-width: 10%;
+    min-height: 25px;
+    margin: 0 -3px;
+    &.thresh__normal {
+      min-width: 60%;
+    }
+  }
+
+  .threshold__marker,
+  .threshold {
+    &.thresh__low-critical {
+      background-color: $thresh-critical;
+    }
+    &.thresh__low-warn {
+      background-color: $thresh-warning;
+    }
+    &.thresh__high-warn {
+      background-color: $thresh-warning;
+    }
+    &.thresh__high-critical {
+      background-color: $thresh-critical;
+    }
+    &.thresh__normal {
+      background-color: $thresh-normal;
+    }
+  }
+}

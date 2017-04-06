@@ -1,0 +1,50 @@
+<div id="sensors-overview">
+    <div class="row column">
+        <h1>Sensors Data</h1>
+    </div>
+    <section class="row column">
+        <div class="page-header">
+            <h2 class="inline h4">Sensors present in the system</h2>
+            <button class="inline btn-export float-right">Export</button>
+        </div>
+    </section>
+
+    <section class="row column">
+        <!-- search -->
+        <div class="content__search">
+            <label for="content__search-input">Event Log Search</label>
+            <input id="content__search-input" type="text" placeholder="Filter issues"/>
+            <input id="content__search-submit" type="submit" class="btn btn-secondary" value="Submit"/>
+        </div>
+        <div class="toggle-filter">
+            <button class="inline first btn-primary">All
+            </button>
+            <button class="inline " ng-click="togglehigh = !togglehigh"
+                    ng-class="togglehigh ? 'btn-primary' : 'btn-secondary'">Critical
+            </button>
+            <button class="inline" ng-click="togglemed = !togglemed"
+                    ng-class="togglemed ? 'btn-primary' : 'btn-secondary'">Warning
+            </button>
+            <button class="inline last" ng-click="togglelow = !togglelow"
+                    ng-class="togglelow ? 'btn-primary' : 'btn-secondary'">Normal
+            </button>
+        </div>
+
+    </section> <!-- end search -->
+
+    <section id="sensor-categories" class="row column">
+        <div class="row column header-row">
+            <div class="column large-12 header__actions-bar">
+                <p class="inline sensor__heading sensor__category">Sensors</p>
+                <p class="inline float-right sensor__heading right">State</p>
+            </div>
+        </div>
+        <a class="sensor__group" href="">All Sensors (50)</a>
+        <a class="sensor__group" href=""><span class="inline priority-tag-circ normal-priority" aria-label="Normal Priority"></span>Temperature (20)</a>
+        <a class="sensor__group" href="#/overview/sensors"> <span class="inline priority-tag-circ high-priority" aria-label="High Priority"></span>Fan Speed (15) <p class="inline float-right sensor__critical-label">Critical</p></a>
+        <a class="sensor__group" href=""><span class="inline priority-tag-circ normal-priority" aria-label="Normal Priority"></span>Altitude (1)</a>
+        <a class="sensor__group" href=""><span class="inline priority-tag-circ normal-priority" aria-label="Normal Priority"></span>Voltage (6)</a>
+        <a class="sensor__group" href=""><span class="inline priority-tag-circ warn-priority" aria-label="Warning Priority"></span>Current (5) <p class="inline float-right sensor__warning-label">Warning</p></a>
+        <a class="sensor__group" href=""><span class="inline priority-tag-circ normal-priority"></span>Power (3)</a>
+    </section>
+</div>

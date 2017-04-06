@@ -6,6 +6,7 @@ $medgrey: #d7dbe0;
 $lightgrey: #ccc;
 $lightblue: #f0f2f5;
 $purple: #5A3EC8;
+$darkpurple: #20214f;
 $field__disabled: #d8d8d8;
 $btn__disabled-txt: #a6a5a6;
 $btn__disabled-bg: #d8d8d8;
@@ -37,6 +38,20 @@ $dropdown__focus-bg: #e6e9ee;
 $alert__error: rgb(230, 35, 37);
 $alert__warning: rgb(255, 127, 0);
 $alert__message: rgb(203, 221, 235);
+
+// Severity
+$critical-lightbg: #e62325;
+$critical-darkbg: #ff5c49;
+$medium-lightbg: #dc267f;
+$medium-darkbg: #FF509E;
+$warning-lightbg: rgb(255, 127, 0);
+$warning-darkbg: #ffb000;
+$normal: #00baa1;
+
+// Threshold graphs
+$thresh-critical: $error-color;
+$thresh-warning: #ff806c;
+$thresh-normal: #8ee9d4;
 
 // Links
 $links: #648FFF;

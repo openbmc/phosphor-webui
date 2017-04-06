@@ -1,0 +1,146 @@
+<div id="sensors">
+    <div class="row column">
+        <h1>Fan Speed Sensors</h1>
+    </div>
+    <section class="row column">
+        <div class="page-header">
+            <h2 class="inline h4">Sensors present in the system</h2>
+            <button class="inline btn-export float-right">Export</button>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="row column">
+        <!-- search -->
+        <div class="content__search">
+            <label for="content__search-input">Sensors Search</label>
+            <input id="content__search-input" type="text" placeholder="Filter issues"/>
+            <input id="content__search-submit" type="submit" class="btn btn-secondary" value="Submit"/>
+        </div>
+        <div class="toggle-filter">
+            <button class="inline first btn-primary">All
+            </button>
+            <button class="inline " ng-click="togglehigh = !togglehigh"
+                    ng-class="togglehigh ? 'btn-primary' : 'btn-secondary'">Critical
+            </button>
+            <button class="inline" ng-click="togglemed = !togglemed"
+                    ng-class="togglemed ? 'btn-primary' : 'btn-secondary'">Warning
+            </button>
+            <button class="inline last" ng-click="togglelow = !togglelow"
+                    ng-class="togglelow ? 'btn-primary' : 'btn-secondary'">Normal
+            </button>
+        </div>
+    </section> <!-- end filter -->
+
+    <section class="row column">
+    <div id="back-link">
+        <a href="#/overview/sensors-overview">Back to Sensor Overview</a>
+    </div>
+    </section>
+
+    <section id="sensor__details" class="row column">
+        <div class="row column header-row">
+            <div class="column small-10 large-11 end header__actions-bar">
+                <p class="inline priority-tag-circ high-priority" aria-label="High Priority"></p>
+                <p class="inline sensor__heading sensor__category">Fan speed (RPMs)</p>
+                <p class="inline sensor__heading middle">Reading</p>
+                <p class="inline float-right sensor__heading right">State</p>
+            </div>
+            <div class="column small-2 large-1 sensor__heading trigger-col"></div>
+        </div>
+
+        <!-- Sensor -->
+        <div class="row column accord-row" ng-class="{'active': sensors__metadatarow, 'selected': sensors__selected}">
+            <div class="row">
+                <div class="column small-10 large-11 sensor__info" ng-click="sensors__metadatarow = ! sensors__metadatarow">
+                    <p class="inline priority-tag-circ high-priority" aria-label="High Priority"></p>
+                    <p class="inline sensor__title">Fan Speed 1</p>
+                    <p class="inline sensor__reading">6200 <span>rpms</span></p>
+                    <p class="inline float-right sensor__critical-label">Critical</p>
+                </div>
+                <div class="column small-2 large-1">
+                    <button class="accord-trigger" ng-class="{'active': sensors__metadatarow}" ng-click="sensors__metadatarow = ! sensors__metadatarow"></button>
+                </div>
+            </div>
+            <div class="row sensors__metadata-row" ng-class="{'active': sensors__metadatarow}">
+                <div class="column small-12">
+                    <div class="threshold-chart__wrapper">
+                        <span class="threshold__label low">Low</span>
+                        <div class="threshold-chart">
+                            <span class="threshold__marker thresh__high-critical" style="left: 90%;"><span class="threshold__value">6200 RPMs</span></span>
+                            <span class="threshold thresh__low-critical"></span>
+                            <span class="threshold thresh__low-warn"></span>
+                            <span class="threshold thresh__normal"></span>
+                            <span class="threshold thresh__high-warn"></span>
+                            <span class="threshold thresh__high-critical"></span>
+                        </div>
+                        <span class="threshold__label high">High</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sensor -->
+        <div class="row column accord-row" ng-class="{'active': sensors__metadatarow2, 'selected': sensors__selected}">
+            <div class="row">
+                <div class="column small-10 large-11 sensor__info" ng-click="sensors__metadatarow2 = ! sensors__metadatarow2">
+                    <p class="inline priority-tag-circ normal-priority" aria-label="Normal Priority"></p>
+                    <p class="inline sensor__title">Fan Speed 2</p>
+                    <p class="inline sensor__reading">4600 <span>rpms</span></p>
+                </div>
+                <div class="column small-2 large-1">
+                    <button class="accord-trigger" ng-class="{'active': sensors__metadatarow2}" ng-click="sensors__metadatarow2 = ! sensors__metadatarow2"></button>
+                </div>
+            </div>
+            <div class="row sensors__metadata-row" ng-class="{'active': sensors__metadatarow2}">
+                <div class="column small-12">
+                    <div class="threshold-chart__wrapper">
+                        <span class="threshold__label low">Low</span>
+                        <div class="threshold-chart">
+                            <span class="threshold__marker thresh__normal" style="left: 40%;"><span class="threshold__value">4600 RPMs</span></span>
+                            <span class="threshold thresh__low-critical"></span>
+                            <span class="threshold thresh__low-warn"></span>
+                            <span class="threshold thresh__normal"></span>
+                            <span class="threshold thresh__high-warn"></span>
+                            <span class="threshold thresh__high-critical"></span>
+                        </div>
+                        <span class="threshold__label high">High</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sensor -->
+        <div class="row column accord-row" ng-class="{'active': sensors__metadatarow3, 'selected': sensors__selected}">
+            <div class="row">
+                <div class="column small-10 large-11 sensor__info" ng-click="sensors__metadatarow3 = ! sensors__metadatarow3">
+                    <p class="inline priority-tag-circ warn-priority" aria-label="Medium Priority"></p>
+                    <p class="inline sensor__title">Fan Speed 3</p>
+                    <p class="inline sensor__reading">1200 <span>rpms</span></p>
+                    <p class="inline float-right sensor__warning-label">warning</p>
+                </div>
+                <div class="column small-2 large-1">
+                    <button class="accord-trigger" ng-class="{'active': sensors__metadatarow3}"
+                            ng-click="sensors__metadatarow3 = ! sensors__metadatarow3"></button>
+                </div>
+            </div>
+            <div class="row sensors__metadata-row" ng-class="{'active': sensors__metadatarow3}">
+                <div class="column small-12">
+                    <div class="threshold-chart__wrapper">
+                        <span class="threshold__label low">Low</span>
+                        <div class="threshold-chart">
+                            <span class="threshold__marker thresh__low-warn" style="left: 15%;"><span class="threshold__value">1200 RPMs</span></span>
+                            <span class="threshold thresh__low-critical"></span>
+                            <span class="threshold thresh__low-warn"></span>
+                            <span class="threshold thresh__normal"></span>
+                            <span class="threshold thresh__high-warn"></span>
+                            <span class="threshold thresh__high-critical"></span>
+                        </div>
+                        <span class="threshold__label high">High</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <paginate ng-include="paginate"></paginate>
+</div> <!-- end event log -->

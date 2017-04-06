@@ -18,6 +18,16 @@ window.angular && (function (angular) {
         // Route configuration
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
+                .when('/overview/sensors-overview', {
+                    'templateUrl': 'overview/controllers/sensors-overview-controller.html',
+                    'controller': 'sensorsOverviewController',
+                    authenticated: true
+                })
+                .when('/overview/sensors', {
+                    'templateUrl': 'overview/controllers/sensors-controller.html',
+                    'controller': 'sensorsController',
+                    authenticated: true
+                })
                 .when('/overview/bmc-reboot', {
                     'templateUrl': 'overview/controllers/bmc-reboot-controller.html',
                     'controller': 'bmcRebootController',

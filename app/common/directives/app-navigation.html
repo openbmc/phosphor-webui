@@ -4,17 +4,17 @@
             <button class="btn-overview" ng-class="{opened: firstLevel == 'overview'}" ng-click="firstLevel = 'overview';" tabindex="1">
 
 
-                <span class="">Server Overview</span></button>
+                <span class="">Server overview</span></button>
         </li>
         <li>
             <button class="btn-health" ng-class="{opened: firstLevel == 'health'}" ng-click="firstLevel = 'health';" tabindex="9">
 
-                <span>Server Health</span></button>
+                <span>Server health</span></button>
         </li>
         <li>
             <button class="btn-control" ng-class="{opened: firstLevel == 'control'}" ng-click="firstLevel = 'control';">
 
-                <span>Server Control</span></button>
+                <span>Server control</span></button>
         </li>
         <li>
             <button class="btn-config" ng-class="{opened: firstLevel == 'config'}" ng-click="firstLevel = 'config';">
@@ -33,19 +33,15 @@
         </li>
     </ul>
     <ul class="nav__second-level btn-overview" ng-style="navStyle" ng-class="{opened: firstLevel == 'overview'}">
-        <li ng-class="{'active': (path == '/overview/system')}" tabindex="2"><a href="#/system-overview">System Overview</a></li>
-
-
-
-
+        <li ng-class="{'active': (path == '/overview/system')}" tabindex="2"><a href="#/system-overview">System overview</a></li>
 
     </ul>
     <ul class="nav__second-level btn-health" ng-style="navStyle"  ng-class="{opened: firstLevel == 'health'}">
-        <li ng-class="{'active': (path == '/overview/log')}"><a href="#/overview/log" tabindex="7">Event Log</a></li>
+        <li ng-class="{'active': (path == '/overview/log')}"><a href="#/overview/log" tabindex="7">Event log</a></li>
         <li><a href="">FRU Information</a></li>
-        <li><a href="">Sensor Data</a></li>
+        <li ng-class="{'active': (path == '/overview/sensors-overview')}"><a href="#/overview/sensors-overview">Sensor data</a></li>
         <li ng-class="{'active': (path == '/overview/power-consumption')}"><a href="" tabindex="4">Power consumption</a></li>
-        <li ng-class="{'active': (path == '/overview/unit-id')}"><a href="#/overview/unit-id" tabindex="6">Unit ID</a></li>
+        <li ng-class="{'active': (path == '/overview/unit-id')}"><a href="#/overview/unit-id" tabindex="6">Unit id</a></li>
         <li><a href="">Diagnostics</a></li>
     </ul>
     <ul class="nav__second-level btn-control" ng-style="navStyle"  ng-class="{opened: firstLevel == 'control'}">
