@@ -22,99 +22,70 @@
     </section>
     <!-- Filters -->
     <section class="row column">
-        <!-- filters -->
-        <div class="event-log__filters">
-            <!-- severity filter -->
-            <div class="dropdown__wrapper">
-                <button class="dropdown__button" ng-click="severityFilter = severityFilter == true ? false : true;"
-                        ng-class="{'active' : severityFilter}">All Severity
-                </button>
-                <ul class="dropdown__list multi-select inline" ng-show="severityFilter">
-                    <li>
-                        <button>All severity (999)</button>
-                    </li>
-                    <li ng-click="dropdown_selectedHigh = !dropdown_selectedHigh; filterHigh = !filterHigh "
-                        ng-class="{'active' : dropdown_selectedHigh, 'active' : filterHigh}">
-                        <button>High severity (999)</button>
-                    </li>
-                    <li ng-click="dropdown_selectedMed = !dropdown_selectedMed; filterMed = !filterMed"
-                        ng-class="{'active' : dropdown_selectedMed, 'active' : filterMed}">
-                        <button>Medium severity (999)</button>
-                    </li>
-                    <li ng-click="dropdown_selectedLow = !dropdown_selectedLow; filterLow = !filterLow"
-                        ng-class="{'active' : dropdown_selectedLow, 'active' : filterLow}">
-                        <button>Low severity (999)</button>
-                    </li>
-                </ul>
-            </div>
-            <!-- date range -->
-            <div class="dropdown__wrapper">
-                <button class="dropdown__button" ng-click="dateFilter = dateFilter == true ? false : true;"
-                        ng-class="{'active' : dateFilter}">Date Range
-                </button>
-                <div class="dropdown__list dropdown__date row" ng-show="dateFilter">
-                    <div class="column small-6">
-                        <label>Start Date</label>
-                        <input type="date"/>
-                    </div>
-                    <div class="column small-6">
-                        <label>End Date</label>
-                        <input type="date"/>
-                    </div>
-                </div>
-            </div>
-            <!-- Status filter -->
-            <div class="dropdown__wrapper">
-                <button class="dropdown__button" ng-click="statusFilter = statusFilter == true ? false : true;"
-                        ng-class="{'active' : statusFilter}">Status
-                </button>
-                <ul class="dropdown__list multi-select inline" ng-show="statusFilter">
-                    <li>
-                        <button>All status (999)</button>
-                    </li>
-                    <li ng-click="dropdown_selectedResolved = !dropdown_selectedResolved; filterResolved = !filterResolved"
-                        ng-class="{'active' : dropdown_selectedResolved, 'active' : filterResolved}">
-                        <button>Resolved issues (999)</button>
-                    </li>
-                    <li ng-click="dropdown_selectedUnresolved = !dropdown_selectedUnresolved; filterUnresolved = !filterUnresolved"
-                        ng-class="{'active' : dropdown_selectedUnresolved, 'active' : filterUnresolved}">
-                        <button>Unresolved issues (999)</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
         <!-- search -->
         <div class="content__search">
             <label for="content__search-input">Event Log Search</label>
-            <input id="content__search-input" type="text" placeholder="Filter issues"/>
-            <input id="event__search-submit" type="submit" class="btn btn-secondary" value="Submit"/>
-            <div class="event__search-tag-wrapper row"
-                 ng-show="filterUnresolved || filterResolved || filterHigh || filterMed || filterLow">
-                <div class="column small-2 large-1 no-padding">
-                    <p class="inline label tag-filter-label">Filtered by: </p>
-                </div>
-                <div class="column small-10 large-11 ">
-                    <button class="tag custom">Custom Tag</button>
-                    <button class="tag event__high" ng-click="filterHigh = !filterHigh" ng-show="filterHigh">High
-                        priority
-                    </button>
-                    <button class="tag event__medium" ng-click="filterMed = !filterMed" ng-show="filterMed">Medium
-                        priority
-                    </button>
-                    <button class="tag event__low" ng-click="filterLow = !filterLow" ng-show="filterLow">Low priority
-                    </button>
-                    <button class="tag event__resolved" ng-click="filterUnresolved = !filterUnresolved"
-                            ng-show="filterUnresolved">Unresolved issues
-                    </button>
-                    <button class="tag event__resolved" ng-click="filterResolved = !filterResolved"
-                            ng-show="filterResolved">Resolved issues
-                    </button>
-                </div>
+            <input id="content__search-input" type="text" placeholder="Search logs"/>
+            <input id="content__search-submit" type="submit" class="btn btn-secondary" value="Submit"/>
+            <!-- filters -->
+            <div class="event-log__filters">
+
             </div>
         </div>
     </section> <!-- end filter -->
+
+    <section id="event-filter" class="row column">
+        <div class="inline toggle-filter">
+            <p class="filter-label">Filter by severity</p>
+            <button class="inline first" ng-click="toggleall = !toggleall"
+                    ng-class="toggleall ? 'btn-primary' : 'btn-secondary'">All
+            </button>
+            <button class="inline " ng-click="togglehigh = !togglehigh"
+                    ng-class="togglehigh ? 'btn-primary' : 'btn-secondary'">High
+            </button>
+            <button class="inline" ng-click="togglemed = !togglemed"
+                    ng-class="togglemed ? 'btn-primary' : 'btn-secondary'">Medium
+            </button>
+            <button class="inline last" ng-click="togglelow = !togglelow"
+                    ng-class="togglelow ? 'btn-primary' : 'btn-secondary'">Low
+            </button>
+        </div>
+        <div class="inline event__date-filter">
+            <p class="filter-label">Filter by date range (MM/DD/YYYY)</p>
+            <div class="inline">
+                <label for="event-filter-start-date">Start Date</label>
+                <input id="event-filter-start-date" type="date" placeholder="MM/DD/YYYY" />
+            </div>
+            <strong>&ndash;</strong>
+            <div class="inline">
+                <label for="event-filter-end-date">End Date</label>
+                <input id="event-filter-end-date" type="date" placeholder="MM/DD/YYYY"/>
+            </div>
+        </div>
+        <div class="inline event__status-filter">
+            <p class="filter-label">Filter by issue status</p>
+            <!-- Status filter -->
+            <div class="dropdown__wrapper">
+                <button class="dropdown__button" ng-click="statusFilter = statusFilter == true ? false : true;"
+                        ng-class="{'active' : statusFilter}">Unresolved issues
+                </button>
+                <ul class="dropdown__list inline" ng-show="statusFilter">
+                    <li>
+                        <button>All issues</button>
+                    </li>
+                    <li>
+                        <button>Resolved issues</button>
+                    </li>
+                    <li>
+                        <button>Unresolved issues</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section> <!-- end filter -->
+
     <section id="event-log__events" class="row column">
-        <div id="header__actions-bar" class="row ">
+        <div class="row header__actions-bar">
             <div class="column small-1 large-1 event-log__col-check">
                 <label class="control-check">
                     <input type="checkbox" name="events__check-all" ng-model="all"/>
@@ -137,17 +108,17 @@
                 <!-- when logs are selected, this text changes to show how many logs are checked -->
                 <div class="event__actions">
                     <button class="inline btn-delete" ng-show="event || all" ng-click="confirm= ! confirm">
-                        <img class="event__icon" src="assets/images/icon-trashcan.svg" alt="">Delete
+                        <img class="event__icon" src="assets/images/icon-trashcan-white.svg" alt="">Delete
                     </button>
                     <button class="inline btn-resolve" ng-show="event || all">
-                        <img class="event__icon" src="assets/images/icon-checklist.svg" alt="">Mark as resolved
+                        <img class="event__icon" src="assets/images/icon-checklist-white.svg" alt="">Mark as resolved
                     </button>
                     <button class="inline btn-export">Export</button>
                 </div>
             </div>
         </div>
         <!-- EVENT -->
-        <div class="row column event-log__single-event"
+        <div class="row column event-log__single-event accord-row"
              ng-class="{'active': event__metadatarow, 'selected': event__selected}">
             <div class="row">
                 <div class="inline__confirm" ng-class="{active: eventConfirm}">
@@ -246,7 +217,7 @@
             </div>
         </div>
         <!-- EVENT -->
-        <div class="row column event-log__single-event"
+        <div class="row column event-log__single-event accord-row"
              ng-class="{'active': event__metadatarow_2, 'selected': event__selected_2}">
             <div class="row">
                 <div class="inline__confirm" ng-class="{active: eventConfirm2}">
@@ -331,7 +302,7 @@
             </div>
         </div>
         <!-- EVENT -->
-        <div class="row column event-log__single-event" ng-class="{'active': event__metadatarow_1}">
+        <div class="row column event-log__single-event accord-row" ng-class="{'active': event__metadatarow_1}">
             <div class="row">
                 <div class="column small-1 large-2 event-log__col-check">
                     <label class="control-check">
@@ -403,7 +374,7 @@
             </div>
         </div>
         <!-- EVENT -->
-        <div class="row column event-log__single-event">
+        <div class="row column event-log__single-event accord-row">
             <div class="row">
                 <div class="column small-1 large-2 event-log__col-check">
                     <label class="control-check">

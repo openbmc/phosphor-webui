@@ -21,10 +21,6 @@
       color: $darkbg__accent;
     }
   }
-  .row {
-    //padding: 0;
-    margin-left: 0;
-  }
 
   // Dropwdowns filter
   .dropdown__date.row {
@@ -39,8 +35,60 @@
     color: $lightbg__primary;
     font-size: .9em;
     font-weight: 700;
+    border: 0;
   }
 
+  .content__search {
+    @include mediaQuery(x-large) {
+      max-width: 61%;
+      @include fastTransition-all;
+    }
+  }
+}
+
+#event-filter {
+  .filter-label {
+    color: darken($lightgrey, 10%);
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: .75em;
+    margin-bottom: 3px;
+  }
+  .event__severity-filter {
+    margin-right: 2em;
+    margin-bottom: 1em;
+    button {
+      margin: 3px -3px;
+      padding: .6em 2em;
+      min-height: 2.1em;
+      font-size: .9em;
+      font-weight: 700;
+      border-radius: 0;
+      &.first,
+      &.last {
+        border-radius: 3px;
+      }
+      &.last {
+        border-left: 0;
+      }
+    }
+    .btn-primary {
+      border: 2px solid $primebtn__bg;
+    }
+
+  }
+  .event__date-filter {
+    margin-right: 1.5em;
+    color: $darkgrey;
+    input {
+      width: 170px;
+      height: 2.1rem;
+    }
+    label {
+      height: 0;
+      text-indent: -999px;
+    }
+  }
 }
 
 .event-log__filters {
@@ -55,6 +103,10 @@
 }
 
 // Event Log Events
+#event-log__events.row {
+  padding-left: 0;
+  padding-right: 0;
+}
 #event-log__events {
   display: block;
   margin-top: 1.6em;
@@ -62,6 +114,13 @@
   position: relative;
   overflow: hidden;
 
+  .header__actions-bar {
+    .btn-export,
+    .btn-delete,
+    .btn-resolve {
+      color: $white;
+    }
+  }
   .inline__confirm {
     height: auto;
     margin-left: 0;
@@ -99,7 +158,7 @@
   .btn-delete,
   .btn-resolve {
     text-transform: capitalize;
-    color: $black;
+    color: black;
     font-size: .9em;
     font-weight: 700;
     position: relative;
@@ -132,18 +191,8 @@
 
   // Single event log card
   .event-log__single-event {
-    position: relative;
     border-top: 1px solid $lightgrey;
-    padding: 1em 1em 1em 0em;
-    background: $lightblue;
-    overflow: hidden;
-    &.active,
-    &.selected {
-      background: $white;
-    }
-    &:hover {
-      background: $white;
-    }
+    padding: 1em 1em 1em .7em;
   }
 
   .event-log__event-info {

@@ -34,6 +34,12 @@ $secbtn__text: #3f71ec;
 // Dropdowns
 $dropdown__focus-bg: #e6e9ee;
 
+// Status colors
+$error-color: #e62425;
+$status-ok: #34bc6e;
+$status-ok-light: #bcefce;
+$status-warn: #ffb000;
+
 // Alerts
 $alert__error: rgb(230, 35, 37);
 $alert__warning: rgb(255, 127, 0);
@@ -63,9 +69,4 @@ $links__disabled: rgba(27, 40, 52, 0.70);
 $nav__top-level-color: #1a273b;
 $nav__second-level-color: #e6e9ed;
 
-// Status colors
-$error-color: #e62425;
-$status-ok: #34bc6e;
-$status-ok-light: #bcefce;
-$status-warn: #ffb000;
 

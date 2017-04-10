@@ -5,18 +5,16 @@
   width: 100%;
   max-width: 99%;
   display: inline-block;
+  float: left;
   position: relative;
   margin-right: 1em;
   margin-top: .5em;
-  @media (min-width: 1333px) {
-    max-width: 60%;
-    margin-top: 0;
-  }
+  margin-bottom: 1em;
   #content__search-input {
     margin: 0;
-    border: 0;
-    border-bottom: 2px solid $lightgrey;
+    border: 1px solid $lightgrey;
     padding-left: 40px;
+    padding-right: 5px;
     &:focus {
       box-shadow: none;
     }
@@ -33,15 +31,18 @@
     opacity: .6;
   }
 
-  #event__search-submit {
+  #content__search-submit {
     position: absolute;
+    display: inline-block;
+    width: 100px;
     top: .5em;
-    right: 0;
-    padding: 8px;
+    right: 5px;
+    padding: 1em 2em;
     min-height: 20px;
-    max-width: 70px;
     text-align: center;
     margin: 0;
+    font-weight: 700;
+    font-size: .8em;
   }
 
   .tag-filter-label {
