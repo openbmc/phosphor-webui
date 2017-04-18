@@ -57,6 +57,21 @@
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: #b8c1c1'></polygon></svg>");
 }
 
+//Offset allows to subtract a custom padding/margin offset
+@mixin calcColumn-4 ($offset: 0) {
+  min-width: calc(100% * (1/4) - #{$offset});
+}
+
+
+@mixin calcColumn-3 ($offset: 0){
+  min-width: calc(100% * (1/3) - #{$offset});
+}
+
+@mixin calcSplitColumn ($offset: 0) {
+  min-width: calc(100% * (1/2) - #{$offset});
+}
+
+
 @mixin indeterminate-bar {
   background-image: repeating-linear-gradient(-45deg, rgba(251, 234, 174, 0.35), rgba(251, 234, 174, 0.35) 25px, rgba(244, 176, 0, 0.45) 25px, rgba(244, 176, 0, 0.45) 50px);
   -webkit-animation: progress 2s linear infinite;

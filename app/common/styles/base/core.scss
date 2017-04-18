@@ -17,6 +17,7 @@ a {
   }
   &:hover {
     color: $links__hover;
+    text-decoration: underline;
   }
   :focus {
     color: $links;

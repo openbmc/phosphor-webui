@@ -1,7 +1,7 @@
 
 // Accordion
 
-#header__actions-bar {
+.header__actions-bar {
   padding-top: 1em;
   padding-right: 1em;
   background: $darkpurple;
@@ -45,8 +45,9 @@
 // Single event log card
 .accord-row {
   position: relative;
-  border-top: 1px solid $lightgrey;
+  border: 1px solid $lightgrey;
   padding: 1em 1em 1em 0em;
+  margin: .65em 0;
   background: $white;
   overflow: hidden;
   &.active,
@@ -55,6 +56,7 @@
   }
   &:hover {
     background: $lightblue;
+    cursor: pointer;
   }
   &:last-child {
     border-bottom: 1px solid $lightgrey;

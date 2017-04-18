@@ -122,11 +122,16 @@
     border-color: rgba($medium-lightbg, 1);
   }
   &.warn-priority {
-    background: rgba($warning-lightbg, .5);
     border-color: $warning-lightbg;
+    background-image: url(/assets/images/warn-slash.svg);
+    background-color: rgba($thresh-warning, .3);
   }
   &.normal-priority {
     background: rgba( $normal, .4);
+  }
+  &.disabled {
+    background: rgba( $darkgrey, .2);
+    border-color: rgba( $darkgrey, .2);
   }
   &.event-resolved {
     background: $purple;

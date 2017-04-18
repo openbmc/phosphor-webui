@@ -50,14 +50,21 @@ $critical-lightbg: #e62325;
 $critical-darkbg: #ff5c49;
 $medium-lightbg: #dc267f;
 $medium-darkbg: #FF509E;
-$warning-lightbg: rgb(255, 127, 0);
+$warning-lightbg: #ff836f;
 $warning-darkbg: #ffb000;
+$low-lightbg: #c42cd6;
 $normal: #00baa1;
 
 // Threshold graphs
 $thresh-critical: $error-color;
 $thresh-warning: #ff806c;
 $thresh-normal: #8ee9d4;
+
+//Inventory
+$active: #c6b6f5;
+$inactive: $medium-lightbg;
+$present: #b1bef3;
+$not-present: $medium-lightbg;
 
 // Links
 $links: #648FFF;

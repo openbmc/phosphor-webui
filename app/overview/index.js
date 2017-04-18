@@ -18,6 +18,16 @@ window.angular && (function (angular) {
         // Route configuration
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
+                .when('/overview/inventory-overview', {
+                    'templateUrl': 'overview/controllers/inventory-overview-controller.html',
+                    'controller': 'inventoryOverviewController',
+                    authenticated: true
+                })
+                .when('/overview/inventory', {
+                    'templateUrl': 'overview/controllers/inventory-controller.html',
+                    'controller': 'inventoryController',
+                    authenticated: true
+                })
                 .when('/overview/sensors-overview', {
                     'templateUrl': 'overview/controllers/sensors-overview-controller.html',
                     'controller': 'sensorsOverviewController',

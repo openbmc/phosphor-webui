@@ -51,3 +51,19 @@ h5, .h5 {
   margin-bottom: 0;
   margin-top: 2em;
 }
+
+.content-label {
+  color: darken($lightgrey, 10%);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: .75em;
+  margin-bottom: 3px;
+}
+
+.courier-normal {
+  font-family: "Courier New", Helvetica, arial, sans-serif;
+}
+.courier-bold {
+  font-family: "Courier New", Helvetica, arial, sans-serif;
+  font-weight: 700;
+}
