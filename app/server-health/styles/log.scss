@@ -1,6 +1,5 @@
 // Event Log SCSS
 #event-log {
-
   .accord-trigger {
     transform: rotate(90deg);
     font-size: 1.5em;
@@ -37,8 +36,8 @@
     font-weight: 700;
     border: 0;
   }
-
   .content__search {
+    float: none;
     @include mediaQuery(x-large) {
       max-width: 61%;
       @include fastTransition-all;
@@ -110,10 +109,8 @@
 #event-log__events {
   display: block;
   margin-top: 1.6em;
-  border-top: 1px solid $lightgrey;
   position: relative;
   overflow: hidden;
-
   .header__actions-bar {
     .btn-export,
     .btn-delete,
@@ -127,7 +124,6 @@
     left: 0;
     padding: 1em 2em 1em 2em
   }
-
   .inline__confirm-message {
     margin-top: 5px;
     margin-bottom: -10px;

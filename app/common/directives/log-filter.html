@@ -1,0 +1,58 @@
+<section id="event-filter" class="row column">
+    <div class="inline event__severity-filter">
+        <p class="filter-label">Filter by severity</p>
+        <button class="inline first" ng-click="toggleSeverityAll()"
+                ng-class="selectedSeverity.all ? 'btn-primary' : 'btn-secondary'">All
+        </button>
+        <button class="inline " ng-click="toggleSeverity('high')"
+                ng-class="selectedSeverity.high ? 'btn-primary' : 'btn-secondary'">High
+        </button>
+        <button class="inline" ng-click="toggleSeverity('medium')"
+                ng-class="selectedSeverity.medium ? 'btn-primary' : 'btn-secondary'">Medium
+        </button>
+        <button class="inline last" ng-click="toggleSeverity('low')"
+                ng-class="selectedSeverity.low ? 'btn-primary' : 'btn-secondary'">Low
+        </button>
+    </div>
+    <div class="inline event__date-filter">
+        <p class="filter-label">Filter by date range (MM/DD/YYYY)</p>
+        <div class="inline">
+            <label for="event-filter-start-date">Start Date</label>
+            <input id="event-filter-start-date" type="date" placeholder="MM/DD/YYYY" ng-model="start_date"/>
+        </div>
+        <strong>&ndash;</strong>
+        <div class="inline">
+            <label for="event-filter-end-date">End Date</label>
+            <input id="event-filter-end-date" type="date" placeholder="MM/DD/YYYY" ng-model="end_date"/>
+        </div>
+    </div>
+    <div class="inline event__status-filter">
+        <p class="filter-label">Filter by issue status</p>
+        <!-- Status filter -->
+        <div class="dropdown__wrapper">
+            <button class="dropdown__button" ng-click="statusFilter = statusFilter == true ? false : true;"
+                    ng-class="{'active' : statusFilter}" toggle-flag="statusFilter">
+                    <span ng-if="selectedStatus.all">All issues</span>
+                    <span ng-if="!selectedStatus.all && selectedStatus.resolved">Resolved issues</span>
+                    <span ng-if="!selectedStatus.all && !selectedStatus.resolved">Unresolved issues</span>
+            </button>
+            <ul class="dropdown__list inline" ng-show="statusFilter">
+                <li>
+                    <button 
+                        ng-click="selectedStatus.all = true; statusFilter = false;"
+                        ng-class="{'active' : selectedStatus.all}">All issues</button>
+                </li>
+                <li>
+                    <button 
+                        ng-click="selectedStatus.all = false; selectedStatus.resolved = true; statusFilter = false;"
+                        ng-class="{'active' : selectedStatus.resolved}">Resolved issues</button>
+                </li>
+                <li>
+                    <button 
+                        ng-click="selectedStatus.all = false; selectedStatus.resolved = false; statusFilter = false;"
+                        ng-class="{'active' : !selectedStatus.resolved}">Unresolved issues</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>

@@ -348,7 +348,7 @@ window.angular && (function (angular) {
                             severity_flags: severityFlags,
                             additional_data: content.data[key].AdditionalData.join("\n"),
                             selected: false,
-                            search_text: (severityCode + " " + content.data[key].Severity + " " + content.data[key].AdditionalData.join(" ")).toLowerCase(),
+                            search_text: ("#" + content.data[key].Id + " " + severityCode + " " + content.data[key].Severity + " " + content.data[key].AdditionalData.join(" ")).toLowerCase(),
                             meta: false,
                             confirm: false,
                             related_items: relatedItems,

@@ -58,6 +58,11 @@ window.angular && (function (angular) {
                     'controller': 'diagnosticsController',
                     authenticated: true
                 })
+                .when('/server-health', {
+                    'templateUrl': 'server-health/controllers/log-controller.html',
+                    'controller': 'logController',
+                    authenticated: true
+                });
         }]);
 
 })(window.angular);
