@@ -140,8 +140,8 @@ $title-minWidth: 210px;
   }
 }
 
-#back-link {
-  margin: 1em 0 0;
+.back-link {
+  margin: 1em 0 1em;
   a {
     text-decoration: none;
     position: relative;
@@ -193,7 +193,8 @@ $title-minWidth: 210px;
   .accord-row {padding-left: 3.7em;}
   .header-row {
     background: $darkpurple;
-    padding-left: 3.7em;
+    padding-top: 1.5em;
+    padding-bottom: 0;
     .inv-active {
       color: $active;
     }
@@ -304,8 +305,6 @@ $title-minWidth: 210px;
     }
   }
   .inv-event-log-row {
-    position: relative;
-    z-index: 100;
     border-top: 2px solid $lightgrey;
     margin-right: 3.7em;
     margin-left: 0;

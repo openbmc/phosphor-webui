@@ -11,11 +11,20 @@ window.angular && (function (angular) {
                     'path': '=',
                     'showNavigation': '='
                 },
-                'controller': ['$scope', 'dataService', function($scope, dataService){
+                'controller': ['$scope', '$location', 'dataService', function($scope, $location, dataService){
+                    $scope.change = function(firstLevel){
+                        $scope.firstLevel = firstLevel;
+                        $location.path('/'+firstLevel);
+                    }
                     $scope.$watch('showNavigation', function(){
                         var paddingTop = 0;
-                        $scope.firstLevel = 'overview';
-                        $scope.secondLevel = 'system_overview';
+                        var urlRoot = $location.path().split("/")[1];
+                        if(urlRoot != ""){
+                            $scope.firstLevel = urlRoot;
+                        }else{
+                            $scope.firstLevel = 'overview';
+                        }
+
                         if($scope.showNavigation){
                             paddingTop = document.getElementById('header__wrapper').offsetHeight;
                         }

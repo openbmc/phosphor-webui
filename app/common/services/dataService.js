@@ -19,7 +19,8 @@ window.angular && (function (angular) {
             this.server_state = 'Unreachable';
             this.server_status = -2;
             this.chassis_state = 'On';
-            this.server_id = "Server 9.3.164.147";
+            this.LED_state = Constants.LED_STATE_TEXT.off;
+            this.server_id = Constants.API_CREDENTIALS.host.replace(/[^\d]+/m,"");
             this.last_updated = new Date();
 
             this.loading = false;

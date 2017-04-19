@@ -1,0 +1,29 @@
+<div id="uid-switch">
+    <div class="row column">
+        <h1>Unit ID Indicator</h1>
+    </div>
+
+    <div class="row column">
+        <h2 class="h4">Unit ID control</h2>
+    </div>
+
+    <div class="row column" ng-class="{disabled: dataService.server_unreachable || dataService.loading}">
+        <div class="btm-border-grey">
+            <div class="toggle inline">
+                <input id="toggle__switch-round"
+                       class="toggle-switch toggle-switch__round-flat"
+                       type="checkbox"
+                       tabindex="0"
+                       ng-click="toggleLED()"
+                       ng-checked="dataService.LED_state == 'on'"
+                       ng-disabled="dataService.server_unreachable"
+                       >
+                <label for="toggle__switch-round" tabindex="0">Unit ID indicator is <span class="uid-switch__status">{{dataService.LED_state}}</span></label>
+            </div>
+            <div class="uid-switch__label inline">
+                <p>Unit ID indicator is <span class="uid-switch__status">{{dataService.LED_state}}</span></p>
+                <p>Control unit indicator to identify server unit.</p>
+            </div>
+        </div>
+    </div>
+</div>

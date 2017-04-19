@@ -1,65 +1,64 @@
 <nav>
     <ul id="nav__top-level" ng-style="navStyle">
         <li>
-            <button class="btn-overview" ng-class="{opened: firstLevel == 'overview'}" ng-click="firstLevel = 'overview';" tabindex="1">
+            <button class="btn-overview" ng-class="{opened: firstLevel == 'overview'}" ng-click="change('overview')" tabindex="1">
 
 
-                <span class="">Server overview</span></button>
+                <span class="">Server Overview</span></button>
         </li>
         <li>
-            <button class="btn-health" ng-class="{opened: firstLevel == 'health'}" ng-click="firstLevel = 'health';" tabindex="9">
+            <button class="btn-health" ng-class="{opened: firstLevel == 'server-health'}" ng-click="change('server-health')" tabindex="9">
 
-                <span>Server health</span></button>
+                <span>Server Health</span></button>
         </li>
         <li>
-            <button class="btn-control" ng-class="{opened: firstLevel == 'control'}" ng-click="firstLevel = 'control';">
+            <button class="btn-control" ng-class="{opened: firstLevel == 'server-control'}" ng-click="change('server-control')">
 
-                <span>Server control</span></button>
+                <span>Server Control</span></button>
         </li>
         <li>
-            <button class="btn-config" ng-class="{opened: firstLevel == 'config'}" ng-click="firstLevel = 'config';">
+            <button class="btn-config" ng-class="{opened: firstLevel == 'configuration'}" ng-click="change('configuration')">
 
                 <span>Configuration</span></button>
         </li>
         <li>
-            <button class="btn-firmware" ng-class="{opened: firstLevel == 'firmware'}" ng-click="firstLevel = 'firmware';">
+            <button class="btn-firmware" ng-class="{opened: firstLevel == 'firmware'}" ng-click="change('firmware')">
 
                 <span>Firmware</span></button>
         </li>
         <li>
-            <button class="btn-users" ng-class="{opened: firstLevel == 'users'}" ng-click="firstLevel = 'users';">
+            <button class="btn-users" ng-class="{opened: firstLevel == 'users'}" ng-click="change('users')">
 
                 <span>Users</span></button>
         </li>
     </ul>
     <ul class="nav__second-level btn-overview" ng-style="navStyle" ng-class="{opened: firstLevel == 'overview'}">
-        <li ng-class="{'active': (path == '/overview/system')}" tabindex="2"><a href="#/system-overview">System overview</a></li>
-
+        <li ng-class="{'active': (path == '/overview' || path == '/overview/system')}" tabindex="2"><a href="#/overview/system">System Overview</a></li>
     </ul>
-    <ul class="nav__second-level btn-health" ng-style="navStyle"  ng-class="{opened: firstLevel == 'health'}">
-        <li ng-class="{'active': (path == '/overview/log')}"><a href="#/overview/log" tabindex="7">Event log</a></li>
-        <li ng-class="{'active': (path == '/overview/inventory-overview')}"><a href="#/overview/inventory-overview">Hardware Inventory</a></li>
-        <li ng-class="{'active': (path == '/overview/sensors-overview') || (path == '/overview/sensors')}"><a href="#/overview/sensors-overview">Sensor data</a></li>
-        <li ng-class="{'active': (path == '/overview/power-consumption')}"><a href="" tabindex="4">Power consumption</a></li>
-        <li ng-class="{'active': (path == '/overview/unit-id')}"><a href="#/overview/unit-id" tabindex="6">Unit id</a></li>
-        <li><a href="">Diagnostics</a></li>
+    <ul class="nav__second-level btn-health" ng-style="navStyle"  ng-class="{opened: firstLevel == 'server-health'}">
+        <li ng-class="{'active': (path == '/server-health' || path == '/server-health/event-log')}"><a href="#/server-health/event-log" tabindex="7">Event Log</a></li>
+        <li ng-class="{'active': (path == '/server-health/inventory-overview' || path == '/server-health/inventory')}"><a href="#/server-health/inventory-overview">Hardware Inventory</a></li>
+        <li ng-class="{'active': (path == '/server-health/sensors-overview' || path == '/server-health/sensors')}"><a href="#/server-health/sensors-overview">Sensor Data</a></li>
+        <li ng-class="{'active': (path == '/server-health/power-consumption')}"><a href="#/server-health/power-consumption" tabindex="4">Power consumption</a></li>
+        <li ng-class="{'active': (path == '/server-health/unit-id')}"><a href="#/server-health/unit-id" tabindex="6">Unit ID</a></li>
+        <li ng-class="{'active': (path == '/server-health/diagnostics')}"><a href="#/server-health/diagnostics">Diagnostics</a></li>
     </ul>
-    <ul class="nav__second-level btn-control" ng-style="navStyle"  ng-class="{opened: firstLevel == 'control'}">
-        <li ng-class="{'active': (path == '/overview/power-operations')}" tabindex="3"><a href="#/overview/power-operations">Server power operations</a></li>
-        <li ng-class="{'active': (path == '/overview/bmc-reboot')}"><a href="#/overview/bmc-reboot" tabindex="8">Reboot BMC</a></li>
-        <li ng-class="{'active': (path == '/overview/remote-console')}"><a href="" tabindex="5">Remote console</a></li>
+    <ul class="nav__second-level btn-control" ng-style="navStyle"  ng-class="{opened: firstLevel == 'server-control'}">
+        <li ng-class="{'active': (path == '/server-control' || path == '/server-control/power-operations')}" tabindex="3"><a href="#/server-control/power-operations">Server power operations</a></li>
+        <li ng-class="{'active': (path == '/server-control/bmc-reboot')}"><a href="#/server-control/bmc-reboot" tabindex="8">Reboot BMC</a></li>
+        <li ng-class="{'active': (path == '/server-control/remote-console')}"><a href="#/server-control/remote-console" tabindex="5">Remote console</a></li>
     </ul>
-    <ul class="nav__second-level btn-firmware" ng-style="navStyle"  ng-class="{opened: firstLevel == 'config'}">
-        <li><a href="">Network Configuration</a></li>
-        <li><a href="">Date & Time</a></li>
-        <li><a href="">Security</a></li>
-        <li><a href="">Configuration File</a></li>
+    <ul class="nav__second-level btn-firmware" ng-style="navStyle"  ng-class="{opened: firstLevel == 'configuration'}">
+        <li ng-class="{'active': (path == '/configuration' || path == '/configuration/network')}"><a href="#/configuration/network">Network Configuration</a></li>
+        <li ng-class="{'active': (path == '/configuration/date-time')}"><a href="#/configuration/date-time">Date & Time</a></li>
+        <li ng-class="{'active': (path == '/configuration/security')}"><a href="#/configuration/security">Security</a></li>
+        <li ng-class="{'active': (path == '/configuration/file')}"><a href="#/configuration/file">Configuration File</a></li>
     </ul>
     <ul class="nav__second-level btn-firmware" ng-style="navStyle"  ng-class="{opened: firstLevel == 'firmware'}">
-        <li><a href="">BMC Firmawre</a></li>
-        <li><a href="">Server Firmware</a></li>
+        <li ng-class="{'active': (path == '/firmware' || path == '/firmware/bmc')}"><a href="#/firmware/bmc">BMC Firmawre</a></li>
+        <li ng-class="{'active': (path == '/firmware/server')}"><a href="#/firmware/server">Server Firmware</a></li>
     </ul>
     <ul class="nav__second-level btn-users" ng-style="navStyle"  ng-class="{opened: firstLevel == 'users'}">
-        <li><a href="">Manage User Account</a></li>
+        <li ng-class="{'active': (path == '/users' || path == '/users/manage-accounts')}"><a href="#/users/manage-accounts">Manage User Account</a></li>
     </ul>
 </nav>

@@ -21,6 +21,8 @@
 	<!-- build:js scripts/vendor.min.js -->
 	<script src="../bower_components/angular/angular.min.js"></script>
 	<script src="../bower_components/angular-route/angular-route.min.js"></script>
+	<script src="../bower_components/angular-clipboard/angular-clipboard.min.js"></script>
+    <script src="../bower_components/angularUtils-pagination/dirPagination.min.js"></script>
 	<!-- endbuild -->
 
 	<!-- build:js scripts/app.min.js -->
@@ -44,19 +46,35 @@
 	<script src="common/directives/app-header.js"></script>
 	<script src="common/directives/app-navigation.js"></script>
 	<script src="common/directives/confirm.js"></script>
+    <script src="common/directives/toggle-flag.js"></script>
 
-	<script src="login/index.js"></script>
-	<script src="login/controllers/login-controller.js"></script>
-	<script src="overview/index.js"></script>
-	<script src="overview/controllers/bmc-reboot-controller.js"></script>
-	<script src="overview/controllers/power-operations-controller.js"></script>
-	<script src="overview/controllers/system-overview-controller.js"></script>
-	<script src="overview/controllers/unit-id-controller.js"></script>
-	<script src="overview/controllers/log-controller.js"></script>
-	<script src="overview/controllers/sensors-controller.js"></script>
-	<script src="overview/controllers/sensors-overview-controller.js"></script>
-	<script src="overview/controllers/inventory-controller.js"></script>
-	<script src="overview/controllers/inventory-overview-controller.js"></script>
+    <script src="login/index.js"></script>
+    <script src="login/controllers/login-controller.js"></script>
+    <script src="overview/index.js"></script>
+    <script src="overview/controllers/system-overview-controller.js"></script>
+    <script src="server-control/index.js"></script>
+    <script src="server-control/controllers/bmc-reboot-controller.js"></script>
+    <script src="server-control/controllers/power-operations-controller.js"></script>
+    <script src="server-control/controllers/remote-console-controller.js"></script>
+    <script src="server-health/index.js"></script>
+    <script src="server-health/controllers/diagnostics-controller.js"></script>
+    <script src="server-health/controllers/inventory-controller.js"></script>
+    <script src="server-health/controllers/inventory-overview-controller.js"></script>
+    <script src="server-health/controllers/log-controller.js"></script>
+    <script src="server-health/controllers/power-consumption-controller.js"></script>
+    <script src="server-health/controllers/sensors-controller.js"></script>
+    <script src="server-health/controllers/sensors-overview-controller.js"></script>
+    <script src="server-health/controllers/unit-id-controller.js"></script>
+    <script src="configuration/index.js"></script>
+    <script src="configuration/controllers/date-time-controller.js"></script>
+    <script src="configuration/controllers/file-controller.js"></script>
+    <script src="configuration/controllers/network-controller.js"></script>
+    <script src="configuration/controllers/security-controller.js"></script>
+    <script src="firmware/index.js"></script>
+    <script src="firmware/controllers/bmc-controller.js"></script>
+    <script src="firmware/controllers/server-controller.js"></script>
+    <script src="users/index.js"></script>
+    <script src="users/controllers/user-accounts-controller.js"></script>
 	<!-- endbuild -->
 </body>
 

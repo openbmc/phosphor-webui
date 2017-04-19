@@ -1,0 +1,102 @@
+// Power Operations SCSS
+
+#power-operations {
+
+  .h4 {
+    font-weight: bold;
+  }
+
+  // Power op time stamp
+  .power__status-log {
+    color: $darkgrey;
+    font-weight:500;
+  }
+
+  // Power Curernt status wrapper
+  .power__current-status {
+    border-bottom: 1px solid $lightbg__grey;
+    margin: 2.625em 0 1.2em 0;
+    .h4 {
+      padding: 0;
+      margin: 0 0 .5em 0;
+    }
+  }
+
+  // Power state indicator on/off
+  .power__state {
+    font-weight: 700;
+    margin-top: -.3em;
+    span:before {
+      content: '\25CF';
+      display: inline-block;
+      font-size: 1.8em;
+      color: $darkgrey;
+      margin-right: .1em;
+      vertical-align: middle;
+      transform: translateY(-4px);
+      @include slowTransition-all;
+    }
+  }
+
+  // Power bar indicator
+  .power__indicator-bar {
+    font-weight: bold;
+    padding: 1.4em 3em 0;
+    margin-bottom: 3.750em;
+    background-size: 200% 100%;
+    background-image: linear-gradient(to right, $lightgrey 50%, $status-ok-light 50%);
+    background-position: 0;
+    transition: background-position 2s ease;
+    overflow: hidden;
+    p {
+      padding: 0;
+      margin: 0;
+    }
+    &.power__state-on {
+      background-position: -100%;
+      .power__state {
+        span:before {
+          color: $status-ok;
+        }
+      }
+    }
+    &.power__state-off {
+      background-position: 0;
+      color: $darkgrey;
+      .power__state {
+        span:before {
+          color: $darkgrey;
+        }
+      }
+    }
+    &.power__state-indet {
+      color: $darkgrey;
+      @include indeterminate-bar;
+      .power__state {
+        span:before {
+          color: $status-warn;
+        }
+      }
+    }
+  }
+
+  // Power button options
+  .power-option {
+    border-top: 1px solid $lightgrey;
+    padding: 1.8em 0 1em 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 1px;
+    min-width: 100%;
+    .btn-secondary {
+      margin-bottom: .5em;
+      @include mediaQuery(small) {
+        min-width: 300px;
+      }
+    }
+    @include mediaQuery(small){
+      padding: 1.8em 0 1em 1.8em;
+    }
+  }
+
+} //end power-operations
