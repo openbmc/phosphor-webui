@@ -14,16 +14,19 @@ window.angular && (function (angular) {
                 'controller': ['$scope', '$location', 'dataService', function($scope, $location, dataService){
                     $scope.change = function(firstLevel){
                         $scope.firstLevel = firstLevel;
-                        $location.path('/'+firstLevel);
-                    }
+                        //$location.path('/'+firstLevel);
+                    };
+                    $scope.closeSubnav = function(){
+                        $scope.firstLevel = '';
+                    };
                     $scope.$watch('showNavigation', function(){
                         var paddingTop = 0;
-                        var urlRoot = $location.path().split("/")[1];
-                        if(urlRoot != ""){
-                            $scope.firstLevel = urlRoot;
-                        }else{
-                            $scope.firstLevel = 'overview';
-                        }
+                        // var urlRoot = $location.path().split("/")[1];
+                        // if(urlRoot != ""){
+                        //     $scope.firstLevel = urlRoot;
+                        // }else{
+                        //     $scope.firstLevel = 'overview';
+                        // }
 
                         if($scope.showNavigation){
                             paddingTop = document.getElementById('header__wrapper').offsetHeight;

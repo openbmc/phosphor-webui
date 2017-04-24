@@ -91,19 +91,12 @@ $nav__seclvlWidth: 240px;
   z-index: 97;
   padding: 0;
   margin: 0;
-  display: none;
   list-style-type: none;
-  @include fastTransition-all;
-  @include mediaQuery(medium) {
-    left: $nav__toplvlWidth;
-    &.btn-overview {
-      display: block;
-    }
-  }
+  @include slowTransition-all;
   &.opened {
     left: $nav__toplvlWidth;
-    display: block;
-    @include fastTransition-all;
+    box-shadow: 7px 0 28px -10px $darkgrey;
+    @include slowTransition-all;
   }
 
   a {

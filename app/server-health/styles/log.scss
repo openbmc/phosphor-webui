@@ -74,7 +74,6 @@
     .btn-primary {
       border: 2px solid $primebtn__bg;
     }
-
   }
   .event__date-filter {
     margin-right: 1.5em;
@@ -85,7 +84,7 @@
     }
     label {
       height: 0;
-      text-indent: -999px;
+      text-indent: -9999px;
     }
   }
 }
@@ -106,6 +105,7 @@
   padding-left: 0;
   padding-right: 0;
 }
+
 #event-log__events {
   display: block;
   margin-top: 1.6em;
@@ -136,7 +136,6 @@
       margin-top: 0;
     }
   }
-
   .event-log__col-check {
     max-width: 60px;
     text-align: center;
@@ -177,7 +176,6 @@
     left: 2px;
     top: -5px;
   }
-
   .btn-meta-copy,
   .btn-delete,
   .btn-resolve {
@@ -190,7 +188,6 @@
     border-top: 1px solid $lightgrey;
     padding: 1em 1em 1em .7em;
   }
-
   .event-log__event-info {
     &:hover {
       cursor: pointer;
@@ -207,7 +204,6 @@
     line-height: inherit;
     min-width: 103px;
     text-align: center;
-
     &.high-priority {
       background: $error-color;
 
@@ -284,7 +280,6 @@
       -webkit-appearance: none;
       width: 7px;
     }
-
     &::-webkit-scrollbar-thumb {
       border-radius: 4px;
       background-color: rgba(0, 0, 0, .5);
@@ -301,7 +296,6 @@
     margin-right: 1.2em;
     padding-top: .3em;
   }
-
   .event__related-item {
     margin-right: 1em;
     padding-top: .3em;
@@ -316,7 +310,6 @@
       float: right;
     }
   }
-
   .event__icon {
     width: 20px;
     height: 20px;
@@ -325,9 +318,7 @@
     margin-top: -3px;
     display: inline-block;
   }
-
 }
-
 //end event-log__events
 
 

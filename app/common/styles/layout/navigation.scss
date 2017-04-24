@@ -14,6 +14,7 @@ $nav__seclvlWidth: 240px;
   margin: 0;
   padding: 0;
   width: $nav__toplvlWidth;
+  display: block;
   li {
     margin: 0;
   }
@@ -30,6 +31,7 @@ $nav__seclvlWidth: 240px;
     margin-bottom: 0;
     white-space: normal;
     border-radius: 0;
+    text-decoration: none;
     .nav__icon {
       color: $white;
       max-height: 40px;
@@ -86,22 +88,23 @@ $nav__seclvlWidth: 240px;
   background: $nav__second-level-color;
   top: 0;
   bottom: 0;
-  left: -$nav__toplvlWidth;
+  left: 0;
   width: $nav__seclvlWidth;
-  z-index: 97;
+  z-index: 0;
   padding: 0;
   margin: 0;
   display: none;
   list-style-type: none;
   @include fastTransition-all;
   @include mediaQuery(medium) {
-    left: $nav__toplvlWidth;
+    left: 0;
     &.btn-overview {
-      display: block;
+      display: none;
     }
   }
   &.opened {
     left: $nav__toplvlWidth;
+    z-index: 100;
     display: block;
     @include fastTransition-all;
   }
@@ -114,7 +117,6 @@ $nav__seclvlWidth: 240px;
     position: relative;
     font-weight: 400;
   }
-
   li {
     a:after{
       content: '\203A';

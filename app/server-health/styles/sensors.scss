@@ -200,7 +200,6 @@ $title-minWidth: 210px;
     -webkit-transition: 0.5s linear max-height;
     transition: 0.5s linear max-height;
     padding: 0;
-    @include  fastTransition-all;
     @include mediaQuery(large) {
       margin-left: 200px;
     }
