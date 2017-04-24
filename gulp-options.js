@@ -8,7 +8,7 @@ module.exports = {
     'srcFolderPath': './app',
     'tempFolderPath': __dirname + '/.temp',
     'nodeModulesFolderPath': './node_modules',
-	'bowerFolderPath': './app/bower_components',
+	'bowerFolderPath': __dirname + '/bower_components',
     'dirname': __dirname,
     'excludePath': '!./app/vendors/**/*'
 };

@@ -45,6 +45,18 @@ gulp.task('webapp:sasscompile', function () {
         .pipe(gulp.dest(options.srcFolderPath + '/styles'))
 });
 
+gulp.task('webapp:minifyvendorjs', function () {
+    return gulp
+        .src(options.bowerFolderPath + '/**/*.js')
+        .pipe(uglify({
+            preserveComments: 'false'
+        })) 
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest(function(file) {
+            return file.base;
+        }))
+});
+
 // ----- To .temp from app
 gulp.task('webapp:copyjs', function () {
     return gulp.src(options.srcFolderPath + '/**/*.js')
@@ -111,6 +123,7 @@ module.exports = function (callback) {
     return runSequence(
         'webapp:clean',
         'webapp:sasscompile',
+        'webapp:minifyvendorjs',
         [
             'webapp:copyjs',
             'webapp:copycss',
