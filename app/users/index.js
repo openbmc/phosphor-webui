@@ -18,7 +18,7 @@ window.angular && (function (angular) {
         // Route configuration
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
-                .when('/users/manage-user-accounts', {
+                .when('/users/manage-accounts', {
                     'templateUrl': 'users/controllers/user-accounts-controller.html',
                     'controller': 'userAccountsController',
                     authenticated: true

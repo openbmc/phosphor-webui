@@ -30,6 +30,7 @@ $nav__seclvlWidth: 240px;
     margin-bottom: 0;
     white-space: normal;
     border-radius: 0;
+    text-decoration: none;
     .nav__icon {
       color: $white;
       max-height: 40px;
@@ -92,13 +93,12 @@ $nav__seclvlWidth: 240px;
   padding: 0;
   margin: 0;
   list-style-type: none;
-  @include slowTransition-all;
+  @include fastTransition-all;
   &.opened {
     left: $nav__toplvlWidth;
     box-shadow: 7px 0 28px -10px $darkgrey;
-    @include slowTransition-all;
+    @include fastTransition-all;
   }
-
   a {
     padding: 1.2em 1em 1.2em 1em;
     display: block;
