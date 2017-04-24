@@ -11,7 +11,7 @@
     <button id="header__server-name">Server {{dataService.server_id}}</button>
     <div class="header__functions">
         <a href="" id="header__server-health">Server health<span class="status-light__error">{{dataService.server_health}}</span></a>
-        <a href="#/overview/power-operations" class="header__server-power" role="button">Server power<span ng-class="{'status-light__error': dataService.server_state == 'Off', 'status-light__disabled': dataService.server_state == 'Unreachable', 'status-light__good': dataService.server_state == 'Running', 'status-light__warn': dataService.server_state == 'Quiesced'}">{{dataService.server_state}}</span></a>
+        <a href="#/server-control" class="header__server-power" role="button">Server power<span ng-class="{'status-light__error': dataService.server_state == 'Off', 'status-light__disabled': dataService.server_state == 'Unreachable', 'status-light__good': dataService.server_state == 'Running', 'status-light__warn': dataService.server_state == 'Quiesced'}">{{dataService.server_state}}</span></a>
         <p class="header__refresh">Page last refreshed <span>{{dataService.last_updated |date:'h:mm:ss MMM dd yyyy'}}</span></p>
         <button class="header__page-refresh" ng-click="refresh()"><img src="assets/images/icon-refresh-white.svg" alt="refresh page" role="button"/></button>
     </div>
