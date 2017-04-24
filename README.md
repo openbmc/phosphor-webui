@@ -4,9 +4,6 @@ TODO: Write a project description
 ## Installation
 `npm-install`
 
-## Minify vendors
-`npm run-script minifyvendors`
-
 ## Distribution
 `npm run-script distribution`
 
