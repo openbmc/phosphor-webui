@@ -7,6 +7,7 @@
     "bower": "node node_modules/bower/bin/bower",
     "gulp": "node node_modules/gulp/bin/gulp.js",
     "distribution": "npm run gulp distribution",
+    "minifyvendors": "npm run gulp minifyvendors",
     "serve": "npm run gulp server",
     "shrinkwrap": "npm shrinkwrap --dev",
     "start-dev": "npm run gulp server",

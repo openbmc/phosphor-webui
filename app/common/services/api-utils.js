@@ -337,7 +337,7 @@ window.angular && (function (angular) {
                           severityFlags[priority.toLowerCase()] = true;
                           relatedItems = [];
                           content.data[key].associations.forEach(function(item){
-                            relatedItems.push(item[2]); //@TODO: better way to find the third item?
+                            relatedItems.push(item[2]);
                           });
 
                           data.push(Object.assign({
