@@ -1,6 +1,6 @@
 <div id="configuration-network">
 	<div class="row column">
-		<h1>Network settings</h1>
+		<h1>BMC network settings</h1>
 	</div>
 	<form class="net-config__form" role="form" action="">
 		<section class="row column">
@@ -8,8 +8,8 @@
 				<h2 class="inline h4">Common settings</h2>
 			</div>
 			<fieldset>
-				<div class="row column">
-					<label for="netinterface-select" class="inline">Network interface</label>
+				<div class="column small-12 large-3">
+					<label for="netinterface-select">Network interface</label>
 					<div id="netinterface-select" class="dropdown__wrapper">
 						<button class="dropdown__button" ng-click="networkDevice = ! networkDevice">eth0</button>
 						<ul class="dropdown__list inline" ng-show="networkDevice">
@@ -22,22 +22,22 @@
 						</ul>
 					</div>
 				</div>
-				<div class="row column">
-					<label for="net-config__mac" class="inline">MAC address</label>
-					<input id="net-config__mac" type="text" class="inline"/>
+				<div class="column small-12 large-3">
+					<label for="net-config__mac">MAC address</label>
+					<input id="net-config__mac" type="text" readonly class=""/>
 				</div>
-				<div class="row column">
-					<label for="net-config__host" class="inline">Hostname</label>
-					<input id="net-config__host" type="text" class="inline"/>
+				<div class="column small-12 large-3">
+					<label for="net-config__host">Hostname</label>
+					<input id="net-config__host" type="text" class=""/>
 				</div>
-				<div class="row column">
-					<label for="net-config__domain" class="inline">Domain name</label>
-					<input id="net-config__domain" type="text" class="inline"/>
+				<div class="column small-12 large-3">
+					<label for="net-config__domain">Domain name</label>
+					<input id="net-config__domain" type="text" class=""/>
 				</div>
 			</fieldset>
 		</section>
 		<section class="row column">
-			<div class="page-header">
+			<div class="column small-12 page-header">
 				<h2 class="inline h4">IPV4 settings</h2>
 			</div>
 			<fieldset>
@@ -49,38 +49,45 @@
 				</div>
 				<div class="row column">
 					<label class="control-radio" for="static-ip-address">Assign a static IP address
-						<input type="radio" name="ip-address" id="static-ip-address" ng-model="dhcp" ng-value="false" />
+						<input type="radio" name="ip-address" id="static-ip-address" ng-model="dhcp" ng-value="false"/>
 						<span class="control__indicator control__indicator-on"></span>
 					</label>
 				</div>
 				<fieldset class="net-config__static-ip-wrap">
-					<div class="row column">
+					<div class="column small-12 large-4">
 						<label for="net-config__ipv4-address" class="inline">IPV4 address</label>
-						<input id="net-config__ipv4-address" type="text" class="inline" ng-disabled="dhcp" value="178.45.23.122"/>
+						<input id="net-config__ipv4-address" type="text" ng-disabled="dhcp" value=""/>
 					</div>
-					<div class="row column">
+					<div class="column small-12 large-4">
 						<label for="net-config__subnet" class="inline">Subnet mask</label>
-						<input id="net-config__subnet" type="text" class="inline" ng-disabled="dhcp" value="255.255.0.0"/>
+						<input id="net-config__subnet" type="text" ng-disabled="dhcp" value=""/>
 					</div>
-					<div class="row column">
+					<div class="column small-12 large-4">
 						<label for="net-config__default-gateway" class="inline">Default gateway</label>
-						<input id="net-config__default-gateway" type="text" class="inline" ng-disabled="dhcp" value="178.45.1.1"/>
-					</div>
-					<div class="row column">
-						<label for="net-config__prime-dns" class="inline">Primary DNS server</label>
-						<input id="net-config__prime-dns" type="text" class="inline"/>
-					</div>
-					<div class="row column">
-						<label for="net-config__secondary-dns" class="inline">Secondary DNS server</label>
-						<input id="net-config__secondary-dns" type="text" class="inline"/>
-					</div>
-					<div class="row column">
-						<label for="net-config__tertiary-dns" class="inline">Tertiary DNS server</label>
-						<input id="net-config__tertiary-dns" type="text" class="inline"/>
+						<input id="net-config__default-gateway" type="text" ng-disabled="dhcp" value=""/>
 					</div>
 				</fieldset>
 			</fieldset>
-			<div class="network-config__submit-wrapper float-right">
+		</section>
+		<section class="row column">
+			<div class="column small-12 page-header">
+				<h2 class="inline h4">DNS settings</h2>
+			</div>
+			<fieldset>
+				<div class="column small-12 large-4">
+					<label for="net-config__prime-dns">Primary DNS server</label>
+					<input id="net-config__prime-dns" type="text"/>
+				</div>
+				<div class="column small-12 large-4">
+					<label for="net-config__secondary-dns">Secondary DNS server</label>
+					<input id="net-config__secondary-dns" type="text"/>
+				</div>
+				<div class="column small-12 large-4">
+					<label for="net-config__tertiary-dns">Tertiary DNS server</label>
+					<input id="net-config__tertiary-dns" type="text"/>
+				</div>
+			</fieldset>
+			<div class="network-config__submit-wrapper">
 				<button class="btn-primary inline">Save settings</button>
 				<button class="btn-secondary inline">Cancel</button>
 			</div>

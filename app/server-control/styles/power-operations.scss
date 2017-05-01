@@ -14,7 +14,7 @@
 
   // Power Curernt status wrapper
   .power__current-status {
-    border-bottom: 1px solid $lightbg__grey;
+    border-bottom: 1px solid $medgrey;
     margin: 2.625em 0 1.2em 0;
     .h4 {
       padding: 0;
@@ -82,7 +82,7 @@
 
   // Power button options
   .power-option {
-    border-top: 1px solid $lightgrey;
+    border-top: 1px solid $medgrey;
     padding: 1.8em 0 1em 0;
     position: relative;
     overflow: hidden;

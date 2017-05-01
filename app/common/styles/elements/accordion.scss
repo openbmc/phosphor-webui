@@ -8,11 +8,8 @@
   color: $white;
   margin-left: 0;
   .event__actions {
-    margin-top: 1em;
     margin-right: 10px;
-    @include mediaQuery(medium) {
-      margin-top: -6px;
-    }
+    margin-top: -6px;
     @include mediaQuery(large) {
       margin-right: -20px;
     }

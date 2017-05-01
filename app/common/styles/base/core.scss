@@ -16,7 +16,7 @@ a {
     color: $links__visited;
   }
   &:hover {
-    color: $links__hover;
+    text-decoration: underline;
   }
   :focus {
     color: $links;

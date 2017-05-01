@@ -30,9 +30,37 @@
   font-weight: 200;
 }
 
+@mixin fontFamilyBold {
+  font-family: Helvetica, Arial, Verdana, sans-serif;
+  font-weight: 700;
+}
+
 @mixin fontCourierBold {
   font-family: "Courier New", Helvetica, arial, sans-serif;
   font-weight: 700;
+}
+
+//Navigation icons
+@mixin navIcons {
+  color: $white;
+  fill: $white;
+  max-height: 40px;
+  stroke-width: .5;
+  display: block;
+  width: 40px;
+  margin: 0 auto .5em auto;
+  .st0 {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+  }
+  .st1 {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 4;
+    stroke-miterlimit: 10;
+  }
 }
 
 //Transitions mixin
@@ -71,6 +99,10 @@
   min-width: calc(100% * (1/2) - 5px);
 }
 
+@mixin vertCenter {
+  top: 50%;
+  transform: translateY(-50%);
+}
 
 @mixin indeterminate-bar {
   background-image: repeating-linear-gradient(-45deg, rgba(251, 234, 174, 0.35), rgba(251, 234, 174, 0.35) 25px, rgba(244, 176, 0, 0.45) 25px, rgba(244, 176, 0, 0.45) 50px);

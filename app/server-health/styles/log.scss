@@ -47,7 +47,7 @@
 
 #event-filter {
   .filter-label {
-    color: darken($lightgrey, 10%);
+    color: darken($medgrey, 10%);
     text-transform: uppercase;
     font-weight: 700;
     font-size: .75em;
@@ -305,10 +305,7 @@
   }
   .event__actions {
     margin-left: -1em;
-    //margin-bottom: 1em;
-    @include mediaQuery(medium) {
-      float: right;
-    }
+    float: right;
   }
   .event__icon {
     width: 20px;

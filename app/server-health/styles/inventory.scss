@@ -59,7 +59,7 @@ $title-minWidth: 210px;
     margin: .5em 0;
     font-weight: 700;
     background: $white;
-    padding: 1.8em 1em 1em 3.7em;
+    padding: 1em 1em 0 3.7em;
     text-decoration: none;
     border: 1px solid $lightgrey;
     vertical-align: middle;
@@ -293,15 +293,12 @@ $title-minWidth: 210px;
     -webkit-transition: 0.5s linear max-height;
     transition: 0.5s linear max-height;
     padding: 0;
+    .content-label {
+      margin-top: 1em;
+    }
     &.active {
       max-height: 1000px; //max-height used to allow flexible height of content and still allow transition
       @include fastTransition-all;
-      //@include mediaQuery(small) {
-      //  max-height: 1000px;
-      //}
-      //@include mediaQuery(medium) {
-      //  max-height: 1000px;
-      //}
     }
   }
   .inv-event-log-row {

@@ -1,0 +1,91 @@
+
+// Table Header
+.table-header {
+  width: 100%;
+  color: $black;
+  line-height: 30px;
+  padding: 10px 15px;
+
+  @include mediaQuery(medium) {
+    padding: 15px 20px;
+  }
+
+  @include mediaQuery(large) {
+    padding: 15px 30px;
+  }
+}
+
+
+// Table
+.table {
+  width: 100%;
+}
+
+.table__row {
+  display: flex;
+  width: 100%;
+  max-width: calc(100vw - 30px);
+  flex-wrap: wrap;
+  border-bottom: 1px solid $medgrey;
+  border-left: 1px solid $medgrey;
+  border-right: 1px solid $medgrey;
+  padding: 5px 0;
+
+  @include mediaQuery(small) {
+    padding: 0;
+  }
+}
+
+.table__cell {
+  flex: 0 0 100%;
+  line-height: 20px;
+  padding: 5px 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @include mediaQuery(small) {
+    flex: 1;
+    padding: 15px 20px;
+  }
+
+  @include mediaQuery(large) {
+    padding: 15px 30px;
+  }
+}
+
+.table__cell-label {
+  display: inline-block;
+  font-weight: 700;
+  min-width: 50%;
+  padding-right: 15px;
+
+  @include mediaQuery(small) {
+    display: none;
+  }
+}
+
+// Table Head
+.table__head {
+  .table__row {
+    display: none;
+    font-weight: 700;
+    border-bottom: 1px solid $medgrey;
+    background-color: $darkbg__primary;
+    color: $white;
+
+    @include mediaQuery(small) {
+      display: flex;
+    }
+
+    .table__cell {
+      @include fastTransition-all();
+      position: relative;
+
+      &:last-child {
+        border: 0;
+      }
+    }
+  }
+}
+

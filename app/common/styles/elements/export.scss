@@ -1,18 +1,16 @@
 //Export button
 .btn-export {
-  text-transform: capitalize;
   color: $black;
   font-size: .9em;
   font-weight: 700;
   position: relative;
   padding: 0 0 1em 2em;
   margin-right: .6em;
+  text-decoration: none;
+  margin-top: 7px;
   &:hover {
     text-decoration: underline;
   }
-}
-.btn-export {
-  margin-top: 7px;
 }
 .btn-export:before {
   content: '\21E5';

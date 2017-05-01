@@ -3,11 +3,13 @@ $white: #ffffff;
 $black: #333;
 $darkgrey: #666;
 $medgrey: #d7dbe0;
-$lightgrey: #ccc;
+$lightgrey: #f5f7fa;
 $lightblue: #f0f2f5;
+$medblue: #3f71ec;
 $purple: #5A3EC8;
 $darkpurple: #20214f;
-$field__disabled: #d8d8d8;
+$field__disabled: #e6e6e6;
+$field__focus: #3C6DEF;
 $btn__disabled-txt: #a6a5a6;
 $btn__disabled-bg: #d8d8d8;
 
@@ -69,7 +71,7 @@ $not-present: $medium-lightbg;
 // Links
 $links: #648FFF;
 $links__hover: $lightbg__primary;
-$links__visited: $darkbg__primary;
+$links__visited: #8ea7ea;
 $links__disabled: rgba(27, 40, 52, 0.70);
 
 // Navigation

@@ -19,7 +19,7 @@ input[type='url'],
 input[type='text'],
 textarea {
   border-radius: 0px;
-  border: 1px solid $lightgrey;
+  border: 1px solid $medgrey;
   height: 3.1em;
   margin: 0 0 1em 0;
   background: $white;
@@ -27,15 +27,27 @@ textarea {
   transition: none !important;
   &:focus {
     border-color: $lightbg__accent;
-    border-bottom: 5px solid $lightbg__primary;
+    box-shadow: 0 -5px $field__focus inset;
   }
-  &:disabled, .disabled {
+  &:disabled,
+  .disabled {
     background: $field__disabled;
     border: 1px solid $lightbg__grey;
   }
   &.input__error {
-    border-color: $error-color;
+    box-shadow: 0 -5px $error-color inset;
+    color: $error-color;
+    &:focus {
+      box-shadow: 0 -5px $field__focus inset;
+    }
   }
+}
+
+input[readonly],
+input[readonly]:focus{
+  box-shadow: 0 0 0;
+  background: $field__disabled;
+  border: 1px solid $lightbg__grey;
 }
 
 textarea { padding: .2em;
