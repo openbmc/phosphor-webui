@@ -29,6 +29,7 @@ window.angular && (function (angular) {
             this.showNavigation = false;
             this.bodyStyle = {};
             this.path = '';
+            this.sensorData = [];
 
             this.setPowerOnState = function(){
                 this.server_state = Constants.HOST_STATE_TEXT.on;

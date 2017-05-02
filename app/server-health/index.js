@@ -38,7 +38,7 @@ window.angular && (function (angular) {
                     'controller': 'sensorsOverviewController',
                     authenticated: true
                 })
-                .when('/server-health/sensors', {
+                .when('/server-health/sensors/:type', {
                     'templateUrl': 'server-health/controllers/sensors-controller.html',
                     'controller': 'sensorsController',
                     authenticated: true

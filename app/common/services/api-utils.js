@@ -360,6 +360,122 @@ window.angular && (function (angular) {
                 }).error(function(error){
                   console.log(error);
                 });
+              },
+              getAllSensorStatus: function(callback){
+                /**
+                GET   https://9.3.185.156/xyz/openbmc_project/sensors/enumerate
+                */
+                $http({
+                  method: 'GET',
+                  url: "/assets/mocks/sensors.json",
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: true
+                }).success(function(response){
+                      var json = JSON.stringify(response);
+                      var content = JSON.parse(json);
+                      var dataClone = JSON.parse(JSON.stringify(content.data));
+                      var sensorData = [];
+                      var allSensorSeveries = [];
+                      var allSensorRows = [];
+                      var total = 0;
+                      var status = 'normal';
+                      var data = {
+                                   total: 0,
+                                   status: '',
+                                   sensors: [{
+                                      title: 'All Sensors',
+                                      type: 'all',
+                                      status: '',
+                                      severity_flags: {},
+                                      search_text: '',
+                                      display_headers: ['Sensor (Unit)', 'Reading', 'State'],
+                                      data: []
+                                   }]
+                                 };
+
+                      function getSensorStatus(reading){
+                        var severityFlags = {critical: false, warning: false, normal: false}, severityText = '';
+                        if(reading.Value >= reading.CriticalLow && reading.Value <= reading.CriticalHigh){
+                          severityFlags.critical = true;
+                          severityText = 'critical';
+                        }
+                        else if(reading.Value >= reading.WarningLow && reading.Value <= reading.WarningHigh){
+                          severityFlags.warning = true;
+                          severityText = 'warning';
+                        }else{
+                          severityFlags.normal = true;
+                          severityText = 'normal';
+                        }
+                        return { flags: severityFlags, severityText: severityText};
+                      }
+
+                      for(var key in content.data){
+                        if(content.data.hasOwnProperty(key) && content.data[key].hasOwnProperty('Unit')){
+                          sensorData.push(Object.assign({
+                            path: key,
+                            selected: false,
+                            confirm: false,
+                            copied: false,
+                            original_data: {key: key, value: content.data[key]}
+                          }, content.data[key]));
+                        }
+                      }
+
+                      Constants.SENSOR_DATA_TEMPLATE.sensors.forEach(function(sensor){
+                          var rowData = [];
+                          var severities = [];
+                          var thisSensorData = sensorData.filter(function(el){
+                            return el.path.indexOf('sensors/'+sensor.key_search) > -1;
+                          });
+
+                          for(var i = 0; i < thisSensorData.length; i++){
+
+                             var severity = getSensorStatus(thisSensorData[i]);
+                             severities.push(severity.severityText);
+                             rowData.push(Object.assign({
+                                title: sensor.sensor_row.title + (i+1),
+                                status: severity.severityText,
+                                severity_flags: severity.flags,
+                                reading: thisSensorData[i].Value + sensor.sensor_row.reading,
+                                search_text: (sensor.sensor_row.title + (i+1) + " " + severity.severityText + " " + thisSensorData[i].Value + sensor.sensor_row.reading).toLowerCase(),
+                                indicator: (severity.flags.critical) ? '90%' : ((severity.flags.warning) ? '15%' : '50%')
+                             }, thisSensorData[i]));
+                          }
+
+                          status = (severities.indexOf('critical') > -1) ? 'critical' : ((severities.indexOf('warning') > -1) ? 'warning' : 'normal');
+                          total += rowData.length;
+                          allSensorSeveries.push(status);
+                          var sevFlags =  {critical: false, warning: false, normal: false};
+                          sevFlags[status] = true;
+                          data.sensors.push({
+                            title: sensor.title,
+                            type: sensor.type,
+                            status: status,
+                            severity_flags: sevFlags,
+                            search_text: (sensor.title + " " + status).toLowerCase(),
+                            display_headers: sensor.display_headers,
+                            data: rowData
+                          });
+                          Array.prototype.push.apply(allSensorRows, rowData);
+                      });
+
+                      data.status = (allSensorSeveries.indexOf('critical') > -1) ? 'critical' : ((allSensorSeveries.indexOf('warning') > -1) ? 'warning' : 'normal');
+                      data.total = total;
+                      if(allSensorRows.length){
+                        data.sensors[0].status = data.status;
+                        data.sensors[0].data = allSensorRows;
+                        data.sensors[0].search_text = (data.sensors[0].title + " " + data.sensors[0].status).toLowerCase();
+                        var flags = {critical: false, warning: false, normal: false};
+                        flags[data.status] = true;
+                        data.sensors[0].severity_flags = flags;
+                      }
+                      callback(data, dataClone);
+                }).error(function(error){
+                  console.log(error);
+                });
               }
           };
           return SERVICE;
