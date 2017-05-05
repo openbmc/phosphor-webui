@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <a ng-repeat="sensor in (filteredSensorData = data.sensors|filter:filterBySeverity|filter:filterBySearchTerms)" class="sensor__group" href="#/server-health/sensors/{{sensor.type}}"> <span class="inline priority-tag-circ high-priority" aria-label="High Priority"></span>{{sensor.title}} ({{sensor.data.length}}) <p class="inline float-right" ng-class="{'sensor__critical-label': sensor.status == 'critical', 'sensor__warning-label': sensor.status == 'warning', 'sensor__normal-label': sensor.status == 'normal'}">{{sensor.status}}</p></a>
+        <a ng-repeat="sensor in (filteredSensorData = data.sensors|filter:filterBySeverity|filter:filterBySearchTerms)" class="sensor__group" href="#/server-health/sensors/{{sensor.type}}"> <span class="inline priority-tag-circ" ng-class="{'high-priority': sensor.status == 'critical', 'medium-priority': sensor.status == 'warning', 'low-priority': sensor.status == 'normal'}" aria-label="High Priority"></span>{{sensor.title}} ({{sensor.data.length}}) <p class="inline float-right" ng-class="{'sensor__critical-label': sensor.status == 'critical', 'sensor__warning-label': sensor.status == 'warning', 'sensor__normal-label': sensor.status == 'normal'}">{{sensor.status}}</p></a>
 
     </section>
 </div>

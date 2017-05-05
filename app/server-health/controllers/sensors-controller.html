@@ -43,7 +43,7 @@
     <section id="sensor__details" class="row column" ng-hide="!data.display_headers">
         <div class="row column header-row">
             <div class="column small-10 large-11 header__actions-bar">
-                <p class="inline priority-tag-circ high-priority" aria-label="High Priority"></p>
+                <p class="inline priority-tag-circ" ng-class="{'high-priority': data.status == 'critical', 'medium-priority': data.status == 'warning', 'low-priority': data.status == 'normal'}" aria-label="High Priority"></p>
                 <p class="inline sensor__heading sensor__category">{{data.display_headers[0]}}</p>
                 <p class="inline sensor__heading middle">{{data.display_headers[1]}}</p>
                 <p class="inline float-right sensor__heading right">{{data.display_headers[2]}}</p>
@@ -55,7 +55,7 @@
         <div ng-repeat="sensor in (filteredSensorData = (data.data|filter:filterBySeverity|filter:filterBySearchTerms))" class="row column accord-row" ng-class="{'active': sensors__metadatarow, 'selected': sensors__selected}">
             <div class="row">
                 <div class="column small-10 large-11 sensor__info" ng-click="sensors__metadatarow = ! sensors__metadatarow">
-                    <p class="inline priority-tag-circ high-priority" aria-label="High Priority"></p>
+                    <p class="inline priority-tag-circ" ng-class="{'high-priority': sensor.status == 'critical', 'medium-priority': sensor.status == 'warning', 'low-priority': sensor.status == 'normal'}" aria-label="High Priority"></p>
                     <p class="inline sensor__title">{{sensor.title}}</p>
                     <p class="inline sensor__reading">{{sensor.reading}}</p>
                     <p class="inline float-right" ng-class="{'sensor__critical-label': sensor.status == 'critical', 'sensor__warning-label': sensor.status == 'warning', 'sensor__normal-label': sensor.status == 'normal'}">{{sensor.status}}</p>
