@@ -1,0 +1,37 @@
+.user-manage__form {
+  label {
+    min-width: 260px;
+    font-weight: 700;
+  }
+  input {
+    width: 190px;
+    height: 32px;
+  }
+  fieldset {
+    display: block;
+    padding-left: 1.5em;
+    margin-bottom: 1em;
+    border-bottom: 1px solid $medgrey;
+  }
+
+  .user-manage__input-wrapper {
+    position: relative;
+    height: 32px;
+    margin-bottom: 1em;
+    input {
+      padding-right: 60px;
+    }
+  }
+  .password-toggle {
+    position: absolute;
+    right: 5px;
+    padding: 3px;
+    color: $primebtn__bg;
+    font-size: .8em;
+    @include vertCenter;
+  }
+  .user-manage__submit-wrapper button {
+    float: right;
+    margin-left: .5em;
+  }
+}

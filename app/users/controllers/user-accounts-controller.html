@@ -1,5 +1,42 @@
 <div id="user-accounts">
-    <div class="row column">
-        <h1>User accounts</h1>
-    </div>
+	<div class="row column">
+		<h1>Manage user account</h1>
+	</div>
+	<section class="row column">
+		<div class="column small-12 page-header">
+			<h2 class="h4">Change password</h2>
+		</div>
+		<form class="user-manage__form" role="form" action="">
+			<fieldset>
+				<div class="row column">
+					<label for="user-manage__current-password" class="inline">Current password</label>
+					<input id="user-manage__current-password" type="password" class="user-manage__current-password inline"/>
+				</div>
+				<div class="row column">
+					<label for="user-manage__new-password" class="inline">New password</label>
+					<div class="user-manage__input-wrapper inline">
+						<input id="user-manage__new-password" type="{{showpassword ? 'text' : 'password'}}" ng-model="password" class="user-manage__new-password inline"/>
+						<button ng-model="showpassword" ng-click="togglePassword = !togglePassword; showpassword = !showpassword;" class="password-toggle">
+							<span ng-hide="togglePassword">Show</span>
+							<span ng-show="togglePassword">Hide</span>
+						</button>
+					</div>
+				</div>
+				<div class="row column">
+					<label for="user-manage__verify-password" class="inline">Retype new password</label>
+					<div class="user-manage__input-wrapper inline">
+						<input id="user-manage__verify-password" type="{{showpasswordVerify ? 'text' : 'password'}}" ng-model="passwordVerify" class="user-manage__verify-password inline"/>
+						<button ng-model="showpasswordVerify" ng-click="toggleVerify = !toggleVerify; showpasswordVerify = !showpasswordVerify;" class="password-toggle">
+							<span ng-hide="toggleVerify">Show</span>
+							<span ng-show="toggleVerify">Hide</span>
+						</button>
+					</div>
+				</div>
+			</fieldset>
+			<div class="user-manage__submit-wrapper">
+			<button class="btn-primary inline">Save password</button>
+			<button class="btn-secondary inline">Cancel</button>
+			</div>
+		</form>
+	</section>
 </div>
