@@ -4,7 +4,7 @@
     </div>
 
     <div class="row column  btm-border-grey">
-        <span class="bmc-reboot__status-log inline">BMC last reboot at {{dataService.last_updated |date:'h:mm:ss on MM/dd/yyyy'}}</span>
+        <span class="bmc-reboot__status-log inline">BMC last reboot at {{dataService.last_updated |date:'h:mm:ss on MMM dd yyyy'}}</span>
     </div>
 
     <div class="row column btm-border-grey bmc-reboot-option"
@@ -13,7 +13,7 @@
             <li>Rebooting the BMC causes your browser to lose contact with the BMC for several minutes.</li>
             <li>When the BMC software has started, you can then log in again.</li>
             <li>If the Log In button is not enabled after several minutes, you may need to point your browser to the
-                BMC’s address and log in again.
+                BMC’s address to log in again.
             </li>
         </ul>
         <button id="bmc__reboot" class="btn-secondary" ng-click="rebootConfirm()" ng-disabled="dataService.server_unreachable"><i>&#x21BB</i> Reboot BMC
