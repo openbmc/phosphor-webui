@@ -40,7 +40,7 @@
 // Single event log card
 .accord-row {
   position: relative;
-  border: 1px solid $lightgrey;
+  border: 1px solid $medgrey;
   padding: 1em 1em 1em 0em;
   margin: .65em 0;
   background: $white;
@@ -54,6 +54,6 @@
     cursor: pointer;
   }
   &:last-child {
-    border-bottom: 1px solid $lightgrey;
+    border-bottom: 1px solid $medgrey;
   }
 }

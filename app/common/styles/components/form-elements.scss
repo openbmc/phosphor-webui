@@ -3,7 +3,7 @@
   position: relative;
   padding: .5em .8em;
   margin-top: -10px;
-  border: 1px solid $medgrey;
+  border: 1px solid $darkgrey;
   min-width: 70px;
   padding-right: 25px;
   font-weight: 400;
@@ -111,7 +111,7 @@
   width: 20px;
   height: 20px;
   background: $white;
-  border: 1px solid $lightgrey;
+  border: 1px solid $medgrey;
 }
 
 /* Hover and focus states */
@@ -216,7 +216,7 @@
   pointer-events: none;
   opacity: .6;
   background: #ccc;
-  border: 1px solid $lightgrey;
+  border: 1px solid $medgrey;
 }
 
 .control-radio:hover > input:disabled ~ .control__indicator{

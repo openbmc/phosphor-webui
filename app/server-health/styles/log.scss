@@ -185,7 +185,7 @@
 
   // Single event log card
   .event-log__single-event {
-    border-top: 1px solid $lightgrey;
+    border-top: 1px solid $medgrey;
     padding: 1em 1em 1em .7em;
   }
   .event-log__event-info {
@@ -271,7 +271,7 @@
   .event__metadata {
     height: 200px;
     overflow-y: scroll;
-    border: 1px solid $lightgrey;
+    border: 1px solid $medgrey;
     padding: .5em .5em 0;
     background: $white;
     display: block;

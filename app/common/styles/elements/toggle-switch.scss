@@ -39,7 +39,7 @@ input.toggle-switch__round-flat + label {
   padding: 2px;
   width: 50px;
   height: 30px;
-  background-color: $lightgrey;
+  background-color: $medgrey;
   @include borderRadius;
   @include marginTransition;
 }
@@ -66,7 +66,7 @@ input.toggle-switch__round-flat + label:after {
   left: 4px;
   bottom: 4px;
   width: 20px;
-  background-color: $lightgrey;
+  background-color: $medgrey;
   -webkit-border-radius: 52px;
   -moz-border-radius: 52px;
   -ms-border-radius: 52px;

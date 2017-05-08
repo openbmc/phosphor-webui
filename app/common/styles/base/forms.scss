@@ -19,14 +19,14 @@ input[type='url'],
 input[type='text'],
 textarea {
   border-radius: 0px;
-  border: 1px solid $medgrey;
+  border: 1px solid $darkgrey;
   height: 3.1em;
   margin: 0 0 1em 0;
   background: $white;
   box-shadow: 0 0 0;
   transition: none !important;
   &:focus {
-    border-color: $lightbg__accent;
+    border-color: $medgrey;
     box-shadow: 0 -5px $field__focus inset;
   }
   &:disabled,
