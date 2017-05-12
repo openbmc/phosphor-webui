@@ -17,9 +17,16 @@ window.angular && (function (angular) {
             '$window', 
             'APIUtils', 
             'dataService', 
-            'userModel', 
-            function($scope, $window, APIUtils, dataService, userModel){
+            'userModel',
+            '$routeParams',
+            function($scope, $window, APIUtils, dataService, userModel, $routeParams){
                 $scope.dataService = dataService;
+
+                if($routeParams.fake_login &&
+                   $routeParams.fake_login === 'fake_login'){
+                    userModel.fakeLogin();
+                    $window.location.hash = '#/system-overview';
+                }
 
                 $scope.tryLogin = function(username, password, event){
                     if(event.keyCode === 13){

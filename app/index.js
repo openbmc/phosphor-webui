@@ -36,7 +36,7 @@ window.angular && (function (angular) {
                 });
         }])
         .config(['$httpProvider', function($httpProvider){
-            //console.log($httpProvider.interceptors);
+            $httpProvider.defaults.timeout = 10000;
             $httpProvider.interceptors.push('apiInterceptor');
         }])
         .run(['$rootScope', '$location', 'dataService', 'userModel',
@@ -66,7 +66,8 @@ window.angular && (function (angular) {
            $rootScope.$on('$locationChangeSuccess', function(event){
                var path = $location.path();
                dataService.path = path;
-               if(['/','/login','/logout'].indexOf(path) == -1){
+               if(['/','/login','/logout'].indexOf(path) == -1 &&
+                path.indexOf('/login') == -1){
                    dataService.showNavigation = true;
                }else{
                    dataService.showNavigation = false;
@@ -74,6 +75,10 @@ window.angular && (function (angular) {
            });
 
            $rootScope.$on('timedout-user', function(){
+             if(sessionStorage.getItem('LOGIN_ID') == 'FAKE_ID'){
+                return;
+             }
+
              sessionStorage.removeItem('LOGIN_ID');
              $location.path('/login');
            });

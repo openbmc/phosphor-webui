@@ -2425,15 +2425,6 @@ header {
     right: .3em;
     transition: all .5s ease; }
 
-.page-header {
-  position: relative;
-  border-bottom: 1px solid #b8c1c1;
-  margin: 2.625em 0 1.2em 0; }
-  .page-header .h4 {
-    padding: 0;
-    margin: 0 0 .5em 0;
-    font-weight: bold; }
-
 .content__container {
   margin-left: 120px;
   padding: 1em .1em;
@@ -2675,61 +2666,6 @@ header {
   #bmc-reboot .bmc-reboot-option button {
     margin-bottom: 1.5em;
     margin-top: 1.5em; }
-
-#event-log #event-filter button {
-  margin: 3px -3px;
-  padding: .5em 2em;
-  min-height: 2em;
-  font-size: .9em;
-  border-radius: 0; }
-  #event-log #event-filter button.first, #event-log #event-filter button.last {
-    border-radius: 3px; }
-
-#event-log #event-filter .btn-primary {
-  border: 2px solid #3c6df0; }
-
-#event-log #event-filter .filter-label {
-  color: #b3b3b3;
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: .75em;
-  margin-bottom: 3px; }
-
-#event-log .event-log__timezone,
-#event-log .event-log__timezone button {
-  position: relative;
-  text-transform: uppercase;
-  color: #3c6df0;
-  font-size: .9em;
-  font-weight: 700; }
-
-#event-log .event-log__timezone .event-log__tz-select {
-  position: relative;
-  padding: 1em;
-  margin-top: 0px; }
-  #event-log .event-log__timezone .event-log__tz-select:after {
-    content: '\25bC';
-    display: inline-block;
-    margin-left: 5px;
-    font-size: .8em; }
-
-#event-log .event-log__tz-list {
-  position: absolute;
-  right: 0;
-  background: #ffffff;
-  padding: 0;
-  width: 100%;
-  border: 1px solid #b8c1c1;
-  margin-top: -5px;
-  box-shadow: 0px 4px 10px -2px #ccc; }
-  #event-log .event-log__tz-list li {
-    list-style-type: none; }
-  #event-log .event-log__tz-list button {
-    padding: 1em;
-    text-align: left;
-    width: 100%; }
-    #event-log .event-log__tz-list button:hover {
-      background: #d8e2fc; }
 
 #power-operations .h4 {
   font-weight: bold; }

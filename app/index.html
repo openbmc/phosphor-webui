@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="styles/index.css">
     <!-- endbuild -->
 </head>
-<body ng-style="dataService.bodyStyle" ng-attr-id="{{dataService.path == '/login' ? 'login': ''}}">
+<body ng-style="dataService.bodyStyle" ng-attr-id="{{!dataService.showNavigation ? 'login': ''}}">
 
     <app-header ng-if="dataService.showNavigation" path="dataService.path"></app-header>
-    <app-navigation ng-if="dataService.showNavigation" path="dataService.path" show-navigation="    dataService.showNavigation"></app-navigation>
+    <app-navigation ng-if="dataService.showNavigation" path="dataService.path" show-navigation="dataService.showNavigation"></app-navigation>
 
-    <main ng-view ng-class="{'content__container': dataService.path != '/login', 'login__wrapper': dataService.path == '/login'}">
+    <main ng-view ng-class="{'content__container': dataService.showNavigation, 'login__wrapper': !dataService.showNavigation}">
     </main>
 
 	<!-- build:js scripts/vendor.min.js -->
