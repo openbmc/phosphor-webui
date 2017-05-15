@@ -90,14 +90,13 @@
 			<a href="#/server-control/remote-console" tabindex="5" ng-click="closeSubnav()">Serial over LAN</a></li>
 	</ul>
 	<ul class="nav__second-level btn-firmware" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'configuration')}">
-		<li ng-class="{'active': (path == '/configuration' || path == '/configuration/network')}"><a href="#/configuration/network" ng-click="closeSubnav()">Network settings</a></li>
+		<li ng-class="{'active': (path == '/configuration' || path == '/configuration/network')}">
+			<a href="#/configuration/network" ng-click="closeSubnav()">Network settings</a></li>
+		<li ng-class="{'active': (path == '/configuration' || path == '/configuration/firmware')}">
+			<a href="#/configuration/firmware" ng-click="closeSubnav()">Firmware</a></li>
 		<!--<li ng-class="{'active': (path == '/configuration/date-time')}"><a href="#/configuration/date-time" ng-click="closeSubnav()">Date & Time</a></li>-->
 		<!--<li ng-class="{'active': (path == '/configuration/security')}"><a href="#/configuration/security" ng-click="closeSubnav()">Security</a></li>-->
 		<!--<li ng-class="{'active': (path == '/configuration/file')}"><a href="#/configuration/file" ng-click="closeSubnav()">Configuration File</a></li>-->
-	</ul>
-	<ul class="nav__second-level btn-firmware" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'firmware')}">
-		<li ng-class="{'active': (path == '/firmware' || path == '/firmware/bmc')}"><a href="#/firmware/bmc" ng-click="closeSubnav()">BMC firmawre</a></li>
-		<li ng-class="{'active': (path == '/firmware/server')}"><a href="#/firmware/server" ng-click="closeSubnav()">Server firmware</a></li>
 	</ul>
 	<ul class="nav__second-level btn-users" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'users')}">
 		<li ng-class="{'active': (path == '/users' || path == '/users/manage-accounts')}">

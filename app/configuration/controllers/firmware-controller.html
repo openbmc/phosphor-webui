@@ -1,0 +1,136 @@
+<div id="firmware">
+	<div class="row column">
+		<h1>Firmware</h1>
+	</div>
+</div>
+<section class="row column">
+	<div class="column small-12 page-header">
+		<h2 class="inline h4">Manage BMC and server firmware</h2>
+		<a class="inline float-right btn-upload" ng-click="gotoAnchor()">
+			<svg version="1.1" baseProfile="tiny" class="btn-upload-icon" x="0px" y="0px" viewBox="0 0 24 24" xml:space="preserve">
+				<path d="M21,14v6H3v-6H1v9h22v-9H21z"/>
+				<path d="M11,5v13h2V5l4.5,4.5L19,8l-7-7L5,8l1.5,1.5L11,5z"/>
+			</svg>
+			Upload section
+		</a>
+	</div>
+</section>
+<section class="row column firmware__server-image">
+	<div class="table-header column small-12">
+		Server images
+	</div>
+	<div class="table row column">
+		<div class="table__head">
+			<div class="table__row">
+				<div class="table__cell">
+					Image ID
+				</div>
+				<div class="table__cell">
+					Server firmware version
+				</div>
+				<div class="table__cell">
+					State
+				</div>
+				<div class="table__cell">
+					Action
+				</div>
+			</div>
+		</div>
+		<div class="table__body">
+			<div class="table__row" data-table-row="">
+				<div class="table__cell"><span class="table__cell-label">Image ID:</span>46c8c3d0</div>
+				<div class="table__cell"><span class="table__cell-label">Server firmware version:</span>v1.99.4-82-g874f12e
+				</div>
+				<div class="table__cell firmware__active"><span class="table__cell-label">State:</span>Active</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Action:</span><a href="" class="firmware__action-link">Delete</a>
+				</div>
+			</div>
+			<div class="table__row" data-table-row="">
+				<div class="table__cell"><span class="table__cell-label">Image ID:</span>46c8c3d0</div>
+				<div class="table__cell"><span class="table__cell-label">Server firmware version:</span>v2.1.1-22-abcdef
+				</div>
+				<div class="table__cell firmware__ready"><span class="table__cell-label">State:</span>Ready</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Action:</span><a href="">Activate</a><a href="" class="firmware__action-link">Delete</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="row column firmware__bmc-image">
+	<div class="table-header column small-12">
+		BMC images
+	</div>
+	<div class="table row column">
+		<div class="table__head">
+			<div class="table__row">
+				<div class="table__cell">
+					Image ID
+				</div>
+				<div class="table__cell">
+					Server firmware version
+				</div>
+				<div class="table__cell">
+					State
+				</div>
+				<div class="table__cell">
+					Action
+				</div>
+			</div>
+		</div>
+		<div class="table__body">
+			<div class="table__row" data-table-row="">
+
+				<div class="table__cell"><span class="table__cell-label">Image ID:</span>46c8c3d0</div>
+				<div class="table__cell"><span class="table__cell-label">Server firmware version:</span>v1.99.4-82-g874f12e
+				</div>
+				<div class="table__cell firmware__active"><span class="table__cell-label">State:</span>Active</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Action:</span><a href="" class="firmware__action-link">Delete</a>
+				</div>
+			</div>
+			<div class="table__row" data-table-row="">
+				<div class="table__cell"><span class="table__cell-label">Image ID:</span>46c8c3d0</div>
+				<div class="table__cell"><span class="table__cell-label">Server firmware version:</span>v2.1.1-22-abcdef
+				</div>
+				<div class="table__cell firmware__ready"><span class="table__cell-label">State:</span>Ready</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Action:</span><a href="">Activate</a><a href="" class="firmware__action-link">Delete</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="row column">
+	<div class="column small-12 page-header">
+		<h2 class="inline h3 bold">Upload firmware image</h2>
+	</div>
+	<form id="firmware__upload-form" role="form" class="firmware__upload-form">
+		<div class="row column firmware__upload-station">
+			<label class="control-radio" for="upload-workstation">Upload from workstation
+				<input type="radio" name="firmware-upload" id="upload-workstation" checked/>
+				<span class="control__indicator control__indicator-on"></span>
+			</label>
+			<p>Optional text area. Can be used to explain about updating openBMC firmware from workstation. This could be step-by-step instruction. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et</p>
+		</div>
+		<div class="row column firmware__upload-tftp">
+			<label class="control-radio" for="upload-tftp">Upload from tftp server
+				<input type="radio" name="firmware-upload" id="upload-tftp"/>
+				<span class="control__indicator control__indicator-on"></span>
+			</label>
+			<p>Optional text area. Can be used to explain about updating openBMC firmware from workstation. This could be step-by-step instruction. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et</p>
+			<fieldset>
+			<div class="column medium-4 no-padding">
+				<label for="tftp-ip">Server IP address</label>
+				<input name="tftp-ip" id="tftp-ip" type="number"/>
+			</div>
+			<div class="column medium-4 end">
+				<label for="tftp-file-name">File name</label>
+				<input name="tftp-file-name" id="tftp-file-name" type="text"/>
+			</div>
+			</fieldset>
+		</div>
+		<button class="float-right inline button btn-primary" id="upload">Update firmware</button>
+	</form>
+</section>

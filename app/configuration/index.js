@@ -40,7 +40,11 @@ window.angular && (function (angular) {
                     'templateUrl': 'configuration/controllers/network-controller.html',
                     'controller': 'networkController',
                     authenticated: true
-                });
+                }).when('/configuration/firmware', {
+                'templateUrl': 'configuration/controllers/firmware-controller.html',
+                'controller': 'firmwareController',
+                authenticated: true
+            });
         }]);
 
 })(window.angular);

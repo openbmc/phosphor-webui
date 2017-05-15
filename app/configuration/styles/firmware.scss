@@ -1,0 +1,66 @@
+.btn-upload {
+  color: $lightbg__primary;
+  font-weight: 700;
+  text-decoration: none;
+  .btn-upload-icon {
+    fill: $lightbg__primary;
+    display: inline-block;
+    width: 1.25em;
+    height: 1.25em;
+  }
+  &:visited .btn-upload-icon {
+    fill: $links__visited;
+  }
+  &:hover .btn-upload-icon {
+    fill: $lightbg__primary;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.table__cell {
+  font-weight: 700;
+  a {
+    display: inline-block;
+    margin-right: 1.7em;
+    text-decoration: none;
+    font-weight: 700;
+  }
+}
+
+.table-header {
+  font-weight: 700;
+}
+
+.firmware__ready {
+  font-weight: 300;
+}
+
+.firmware__bmc-image {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
+
+.firmware__upload-form {
+  label {
+    font-weight: 700;
+  }
+  .row p,
+  fieldset {
+    padding-left: 3em;
+    label {
+      font-weight: 300;
+    }
+  }
+  input {
+    height: 2.4em;
+  }
+}
+.firmware__upload-station {
+  padding-bottom: 1em;
+}
+.firmware__upload-tftp {
+  padding-top: 2em;
+  border-top: 1px solid $medgrey;
+}

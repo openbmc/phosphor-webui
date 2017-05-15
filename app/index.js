@@ -31,7 +31,6 @@ window.angular && (function (angular) {
             'app.serverControl',
             'app.serverHealth',
             'app.configuration',
-            'app.firmware',
             'app.users'
         ])
         // Route configuration
