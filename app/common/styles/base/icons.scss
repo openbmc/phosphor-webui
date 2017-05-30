@@ -1,0 +1,98 @@
+.icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  speak: none;
+  &:hover {
+    cursor: pointer;
+  }
+  &.icon-as-spacer {
+    text-indent: -9999px;
+  }
+}
+
+.icon__more {
+  fill: $medblue;
+  stroke: $medblue;
+  background: $white;
+  overflow: visible;
+}
+
+.icon__more-dropdown {
+  background: $lightgrey;
+  position: absolute;
+  right: 3px;
+  white-space: normal;
+  word-wrap: normal;
+  z-index: 200;
+  padding: 1em;
+  font-size: 1em;
+  box-shadow: 2px 4px 5px $medgrey;
+}
+
+.icon__bar-arrow {
+  &:before {
+    content: '\21E5';
+    position: absolute;
+    font-size: 1.7em;
+    vertical-align: middle;
+    transform: rotate(90deg);
+    display: inline-block;
+    left: 0px;
+    top: -5px;
+  }
+}
+
+.icon__warning{
+  margin-right: .7em;
+  margin-top: -2px;
+  &:before {
+    content: '!';
+    color: $alert__error;
+    position: absolute;
+    left: 55%;
+    top: 40%;
+    font-size: .7em;
+  }
+  &:after {
+    content: '\025b3';
+    position: absolute;
+    left: 0;
+    top: -10%;
+    color: $alert__error;
+    font-size: 1.5em;
+  }
+}
+
+.icon__info{
+  margin-top: -4px;
+  margin-right: .5em;
+  width: 25px;
+  height: 25px;
+  fill: $medblue;
+  float: left;
+}
+
+.icon__up-arrow {
+  margin-right: 1em;
+  &:before {
+    content: '\029C0';
+    position: absolute;
+    font-size: 3em;
+    left: 0;
+    top: -50%;
+    transform: rotate(90deg);
+  }
+}
+.icon__down-arrow {
+  margin-right: 1em;
+  &:before {
+    content: '\029C0';
+    position: absolute;
+    font-size: 3em;
+    left: -4px;
+    top: -50%;
+    transform: rotate(-90deg);
+  }
+}

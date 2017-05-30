@@ -109,41 +109,66 @@
   -webkit-animation: progress 2s linear infinite;
   -moz-animation: progress 2s linear infinite;
   animation: progress 2s linear infinite;
-  background-size: 130% 100%;
+  background-size: 165% 100%;
 
   @-webkit-keyframes progress {
     0% {
-      background-position: 0 0;
+      background-position: -70px 0;
     }
     100% {
-      background-position: -70px 0;
+      background-position: 0 0;
     }
   }
 
   @-moz-keyframes progress {
     0% {
-      background-position: 0 0;
+      background-position: -70px 0;
     }
     100% {
-      background-position: -70px 0;
+      background-position: 0 0;
     }
   }
 
   @-ms-keyframes progress {
     0% {
-      background-position: 0 0;
+      background-position: -70px 0;
     }
     100% {
-      background-position: -70px 0;
+      background-position: 0 0;
     }
   }
 
   @keyframes progress {
     0% {
-      background-position: 0 0;
-    }
-    100% {
       background-position: -70px 0;
     }
+    100% {
+      background-position: 0 0;
+    }
+  }
+}
+
+@mixin table-row-save {
+  @-webkit-keyframes row-flash {
+    from { background-color: $lightblue; }
+    to { background-color: inherit; }
+  }
+  @-moz-keyframes row-flash {
+    from { background-color: $lightblue; }
+    to { background-color: inherit; }
+  }
+  @-o-keyframes row-flash {
+    from { background-color: $lightblue; }
+    to { background-color: inherit; }
+  }
+  @keyframes row-flash {
+    from { background-color: $lightblue; }
+    to { background-color: inherit; }
+  }
+  .row-flash {
+    -webkit-animation: row-flash 1s infinite; /* Safari 4+ */
+    -moz-animation:    row-flash 1s infinite; /* Fx 5+ */
+    -o-animation:      row-flash 1s infinite; /* Opera 12+ */
+    animation:         row-flash 1s infinite; /* IE 10+ */
   }
 }

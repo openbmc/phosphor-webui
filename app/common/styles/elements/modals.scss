@@ -1,0 +1,69 @@
+.modal-overlay {
+  width:100%;
+  height:100%;
+  z-index:100;
+  background-color:#000;
+  opacity:0.5;
+  position:fixed;
+  top:0;
+  left:0;
+  display:none;
+  margin:0;
+  padding:0;
+}
+
+.modal {
+  width:50%;
+  max-width: 850px;
+  margin: .5em auto;
+  padding: .8em 1.5em;
+  border: thin #000 solid;
+  background-color:#fff;
+  z-index:101;
+  position:fixed;
+  top:25%;
+  left:25%;
+  overflow: hidden;
+  display:none;
+  @include fastTransition-all;
+  @include mediaQuery(medium) {
+    padding: 2.5em;
+  }
+}
+
+.modal .page-header {
+  padding-bottom: .7em;
+}
+
+.screen-reader-offscreen {
+  position:absolute;
+  left:-999px;
+  width:1px;
+  height:1px;
+  top:auto;
+}
+.modal__content {
+  border-bottom: 1px solid $lightbg__grey;
+  padding-bottom: 1em;
+  margin-bottom: 2em;
+}
+.modal__link {
+  display: block;
+  margin: .8em 0 1em;
+  @include mediaQuery(medium) {
+    display: inline-block;
+    margin: .6em 0;
+  }
+}
+.modal__button-wrapper {
+  float: right;
+  button {
+    margin-bottom: .8em;
+    margin-right: .8em;
+    display: inline-block;
+    @include mediaQuery(medium) {
+      margin-left: .8em;
+      margin-right: 0;
+    }
+  }
+}

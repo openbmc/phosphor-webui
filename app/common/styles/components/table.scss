@@ -4,17 +4,14 @@
   width: 100%;
   color: $black;
   line-height: 30px;
-  padding: 10px 15px;
-
+  padding: .8em 0 0;
+  margin-bottom: .8em;
+  border-bottom: 1px solid $medgrey;
+  font-size: 1.25em;
   @include mediaQuery(medium) {
-    padding: 15px 20px;
-  }
-
-  @include mediaQuery(large) {
-    padding: 15px 30px;
+    margin: 1.8em 0;
   }
 }
-
 
 // Table
 .table {
@@ -24,34 +21,46 @@
 .table__row {
   display: flex;
   width: 100%;
-  max-width: calc(100vw - 30px);
+  max-width: calc(100vw - 10px);
   flex-wrap: wrap;
-  border-bottom: 1px solid $medgrey;
-  border-left: 1px solid $medgrey;
-  border-right: 1px solid $medgrey;
-  padding: 5px 0;
-
-  @include mediaQuery(small) {
-    padding: 0;
+  font-weight: 400;
+  position: relative;
+  &.disabled {
+    background-color: $disabled-row;
+    color: $disabled-row-txt;
   }
+}
+
+.table__row-save {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height:100%;
+  background: $darkbg__primary;
+  z-index:200;
+  color: $white;
+  padding: .8em 1em;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
 }
 
 .table__cell {
   flex: 0 0 100%;
-  line-height: 20px;
-  padding: 5px 15px;
+  line-height: 2.8em;
+  padding: .5em 1em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
+  border-bottom: 1px solid $medgrey;
   @include mediaQuery(small) {
     flex: 1;
-    padding: 15px 20px;
   }
-
-  @include mediaQuery(large) {
-    padding: 15px 30px;
-  }
+  //
+  //@include mediaQuery(large) {
+  //  padding: 15px 30px;
+  //}
 }
 
 .table__cell-label {
@@ -81,11 +90,18 @@
     .table__cell {
       @include fastTransition-all();
       position: relative;
-
+      border: 0;
       &:last-child {
         border: 0;
       }
     }
   }
 }
+
+.table__row-uploading {
+  color: $darkgrey;
+  font-weight: 700;
+  @include indeterminate-bar;
+}
+
 

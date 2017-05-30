@@ -3,33 +3,40 @@
 		<h1>Firmware</h1>
 	</div>
 </div>
-<section class="row column">
+<div class="row column">
 	<div class="column small-12 page-header">
-		<h2 class="inline h4">Manage BMC and server firmware</h2>
-		<a class="inline float-right btn-upload" ng-click="gotoAnchor()">
-			<svg version="1.1" baseProfile="tiny" class="btn-upload-icon" x="0px" y="0px" viewBox="0 0 24 24" xml:space="preserve">
-				<path d="M21,14v6H3v-6H1v9h22v-9H21z"/>
-				<path d="M11,5v13h2V5l4.5,4.5L19,8l-7-7L5,8l1.5,1.5L11,5z"/>
-			</svg>
-			Upload section
-		</a>
+		<h1 class="inline h4">Manage BMC and server firmware</h1>
 	</div>
-</section>
-<section class="row column firmware__server-image">
+</div>
+<div class="row column">
+	<p>Use the tables at the top of the page to manage firmware images that are currently available on the BMC. The
+		image at the top of the table is the Primary image, which will be used the next time the device is
+		booted. To change which image is Primary, move the image you want to use as the Primary to the top of the tablw using the arrows.</p>
+	<p>Use the Upload images section of this page to transfer new firmware images to the BMC. After uploading a new
+		image, activate it to make it available for use.</p>
+	<button class="inline btn-primary" ng-click="gotoAnchor()">
+		<span class="icon icon__bar-arrow">&nbsp;</span>&nbsp;&nbsp;Scroll to upload image file
+	</button>
+</div>
+<div class="row column firmware__table">
 	<div class="table-header column small-12">
-		Server images
+		<p class="inline">Server images</p>
+		<p class="inline firmware__active-version">In-memory firmware version: v1.99.4-82-g874f12e</p>
 	</div>
 	<div class="table row column">
 		<div class="table__head">
 			<div class="table__row">
 				<div class="table__cell">
+					Boot Priority
+				</div>
+				<div class="table__cell">
+					Image state
+				</div>
+				<div class="table__cell">
 					Image ID
 				</div>
 				<div class="table__cell">
-					Server firmware version
-				</div>
-				<div class="table__cell">
-					State
+					Version
 				</div>
 				<div class="table__cell">
 					Action
@@ -37,42 +44,146 @@
 			</div>
 		</div>
 		<div class="table__body">
-			<div class="table__row" data-table-row="">
-				<div class="table__cell"><span class="table__cell-label">Image ID:</span>46c8c3d0</div>
-				<div class="table__cell"><span class="table__cell-label">Server firmware version:</span>v1.99.4-82-g874f12e
+			<div class="table__row">
+				<div class="table__cell firmware__primary">
+					<span class="table__cell-label">Boot Priority:</span>
+					<div class="icon icon__up-arrow icon-as-spacer" aria-hidden="true">
+						<span class="accessible-text">firmware down in priority</span></div>
+					<div class="icon icon__down-arrow" aria-hidden="true">
+						<span class="accessible-text">firmware down in priority</span></div>
 				</div>
-				<div class="table__cell firmware__active"><span class="table__cell-label">State:</span>Active</div>
+				<div class="table__cell firmware__active">
+					<span class="table__cell-label">Image state:</span>Active
+				</div>
 				<div class="table__cell">
-					<span class="table__cell-label">Action:</span><a href="" class="firmware__action-link">Delete</a>
+					<span class="table__cell-label">Image ID:</span>46c8c3d0
+				</div>
+				<div class="table__cell firmware__version" ng-class="{'active':extendedVersion === true}">
+					<span class="table__cell-label">Version:</span>v1.99.4-82-g874f12e
+					<div class="icon icon__more" ng-click="extendedVersion = ! extendedVersion"
+							ng-class="{'active':extendedVersion === true}">
+						<svg version="1.1" x="0px" y="0px" viewBox="0 0 24.3 24.6">
+							<path d="M12.1,23C6.1,23,1.3,18.2,1.3,12.3S6.1,1.6,12.1,1.6s10.7,4.8,10.7,10.7S18,23,12.1,23z M12.1,2.6c-5.4,0-9.7,4.4-9.7,9.7 S6.7,22,12.1,22s9.7-4.4,9.7-9.7S17.4,2.6,12.1,2.6z"/>
+							<g>
+								<circle cx="6.7" cy="12.5" r="1.5"/>
+								<circle cx="12.1" cy="12.5" r="1.5"/>
+								<circle cx="17.4" cy="12.5" r="1.5"/>
+							</g>
+						</svg>
+					</div>
+					<div class="icon__more-dropdown" ng-show="extendedVersion">
+						<h5 class="bold">Extended version information</h5>
+						<p class="no-margin">Host: 1.2.3</p>
+						<p class="no-margin">Linux: 2.3.4</p>
+						<p class="no-margin">Other OS: 4.5.6</p>
+					</div>
+				</div>
+				<div class="table__cell">
+					&nbsp;
 				</div>
 			</div>
-			<div class="table__row" data-table-row="">
-				<div class="table__cell"><span class="table__cell-label">Image ID:</span>46c8c3d0</div>
-				<div class="table__cell"><span class="table__cell-label">Server firmware version:</span>v2.1.1-22-abcdef
-				</div>
-				<div class="table__cell firmware__ready"><span class="table__cell-label">State:</span>Ready</div>
+			<!-- new row -->
+			<div class="table__row">
 				<div class="table__cell">
-					<span class="table__cell-label">Action:</span><a href="">Activate</a><a href="" class="firmware__action-link">Delete</a>
+					<span class="table__cell-label">Boot Priority:</span>
+					<div class="icon icon__up-arrow" aria-hidden="true">
+						<span class="accessible-text">firmware up in priority</span></div>
+					<div class="icon icon__down-arrow" aria-hidden="true">
+						<span class="accessible-text">firmware down in priority</span></div>
+				</div>
+				<div class="table__cell firmware__active">
+					<span class="table__cell-label">Image state:</span>Active
+				</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Image ID:</span>46c9c3e4
+				</div>
+				<div class="table__cell firmware__version">
+					<span class="table__cell-label">Version:</span>v1.99.4-82-g874g45r
+				</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Action:</span>
+					<button class="firmware__action-link">Delete</button>
+				</div>
+			</div>
+			<!-- new row -->
+			<div class="table__row">
+				<div class="table__cell">
+					<span class="table__cell-label">Boot Priority:</span>
+					<div class="icon icon__up-arrow" aria-hidden="true">
+						<span class="accessible-text">firmware up in priority</span></div>
+					<div class="icon icon__down-arrow icon-as-spacer" aria-hidden="true">
+						<span class="accessible-text">firmware down in priority</span></div>
+				</div>
+				<div class="table__cell firmware__active">
+					<span class="table__cell-label">Image state:</span>Active
+				</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Image ID:</span>46c9c3e4
+				</div>
+				<div class="table__cell firmware__version">
+					<span class="table__cell-label">Version:</span>v1.99.4-82-g974g48r
+				</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Action:</span>
+					<button class="firmware__action-link">Delete</button>
+				</div>
+			</div>
+			<!-- new row -->
+			<div class="table__row disabled">
+				<div class="table__cell"></div>
+				<div class="table__cell firmware__active">
+					<span class="table__cell-label">Image state:</span>Invalid
+				</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Image ID:</span>46c9c3e4
+				</div>
+				<div class="table__cell firmware__version">
+					<span class="table__cell-label">Version:</span>v1.99.4-82-g774g15r
+				</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Action:</span>
+					<button class="firmware__action-link">Delete</button>
+				</div>
+			</div>
+			<div class="table__row">
+				<div class="table__row-save" role="alert"><p>Saved</p></div> <!-- inject div when row is saved -->
+				<div class="table__cell"></div>
+				<div class="table__cell firmware__active">
+					<span class="table__cell-label">Image state:</span>Invalid
+				</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Image ID:</span>46c9c3e4
+				</div>
+				<div class="table__cell firmware__version">
+					<span class="table__cell-label">Version:</span>v1.99.4-82-g774g15r
+				</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Action:</span>
+					<button class="firmware__action-link">Delete</button>
 				</div>
 			</div>
 		</div>
 	</div>
-</section>
-<section class="row column firmware__bmc-image">
+</div>
+<div class="row column firmware__table">
 	<div class="table-header column small-12">
-		BMC images
+		<p class="inline">BMC images</p>
+		<p class="inline firmware__active-version">In-memory firmware version: v4.0.4-83r</p>
 	</div>
 	<div class="table row column">
 		<div class="table__head">
 			<div class="table__row">
 				<div class="table__cell">
+					Boot Priority
+				</div>
+				<div class="table__cell">
+					Image state
+				</div>
+				<div class="table__cell">
 					Image ID
 				</div>
 				<div class="table__cell">
-					Server firmware version
-				</div>
-				<div class="table__cell">
-					State
+					Version
 				</div>
 				<div class="table__cell">
 					Action
@@ -80,57 +191,261 @@
 			</div>
 		</div>
 		<div class="table__body">
-			<div class="table__row" data-table-row="">
-
-				<div class="table__cell"><span class="table__cell-label">Image ID:</span>46c8c3d0</div>
-				<div class="table__cell"><span class="table__cell-label">Server firmware version:</span>v1.99.4-82-g874f12e
-				</div>
-				<div class="table__cell firmware__active"><span class="table__cell-label">State:</span>Active</div>
+			<!-- new row -->
+			<div class="table__row">
 				<div class="table__cell">
-					<span class="table__cell-label">Action:</span><a href="" class="firmware__action-link">Delete</a>
+					<span class="table__cell-label">Boot Priority:</span>
+				</div>
+				<div class="table__cell firmware__active">
+					<span class="table__cell-label">Image state:</span>Active
+				</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Image ID:</span>nnnnnn0
+				</div>
+				<div class="table__cell firmware__version">
+					<span class="table__cell-label">Version:</span>v4.0.4-83r
+				</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Action:</span>
 				</div>
 			</div>
-			<div class="table__row" data-table-row="">
-				<div class="table__cell"><span class="table__cell-label">Image ID:</span>46c8c3d0</div>
-				<div class="table__cell"><span class="table__cell-label">Server firmware version:</span>v2.1.1-22-abcdef
+			<!-- new row -->
+			<div class="table__row disabled">
+				<div class="table__cell"></div>
+				<div class="table__cell firmware__active">
+					<span class="table__cell-label">Image state:</span>Activation failed
 				</div>
-				<div class="table__cell firmware__ready"><span class="table__cell-label">State:</span>Ready</div>
 				<div class="table__cell">
-					<span class="table__cell-label">Action:</span><a href="">Activate</a><a href="" class="firmware__action-link">Delete</a>
+					<span class="table__cell-label">Image ID:</span>50c9c3e4
+				</div>
+				<div class="table__cell firmware__version">
+					<span class="table__cell-label">Version:</span>v3.4-82-g874g45r
+				</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Action:</span>
+					<button class="firmware__action-link">Delete</button>
+				</div>
+			</div>
+			<!-- new row -->
+			<div class="table__row">
+				<div class="table__cell"></div>
+				<div class="table__cell firmware__active">
+					<span class="table__cell-label">Image state:</span>Ready
+				</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Image ID:</span>nnnnnn1
+				</div>
+				<div class="table__cell firmware__version">
+					<span class="table__cell-label">Version:</span>v4.0.3-83r
+				</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Action:</span>
+					<button class="firmware__action-link">Activate</button>
+					<button class="firmware__action-link">Delete</button>
+				</div>
+			</div>
+			<!-- new row -->
+			<div class="table__row table__row-uploading">
+				<div class="table__cell"></div>
+				<div class="table__cell firmware__active">
+					<span class="table__cell-label">Image state:</span>Not ready
+				</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Image ID:</span>nnnnnn2
+				</div>
+				<div class="table__cell firmware__version">
+					<span class="table__cell-label">Version:</span>v4.0.2-82p
+				</div>
+				<div class="table__cell">
+					<span class="table__cell-label">Action:</span>
+					<span>Validating...</span>
 				</div>
 			</div>
 		</div>
 	</div>
-</section>
-<section class="row column">
+</div>
+<div class="row column" id="upload">
 	<div class="column small-12 page-header">
 		<h2 class="inline h3 bold">Upload firmware image</h2>
+		<p>Specify an image file located on your workstation or a TFTP server. An image file may contain firmware images for the server, BMC, or other hardware devices. Each image that you upload will be unpacked from the image file, and added to the appropriate list above.</p>
 	</div>
 	<form id="firmware__upload-form" role="form" class="firmware__upload-form">
-		<div class="row column firmware__upload-station">
-			<label class="control-radio" for="upload-workstation">Upload from workstation
-				<input type="radio" name="firmware-upload" id="upload-workstation" checked/>
-				<span class="control__indicator control__indicator-on"></span>
+		<div class=" column firmware__upload-station">
+			<h3 class="h4 bold">Upload from workstation</h3>
+			<p>Optional text area. Can be used to explain about updating openBMC firmware from workstation. This could
+				be step-by-step instruction. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et</p>
+			<label for="file-upload" class="inline firmware__upload-chooser">
+				<input id="file-upload" type="file" class="hide"/>
+				<span class="button btn-secondary inline">Choose a file</span>
+				<span class="inline firmware__upload-file-name">No file chosen</span>
 			</label>
-			<p>Optional text area. Can be used to explain about updating openBMC firmware from workstation. This could be step-by-step instruction. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et</p>
+			<input type="submit" value="Upload firmware" class="inline btn btn-primary float-right"/>
+			<div class="inline uploading">Upload in progress...</div>
 		</div>
-		<div class="row column firmware__upload-tftp">
-			<label class="control-radio" for="upload-tftp">Upload from tftp server
-				<input type="radio" name="firmware-upload" id="upload-tftp"/>
-				<span class="control__indicator control__indicator-on"></span>
-			</label>
-			<p>Optional text area. Can be used to explain about updating openBMC firmware from workstation. This could be step-by-step instruction. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et</p>
+		<div class=" column firmware__upload-tftp">
+			<h3 class="h4 bold">Download from TFTP server</h3>
+			<p>Optional text area. Can be used to explain about updating openBMC firmware from workstation. This could
+				be step-by-step instruction. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et</p>
 			<fieldset>
-			<div class="column medium-4 no-padding">
-				<label for="tftp-ip">Server IP address</label>
-				<input name="tftp-ip" id="tftp-ip" type="number"/>
-			</div>
-			<div class="column medium-4 end">
-				<label for="tftp-file-name">File name</label>
-				<input name="tftp-file-name" id="tftp-file-name" type="text"/>
-			</div>
+				<div class="row">
+					<div class="column small-12 large-4">
+						<label for="tftp-ip">Server IP address</label>
+						<input name="tftp-ip" id="tftp-ip" type="number"/>
+					</div>
+					<div class="column small-12 large-4">
+						<label for="tftp-file-name">File name</label>
+						<input name="tftp-file-name" id="tftp-file-name" type="text"/>
+					</div>
+					<div class="column small-12 large-4">
+						<input type="submit" value="Download firmware" class="inline btn btn-primary float-right"/>
+					</div>
+				</div>
+				<div class="inline uploading">Upload in progress...</div>
 			</fieldset>
 		</div>
-		<button class="float-right inline button btn-primary" id="upload">Update firmware</button>
 	</form>
+</div>
+
+<!-- Firmware modals -->
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
+	<div class="modal__upload-fail" role="document">
+		<div class="screen-reader-offscreen modal-description">Upload failure modal</div><!-- accessibility only; used for screen readers -->
+		<div class="page-header ">
+			<span class="icon icon__warning inline"><span class="accessible-text" role="alert">Warning</span></span>
+			<h1 class="modal-title h4 inline">Upload failed</h1>
+		</div>
+		<div class="modal__content">
+			<p>The upload of the image file has failed.</p>
+		</div>
+		<div class="modal__button-wrapper">
+			<button class="inline btn-primary">Close</button>
+		</div>
+	</div>
 </section>
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
+	<div class="modal__activation-fail" role="document">
+		<div class="screen-reader-offscreen modal-description">Activation failure modal</div><!-- accessibility only; used for screen readers -->
+		<div class="page-header ">
+			<span class="icon icon__warning inline"><span class="accessible-text" role="alert">Warning</span></span>
+			<h1 class="modal-title h4 inline">Activation failed</h1>
+		</div>
+		<div class="modal__content">
+			<p>Activation of the image file has failed.</p>
+		</div>
+		<div class="modal__button-wrapper">
+			<button class="inline btn-primary">Close</button>
+		</div>
+	</div>
+</section>
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
+	<div class="modal__tftp-unreachable" role="document">
+		<div class="screen-reader-offscreen modal-description">TFTP server unreachable modal</div><!-- accessibility only; used for screen readers -->
+		<div class="page-header ">
+			<span class="icon icon__warning inline"><span class="accessible-text" role="alert">Warning</span></span>
+			<h1 class="modal-title h4 inline">TFTP server unreachable </h1>
+		</div>
+		<div class="modal__content">
+			<p>Could not make a connection with the TFTP server. Check the IP address and connections, and try
+				again.</p>
+		</div>
+		<div class="modal__button-wrapper">
+			<button class="inline btn-primary">Close</button>
+		</div>
+	</div>
+</section>
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
+	<div class="modal__tftp-unreachable" role="document">
+		<div class="screen-reader-offscreen modal-description">Delete firmware image</div><!-- accessibility only; used for screen readers -->
+		<div class="page-header ">
+			<span class="icon icon__warning inline"><span class="accessible-text" role="alert">Warning</span></span>
+			<h1 class="modal-title h4 inline">Delete image</h1>
+		</div>
+		<div class="modal__content">
+			<p>Delete firmware v3.4-82-g874g45r?</p>
+		</div>
+		<div class="modal__button-wrapper">
+			<button class="inline btn-secondary">Cancel</button>
+			<button class="inline btn-primary">Continue</button>
+		</div>
+	</div>
+</section>
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
+	<div class="modal__upload" role="document">
+		<div class="screen-reader-offscreen modal-description">Upload image file modal</div><!-- accessibility only; used for screen readers -->
+		<div class="page-header ">
+			<h1 class="modal-title h4"><span class="icon icon__info"><svg xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 32 32"><path
+					d="M18 14h-6v2h1v6h-2v2h8v-2h-2z"/><circle cx="16" cy="10" r="2"/><path
+					d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z"/></svg></span>
+				Upload image file
+			</h1>
+		</div>
+		<div class="modal__content">
+			<p>Uploading this image may replace a non-active image, and prevent rollback from the current active image
+				to the previous image.</p>
+		</div>
+		<div class="modal__button-wrapper">
+			<button class="inline btn-secondary">Cancel</button>
+			<button class="inline btn-primary">Continue</button>
+		</div>
+	</div>
+</section>
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
+	<div class="modal__reboot" role="document">
+		<div class="screen-reader-offscreen modal-description">Server reboot required modal</div><!-- accessibility only; used for screen readers -->
+		<div class="page-header ">
+			<h1 class="modal-title h4"><span class="icon icon__info"><svg xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 32 32"><path
+					d="M18 14h-6v2h1v6h-2v2h8v-2h-2z"/><circle cx="16" cy="10" r="2"/><path
+					d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z"/></svg></span>
+				Server reboot required
+			</h1>
+		</div>
+		<div class="modal__content">
+			<p>You specified a new primary firmware image. This change will not take effect until the server is powered
+				down and restarted.</p>
+		</div>
+		<a href="#/server-control/power-operations" class="bold modal__link">Go to power operations page</a>
+		<div class="modal__button-wrapper">
+			<button class="inline btn-secondary">Cancel</button>
+			<button class="inline btn-primary">Warm reboot</button>
+		</div>
+	</div>
+</section>
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
+	<div class="modal__preserve-settings" role="document">
+		<div class="screen-reader-offscreen modal-description">Preserve setting modal</div><!-- accessibility only; used for screen readers -->
+		<div class="page-header ">
+			<h1 class="modal-title h4"><span class="icon icon__info"><svg xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 32 32"><path
+					d="M18 14h-6v2h1v6h-2v2h8v-2h-2z"/><circle cx="16" cy="10" r="2"/><path
+					d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z"/></svg></span>
+				Preserve settings
+			</h1>
+		</div>
+		<div class="modal__content">
+			<p>Switching to a new BMC firmware image will erase current user settings. Network settings will be preserved unless you choose to reset all settings.</p>
+			<form>
+				<fieldset>
+					<div class="row column">
+						<label class="control-radio bold" for="preserve-settings">Preserve network settings
+							<input type="radio" name="preserve-settings" id="preserve-settings" ng-checked="true" ng-model="dhcp" ng-value="true" ng-init="dhcp=true"/>
+							<span class="control__indicator control__indicator-on"></span>
+						</label>
+					</div>
+					<div class="row column">
+						<label class="control-radio bold" for="reset-settings">Reset all user and network settings
+							<input type="radio" name="reset-settings" id="reset-settings" ng-model="dhcp" ng-value="false"/>
+							<span class="control__indicator control__indicator-on"></span>
+						</label>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<div class="modal__button-wrapper">
+			<button class="inline btn-secondary">Cancel</button>
+			<button class="inline btn-primary">Continue</button>
+		</div>
+	</div>
+</section>
+<div class="modal-overlay" tabindex="-1"></div>

@@ -1,54 +1,82 @@
-.btn-upload {
-  color: $lightbg__primary;
-  font-weight: 700;
-  text-decoration: none;
-  .btn-upload-icon {
-    fill: $lightbg__primary;
-    display: inline-block;
-    width: 1.25em;
-    height: 1.25em;
-  }
-  &:visited .btn-upload-icon {
-    fill: $links__visited;
-  }
-  &:hover .btn-upload-icon {
-    fill: $lightbg__primary;
-  }
-  &:hover {
-    cursor: pointer;
-  }
-}
 
-.table__cell {
-  font-weight: 700;
-  a {
-    display: inline-block;
-    margin-right: 1.7em;
-    text-decoration: none;
-    font-weight: 700;
-  }
-}
-
-.table-header {
-  font-weight: 700;
-}
 
 .firmware__ready {
   font-weight: 300;
 }
 
-.firmware__bmc-image {
+.firmware__table {
   margin-top: 2.5em;
   margin-bottom: 2.5em;
+
+  .table__cell {
+    a {
+      display: inline-block;
+      margin-right: 1.7em;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .icon {
+      color: $medblue;
+      &.disabled {
+        color: $medgrey;
+      }
+    }
+  }
+
+  .table-header {
+    font-weight: 700;
+  }
+
+  .table__row.disabled {
+    .firmware__action-link {
+      color: $medblue;
+      opacity: 1;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
 }
 
+.firmware__active-version {
+  color: $medblue;
+  font-size: .8em;
+  float: right;
+  font-weight: 400;
+}
+
+.firmware__action-link {
+  color: $links;
+  padding: 5px;
+  min-width: 90px;
+  text-align: left;
+}
+
+.firmware__version {
+  position: relative;
+  .icon {
+    position: absolute;
+    right: 0;
+    top: 20%;
+  }
+  &.active {
+    overflow: visible;
+  }
+}
+
+
+.icon__more-dropdown {
+  width: 300px;
+  top: 70%;
+}
+
+// Upload firmware
 .firmware__upload-form {
   label {
     font-weight: 700;
   }
   .row p,
   fieldset {
-    padding-left: 3em;
     label {
       font-weight: 300;
     }
@@ -56,11 +84,33 @@
   input {
     height: 2.4em;
   }
+  input[type=submit] {
+    width: auto;
+    margin-top: 1.5em;
+  }
+}
+.firmware__upload-chooser {
+    width: 100%;
+    background: $lightgrey;
+    padding-left: 1em;
+    padding-right: 1em;
+  .btn-secondary {
+    vertical-align: middle;
+    margin: 1em .5em 1em 0;
+  }
+  &.uploading {
+    @include indeterminate-bar;
+  }
+  @include mediaQuery(medium) {
+    width: 70%;
+  }
 }
 .firmware__upload-station {
   padding-bottom: 1em;
+  border-bottom: 1px solid $medgrey;
+  padding-left: 1em;
 }
 .firmware__upload-tftp {
   padding-top: 2em;
-  border-top: 1px solid $medgrey;
+  padding-left: 1em;
 }

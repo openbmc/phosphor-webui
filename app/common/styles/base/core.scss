@@ -12,9 +12,7 @@ p {
 
 a {
   color: $links;
-  &:visited {
-    color: $links__visited;
-  }
+  text-decoration: none;
   &:hover {
     text-decoration: underline;
   }

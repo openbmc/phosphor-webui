@@ -13,11 +13,14 @@ $field__focus: #3C6DEF;
 $btn__disabled-txt: #a6a5a6;
 $btn__disabled-bg: #d8d8d8;
 
+//Disabled table elements
+$disabled-row: #dddee0;
+$disabled-row-txt: #999999;
+
 // Dark background
 $darkbg__grey: #E3ECEC;
 $darkbg__accent: #79a6f6;
 $darkbg__primary: #19273c;
-$active: #648FFF;
 
 // Light Background
 $lightbg__grey: #b8c1c1;
@@ -69,7 +72,7 @@ $present: #b1bef3;
 $not-present: $medium-lightbg;
 
 // Links
-$links: #648FFF;
+$links: #3f71ec;
 $links__hover: $lightbg__primary;
 $links__visited: #8ea7ea;
 $links__disabled: rgba(27, 40, 52, 0.70);

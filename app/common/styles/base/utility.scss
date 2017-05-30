@@ -34,7 +34,7 @@
   justify-content: center;
   flex-direction: column;
   background: transparent;
-  border: 0px;
+  border: 0;
   margin: 0;
   &:hover {
     color: $lightbg__accent;
@@ -74,4 +74,20 @@
 
 .transitionAll {
   transition: all .5s ease;
+}
+
+//Uploading
+.uploading {
+  @include indeterminate-bar;
+  font-weight: 700;
+  padding: .2em 6em .2em 1em;
+  margin: .8em 0;
+  width: 100%;
+}
+
+.accessible-text {
+  height: 0;
+  width: 0;
+  position: absolute;
+  overflow: hidden;
 }
