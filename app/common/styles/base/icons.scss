@@ -4,9 +4,6 @@
   height: 20px;
   position: relative;
   speak: none;
-  &:hover {
-    cursor: pointer;
-  }
   &.icon-as-spacer {
     text-indent: -9999px;
   }
@@ -17,6 +14,9 @@
   stroke: $medblue;
   background: $white;
   overflow: visible;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .icon__more-dropdown {
@@ -45,24 +45,11 @@
 }
 
 .icon__warning{
-  margin-right: .7em;
-  margin-top: -2px;
-  &:before {
-    content: '!';
-    color: $alert__error;
-    position: absolute;
-    left: 55%;
-    top: 40%;
-    font-size: .7em;
-  }
-  &:after {
-    content: '\025b3';
-    position: absolute;
-    left: 0;
-    top: -10%;
-    color: $alert__error;
-    font-size: 1.5em;
-  }
+  width: 30px;
+  height: 30px;
+  background-image: url(/assets/images/icon-warning.svg);
+  background-repeat: no-repeat;
+  vertical-align: middle;
 }
 
 .icon__info{
@@ -83,6 +70,9 @@
     left: 0;
     top: -50%;
     transform: rotate(90deg);
+  }
+  &.hide {
+    text-align: -9999px;
   }
 }
 .icon__down-arrow {
