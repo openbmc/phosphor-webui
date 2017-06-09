@@ -1,0 +1,62 @@
+//Quick links block
+.quick-links {
+  background-color: $lightgrey;
+  padding: 1em 1.4em;
+  font-size: .9em;
+  font-weight: 400;
+  a {
+    color: $black;
+    text-decoration: none;
+    display: block;
+  }
+  p {
+    margin-bottom: 0;
+  }
+  .event-log__events {
+    margin-top: 0;
+  }
+}
+
+.quick-links__item {
+  padding: 1em 0 1em 0;
+  border-bottom: 1px solid $medgrey;
+  position: relative;
+  &:after {
+    content: '\203A';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    font-size: 3em;
+    color: lighten($darkgrey, 15%);
+    transform: translateY(-50%);
+  }
+  &.no-icon {
+    &:after {
+      display: none;
+    }
+  }
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.quick-links__label {
+  font-weight: 700;
+}
+
+.quick-links__event-copy {
+  color: $alert__error;
+  margin-left: 1em;
+  margin-bottom: 0;
+  font-weight: 700;
+  font-size: .9em;
+  a {
+    color: $alert__error;
+  }
+}
+
+//toggle switch
+.quick-links__item .toggle label {
+  transform: translateY(-2px);
+  margin-right: 0;
+}
