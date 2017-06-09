@@ -1,0 +1,38 @@
+.overview__server-metadata {
+  border-bottom: 1px solid $medgrey;
+  padding: 1.8em 0 0 0;
+}
+.overview__metadata-wrapper {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+.overview__metadata-block {
+  list-style-type: none;
+  min-width: 45%;
+  margin-bottom: 1em;
+  display: inline-block;
+  white-space: normal;
+  word-break: break-all;
+  @include mediaQuery(small) {
+    float: left;
+  }
+  @include mediaQuery(medium) {
+    margin-left: 1em;
+  }
+}
+.overview__event-log {
+  padding-top: 2em;
+  a {color: $black; text-decoration: none;}
+  .control-check {display: none;}
+  .accord-trigger {
+    transform: rotate(0deg) translateY(-50%);
+    position: absolute;
+    top: 50%;
+    right: 0;
+  }
+  .event-log__event-info {
+    width: 90%;
+    padding-left: 1.4em;
+  }
+}
