@@ -3,7 +3,7 @@
 }
 
 .disabled {
-  color: $lightbg__grey;
+  color: darken($lightbg__grey, 10%);
 }
 
 .float-right {

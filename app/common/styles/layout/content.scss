@@ -37,7 +37,7 @@ section.row {
 }
 
 .content-label {
-  color: darken($lightgrey, 10%);
+  color: lighten($darkgrey, 15%);
   text-transform: uppercase;
   font-weight: 700;
   font-size: .75em;

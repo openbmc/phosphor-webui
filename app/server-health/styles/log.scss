@@ -106,7 +106,8 @@
   padding-right: 0;
 }
 
-#event-log__events {
+#event-log__events,
+.event-log__events {
   display: block;
   margin-top: 1.6em;
   position: relative;
@@ -185,8 +186,10 @@
 
   // Single event log card
   .event-log__single-event {
-    border-top: 1px solid $medgrey;
+    border: 1px solid $medgrey;
     padding: 1em 1em 1em .7em;
+    margin: .5em 0 .5em 0;
+    position: relative;
   }
   .event-log__event-info {
     &:hover {
@@ -227,8 +230,10 @@
     text-transform: uppercase;
     color: $darkgrey;
     font-weight: 700;
-    margin: 0 1em;
     min-width: 103px;
+    @include mediaQuery(medium) {
+      margin: 0 1em;
+    }
   }
 
   //Event description
@@ -241,13 +246,16 @@
     @include fontCourierBold;
     font-size: .9em;
     color: $darkgrey;
+    margin-right: 1em;
   }
 
   .event__timestamp {
     @include fontCourierBold;
     font-size: .9em;
     color: #999999;
-    margin-left: 1.2em;
+    @media (min-width: 1105px ) {
+      float: right;
+    }
   }
 
   // Event metadata row

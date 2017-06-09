@@ -103,8 +103,11 @@
   border-color: $normal;
   &.high-priority {
     color: $critical-lightbg;
-    background-color: rgba( $critical-lightbg, .4 );
+    background-color: rgba( $critical-bg, 1 );
     background-image: url(/assets/images/crit-x.svg);
+    background-size: 120%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
     border-color: $critical-lightbg;
     &:before {
       content: '';
