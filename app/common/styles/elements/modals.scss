@@ -12,6 +12,10 @@
   padding:0;
 }
 
+.modal-overlay.active{
+  display: block;
+}
+
 .modal {
   width:50%;
   max-width: 850px;
@@ -29,6 +33,10 @@
   @include mediaQuery(medium) {
     padding: 2.5em;
   }
+}
+
+.modal.active{
+  display: block;
 }
 
 .modal .page-header {

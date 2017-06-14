@@ -476,7 +476,115 @@ window.angular && (function (angular) {
                 }).error(function(error){
                   console.log(error);
                 });
-              }
+              },
+              getFirmwares: function(callback){
+                $http({
+                  method: 'GET',
+                  //url: SERVICE.API_CREDENTIALS.mock_host + "/software",
+                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/software/enumerate",
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: true
+                }).success(function(response){
+                      var json = JSON.stringify(response);
+                      var content = JSON.parse(json);
+                      var data = [];
+                      var active = false;
+                      var isExtended = false;
+                      var bmcActiveVersion = "";
+                      var hostActiveVersion = "";
+                      var imageType = "";
+                      var extendedVersions = [];
+
+                      function getFormatedExtendedVersions(extendedVersion){
+                        var versions = [];
+                        extendedVersion = extendedVersion.split(",");
+
+                        extendedVersion.forEach(function(item){
+                          var parts = item.split("-");
+                          var numberIndex = 0;
+                          for(var i = 0; i < parts.length; i++){
+                            if(/[0-9]/.test(parts[i])){
+                              numberIndex = i;
+                              break;
+                            }
+                          }
+                          var titlePart = parts.splice(0, numberIndex);
+                          titlePart = titlePart.join("");
+                          titlePart = titlePart[0].toUpperCase() + titlePart.substr(1, titlePart.length);
+                          var versionPart = parts.join("-");
+                          versions.push({
+                            title: titlePart,
+                            version: versionPart
+                          });
+                        });
+
+                        return versions;
+                      }
+
+                      for(var key in content.data){
+                        if(content.data.hasOwnProperty(key) && content.data[key].hasOwnProperty('Version')){
+                          active = (/\.Active$/).test(content.data[key].Activation);
+                          imageType = content.data[key].Purpose.split(".").pop();
+                          isExtended = content.data[key].hasOwnProperty('ExtendedVersion') && content.data[key].ExtendedVersion != "";
+                          if(isExtended){
+                            extendedVersions = getFormatedExtendedVersions(content.data[key].ExtendedVersion);
+                          }
+                          data.push(Object.assign({
+                            path: key,
+                            active: active,
+                            imageId: key.split("/").pop(),
+                            imageType: imageType,
+                            isExtended: isExtended,
+                            extended: {
+                              show: false,
+                              versions: extendedVersions
+                            },
+                            data: {key: key, value: content.data[key]}
+                          }, content.data[key]));
+
+                          if(active && imageType == 'BMC'){
+                            bmcActiveVersion = content.data[key].Version;
+                          }
+
+                          if(active && imageType == 'Host'){
+                            hostActiveVersion = content.data[key].Version;
+                          }
+                        }
+                      }
+                      callback(data, bmcActiveVersion, hostActiveVersion);
+                }).error(function(error){
+                  console.log(error);
+                });
+              },
+              uploadImage: function(file, callback){
+                $http({
+                  method: 'PUT',
+                  timeout: 5 * 60 * 1000,
+                  //url: 'http://localhost:3002/upload',
+                  url: SERVICE.API_CREDENTIALS.host + "/upload/image/",
+                  headers: {
+                      'Accept': 'application/octet-stream',
+                      'Content-Type': 'application/octet-stream'
+                  },
+                  withCredentials: true,
+                  data: file
+                }).success(function(response){
+                      var json = JSON.stringify(response);
+                      var content = JSON.parse(json);
+                      if(callback){
+                          return callback(content);
+                      }
+                }).error(function(error){
+                  if(callback){
+                      callback(error);
+                  }else{
+                      console.log(error);
+                  }
+                });
+              },
           };
           return SERVICE;
         }]);

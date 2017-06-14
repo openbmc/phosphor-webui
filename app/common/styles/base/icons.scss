@@ -44,7 +44,7 @@
   }
 }
 
-.icon__warning {
+.icon__warning{
   width: 30px;
   height: 30px;
   background-image: url(/assets/images/icon-warning.svg);
@@ -52,23 +52,7 @@
   vertical-align: middle;
 }
 
-.icon__critical {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  position: relative;
-  border-width: 2px;
-  border-style: solid;
-  color: $critical-lightbg;
-  background-color: rgba($critical-bg, 1);
-  background-image: url(/assets/images/crit-x.svg);
-  background-size: 120%;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  border-color: $critical-lightbg;
-}
-
-.icon__info {
+.icon__info{
   margin-top: -4px;
   margin-right: .5em;
   width: 25px;
@@ -91,7 +75,6 @@
     text-align: -9999px;
   }
 }
-
 .icon__down-arrow {
   margin-right: 1em;
   &:before {

@@ -18,252 +18,8 @@
 		<span class="icon icon__bar-arrow">&nbsp;</span>&nbsp;&nbsp;Scroll to upload image file
 	</button>
 </div>
-<div class="row column firmware__table">
-	<div class="table-header column small-12">
-		<p class="inline">Server images</p>
-		<p class="inline firmware__active-version">In-memory firmware version: v1.99.4-82-g874f12e</p>
-	</div>
-	<div class="table row column">
-		<div class="table__head">
-			<div class="table__row">
-				<div class="table__cell">
-					Boot Priority
-				</div>
-				<div class="table__cell">
-					Image state
-				</div>
-				<div class="table__cell">
-					Image ID
-				</div>
-				<div class="table__cell">
-					Version
-				</div>
-				<div class="table__cell">
-					Action
-				</div>
-			</div>
-		</div>
-		<div class="table__body">
-			<div class="table__row">
-				<div class="table__cell firmware__primary">
-					<span class="table__cell-label">Boot Priority:</span>
-					<div class="icon icon__up-arrow icon-as-spacer" aria-hidden="true">
-						<span class="accessible-text">firmware down in priority</span></div>
-					<div class="icon icon__down-arrow" aria-hidden="true">
-						<span class="accessible-text">firmware down in priority</span></div>
-				</div>
-				<div class="table__cell firmware__active">
-					<span class="table__cell-label">Image state:</span>Active
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Image ID:</span>46c8c3d0
-				</div>
-				<div class="table__cell firmware__version" ng-class="{'active':extendedVersion === true}">
-					<span class="table__cell-label">Version:</span>v1.99.4-82-g874f12e
-					<div class="icon icon__more" ng-click="extendedVersion = ! extendedVersion"
-							ng-class="{'active':extendedVersion === true}">
-						<svg version="1.1" x="0px" y="0px" viewBox="0 0 24.3 24.6">
-							<path d="M12.1,23C6.1,23,1.3,18.2,1.3,12.3S6.1,1.6,12.1,1.6s10.7,4.8,10.7,10.7S18,23,12.1,23z M12.1,2.6c-5.4,0-9.7,4.4-9.7,9.7 S6.7,22,12.1,22s9.7-4.4,9.7-9.7S17.4,2.6,12.1,2.6z"/>
-							<g>
-								<circle cx="6.7" cy="12.5" r="1.5"/>
-								<circle cx="12.1" cy="12.5" r="1.5"/>
-								<circle cx="17.4" cy="12.5" r="1.5"/>
-							</g>
-						</svg>
-					</div>
-					<div class="icon__more-dropdown" ng-show="extendedVersion">
-						<h5 class="bold">Extended version information</h5>
-						<p class="no-margin">Host: 1.2.3</p>
-						<p class="no-margin">Linux: 2.3.4</p>
-						<p class="no-margin">Other OS: 4.5.6</p>
-					</div>
-				</div>
-				<div class="table__cell">
-					&nbsp;
-				</div>
-			</div>
-			<!-- new row -->
-			<div class="table__row">
-				<div class="table__cell">
-					<span class="table__cell-label">Boot Priority:</span>
-					<div class="icon icon__up-arrow" aria-hidden="true">
-						<span class="accessible-text">firmware up in priority</span></div>
-					<div class="icon icon__down-arrow" aria-hidden="true">
-						<span class="accessible-text">firmware down in priority</span></div>
-				</div>
-				<div class="table__cell firmware__active">
-					<span class="table__cell-label">Image state:</span>Active
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Image ID:</span>46c9c3e4
-				</div>
-				<div class="table__cell firmware__version">
-					<span class="table__cell-label">Version:</span>v1.99.4-82-g874g45r
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Action:</span>
-					<button class="firmware__action-link">Delete</button>
-				</div>
-			</div>
-			<!-- new row -->
-			<div class="table__row">
-				<div class="table__cell">
-					<span class="table__cell-label">Boot Priority:</span>
-					<div class="icon icon__up-arrow" aria-hidden="true">
-						<span class="accessible-text">firmware up in priority</span></div>
-					<div class="icon icon__down-arrow icon-as-spacer" aria-hidden="true">
-						<span class="accessible-text">firmware down in priority</span></div>
-				</div>
-				<div class="table__cell firmware__active">
-					<span class="table__cell-label">Image state:</span>Active
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Image ID:</span>46c9c3e4
-				</div>
-				<div class="table__cell firmware__version">
-					<span class="table__cell-label">Version:</span>v1.99.4-82-g974g48r
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Action:</span>
-					<button class="firmware__action-link">Delete</button>
-				</div>
-			</div>
-			<!-- new row -->
-			<div class="table__row disabled">
-				<div class="table__cell"></div>
-				<div class="table__cell firmware__active">
-					<span class="table__cell-label">Image state:</span>Invalid
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Image ID:</span>46c9c3e4
-				</div>
-				<div class="table__cell firmware__version">
-					<span class="table__cell-label">Version:</span>v1.99.4-82-g774g15r
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Action:</span>
-					<button class="firmware__action-link">Delete</button>
-				</div>
-			</div>
-			<div class="table__row">
-				<div class="table__row-save" role="alert"><p>Saved</p></div> <!-- inject div when row is saved -->
-				<div class="table__cell"></div>
-				<div class="table__cell firmware__active">
-					<span class="table__cell-label">Image state:</span>Invalid
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Image ID:</span>46c9c3e4
-				</div>
-				<div class="table__cell firmware__version">
-					<span class="table__cell-label">Version:</span>v1.99.4-82-g774g15r
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Action:</span>
-					<button class="firmware__action-link">Delete</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row column firmware__table">
-	<div class="table-header column small-12">
-		<p class="inline">BMC images</p>
-		<p class="inline firmware__active-version">In-memory firmware version: v4.0.4-83r</p>
-	</div>
-	<div class="table row column">
-		<div class="table__head">
-			<div class="table__row">
-				<div class="table__cell">
-					Boot Priority
-				</div>
-				<div class="table__cell">
-					Image state
-				</div>
-				<div class="table__cell">
-					Image ID
-				</div>
-				<div class="table__cell">
-					Version
-				</div>
-				<div class="table__cell">
-					Action
-				</div>
-			</div>
-		</div>
-		<div class="table__body">
-			<!-- new row -->
-			<div class="table__row">
-				<div class="table__cell">
-					<span class="table__cell-label">Boot Priority:</span>
-				</div>
-				<div class="table__cell firmware__active">
-					<span class="table__cell-label">Image state:</span>Active
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Image ID:</span>nnnnnn0
-				</div>
-				<div class="table__cell firmware__version">
-					<span class="table__cell-label">Version:</span>v4.0.4-83r
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Action:</span>
-				</div>
-			</div>
-			<!-- new row -->
-			<div class="table__row disabled">
-				<div class="table__cell"></div>
-				<div class="table__cell firmware__active">
-					<span class="table__cell-label">Image state:</span>Activation failed
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Image ID:</span>50c9c3e4
-				</div>
-				<div class="table__cell firmware__version">
-					<span class="table__cell-label">Version:</span>v3.4-82-g874g45r
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Action:</span>
-					<button class="firmware__action-link">Delete</button>
-				</div>
-			</div>
-			<!-- new row -->
-			<div class="table__row">
-				<div class="table__cell"></div>
-				<div class="table__cell firmware__active">
-					<span class="table__cell-label">Image state:</span>Ready
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Image ID:</span>nnnnnn1
-				</div>
-				<div class="table__cell firmware__version">
-					<span class="table__cell-label">Version:</span>v4.0.3-83r
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Action:</span>
-					<button class="firmware__action-link">Activate</button>
-					<button class="firmware__action-link">Delete</button>
-				</div>
-			</div>
-			<!-- new row -->
-			<div class="table__row table__row-uploading">
-				<div class="table__cell"></div>
-				<div class="table__cell firmware__active">
-					<span class="table__cell-label">Image state:</span>Not ready
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Image ID:</span>nnnnnn2
-				</div>
-				<div class="table__cell firmware__version">
-					<span class="table__cell-label">Version:</span>v4.0.2-82p
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Action:</span>
-					<span>Validating...</span>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+<firmware-list title="BMC images" version="bmcActiveVersion" firmwares="firmwares" filter-by="filters.bmc"></firmware-list>
+<firmware-list title="Server images" version="hostActiveVersion" firmwares="firmwares" filter-by="filters.host"></firmware-list>
 <div class="row column" id="upload">
 	<div class="column small-12 page-header">
 		<h2 class="inline h3 bold">Upload firmware image</h2>
@@ -275,12 +31,12 @@
 			<p>Optional text area. Can be used to explain about updating openBMC firmware from workstation. This could
 				be step-by-step instruction. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et</p>
 			<label for="file-upload" class="inline firmware__upload-chooser">
-				<input id="file-upload" type="file" class="hide"/>
+				<input id="file-upload" type="file" file="file" class="hide" onchange="angular.element(this).scope().fileNameChanged()"/>
 				<span class="button btn-secondary inline">Choose a file</span>
-				<span class="inline firmware__upload-file-name">No file chosen</span>
+				<span class="inline firmware__upload-file-name"><span ng-if="!file">No file chosen</span><span ng-if="file.name !== undefined">{{file.name}}</span></span>
 			</label>
-			<input type="submit" value="Upload firmware" class="inline btn btn-primary float-right"/>
-			<div class="inline uploading">Upload in progress...</div>
+			<input type="button" value="Upload firmware" class="inline button btn-primary float-right" ng-click="upload()"/>
+			<div class="inline uploading" ng-show="uploading">Upload in progress...</div>
 		</div>
 		<div class=" column firmware__upload-tftp">
 			<h3 class="h4 bold">Download from TFTP server</h3>
@@ -297,63 +53,33 @@
 						<input name="tftp-file-name" id="tftp-file-name" type="text"/>
 					</div>
 					<div class="column small-12 large-4">
-						<input type="submit" value="Download firmware" class="inline btn btn-primary float-right"/>
+						<input type="submit" value="Download firmware" class="inline button btn-primary float-right"/>
 					</div>
 				</div>
-				<div class="inline uploading">Upload in progress...</div>
+				<div class="inline uploading" ng-show="downloading">Downloading in progress...</div>
 			</fieldset>
 		</div>
 	</form>
 </div>
 
 <!-- Firmware modals -->
-<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': display_error}">
 	<div class="modal__upload-fail" role="document">
-		<div class="screen-reader-offscreen modal-description">Upload failure modal</div><!-- accessibility only; used for screen readers -->
+		<div class="screen-reader-offscreen modal-description">{{error.modal_title}}</div><!-- accessibility only; used for screen readers -->
 		<div class="page-header ">
-			<span class="icon icon__warning inline"><span class="accessible-text" role="alert">Warning</span></span>
-			<h1 class="modal-title h4 inline">Upload failed</h1>
+			<span class="icon icon__warning inline"><span class="accessible-text" role="alert">{{error.type}}</span></span>
+			<h1 class="modal-title h4 inline">{{error.title}}</h1>
 		</div>
 		<div class="modal__content">
-			<p>The upload of the image file has failed.</p>
+			<p>{{error.desc}}</p>
 		</div>
 		<div class="modal__button-wrapper">
-			<button class="inline btn-primary">Close</button>
+			<button class="inline btn-primary" ng-click="display_error = false;">Close</button>
 		</div>
 	</div>
 </section>
-<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
-	<div class="modal__activation-fail" role="document">
-		<div class="screen-reader-offscreen modal-description">Activation failure modal</div><!-- accessibility only; used for screen readers -->
-		<div class="page-header ">
-			<span class="icon icon__warning inline"><span class="accessible-text" role="alert">Warning</span></span>
-			<h1 class="modal-title h4 inline">Activation failed</h1>
-		</div>
-		<div class="modal__content">
-			<p>Activation of the image file has failed.</p>
-		</div>
-		<div class="modal__button-wrapper">
-			<button class="inline btn-primary">Close</button>
-		</div>
-	</div>
-</section>
-<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
-	<div class="modal__tftp-unreachable" role="document">
-		<div class="screen-reader-offscreen modal-description">TFTP server unreachable modal</div><!-- accessibility only; used for screen readers -->
-		<div class="page-header ">
-			<span class="icon icon__warning inline"><span class="accessible-text" role="alert">Warning</span></span>
-			<h1 class="modal-title h4 inline">TFTP server unreachable </h1>
-		</div>
-		<div class="modal__content">
-			<p>Could not make a connection with the TFTP server. Check the IP address and connections, and try
-				again.</p>
-		</div>
-		<div class="modal__button-wrapper">
-			<button class="inline btn-primary">Close</button>
-		</div>
-	</div>
-</section>
-<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
+
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': confirm_delete}">
 	<div class="modal__tftp-unreachable" role="document">
 		<div class="screen-reader-offscreen modal-description">Delete firmware image</div><!-- accessibility only; used for screen readers -->
 		<div class="page-header ">
@@ -361,15 +87,16 @@
 			<h1 class="modal-title h4 inline">Delete image</h1>
 		</div>
 		<div class="modal__content">
-			<p>Delete firmware v3.4-82-g874g45r?</p>
+			<p>Delete firmware {{delete_image_version}}?</p>
 		</div>
 		<div class="modal__button-wrapper">
-			<button class="inline btn-secondary">Cancel</button>
-			<button class="inline btn-primary">Continue</button>
+			<button class="inline btn-secondary" ng-click="confirm_delete=false;">Cancel</button>
+			<button class="inline btn-primary" ng-click="confirmDeleteImage()">Continue</button>
 		</div>
 	</div>
 </section>
-<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
+
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': confirm_upload_image}">
 	<div class="modal__upload" role="document">
 		<div class="screen-reader-offscreen modal-description">Upload image file modal</div><!-- accessibility only; used for screen readers -->
 		<div class="page-header ">
@@ -385,12 +112,12 @@
 				to the previous image.</p>
 		</div>
 		<div class="modal__button-wrapper">
-			<button class="inline btn-secondary">Cancel</button>
-			<button class="inline btn-primary">Continue</button>
+			<button class="inline btn-secondary" ng-click="confirm_upload_image = false;">Cancel</button>
+			<button class="inline btn-primary" ng-click="confirmUpload()">Continue</button>
 		</div>
 	</div>
 </section>
-<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': reboot_confirm}">
 	<div class="modal__reboot" role="document">
 		<div class="screen-reader-offscreen modal-description">Server reboot required modal</div><!-- accessibility only; used for screen readers -->
 		<div class="page-header ">
@@ -407,12 +134,12 @@
 		</div>
 		<a href="#/server-control/power-operations" class="bold modal__link">Go to power operations page</a>
 		<div class="modal__button-wrapper">
-			<button class="inline btn-secondary">Cancel</button>
-			<button class="inline btn-primary">Warm reboot</button>
+			<button class="inline btn-secondary" ng-click="reboot_confirm=false;">Cancel</button>
+			<button class="inline btn-primary" ng-click="confirmWarmReboot()">Warm reboot</button>
 		</div>
 	</div>
 </section>
-<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': preserve_settings_confirm}">
 	<div class="modal__preserve-settings" role="document">
 		<div class="screen-reader-offscreen modal-description">Preserve setting modal</div><!-- accessibility only; used for screen readers -->
 		<div class="page-header ">
@@ -443,9 +170,9 @@
 			</form>
 		</div>
 		<div class="modal__button-wrapper">
-			<button class="inline btn-secondary">Cancel</button>
-			<button class="inline btn-primary">Continue</button>
+			<button class="inline btn-secondary" ng-click="preserve_settings_confirm=false;">Cancel</button>
+			<button class="inline btn-primary" ng-click="preserveSettingsConfirmed()">Continue</button>
 		</div>
 	</div>
 </section>
-<div class="modal-overlay" tabindex="-1"></div>
+<div class="modal-overlay" tabindex="-1" ng-class="{'active': (display_error || confirm_upload_image || reboot_confirm || preserve_settings_confirm)}"></div>
