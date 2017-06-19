@@ -1,4 +1,4 @@
-button, .button, input[type="submit"], .submit {
+button, .btn, .button, .submit {
   font-size: 1em;
   @include fontFamilyBold;
   text-transform: none;
@@ -23,8 +23,7 @@ button, .button, input[type="submit"], .submit {
   }
 }
 
-.btn-primary,
-input[type="submit"] {
+.btn-primary {
   color: $primebtn__text;
   background: $primebtn__bg;
   min-height: 40px;
