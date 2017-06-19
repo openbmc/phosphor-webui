@@ -111,13 +111,14 @@
   width: 20px;
   height: 20px;
   background: $white;
-  border: 1px solid $medgrey;
+  border: 1px solid $lightbg__grey;
 }
 
 /* Hover and focus states */
 .control-check:hover input ~ .control__indicator,
 .control-check input:focus ~ .control__indicator {
   border: 1px solid $primebtn__bg;
+  background-color: $primebtn__bg;
 }
 
 /* Checked state */

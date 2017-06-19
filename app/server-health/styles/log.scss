@@ -1,25 +1,5 @@
 // Event Log SCSS
 #event-log {
-  .accord-trigger {
-    transform: rotate(90deg);
-    font-size: 1.5em;
-    color: lighten($darkgrey, 10%);
-    padding: .3em;
-    display: block;
-    margin: 0 auto;
-    transition: all .2s ease;
-    &:after {
-      content: '\276F'
-    }
-    &.active {
-      transform: rotate(-90deg);
-      color: $darkbg__accent;
-    }
-    &:focus {
-      outline: 0;
-      color: $darkbg__accent;
-    }
-  }
 
   // Dropwdowns filter
   .dropdown__date.row {
@@ -190,6 +170,7 @@
     padding: 1em 1em 1em .7em;
     margin: .5em 0 .5em 0;
     position: relative;
+    overflow: hidden;
   }
   .event-log__event-info {
     &:hover {

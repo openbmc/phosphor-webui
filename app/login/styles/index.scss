@@ -47,6 +47,12 @@
     max-width: 100%;
   }
   @include fastTransition-all;
+
+  input:disabled,
+  input:disabled:hover {
+    background-color: $lightbg__grey;
+    cursor: default;
+  }
 }
 
 .login__desc {
