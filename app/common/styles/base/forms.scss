@@ -19,7 +19,7 @@ input[type='url'],
 input[type='text'],
 textarea {
   border-radius: 0px;
-  border: 1px solid $darkgrey;
+  border: 1px solid $input-border;
   height: 3.1em;
   margin: 0 0 1em 0;
   background: $white;
@@ -41,6 +41,11 @@ textarea {
       box-shadow: 0 -5px $field__focus inset;
     }
   }
+}
+
+//Foundation overwrite
+[type=color], [type=date], [type=datetime-local], [type=datetime], [type=email], [type=month], [type=number], [type=password], [type=search], [type=tel], [type=text], [type=time], [type=url], [type=week], textarea {
+  border-color: $input-border;
 }
 
 input[readonly],
