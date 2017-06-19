@@ -29,7 +29,7 @@ window.angular && (function (angular) {
                     }
 
                     dataService.last_updated = new Date();
-                    if(response == null){
+                    if(!response){
                         dataService.server_unreachable = true;
                     }else{
                         dataService.server_unreachable = false;

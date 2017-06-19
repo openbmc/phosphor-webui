@@ -68,7 +68,6 @@ window.angular && (function (angular) {
                                     //@TODO:show error message
                                 }
                             });
-                        }else{
                         }
                     });
                 };

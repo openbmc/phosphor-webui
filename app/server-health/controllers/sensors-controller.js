@@ -9,7 +9,7 @@
 
 window.angular && (function (angular) {
     'use strict';
-    var sensorData = [], originalData = {};
+    var sensorData = [];
     angular
         .module('app.overview')
         .controller('sensorsController', [

@@ -9,7 +9,6 @@
 
 window.angular && (function (angular) {
     'use strict';
-    var sensorData = [], originalData = {};
     angular
         .module('app.overview')
         .controller('sensorsOverviewController', [
@@ -109,11 +108,9 @@ window.angular && (function (angular) {
 
                 $scope.loadSensorData = function(){
                     APIUtils.getAllSensorStatus(function(data, originalData){
-                        sensorData = data;
-                        originalData = originalData;
                         $scope.data = data;
                         $scope.originalData = originalData;
-                        dataService.sensorData = sensorData;
+                        dataService.sensorData = data;
                         $scope.export_data = JSON.stringify(originalData);
                     });
                 };

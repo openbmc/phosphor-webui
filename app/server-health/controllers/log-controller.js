@@ -9,7 +9,6 @@
 
 window.angular && (function (angular) {
     'use strict';
-    var logData = [], originalData = {};
     angular
         .module('app.serverHealth')
         .controller('logController', [
@@ -41,8 +40,6 @@ window.angular && (function (angular) {
 
                 $scope.loadLogs = function(){
                     APIUtils.getLogs(function(data, originalData){
-                        logData = data;
-                        originalData = originalData;
                         $scope.logs = data;
                         $scope.originalData = originalData;
                     });
@@ -81,7 +78,6 @@ window.angular && (function (angular) {
                 $scope.filterBySearchTerms = function(log){
                     if(!$scope.searchItems.length) return true; 
 
-                    var flag = false;
                     for(var i = 0, length = $scope.searchItems.length; i < length; i++){
                         if(log.search_text.indexOf($scope.searchItems[i].toLowerCase()) == -1) return false;
                     }

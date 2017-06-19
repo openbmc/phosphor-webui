@@ -326,7 +326,6 @@ window.angular && (function (angular) {
                       var data = [];
                       var severityCode = '';
                       var priority = '';
-                      var resolved = false;
                       var relatedItems = [];
 
                       for(var key in content.data){
