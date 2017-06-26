@@ -3,7 +3,6 @@
 
 .content__search {
   width: 100%;
-  max-width: 99%;
   display: inline-block;
   float: left;
   position: relative;
@@ -38,7 +37,7 @@
     width: 100px;
     top: .5em;
     right: 5px;
-    padding: 1em 2em;
+    padding: 1em 2em .9em;
     min-height: 20px;
     text-align: center;
     margin: 0;

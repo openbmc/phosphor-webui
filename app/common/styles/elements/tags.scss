@@ -118,8 +118,8 @@
     }
   }
   &.medium-priority {
-    background: rgba($medium-lightbg, .5);
-    border-color: rgba($medium-lightbg, 1);
+    background: rgba($severity-medium-lightbg, .5);
+    border-color: rgba($severity-medium-lightbg, 1);
   }
   &.warn-priority {
     border-color: $warning-lightbg;

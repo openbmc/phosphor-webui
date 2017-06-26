@@ -3,6 +3,7 @@
 
 .header__actions-bar {
   padding-top: 1em;
+  padding-bottom: 1em;
   padding-right: 1em;
   background: $darkpurple;
   color: $white;
@@ -14,6 +15,7 @@
       margin-right: -20px;
     }
   }
+  p {margin-bottom: 0;}
 }
 
 .accord-trigger {
@@ -29,7 +31,6 @@
   }
   &.active {
     transform: rotate(-90deg);
-    color: $darkbg__accent;
   }
   &:focus {
     outline: 0;
@@ -37,23 +38,15 @@
   }
 }
 
-// Single event log card
 .accord-row {
-  position: relative;
-  border: 1px solid $medgrey;
-  padding: 1em 1em 1em 0em;
-  margin: .65em 0;
-  background: $white;
   overflow: hidden;
-  &.active,
-  &.selected {
-    background: $lightblue;
+  .accord-content.inactive {
+    max-height: 0;
+    height: 0;
   }
-  &:hover {
-    background: $lightblue;
-    cursor: pointer;
-  }
-  &:last-child {
-    border-bottom: 1px solid $medgrey;
+  .accord-content.active {
+    height: auto;
+    max-height: 1000px;
+    @include fastTransition-all;
   }
 }

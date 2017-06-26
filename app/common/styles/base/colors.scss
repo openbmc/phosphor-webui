@@ -4,7 +4,7 @@ $black: #333;
 $darkgrey: #666;
 $medgrey: #d7dbe0;
 $lightgrey: #f5f7fa;
-$lightblue: #f0f2f5;
+$lightblue: #f1f2f6;
 $medblue: #3f71ec;
 $purple: #5A3EC8;
 $darkpurple: #20214f;
@@ -23,7 +23,7 @@ $disabled-row: #dddee0;
 $disabled-row-txt: #999999;
 
 //Forms
-$input-border: #505050;
+$input-border: #a7a7a7;
 
 // Light Background
 $lightbg__grey: #b8c1c1;
@@ -56,7 +56,7 @@ $alert__message: rgb(203, 221, 235);
 // Severity
 $critical-lightbg: #e62325;
 $critical-darkbg: #ff5c49;
-$medium-lightbg: #dc267f;
+$severity-medium-lightbg: #dc267f;
 $medium-darkbg: #FF509E;
 $warning-lightbg: #ff836f;
 $warning-darkbg: #ffb000;
@@ -70,12 +70,12 @@ $thresh-normal: #8ee9d4;
 
 //Inventory
 $active: #c6b6f5;
-$inactive: $medium-lightbg;
+$inactive: $severity-medium-lightbg;
 $present: #b1bef3;
-$not-present: $medium-lightbg;
+$not-present: $severity-medium-lightbg;
 
 // Links
-$links: #648FFF;
+$links: #3c6df0;
 $links__hover: $lightbg__primary;
 $links__visited: #8ea7ea;
 $links__disabled: rgba(27, 40, 52, 0.70);

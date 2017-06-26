@@ -91,3 +91,17 @@
   position: absolute;
   overflow: hidden;
 }
+
+.show-scroll {
+  // Force scrollbar to always be visible in webkit browsers
+  &::-webkit-scrollbar {
+    background-color: lighten($medgrey, 5%);
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+  }
+}
