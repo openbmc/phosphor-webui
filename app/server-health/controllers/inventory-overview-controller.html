@@ -28,7 +28,7 @@
 			<p class="inline inventory__device-col">System</p>
 			<p class="inline inventory__function-col"></p>
 			<p class="inline inventory__assoc-event"></p>
-			<button class="accord-trigger float-right" ng-class="{'active': inv.meta}" ng-click="inv.meta = ! inv.meta"></button>
+			<button class="accord-trigger float-right" ng-class="{'active': inv.meta}"></button>
 			<div class="row inventory__metadata" ng-class="{'active': inv.meta}">
 				<div class="column large-9 no-padding">
 					<div class="inline inventory__metadata-block">
@@ -162,12 +162,12 @@
 			</div>
 		</div>
 		<!-- hardware item w/ sub categories -->
-		<div class="inventory__group"  ng-class="{'active': inv2.meta}" ng-click="inv2.meta = ! inv2.meta">
+		<div class="inventory__group"  ng-class="{'active': invCpu.meta}" ng-click="invCpu.meta = ! invCpu.meta">
 			<p class="inline inventory__device-col">CPU 0</p>
 			<p class="inline inventory__function-col"></p>
 			<p class="inline inventory__assoc-event"><a href="#/server-health/event-log">View 3 events</a></p>
-			<button class="accord-trigger float-right" ng-class="{'active': inv2.meta}" ng-click="inv2.meta = ! inv2.meta"></button>
-			<div class="row inventory__metadata" ng-class="{'active': inv2.meta}">
+			<button class="accord-trigger float-right" ng-class="{'active': invCpu.meta}"></button>
+			<div class="row inventory__metadata" ng-class="{'active': invCpu.meta}">
 				<div class="column large-9 no-padding">
 					<div class="inline inventory__metadata-block">
 						<p class="content-label">Name</p>
@@ -175,11 +175,11 @@
 					</div>
 					<div class="inline inventory__metadata-block">
 						<p class="content-label">Serial Number</p>
-						<p class="courier-bold">2230123ab-04</p>
+						<p class="courier-bold">YA3933853282</p>
 					</div>
 					<div class="inline inventory__metadata-block">
 						<p class="content-label">Part Number</p>
-						<p class="courier-bold">12355123ab</p>
+						<p class="courier-bold">01HL982</p>
 					</div>
 					<div class="inline inventory__metadata-block">
 						<p class="content-label">Manufacturer</p>
@@ -195,7 +195,7 @@
 					</div>
 					<div class="inline inventory__metadata-block">
 						<p class="content-label">Field replaceable</p>
-						<p class="courier-bold">Not replaceable</p>
+						<p class="courier-bold">Replaceable</p>
 					</div>
 					<div class="inline inventory__metadata-block">
 						<p class="content-label">Higher level FRU</p>

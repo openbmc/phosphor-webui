@@ -1,6 +1,6 @@
 <div id="sensors-overview">
     <div class="row column">
-        <h1>Sensors data</h1>
+        <h1>Sensors</h1>
     </div>
     <section class="row column">
         <div class="page-header">
@@ -12,9 +12,9 @@
     <section class="row column">
         <!-- search -->
         <div class="content__search">
-            <label for="content__search-input">Event Log Search</label>
+            <label for="content__search-input">Sensors Search</label>
             <input id="content__search-input" type="text" placeholder="Filter issues" ng-model="customSearch" ng-keydown="doSearchOnEnter($event)"/>
-            <input id="content__search-submit" type="submit" class="btn btn-secondary" value="Submit" ng-click="doSearchOnClick()"/>
+            <input id="content__search-submit" type="submit" class="btn btn-primary" value="Filter" ng-click="doSearchOnClick()"/>
         </div>
         <div class="toggle-filter">
             <button class="inline first btn-primary" ng-click="toggleSeverityAll()"
@@ -25,9 +25,6 @@
             </button>
             <button class="inline" ng-click="toggleSeverity('warning')"
                     ng-class="selectedSeverity.warning ? 'btn-primary' : 'btn-secondary'">Warning
-            </button>
-            <button class="inline last" ng-click="toggleSeverity('normal')"
-                    ng-class="selectedSeverity.normal ? 'btn-primary' : 'btn-secondary'">Normal
             </button>
         </div>
 
