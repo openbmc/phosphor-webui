@@ -67,7 +67,11 @@ window.angular && (function (angular) {
                 }).success(function(response){
                       var json = JSON.stringify(response);
                       var content = JSON.parse(json);
-                      callback(content.data.Asserted);
+                      if(callback){
+                        callback(content.data.Asserted);
+                      }else{
+                        return content.data.Asserted;
+                      }
                 }).error(function(error){
                   console.log(error);
                 });
@@ -355,7 +359,11 @@ window.angular && (function (angular) {
                           }, content.data[key]));
                         }
                       }
-                      callback(data, dataClone);
+                      if(callback){
+                        callback(data, dataClone);
+                      }else{
+                        return data;
+                      }
                 }).error(function(error){
                   console.log(error);
                 });
@@ -553,7 +561,11 @@ window.angular && (function (angular) {
                           }
                         }
                       }
-                      callback(data, bmcActiveVersion, hostActiveVersion);
+                      if(callback){
+                        callback(data, bmcActiveVersion, hostActiveVersion);
+                      }else{
+                        return(data, bmcActiveVersion, hostActiveVersion);
+                      }
                 }).error(function(error){
                   console.log(error);
                 });
@@ -582,6 +594,48 @@ window.angular && (function (angular) {
                   }else{
                       console.log(error);
                   }
+                });
+              },
+              getBMCEthernetInfo: function(callback){
+                $http({
+                  method: 'GET',
+                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory/system/chassis/motherboard/boxelder/bmc/ethernet",
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: true
+                }).success(function(response){
+                      var json = JSON.stringify(response);
+                      var content = JSON.parse(json);
+                      if(callback){
+                        callback(content.data);
+                      }else{
+                        return content.data;
+                      }
+                }).error(function(error){
+                  console.log(error);
+                });
+              },
+              getBMCInfo: function(callback){
+                $http({
+                  method: 'GET',
+                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory/system/chassis/motherboard/boxelder/bmc",
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: true
+                }).success(function(response){
+                      var json = JSON.stringify(response);
+                      var content = JSON.parse(json);
+                      if(callback){
+                        callback(content.data);
+                      }else{
+                        return content.data;
+                      }
+                }).error(function(error){
+                  console.log(error);
                 });
               },
           };

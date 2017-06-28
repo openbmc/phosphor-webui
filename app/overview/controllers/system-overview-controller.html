@@ -17,19 +17,19 @@
 					<ul class="overview__metadata-wrapper">
 						<li class="overview__metadata-block">
 							<p class="content-label">Model</p>
-							<p class="courier-bold">5150-A0A</p>
+							<p class="courier-bold">{{bmc_info.Model}}</p>
 						</li>
 						<li class="overview__metadata-block">
 							<p class="content-label">Manufacturer</p>
-							<p class="courier-bold">IBM</p>
+							<p class="courier-bold">{{bmc_info.Manufacturer}}</p>
 						</li>
 						<li class="overview__metadata-block">
 							<p class="content-label">Firmware version</p>
-							<p class="courier-bold">2.3.104497</p>
+							<p class="courier-bold">{{server_firmware}}</p>
 						</li>
 						<li class="overview__metadata-block">
 							<p class="content-label">Serial number</p>
-							<p class="courier-bold">123456abcd</p>
+							<p class="courier-bold">{{bmc_info.SerialNumber}}</p>
 						</li>
 					</ul>
 				</div>
@@ -43,7 +43,7 @@
 					<ul class="overview__metadata-wrapper">
 						<li class="overview__metadata-block">
 							<p class="content-label">BMC IP address</p>
-							<p class="courier-bold">9.3.111.222</p>
+							<p class="courier-bold">{{dataService.server_id}}</p>
 						</li>
 						<li class="overview__metadata-block">
 							<p class="content-label">Hostname</p>
@@ -51,11 +51,11 @@
 						</li>
 						<li class="overview__metadata-block">
 							<p class="content-label">Mac address</p>
-							<p class="courier-bold"></p>
+							<p class="courier-bold">{{mac_address}}</p>
 						</li>
 						<li class="overview__metadata-block">
 							<p class="content-label">Firmware</p>
-							<p class="courier-bold">4.3.104497</p>
+							<p class="courier-bold">{{bmc_firmware}}</p>
 						</li>
 
 					</ul>
@@ -81,7 +81,7 @@
 			</div>
 
 			<!-- Power metadata -->
-			<div class="row column overview__event-log event-log__events" >
+			<div class="row column overview__event-log event-log__events" ng-show="logs.length">
 				<h3 class="bold h4">High priority events</h3>
 
 				<!-- TODO: I built event log section so that you could easily just pull in our existing event log template. All display tweaks (such as hiding checkbox) are done via SCSS -->
@@ -90,7 +90,7 @@
 				<!-- <p class="disabled">No high priority events</p> -->
 
 				<!-- single event -->
-				<a href="#/server-health/event-log"> <!-- this should go to specific event in event log page -->
+				<a href="#/server-health/event-log" ng-repeat="event in logs|orderBy:'+Id'"> <!-- this should go to specific event in event log page -->
 					<div class="row column event-log__single-event">
 						<div class="row">
 							<div class="column small-1 large-1 event-log__col-check">
@@ -101,12 +101,12 @@
 								</label>
 							</div>
 							<div class="column small-9 large-10 event-log__event-info" ng-click=""><!-- click will go to specific event in event log page-->
-								<p class="inline event__id">#00995</p>
+								<p class="inline event__id">#{{event.Id}}</p>
 								<p class="inline event__priority high-priority">High</p>
-								<p class="inline event__severity">emergency</p>
-								<p class="inline event__timestamp">03/09/2017 21:00:26 EDT</p>
+								<p class="inline event__severity">{{event.severity_code}}</p>
+								<p class="inline event__timestamp">{{event.Timestamp| date:'MM/dd/yyyy  HH:mm:ss '+tmz: tmz}}</p>
 								<div>
-									<p class="inline event__description">Vestibulum ac diam sit amet quam vehicula aliquet quam id dui</p>
+									<p class="inline event__description">{{event.Severity}}</p>
 								</div>
 							</div>
 							<div class="column small-1 large-1">
@@ -115,38 +115,12 @@
 						</div>
 					</div>
 				</a>
-				<!-- single event -->
-				<a href="#/server-health/event-log"><!-- this should go to specific event in event log page -->
-				<div class="row column event-log__single-event">
-					<div class="row">
-						<div class="column small-1 large-1 event-log__col-check">
-							<label class="control-check">
-								<input type="checkbox" name="events__check" ng-click="event.selected= ! event.selected"
-										ng-checked="event.selected"/>
-								<span class="control__indicator"></span>
-							</label>
-						</div>
-						<div class="column small-9 large-10 event-log__event-info" ng-click=""><!-- click will go to specific event in event log page-->
-							<p class="inline event__id">#00991</p>
-							<p class="inline event__priority high-priority">High</p>
-							<p class="inline event__severity">emergency</p>
-							<p class="inline event__timestamp">02/09/2017 21:00:26 EDT</p>
-							<div>
-								<p class="inline event__description">Vestibulum ac diam sit amet quam vehicula aliquet quam id dui Praesent sapien massa, convallis a pellentesque nec, egestas non nisi.</p>
-							</div>
-						</div>
-						<div class="column small-1 large-1">
-							<button class="accord-trigger"></button>
-						</div>
-					</div>
-				</div>
-				</a>
 			</div>
 		</div>
 		<div class="column large-4">
 			<div class="quick-links" >
-				<a href="" class="quick-links__item quick-links__events event-log__events" >
-					<span class="event__priority high-priority">High</span><p class="inline quick-links__event-copy">3 High priority events</p><!-- link to event log filtered to the high priority events -->
+				<a href="#/server-health/event-log" class="quick-links__item quick-links__events event-log__events" ng-show="logs.length">
+					<span class="event__priority high-priority">High</span><p class="inline quick-links__event-copy">{{logs.length}} High priority events</p><!-- link to event log filtered to the high priority events -->
 				</a>
 				<div class="quick-links__item no-icon">
 					<p class="inline quick-links__label">BMC time</p>
@@ -165,11 +139,11 @@
 						<label for="toggle__switch-round" tabindex="0">Server indicator is <span class="uid-switch__status">{{dataService.LED_state}}</span></label>
 					</div>
 				</div>
-				<a href="" class="no-icon quick-links__item">
+				<a href="#/server-control/remote-console" class="no-icon quick-links__item">
 					<p class="inline quick-links__label">Launch Serial Over Lan</p>
 					<span class="btn-pop-out inline float-right"></span>
 				</a>
-				<a href="" class="quick-links__item">
+				<a href="#/configuration/network" class="quick-links__item">
 					<p class="inline quick-links__label">Edit network settings</p>
 				</a>
 			</div>
