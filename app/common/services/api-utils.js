@@ -599,7 +599,7 @@ window.angular && (function (angular) {
               getBMCEthernetInfo: function(callback){
                 $http({
                   method: 'GET',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory/system/chassis/motherboard/boxelder/bmc/ethernet",
+                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -620,7 +620,7 @@ window.angular && (function (angular) {
               getBMCInfo: function(callback){
                 $http({
                   method: 'GET',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory/system/chassis/motherboard/boxelder/bmc",
+                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -636,6 +636,110 @@ window.angular && (function (angular) {
                       }
                 }).error(function(error){
                   console.log(error);
+                });
+              },
+              getHardwares: function(callback){
+                $http({
+                  method: 'GET',
+                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory/system",
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: true
+                }).success(function(response){
+                      var json = JSON.stringify(response);
+                      var content = JSON.parse(json);
+                      var hardwareData = [];
+                      var keyIndexMap = {};
+                      var title = "";
+                      var data = [];
+                      var searchText = "";
+                      var componentIndex = -1;
+                      var tempParts = [];
+
+
+                      function isSubComponent(key){
+
+                        for(var i = 0; i < Constants.HARDWARE.parent_components.length; i++){
+                          if(key.split(Constants.HARDWARE.parent_components[i]).length == 2) return true;
+                        }
+
+                        return false;
+                      }
+
+                      function titlelize(title){
+                        title = title.replace(/([A-Z0-9]+)/g, " $1").replace(/^\s+/, "");
+                        for(var i = 0; i < Constants.HARDWARE.uppercase_titles.length; i++){
+                          if(title.toLowerCase().indexOf((Constants.HARDWARE.uppercase_titles[i] + " ")) > -1){
+                            return title.toUpperCase();
+                          }
+                        }
+
+                        return title;
+                      }
+
+                      function camelcaseToLabel(obj){
+                        var transformed = [], label = "";
+                        for(var key in obj){
+                          label = key.replace(/([A-Z0-9]+)/g, " $1").replace(/^\s+/, "");
+                          if(obj[key] !== ""){
+                            transformed.push({key:label, value: obj[key]});
+                          }
+                        }
+
+                        return transformed;
+                      }
+
+                      function getSearchText(data){
+                        var searchText = "";
+                        for(var i = 0; i < data.length; i++){
+                          searchText += " " + data[i].key + " " + data[i].value;
+                        }
+
+                        return searchText; 
+                      }
+
+                      for(var key in content.data){
+                        if(content.data.hasOwnProperty(key) && 
+                           key.indexOf(Constants.HARDWARE.component_key_filter) == 0){
+
+                          data = camelcaseToLabel(content.data[key]);
+                          searchText = getSearchText(data);
+                          title = key.split("/").pop();
+
+                          title = titlelize(title);
+
+                          if(!isSubComponent(key)){
+                              hardwareData.push(Object.assign({
+                                path: key,
+                                title: title,
+                                selected: false,
+                                expanded: false,
+                                search_text: title.toLowerCase() + " " + searchText.toLowerCase(),
+                                sub_components: [], 
+                                original_data: {key: key, value: content.data[key]}
+                              }, {items: data}));
+
+                              keyIndexMap[key] = hardwareData.length - 1;
+                          }else{
+                            var tempParts = key.split("/");
+                            tempParts.pop();
+                            tempParts = tempParts.join("/");
+                            componentIndex = keyIndexMap[tempParts];
+                            data = content.data[key];
+                            data.title = title;
+                            hardwareData[componentIndex].sub_components.push(data);
+                            hardwareData[componentIndex].search_text += " " + title.toLowerCase();
+                          }
+                      }
+                    }
+
+                    if(callback){
+                       callback(hardwareData, content.data);
+                    }else{
+                       return { data: hardwareData, original_data: content.data};
+                    }
                 });
               },
           };

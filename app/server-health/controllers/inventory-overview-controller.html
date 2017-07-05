@@ -2,15 +2,17 @@
 	<div class="row column no-padding">
 		<h1>Hardware status</h1>
 		<div class="page-header">
-			<button class="inline btn-export float-right">Export</button>
+
+			<a ng-href="data:text/json;charset=utf-8,{{originalData}}" class="inline btn-export float-right"  download="export_inventory.json" ng-show="hardwares.length">Export</a>
+
 		</div>
 	</div>
 	<section class="row column">
 		<!-- search -->
 		<div class="content__search">
 			<label for="content__search-input">Search</label> <input id="content__search-input" type="text"
-				placeholder="Filter hardware components"/>
-			<input id="content__search-submit" type="submit" class="btn btn-primary" value="Filter"/>
+				placeholder="Filter hardware components" ng-model="customSearch" ng-keydown="doSearchOnEnter($event)"/>
+			<input id="content__search-submit" type="submit" class="btn btn-primary" value="Filter" ng-click="doSearchOnClick()"/>
 		</div>
 
 	</section>
@@ -20,353 +22,29 @@
 			<div class="column large-12 header__actions-bar">
 				<div class="inline inventory__heading inventory__device-col">Hardware</div>
 				<div class="inline inventory__heading inventory__function-col">&nbsp;</div>
-				<div class="inline inventory__heading inventory__assoc-event sort-heading sort-down">Associated events</div>
+				<div class="inline inventory__heading inventory__assoc-event"><!--Associated events--></div>
 			</div>
 		</div>
-		<!-- hardware item -->
-		<div class="inventory__group" ng-class="{'active': inv.meta}" ng-click="inv.meta = ! inv.meta">
-			<p class="inline inventory__device-col">System</p>
+		<div ng-repeat="inventory in hardwares|filter:filterBySearchTerms" class="inventory__group"  ng-class="{'active': inventory.expanded}" ng-click="inventory.expanded = ! inventory.expanded">
+			<p class="inline inventory__device-col">{{inventory.title}}</p>
 			<p class="inline inventory__function-col"></p>
-			<p class="inline inventory__assoc-event"></p>
-			<button class="accord-trigger float-right" ng-class="{'active': inv.meta}"></button>
-			<div class="row inventory__metadata" ng-class="{'active': inv.meta}">
+			<p class="inline inventory__assoc-event"><!--<a href="#/server-health/event-log">View 3 events</a>--></p>
+			<button class="accord-trigger float-right" ng-class="{'active': inventory.expanded}"></button>
+			<div class="row inventory__metadata" ng-class="{'active': inventory.expanded}">
 				<div class="column large-9 no-padding">
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Name</p>
-						<p class="courier-bold">System</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Serial Number</p>
-						<p class="courier-bold">2230123ab-04</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Part Number</p>
-						<p class="courier-bold">12355123ab</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Manufacturer</p>
-						<p class="courier-bold">IBM</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Version</p>
-						<p class="courier-bold">10</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Functional</p>
-						<p class="courier-bold">Yes</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Field replaceable</p>
-						<p class="courier-bold">Not replaceable</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Higher level FRU</p>
-						<p class="courier-bold">Motherboard</p>
+					<div  ng-repeat="item in inventory.items" class="inline inventory__metadata-block">
+						<p class="content-label">{{item.key}}</p>
+						<p class="courier-bold">{{item.value}}</p>
 					</div>
 				</div>
-				<div class="column large-3">
-
-				</div>
-			</div>
-		</div>
-
-		<!-- hardware item -->
-		<div class="inventory__group">
-			<p class="inline inventory__device-col">Chassis</p>
-			<p class="inline inventory__function-col"></p>
-			<p class="inline inventory__assoc-event"></p>
-			<button class="accord-trigger float-right"></button>
-			<div class="row inventory__metadata">
-				<div class="column large-9 no-padding">
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Name</p>
-						<p class="courier-bold">Processor module</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Serial Number</p>
-						<p class="courier-bold">2230123ab-04</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Part Number</p>
-						<p class="courier-bold">12355123ab</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Manufacturer</p>
-						<p class="courier-bold">IBM</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Version</p>
-						<p class="courier-bold">10</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Functional</p>
-						<p class="courier-bold">Yes</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Field replaceable</p>
-						<p class="courier-bold">Not replaceable</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Higher level FRU</p>
-						<p class="courier-bold">Motherboard</p>
-					</div>
-				</div>
-				<div class="column large-3 no-padding">
-				</div>
-			</div>
-		</div>
-		<!-- hardware item -->
-		<div class="inventory__group ">
-			<p class="inline inventory__device-col">Motherboard</p>
-			<p class="inline inventory__function-col"></p>
-			<p class="inline inventory__assoc-event"></p>
-			<button class="accord-trigger float-right"></button>
-			<div class="row inventory__metadata ">
-				<div class="column large-9 no-padding">
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Name</p>
-						<p class="courier-bold">Processor module</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Serial Number</p>
-						<p class="courier-bold">2230123ab-04</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Part Number</p>
-						<p class="courier-bold">12355123ab</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Manufacturer</p>
-						<p class="courier-bold">IBM</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Version</p>
-						<p class="courier-bold">10</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Functional</p>
-						<p class="courier-bold">Yes</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Field replaceable</p>
-						<p class="courier-bold">Not replaceable</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Higher level FRU</p>
-						<p class="courier-bold">Motherboard</p>
-					</div>
-				</div>
-				<div class="column large-3 no-padding">
-
-				</div>
-			</div>
-		</div>
-		<!-- hardware item w/ sub categories -->
-		<div class="inventory__group"  ng-class="{'active': invCpu.meta}" ng-click="invCpu.meta = ! invCpu.meta">
-			<p class="inline inventory__device-col">CPU 0</p>
-			<p class="inline inventory__function-col"></p>
-			<p class="inline inventory__assoc-event"><a href="#/server-health/event-log">View 3 events</a></p>
-			<button class="accord-trigger float-right" ng-class="{'active': invCpu.meta}"></button>
-			<div class="row inventory__metadata" ng-class="{'active': invCpu.meta}">
-				<div class="column large-9 no-padding">
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Name</p>
-						<p class="courier-bold">Processor module</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Serial Number</p>
-						<p class="courier-bold">YA3933853282</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Part Number</p>
-						<p class="courier-bold">01HL982</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Manufacturer</p>
-						<p class="courier-bold">IBM</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Version</p>
-						<p class="courier-bold">10</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Functional</p>
-						<p class="courier-bold">Yes</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Field replaceable</p>
-						<p class="courier-bold">Replaceable</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Higher level FRU</p>
-						<p class="courier-bold">Motherboard</p>
-					</div>
-				</div>
-				<div class="column large-3 no-padding">
+				<div class="column large-3 no-padding" ng-show="inventory.sub_components.length">
 					<div class="inventory__metadata-scroll show-scroll"> <!-- If content overflows; add 'show-scroll' class via JS to force visible scrollbar in webkit browsers-->
 						<div class="content-label">Subcomponents</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 0</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold"><span class="icon icon__warning"></span>Core 1</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 2</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 3</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 4</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 5</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 6</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 7</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 8</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 9</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 10</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 11</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 12</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 13</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 14</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 15</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 16</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 17</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 18</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 19</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 20</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 21</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 22</p>
-						</div>
-						<div class="inline inventory__metadata-block">
-							<p class="courier-bold">Core 23</p>
+						<div ng-repeat="sub_component in inventory.sub_components" class="inline inventory__metadata-block">
+							<p class="courier-bold"><span class="icon icon__warning" ng-if="sub_component.Present"></span>{{sub_component.title}}</p>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<!-- hardware item -->
-		<div class="inventory__group ">
-			<p class="inline inventory__device-col">Ethernet</p>
-			<p class="inline inventory__function-col">Inactive</p>
-			<p class="inline inventory__assoc-event"><a href="#/server-health/event-log">View 1 event</a></p>
-			<button class="accord-trigger float-right"></button>
-			<div class="row inventory__metadata ">
-				<div class="column large-9 no-padding">
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Name</p>
-						<p class="courier-bold">Processor module</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Serial Number</p>
-						<p class="courier-bold">2230123ab-04</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Part Number</p>
-						<p class="courier-bold">12355123ab</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Manufacturer</p>
-						<p class="courier-bold">IBM</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Version</p>
-						<p class="courier-bold">10</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Functional</p>
-						<p class="courier-bold">Yes</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Field replaceable</p>
-						<p class="courier-bold">Not replaceable</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Higher level FRU</p>
-						<p class="courier-bold">Motherboard</p>
-					</div>
-				</div>
-				<div class="column large-3 no-padding"></div>
-			</div>
-		</div>
-		<!-- hardware item no sub items -->
-		<div class="inventory__group inv-disabled">
-			<p class="inline inventory__device-col">DIMM 0</p>
-			<p class="inline inventory__function-col">Not present</p>
-			<p class="inline inventory__assoc-event"></p>
-			<button class="accord-trigger float-right"></button>
-			<div class="row inventory__metadata ">
-				<div class="column large-9 no-padding">
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Name</p>
-						<p class="courier-bold">Processor module</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Serial Number</p>
-						<p class="courier-bold">2230123ab-04</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Part Number</p>
-						<p class="courier-bold">12355123ab</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Manufacturer</p>
-						<p class="courier-bold">IBM</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Version</p>
-						<p class="courier-bold">10</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Functional</p>
-						<p class="courier-bold">Yes</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Field replaceable</p>
-						<p class="courier-bold">Not replaceable</p>
-					</div>
-					<div class="inline inventory__metadata-block">
-						<p class="content-label">Higher level FRU</p>
-						<p class="courier-bold">Motherboard</p>
-					</div>
-				</div>
-				<div class="column large-3 no-padding"></div>
 			</div>
 		</div>
 	</section>

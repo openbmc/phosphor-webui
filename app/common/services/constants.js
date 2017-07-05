@@ -20,7 +20,7 @@ window.angular && (function (angular) {
                     password: "testpass",
                 },
                 API_CREDENTIALS: {
-                    host: 'https://9.3.185.173',
+                    host: 'https://9.3.164.177',
                     mock_host: 'http://localhost:3000'
                 },
                 API_RESPONSE: {
@@ -60,6 +60,15 @@ window.angular && (function (angular) {
                 },
                 PAGINATION: {
                     LOG_ITEMS_PER_PAGE: 4
+                },
+                HARDWARE: {
+                  component_key_filter: '/xyz/openbmc_project/inventory/system',
+                  parent_components: [
+                   /xyz\/openbmc_project\/inventory\/system\/chassis\/motherboard\/cpu\d+\//
+                  ],
+                  uppercase_titles: [
+                   'cpu', 'dimm'
+                  ]
                 },
                 SENSOR_DATA_TEMPLATE: {
                     sensors: [
