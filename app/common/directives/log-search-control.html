@@ -1,5 +1,6 @@
+<p class="content-label">Filter events</p>
 <div class="content__search">
     <label for="content__search-input">Event Log Search</label>
-    <input id="content__search-input" type="text" placeholder="Filter issues" ng-model="customSearch" ng-keydown="doSearchOnEnter($event)"/>
+    <input id="content__search-input" type="text" ng-model="customSearch" ng-keydown="doSearchOnEnter($event)"/>
     <input id="content__search-submit" type="submit" class="btn btn-primary" value="Filter" ng-click="doSearchOnClick()"/>
 </div>
