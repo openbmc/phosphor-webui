@@ -151,6 +151,9 @@ $title-minWidth: 210px;
     @include mediaQuery(small) {
       @include calcColumn-3;
     }
+    .content-label {
+      color:lighten($darkgrey, 10%);
+    }
   }
 
   .inventory__metadata-scroll {
