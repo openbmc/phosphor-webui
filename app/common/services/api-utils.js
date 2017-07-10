@@ -11,7 +11,7 @@ window.angular && (function (angular) {
     'use strict';
     angular
         .module('app.common.services')
-        .factory('APIUtils', ['$http', 'Constants', function($http, Constants){
+        .factory('APIUtils', ['$http', 'Constants', '$q', function($http, Constants, $q){
           var SERVICE = {
               LOGIN_CREDENTIALS: Constants.LOGIN_CREDENTIALS,
               API_CREDENTIALS: Constants.API_CREDENTIALS,
@@ -599,7 +599,7 @@ window.angular && (function (angular) {
               getBMCEthernetInfo: function(callback){
                 $http({
                   method: 'GET',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory",
+                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory/system/chassis/motherboard/boxelder/bmc/ethernet",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -620,7 +620,7 @@ window.angular && (function (angular) {
               getBMCInfo: function(callback){
                 $http({
                   method: 'GET',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory",
+                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory/system/chassis/motherboard/boxelder/bmc",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -641,7 +641,7 @@ window.angular && (function (angular) {
               getHardwares: function(callback){
                 $http({
                   method: 'GET',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory/system",
+                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory/enumerate",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -741,6 +741,56 @@ window.angular && (function (angular) {
                        return { data: hardwareData, original_data: content.data};
                     }
                 });
+              },
+              deleteLogs: function(logs) {
+                  var defer = $q.defer();
+                  var promises = [];
+
+                  function finished(){
+                      defer.resolve();
+                  }
+
+                  logs.forEach(function(item){
+                    promises.push($http({
+                                      method: 'POST',
+                                      url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/logging/entry/"+item.Id+"/action/Delete",
+                                      headers: {
+                                          'Accept': 'application/json',
+                                          'Content-Type': 'application/json'
+                                      },
+                                      withCredentials: true,
+                                      data: JSON.stringify({"data": []})
+                                 }));
+                  });
+
+                  $q.all(promises).then(finished);
+
+                  return defer.promise;
+              },
+              resolveLogs: function(logs) {
+                  var defer = $q.defer();
+                  var promises = [];
+
+                  function finished(){
+                      defer.resolve();
+                  }
+
+                  logs.forEach(function(item){
+                    promises.push($http({
+                                      method: 'PUT',
+                                      url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/logging/entry/"+item.Id+"/attr/Resolved",
+                                      headers: {
+                                          'Accept': 'application/json',
+                                          'Content-Type': 'application/json'
+                                      },
+                                      withCredentials: true,
+                                      data: JSON.stringify({"data": "1"})
+                                 }));
+                  });
+
+                  $q.all(promises).then(finished);
+
+                  return defer.promise;
               },
           };
           return SERVICE;

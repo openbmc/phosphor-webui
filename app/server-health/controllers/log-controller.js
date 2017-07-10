@@ -120,6 +120,28 @@ window.angular && (function (angular) {
                     $scope.export_data = JSON.stringify(data);
                 }
 
+
+                $scope.accept = function(){
+                    APIUtils.deleteLogs($scope.selectedEvents).then(function(){
+                        $scope.confirm = false;
+                        $scope.loadLogs();
+                    });
+                }
+
+                $scope.resolve = function(){
+                    var events = $scope.selectedEvents.filter(function(item){
+                        return item.Resolved != 1;
+                    });
+
+                    if(!events.length) return;
+
+                    APIUtils.resolveLogs(events).then(function(){
+                        events.forEach(function(item){
+                            item.Resolved = 1;
+                        });
+                    });
+                }
+
                 $scope.$watch('logs', function(){
                     $scope.selectedEvents = $scope.logs.filter(function(item){
                         return item.selected;

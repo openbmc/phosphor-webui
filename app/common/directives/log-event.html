@@ -7,7 +7,7 @@
                      event</strong>?</p>
              </div>
              <div class="inline__confirm-buttons">
-                 <button class="btn-primary" ng-click="accept()">Yes</button>
+                 <button class="btn-primary" ng-click="accept(event)">Yes</button>
                  <button class="btn-primary" ng-click="event.confirm=false;">No</button>
              </div>
          </div>
@@ -48,7 +48,7 @@
                              src="assets/images/icon-trashcan.svg"
                              alt=""/>Delete
                      </button>
-                     <button class="btn-resolve"><img class="event__icon" src="assets/images/icon-checklist.svg" alt=""/>Resolved</button>
+                     <button class="btn-resolve" ng-class="{'disabled': (event.Resolved == 1)}" ng-click="resolveEvent(event)" ng-disabled="event.Resolved == 1"><img class="event__icon" src="assets/images/icon-checklist.svg" alt=""/>Resolved</button>
                  </div>
                  <div class="event__related" ng-show="event.related_items.length">
                      <p class="inline event__related-label">Related items:</p>

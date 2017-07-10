@@ -22,6 +22,18 @@ window.angular && (function (angular) {
                     $scope.copyFailed = function (err) {
                         console.error('Error!', err);
                     };
+                    $scope.resolveEvent = function(event){
+                        APIUtils.resolveLogs([{Id: event.Id}]).then(function(){
+                            event.Resolved = 1;
+                        });
+                    }
+
+                    $scope.accept = function(){
+                        $scope.event.selected = true;
+                        $timeout(function(){
+                            $scope.$parent.accept();
+                        }, 10);
+                    }
                 }]
             };
         }]);

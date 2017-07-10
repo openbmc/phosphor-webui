@@ -20,7 +20,7 @@ window.angular && (function (angular) {
                     password: "testpass",
                 },
                 API_CREDENTIALS: {
-                    host: 'https://9.3.164.177',
+                    host: 'https://9.3.181.15',
                     mock_host: 'http://localhost:3000'
                 },
                 API_RESPONSE: {
@@ -59,7 +59,7 @@ window.angular && (function (angular) {
                     Warning: 'Medium'
                 },
                 PAGINATION: {
-                    LOG_ITEMS_PER_PAGE: 4
+                    LOG_ITEMS_PER_PAGE: 25
                 },
                 HARDWARE: {
                   component_key_filter: '/xyz/openbmc_project/inventory/system',
