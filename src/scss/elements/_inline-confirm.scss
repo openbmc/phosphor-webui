@@ -1,0 +1,53 @@
+
+// inline confirmation message
+.inline__confirm {
+  position: absolute;
+  top: 0;
+  transform: translateY(-100%);
+  width: 100%;
+  margin-left: -1.8em;
+  z-index: 5;
+  background: $darkbg__primary;
+  color: $white;
+  padding: 2em 2em 1.55em 2em;
+  overflow: hidden;
+  &.active {
+    transform: translateY(0);
+    @include fastTransition-all;
+  }
+}
+
+// Power confirmation buttons
+.inline__confirm-buttons {
+  .btn-primary {
+    background: transparent;
+    border: 2px solid $white;
+    padding: 1em 2.2em;
+    margin: 0 10px;
+    border-radius: 4px;
+    &:focus,
+    &:hover {
+      background: $primebtn__bg;
+      border: 2px solid $primebtn__bg;
+    }
+  }
+  @include mediaQuery(large) {
+    float: right;
+  }
+}
+
+// confirmation message
+.inline__confirm-message {
+  display: inline-block;
+}
+
+// Power confirmation message icon
+.inline__confirm-message i::before {
+  content: '\26A0';
+  color: $white;
+  display: inline-block;
+  font-size: 2em;
+  vertical-align: middle;
+  font-style: normal;
+  margin-right: 15px;
+}

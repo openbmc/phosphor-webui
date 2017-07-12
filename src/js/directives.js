@@ -84,7 +84,7 @@ angular
             scope.$watch('confirm', function(){
                 if(scope.confirm){
                     $timeout(function(){
-                        angular.element(e[0].parentNode).css({'min-height': e[0].querySelector('.power__confirm').offsetHeight + 'px'});
+                        angular.element(e[0].parentNode).css({'min-height': e[0].querySelector('.inline__confirm').offsetHeight + 'px'});
                     }, 0);
                 }else{
                     angular.element(e[0].parentNode).css({'min-height': 0+ 'px'});

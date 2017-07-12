@@ -27,7 +27,7 @@
             <button id="power__power-on" class="btn-secondary" ng-click="powerOnConfirm()" role="button">Power On</button>
             <p>Attempts to power on the server</p>
 
-            <confirm title="power off" message="Power off the server" confirm="power_confirm" ng-show="power_confirm" callback="togglePower"></confirm>
+            <confirm title="power on" message="Power on the server" confirm="power_confirm" ng-show="power_confirm" callback="togglePower"></confirm>
         </div>
 
         <!-- Power reboot/shutdown options : when server is off all of these are hidden. When one option is selected, the others are disabled. -->
