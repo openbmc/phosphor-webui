@@ -1,4 +1,17 @@
-<div class="row column">
-    <h1>BMC Reboot</h1>
-    <p>BMC Reboot will be here.</p>
+<div id="bmc-reboot">
+    <div class="row column">
+        <h1>Reboot BMC</h1>
+    </div>
+
+    <div class="row column">
+        <span class="bmc-reboot__status-log inline">BMC last reboot at {{dataService.last_updated |date:'h:mm:ss on MM/dd/yyyy'}}</span>
+    </div>
+
+    <div class="row column">
+
+            <div class="row column btm-border-grey bmc-reboot-option" ng-class="{disabled: confirm && !bmcreboot_confirm, transitionAll: confirm && bmcreboot_confirm}">
+                <button id="bmc__reboot" class="btn-secondary" ng-click="bmcrebootConfirm()" role="button">Reboot BMC</button>
+                <confirm title="Reboot BMC" message="perform an orderly shutdown" confirm="bmcreboot_confirm" callback="bmcReboot"></confirm>
+            </div>
+        </div>
 </div>

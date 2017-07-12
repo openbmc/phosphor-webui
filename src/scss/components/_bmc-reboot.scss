@@ -1,0 +1,10 @@
+// BMC Reboot
+
+#bmc-reboot {
+  .bmc-reboot__status-log {
+    color: $darkgrey;
+    font-weight: 500;
+    margin-top: 1em;
+    padding-bottom: .7em;
+  }
+}
