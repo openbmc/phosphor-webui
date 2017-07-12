@@ -25,6 +25,12 @@
  .controller('systemOverviewController', ['$scope', 'dataService', function($scope, dataService){
     $scope.dataService = dataService;
  }])
+ .controller('unitIDController', ['$scope', 'dataService', function($scope, dataService){
+    $scope.dataService = dataService;
+ }])
+ .controller('bmcRebootController', ['$scope', 'dataService', function($scope, dataService){
+    $scope.dataService = dataService;
+ }])
   .controller('powerOperationsController', ['$scope', 'APIUtils', 'dataService', function($scope, APIUtils, dataService){
     $scope.dataService = dataService;
     $scope.confirm = false;

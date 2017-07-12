@@ -24,6 +24,16 @@ angular
         'templateUrl': 'system-overview.html',
         'controller': 'systemOverviewController'
       })
+      .when('/unit-id', {
+        'templateUrl': 'unit-id.html',
+        'controller': 'unitIDController',
+         authenticated: true
+      })
+      .when('/bmc-reboot', {
+        'templateUrl': 'bmc-reboot.html',
+        'controller': 'bmcRebootController',
+         authenticated: true
+      })
       .otherwise({
         'redirectTo': '/login'
       });
