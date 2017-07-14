@@ -63,6 +63,17 @@ $warning-darkbg: #ffb000;
 $low-lightbg: #c42cd6;
 $normal: #00baa1;
 
+// Priority tags
+$lowPriorityColor: #00b6cb;
+$lowPriorty-bg: #cdf0f6;
+$medPriorityColor: #feb101;
+$medPriorty-bg: #fef0cd;
+$highPriorityColor: #e62425;
+$highPriority-bg: #edc9cb;
+$resolvedColor: #999999;
+$resolved-bg: #d6d6d6;
+
+
 // Threshold graphs
 $thresh-critical: $error-color;
 $thresh-warning: #ffb001;

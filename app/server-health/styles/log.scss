@@ -1,6 +1,8 @@
 // Event Log SCSS
 #event-log {
 
+  .dropdown__button {
+  }
   // Dropwdowns filter
   .dropdown__date.row {
     padding: .5em;
@@ -67,6 +69,11 @@
       text-indent: -9999px;
     }
   }
+  .event__status-filter .dropdown__wrapper,
+  .event__status-filter .dropdown__button {
+    width: 100%;
+    text-align: left;
+  }
 }
 
 .event-log__filters {
@@ -97,6 +104,13 @@
     .btn-delete,
     .btn-resolve {
       color: $white;
+    }
+    .event-log__col-check {
+      text-align: left;
+      max-width: 30px;
+      .control-check {
+        margin-left: -5px;
+      }
     }
   }
   .inline__confirm {
@@ -171,6 +185,16 @@
     margin: .5em 0 .5em 0;
     position: relative;
     overflow: hidden;
+    @include fastTransition-all;
+    &.active {
+      background-color: $lightgrey;
+      @include slowTransition-all;
+    }
+    .accord-trigger {
+      position: absolute;
+      right: 1em;
+      top: .3em;
+    }
   }
   .event-log__event-info {
     &:hover {
@@ -189,19 +213,24 @@
     min-width: 103px;
     text-align: center;
     &.high-priority {
-      background: $error-color;
-
+      background: $highPriority-bg;
+      border: 2px solid $highPriorityColor;
+      color: darken($highPriorityColor, 5%);
     }
     &.med-priority {
-      background: $alert__warning;
-
+      background: $medPriorty-bg;
+      border: 2px solid $medPriorityColor;
+      color: darken($medPriorityColor, 15%);
     }
     &.low-priority {
-      background: $lightbg__primary;
+      background: $lowPriorty-bg;
+      border: 2px solid $lowPriorityColor;
+      color: darken($lowPriorityColor, 5%);
     }
     &.event-resolved {
-      background: $purple;
-      padding: 2px 1em;
+      background: $resolved-bg;
+      border: 2px solid $resolvedColor;
+      color: $resolvedColor;
     }
   }
 
@@ -209,17 +238,34 @@
   .event__severity {
     font-size: .7em;
     text-transform: uppercase;
-    color: $darkgrey;
     font-weight: 700;
     min-width: 103px;
     @include mediaQuery(medium) {
-      margin: 0 1em;
+      margin: 0 1em 0 1.5em;
+    }
+    &.high-priority {
+      color: darken($highPriorityColor, 5%);
+    }
+    &.med-priority {
+      color: darken($medPriorityColor, 15%);
+    }
+    &.low-priority {
+      color: darken($lowPriorityColor, 5%);
+    }
+    &.event-resolved {
+      color: $resolvedColor;
     }
   }
 
   //Event description
   .event__description {
     font-weight: 400;
+    margin-left: 1em;
+    @include mediaQuery(small) {
+      margin-left: 4.5em;
+      margin-right: 1em;
+    }
+    word-break: break-all;
   }
 
   //Event ID
@@ -246,7 +292,6 @@
     -webkit-transition: 0.5s linear max-height;
     transition: 0.5s linear max-height;
     &.active {
-      max-height: 1000px; //max-height used to allow flexible height of content and still allow transition
       @include mediaQuery(small) {
         max-height: 1000px;
       }
