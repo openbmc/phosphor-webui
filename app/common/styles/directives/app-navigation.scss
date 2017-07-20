@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 $nav__toplvlWidth: 125px;
 $nav__seclvlWidth: 240px;
 
@@ -13,6 +14,16 @@ $nav__seclvlWidth: 240px;
   background: $nav__top-level-color;
   //height: 100%;
   position: absolute;
+=======
+$nav__toplvlWidth: 120px;
+$nav__seclvlWidth: 240px;
+
+// Top level navigation
+#nav__top-level {
+  background: $nav__top-level-color;
+  height: 100%;
+  position: fixed;
+>>>>>>> 4c1a3dd... Major update to code structure
   left: 0;
   top: 0;
   bottom: 0;
@@ -21,6 +32,7 @@ $nav__seclvlWidth: 240px;
   margin: 0;
   padding: 0;
   width: $nav__toplvlWidth;
+<<<<<<< HEAD
   overflow-y: auto;
   li {
     margin: 0;
@@ -29,6 +41,11 @@ $nav__seclvlWidth: 240px;
   .nav-icon {
     @include navIcons;
   }
+=======
+  li {
+    margin: 0;
+  }
+>>>>>>> 4c1a3dd... Major update to code structure
   .button, button, a {
     background: transparent;
     height: auto;
@@ -42,9 +59,18 @@ $nav__seclvlWidth: 240px;
     margin-bottom: 0;
     white-space: normal;
     border-radius: 0;
+<<<<<<< HEAD
     text-decoration: none;
     border-top: 1px solid transparent;
     border-bottom: 1px solid transparent;
+=======
+    .nav__icon {
+      color: $white;
+      max-height: 40px;
+      stroke-width: .5;
+      margin-bottom: -.5em;
+    }
+>>>>>>> 4c1a3dd... Major update to code structure
     a {
       margin-bottom: 5px;
     }
@@ -52,7 +78,11 @@ $nav__seclvlWidth: 240px;
       margin: 1em 0 0 0;
       display: block;
       font-size: .9em;
+<<<<<<< HEAD
       font-weight: 700;
+=======
+      font-weight: normal;
+>>>>>>> 4c1a3dd... Major update to code structure
       line-height: 1rem;
     }
 
@@ -68,17 +98,24 @@ $nav__seclvlWidth: 240px;
     &:hover {
       background: $nav__second-level-color;
       fill: $black;
+<<<<<<< HEAD
       color: $medblue;
       padding: 1em;
       border-radius: 0;
       border-top: 1px solid $medgrey;
       border-bottom: 1px solid $medgrey;
+=======
+      color: $black;
+      padding: 1em;
+      border-radius: 0;
+>>>>>>> 4c1a3dd... Major update to code structure
       .nav__icon-help__outer {
         stroke: $black;
       }
       .nav__icon-help__inner {
         fill: $lightbg__primary;
       }
+<<<<<<< HEAD
       .nav-icon {
         fill: $medblue;
         color: $medblue;
@@ -91,11 +128,14 @@ $nav__seclvlWidth: 240px;
           stroke: $medblue;
         }
       }
+=======
+>>>>>>> 4c1a3dd... Major update to code structure
     }
   }
   .opened {
     background: $nav__second-level-color;
     fill: $black;
+<<<<<<< HEAD
     color: $medblue;
     .nav__icon-help__outer {
       stroke: $lightbg__primary;
@@ -112,6 +152,12 @@ $nav__seclvlWidth: 240px;
         stroke: $medblue;
       }
     }
+=======
+    color: $black;
+    .nav__icon-help__outer {
+      stroke: $lightbg__primary;
+    }
+>>>>>>> 4c1a3dd... Major update to code structure
   }
 }
 
@@ -121,11 +167,16 @@ $nav__seclvlWidth: 240px;
   background: $nav__second-level-color;
   top: 0;
   bottom: 0;
+<<<<<<< HEAD
   left: -245px;
+=======
+  left: -$nav__toplvlWidth;
+>>>>>>> 4c1a3dd... Major update to code structure
   width: $nav__seclvlWidth;
   z-index: 97;
   padding: 0;
   margin: 0;
+<<<<<<< HEAD
   list-style-type: none;
   @include fastTransition-all;
   &.opened {
@@ -133,6 +184,23 @@ $nav__seclvlWidth: 240px;
     box-shadow: 7px 0 28px -10px $darkgrey;
     @include fastTransition-all;
   }
+=======
+  display: none;
+  list-style-type: none;
+  @include fastTransition-all;
+  @include mediaQuery(medium) {
+    left: $nav__toplvlWidth;
+    &.btn-overview {
+      display: block;
+    }
+  }
+  &.opened {
+    left: $nav__toplvlWidth;
+    display: block;
+    @include fastTransition-all;
+  }
+
+>>>>>>> 4c1a3dd... Major update to code structure
   a {
     padding: 1.2em 1em 1.2em 1em;
     display: block;

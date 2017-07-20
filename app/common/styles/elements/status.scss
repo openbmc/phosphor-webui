@@ -3,7 +3,6 @@
   content: '\25CF';
   display: inline-block;
   font-size: 2em;
-  color: $status-ok;
   margin-right: .1em;
   transform: translateY(2px);
   @include slowTransition-all;
@@ -41,6 +40,7 @@
 }
 
 .status-light__good {
+  color: $status-ok;
   &::before {
     @include status-light__good;
   }

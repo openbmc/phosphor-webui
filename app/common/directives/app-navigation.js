@@ -11,6 +11,7 @@ window.angular && (function (angular) {
                     'path': '=',
                     'showNavigation': '='
                 },
+<<<<<<< HEAD
                 'controller': ['$scope', '$location', 'dataService', function($scope, $location, dataService){
                     $scope.showSubMenu = false;
                     $scope.change = function(firstLevel){
@@ -33,6 +34,13 @@ window.angular && (function (angular) {
                             $scope.firstLevel = 'overview';
                         }
 
+=======
+                'controller': ['$scope', 'dataService', function($scope, dataService){
+                    $scope.$watch('showNavigation', function(){
+                        var paddingTop = 0;
+                        $scope.firstLevel = 'overview';
+                        $scope.secondLevel = 'system_overview';
+>>>>>>> 4c1a3dd... Major update to code structure
                         if($scope.showNavigation){
                             paddingTop = document.getElementById('header__wrapper').offsetHeight;
                         }

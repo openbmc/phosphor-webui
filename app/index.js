@@ -16,8 +16,11 @@ window.angular && (function (angular) {
         .module('app', [
             // Dependencies
             'ngRoute',
+<<<<<<< HEAD
             'angular-clipboard',
             'angularUtils.directives.dirPagination',
+=======
+>>>>>>> 4c1a3dd... Major update to code structure
             // Basic resources
             'app.constants',
             'app.templates',
@@ -27,11 +30,15 @@ window.angular && (function (angular) {
             'app.common.filters',
             // Model resources
             'app.login',
+<<<<<<< HEAD
             'app.overview',
             'app.serverControl',
             'app.serverHealth',
             'app.configuration',
             'app.users'
+=======
+            'app.overview'
+>>>>>>> 4c1a3dd... Major update to code structure
         ])
         // Route configuration
         .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
@@ -41,11 +48,16 @@ window.angular && (function (angular) {
                     'redirectTo': '/login'
                 });
         }])
+<<<<<<< HEAD
         .config(['$compileProvider', function ($compileProvider) {
           $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|data|blob):/);
         }])
         .config(['$httpProvider', function($httpProvider){
             $httpProvider.defaults.timeout = 20000;
+=======
+        .config(['$httpProvider', function($httpProvider){
+            //console.log($httpProvider.interceptors);
+>>>>>>> 4c1a3dd... Major update to code structure
             $httpProvider.interceptors.push('apiInterceptor');
         }])
         .run(['$rootScope', '$location', 'dataService', 'userModel',
@@ -75,8 +87,12 @@ window.angular && (function (angular) {
            $rootScope.$on('$locationChangeSuccess', function(event){
                var path = $location.path();
                dataService.path = path;
+<<<<<<< HEAD
                if(['/','/login','/logout'].indexOf(path) == -1 &&
                 path.indexOf('/login') == -1){
+=======
+               if(['/','/login','/logout'].indexOf(path) == -1){
+>>>>>>> 4c1a3dd... Major update to code structure
                    dataService.showNavigation = true;
                }else{
                    dataService.showNavigation = false;
@@ -84,10 +100,13 @@ window.angular && (function (angular) {
            });
 
            $rootScope.$on('timedout-user', function(){
+<<<<<<< HEAD
              if(sessionStorage.getItem('LOGIN_ID') == 'FAKE_ID'){
                 return;
              }
 
+=======
+>>>>>>> 4c1a3dd... Major update to code structure
              sessionStorage.removeItem('LOGIN_ID');
              $location.path('/login');
            });

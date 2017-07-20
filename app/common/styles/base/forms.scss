@@ -19,45 +19,29 @@ input[type='url'],
 input[type='text'],
 textarea {
   border-radius: 0px;
-  border: 1px solid $input-border;
+  border: 1px solid $lightbg__grey;
   height: 3.1em;
+  transition: all 1s ease;
   margin: 0 0 1em 0;
-  background: $white;
-  box-shadow: 0 0 0;
-  transition: none !important;
+  background: $lightbg__grey;
+  box-shadow: 0px 0px 0px;
   &:focus {
-    border-color: $medgrey;
-    box-shadow: 0 -5px $field__focus inset;
+    border-color: $lightbg__accent;
+    box-shadow: 0px 0px 0px;
   }
-  &:disabled,
-  .disabled {
+  &:disabled, .disabled {
     background: $field__disabled;
     border: 1px solid $lightbg__grey;
   }
   &.input__error {
-    box-shadow: 0 -5px $error-color inset;
-    color: $error-color;
-    &:focus {
-      box-shadow: 0 -5px $field__focus inset;
-    }
+    border-color: $error;
+    background: rgba(230, 35, 37, 0.1);
   }
-}
-
-//Foundation overwrite
-[type=color], [type=date], [type=datetime-local], [type=datetime], [type=email], [type=month], [type=number], [type=password], [type=search], [type=tel], [type=text], [type=time], [type=url], [type=week], textarea {
-  border-color: $input-border;
-}
-
-input[readonly],
-input[readonly]:focus{
-  box-shadow: 0 0 0;
-  background: $field__disabled;
-  border: 1px solid $lightbg__grey;
 }
 
 textarea { padding: .2em;
   height: auto;}
-input[type="submit"], .submit {
+input[type="submit"] {
   margin: 1em 0;
   width: 100%;
 }
@@ -73,4 +57,74 @@ select{
     @include bgImage__arrowDown-accent;
     box-shadow: 0 0 0;
   }
+}
+
+//Custom Checkbox and Radio
+.checkbox-custom,
+.radio-custom {
+  opacity: 0;
+  position: absolute;
+}
+
+.checkbox-custom, .checkbox-custom-label,
+.radio-custom,
+.radio-custom-label {
+  display: inline-block;
+  vertical-align: middle;
+  margin: .1em 0 .1em -.5em;
+  padding: .5em;
+  cursor: pointer;
+}
+
+.checkbox-custom-label, .radio-custom-label {
+  position: relative;
+  padding-left: 2em;
+
+}
+
+.checkbox-custom + .checkbox-custom-label:before,
+.radio-custom + .radio-custom-label:before {
+  content: '';
+  background: #fff;
+  border: 1px solid $lightbg__grey;
+  display: inline-block;
+  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+  margin-top: -3px;
+  text-align: center;
+  position: absolute;
+  left: 9px;
+  top: 15px;
+}
+
+.checkbox-custom:checked + .checkbox-custom-label:after {
+  content: '\2713';
+  position: absolute;
+  left: 10px;
+  top: 3px;
+  font-size: 1em;
+  padding: 4px 0 0 2px;
+  color: $white;
+}
+
+.checkbox-custom:checked + .checkbox-custom-label:before {
+  background: $lightbg__primary;
+  @include fastTransition-all;
+}
+
+.radio-custom + .radio-custom-label:before {
+  border-radius: 50%;
+}
+
+.radio-custom:checked + .radio-custom-label:before {
+  background: $lightbg__primary;
+  @include fastTransition-all;
+  box-shadow: inset 0px 0px 0px 2px #fff;
+}
+
+
+.checkbox-custom:focus + .checkbox-custom-label, .radio-custom:focus + .radio-custom-label {
+  outline: 1px solid $lightbg__grey; /* focus style */
 }

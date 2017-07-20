@@ -1,0 +1,27 @@
+// BMC Reboot
+
+#bmc-reboot {
+  ul {
+    margin: 0;
+    padding: 0;
+    margin-left: 1.3em;
+  }
+  .bmc-reboot__status-log {
+    color: $darkgrey;
+    font-weight: 500;
+    margin-top: 1em;
+    padding-bottom: .7em;
+  }
+
+  .bmc-reboot-option {
+    position: relative;
+    overflow: hidden;
+    padding-top: 1.5em;
+    padding-left: 1.8em;
+    button {
+      margin-bottom: 1.5em;
+      margin-top: 1.5em;
+    }
+  }
+
+}

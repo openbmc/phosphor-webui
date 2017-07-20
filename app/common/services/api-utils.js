@@ -11,7 +11,11 @@ window.angular && (function (angular) {
     'use strict';
     angular
         .module('app.common.services')
+<<<<<<< HEAD
         .factory('APIUtils', ['$http', 'Constants', '$q', function($http, Constants, $q){
+=======
+        .factory('APIUtils', ['$http', 'Constants', function($http, Constants){
+>>>>>>> 4c1a3dd... Major update to code structure
           var SERVICE = {
               LOGIN_CREDENTIALS: Constants.LOGIN_CREDENTIALS,
               API_CREDENTIALS: Constants.API_CREDENTIALS,
@@ -19,8 +23,11 @@ window.angular && (function (angular) {
               CHASSIS_POWER_STATE: Constants.CHASSIS_POWER_STATE,
               HOST_STATE_TEXT: Constants.HOST_STATE,
               HOST_STATE: Constants.HOST_STATE,
+<<<<<<< HEAD
               LED_STATE: Constants.LED_STATE,
               LED_STATE_TEXT: Constants.LED_STATE_TEXT,
+=======
+>>>>>>> 4c1a3dd... Major update to code structure
               getChassisState: function(callback){
                 $http({
                   method: 'GET',
@@ -55,6 +62,7 @@ window.angular && (function (angular) {
                   console.log(error);
                 });
               },
+<<<<<<< HEAD
               getLEDState: function(callback){
                 $http({
                   method: 'GET',
@@ -76,6 +84,8 @@ window.angular && (function (angular) {
                   console.log(error);
                 });
               },
+=======
+>>>>>>> 4c1a3dd... Major update to code structure
               login: function(username, password, callback){
                 $http({
                   method: 'POST',
@@ -92,11 +102,15 @@ window.angular && (function (angular) {
                   }
                 }).error(function(error){
                   if(callback){
+<<<<<<< HEAD
                       if(error && error.status && error.status == 'error'){
                         callback(error);
                       }else{
                         callback(error, true);
                       }
+=======
+                      callback(null, true);
+>>>>>>> 4c1a3dd... Major update to code structure
                   }
                   console.log(error);
                 });
@@ -170,6 +184,7 @@ window.angular && (function (angular) {
                   }
                 });
               },
+<<<<<<< HEAD
               setLEDState: function(state, callback){
                 $http({
                   method: 'PUT',
@@ -219,6 +234,15 @@ window.angular && (function (angular) {
                 });
               },
               hostPowerOn: function(callback){
+=======
+              hostPowerOn: function(callback){
+                /**
+                curl -c cjar -b cjar -k -H "Content-Type: application/json" -d 
+                "{\"data\": \"xyz.openbmc_project.State.Host.Transition.Off\"}" 
+                -X PUT  
+                https://9.3.164.147/xyz/openbmc_project/state/host0/attr/RequestedHostTransition 
+                **/
+>>>>>>> 4c1a3dd... Major update to code structure
                 $http({
                   method: 'PUT',
                   url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/state/host0/attr/RequestedHostTransition",
@@ -313,6 +337,7 @@ window.angular && (function (angular) {
                       console.log(error);
                   }
                 });
+<<<<<<< HEAD
               },
               getLogs: function(callback){
                 $http({
@@ -785,6 +810,9 @@ window.angular && (function (angular) {
 
                   return defer.promise;
               },
+=======
+              }
+>>>>>>> 4c1a3dd... Major update to code structure
           };
           return SERVICE;
         }]);

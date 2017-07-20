@@ -1,0 +1,76 @@
+label, legend {
+  font-size:1em;
+  font-weight: 300;
+  margin: 0;
+  &.disabled {
+    color: $lightbg__grey;
+  }
+  .error {
+    font-size: .9em;
+  }
+}
+
+input[type='email'],
+input[type='number'],
+input[type='password'],
+input[type='search'],
+input[type='tel'],
+input[type='url'],
+input[type='text'],
+textarea {
+  border-radius: 0px;
+  border: 1px solid $input-border;
+  height: 3.1em;
+  margin: 0 0 1em 0;
+  background: $white;
+  box-shadow: 0 0 0;
+  transition: none !important;
+  &:focus {
+    border-color: $medgrey;
+    box-shadow: 0 -5px $field__focus inset;
+  }
+  &:disabled,
+  .disabled {
+    background: $field__disabled;
+    border: 1px solid $lightbg__grey;
+  }
+  &.input__error {
+    box-shadow: 0 -5px $error-color inset;
+    color: $error-color;
+    &:focus {
+      box-shadow: 0 -5px $field__focus inset;
+    }
+  }
+}
+
+//Foundation overwrite
+[type=color], [type=date], [type=datetime-local], [type=datetime], [type=email], [type=month], [type=number], [type=password], [type=search], [type=tel], [type=text], [type=time], [type=url], [type=week], textarea {
+  border-color: $input-border;
+}
+
+input[readonly],
+input[readonly]:focus{
+  box-shadow: 0 0 0;
+  background: $field__disabled;
+  border: 1px solid $lightbg__grey;
+}
+
+textarea { padding: .2em;
+  height: auto;}
+input[type="submit"], .submit {
+  margin: 1em 0;
+  width: 100%;
+}
+
+//Custom select
+select{
+  border-radius: 0px;
+  height:auto;
+  @include fastTransition-all;
+  @include bgImage__arrowDown-primary;
+  &:focus {
+    border-color: $lightbg__accent;
+    @include bgImage__arrowDown-accent;
+    box-shadow: 0 0 0;
+  }
+}

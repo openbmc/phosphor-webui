@@ -1,0 +1,163 @@
+$logoHeight: 30px;
+$logoMaxHeight: 100px;
+$logoMaxWidth: 125px;
+
+#header__wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.app__version {
+  margin-left: 1em;
+  display: none;
+  @include mediaQuery(x-small) {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+header {
+  position: relative;
+  background: #000;
+  color: $white;
+  overflow: hidden;
+}
+
+.header__logout {
+  float: right;
+  display: inline-block;
+  color: $white;
+  font-size: .9em;
+  text-decoration: none;
+  padding: 1em;
+  &:visited {
+    color: $white;
+  }
+}
+
+.header__functions-wrapper {
+  color: $white;
+  background: $darkbg__primary;
+  padding: 0 1.1em;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  min-height: 5em;
+  #header__server-name {
+    //margin-top: .8em;
+    font-size: 1.5em;
+    font-weight: 500;
+    color: $white;
+    padding: .9em;
+    height: 100%;
+    background: transparent;
+    max-width: 350px;
+    white-space: nowrap;
+  }
+  .logo__wrapper {
+    padding-top: .5em;
+    //position: absolute;
+    //top: 50%;
+    //transform: translateY(-50%);
+  }
+
+  #header__logo {
+    vertical-align: middle;
+    margin: 1em;
+    float: left;
+    height: $logoHeight; //required for <SVG> logos - can remove if using img
+    max-height: $logoMaxHeight;
+    max-width: $logoMaxWidth;
+    width: auto;
+  }
+  #header__funct-icon {
+    display: block;
+    font-size: 2.3em;
+    color: $white;
+    padding: 0;
+    &:before {
+      content: '\2261';
+      line-height: .5;
+      font-size: 2em;
+      padding: 0 .3em;
+    }
+    @include mediaQuery(medium) {
+      display: none;
+    }
+  }
+
+  .header__functions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: $darkbg__primary;
+    z-index: 100;
+    @include fastTransition-all;
+    span {
+      display: block;
+      color: $white;
+      font-size: 1em;
+    }
+    a, p, button {
+      display: block;
+      float: left;
+      text-decoration: none;
+      border-left: 1px solid #384456;
+      color: $lightgrey;
+      margin: 0;
+      padding: 1.250em 1.688em;
+      height: 100%;
+      font-size: 0.875em;
+      line-height: 1;
+      > span {
+        font-size: 1rem;
+        font-weight: bold;
+      }
+    }
+  }
+
+  // hide/show header functions based on screen size
+  .header__functions > #header__server-health {
+    display: none;
+    @include mediaQuery(small) {
+      display: block;
+    }
+  }
+
+  .header__functions > .header__refresh {
+    display: none;
+    @include mediaQuery(medium) {
+      display: block;
+    }
+  }
+
+  .header__functions {
+    .header__refresh {
+      color: $lightgrey;
+      line-height: 1.8;
+      margin-top: -4px;
+    }
+  }
+  .header__server-power,
+  .header__page-refresh {
+    &:hover {
+      background: rgba(60, 109, 240, .4);
+    }
+  }
+  .header__page-refresh {
+    img {
+      stroke: $white;
+      height: 22px;
+      width: 24px;
+    }
+  }
+}
+
+// end header__functions-wrapper

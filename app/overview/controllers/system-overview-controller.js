@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Controller for systemOverview
+=======
+ * Controller for system overview
+>>>>>>> 4c1a3dd... Major update to code structure
  *
  * @module app/overview
  * @exports systemOverviewController
@@ -17,6 +21,7 @@ window.angular && (function (angular) {
             '$window', 
             'APIUtils', 
             'dataService',
+<<<<<<< HEAD
             function($scope, $window, APIUtils, dataService){
                 $scope.dataService = dataService;
                 $scope.dropdown_selected = false;
@@ -80,8 +85,16 @@ window.angular && (function (angular) {
                     APIUtils.setLEDState(toggleState, function(status){
                     });
                 }
+=======
+            function($scope, $window, APIUtils, dataService, userModel){
+                $scope.dataService = dataService;
+>>>>>>> 4c1a3dd... Major update to code structure
             }
         ]
     );
 
+<<<<<<< HEAD
 })(angular);
+=======
+})(angular);
+>>>>>>> 4c1a3dd... Major update to code structure

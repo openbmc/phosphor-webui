@@ -20,8 +20,12 @@ window.angular && (function (angular) {
                     password: "testpass",
                 },
                 API_CREDENTIALS: {
+<<<<<<< HEAD
                     host: 'https://9.3.181.15',
                     mock_host: 'http://localhost:3000'
+=======
+                    host: 'https://9.3.164.147'
+>>>>>>> 4c1a3dd... Major update to code structure
                 },
                 API_RESPONSE: {
                     ERROR_STATUS: 'error',
@@ -44,6 +48,7 @@ window.angular && (function (angular) {
                     off: -1,
                     booting: 0,
                     unreachable: -2
+<<<<<<< HEAD
                 },
                 LED_STATE: {
                     on: true,
@@ -78,8 +83,14 @@ window.angular && (function (angular) {
                   'xyz.openbmc_project.Sensor.Value.Unit.Watts': 'watts',
                   'xyz.openbmc_project.Sensor.Value.Unit.Amperes': 'amperes',
                   'xyz.openbmc_project.Sensor.Value.Unit.Joules': 'joules'
+=======
+>>>>>>> 4c1a3dd... Major update to code structure
                 }
             };
         });
 
+<<<<<<< HEAD
 })(window.angular);
+=======
+})(window.angular);
+>>>>>>> 4c1a3dd... Major update to code structure

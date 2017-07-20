@@ -1,5 +1,6 @@
 .inline {
   display: inline-block;
+  line-height: 2;
 }
 
 .disabled {
@@ -13,7 +14,7 @@
   clear: both;
 }
 .error {
-  color: $error-color;
+  color: $error;
 }
 
 .hide {
@@ -42,66 +43,14 @@
   }
 }
 
-.fixed {
-  position:fixed;
-  top:130px;
-  z-index:200;
-}
-
-.bold {
-  font-weight: 700;
-}
-
 .no-margin {
-  margin: 0 !important;
-}
-
-.no-padding {
-  padding:0 !important;
+  margin: 0px !important;
 }
 
 .no-bottom-margin {
-  margin-bottom: 0 !important;
+  margin-bottom: 0px !important;
 }
 
 .no-top-margin {
-  margin-top: 0 !important;
-}
-
-.btm-border-grey {
-  border-bottom: 1px solid $lightbg__grey;
-}
-
-.transitionAll {
-  transition: all .5s ease;
-}
-
-//Uploading
-.uploading {
-  @include indeterminate-bar;
-  font-weight: 700;
-  padding: .2em 6em .2em 1em;
-  margin: .8em 0;
-  width: 100%;
-}
-
-.accessible-text {
-  height: 0;
-  width: 0;
-  position: absolute;
-  overflow: hidden;
-}
-
-.show-scroll {
-  // Force scrollbar to always be visible in webkit browsers
-  &::-webkit-scrollbar {
-    background-color: lighten($medgrey, 5%);
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: rgba(0,0,0,.5);
-    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
-  }
+  margin-top: 0px !important;
 }

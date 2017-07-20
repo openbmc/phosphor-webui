@@ -18,11 +18,14 @@ window.angular && (function (angular) {
         // Route configuration
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
+<<<<<<< HEAD
                 .when('/login/:fake_login', {
                     'templateUrl': 'login/controllers/login-controller.html',
                     'controller': 'LoginController',
                     authenticated: false
                 })
+=======
+>>>>>>> 4c1a3dd... Major update to code structure
                 .when('/login', {
                     'templateUrl': 'login/controllers/login-controller.html',
                     'controller': 'LoginController',

@@ -19,8 +19,11 @@ window.angular && (function (angular) {
             'dataService',
             function($scope, $window, APIUtils, dataService, userModel){
                 $scope.dataService = dataService;
+<<<<<<< HEAD
 
                 $scope.dropdown_selected = false;
+=======
+>>>>>>> 4c1a3dd... Major update to code structure
             }
         ]
     );

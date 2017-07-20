@@ -1,0 +1,24 @@
+html, body {
+  height: 100%;
+  @include fontFamily;
+  font-size: 16px;
+  color: $black;
+}
+
+p {
+  margin-bottom: .8em;
+  transition: margin .05s;
+}
+
+a {
+  color: $links;
+  &:visited {
+    color: $links__visited;
+  }
+  &:hover {
+    text-decoration: underline;
+  }
+  :focus {
+    color: $links;
+  }
+}

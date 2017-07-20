@@ -1,98 +1,28 @@
 // Global
-$white: #ffffff;
+$white: #fff;
 $black: #333;
-$darkgrey: #666;
-$medgrey: #d7dbe0;
-$lightgrey: #f5f7fa;
-$lightblue: #f1f2f6;
-$medblue: #3f71ec;
-$purple: #5A3EC8;
-$darkpurple: #20214f;
-$field__disabled: #e6e6e6;
-$field__focus: #3C6DEF;
-$btn__disabled-txt: #a6a5a6;
-$btn__disabled-bg: #d8d8d8;
+$field__disabled: #F4F8F8;
+$error: #FF5C49;
+$status-ok: #098145;
 
 // Dark background
 $darkbg__grey: #E3ECEC;
 $darkbg__accent: #79a6f6;
-$darkbg__primary: #19273c;
+$darkbg__primary: #1d3458;
+$active: #648FFF;
 
-//Disabled table elements
-$disabled-row: #dddee0;
-$disabled-row-txt: #999999;
-
-//Forms
-$input-border: #a7a7a7;
-
-// Light Background
+// White Background
 $lightbg__grey: #b8c1c1;
-$lightbg__accent: #d8e2fc;
-$lightbg__primary: #3c6df0;
-
-// Primary Button colors
-$primebtn__bg: #3c6df0;
-$primebtn__text: $white;
-
-// Secondary Button colors
-$secbtn__bg: #ebf0fc;
-$secbtn__border: #3f71ec;
-$secbtn__text: #3f71ec;
-
-// Dropdowns
-$dropdown__focus-bg: #e6e9ee;
-
-// Status colors
-$error-color: #e62425;
-$status-ok: #34bc6e;
-$status-ok-light: #bcefce;
-$status-warn: #ffb000;
+$lightbg__accent: #3c6df0;
+$lightbg__primary: #19273c;
 
 // Alerts
-$alert__error: rgb(230, 35, 37);
-$alert__warning: rgb(255, 127, 0);
-$alert__message: rgb(203, 221, 235);
-
-// Severity
-$critical-lightbg: #e62325;
-$critical-darkbg: #ff5c49;
-$severity-medium-lightbg: #dc267f;
-$medium-darkbg: #FF509E;
-$warning-lightbg: #ff836f;
-$warning-darkbg: #ffb000;
-$low-lightbg: #c42cd6;
-$normal: #00baa1;
-
-// Priority tags
-$lowPriorityColor: #00b6cb;
-$lowPriorty-bg: #cdf0f6;
-$medPriorityColor: #feb101;
-$medPriorty-bg: #fef0cd;
-$highPriorityColor: #e62425;
-$highPriority-bg: #edc9cb;
-$resolvedColor: #999999;
-$resolved-bg: #d6d6d6;
-
-
-// Threshold graphs
-$thresh-critical: $error-color;
-$thresh-warning: #ffb001;
-$thresh-normal: $lightgrey;
-
-//Inventory
-$active: #c6b6f5;
-$inactive: $severity-medium-lightbg;
-$present: #b1bef3;
-$not-present: $severity-medium-lightbg;
+$alert__error: rgba(230, 35, 37, 0.3);
+$alert__warning: rgba(255, 127, 0, 0.3);
+$alert__message: rgba(203, 221, 235, 0.5);
 
 // Links
-$links: #3c6df0;
-$links__hover: $lightbg__primary;
-$links__visited: #8ea7ea;
+$links: #648FFF;
+$links__hover: $lightbg__accent;
+$links__visited: #5A3EC8;
 $links__disabled: rgba(27, 40, 52, 0.70);
-
-// Navigation
-$nav__top-level-color: #1a273b;
-$nav__second-level-color: #e6e9ed;
-
-

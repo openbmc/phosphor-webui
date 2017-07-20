@@ -17,6 +17,7 @@ window.angular && (function (angular) {
             '$window', 
             'APIUtils', 
             'dataService', 
+<<<<<<< HEAD
             'userModel',
             '$routeParams',
             function($scope, $window, APIUtils, dataService, userModel, $routeParams){
@@ -28,6 +29,12 @@ window.angular && (function (angular) {
                     $window.location.hash = '#/overview/system';
                 }
 
+=======
+            'userModel', 
+            function($scope, $window, APIUtils, dataService, userModel){
+                $scope.dataService = dataService;
+
+>>>>>>> 4c1a3dd... Major update to code structure
                 $scope.tryLogin = function(username, password, event){
                     if(event.keyCode === 13){
                         $scope.login(username, password);
@@ -43,7 +50,11 @@ window.angular && (function (angular) {
                         userModel.login(username, password, function(status, unreachable){
                             if(status){
                                 $scope.$emit('user-logged-in',{});
+<<<<<<< HEAD
                                 $window.location.hash = '#/overview/system';
+=======
+                                $window.location.hash = '#/system-overview';
+>>>>>>> 4c1a3dd... Major update to code structure
                             }else{
                                 if(!unreachable){
                                    $scope.error = true;

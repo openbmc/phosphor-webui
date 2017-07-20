@@ -19,8 +19,12 @@ window.angular && (function (angular) {
             this.server_state = 'Unreachable';
             this.server_status = -2;
             this.chassis_state = 'On';
+<<<<<<< HEAD
             this.LED_state = Constants.LED_STATE_TEXT.off;
             this.server_id = Constants.API_CREDENTIALS.host.replace(/[^\d]+/m,"");
+=======
+            this.server_id = "Server 9.3.164.147";
+>>>>>>> 4c1a3dd... Major update to code structure
             this.last_updated = new Date();
 
             this.loading = false;
@@ -29,7 +33,10 @@ window.angular && (function (angular) {
             this.showNavigation = false;
             this.bodyStyle = {};
             this.path = '';
+<<<<<<< HEAD
             this.sensorData = [];
+=======
+>>>>>>> 4c1a3dd... Major update to code structure
 
             this.setPowerOnState = function(){
                 this.server_state = Constants.HOST_STATE_TEXT.on;

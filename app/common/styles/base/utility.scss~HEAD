@@ -1,0 +1,107 @@
+.inline {
+  display: inline-block;
+}
+
+.disabled {
+  color: $lightbg__grey;
+}
+
+.float-right {
+  float: right;
+}
+.clear-float {
+  clear: both;
+}
+.error {
+  color: $error-color;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.close {
+  color: $lightbg__primary;
+  font-size: 1.5em;
+  padding: 1em;
+  box-sizing: border-box;
+  line-height: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background: transparent;
+  border: 0px;
+  margin: 0;
+  &:hover {
+    color: $lightbg__accent;
+    background: transparent;
+  }
+}
+
+.fixed {
+  position:fixed;
+  top:130px;
+  z-index:200;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+.no-padding {
+  padding:0 !important;
+}
+
+.no-bottom-margin {
+  margin-bottom: 0 !important;
+}
+
+.no-top-margin {
+  margin-top: 0 !important;
+}
+
+.btm-border-grey {
+  border-bottom: 1px solid $lightbg__grey;
+}
+
+.transitionAll {
+  transition: all .5s ease;
+}
+
+//Uploading
+.uploading {
+  @include indeterminate-bar;
+  font-weight: 700;
+  padding: .2em 6em .2em 1em;
+  margin: .8em 0;
+  width: 100%;
+}
+
+.accessible-text {
+  height: 0;
+  width: 0;
+  position: absolute;
+  overflow: hidden;
+}
+
+.show-scroll {
+  // Force scrollbar to always be visible in webkit browsers
+  &::-webkit-scrollbar {
+    background-color: lighten($medgrey, 5%);
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+  }
+}

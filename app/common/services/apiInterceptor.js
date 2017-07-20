@@ -16,12 +16,18 @@ window.angular && (function (angular) {
         .service('apiInterceptor', ['$q', '$rootScope', 'dataService', function($q, $rootScope, dataService){
             return {
                 'request': function(config){
+<<<<<<< HEAD
                     dataService.loading = true;
                     config.timeout = 20000;
+=======
+                    dataService.server_unreachable = false;
+                    dataService.loading = true;
+>>>>>>> 4c1a3dd... Major update to code structure
                     return config;
                 },
                 'response': function(response){
                     dataService.loading = false;
+<<<<<<< HEAD
 
                     //not interested in template requests
                     if(!/^https?\:/i.test(response.config.url)){
@@ -33,6 +39,12 @@ window.angular && (function (angular) {
                         dataService.server_unreachable = true;
                     }else{
                         dataService.server_unreachable = false;
+=======
+                    dataService.last_updated = new Date();
+
+                    if(response == null){
+                        dataService.server_unreachable = true;
+>>>>>>> 4c1a3dd... Major update to code structure
                     }
 
                     if(response && response.status == 'error' &&
@@ -45,9 +57,12 @@ window.angular && (function (angular) {
                 'responseError': function(rejection){
                     dataService.server_unreachable = true;
                     dataService.loading = false;
+<<<<<<< HEAD
                     if(dataService.path != '/login'){
                         $rootScope.$emit('timedout-user', {});
                     }
+=======
+>>>>>>> 4c1a3dd... Major update to code structure
                     return $q.reject(rejection);
                 }
             };

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>openBMC</title>
+    <link rel="icon" href="favicon.ico?v=2"/>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/vendor.min.js"></script>
+
+</head>
+<body>
+<div class="login__wrapper">
+    <div class="row">
+        <div class="columns large-6">
+            <img src="img/logo.svg" class="login__logo" alt="IBM"/>
+        </div>
+        <div class="columns large-6">
+        </div>
+    </div>
+    <div class="row">
+        <div class="columns large-6 login__desc">
+            <h1>BMC Advanced System Management</h1>
+            <p>Build Version: 1.00.102</p>
+            <div class="login__server-info">
+                <h3>Server ID: 29000000166668</h3>
+                <p>Power SL-22LC</p>
+                <p>Server status: <span class="login__status">Operational</span></p>
+                <!-- if status is not operational add "error" class and change text -->
+            </div>
+        </div>
+        <div class="columns large-6">
+            <form id="login__form">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+
+                <input id="login__submit" type="submit" value="Log in" role="button">
+
+        </div>
+    </div>
+</div>
+<script src="js/app.min.js"></script>
+</body>
+</html>

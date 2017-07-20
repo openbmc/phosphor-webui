@@ -15,9 +15,12 @@ window.angular && (function (angular) {
         .module('app.common.services')
         .service('userModel', ['APIUtils',function(APIUtils){
             return {
+<<<<<<< HEAD
                 fakeLogin: function(callback){
                     sessionStorage.setItem('LOGIN_ID', 'FAKE_ID');
                 },
+=======
+>>>>>>> 4c1a3dd... Major update to code structure
                 login : function(username, password, callback){
                     APIUtils.login(username, password, function(response, error){
                         if(response && 
