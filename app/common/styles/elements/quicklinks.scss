@@ -4,6 +4,10 @@
   padding: 1em 1.4em;
   font-size: .9em;
   font-weight: 400;
+  margin: 1em 0;
+  @include mediaQuery(medium) {
+    margin: 0 0 0 1em;
+  }
   a {
     color: $black;
     text-decoration: none;
@@ -38,6 +42,14 @@
   &:last-child {
     border-bottom: 0;
   }
+  .float-right {
+    display:inline-block;
+    float: right;
+    @media(min-width: 1024px) and (max-width: 1140px) {
+      display: block;
+      float: none;
+    }
+  }
 }
 
 .quick-links__label {
@@ -46,7 +58,6 @@
 
 .quick-links__event-copy {
   color: $alert__error;
-  margin-left: 1em;
   margin-bottom: 0;
   font-weight: 700;
   font-size: .9em;
