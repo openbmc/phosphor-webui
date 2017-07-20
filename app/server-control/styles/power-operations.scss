@@ -89,15 +89,14 @@
     min-width: 100%;
     .btn-secondary {
       margin-bottom: .5em;
+      margin-right: 1em;
+      font-size: .9em;
       @include mediaQuery(small) {
-        min-width: 300px;
+        min-width: 240px;
       }
     }
     @include mediaQuery(small){
-      padding: 1.8em 0 0 1.8em;
-    }
-    p {
-      margin-left: 2em;
+      padding: 1.8em 0 0 0;
     }
   }
 
