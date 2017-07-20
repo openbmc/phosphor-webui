@@ -40,9 +40,6 @@ $title-minWidth: 210px;
     .inv-active {
       color: darken($active, 20%);
     }
-    .inv-present {
-      color: darken($present, 20%);
-    }
     &.inv-disabled {
       background: $medgrey;
       .inventory__device-col,
@@ -56,9 +53,6 @@ $title-minWidth: 210px;
       .accord-trigger:hover {
         cursor: default;
       }
-    }
-    .accord-trigger {
-      margin-top: -8px;
     }
   }
 
@@ -143,6 +137,9 @@ $title-minWidth: 210px;
       padding-bottom: 1em;
       @include fastTransition-all;
     }
+    &:hover {
+      cursor: default;
+    }
   }
 
   .inventory__metadata-block {
@@ -152,7 +149,7 @@ $title-minWidth: 210px;
       @include calcColumn-3;
     }
     .content-label {
-      color:lighten($darkgrey, 10%);
+      color: $darkgrey;
     }
   }
 
@@ -178,7 +175,10 @@ $title-minWidth: 210px;
       border-top: 0;
       max-height: 500px;
       padding: .5em 1em;
-      width: 23%;
+      width: 30%;
+    }
+    .icon__warning {
+      margin-top: -10px;
     }
   }
 }
