@@ -32,25 +32,25 @@
         <div class="dropdown__wrapper">
             <button class="dropdown__button" ng-click="statusFilter = statusFilter == true ? false : true;"
                     ng-class="{'active' : statusFilter}" toggle-flag="statusFilter">
-                    <span ng-if="selectedStatus.all">All issues</span>
-                    <span ng-if="!selectedStatus.all && selectedStatus.resolved">Resolved issues</span>
-                    <span ng-if="!selectedStatus.all && !selectedStatus.resolved">Unresolved issues</span>
+                    <span ng-if="selectedStatus.all">All events</span>
+                    <span ng-if="!selectedStatus.all && selectedStatus.resolved">Resolved events</span>
+                    <span ng-if="!selectedStatus.all && !selectedStatus.resolved">Unresolved events</span>
             </button>
             <ul class="dropdown__list inline" ng-show="statusFilter">
                 <li>
                     <button 
                         ng-click="selectedStatus.all = true; statusFilter = false;"
-                        ng-class="{'active' : selectedStatus.all}">All issues</button>
+                        ng-class="{'active' : selectedStatus.all}">All events</button>
                 </li>
                 <li>
                     <button 
                         ng-click="selectedStatus.all = false; selectedStatus.resolved = true; statusFilter = false;"
-                        ng-class="{'active' : selectedStatus.resolved}">Resolved issues</button>
+                        ng-class="{'active' : selectedStatus.resolved}">Resolved events</button>
                 </li>
                 <li>
                     <button 
                         ng-click="selectedStatus.all = false; selectedStatus.resolved = false; statusFilter = false;"
-                        ng-class="{'active' : !selectedStatus.resolved}">Unresolved issues</button>
+                        ng-class="{'active' : !selectedStatus.resolved}">Unresolved events</button>
                 </li>
             </ul>
         </div>
