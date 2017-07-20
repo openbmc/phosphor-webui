@@ -4,7 +4,7 @@
     </div>
 
     <div class="row column">
-        <h2 class="h4">Server LED control</h2>
+        <h2 class="h4">LED light control</h2>
     </div>
 
     <div class="row column" ng-class="{disabled: dataService.server_unreachable || dataService.loading}">
@@ -21,8 +21,8 @@
                 <label for="toggle__switch-round" tabindex="0">Server indicator is <span class="uid-switch__status">{{dataService.LED_state}}</span></label>
             </div>
             <div class="uid-switch__label inline">
-                <p>Server LED is <span class="uid-switch__status">{{dataService.LED_state}}</span></p>
-                <p>Control server LED to identify server unit</p>
+                <p>Server LED light is <span class="uid-switch__status">{{dataService.LED_state}}</span></p>
+                <p>Turn the LED light on or off. If the server has an LCD, use this control to display text (on) or not to display text (off) on the LCD.</p>
             </div>
         </div>
     </div>
