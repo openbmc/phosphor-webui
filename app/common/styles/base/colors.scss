@@ -82,8 +82,6 @@ $thresh-normal: $lightgrey;
 //Inventory
 $active: #c6b6f5;
 $inactive: $severity-medium-lightbg;
-$present: #b1bef3;
-$not-present: $severity-medium-lightbg;
 
 // Links
 $links: #3c6df0;
@@ -95,4 +93,5 @@ $links__disabled: rgba(27, 40, 52, 0.70);
 $nav__top-level-color: #1a273b;
 $nav__second-level-color: #e6e9ed;
 
-
+//Loader
+$loaderColor: #1d3458;
