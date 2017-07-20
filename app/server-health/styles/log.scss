@@ -93,6 +93,12 @@
   padding-right: 0;
 }
 
+.accord-trigger {
+  position: absolute;
+  right: 1em;
+  top: .3em;
+}
+
 #event-log__events,
 .event-log__events {
   display: block;
@@ -190,11 +196,6 @@
       background-color: $lightgrey;
       @include slowTransition-all;
     }
-    .accord-trigger {
-      position: absolute;
-      right: 1em;
-      top: .3em;
-    }
   }
   .event-log__event-info {
     &:hover {
@@ -279,7 +280,7 @@
   .event__timestamp {
     @include fontCourierBold;
     font-size: .9em;
-    color: #999999;
+    color: $darkgrey;
     @media (min-width: 1105px ) {
       float: right;
     }
