@@ -2,6 +2,7 @@ html, body {
   height: 100%;
   @include fontFamily;
   font-size: 16px;
+  font-weight: 400;
   color: $black;
 }
 
@@ -12,11 +13,14 @@ p {
 
 a {
   color: $links;
+  text-decoration: none;
+  font-weight: 700;
   &:visited {
-    color: $links__visited;
+    color: lighten($links, 5%);
   }
   &:hover {
     text-decoration: underline;
+    cursor: pointer;
   }
   :focus {
     color: $links;
