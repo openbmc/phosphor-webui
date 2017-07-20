@@ -11,21 +11,17 @@
 <div class="row column">
 	<p>Use the tables at the top of the page to manage firmware images that are currently available on the BMC. The
 		image at the top of the table is the Primary image, which will be used the next time the device is
-		booted. To change which image is Primary, move the image you want to use as the Primary to the top of the tablw using the arrows.</p>
-	<p>Use the Upload images section of this page to transfer new firmware images to the BMC. After uploading a new
-		image, activate it to make it available for use.</p>
-	<button class="inline btn-primary" ng-click="gotoAnchor()">
-		<span class="icon icon__bar-arrow">&nbsp;</span>&nbsp;&nbsp;Scroll to upload image file
-	</button>
+		booted. To change which image is Primary, move the image you want to use as the Primary to the top of the table using the arrows.</p>
+	<p><a ng-click="gotoAnchor()">Scroll down to upload an image file</a> to transfer a new firmware image to the BMC. After uploading a new image, Activate it to make it availbe for use.</p>
 </div>
 <firmware-list title="BMC images" version="bmcActiveVersion" firmwares="firmwares" filter-by="filters.bmc"></firmware-list>
 <firmware-list title="Server images" version="hostActiveVersion" firmwares="firmwares" filter-by="filters.host"></firmware-list>
 <div class="row column" id="upload">
 	<div class="column small-12 page-header">
 		<h2 class="inline h3 bold">Upload firmware image</h2>
-		<p>Specify an image file located on your workstation or a TFTP server. An image file may contain firmware images for the server, BMC, or other hardware devices. Each image that you upload will be unpacked from the image file, and added to the appropriate list above.</p>
 	</div>
 	<form id="firmware__upload-form" role="form" class="firmware__upload-form">
+		<p>Specify an image file located on your workstation or a TFTP server. An image file may contain firmware images for the server, BMC, or other hardware devices. Each image that you upload will be unpacked from the image file, and added to the appropriate list above.</p>
 		<div class=" column firmware__upload-station">
 			<h3 class="h4 bold">Upload from workstation</h3>
 			<p>Optional text area. Can be used to explain about updating openBMC firmware from workstation. This could
