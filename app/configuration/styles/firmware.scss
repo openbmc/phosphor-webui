@@ -21,6 +21,10 @@
         color: $medgrey;
       }
     }
+    .icon.icon-as-spacer {
+      text-indent: 0;
+      color: $btn__disabled-txt;
+    }
   }
 
   .table-header {
@@ -36,6 +40,13 @@
       }
     }
   }
+  .firmware__primary {
+    background-color: lighten($status-ok, 40%);
+  }
+}
+
+.firmware__version {
+  flex: 30%;
 }
 
 .firmware__active-version {
@@ -89,6 +100,7 @@
     background: $lightgrey;
     padding-left: 1em;
     padding-right: 1em;
+    margin-bottom: 1em;
   .btn-secondary {
     vertical-align: middle;
     margin: 1em .5em 1em 0;
@@ -101,9 +113,10 @@
   }
 }
 .firmware__upload-station {
-  padding-bottom: 1em;
+  padding-bottom: 2em;
   border-bottom: 1px solid $medgrey;
   padding-left: 1em;
+  margin-top: 2em;
 }
 .firmware__upload-tftp {
   padding-top: 2em;
