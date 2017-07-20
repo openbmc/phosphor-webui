@@ -27,30 +27,30 @@
     font-weight: 700;
     margin-top: -.3em;
     span:before {
-      content: '\25CF';
-      display: inline-block;
-      font-size: 1.8em;
-      color: $darkgrey;
-      margin-right: .1em;
-      vertical-align: middle;
-      transform: translateY(-4px);
-      @include slowTransition-all;
+      content: '';
+      position: absolute;
+      margin-left: -25px;
+      @extend .icon__off;
     }
   }
 
   // Power bar indicator
   .power__indicator-bar {
     font-weight: bold;
-    padding: 1.4em 3em 0;
+    padding: 1em 2em .7em;
     margin-bottom: 3em;
     background-size: 200% 100%;
-    background-image: linear-gradient(to right, $lightgrey 50%, $status-ok-light 50%);
+    background-image: linear-gradient(to right, darken($lightgrey,3%) 50%, $status-ok-light 50%);
     background-position: 0;
     transition: background-position 2s ease;
     overflow: hidden;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
     p {
       padding: 0;
       margin: 0;
+      font-size: 1.2em;
     }
     &.power__state-on {
       background-position: -100%;
@@ -63,10 +63,11 @@
     }
     &.power__state-off {
       background-position: 0;
-      color: $darkgrey;
+      color: $black;
       .power__state {
         span:before {
-          color: $darkgrey;
+          content: '';
+          @extend .icon__off;
         }
       }
     }
