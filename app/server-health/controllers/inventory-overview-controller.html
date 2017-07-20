@@ -2,16 +2,17 @@
 	<div class="row column no-padding">
 		<h1>Hardware status</h1>
 		<div class="page-header">
-
+			<h2 class="inline h4">All hardware in the system</h2>
 			<a ng-href="data:text/json;charset=utf-8,{{originalData}}" class="inline btn-export float-right"  download="export_inventory.json" ng-show="hardwares.length">Export</a>
 
 		</div>
 	</div>
 	<section class="row column">
 		<!-- search -->
+		<p class="content-label" aria-label="hardware filter">Filter hardware components</p>
 		<div class="content__search">
 			<label for="content__search-input">Search</label> <input id="content__search-input" type="text"
-				placeholder="Filter hardware components" ng-model="customSearch" ng-keydown="doSearchOnEnter($event)"/>
+				ng-model="customSearch" ng-keydown="doSearchOnEnter($event)"/>
 			<input id="content__search-submit" type="submit" class="btn btn-primary" value="Filter" ng-click="doSearchOnClick()"/>
 		</div>
 
@@ -30,7 +31,7 @@
 			<p class="inline inventory__function-col"></p>
 			<p class="inline inventory__assoc-event"><!--<a href="#/server-health/event-log">View 3 events</a>--></p>
 			<button class="accord-trigger float-right" ng-class="{'active': inventory.expanded}"></button>
-			<div class="row inventory__metadata" ng-class="{'active': inventory.expanded}">
+			<div class="row inventory__metadata" ng-class="{'active': inventory.expanded}" ng-click="$event.stopPropagation()">
 				<div class="column large-9 no-padding">
 					<div  ng-repeat="item in inventory.items" class="inline inventory__metadata-block">
 						<p class="content-label">{{item.key}}</p>
@@ -41,7 +42,7 @@
 					<div class="inventory__metadata-scroll show-scroll"> <!-- If content overflows; add 'show-scroll' class via JS to force visible scrollbar in webkit browsers-->
 						<div class="content-label">Subcomponents</div>
 						<div ng-repeat="sub_component in inventory.sub_components" class="inline inventory__metadata-block">
-							<p class="courier-bold"><span class="icon icon__warning" ng-if="sub_component.Present"></span>{{sub_component.title}}</p>
+							<p class="courier-bold">{{sub_component.title}}<span class="icon icon__warning" ng-if="sub_component.Present"></span></p>
 						</div>
 					</div>
 				</div>
