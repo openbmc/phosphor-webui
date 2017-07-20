@@ -1,11 +1,14 @@
+$userInputHeight: 40px;
+
 .user-manage__form {
   label {
-    min-width: 260px;
+    min-width: 210px;
     font-weight: 700;
+    margin-right: 4em;
   }
   input {
-    width: 190px;
-    height: 32px;
+    width: 225px;
+    height: $userInputHeight;
   }
   fieldset {
     display: block;
@@ -16,7 +19,7 @@
 
   .user-manage__input-wrapper {
     position: relative;
-    height: 32px;
+    height: $userInputHeight;
     margin-bottom: 1em;
     input {
       padding-right: 60px;
