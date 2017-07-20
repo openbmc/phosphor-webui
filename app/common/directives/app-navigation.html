@@ -66,10 +66,6 @@
 			</button>
 		</li>
 	</ul>
-	<!--<ul class="nav__second-level btn-overview" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'overview')}">-->
-	<!--<li ng-class="{'active': (path == '/overview' || path == '/overview/system')}" tabindex="2">-->
-	<!--<a href="#/overview/system" ng-click="closeSubnav()">System overview</a></li>-->
-	<!--</ul>-->
 	<ul class="nav__second-level btn-health" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'server-health')}">
 		<li ng-class="{'active': (path == '/server-health/event-log')}">
 			<a href="#/server-health/event-log" tabindex="3" ng-click="closeSubnav()">Event log</a></li>
@@ -80,7 +76,6 @@
 		<!--<li ng-class="{'active': (path == '/server-health/power-consumption')}"><a href="#/server-health/power-consumption" tabindex="4" ng-click="closeSubnav()">Power consumption</a></li>-->
 		<li ng-class="{'active': (path == '/server-health/unit-id')}">
 			<a href="#/server-health/unit-id" tabindex="6" ng-click="closeSubnav()">Server LED</a></li>
-		<!--<li ng-class="{'active': (path == '/server-health/diagnostics')}"><a href="#/server-health/diagnostics" ng-click="closeSubnav()">Diagnostics</a></li>-->
 	</ul>
 	<ul class="nav__second-level btn-control" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'server-control')}">
 		<li ng-class="{'active': (path == '/server-control' || path == '/server-control/power-operations')}">
