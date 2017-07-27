@@ -17,7 +17,7 @@ window.angular && (function (angular) {
             return {
                 'request': function(config){
                     dataService.loading = true;
-                    config.timeout = 10000;
+                    config.timeout = 20000;
                     return config;
                 },
                 'response': function(response){
