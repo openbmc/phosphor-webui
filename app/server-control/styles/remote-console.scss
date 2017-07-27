@@ -1,13 +1,13 @@
 
 .serial-lan__wrapper {
-  background: $lightgrey;
-  border: 1px solid $medgrey;
-  padding: 2.5em 2.5em 5em 2.5em;
   .btn-export {
     margin: 1.8em 0 1.8em 2em;
   }
 }
 
+.serial-lan__copy {
+  padding: 1em 0;
+}
 .serial-lan__terminal {
   position: relative;
   width: 101%; //extra 1% to fix redraw issue with terminal window
@@ -16,13 +16,14 @@
   overflow: scroll;
 }
 
-.serial-lan__copy {
-  padding: 2.5em 2.5em 1em;
-}
-
 .serial-lan__actions {
   float: right;
-  a {
+  .btn-pop-out,
+  .btn-export {
     text-decoration: none;
+    font-size: .9em;
+    &:visited {
+      color: $black;
+    }
   }
 }
