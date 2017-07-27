@@ -12,10 +12,7 @@
 				<div class="table__cell">
 					Image state
 				</div>
-				<div class="table__cell">
-					Image ID
-				</div>
-				<div class="table__cell">
+				<div class="table__cell firmware__version">
 					Version
 				</div>
 				<div class="table__cell">
@@ -24,8 +21,8 @@
 			</div>
 		</div>
 		<div class="table__body">
-			<div class="table__row" ng-repeat="firmware in firmwares|filter:filterBy">
-				<div class="table__cell firmware__primary">
+			<div class="table__row" ng-class="firmware.active ? 'firmware__primary' : ''" ng-repeat="firmware in firmwares|filter:filterBy">
+				<div class="table__cell">
 					<span class="table__cell-label">Boot Priority:</span>
 					<div class="icon icon__up-arrow icon-as-spacer" aria-hidden="true">
 						<span class="accessible-text">firmware down in priority</span></div>
@@ -34,9 +31,6 @@
 				</div>
 				<div class="table__cell firmware__active">
 					<span class="table__cell-label">Image state:</span><span ng-if="firmware.active">Active</span>
-				</div>
-				<div class="table__cell">
-					<span class="table__cell-label">Image ID:</span>{{firmware.imageId}}
 				</div>
 				<div class="table__cell firmware__version" ng-class="{'active':firmware.isExtended}">
 					<span class="table__cell-label">Version:</span>{{firmware.Version}}
