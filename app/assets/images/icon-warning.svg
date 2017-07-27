@@ -1,11 +1,13 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+	 viewBox="0 0 20 20" style="enable-background:new 0 0 20 20;" xml:space="preserve">
 <style type="text/css">
-	.st0{opacity:0.4;fill:#FFB000;}
+	.st0{opacity:0.4;fill:#FFB000;enable-background:new    ;}
 	.st1{fill:#FFB000;}
 </style>
-<polygon class="st0" points="10.8,28.8 20,12.8 29.2,28.8 "/>
-<path class="st1" d="M20,9.6L8,30.4h24L20,9.6z M20,12.8l9.2,16H10.8L20,12.8z"/>
-<path d="M19,17.5v1.7l0.5,4.3h1l0.5-4.3v-1.7H19z"/>
-<circle cx="20" cy="26" r="1"/>
+<g>
+	<polygon class="st0" points="2.5,17 10,4 17.5,17 	"/>
+	<path class="st1" d="M10,1.4L0.3,18.3h19.5L10,1.4z M10,4l7.5,13h-15L10,4z"/>
+	<path d="M9.2,7.8v1.4l0.4,3.5h0.8l0.4-3.5V7.8H9.2z"/>
+	<circle cx="10" cy="14.7" r="0.8"/>
+</g>
 </svg>

@@ -19,11 +19,20 @@
       color: $medblue;
       &.disabled {
         color: $medgrey;
+        &:hover {
+          cursor: default;
+        }
+      }
+      &:hover {
+        cursor: pointer;
       }
     }
     .icon.icon-as-spacer {
       text-indent: 0;
       color: $btn__disabled-txt;
+      &:hover {
+        cursor: default;
+      }
     }
   }
 
