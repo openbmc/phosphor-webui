@@ -18,9 +18,6 @@
   @include mediaQuery(small) {
     float: left;
   }
-  @include mediaQuery(medium) {
-    margin-left: .8em;
-  }
 }
 .overview__event-log {
   padding-top: 2em;
@@ -39,4 +36,14 @@
   .event-log__single-event .event__description {
     margin-left: 2.3em;
   }
+}
+
+input.modal__edit-server-name {
+  margin-bottom: 0;
+}
+
+.modal__char-count {
+  text-align: right;
+  font-size: .8em;
+  color: $darkgrey;
 }
