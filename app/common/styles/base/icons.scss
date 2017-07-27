@@ -4,6 +4,7 @@
   height: 20px;
   position: relative;
   speak: none;
+  font-style: normal;
   &.icon-as-spacer {
     text-indent: -9999px;
   }
@@ -44,20 +45,37 @@
   }
 }
 
-.icon__warning{
-  width: 40px;
-  height: 40px;
-  background-image: url(/assets/images/icon-warning.svg);
+.icon-angle {
+  &:before {
+    content: '\276F';
+    display: inline-block;
+    font-size: 1em;
+    margin-left: 1em;
+    color: lighten($darkgrey, 4%);
+  }
+}
+//Status icons
+@mixin status-icon {
   background-repeat: no-repeat;
   vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  margin-right: .4em;
 }
 
-.icon__critical{
-  width: 40px;
-  height: 40px;
+.icon__warning {
+  @include status-icon;
+  background-image: url(/assets/images/icon-warning.svg);
+}
+
+.icon__critical {
+  @include status-icon;
   background-image: url(/assets/images/icon-critical.svg);
-  background-repeat: no-repeat;
-  vertical-align: middle;
+}
+
+.icon__good {
+  @include status-icon;
+  background-image: url(/assets/images/icon-on.svg);
 }
 
 .icon__info{
