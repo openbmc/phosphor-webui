@@ -1,11 +1,18 @@
 $nav__toplvlWidth: 125px;
 $nav__seclvlWidth: 240px;
 
+.nav__wrapper {
+  height: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+}
+
 // Top level navigation
 #nav__top-level {
   background: $nav__top-level-color;
-  height: 100%;
-  position: fixed;
+  //height: 100%;
+  position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
@@ -14,6 +21,7 @@ $nav__seclvlWidth: 240px;
   margin: 0;
   padding: 0;
   width: $nav__toplvlWidth;
+  overflow-y: auto;
   li {
     margin: 0;
   }
@@ -113,7 +121,7 @@ $nav__seclvlWidth: 240px;
   background: $nav__second-level-color;
   top: 0;
   bottom: 0;
-  left: -$nav__toplvlWidth;
+  left: -245px;
   width: $nav__seclvlWidth;
   z-index: 97;
   padding: 0;

@@ -85,11 +85,13 @@
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: #b8c1c1'></polygon></svg>");
 }
 
+@mixin calcColumn-5 {
+  min-width: calc(100% * (1/5) - 5px);
+}
 
 @mixin calcColumn-4 ($offset: 0) {
   min-width: calc(100% * (1/4) - #{$offset});
 }
-
 
 @mixin calcColumn-3 {
   min-width: calc(100% * (1/3) - 5px);

@@ -1,6 +1,12 @@
 // toggle buttons for filtering
 .toggle-filter {
-  margin-top: 12px;
+  display: inline-block;
+  @media (min-width: 1300px) {
+    margin-top: -25px;
+  }
+  .content-label {
+    margin-bottom: .4em;
+  }
   .filter-label {
     color: darken($lightgrey, 10%);
     text-transform: uppercase;
@@ -18,6 +24,7 @@
     font-weight: 700;
     border-radius: 0;
     display: inline-block;
+    border-left: 0;
     &.first,
     &.last {
       border-radius: 3px;
@@ -26,5 +33,4 @@
   .btn-primary {
     border: 2px solid $primebtn__bg;
   }
-
 }

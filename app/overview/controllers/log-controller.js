@@ -1,9 +1,9 @@
 /**
- * Controller for unit Id
+ * Controller for log
  *
- * @module app/serverHealth
- * @exports unitIdController
- * @name unitIdController
+ * @module app/overview
+ * @exports logController
+ * @name logController
  * @version 0.1.0
  */
 
@@ -11,14 +11,16 @@ window.angular && (function (angular) {
     'use strict';
 
     angular
-        .module('app.serverHealth')
-        .controller('unitIdController', [
+        .module('app.overview')
+        .controller('logController', [
             '$scope', 
             '$window', 
             'APIUtils', 
             'dataService',
             function($scope, $window, APIUtils, dataService, userModel){
                 $scope.dataService = dataService;
+
+                $scope.dropdown_selected = false;
             }
         ]
     );

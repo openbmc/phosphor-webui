@@ -59,7 +59,7 @@ window.angular && (function (angular) {
                     Warning: 'Medium'
                 },
                 PAGINATION: {
-                    LOG_ITEMS_PER_PAGE: 25
+                    LOG_ITEMS_PER_PAGE: 4
                 },
                 HARDWARE: {
                   component_key_filter: '/xyz/openbmc_project/inventory/system',
@@ -70,93 +70,14 @@ window.angular && (function (angular) {
                    'cpu', 'dimm'
                   ]
                 },
-                SENSOR_DATA_TEMPLATE: {
-                    sensors: [
-                        {
-                           type: 'fan',
-                           title: 'Fan Speed',
-                           key_search: 'fan_tach',
-                           display_headers: ['Fan Speed(RPM)', 'Reading', 'State'],
-                           sensor_row: {
-                                title: 'Fan Speed ',
-                                reading: ' rpms',
-                                status: '',
-                                indicator: ''
-                           }
-                        },
-                        {
-                           type: 'temperature',
-                           title: 'Temperature',
-                           'key_search': 'temperature',
-                           display_headers: ['Temperature (DegreesC)', 'Reading', 'State'],
-                           sensor_row: {
-                                title: 'Temperature ',
-                                reading: ' degreeC',
-                                status: '',
-                                indicator: ''
-                           }
-                        },
-                        {
-                           type: 'altitude',
-                           title: 'Altitude',
-                           'key_search': 'altitude',
-                           display_headers: ['Altitude (Meters)', 'Reading', 'State'],
-                           sensor_row: {
-                                title: 'Altitude ',
-                                reading: ' Meters',
-                                status: '',
-                                indicator: ''
-                           }
-                        },
-                        {
-                           type: 'voltage',
-                           title: 'Voltage',
-                           'key_search': 'voltage',
-                           display_headers: ['Temperature (Volts)', 'Reading', 'State'],
-                           sensor_row: {
-                                title: 'Voltage ',
-                                reading: ' volts',
-                                status: '',
-                                indicator: ''
-                           }
-                        },
-                        {
-                           type: 'current',
-                           title: 'Current',
-                           'key_search': 'current',
-                           display_headers: ['Current (Amperes)', 'Reading', 'State'],
-                           sensor_row: {
-                                title: 'Current ',
-                                reading: ' amperes',
-                                status: '',
-                                indicator: ''
-                           }
-                        },
-                        {
-                           type: 'power',
-                           title: 'Power',
-                           'key_search': 'power',
-                           display_headers: ['Power (Watts)', 'Reading', 'State'],
-                           sensor_row: {
-                                title: 'Power ',
-                                reading: ' watts',
-                                status: '',
-                                indicator: ''
-                           }
-                        },
-                        {
-                           type: 'energy',
-                           title: 'Energy',
-                           'key_search': 'energy',
-                           display_headers: ['Energy (Joules)', 'Reading', 'State'],
-                           sensor_row: {
-                                title: 'Energy ',
-                                reading: ' joules',
-                                status: '',
-                                indicator: ''
-                           }
-                        }
-                    ]
+                SENSOR_UNIT_MAP: {
+                  'xyz.openbmc_project.Sensor.Value.Unit.RPMS': 'rpms',
+                  'xyz.openbmc_project.Sensor.Value.Unit.DegreesC': 'C',
+                  'xyz.openbmc_project.Sensor.Value.Unit.Volts': 'volts',
+                  'xyz.openbmc_project.Sensor.Value.Unit.Meters': 'meters',
+                  'xyz.openbmc_project.Sensor.Value.Unit.Watts': 'watts',
+                  'xyz.openbmc_project.Sensor.Value.Unit.Amperes': 'amperes',
+                  'xyz.openbmc_project.Sensor.Value.Unit.Joules': 'joules'
                 }
             };
         });

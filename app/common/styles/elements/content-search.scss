@@ -7,7 +7,6 @@
   float: left;
   position: relative;
   margin-right: 1em;
-  margin-top: .5em;
   margin-bottom: .5em;
 
   #content__search-input {
@@ -43,6 +42,10 @@
     margin: 0;
     font-weight: 700;
     font-size: .8em;
+    border: 0;
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .tag-filter-label {

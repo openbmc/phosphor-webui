@@ -1,4 +1,4 @@
-button, .btn, .button, .submit {
+button, .button, .submit {
   font-size: 1em;
   @include fontFamilyBold;
   text-transform: none;
@@ -10,15 +10,13 @@ button, .btn, .button, .submit {
   &:hover {
     cursor: pointer;
   }
-}
-
-.disabled {
-  button, .button, input[type="submit"] {
+  &.disabled {
     opacity: 0.2;
     color: $btn__disabled-txt;
     &:hover {
       cursor: default;
       background: transparent;
+      text-decoration: none;
     }
   }
 }
@@ -39,7 +37,7 @@ button, .btn, .button, .submit {
       cursor: default;
     }
   }
-  i { // button symbol
+  i { //button symbol
     font-style: normal;
     text-transform: none;
     font-size: 1.5em;

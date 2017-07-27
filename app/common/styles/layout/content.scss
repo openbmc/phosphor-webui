@@ -37,10 +37,15 @@ section.row {
   margin-top: 2em;
 }
 
-.content-label {
-  color: lighten($darkgrey, 15%);
+.content-label, label {
+  color: $darkgrey;
   text-transform: uppercase;
   font-weight: 700;
   font-size: .75em;
   margin-bottom: 0;
+}
+
+.subhead {
+  border-bottom: 1px solid $medgrey;
+  padding-bottom: .5em;
 }

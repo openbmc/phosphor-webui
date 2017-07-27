@@ -13,7 +13,7 @@
   .close {
     color: $lightbg__primary;
     position: absolute;
-    right: 0%;
+    right: 0;
     top: 50%;
     transform: translateY(-50%);
     font-size: 1.5em;
@@ -24,7 +24,7 @@
     justify-content: center;
     flex-direction: column;
     background: transparent;
-    border: 0px;
+    border: 0;
     margin: 0;
     &:hover {
       color: $lightbg__accent;

@@ -45,7 +45,7 @@ window.angular && (function (angular) {
           $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|data|blob):/);
         }])
         .config(['$httpProvider', function($httpProvider){
-            $httpProvider.defaults.timeout = 10000;
+            $httpProvider.defaults.timeout = 20000;
             $httpProvider.interceptors.push('apiInterceptor');
         }])
         .run(['$rootScope', '$location', 'dataService', 'userModel',

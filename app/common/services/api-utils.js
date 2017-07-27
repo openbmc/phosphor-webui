@@ -369,12 +369,9 @@ window.angular && (function (angular) {
                 });
               },
               getAllSensorStatus: function(callback){
-                /**
-                GET   https://9.3.185.156/xyz/openbmc_project/sensors/enumerate
-                */
                 $http({
                   method: 'GET',
-                  url: "/assets/mocks/sensors.json",
+                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/sensors/enumerate",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -385,101 +382,93 @@ window.angular && (function (angular) {
                       var content = JSON.parse(json);
                       var dataClone = JSON.parse(JSON.stringify(content.data));
                       var sensorData = [];
-                      var allSensorSeveries = [];
-                      var allSensorRows = [];
-                      var total = 0;
-                      var status = 'normal';
-                      var data = {
-                                   total: 0,
-                                   status: '',
-                                   sensors: [{
-                                      title: 'All Sensors',
-                                      type: 'all',
-                                      status: '',
-                                      severity_flags: {},
-                                      search_text: '',
-                                      display_headers: ['Sensor (Unit)', 'Reading', 'State'],
-                                      data: []
-                                   }]
-                                 };
+                      var severity = {};
+                      var title = "";
+                      var tempKeyParts = [];
+                      var order = 0;
 
                       function getSensorStatus(reading){
-                        var severityFlags = {critical: false, warning: false, normal: false}, severityText = '';
-                        if(reading.Value >= reading.CriticalLow && reading.Value <= reading.CriticalHigh){
+                        var severityFlags = {critical: false, warning: false, normal: false}, severityText = '', order = 0;
+
+                        if(reading.hasOwnProperty('CriticalLow') && 
+                          reading.Value < reading.CriticalLow
+                          ){
                           severityFlags.critical = true;
                           severityText = 'critical';
-                        }
-                        else if(reading.Value >= reading.WarningLow && reading.Value <= reading.WarningHigh){
+                          order = 2;
+                        }else if(reading.hasOwnProperty('CriticalHigh') && 
+                          reading.Value > reading.CriticalHigh 
+                          ){
+                          severityFlags.critical = true;
+                          severityText = 'critical';
+                          order = 2;
+                        }else if(reading.hasOwnProperty('CriticalLow') && 
+                          reading.hasOwnProperty('WarningLow') && 
+                          reading.Value >= reading.CriticalLow && reading.Value <= reading.WarningLow){
                           severityFlags.warning = true;
                           severityText = 'warning';
+                          order = 1;
+                        }else if(reading.hasOwnProperty('WarningHigh') && 
+                          reading.hasOwnProperty('CriticalHigh') && 
+                          reading.Value >= reading.WarningHigh && reading.Value <= reading.CriticalHigh){
+                          severityFlags.warning = true;
+                          severityText = 'warning';
+                          order = 1;
                         }else{
                           severityFlags.normal = true;
                           severityText = 'normal';
                         }
-                        return { flags: severityFlags, severityText: severityText};
+                        return { flags: severityFlags, severityText: severityText, order: order};
                       }
 
                       for(var key in content.data){
                         if(content.data.hasOwnProperty(key) && content.data[key].hasOwnProperty('Unit')){
+
+                          severity = getSensorStatus(content.data[key]);
+
+                          if(!content.data[key].hasOwnProperty('CriticalLow')){
+                            content.data[key].CriticalLow = "--";
+                            content.data[key].CriticalHigh = "--";
+                          }
+
+                          if(!content.data[key].hasOwnProperty('WarningLow')){
+                            content.data[key].WarningLow = "--";
+                            content.data[key].WarningHigh = "--";
+                          }
+
+                          tempKeyParts = key.split("/");
+                          title = tempKeyParts.pop();
+                          title = tempKeyParts.pop() + '_' + title;
+                          title = title.split("_").map(function(item){
+                             return item.toLowerCase().charAt(0).toUpperCase() + item.slice(1);
+                          }).reduce(function(prev, el){
+                            return prev + " " + el;
+                          });
+
                           sensorData.push(Object.assign({
                             path: key,
                             selected: false,
                             confirm: false,
                             copied: false,
+                            title: title,
+                            unit: Constants.SENSOR_UNIT_MAP[content.data[key].Unit],
+                            severity_flags: severity.flags,
+                            status: severity.severityText,
+                            order: severity.order,
+                            search_text: (title + " " + content.data[key].Value + " " + 
+                               Constants.SENSOR_UNIT_MAP[content.data[key].Unit] + " " + 
+                               severity.severityText + " " + 
+                               content.data[key].CriticalLow + " " +
+                               content.data[key].CriticalHigh + " " +
+                               content.data[key].WarningLow + " " +
+                               content.data[key].WarningHigh + " "
+                               ).toLowerCase(),
                             original_data: {key: key, value: content.data[key]}
                           }, content.data[key]));
                         }
                       }
 
-                      Constants.SENSOR_DATA_TEMPLATE.sensors.forEach(function(sensor){
-                          var rowData = [];
-                          var severities = [];
-                          var thisSensorData = sensorData.filter(function(el){
-                            return el.path.indexOf('sensors/'+sensor.key_search) > -1;
-                          });
-
-                          for(var i = 0; i < thisSensorData.length; i++){
-
-                             var severity = getSensorStatus(thisSensorData[i]);
-                             severities.push(severity.severityText);
-                             rowData.push(Object.assign({
-                                title: sensor.sensor_row.title + (i+1),
-                                status: severity.severityText,
-                                severity_flags: severity.flags,
-                                reading: thisSensorData[i].Value + sensor.sensor_row.reading,
-                                search_text: (sensor.sensor_row.title + (i+1) + " " + severity.severityText + " " + thisSensorData[i].Value + sensor.sensor_row.reading).toLowerCase(),
-                                indicator: (severity.flags.critical) ? '90%' : ((severity.flags.warning) ? '15%' : '50%')
-                             }, thisSensorData[i]));
-                          }
-
-                          status = (severities.indexOf('critical') > -1) ? 'critical' : ((severities.indexOf('warning') > -1) ? 'warning' : 'normal');
-                          total += rowData.length;
-                          allSensorSeveries.push(status);
-                          var sevFlags =  {critical: false, warning: false, normal: false};
-                          sevFlags[status] = true;
-                          data.sensors.push({
-                            title: sensor.title,
-                            type: sensor.type,
-                            status: status,
-                            severity_flags: sevFlags,
-                            search_text: (sensor.title + " " + status).toLowerCase(),
-                            display_headers: sensor.display_headers,
-                            data: rowData
-                          });
-                          Array.prototype.push.apply(allSensorRows, rowData);
-                      });
-
-                      data.status = (allSensorSeveries.indexOf('critical') > -1) ? 'critical' : ((allSensorSeveries.indexOf('warning') > -1) ? 'warning' : 'normal');
-                      data.total = total;
-                      if(allSensorRows.length){
-                        data.sensors[0].status = data.status;
-                        data.sensors[0].data = allSensorRows;
-                        data.sensors[0].search_text = (data.sensors[0].title + " " + data.sensors[0].status).toLowerCase();
-                        var flags = {critical: false, warning: false, normal: false};
-                        flags[data.status] = true;
-                        data.sensors[0].severity_flags = flags;
-                      }
-                      callback(data, dataClone);
+                      callback(sensorData, dataClone);
                 }).error(function(error){
                   console.log(error);
                 });
@@ -680,11 +669,15 @@ window.angular && (function (angular) {
                       }
 
                       function camelcaseToLabel(obj){
-                        var transformed = [], label = "";
+                        var transformed = [], label = "", value = "";
                         for(var key in obj){
                           label = key.replace(/([A-Z0-9]+)/g, " $1").replace(/^\s+/, "");
                           if(obj[key] !== ""){
-                            transformed.push({key:label, value: obj[key]});
+                            value = obj[key];
+                            if(value == 1 || value == 0){
+                              value = (value == 1) ? 'Yes' : 'No';
+                            }
+                            transformed.push({key:label, value: value});
                           }
                         }
 
