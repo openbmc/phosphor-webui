@@ -103,6 +103,7 @@ $title-minWidth: 210px;
   .inventory__device-col {
     margin-right: 6px;
     width: 50%;
+    text-transform: capitalize;
     @include mediaQuery(medium){
       width: auto;
     }
