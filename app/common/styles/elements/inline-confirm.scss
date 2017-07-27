@@ -6,7 +6,7 @@
   transform: translateY(-103%);
   width: 100%;
   height: 100%;
-  margin-left: -1.8em;
+  //margin-left: -1.8em;
   z-index: 5;
   background: $darkbg__primary;
   color: $white;
@@ -21,6 +21,7 @@
 
 // Power confirmation buttons
 .inline__confirm-buttons {
+  margin-left: 1.8em;
   .btn-primary {
     background: transparent;
     border: 2px solid $white;
@@ -33,8 +34,11 @@
       border: 2px solid $primebtn__bg;
     }
   }
-  @include mediaQuery(medium) {
-    float: right;
+  @media (min-width: 900px) {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 
