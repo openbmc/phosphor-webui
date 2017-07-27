@@ -1,61 +1,67 @@
 //status light states
-@mixin status-light {
-  content: '\25CF';
+@mixin status-light-before {
+  content: '';
   display: inline-block;
-  font-size: 2em;
-  color: $status-ok;
-  margin-right: .1em;
-  transform: translateY(2px);
+  margin-right: -12%;
+  transform: translateY(-2px);
   @include slowTransition-all;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  position: absolute;
 }
 
+@mixin status-light-header {
+  padding-left: 1.6em;
+  margin-top: .7em;
+  position: relative;
+}
 @mixin status-light__good {
-  @include status-light;
-  color: $status-ok;
-
+  @include status-light-before;
 }
 
 @mixin status-light__error {
-  @include status-light;
-  color: $error-color;
-
+  @include status-light-before;
 }
 
 @mixin status-light__disabled {
-  @include status-light;
-  color: $darkgrey;
-
+  @include status-light-before;
 }
 
 @mixin status-light__warn {
-  @include status-light;
-  color: $status-warn;
+  @include status-light-before;
 
 }
 
 .status-light__disabled {
-  color: $darkgrey;
+  @include status-light-header;
   &::before {
     @include status-light__disabled;
   }
 }
 
 .status-light__good {
+  @include status-light-header;
   &::before {
     @include status-light__good;
+    @extend .icon__good;
   }
 }
 
 .status-light__error {
-  color: $error-color;
+  @include status-light-header;
   &::before {
     @include status-light__error;
+    @extend .icon__critical;
   }
+
 }
 
 .status-light__warn {
-  color: $status-warn;
+  @include status-light-header;
   &::before {
     @include status-light__warn;
+    @extend .icon__warning;
   }
 }
