@@ -11,7 +11,7 @@ p {
   transition: margin .05s;
 }
 
-a {
+a, button.link {
   color: $links;
   text-decoration: none;
   font-weight: 700;
@@ -25,4 +25,9 @@ a {
   :focus {
     color: $links;
   }
+}
+
+button.link {
+  padding-left: .3em;
+  padding-right: .3em;
 }

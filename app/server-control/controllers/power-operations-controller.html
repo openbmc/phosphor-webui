@@ -14,7 +14,7 @@
     <div class="row column">
         <div id="power-indicator-bar" class="power__indicator-bar" ng-class="{'power__state-on': dataService.server_state == 'Running', 'power__state-off': dataService.server_state == 'Off', 'power__state-indet': dataService.server_state == 'Quiesced'}">
             <p class="inline">{{dataService.server_id}}</p>
-            <h3 class="power__state inline float-right h3"><span>{{dataService.server_state}}</span></h3>
+            <h3 class="power__state inline no-margin h3"><span>{{dataService.server_state}}</span></h3>
         </div>
     </div>
     <div class="row column">

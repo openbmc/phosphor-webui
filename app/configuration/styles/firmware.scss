@@ -38,6 +38,9 @@
 
   .table-header {
     font-weight: 700;
+    p {
+      margin-bottom: 0em;
+    }
   }
 
   .table__row.disabled {
@@ -103,6 +106,9 @@
     width: auto;
     margin-top: 1.5em;
   }
+}
+.firmware__upload-file-name {
+  text-transform: none;
 }
 .firmware__upload-chooser {
     width: 100%;

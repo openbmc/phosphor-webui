@@ -525,7 +525,9 @@ textarea::-webkit-input-placeholder {
 
 input::-moz-placeholder,
 textarea::-moz-placeholder {
-  color: #cacaca; }
+  color: #cacaca;
+  text-transform: lowercase;
+}
 
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
@@ -560,7 +562,7 @@ input[type='search'] {
 [type='radio'] + label {
   display: inline-block;
   vertical-align: baseline;
-  margin-left: 0.5rem;
+  //margin-left: 0.5rem;
   margin-right: 1rem;
   margin-bottom: 0; }
 [type='checkbox'] + label[for],
