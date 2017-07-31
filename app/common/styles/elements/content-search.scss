@@ -30,12 +30,22 @@
     opacity: .6;
   }
 
-  #content__search-submit {
-    position: absolute;
+  .clear-input {
     display: inline-block;
-    width: 100px;
-    top: .5em;
+    height: 30px;
+    width: 20px;
+    color: $darkgrey;
+    padding: 0;
+    margin-right: .5em;
+  }
+  .search-submit__wrapper {
+    position: absolute;
+    width: auto;
+    top: .4em;
     right: 5px;
+  }
+  .content__search-submit {
+    display: inline-block;
     padding: 1em 2em .9em;
     min-height: 20px;
     text-align: center;
@@ -43,6 +53,7 @@
     font-weight: 700;
     font-size: .8em;
     border: 0;
+    width: auto;
     &:hover {
       cursor: pointer;
     }
