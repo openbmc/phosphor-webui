@@ -40,28 +40,6 @@
   font-weight: 700;
 }
 
-//Navigation icons
-@mixin navIcons {
-  color: $white;
-  fill: $white;
-  max-height: 40px;
-  stroke-width: .5;
-  display: block;
-  width: 40px;
-  margin: 0 auto .5em auto;
-  .st0 {
-    fill: none;
-    stroke: #fff;
-    stroke-width: 2;
-    stroke-miterlimit: 10;
-  }
-  .st1 {
-    fill: none;
-    stroke: #fff;
-    stroke-width: 4;
-    stroke-miterlimit: 10;
-  }
-}
 
 //Transitions mixin
 @mixin fastTransition-all {
