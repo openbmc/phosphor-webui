@@ -14,7 +14,7 @@ window.angular && (function (angular) {
     angular
         .module('app.common.services')
         .service('dataService', ['Constants', function (Constants) {
-            this.app_version = "openBMC V.0.0.1";
+            this.app_version = "V.0.0.1";
             this.server_health = 'Error';
             this.server_state = 'Unreachable';
             this.server_status = -2;

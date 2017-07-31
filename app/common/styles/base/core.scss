@@ -33,7 +33,7 @@ button, .button, input[type="submit"] {
   }
 }
 
-a {
+a, button.link {
   color: $links;
   &:visited {
     color: $links__visited;
@@ -44,4 +44,9 @@ a {
   focus {
     color: $links;
   }
+}
+
+button.link {
+  padding-left: .3em;
+  padding-right: .3em;
 }
