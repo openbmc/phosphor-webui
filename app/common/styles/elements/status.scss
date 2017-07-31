@@ -4,7 +4,6 @@
   display: inline-block;
   margin-right: -12%;
   transform: translateY(-2px);
-  @include slowTransition-all;
   left: 0;
   top: 0;
   width: 20px;
@@ -38,6 +37,7 @@
   @include status-light-header;
   &::before {
     @include status-light__disabled;
+    @extend .icon__off;
   }
 }
 

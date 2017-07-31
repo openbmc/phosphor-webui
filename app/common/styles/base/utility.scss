@@ -4,6 +4,11 @@
 
 .disabled {
   color: $lightbg__grey;
+  @include fastTransition-all;
+  &:hover {
+    cursor: default;
+    text-decoration: none;
+  }
 }
 
 .float-right {
