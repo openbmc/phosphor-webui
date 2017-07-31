@@ -2,6 +2,12 @@ $logoHeight: 30px;
 $logoMaxHeight: 100px;
 $logoMaxWidth: 125px;
 
+@mixin round-corners {
+  -webkit-border-radius: 6px 6px;
+  -moz-border-radius: 6px 6px;
+  border-radius: 6px 6px;
+}
+
 #header__wrapper {
   position: fixed;
   top: 0;
@@ -23,7 +29,7 @@ $logoMaxWidth: 125px;
 
 header {
   position: relative;
-  background: #000;
+  background: $black;
   color: $white;
   overflow: hidden;
 }
@@ -35,6 +41,7 @@ header {
   font-size: .9em;
   text-decoration: none;
   padding: 1em;
+  font-weight: 400;
   &:visited {
     color: $white;
   }
@@ -42,23 +49,33 @@ header {
 
 .header__functions-wrapper {
   color: $white;
-  background: $darkbg__primary;
   padding: 0 1.1em;
   box-sizing: border-box;
   display: block;
   position: relative;
   overflow: hidden;
   min-height: 5em;
-  #header__server-name {
-    //margin-top: .8em;
+  border-bottom: 1px solid $medgrey;
+  background: $white;
+  .header__server-name {
     font-size: 1.5em;
     font-weight: 500;
-    color: $white;
-    padding: .9em;
+    color: $darkgrey;
+    padding: .4em 0 0 1em;
     height: 100%;
     background: transparent;
     max-width: 350px;
     white-space: nowrap;
+    overflow: hidden;
+    .header__hostname {
+      color: $black;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0;
+    }
+    .header__server-ip {
+      font-size: 1rem;
+    }
   }
   .logo__wrapper {
     padding-top: .5em;
@@ -67,7 +84,7 @@ header {
     //transform: translateY(-50%);
   }
 
-  #header__logo {
+  .header__logo {
     vertical-align: middle;
     margin: 1em;
     float: left;
@@ -76,55 +93,41 @@ header {
     max-width: $logoMaxWidth;
     width: auto;
   }
-  #header__funct-icon {
-    display: block;
-    font-size: 2.3em;
-    color: $white;
-    padding: 0;
-    &:before {
-      content: '\2261';
-      line-height: .5;
-      font-size: 2em;
-      padding: 0 .3em;
-    }
-    @include mediaQuery(medium) {
-      display: none;
-    }
-  }
 
   .header__functions {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
-    background: $darkbg__primary;
     z-index: 100;
+    margin: .3em 0;
     @include fastTransition-all;
     span {
       display: block;
-      color: $white;
+      color: $black;
       font-size: 1em;
     }
-    a, p, button {
+    a, p {
       display: block;
       float: left;
       text-decoration: none;
-      border-left: 1px solid #384456;
-      color: $lightgrey;
-      margin: 0;
+      color: $darkgrey;
       padding: 1.250em 1.688em;
       height: 100%;
       font-size: 0.875em;
+      font-weight: 400;
       line-height: 1;
       > span {
+        display: block;
         font-size: 1rem;
         font-weight: bold;
+        margin-top: .3em;
       }
     }
   }
 
   // hide/show header functions based on screen size
-  .header__functions > #header__server-health {
+  .header__functions > .header__server-health {
     display: none;
     @include mediaQuery(small) {
       display: block;
@@ -135,27 +138,55 @@ header {
     display: none;
     @include mediaQuery(medium) {
       display: block;
+      background-color: $white;
     }
   }
 
   .header__functions {
+    .header__server-power,
+    .header__page-refresh,
+    .header__server-health {
+      background: $lightgrey;
+      @include round-corners;
+      margin: 0 .3em;
+      height: 100%;
+      border: 1px solid $medgrey;
+      @include fastTransition-all;
+      &:hover {
+        background: rgba(255, 255, 255, 1);
+      }
+    }
     .header__refresh {
-      color: $lightgrey;
+      color: $darkgrey;
       line-height: 1.8;
       margin-top: -4px;
+      span {
+        @include fontCourierBold;
+      }
     }
   }
-  .header__server-power,
+
   .header__page-refresh {
-    &:hover {
-      background: rgba(60, 109, 240, .4);
+    padding-top: 0;
+    position: relative;
+    span {
+      font-size: 0.875em;
+      font-weight: 400;
+      color: $darkgrey;
+      display: block;
+      margin-bottom: 1.8em;
     }
-  }
-  .header__page-refresh {
-    img {
-      stroke: $white;
-      height: 22px;
-      width: 24px;
+    svg {
+      stroke: $medblue;
+      fill: $medblue;
+      height: 20px;
+      width: 20px;
+      display: block;
+      margin: 0 auto;
+      position: absolute;
+      left: 50%;
+      top: 55%;
+      transform: translateX(-50%);
     }
   }
 }
