@@ -1,8 +1,6 @@
 // Event Log SCSS
 #event-log {
 
-  .dropdown__button {
-  }
   // Dropwdowns filter
   .dropdown__date.row {
     padding: .5em;
@@ -35,10 +33,11 @@
     margin-bottom: 3px;
   }
   .event__severity-filter {
+    float:left;
     margin-right: 2em;
     margin-bottom: 1em;
     button {
-      margin: 3px -3px;
+      margin: 0px -3px;
       padding: .6em 2em;
       min-height: 2.1em;
       font-size: .9em;
@@ -61,6 +60,7 @@
   .event__date-filter {
     margin-right: 1.5em;
     color: $darkgrey;
+    float:left;
     input {
       width: 170px;
       height: 2.1rem;
@@ -71,6 +71,7 @@
     }
   }
   .event__status-filter {
+    float:left;
     @include mediaQuery(medium) {
       width: 25%;
     }
@@ -91,12 +92,6 @@
     float: right;
     display: inline-block;
   }
-}
-
-// Event Log Events
-#event-log__events.row {
-  padding-left: 0;
-  padding-right: 0;
 }
 
 .accord-trigger {
@@ -168,6 +163,10 @@
     &:hover {
       text-decoration: underline;
     }
+  }
+  .btn-resolve.disabled:hover {
+    cursor: default;
+    text-decoration: none;
   }
   .btn-export {
     margin-top: 7px;
