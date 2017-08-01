@@ -17,11 +17,16 @@ window.angular && (function (angular) {
             'APIUtils', 
             'dataService',
             'Constants',
-            function($scope, $window, APIUtils, dataService, Constants){
+            '$routeParams',
+            function($scope, $window, APIUtils, dataService, Constants, $routeParams){
                 $scope.dataService = dataService;
                 $scope.logs = [];
                 $scope.tmz = 'EDT';
                 $scope.itemsPerPage = Constants.PAGINATION.LOG_ITEMS_PER_PAGE;
+                $scope.loading = false;
+
+                var sensorType = $routeParams.type;
+
                 // priority buttons
                 $scope.selectedSeverity = {
                     all: true,
@@ -29,6 +34,12 @@ window.angular && (function (angular) {
                     medium: false,
                     high: false
                 };
+
+                if(sensorType == 'high'){
+                    $scope.selectedSeverity.all = false;
+                    $scope.selectedSeverity.high = true;
+                }
+
                 $scope.selectedStatus = {
                     all: true,
                     resolved: false
@@ -39,9 +50,11 @@ window.angular && (function (angular) {
                 $scope.selectedEvents = [];
 
                 $scope.loadLogs = function(){
-                    APIUtils.getLogs(function(data, originalData){
-                        $scope.logs = data;
-                        $scope.originalData = originalData;
+                    $scope.loading = true;
+                    APIUtils.getLogs().then(function(result){
+                        $scope.logs = result.data;
+                        $scope.originalData = result.original;
+                        $scope.loading = false;
                     });
                 };
                 $scope.jsonData = function(data){

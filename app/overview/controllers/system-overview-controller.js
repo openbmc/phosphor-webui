@@ -17,7 +17,8 @@ window.angular && (function (angular) {
             '$window', 
             'APIUtils', 
             'dataService',
-            function($scope, $window, APIUtils, dataService){
+            '$q',
+            function($scope, $window, APIUtils, dataService, $q){
                 $scope.dataService = dataService;
                 $scope.dropdown_selected = false;
                 $scope.tmz = 'EDT';
@@ -26,24 +27,33 @@ window.angular && (function (angular) {
                 $scope.bmc_info = {};
                 $scope.bmc_firmware = "";
                 $scope.server_firmware = "";
+                $scope.loading = false;
 
                 loadOverviewData();
                 function loadOverviewData(){
-                    APIUtils.getLogs(function(data){
-                       $scope.displayLogs(data);
-                    });
-                    APIUtils.getFirmwares(function(data, bmcActiveVersion, hostActiveVersion){
-                       $scope.displayServerInfo(data, bmcActiveVersion, hostActiveVersion);
-                    });
-                    APIUtils.getLEDState(function(state){
-                       $scope.displayLEDState(state);
-                    });
-                    APIUtils.getBMCEthernetInfo(function(data){
-                       $scope.displayBMCEthernetInfo(data);
-                    });
-                    APIUtils.getBMCInfo(function(data){
-                       $scope.displayBMCInfo(data);
-                    });
+                    $scope.loading = true;
+                    var promises = {
+                      logs: APIUtils.getLogs(),
+                      firmware: APIUtils.getFirmwares(),
+                      led: APIUtils.getLEDState(),
+                      ethernet: APIUtils.getBMCEthernetInfo(),
+                      bmc_info: APIUtils.getBMCInfo()
+                    };
+                    $q.all(promises)
+                      .then(function(data){
+                        $scope.displayLogs(data.logs.data);
+                        $scope.displayServerInfo(
+                            data.firmware.data, 
+                            data.firmware.bmcActiveVersion, 
+                            data.firmware.hostActiveVersion
+                        );
+                        $scope.displayLEDState(data.led);
+                        $scope.displayBMCEthernetInfo(data.ethernet);
+                        $scope.displayBMCInfo(data.bmc_info);
+                      })
+                      .finally(function(){
+                        $scope.loading = false;
+                      });
                 }
                 $scope.displayBMCEthernetInfo = function(data){
                     $scope.mac_address = data.MACAddress;

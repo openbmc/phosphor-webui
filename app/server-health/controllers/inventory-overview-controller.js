@@ -23,10 +23,13 @@ window.angular && (function (angular) {
                 $scope.originalData = {};
                 $scope.customSearch = "";
                 $scope.searchTerms = [];
+                $scope.loading = false;
 
                 APIUtils.getHardwares(function(data, originalData){
+                    $scope.loading = true;
                     $scope.hardwares = data;
                     $scope.originalData = JSON.stringify(originalData);
+                    $scope.loading = false;
                 });
 
                 $scope.doSearchOnEnter = function (event) {

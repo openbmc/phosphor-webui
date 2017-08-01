@@ -1,3 +1,4 @@
+<loader loading="loading"></loader>
 <div class="overview">
 	<div class="row column">
 		<h1 class="inline">IBM Power Witherspoon 2</h1>
@@ -78,14 +79,14 @@
 			<!-- Power metadata -->
 			<div class="row column overview__event-log event-log__events" ng-show="logs.length">
 				<div class="page-header">
-					<h3 class="bold h4 inline">High priority events</h3>
-					<a href="#/server-health/event-log" class="inline float-right">View all event logs</a>
+					<h3 class="bold h4 inline">High priority events ({{logs.length}})</h3>
+					<a href="#/server-health/event-log/high" class="inline float-right">View all event logs</a>
 				</div>
 				<!-- show when there are no critical events from event log -->
 				<!-- <p class="disabled">No high priority events</p> -->
 
 				<!-- single event -->
-				<a href="#/server-health/event-log" ng-repeat="event in logs|orderBy:'+Id'">
+				<a href="#/server-health/event-log/high" ng-repeat="event in logs|orderBy:'+Id'">
 					<div class="row column event-log__single-event">
 						<div class="row">
 							<div class="column small-1 large-1 event-log__col-check">
@@ -113,13 +114,15 @@
 			</div>
 
 			<div class="row column overview__event-log event-log__events" ng-show="!logs.length">
-				<h3 class="bold h4">High priority events</h3>
-				<p>There are no high priority events to display at this time.</p>
+				<div class="page-header">
+					<h3 class="bold h4">High priority events (0)</h3>
+					<p>There are no high priority events to display at this time.</p>
+				</div>
 			</div>
 		</div>
 		<div class="column large-4 no-padding">
 			<div class="quick-links">
-				<a href="#/server-health/event-log" class="quick-links__item quick-links__events event-log__events" ng-show="logs.length">
+				<a href="#/server-health/event-log/high" class="quick-links__item quick-links__events event-log__events" ng-show="logs.length">
 					<p class="inline quick-links__event-copy">{{logs.length}} High priority events</p><!-- link to event log filtered to the high priority events -->
 				</a>
 				<div class="quick-links__item no-icon">
@@ -127,7 +130,7 @@
 					<p class="inline courier-bold float-right">3:20:12 5/22/2017 UTC</p>
 				</div>
 				<div class="quick-links__item no-icon">
-					<p class="inline quick-links__label">Turn on server indicator</p>
+					<p class="inline quick-links__label">Turn <span ng-if="dataService.LED_state == 'off'">on</span><span ng-if="dataService.LED_state == 'on'">off</span> server indicator</p>
 					<div class="toggle inline float-right">
 						<input id="toggle__switch-round"
 								class="toggle-switch toggle-switch__round-flat"
