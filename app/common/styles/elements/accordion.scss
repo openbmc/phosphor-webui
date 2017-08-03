@@ -11,8 +11,8 @@
   .event__actions {
     margin-right: 10px;
     margin-top: -6px;
-    @include mediaQuery(large) {
-      margin-right: -20px;
+    @include mediaQuery(medium) {
+      margin-right: -40px;
     }
   }
   p {margin-bottom: 0;}
