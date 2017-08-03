@@ -93,27 +93,16 @@
 }
 
 .icon__up-arrow {
-  margin-right: 1em;
-  &:before {
-    content: '\029C0';
-    position: absolute;
-    font-size: 3em;
-    left: 0;
-    top: -50%;
-    transform: rotate(90deg);
-  }
-  &.hide {
-    text-align: -9999px;
+  margin-right: .4em;
+  margin-bottom: -15px;
+  background: url(/assets/images/icon-arrow-blue.svg) center center no-repeat;
+  height: 40px;
+  width: 30px;
+  &.icon-as-spacer {
+    background: url(/assets/images/icon-arrow-gray.svg) center center no-repeat;
   }
 }
 .icon__down-arrow {
-  margin-right: 1em;
-  &:before {
-    content: '\029C0';
-    position: absolute;
-    font-size: 3em;
-    left: -4px;
-    top: -50%;
-    transform: rotate(-90deg);
-  }
+  @extend .icon__up-arrow;
+  transform: rotate(180deg);
 }
