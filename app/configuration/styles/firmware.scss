@@ -98,13 +98,13 @@
   label {
     font-weight: 700;
   }
-
   input {
     height: 2.4em;
   }
-  input[type=submit] {
+  .button {
+    min-width: 210px;
     width: auto;
-    margin-top: 1.5em;
+    margin-top: 1em;
   }
 }
 .firmware__upload-file-name {
@@ -116,9 +116,10 @@
     padding-left: 1em;
     padding-right: 1em;
     margin-bottom: 1em;
-  .btn-secondary {
+  .button {
     vertical-align: middle;
     margin: 1em .5em 1em 0;
+    min-width: 3em;
   }
   &.uploading {
     @include indeterminate-bar;
