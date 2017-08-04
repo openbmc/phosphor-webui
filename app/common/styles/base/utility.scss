@@ -110,3 +110,22 @@
     -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
   }
 }
+
+.flash {
+  animation-name: flash;
+  animation-timing-function: ease-out;
+  animation-duration: 1s;
+  -webkit-animation-name: flash;
+  -webkit-animation-timing-function: ease-out;
+  -webkit-animation-duration: 1s;
+  color: $white;
+}
+@-webkit-keyframes flash {
+  from { background: $field__focus; }
+  to  { background: none; }
+}
+
+@keyframes flash {
+  0% { background: $field__focus; }
+  100% { background: none; }
+}

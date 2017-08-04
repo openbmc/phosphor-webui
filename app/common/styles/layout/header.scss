@@ -158,8 +158,8 @@ header {
     }
     .header__refresh {
       color: $darkgrey;
-      line-height: 1.8;
-      margin-top: -4px;
+      line-height: 1.4;
+      border-radius: 6px;
       span {
         @include fontCourierBold;
       }
