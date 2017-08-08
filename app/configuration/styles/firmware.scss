@@ -82,15 +82,18 @@
     right: 0;
     top: 20%;
   }
-  &.active {
-    overflow: visible;
-  }
 }
 
 
 .icon__more-dropdown {
-  width: 300px;
-  top: 70%;
+  width: 100%;
+  top: 68%;
+  right: 0;
+  @include mediaQuery(medium){
+    width: 30%;
+    right: 18%;
+    top: 74%;
+  }
 }
 
 // Upload firmware
