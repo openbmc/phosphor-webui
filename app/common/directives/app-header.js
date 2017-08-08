@@ -42,6 +42,14 @@ window.angular && (function (angular) {
 
                     $scope.refresh = function(){
                         $scope.loadServerStatus();
+
+                        //Add flash class to header timestamp on click of refresh
+                        var myEl = angular.element( document.querySelector( '.header__refresh' ) );
+                        myEl.addClass('flash');
+                        setTimeout(function () {
+                            myEl.removeClass("flash");
+                        },2000);
+
                     }
 
                     var loginListener = $rootScope.$on('user-logged-in', function(event, arg){
