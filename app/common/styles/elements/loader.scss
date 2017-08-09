@@ -8,11 +8,12 @@
 .loader__wrapper {
   width: 115px;
   height: 115px;
-  position: relative;
-  top: 0;
+  position: fixed;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   margin: 3em 0;
+  z-index: 91;
 }
 
 .loader{
@@ -20,7 +21,7 @@
   height:100%;
   transform: translateZ(0) rotate(360deg);
   transform-origin: center center;
-  -moz-transform-origin: 50px 50px; /* firefox requires fixed values */
+  -moz-transform-origin: center center; /* firefox requires fixed values */
   animation: rotate 1s linear infinite;
 }
 
@@ -37,4 +38,17 @@
   transition: stroke-dashoffset 1s cubic-bezier(.5,.08,0,1);
   -webkit-animation: a 4s ease-out infinite;
   animation: a 4s ease-out infinite;
+}
+
+.loader__overlay {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #fefefe;
+  height: 100%;
+  z-index: 90;
+  opacity: .7;
+  width: 100%;
+  -webkit-animation: fade 1s ease-in;
 }
