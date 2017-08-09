@@ -33,7 +33,8 @@
 
 }
 
-.status-light__disabled {
+.status-light__disabled,
+.status-light__off{
   @include status-light-header;
   &::before {
     @include status-light__disabled;
