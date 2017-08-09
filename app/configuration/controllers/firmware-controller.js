@@ -112,10 +112,10 @@ window.angular && (function (angular) {
                     };
 
                     $scope.loadFirmwares = function(){
-                        APIUtils.getFirmwares(function(data, bmcActiveVersion, hostActiveVersion){
-                           $scope.firmwares = data;
-                           $scope.bmcActiveVersion = bmcActiveVersion;
-                           $scope.hostActiveVersion = hostActiveVersion;
+                        APIUtils.getFirmwares().then(function(result){
+                           $scope.firmwares = result.data;
+                           $scope.bmcActiveVersion = result.bmcActiveVersion;
+                           $scope.hostActiveVersion = result.hostActiveVersion;
                         });
                     }
 

@@ -32,6 +32,7 @@ window.angular && (function (angular) {
                     critical: false
                 };
                 $scope.export_name = "sensors.json";
+                $scope.loading = false;
                 $scope.jsonData = function(data){
                     var dt = {};
                     data.data.forEach(function(item){
@@ -110,11 +111,13 @@ window.angular && (function (angular) {
                 }
 
                 $scope.loadSensorData = function(){
+                    $scope.loading = true;
                     APIUtils.getAllSensorStatus(function(data, originalData){
                         $scope.data = data;
                         $scope.originalData = originalData;
                         dataService.sensorData = data;
                         $scope.export_data = JSON.stringify(originalData);
+                        $scope.loading = false;
                     });
                 };
 
