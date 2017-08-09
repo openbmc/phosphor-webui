@@ -12,7 +12,7 @@
 	</div>
     <div class="header__functions">
         <a href="#/server-health/event-log" class="header__server-health">Server health <i class="icon icon-angle"></i><span class="status-light__error">{{dataService.server_health}}</span></a>
-        <a href="#/server-control/power-operations" class="header__server-power" role="button">Server power <i class="icon icon-angle"></i><span ng-class="{'status-light__off': dataService.server_state == 'Off', 'status-light__disabled': dataService.server_state == 'Unreachable', 'status-light__good': dataService.server_state == 'Running', 'status-light__warn': dataService.server_state == 'Quiesced'}">{{dataService.server_state}}</span></a>
+        <a href="#/server-control/power-operations" class="header__server-power" role="button">Server power <i class="icon icon-angle"></i><span ng-class="{'status-light__error': dataService.server_state == 'Off', 'status-light__disabled': dataService.server_state == 'Unreachable', 'status-light__good': dataService.server_state == 'Running', 'status-light__warn': dataService.server_state == 'Quiesced'}">{{dataService.server_state}}</span></a>
         <p class="header__refresh">Data last refreshed<span>{{dataService.last_updated |date:'h:mm:ss MMM dd yyyy'}}</span></p>
         <button class="header__page-refresh" ng-click="refresh()"><span>Refresh</span><svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52.18 51.91"><path class="cls-1" d="M38,20.77H52v-14H48.3v6.07A26,26,0,1,0,48.7,38H44.32a22.14,22.14,0,1,1,1.8-20.92H38v3.67Z" transform="translate(0.16 0.14)"/></button>
     </div>
