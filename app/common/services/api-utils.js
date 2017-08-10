@@ -55,7 +55,8 @@ window.angular && (function (angular) {
                   console.log(error);
                 });
               },
-              getLEDState: function(callback){
+              getLEDState: function(){
+                var deferred = $q.defer();
                 $http({
                   method: 'GET',
                   url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/led/groups/enclosure_identify",
@@ -65,16 +66,14 @@ window.angular && (function (angular) {
                   },
                   withCredentials: true
                 }).success(function(response){
-                      var json = JSON.stringify(response);
-                      var content = JSON.parse(json);
-                      if(callback){
-                        callback(content.data.Asserted);
-                      }else{
-                        return content.data.Asserted;
-                      }
+                    var json = JSON.stringify(response);
+                    var content = JSON.parse(json);
+                    deferred.resolve(content.data.Asserted);
                 }).error(function(error){
                   console.log(error);
+                  deferred.reject(error);
                 });
+                return deferred.promise;
               },
               login: function(username, password, callback){
                 $http({
@@ -314,7 +313,8 @@ window.angular && (function (angular) {
                   }
                 });
               },
-              getLogs: function(callback){
+              getLogs: function(){
+                var deferred = $q.defer();
                 $http({
                   method: 'GET',
                   url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/logging/enumerate",
@@ -359,14 +359,13 @@ window.angular && (function (angular) {
                           }, content.data[key]));
                         }
                       }
-                      if(callback){
-                        callback(data, dataClone);
-                      }else{
-                        return data;
-                      }
+                      deferred.resolve({data: data, original: dataClone});
                 }).error(function(error){
                   console.log(error);
+                  deferred.reject(error);
                 });
+
+                return deferred.promise;
               },
               getAllSensorStatus: function(callback){
                 $http({
@@ -473,10 +472,10 @@ window.angular && (function (angular) {
                   console.log(error);
                 });
               },
-              getFirmwares: function(callback){
+              getFirmwares: function(){
+                var deferred = $q.defer();
                 $http({
                   method: 'GET',
-                  //url: SERVICE.API_CREDENTIALS.mock_host + "/software",
                   url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/software/enumerate",
                   headers: {
                       'Accept': 'application/json',
@@ -550,14 +549,18 @@ window.angular && (function (angular) {
                           }
                         }
                       }
-                      if(callback){
-                        callback(data, bmcActiveVersion, hostActiveVersion);
-                      }else{
-                        return(data, bmcActiveVersion, hostActiveVersion);
-                      }
+
+                      deferred.resolve({
+                          data: data, 
+                          bmcActiveVersion: bmcActiveVersion, 
+                          hostActiveVersion: hostActiveVersion
+                      });
                 }).error(function(error){
                   console.log(error);
+                  deferred.reject(error);
                 });
+
+                return deferred.promise;
               },
               uploadImage: function(file, callback){
                 $http({
@@ -585,7 +588,8 @@ window.angular && (function (angular) {
                   }
                 });
               },
-              getBMCEthernetInfo: function(callback){
+              getBMCEthernetInfo: function(){
+                var deferred = $q.defer();
                 $http({
                   method: 'GET',
                   url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory/system/chassis/motherboard/boxelder/bmc/ethernet",
@@ -595,18 +599,18 @@ window.angular && (function (angular) {
                   },
                   withCredentials: true
                 }).success(function(response){
-                      var json = JSON.stringify(response);
-                      var content = JSON.parse(json);
-                      if(callback){
-                        callback(content.data);
-                      }else{
-                        return content.data;
-                      }
+                    var json = JSON.stringify(response);
+                    var content = JSON.parse(json);
+                    deferred.resolve(content.data);
                 }).error(function(error){
                   console.log(error);
+                  deferred.reject(error);
                 });
+
+                return deferred.promise;
               },
               getBMCInfo: function(callback){
+                var deferred = $q.defer();
                 $http({
                   method: 'GET',
                   url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory/system/chassis/motherboard/boxelder/bmc",
@@ -616,16 +620,14 @@ window.angular && (function (angular) {
                   },
                   withCredentials: true
                 }).success(function(response){
-                      var json = JSON.stringify(response);
-                      var content = JSON.parse(json);
-                      if(callback){
-                        callback(content.data);
-                      }else{
-                        return content.data;
-                      }
+                    var json = JSON.stringify(response);
+                    var content = JSON.parse(json);
+                    deferred.resolve(content.data);
                 }).error(function(error){
                   console.log(error);
+                  deferred.reject(error);
                 });
+                return deferred.promise;
               },
               getHardwares: function(callback){
                 $http({
