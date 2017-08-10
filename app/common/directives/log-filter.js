@@ -24,6 +24,13 @@ window.angular && (function (angular) {
                     $scope.toggleSeverity = function(severity){
                         $scope.selectedSeverity[severity] = !$scope.selectedSeverity[severity];
 
+                        if(['high', 'medium', 'low'].indexOf(severity) > -1){
+                            if($scope.selectedSeverity[severity] == false){
+                                $scope.selectedSeverity.all = true;
+                                return;
+                            }
+                        }
+
                         if($scope.selectedSeverity.low && 
                            $scope.selectedSeverity.medium && 
                            $scope.selectedSeverity.high){
