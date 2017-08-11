@@ -28,8 +28,12 @@
     margin: 0 10px;
     border-radius: 4px;
     &:focus,
-    &:hover {
+    &.default {
       background: $primebtn__bg;
+      border: 2px solid $primebtn__bg;
+    }
+    &:hover {
+      background: darken($primebtn__bg, 10%);
       border: 2px solid $primebtn__bg;
     }
   }
