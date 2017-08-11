@@ -55,6 +55,45 @@ window.angular && (function (angular) {
                   console.log(error);
                 });
               },
+              getNetworkInfo: function(){
+                var deferred = $q.defer();
+                $http({
+                  method: 'GET',
+                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/network/enumerate",
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: true
+                }).success(function(response){
+                    var json = JSON.stringify(response);
+                    var content = JSON.parse(json);
+                    var hostname = "";
+                    var macAddress = "";
+
+                    if(content.data.hasOwnProperty('/xyz/openbmc_project/network/config') &&
+                      content.data['/xyz/openbmc_project/network/config'].hasOwnProperty('HostName')
+                      ){
+                      hostname = content.data['/xyz/openbmc_project/network/config'].HostName;
+                    }
+
+                    if(content.data.hasOwnProperty('/xyz/openbmc_project/network/eth0') &&
+                      content.data['/xyz/openbmc_project/network/eth0'].hasOwnProperty('MACAddress')
+                      ){
+                      macAddress = content.data['/xyz/openbmc_project/network/eth0'].MACAddress;
+                    }
+
+                    deferred.resolve({
+                      data: content.data,
+                      hostname: hostname,
+                      mac_address: macAddress,
+                    });
+                }).error(function(error){
+                  console.log(error);
+                  deferred.reject(error);
+                });
+                return deferred.promise;
+              },
               getLEDState: function(){
                 var deferred = $q.defer();
                 $http({

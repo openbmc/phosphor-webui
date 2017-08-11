@@ -41,6 +41,11 @@ window.angular && (function (angular) {
                     return JSON.stringify(dt);
                 };
 
+                $scope.clear = function(){
+                    $scope.customSearch = "";
+                    $scope.searchTerms = [];
+                }
+
                 $scope.doSearchOnEnter = function (event) {
                     var search = $scope.customSearch.replace(/^\s+/g,'').replace(/\s+$/g,'');
                     if (event.keyCode === 13 &&
