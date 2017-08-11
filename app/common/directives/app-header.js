@@ -15,7 +15,6 @@ window.angular && (function (angular) {
 
                     $scope.loadServerStatus = function(){
                         if(!userModel.isLoggedIn()){
-                            //@TODO:some error message?
                             return;
                         }
                         APIUtils.getHostState(function(status){
@@ -28,7 +27,18 @@ window.angular && (function (angular) {
                             }
                         });
                     }
+
+                    $scope.loadNetworkInfo = function(){
+                        if(!userModel.isLoggedIn()){
+                            return;
+                        }
+                        APIUtils.getNetworkInfo().then(function(data){
+                            dataService.setNetworkInfo(data);
+                        });
+                    }
+
                     $scope.loadServerStatus();
+                    $scope.loadNetworkInfo();
 
                     $scope.logout = function(){
                         userModel.logout(function(status, error){
@@ -42,6 +52,7 @@ window.angular && (function (angular) {
 
                     $scope.refresh = function(){
                         $scope.loadServerStatus();
+                        $scope.loadNetworkInfo();
 
                         //Add flash class to header timestamp on click of refresh
                         var myEl = angular.element( document.querySelector( '.header__refresh' ) );
@@ -54,6 +65,7 @@ window.angular && (function (angular) {
 
                     var loginListener = $rootScope.$on('user-logged-in', function(event, arg){
                         $scope.loadServerStatus();
+                        $scope.loadNetworkInfo();
                     });
 
                     $scope.$on('$destroy', function(){
