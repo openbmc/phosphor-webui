@@ -3,7 +3,7 @@
     <div class="row column">
         <h1>Event log</h1>
     </div>
-    <section class="row column">
+    <section class="row column" aria-label="page header">
         <div class="page-header">
             <h2 class="inline h4">All events from the BMC</h2>
             <div class="event-log__timezone inline float-right">
@@ -22,19 +22,19 @@
         </div>
     </section>
     <!-- Filters -->
-    <section class="row column">
+    <section class="row column" aria-label="event log search">
         <!-- search -->
         <log-search-control></log-search-control>
         <!-- filters -->
         <log-filter></log-filter>
     </section> <!-- end filter -->
 
-    <section id="event-log__events" class="row column">
+    <section id="event-log__events" class="row column" aria-label="event log events">
         <div id="event__actions-bar" class="row header__actions-bar no-margin">
             <div class="column small-1 large-1 event-log__col-check">
                 <label class="control-check">
                     <input type="checkbox" name="events__check-all" ng-model="all" ng-checked="(logs|filter:{selected: true}).length == logs.length"/>
-                    <span class="control__indicator"></span>
+                    <span class="control__indicator accessible-text">select all log events</span>
                 </label>
             </div>
             <div class="column small-11 end col-logged-events">
