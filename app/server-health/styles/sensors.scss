@@ -92,9 +92,16 @@ $title-minWidth: 210px;
     margin: 0;
     @include mediaQuery(medium) {
       background: $thresh-normal;
+      padding: .7em .3em;
+      margin-left: 10px;
+      min-width: 109px;
+    }
+    @include mediaQuery(large) {
+      background: $thresh-normal;
       padding: .7em 1em;
       margin-left: 10px;
       margin-right: 10px;
+      min-width: 130px;
     }
     .sensor__label {
       font-weight: 700;
