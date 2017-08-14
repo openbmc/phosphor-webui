@@ -38,20 +38,28 @@ window.angular && (function (angular) {
 =======
 >>>>>>> 4c1a3dd... Major update to code structure
 
+            this.hostname = "";
+            this.mac_address = "";
+
+            this.setNetworkInfo = function(data){
+                this.hostname = data.hostname;
+                this.mac_address = data.mac_address;
+            }
+
             this.setPowerOnState = function(){
                 this.server_state = Constants.HOST_STATE_TEXT.on;
                 this.server_status = Constants.HOST_STATE.on;
-            },
+            }
 
             this.setPowerOffState = function(){
                 this.server_state = Constants.HOST_STATE_TEXT.off;
                 this.server_status = Constants.HOST_STATE.off;
-            },
+            }
 
             this.setBootingState = function(){
                 this.server_state = Constants.HOST_STATE_TEXT.booting;
                 this.server_status = Constants.HOST_STATE.booting;
-            },
+            }
 
             this.setUnreachableState = function(){
                 this.server_state = Constants.HOST_STATE_TEXT.unreachable;

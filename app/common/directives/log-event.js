@@ -9,7 +9,8 @@ window.angular && (function (angular) {
                 'templateUrl': 'common/directives/log-event.html',
                 'scope': {
                    'event': '=',
-                   'tmz': '='
+                   'tmz': '=',
+                   'multiSelected': '='
                 },
                 'controller': ['$rootScope', '$scope','dataService', '$location', '$timeout', function($rootScope, $scope, dataService, $location, $timeout){
                     $scope.dataService = dataService;

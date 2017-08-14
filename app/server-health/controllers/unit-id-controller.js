@@ -17,18 +17,21 @@ window.angular && (function (angular) {
             '$window', 
             'APIUtils', 
             'dataService',
-            function($scope, $window, APIUtils, dataService, userModel){
+            function($scope, $window, APIUtils, dataService){
                 $scope.dataService = dataService;
 
-                $scope.getLEDState = function(){
-                    APIUtils.getLEDState(function(state){
-                        if(state == APIUtils.LED_STATE.on){
-                            dataService.LED_state = APIUtils.LED_STATE_TEXT.on;
-                        }else{
-                            dataService.LED_state = APIUtils.LED_STATE_TEXT.off;
-                        }
-                    });
+                APIUtils.getLEDState().then(function(state){
+                    $scope.displayLEDState(state);
+                });
+
+                $scope.displayLEDState = function(state){
+                    if(state == APIUtils.LED_STATE.on){
+                        dataService.LED_state = APIUtils.LED_STATE_TEXT.on;
+                    }else{
+                        dataService.LED_state = APIUtils.LED_STATE_TEXT.off;
+                    }
                 }
+
                 $scope.toggleLED = function(){
                     var toggleState = (dataService.LED_state == APIUtils.LED_STATE_TEXT.on) ?
                         APIUtils.LED_STATE.off : APIUtils.LED_STATE.on;
@@ -37,8 +40,6 @@ window.angular && (function (angular) {
                     APIUtils.setLEDState(toggleState, function(status){
                     });
                 }
-
-                $scope.getLEDState();
             }
         ]
     );

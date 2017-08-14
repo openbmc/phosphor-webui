@@ -16,9 +16,10 @@
 			<label for="content__search-input">Sensors Search</label>
 			<input id="content__search-input" type="text" ng-model="customSearch" ng-keydown="doSearchOnEnter($event)"/>
 			<div class="search-submit__wrapper">
-				<button class="clear-input" ng-click="customSearch = ''">&#10005;</button>
+				<button class="clear-input" ng-click="clear()">&#10005;</button>
 				<input id="content__search-submit" type="submit" class="btn btn-primary content__search-submit" value="Filter" ng-click="doSearchOnClick()"/>
 			</div>
+
 		</div>
 		<div class="toggle-filter">
 			<p class="content-label">FILTER BY SEVERITY</p>
