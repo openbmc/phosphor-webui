@@ -51,7 +51,7 @@ $nav__seclvlWidth: 240px;
   .nav-icon {
     @include navIcons;
   }
-  .button, button, a {
+  .button, a, .nav__btn {
     background: transparent;
     height: auto;
     border: 0;
@@ -84,6 +84,7 @@ $nav__seclvlWidth: 240px;
       padding: 1em;
       border-radius: 0;
       border-bottom: 1px solid $lightgrey;
+      cursor: pointer;
       .nav__icon-help__outer {
         stroke: $black;
       }

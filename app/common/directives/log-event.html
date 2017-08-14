@@ -15,7 +15,7 @@
              <label class="control-check">
                  <input type="checkbox" name="events__check" ng-click="event.selected= ! event.selected"
                         ng-checked="event.selected"/>
-                 <span class="control__indicator"></span>
+                 <span class="control__indicator accessible-text">select log event</span>
              </label>
          </div>
          <div class="column small-9 large-10 event-log__event-info"
@@ -29,8 +29,8 @@
                  <p class="inline event__description">{{event.Severity}}</p>
              </div>
          <div class="column small-1 large-1">
-             <button class="accord-trigger" ng-class="{'active': event.meta}"
-                     ng-click="event.meta = ! event.meta"></button>
+             <span class="button accord-trigger" ng-class="{'active': event.meta}"
+                     ng-click="event.meta = ! event.meta"></span>
          </div>
         </div>
      <div class="row event__metadata-row" ng-class="{'active': event.meta}">
