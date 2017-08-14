@@ -22,6 +22,11 @@ window.angular && (function (angular) {
                         }
                     };
 
+                    $scope.clear = function(){
+                        $scope.customSearch = "";
+                        $scope.clearSearchItem();
+                    }
+
                     $scope.doSearchOnClick = function() {
                         var search = $scope.customSearch.replace(/^\s+/g,'').replace(/\s+$/g,'');
                         if (search.length >= 2) {

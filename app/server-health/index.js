@@ -28,6 +28,11 @@ window.angular && (function (angular) {
                     'controller': 'logController',
                     authenticated: true
                 })
+                .when('/server-health/event-log/:type/:id', {
+                    'templateUrl': 'server-health/controllers/log-controller.html',
+                    'controller': 'logController',
+                    authenticated: true
+                })
                 .when('/server-health/inventory-overview', {
                     'templateUrl': 'server-health/controllers/inventory-overview-controller.html',
                     'controller': 'inventoryOverviewController',
