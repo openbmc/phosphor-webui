@@ -1,5 +1,5 @@
-
 .serial-lan__wrapper {
+  overflow: hidden;
   .btn-export {
     margin: 1.8em 0 1.8em 2em;
   }
@@ -22,8 +22,18 @@
   .btn-export {
     text-decoration: none;
     font-size: .9em;
+    &:hover {
+      text-decoration: underline;
+    }
     &:visited {
       color: $black;
     }
   }
+}
+
+.serial-lan__header {
+  background: $white;
+  padding: 1.2em;
+  line-height: 0;
+  a {color: $black;}
 }
