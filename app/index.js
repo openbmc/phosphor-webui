@@ -79,7 +79,7 @@ window.angular && (function (angular) {
                    if(current && current.$$route){
                      $location.path(current.$$route.originalPath);
                    }else{
-                     $location.path('/overview/system');
+                     $location.path('/overview/server');
                    }
                 }
              }
