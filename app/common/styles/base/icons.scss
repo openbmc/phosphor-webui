@@ -83,6 +83,11 @@
   background-image: url(/assets/images/icon-off.svg);
 }
 
+.icon__return {
+  @include status-icon;
+  background-image: url(/assets/images/icon-return.svg);
+}
+
 .icon__info{
   margin-top: -4px;
   margin-right: .5em;
