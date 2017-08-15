@@ -23,6 +23,11 @@ window.angular && (function (angular) {
                     'controller': 'bmcRebootController',
                     authenticated: true
                 })
+                .when('/server-control/server-led', {
+                    'templateUrl': 'server-health/controllers/unit-id-controller.html',
+                    'controller': 'unitIdController',
+                    authenticated: true
+                })
                 .when('/server-control/power-operations', {
                     'templateUrl': 'server-control/controllers/power-operations-controller.html',
                     'controller': 'powerOperationsController',
