@@ -97,11 +97,18 @@ header {
   .header__functions {
     position: absolute;
     top: 0;
-    right: 0;
+    right: -680px;
     bottom: 0;
     z-index: 100;
     margin: .3em 0;
+    background: $white;
     @include fastTransition-all;
+    &.active {
+      right: 1em;
+    }
+    @media (min-width: 1025px) {
+      right: 0;
+    }
     span {
       display: block;
       color: $black;
@@ -126,36 +133,53 @@ header {
     }
   }
 
-  // hide/show header functions based on screen size
-  .header__functions > .header__server-health {
-    display: none;
-    @include mediaQuery(small) {
-      display: block;
-    }
-  }
-
-  .header__functions > .header__refresh {
-    display: none;
-    @include mediaQuery(medium) {
-      display: block;
-      background-color: $white;
-    }
-  }
-
   .header__functions {
     .header__server-power,
     .header__page-refresh,
-    .header__server-health {
+    .header__server-health,
+    .header__info {
       background: $lightgrey;
       @include round-corners;
       margin: 0 .3em;
       height: 100%;
       border: 1px solid $medgrey;
+      opacity: 1;
       @include fastTransition-all;
       &:hover {
         background: rgba(255, 255, 255, 1);
       }
     }
+    .header__info {
+      padding: .3em;
+      min-width: 60px;
+      text-align: center;
+      display: inline-block;
+      span {
+        padding: .7em 0 .3em;
+        font-size: 1em;
+        font-weight: 400;
+        color: $darkgrey;
+      }
+      .icon-angle {
+        margin-bottom: .9em;
+      }
+      .icon-angle::before {
+        font-size: 2em;
+        margin-left: 0;
+        display: block;
+        transform: rotate(180deg);
+        @include fastTransition-all;
+      }
+      @media (min-width: 1025px) {
+        display: none;
+      }
+    }
+
+    &.active > .header__info > .icon-angle::before {
+        transform: rotate(-360deg);
+        @include fastTransition-all;
+    }
+
     .header__refresh {
       color: $darkgrey;
       line-height: 1.8;
@@ -174,7 +198,7 @@ header {
       font-weight: 400;
       color: $darkgrey;
       display: block;
-      margin-bottom: 1.8em;
+      margin-bottom: 1.1em;
     }
     svg {
       stroke: $medblue;
