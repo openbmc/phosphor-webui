@@ -1,7 +1,7 @@
 <nav class="nav__wrapper">
 	<ul id="nav__top-level" ng-style="navStyle">
 		<li>
-			<a class="btn-overview" ng-class="{opened: firstLevel == 'overview'}" href="#/overview/system" ng-click="change('overview')" tabindex="1">
+			<a class="btn-overview" ng-class="{opened: firstLevel == 'overview'}" href="#/overview/server" ng-click="change('overview')" tabindex="1">
 				<span class="">
 					<svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve" class="nav-icon">
 						<path d="M23.9,18.2l3.3,3.3l1.1-1.1L23.9,16l-7.8,7.8l-3.3-3.3l-1.1,1.1l4.4,4.4L23.9,18.2z"/>
@@ -67,30 +67,30 @@
 	</ul>
 	<ul class="nav__second-level btn-health" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'server-health')}">
 		<li ng-class="{'active': (path == '/server-health/event-log')}">
-			<a href="#/server-health/event-log" tabindex="3" ng-click="closeSubnav()">Event log</a></li>
+			<a href="#/server-health/event-log" tabindex="6" ng-click="closeSubnav()">Event log</a></li>
 		<li ng-class="{'active': (path == '/server-health/inventory-overview' || path == '/server-health/inventory')}" ng-click="closeSubnav()">
-			<a href="#/server-health/inventory-overview" tabindex="4">Hardware status</a></li>
+			<a href="#/server-health/inventory-overview" tabindex="7">Hardware status</a></li>
 		<li ng-class="{'active': (path == '/server-health/sensors-overview' || path == '/server-health/sensors')}">
-			<a href="#/server-health/sensors-overview" ng-click="closeSubnav()" tabindex="5">Sensors</a></li>
-		<li ng-class="{'active': (path == '/server-health/unit-id')}">
-			<a href="#/server-health/unit-id" tabindex="6" ng-click="closeSubnav()">Server LED</a></li>
+			<a href="#/server-health/sensors-overview" ng-click="closeSubnav()" tabindex="8">Sensors</a></li>
 	</ul>
 	<ul class="nav__second-level btn-control" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'server-control')}">
 		<li ng-class="{'active': (path == '/server-control' || path == '/server-control/power-operations')}">
-			<a href="#/server-control/power-operations" ng-click="closeSubnav()">Server power operations</a></li>
+			<a href="#/server-control/power-operations" tabindex="9" ng-click="closeSubnav()">Server power operations</a></li>
+		<li ng-class="{'active': (path == '/server-control/server-led')}">
+			<a href="#/server-control/server-led" tabindex="10" ng-click="closeSubnav()">Server LED</a></li>
 		<li ng-class="{'active': (path == '/server-control/bmc-reboot')}">
-			<a href="#/server-control/bmc-reboot" tabindex="8" ng-click="closeSubnav()">Reboot BMC</a></li>
+			<a href="#/server-control/bmc-reboot" tabindex="11" ng-click="closeSubnav()">Reboot BMC</a></li>
 		<li ng-class="{'active': (path == '/server-control/remote-console')}">
-			<a href="#/server-control/remote-console" tabindex="5" ng-click="closeSubnav()">Serial over LAN</a></li>
+			<a href="#/server-control/remote-console" tabindex="12" ng-click="closeSubnav()">Serial over LAN</a></li>
 	</ul>
 	<ul class="nav__second-level btn-firmware" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'configuration')}">
 		<li ng-class="{'active': (path == '/configuration' || path == '/configuration/network')}">
-			<a href="#/configuration/network" ng-click="closeSubnav()">Network settings</a></li>
+			<a href="#/configuration/network" tabindex="13" ng-click="closeSubnav()">Network settings</a></li>
 		<li ng-class="{'active': (path == '/configuration' || path == '/configuration/firmware')}">
-			<a href="#/configuration/firmware" ng-click="closeSubnav()">Firmware</a></li>
+			<a href="#/configuration/firmware" tabindex="14" ng-click="closeSubnav()">Firmware</a></li>
 	</ul>
 	<ul class="nav__second-level btn-users" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'users')}">
 		<li ng-class="{'active': (path == '/users' || path == '/users/manage-accounts')}">
-			<a href="#/users/manage-accounts" ng-click="closeSubnav()">Manage user account</a></li>
+			<a href="#/users/manage-accounts" tabindex="15" ng-click="closeSubnav()">Manage user account</a></li>
 	</ul>
 </nav>

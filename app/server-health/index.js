@@ -53,11 +53,6 @@ window.angular && (function (angular) {
                     'controller': 'powerConsumptionController',
                     authenticated: true
                 })
-                .when('/server-health/unit-id', {
-                    'templateUrl': 'server-health/controllers/unit-id-controller.html',
-                    'controller': 'unitIdController',
-                    authenticated: true
-                })
                 .when('/server-health/diagnostics', {
                     'templateUrl': 'server-health/controllers/diagnostics-controller.html',
                     'controller': 'diagnosticsController',

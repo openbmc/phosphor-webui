@@ -25,7 +25,7 @@ window.angular && (function (angular) {
                 if($routeParams.fake_login &&
                    $routeParams.fake_login === 'fake_login'){
                     userModel.fakeLogin();
-                    $window.location.hash = '#/overview/system';
+                    $window.location.hash = '#/overview/server';
                 }
 
                 $scope.tryLogin = function(username, password, event){
@@ -43,7 +43,7 @@ window.angular && (function (angular) {
                         userModel.login(username, password, function(status, unreachable){
                             if(status){
                                 $scope.$emit('user-logged-in',{});
-                                $window.location.hash = '#/overview/system';
+                                $window.location.hash = '#/overview/server';
                             }else{
                                 if(!unreachable){
                                    $scope.error = true;
