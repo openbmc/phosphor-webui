@@ -49,8 +49,8 @@
                         <button class="btn-primary" ng-click="confirm = false">No</button>
                     </div>
                 </div>
-                <p class="inline" ng-show="selectedEvents.length"><span class="event__select-count">{{selectedEvents.length}}</span> Events are Selected</p>
-                <p class="inline" ng-hide="selectedEvents.length"><span class="event__select-count">{{filteredLogs.length}}</span> Events are Logged</p>
+                <p class="inline" ng-show="selectedEvents.length"><span class="event__select-count">{{selectedEvents.length}}</span> Events are selected</p>
+                <p class="inline" ng-hide="selectedEvents.length"><span class="event__select-count">{{filteredLogs.length}}</span> Events are logged</p>
                 <!-- when logs are selected, this text changes to show how many logs are checked -->
                 <div class="event__actions">
                     <button class="inline btn-delete" ng-show="selectedEvents.length || all" ng-click="confirm= ! confirm">
@@ -70,6 +70,6 @@
         multi-selected="selectedEvents.length > 1"
         >
         </log-event>
+        <dir-pagination-controls template-url="common/directives/dirPagination.tpl.html"></dir-pagination-controls>
     </section>
-    <dir-pagination-controls template-url="common/directives/dirPagination.tpl.html"></dir-pagination-controls> 
 </div> <!-- end event log -->

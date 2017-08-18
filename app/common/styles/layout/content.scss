@@ -6,7 +6,7 @@ $nav__seclvlWidth: 240px;
 .page-header {
   position: relative;
   border-bottom: 1px solid $lightbg__grey;
-  margin: 1.625em 0 1.2em 0;
+  margin: .5em 0 2.2em;
   padding-left: 0;
   .h4 {
     padding: .1em 0 0 0;
@@ -21,6 +21,10 @@ $nav__seclvlWidth: 240px;
   transition: left 1s ease;
   @include mediaQuery(x-small){
     padding: 1rem 2rem;
+  }
+  section.row,
+  .column.row.row, .row.row.columns{
+    margin-left: 0;
   }
 }
 
