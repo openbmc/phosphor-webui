@@ -18,7 +18,7 @@ window.angular && (function (angular) {
         // Route configuration
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
-                .when('/overview/system', {
+                .when('/overview/server', {
                     'templateUrl': 'overview/controllers/system-overview-controller.html',
                     'controller': 'systemOverviewController',
                     authenticated: true
