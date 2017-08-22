@@ -84,7 +84,7 @@
 				<!-- <p class="disabled">No high priority events</p> -->
 
 				<!-- single event -->
-				<a href="#/server-health/event-log" ng-repeat="event in logs|orderBy:'+Id'">
+				<a href="#/server-health/event-log/high/{{event.Id}}" ng-repeat="event in logs|orderBy:'+Id'">
 					<div class="row column event-log__single-event">
 						<div class="row">
 							<div class="column small-1 large-1 event-log__col-check">
