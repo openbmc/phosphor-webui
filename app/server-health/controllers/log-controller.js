@@ -24,8 +24,10 @@ window.angular && (function (angular) {
                 $scope.tmz = 'EDT';
                 $scope.itemsPerPage = Constants.PAGINATION.LOG_ITEMS_PER_PAGE;
                 $scope.loading = false;
+                var expandedSelectedIdOnce = false;
 
                 var sensorType = $routeParams.type;
+                var eventId = $routeParams.id;
 
                 // priority buttons
                 $scope.selectedSeverity = {
@@ -49,9 +51,25 @@ window.angular && (function (angular) {
                 $scope.searchItems = [];
                 $scope.selectedEvents = [];
 
+
+                if(eventId){
+                    $scope.customSearch = "#"+eventId;
+                    $scope.searchItems.push("#"+eventId);
+                }
+
                 $scope.loadLogs = function(){
                     $scope.loading = true;
                     APIUtils.getLogs().then(function(result){
+                        if(eventId && expandedSelectedIdOnce == false){
+                            var log = result.data.filter(function(item){
+                                return item.Id == eventId;
+                            });
+
+                            if(log.length){
+                                log[0].meta = true;
+                            }
+                            expandedSelectedIdOnce = true;
+                        }
                         $scope.logs = result.data;
                         $scope.originalData = result.original;
                         $scope.loading = false;

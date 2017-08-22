@@ -76,7 +76,6 @@ window.angular && (function (angular) {
                     }
 
                     if($scope.selectedSeverity.all){
-                        $scope.selectedSeverity.normal = false;
                         $scope.selectedSeverity.warning = false;
                         $scope.selectedSeverity.critical = false;
                     }
@@ -85,11 +84,19 @@ window.angular && (function (angular) {
                 $scope.toggleSeverity = function(severity){
                     $scope.selectedSeverity[severity] = !$scope.selectedSeverity[severity];
 
-                    if($scope.selectedSeverity.normal && 
-                       $scope.selectedSeverity.warning && 
+                   if(['warning', 'critical'].indexOf(severity) > -1){
+                       if($scope.selectedSeverity[severity] == false &&
+                          (!$scope.selectedSeverity.warning &&
+                           !$scope.selectedSeverity.critical
+                          )){
+                           $scope.selectedSeverity.all = true;
+                           return;
+                       }
+                   }
+
+                    if($scope.selectedSeverity.warning && 
                        $scope.selectedSeverity.critical){
                         $scope.selectedSeverity.all = true;
-                        $scope.selectedSeverity.normal = false;
                         $scope.selectedSeverity.warning = false;
                         $scope.selectedSeverity.critical = false;
                     }else{

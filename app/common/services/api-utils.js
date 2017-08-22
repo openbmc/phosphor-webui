@@ -425,6 +425,18 @@ window.angular && (function (angular) {
                       var tempKeyParts = [];
                       var order = 0;
 
+                      function getScaledValue(value, scale){
+                        scale = scale + "";
+                        var power = parseInt(scale.replace(/[\s\t\+\-]/g,''),10);
+
+                        if(scale.indexOf("+") > -1){
+                          value = value * Math.pow(10, power);
+                        }else if(scale.indexOf("-") > -1){
+                          value = value / Math.pow(10, power);
+                        }
+                        return value;
+                      }
+
                       function getSensorStatus(reading){
                         var severityFlags = {critical: false, warning: false, normal: false}, severityText = '', order = 0;
 
@@ -482,6 +494,8 @@ window.angular && (function (angular) {
                           }).reduce(function(prev, el){
                             return prev + " " + el;
                           });
+
+                          content.data[key].Value = getScaledValue(content.data[key].Value, content.data[key].Scale);
 
                           sensorData.push(Object.assign({
                             path: key,
