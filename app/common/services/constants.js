@@ -59,7 +59,7 @@ window.angular && (function (angular) {
                     Warning: 'Medium'
                 },
                 PAGINATION: {
-                    LOG_ITEMS_PER_PAGE: 4
+                    LOG_ITEMS_PER_PAGE: 25
                 },
                 HARDWARE: {
                   component_key_filter: '/xyz/openbmc_project/inventory/system',
