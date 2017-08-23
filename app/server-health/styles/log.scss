@@ -164,7 +164,8 @@
       text-decoration: underline;
     }
   }
-  .btn-resolve.disabled:hover {
+  .btn-resolve.disabled:hover,
+  .btn-delete.disabled:hover{
     cursor: default;
     text-decoration: none;
   }
