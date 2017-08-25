@@ -66,37 +66,6 @@ $title-minWidth: 210px;
       }
     }
   }
-
-  //sortable heading
-  .sort-heading {
-    position: relative;
-    color: $lightblue;
-    &::before {
-      content: '\025be';
-      position: absolute;
-      right: 0;
-      top: 8px;
-      transform: rotate(180deg);
-      font-size: 1.3em;
-    }
-    &::after {
-      content: '\025be';
-      position: absolute;
-      right: -1px;
-      bottom: 8px;
-      font-size: 1.3em;
-    }
-    &.sort-up {
-      &::before {
-        color: $darkbg__accent;
-      }
-    }
-    &.sort-down {
-      &::after {
-        color: $darkbg__accent;
-      }
-    }
-  }
 }
 // Inventory items
 .inventory-overview {
