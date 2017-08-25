@@ -9,6 +9,9 @@ $title-minWidth: 210px;
 .header__actions-bar {
   padding-left: 1.5em;
   font-weight: 700;
+  .sensor__reading {
+    margin-right: .3em;
+  }
   .sensor__heading-current {
     padding-right: 1em;
   }
@@ -43,7 +46,7 @@ $title-minWidth: 210px;
   @include mediaQuery(medium) {
     display: inline-block;
     width: auto;
-    min-width: calc(70% * (1 / 5) - 10px);
+    min-width: calc(70% * (1 / 5) - 18px);
   }
 }
 
@@ -72,6 +75,9 @@ $title-minWidth: 210px;
       background: transparent;
       padding: .5em .5em .5em 0;
     }
+    .icon__normal {
+      width: 0;
+    }
   }
   .content-label {
     font-size: 1em;
@@ -98,10 +104,10 @@ $title-minWidth: 210px;
     }
     @include mediaQuery(large) {
       background: $thresh-normal;
-      padding: .7em 1em;
-      margin-left: 10px;
-      margin-right: 10px;
-      min-width: 130px;
+      padding: .7em;
+      margin-left: .3em;
+      margin-right: .3em;
+      min-width: 150px;
     }
     .sensor__label {
       font-weight: 700;

@@ -31,7 +31,8 @@ window.angular && (function (angular) {
             'app.serverControl',
             'app.serverHealth',
             'app.configuration',
-            'app.users'
+            'app.users',
+            'app.multiServer'
         ])
         // Route configuration
         .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
