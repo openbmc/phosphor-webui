@@ -2,13 +2,12 @@
 	 viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#FFFFFF;}
-	.st1{fill:#F4B000;}
+	.st1{fill:#3C6DF0;}
 </style>
 <g id="Layer_2">
-	<rect x="3.9" y="3.9" class="st0" width="7.9" height="7.9"/>
+	<rect x="3.7" y="4" class="st0" width="8.4" height="8.1"/>
 </g>
-<g id="Isolation_Mode">
-	<path class="st1" d="M2.3,13.7c3.1,3.1,8.2,3.1,11.3,0s3.1-8.2,0-11.3s-8.2-3.1-11.3,0S-0.8,10.5,2.3,13.7z M7,5l0,6H5l0-6H7z
-		 M11,5l0,6H9l0-6H11z"/>
+<g id="Layer_1">
+	<path class="st1" d="M8,0C3.6,0,0,3.6,0,8s3.6,8,8,8s8-3.6,8-8S12.4,0,8,0z M12,9H9v3H7V9H4V7h3V4h2v3h3V9z"/>
 </g>
 </svg>
