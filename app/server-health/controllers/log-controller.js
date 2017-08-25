@@ -52,6 +52,17 @@ window.angular && (function (angular) {
                 $scope.loadLogs = function(){
                     $scope.loading = true;
                     APIUtils.getLogs().then(function(result){
+                        if(eventId && expandedSelectedIdOnce == false){
+                            var log = result.data.filter(function(item){
+                                return item.Id == eventId;
+                            });
+
+                            if(log.length){
+                                log[0].meta = true;
+                            }
+                            expandedSelectedIdOnce = true;
+                        }
+                        dataService.updateServerHealth(result.data);
                         $scope.logs = result.data;
                         $scope.originalData = result.original;
                         $scope.loading = false;
@@ -69,7 +80,6 @@ window.angular && (function (angular) {
                             (log.severity_flags.high && $scope.selectedSeverity.high)
                     );
                 }
-
 
                 $scope.filterByStatus = function(log){
                     if ($scope.selectedStatus.all) return true;
