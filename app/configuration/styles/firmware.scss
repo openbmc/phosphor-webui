@@ -3,7 +3,7 @@
 }
 
 .firmware__table {
-  margin-top: 2.5em;
+  margin-top: 0;
   margin-bottom: 2.5em;
 
   .table__cell {
@@ -36,8 +36,9 @@
 
   .table-header {
     font-weight: 700;
+    margin: 0;
     p {
-      margin-bottom: 0em;
+      margin-bottom: 0;
     }
   }
 

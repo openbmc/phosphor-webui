@@ -70,6 +70,7 @@ window.angular && (function (angular) {
                             }
                             expandedSelectedIdOnce = true;
                         }
+                        dataService.updateServerHealth(result.data);
                         $scope.logs = result.data;
                         $scope.originalData = result.original;
                         $scope.loading = false;
@@ -87,7 +88,6 @@ window.angular && (function (angular) {
                             (log.severity_flags.high && $scope.selectedSeverity.high)
                     );
                 }
-
 
                 $scope.filterByStatus = function(log){
                     if ($scope.selectedStatus.all) return true;
