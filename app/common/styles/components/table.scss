@@ -104,6 +104,33 @@
   @include indeterminate-bar;
 }
 
+//sortable heading
 .sort-heading {
-
+  position: relative;
+  color: $lightblue;
+  &::after {
+    content: '\025be';
+    position: absolute;
+    right: -20px;
+    top: -1px;
+    font-size: 1.3em;
+  }
+  &::before {
+    content: '\025be';
+    position: absolute;
+    right: -20px;
+    top: -10px;
+    font-size: 1.3em;
+    transform: rotate(180deg);
+  }
+  &.sort-up {
+    &::before {
+      color: $darkbg__accent;
+    }
+  }
+  &.sort-down {
+    &::after {
+      color: $darkbg__accent;
+    }
+  }
 }
