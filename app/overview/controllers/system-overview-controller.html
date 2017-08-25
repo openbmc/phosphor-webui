@@ -116,8 +116,6 @@
 				<h3 class="bold h4 inline">High priority events ({{logs.length}})</h3>
 				<a href="#/server-health/event-log/high" class="inline float-right">View all event logs</a>
 			</div>
-			<!-- show when there are no critical events from event log -->
-			<!-- <p class="disabled">No high priority events</p> -->
 
 			<!-- single event -->
 			<a href="#/server-health/event-log/high" ng-repeat="event in logs|orderBy:'+Id'">
