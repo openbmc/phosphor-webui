@@ -13,6 +13,12 @@ window.angular && (function (angular) {
                 'controller': ['$rootScope', '$scope','dataService', 'userModel', '$location', function($rootScope, $scope, dataService, userModel, $location){
                     $scope.dataService = dataService;
 
+                    $scope.loadServerHealth = function(){
+                        APIUtils.getLogs().then(function(result){
+                            dataService.updateServerHealth(result.data);
+                        });
+                    }
+
                     $scope.loadServerStatus = function(){
                         if(!userModel.isLoggedIn()){
                             return;
@@ -37,8 +43,13 @@ window.angular && (function (angular) {
                         });
                     }
 
-                    $scope.loadServerStatus();
-                    $scope.loadNetworkInfo();
+                    function loadData(){
+                       $scope.loadServerStatus();
+                       $scope.loadNetworkInfo();
+                       $scope.loadServerHealth();
+                    }
+
+                    loadData();
 
                     $scope.logout = function(){
                         userModel.logout(function(status, error){
@@ -51,8 +62,7 @@ window.angular && (function (angular) {
                     }
 
                     $scope.refresh = function(){
-                        $scope.loadServerStatus();
-                        $scope.loadNetworkInfo();
+                        loadData();
 
                         //Add flash class to header timestamp on click of refresh
                         var myEl = angular.element( document.querySelector( '.header__refresh' ) );
@@ -64,8 +74,7 @@ window.angular && (function (angular) {
                     }
 
                     var loginListener = $rootScope.$on('user-logged-in', function(event, arg){
-                        $scope.loadServerStatus();
-                        $scope.loadNetworkInfo();
+                        loadData();
                     });
 
                     $scope.$on('$destroy', function(){

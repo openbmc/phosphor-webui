@@ -70,10 +70,7 @@ window.angular && (function (angular) {
                 }
 
                 $scope.toggleSeverityAll = function(){
-
-                    if($scope.selectedSeverity.all !== true){
-                      $scope.selectedSeverity.all = !$scope.selectedSeverity.all;
-                    }
+                    $scope.selectedSeverity.all = !$scope.selectedSeverity.all;
 
                     if($scope.selectedSeverity.all){
                         $scope.selectedSeverity.warning = false;
