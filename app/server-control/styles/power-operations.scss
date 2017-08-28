@@ -23,8 +23,8 @@
     span:before {
       content: '';
       position: absolute;
-      margin-left: -25px;
       @extend .icon__off;
+      margin-left: -25px;
     }
   }
 
@@ -71,6 +71,8 @@
       .power__state {
         span:before {
           color: $status-warn;
+          content: '';
+          @extend .icon__warning;
         }
       }
     }
