@@ -58,9 +58,10 @@
 @mixin status-icon {
   background-repeat: no-repeat;
   vertical-align: middle;
-  width: 20px;
-  height: 23px;
+  width: 16px;
+  height: 16px;
   margin-right: .4em;
+  margin-left: .3em;
 }
 
 .icon__warning {
