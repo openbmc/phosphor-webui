@@ -1,19 +1,21 @@
 .modal-overlay {
   width:100%;
   height:100%;
-  z-index:100;
+  z-index:-1;
   background-color:#000;
-  opacity:0.5;
+  opacity:0;
   position:fixed;
   top:0;
   left:0;
-  display:none;
   margin:0;
   padding:0;
+  @include fastTransition-all;
 }
 
 .modal-overlay.active{
-  display: block;
+  z-index:100;
+  opacity: .5;
+  @include fastTransition-all;
 }
 
 .modal {
@@ -25,10 +27,9 @@
   background-color:#fff;
   z-index:101;
   position:fixed;
-  top:25%;
+  top:-100%;
   left:25%;
   overflow: hidden;
-  display:none;
   @include fastTransition-all;
   @include mediaQuery(medium) {
     padding: 2.5em;
@@ -36,7 +37,8 @@
 }
 
 .modal.active{
-  display: block;
+  top: 25%;
+  @include fastTransition-all;
 }
 
 .modal .page-header {
