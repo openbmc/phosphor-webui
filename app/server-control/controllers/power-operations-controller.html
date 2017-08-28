@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="row column">
-        <div id="power-indicator-bar" class="power__indicator-bar" ng-class="{'power__state-on': dataService.server_state == 'Running', 'power__state-off': dataService.server_state == 'Off', 'power__state-indet': dataService.server_state == 'Quiesced'}">
+        <div id="power-indicator-bar" class="power__indicator-bar" ng-class="{'power__state-on': dataService.server_state == 'Running', 'power__state-off': dataService.server_state == 'Off', 'power__state-indet': dataService.server_state == 'Standby'}">
             <p class="inline">{{dataService.server_id}}</p>
             <h3 class="power__state inline no-margin h3"><span>{{dataService.server_state}}</span></h3>
         </div>
@@ -19,7 +19,7 @@
         </div>
 
         <!-- Power on displays only when server is shutdown -->
-        <div class="row column power-option" ng-hide="dataService.server_state == 'Running' || dataService.server_state == 'Quiesced'" ng-class="{disabled: dataService.server_unreachable || (confirm && !power_confirm) || dataService.loading, transitionAll: confirm && power_confirm}">
+        <div class="row column power-option" ng-hide="dataService.server_state == 'Running' || dataService.server_state == 'Standby'" ng-class="{disabled: dataService.server_unreachable || (confirm && !power_confirm) || dataService.loading, transitionAll: confirm && power_confirm}">
             <button id="power__power-on" class="btn-secondary inline" ng-click="togglePower()" role="button" ng-disabled="dataService.server_unreachable"><img src="assets/images/icon-power.svg" alt="power on" aria-hidden="true">Power on</button>
             <p class="inline">Attempts to power on the server</p>
         </div>
