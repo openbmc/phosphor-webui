@@ -44,6 +44,8 @@ window.angular && (function (angular) {
                            response.status == APIUtils.API_RESPONSE.SUCCESS_STATUS){
                             sessionStorage.removeItem('LOGIN_ID');
                             callback(true);
+                        }else if(response.status == APIUtils.API_RESPONSE.ERROR_STATUS){
+                            callback(false);
                         }else{
                             callback(false, error);
                         }
