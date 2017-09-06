@@ -51,6 +51,11 @@ window.angular && (function (angular) {
                 
                 //Allows keyboard input
                 term.installKeyboard();
+
+                $scope.openTerminalWindow = function(){
+                    dataService.setRemoteWindowActive();
+                    $window.open('#/server-control/remote-console-window','Remote Console Window','directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=600,height=400');
+                }
             }
         ]
     );
