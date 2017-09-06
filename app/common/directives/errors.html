@@ -1,0 +1,17 @@
+<!-- Unexpected error -->
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': display_error}">
+    <div class="modal__upload-fail" role="document">
+        <div class="screen-reader-offscreen modal-description">Unexpected error</div><!-- accessibility only; used for screen readers -->
+        <div class="page-header ">
+            <span class="icon icon__warning inline"><span class="accessible-text" role="alert">Unexpected error</span></span>
+            <h1 class="modal-title h4 inline">Unexpected error</h1>
+        </div>
+        <div class="modal__content">
+            <p>Oops! An unexpected error occurred. Record specific details of the issue, then contact your company support services.</p>
+        </div>
+        <div class="modal__button-wrapper">
+            <button class="inline btn-primary" ng-click="display_error = false;">Close</button>
+        </div>
+    </div>
+</section>
+<div class="modal-overlay" tabindex="-1" ng-class="{'active': (multi_server_recent)}"></div>

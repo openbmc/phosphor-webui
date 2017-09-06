@@ -35,6 +35,7 @@ window.angular && (function (angular) {
                 }; 
                 $scope.login = function(username, password){
                     $scope.error = false;
+                    $scope.server_unreachable = false;
 
                     if(!username || username == "" ||
                        !password || password == ""){
@@ -45,9 +46,11 @@ window.angular && (function (angular) {
                                 $scope.$emit('user-logged-in',{});
                                 $window.location.hash = '#/overview/server';
                             }else{
-                                if(!unreachable){
-                                   $scope.error = true;
-                               }
+                                if(unreachable){
+                                   $scope.server_unreachable = true;
+                                }else{
+                                    $scope.error = true;
+                                }
                            };
                         });
                     }
