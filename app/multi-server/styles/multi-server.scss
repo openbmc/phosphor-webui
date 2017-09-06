@@ -1,11 +1,99 @@
-@mixin state-label {
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: .8em;
+$title-minWidth: 210px;
+$col-width: calc(72% * (1 / 4) - 10px);
+$narrow-width: 17%;
+
+//Multiserver dropdown
+.multi-server__recent {
+  position: fixed;
+  z-index: 110;
+  background: $white;
+  left: 130px;
+  top: -30%;
+  max-height: 0;
+  overflow: hidden;
+  padding: 1em;
+  font-size: .95em;
+  font-weight: 600;
+  @include fastTransition-all;
+  @include mediaQuery(medium) {
+    min-width: 450px;
+  }
+  &.active {
+    top: 130px;
+    max-height: 100%;
+    overflow: scroll;
+    @include fastTransition-all;
+  }
+}
+.multi-server__add-server,
+.multi-server__view-all {
+  display: block;
+  padding: .6em .6em .6em 0;
+  width: 100%;
+  text-align: left;
 }
 
-$title-minWidth: 210px;
+.multi-server__add-server {
+  margin-bottom: 2em;
+  .icon__plus {
+    height: 18px;
+    margin-top: -2px;
+  }
+}
 
+a.multi-server__view-all {
+  color: $black;
+}
+
+.multi-server__recent-header {
+  background: $lightgrey;
+  color: $darkgrey;
+  padding: 1em 0 .7em 1em;
+  margin-left: -1em;
+  margin-right: -1em;
+  margin-top: 1em;
+}
+
+.multi-server__recent-server {
+  padding: .8em 1em;
+  border-bottom: 1px solid $medgrey;
+  margin-left: -1em;
+  margin-right: -1em;
+  &:last-child {
+    border: 0px;
+  }
+  &:hover {
+    cursor: pointer;
+    background: $lightblue;
+    @include fastTransition-all;
+  }
+  .column {
+    padding-left: 0;
+    padding-top: .5em;
+  }
+  .icon {
+    margin-left: 0;
+  }
+  @include mediaQuery(medium) {
+    border-bottom: 0;
+  }
+}
+
+.multi-server__recent-name {
+  line-height: 1.2;
+  text-align: left;
+}
+
+.multi-server__recent-ip {
+  @include fontCourierBold;
+}
+
+.multi-server__recent-power,
+.multi-server__recent-ip{
+  text-align: left;
+}
+
+//Multiserver page
 .header__actions-bar {
   padding-left: 1.5em;
   font-weight: 700;
@@ -30,7 +118,6 @@ $title-minWidth: 210px;
 }
 
 .multi-server__label {
-  float: left;
   font-weight: 300;
   @include fontFamily;
   @include mediaQuery(medium) {
@@ -40,21 +127,39 @@ $title-minWidth: 210px;
 
 .multi-server__col {
   width: 100%;
-  text-align: right;
+  text-align: left;
   margin-bottom: 0;
   display: none;
   padding: .5em .8em .5em .8em;
+  overflow: hidden;
   @include mediaQuery(medium) {
     display: inline-block;
-    width: auto;
-    min-width: calc(91% * (1 / 4) - 10px);
+    width: $col-width;
     padding: .5em .8em .5em 0;
     text-align: left;
+    vertical-align: top;
+    overflow-wrap: break-word;
+  }
+}
+
+.multi-server__data {
+  text-align: left;
+  float: right;
+  width:40%;
+  overflow-wrap: break-word;
+  @media (min-width: 700px){
+    width:30%;
+  }
+  @include mediaQuery(medium) {
+    float: none;
+    width: auto
   }
 }
 
 .narrow-col {
-  min-width: 12%;
+  @include mediaQuery(medium) {
+    width: $narrow-width;
+  }
 }
 
 .multi-server__col-row {
@@ -89,6 +194,7 @@ $title-minWidth: 210px;
       vertical-align: top;
       margin-bottom: 0;
       padding: .5em .8em .5em 0;
+      overflow-wrap: break-word;
     }
     .icon__normal {
       width: 0;
@@ -147,5 +253,6 @@ $title-minWidth: 210px;
 .multi-server__add-form {
   .control-check {
     padding-left: 25px;
+    margin-left: 1em;
   }
 }
