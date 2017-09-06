@@ -20,7 +20,7 @@ window.angular && (function (angular) {
                     password: "testpass",
                 },
                 API_CREDENTIALS: {
-                    host: 'https://9.3.181.64',
+                    host: 'https://9.3.185.161',
                     mock_host: 'http://localhost:3000'
                 },
                 API_RESPONSE: {
@@ -36,7 +36,7 @@ window.angular && (function (angular) {
                 HOST_STATE_TEXT: {
                     on: 'Running',
                     off: 'Off',
-                    booting: 'Quiesced',
+                    booting: 'Standby',
                     unreachable: 'Unreachable'
                 },
                 HOST_STATE: {
