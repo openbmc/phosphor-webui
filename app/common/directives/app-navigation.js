@@ -13,6 +13,7 @@ window.angular && (function (angular) {
                 },
 <<<<<<< HEAD
                 'controller': ['$scope', '$location', 'dataService', function($scope, $location, dataService){
+                    $scope.dataService = dataService;
                     $scope.showSubMenu = false;
                     $scope.change = function(firstLevel){
                         if(firstLevel != $scope.firstLevel) {
@@ -25,6 +26,15 @@ window.angular && (function (angular) {
                     $scope.closeSubnav = function(){
                         $scope.showSubMenu = false;
                     };
+                    $scope.$watch('path', function(){
+                        var urlRoot = $location.path().split("/")[1];
+                        if(urlRoot != ""){
+                            $scope.firstLevel = urlRoot;
+                        }else{
+                            $scope.firstLevel = 'overview';
+                        }
+                        $scope.showSubMenu = false;
+                    });
                     $scope.$watch('showNavigation', function(){
                         var paddingTop = 0;
                         var urlRoot = $location.path().split("/")[1];

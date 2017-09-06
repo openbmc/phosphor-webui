@@ -10,9 +10,7 @@ window.angular && (function (angular) {
                 'controller': ['$rootScope', '$scope','dataService', '$location', function($rootScope, $scope, dataService, $location){
                     $scope.dataService = dataService;
                     $scope.toggleSeverityAll = function(){
-                        if($scope.selectedSeverity.all !== true){
-                          $scope.selectedSeverity.all = !$scope.selectedSeverity.all;
-                        }
+                        $scope.selectedSeverity.all = !$scope.selectedSeverity.all;
 
                         if($scope.selectedSeverity.all){
                             $scope.selectedSeverity.low = false;
