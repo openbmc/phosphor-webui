@@ -38,6 +38,11 @@ window.angular && (function (angular) {
                     'controller': 'remoteConsoleController',
                     authenticated: true
                 })
+                .when('/server-control/remote-console-window', {
+                    'templateUrl': 'server-control/controllers/remote-console-window-controller.html',
+                    'controller': 'remoteConsoleWindowController',
+                    authenticated: true
+                })
                 .when('/server-control', {
                     'templateUrl': 'server-control/controllers/power-operations-controller.html',
                     'controller': 'powerOperationsController',

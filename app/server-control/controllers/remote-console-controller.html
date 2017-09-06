@@ -9,10 +9,10 @@
 	</section>
 	<section class="row column">
 		<p class="serial-lan__copy">The Serial over LAN (SoL) console redirects the output of the server’s serial port to a browser window on your workstation.</p>
-		<div class="serial-lan__wrapper">
+		<div class="serial-lan__wrapper" ng-class="{'disabled': dataService.remote_window_active}">
 			<div id="terminal" class="serial-lan__terminal"></div>
 			<div class="serial-lan__actions">
-				<a href="#" class="inline btn-pop-out" target="_blank">Open in new tab</a>
+				<button class="inline btn-pop-out" ng-click="openTerminalWindow()">Open in new tab</button>
 				<a href="#" class="inline btn-export" download="{{export_name}}">Export console data</a>
 			</div>
 		</div>
