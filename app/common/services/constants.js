@@ -20,7 +20,7 @@ window.angular && (function (angular) {
                     password: "testpass",
                 },
                 API_CREDENTIALS: {
-                    host: 'https://9.3.185.164',
+                    host: 'https://9.3.181.64',
                     mock_host: 'http://localhost:3000'
                 },
                 API_RESPONSE: {
@@ -53,10 +53,25 @@ window.angular && (function (angular) {
                     on: 'on',
                     off: 'off'
                 },
+                SEVERITY_TO_HEALTH_MAP:{
+                    Emergency: 'Critical',
+                    Alert: 'Critical',
+                    Critical: 'Critical',
+                    Error: 'Warning',
+                    Warning: 'Warning',
+                    Notice: 'Good',
+                    Debug: 'Good',
+                    Informational: 'Good'
+                },
                 SEVERITY_TO_PRIORITY_MAP:{
-                    Informational: 'Low',
+                    Emergency: 'High',
+                    Alert: 'High',
+                    Critical: 'High',
                     Error: 'High',
-                    Warning: 'Medium'
+                    Warning: 'Medium',
+                    Notice: 'Low',
+                    Debug: 'Low',
+                    Informational: 'Low'
                 },
                 PAGINATION: {
                     LOG_ITEMS_PER_PAGE: 25
@@ -78,6 +93,12 @@ window.angular && (function (angular) {
                   'xyz.openbmc_project.Sensor.Value.Unit.Watts': 'watts',
                   'xyz.openbmc_project.Sensor.Value.Unit.Amperes': 'amperes',
                   'xyz.openbmc_project.Sensor.Value.Unit.Joules': 'joules'
+                },
+                SERVER_HEALTH: {
+                    critical: 'Critical',
+                    warning: 'Warning',
+                    good: 'Good',
+                    unknown: 'Unknown'
                 }
             };
         });
