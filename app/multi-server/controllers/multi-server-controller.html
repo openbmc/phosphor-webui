@@ -5,7 +5,7 @@
 	</div>
 	<section class="row column">
 		<div class="page-header">
-			<h2 class="inline h4">Displaying all auto-discovered and manually added servers</h2>
+			<h2 class="inline h4">All auto-discovered and manually added servers</h2>
 			<a class="inline float-right" ng-click="multi_server_add = !multi_server_add"><span class="icon icon__plus"></span>Add a server</a>
 		</div>
 	</section>
@@ -28,79 +28,109 @@
 			<div class="column large-12 header__actions-bar">
 				<div class="inline multi-server__title">Server name<span class="sort-heading"></span></div>
 				<div class="inline multi-server__col">BMC IP address<span class="sort-heading"></span></div>
-				<div class="inline multi-server__col">Model number<span class="sort-heading sort-down"></span></div>
-				<div class="inline multi-server__col narrow-col">Power<span class="sort-heading sort-up"></span></div>
+				<div class="inline multi-server__col">Model number<span class="sort-heading" ng-class="sort-down"></span></div>
+				<div class="inline multi-server__col narrow-col">Power<span class="sort-heading" ng-class="sort-up"></span></div>
 				<div class="inline multi-server__col narrow-col">Status<span class="sort-heading"></span></div>
 			</div>
 		</div>
 		<!-- server -->
 		<div class="multi-server__col-row">
 			<div class="inline multi-server__title">IBM Power Witherspoon 2 (current)</div>
-			<div class="inline multi-server__col courier-bold"><span class="multi-server__label">BMC IP address</span>9.3.111.222
+			<div class="inline multi-server__col courier-bold">
+				<span class="multi-server__label">BMC IP address</span>
+				<span class="multi-server__data">9.3.111.222</span>
 			</div>
-			<div class="inline multi-server__col courier-bold"><span class="multi-server__label">Model number</span>8335-GTC
+			<div class="inline multi-server__col courier-bold">
+				<span class="multi-server__label">Model number</span>
+				<span class="multi-server__data">8335-GTC</span>
 			</div>
 			<div class="inline multi-server__col narrow-col bold">
-				<span class="multi-server__label">Power</span><span class="icon icon__off"></span>Off
+				<span class="multi-server__label">Power</span>
+				<span class="multi-server__data"><span class="icon icon__off" ng-class="{'icon__off': dataService.server_state == 'Off' || 'Unreachable', 'icon__good': dataService.server_state == 'Running', 'icon_standby': dataService.server_state == 'Standby'}"></span>Off</span>
 			</div>
 			<div class="inline multi-server__col narrow-col bold">
-				<span class="multi-server__label">Status</span><span class="icon icon__warning" ng-class="{'icon__critical': sensor.status == 'critical', 'icon__warning': sensor.status == 'warning', 'icon__normal': sensor.status == 'normal'}" aria-label="multi.status"></span>Warning
+				<span class="multi-server__label">Status</span>
+				<span class="multi-server__data"><span class="icon icon__critical" ng-class="{'icon__critical': sensor.status == 'critical', 'icon__warning': sensor.status == 'warning', 'icon__normal': sensor.status == 'normal'}" aria-label="multi.status"></span>Emergency</span>
 			</div>
 		</div>
 		<!-- server -->
 		<div class="multi-server__col-row">
 			<div class="inline multi-server__title">IBM Power Witherspoon 6</div>
-			<div class="inline multi-server__col courier-bold"><span class="multi-server__label">BMC IP address</span>9.3.111.222
+			<div class="inline multi-server__col courier-bold">
+				<span class="multi-server__label">BMC IP address</span>
+				<span class="multi-server__data">9.3.41.232</span>
 			</div>
-			<div class="inline multi-server__col courier-bold"><span class="multi-server__label">Model number</span>8335-GTC
+			<div class="inline multi-server__col courier-bold">
+				<span class="multi-server__label">Model number</span>
+				<span class="multi-server__data">PRT85-GTC</span>
 			</div>
 			<div class="inline multi-server__col narrow-col bold">
-				<span class="multi-server__label">Power</span><span class="icon icon__good"></span>On
+				<span class="multi-server__label">Power</span>
+				<span class="multi-server__data"><span class="icon icon__good"></span>On</span>
 			</div>
 			<div class="inline multi-server__col narrow-col bold">
-				<span class="multi-server__label">Status</span><span class="icon icon__good" ng-class="{'icon__critical': sensor.status == 'critical', 'icon__warning': sensor.status == 'warning', 'icon__normal': sensor.status == 'normal'}" aria-label="multi.status"></span>Good
+				<span class="multi-server__label">Status</span>
+				<span class="multi-server__data"><span class="icon icon__good" ng-class="{'icon__critical': sensor.status == 'critical', 'icon__warning': sensor.status == 'warning', 'icon__normal': sensor.status == 'normal'}" aria-label="multi.status"></span>Good</span>
 			</div>
 		</div>
 		<!-- server -->
 		<div class="multi-server__col-row">
 			<div class="inline multi-server__title">IBM Power Witherspoon 4</div>
-			<div class="inline multi-server__col courier-bold"><span class="multi-server__label">BMC IP address</span>9.3.111.222
+			<div class="inline multi-server__col courier-bold">
+				<span class="multi-server__label">BMC IP address</span>
+				<span class="multi-server__data">9.3.21.233</span>
 			</div>
-			<div class="inline multi-server__col courier-bold"><span class="multi-server__label">Model number</span>8335-GTC
+			<div class="inline multi-server__col courier-bold">
+				<span class="multi-server__label">Model number</span>
+				<span class="multi-server__data">MKU-GTC</span>
 			</div>
 			<div class="inline multi-server__col narrow-col bold">
-				<span class="multi-server__label">Power</span><span class="icon icon__good"></span>On
+				<span class="multi-server__label">Power</span>
+				<span class="multi-server__data"><span class="icon icon__good"></span>On</span>
 			</div>
 			<div class="inline multi-server__col narrow-col bold">
-				<span class="multi-server__label">Status</span><span class="icon icon__good" ng-class="{'icon__critical': sensor.status == 'critical', 'icon__warning': sensor.status == 'warning', 'icon__normal': sensor.status == 'normal'}" aria-label="multi.status"></span>Good
+				<span class="multi-server__label">Status</span>
+				<span class="multi-server__data"><span class="icon icon__good" ng-class="{'icon__critical': sensor.status == 'critical', 'icon__warning': sensor.status == 'warning', 'icon__normal': sensor.status == 'normal'}" aria-label="multi.status"></span>Good</span>
 			</div>
 		</div>
 		<!-- server -->
 		<div class="multi-server__col-row">
 			<div class="inline multi-server__title">Server 100023476 ligula sed magna dictum porta. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem</div>
-			<div class="inline multi-server__col courier-bold"><span class="multi-server__label">BMC IP address</span>9.3.111.222
+			<div class="inline multi-server__col courier-bold">
+				<span class="multi-server__label">BMC IP address</span>
+				<span class="multi-server__data">9.3.51.244</span>
 			</div>
-			<div class="inline multi-server__col courier-bold"><span class="multi-server__label">Model number</span>8335-GTC
+			<div class="inline multi-server__col courier-bold">
+				<span class="multi-server__label">Model number</span>
+				<span class="multi-server__data">854-GTC</span>
 			</div>
 			<div class="inline multi-server__col narrow-col bold">
-				<span class="multi-server__label">Power</span><span class="icon icon__good"></span>On
+				<span class="multi-server__label">Power</span>
+				<span class="multi-server__data"><span class="icon icon__good"></span>On</span>
 			</div>
 			<div class="inline multi-server__col narrow-col bold">
-				<span class="multi-server__label">Status</span><span class="icon icon__critical" ng-class="{'icon__critical': sensor.status == 'critical', 'icon__warning': sensor.status == 'warning', 'icon__normal': sensor.status == 'normal'}" aria-label="multi.status"></span>Critical
+				<span class="multi-server__label">Status</span>
+				<span class="multi-server__data"><span class="icon icon__critical" ng-class="{'icon__critical': sensor.status == 'critical', 'icon__warning': sensor.status == 'warning', 'icon__normal': sensor.status == 'normal'}" aria-label="multi.status"></span>Critical</span>
 			</div>
 		</div>
 		<!-- server -->
-		<div class="multi-server__col-row">
+		<div class="multi-server__col-row" ng-show="multi_server_row">
 			<div class="inline multi-server__title">Server 100023476</div>
-			<div class="inline multi-server__col courier-bold"><span class="multi-server__label">BMC IP address</span>9.3.111.222
+			<div class="inline multi-server__col courier-bold">
+				<span class="multi-server__label">BMC IP address</span>
+				<span class="multi-server__data">9.3.185.164</span>
 			</div>
-			<div class="inline multi-server__col courier-bold"><span class="multi-server__label">Model number</span>8335-GTC
+			<div class="inline multi-server__col courier-bold">
+				<span class="multi-server__label">Model number</span>
+				<span class="multi-server__data">82225-GTC</span>
 			</div>
 			<div class="inline multi-server__col narrow-col bold">
-				<span class="multi-server__label">Power</span><span class="icon icon__standby"></span>Standby
+				<span class="multi-server__label">Power</span>
+				<span class="multi-server__data"><span class="icon icon__standby"></span>Standby</span>
 			</div>
 			<div class="inline multi-server__col narrow-col bold">
-				<span class="multi-server__label">Status</span><span class="icon icon__good" ng-class="{'icon__critical': sensor.status == 'critical', 'icon__warning': sensor.status == 'warning', 'icon__normal': sensor.status == 'normal'}" aria-label="multi.status"></span>Good
+				<span class="multi-server__label">Status</span>
+				<span class="multi-server__data"><span class="icon icon__warning" ng-class="{'icon__critical': sensor.status == 'critical', 'icon__warning': sensor.status == 'warning', 'icon__normal': sensor.status == 'normal'}" aria-label="multi.status"></span>Warning</span>
 			</div>
 		</div>
 	</section>
@@ -121,8 +151,8 @@
 		<form id="multi-server_add-form" class="multi-server__add-form" action="">
 			<div class="modal__content row">
 				<div class="column large-12">
-					<label for="multi-server__host">Hostname</label>
-					<input id="multi-server__host" type="text" autofocus/>
+					<label for="multi-server__host">BMC IP Address</label>
+					<input id="multi-server__host" ng-model="multi_ip" type="text" autofocus/>
 				</div>
 				<div class="column large-6">
 					<label for="username">Username</label>
@@ -140,7 +170,7 @@
 			</label>
 			<div class="modal__button-wrapper">
 				<button class="inline btn-secondary" ng-click="multi_server_add=false;">Cancel</button>
-				<button class="inline btn-primary" ng-click="">Add</button>
+				<button class="inline btn-primary" ng-click="multi_server_row = true; multi_server_add = false; multi_ip = null">Add</button>
 			</div>
 			<p class="login__error-msg" role="alert" ng-if="error">Incorrect username or password</p>
 			<p class="login__error-msg" role="alert" ng-if="server_unreachable">Server unreachable</p>
