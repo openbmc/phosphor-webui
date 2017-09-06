@@ -369,14 +369,18 @@ window.angular && (function (angular) {
                       var data = [];
                       var severityCode = '';
                       var priority = '';
+                      var health = '';
                       var relatedItems = [];
 
                       for(var key in content.data){
                         if(content.data.hasOwnProperty(key) && content.data[key].hasOwnProperty('Id')){
                           var severityFlags = {low: false, medium: false, high: false};
+                          var healthFlags = {critical: false, warning: false, good: false};
                           severityCode = content.data[key].Severity.split(".").pop();
                           priority = Constants.SEVERITY_TO_PRIORITY_MAP[severityCode];
                           severityFlags[priority.toLowerCase()] = true;
+                          health = Constants.SEVERITY_TO_HEALTH_MAP[severityCode];
+                          healthFlags[health.toLowerCase()] = true;
                           relatedItems = [];
                           content.data[key].associations.forEach(function(item){
                             relatedItems.push(item[2]);
@@ -388,6 +392,7 @@ window.angular && (function (angular) {
                             priority: priority,
                             severity_code: severityCode,
                             severity_flags: severityFlags,
+                            health_flags: healthFlags,
                             additional_data: content.data[key].AdditionalData.join("\n"),
                             selected: false,
                             search_text: ("#" + content.data[key].Id + " " + severityCode + " " + content.data[key].Severity + " " + content.data[key].AdditionalData.join(" ")).toLowerCase(),
@@ -424,6 +429,19 @@ window.angular && (function (angular) {
                       var title = "";
                       var tempKeyParts = [];
                       var order = 0;
+
+                      function getScaledValue(value, scale){
+                        scale = scale + "";
+                        scale = parseInt(scale, 10);
+                        var power = Math.abs(parseInt(scale,10));
+
+                        if(scale > 0){
+                          value = value * Math.pow(10, power);
+                        }else if(scale < 0){
+                          value = value / Math.pow(10, power);
+                        }
+                        return value;
+                      }
 
                       function getSensorStatus(reading){
                         var severityFlags = {critical: false, warning: false, normal: false}, severityText = '', order = 0;
