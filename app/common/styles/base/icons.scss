@@ -61,11 +61,17 @@
   width: 16px;
   height: 16px;
   margin-right: .4em;
+  margin-left: .3em;
 }
 
 .icon__warning {
   @include status-icon;
   background-image: url(/assets/images/icon-warning.svg);
+}
+
+.modal .icon__warning {
+  width: 30px;
+  height: 30px;
 }
 
 .icon__critical {
