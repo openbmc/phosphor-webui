@@ -48,7 +48,7 @@
 			</div>
 		</div>
 		<!-- sensor -->
-		<div class="sensor__readings-row" ng-repeat="sensor in (filteredSensorData = data|filter:filterBySeverity|filter:filterBySearchTerms|orderBy:'-order')">
+		<div class="sensor__readings-row" ng-repeat="sensor in (filteredSensorData = data|filter:filterBySeverity|filter:filterBySearchTerms|orderBy:'+custom_order')">
 			<p class="inline sensor__title"><span class="icon" ng-class="{'icon__critical': sensor.status == 'critical', 'icon__warning': sensor.status == 'warning', 'icon__normal': sensor.status == 'normal'}" aria-label="sensor.status" ></span>{{sensor.title}}</p>
 			<p class="inline sensor__reading"><span class="sensor__label">Low critical</span>{{sensor.CriticalLow}}<span class="content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></p>
 			<p class="inline sensor__reading"><span class="sensor__label">Low warning</span>{{sensor.WarningLow}}<span class="content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></p>
