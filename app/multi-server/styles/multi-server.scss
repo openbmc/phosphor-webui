@@ -166,7 +166,6 @@ a.multi-server__view-all {
   position: relative;
   display: block;
   margin: 0;
-  background: $white;
   text-decoration: none;
   border: 1px solid $medgrey;
   background: lighten($lightgrey,1%);
@@ -254,5 +253,48 @@ a.multi-server__view-all {
   .control-check {
     padding-left: 25px;
     margin-left: 1em;
+  }
+}
+
+//Multiserver modals
+.modal__multi-login {
+  .multi-server__col-row {
+    background: $lightgrey;
+    border-top: 1px solid $medgrey;
+    margin-bottom: 2em;
+    padding-bottom: .5em;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    @include mediaQuery(large) {
+      padding-top: .5em;
+    }
+    .multi-server__title {
+      width: 100%;
+      min-width: 100%;
+      max-width: 100%;
+      padding: .5em .8em .5em .8em;
+      background: darken($lightgrey, 5%);
+      @include mediaQuery(large) {
+        min-width: 40%;
+        max-width: 40%;
+        background: transparent;
+      }
+    }
+    .multi-server__data {
+      width: 100%;
+      float: none;
+
+    }
+  }
+  .multi-server__col {
+    padding: .5em .8em .5em .8em;
+    width: 100%;
+    @include mediaQuery(large) {
+      width: calc(100% * (1 / 3) - 10px);
+      &.narrow-col {
+        width: 20%;
+      }
+    }
   }
 }
