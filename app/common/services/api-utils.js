@@ -416,6 +416,7 @@ window.angular && (function (angular) {
                       var title = "";
                       var tempKeyParts = [];
                       var order = 0;
+                      var customOrder = 0;
 
                       function getScaledValue(value, scale){
                         scale = scale + "";
@@ -490,6 +491,12 @@ window.angular && (function (angular) {
 
                           content.data[key].Value = getScaledValue(content.data[key].Value, content.data[key].Scale);
 
+                          if(Constants.SENSOR_SORT_ORDER.indexOf(content.data[key].Unit) > -1){
+                            customOrder = Constants.SENSOR_SORT_ORDER.indexOf(content.data[key].Unit);
+                          }else{
+                            customOrder = Constants.SENSOR_SORT_ORDER_DEFAULT;
+                          }
+
                           sensorData.push(Object.assign({
                             path: key,
                             selected: false,
@@ -500,6 +507,7 @@ window.angular && (function (angular) {
                             severity_flags: severity.flags,
                             status: severity.severityText,
                             order: severity.order,
+                            custom_order: customOrder,
                             search_text: (title + " " + content.data[key].Value + " " + 
                                Constants.SENSOR_UNIT_MAP[content.data[key].Unit] + " " + 
                                severity.severityText + " " + 
