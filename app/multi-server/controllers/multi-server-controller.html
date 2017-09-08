@@ -26,7 +26,7 @@
 	<section id="" class="row column">
 		<div class="row column header-row">
 			<div class="column large-12 header__actions-bar">
-				<div class="inline multi-server__title">Server name<span class="sort-heading"></span></div>
+				<div class="inline multi-server__col multi-server__title">Server name<span class="sort-heading"></span></div>
 				<div class="inline multi-server__col">BMC IP address<span class="sort-heading"></span></div>
 				<div class="inline multi-server__col">Model number<span class="sort-heading" ng-class="sort-down"></span></div>
 				<div class="inline multi-server__col narrow-col">Power<span class="sort-heading" ng-class="sort-up"></span></div>
@@ -114,7 +114,7 @@
 			</div>
 		</div>
 		<!-- server -->
-		<div class="multi-server__col-row" ng-show="multi_server_row">
+		<div class="multi-server__col-row">
 			<div class="inline multi-server__title">Server 100023476</div>
 			<div class="inline multi-server__col courier-bold">
 				<span class="multi-server__label">BMC IP address</span>
@@ -166,15 +166,61 @@
 			<label class="control-check">
 				<input id="multi-server__add-view" type="checkbox" name="events__check-all" ng-model="all" />
 				<span class="control__indicator"></span>
-				<span for="multi-server__add-view" class="inline">View this server once added</span>
+				<span class="inline">View this server once added</span>
 			</label>
 			<div class="modal__button-wrapper">
-				<button class="inline btn-secondary" ng-click="multi_server_add=false;">Cancel</button>
-				<button class="inline btn-primary" ng-click="multi_server_row = true; multi_server_add = false; multi_ip = null">Add</button>
+				<button class="inline btn-secondary">Cancel</button>
+				<button class="inline btn-primary">Add</button>
 			</div>
 			<p class="login__error-msg" role="alert" ng-if="error">Incorrect username or password</p>
 			<p class="login__error-msg" role="alert" ng-if="server_unreachable">Server unreachable</p>
 		</form>
 	</div>
 </section>
-<div class="modal-overlay" tabindex="-1" ng-class="{'active': (multi_server_add)}"></div>
+
+<!-- login modal -->
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': multi_server_login}">
+	<div class="modal__multi-login" role="document">
+		<div class="screen-reader-offscreen modal-description">To log into the selected server, provide the login credentials for its BMC.</div><!-- accessibility only; used for screen readers -->
+		<div class="page-header ">
+			<h1 class="modal-title h4"><span class="icon icon__info"><svg xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 32 32"><path
+					d="M18 14h-6v2h1v6h-2v2h8v-2h-2z"/><circle cx="16" cy="10" r="2"/><path
+					d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z"/></svg></span>
+				Login to server
+			</h1>
+		</div>
+		<form id="multi-server_login-form" class="multi-server__login-form" action="">
+			<div class="modal__content row">
+				<div class="column large-12">
+					<!-- server -->
+					<div class="multi-server__col-row">
+						<div class="inline multi-server__title"><span class="icon icon__good" ng-class="{'icon__critical': sensor.status == 'critical', 'icon__warning': sensor.status == 'warning', 'icon__normal': sensor.status == 'normal'}" aria-label="multi.status"></span>Server 100023476</div>
+						<div class="inline multi-server__col courier-bold">
+							<span class="multi-server__data">9.3.185.164</span>
+						</div>
+						<div class="inline multi-server__col narrow-col bold">
+							<span class="multi-server__data"><span class="icon icon__standby"></span>Standby</span>
+						</div>
+					</div>
+				</div>
+				<div class="column large-6">
+					<label for="username">Username</label>
+					<input type="text" id="username" name="username" ng-model="username" ng-class="{error: error}" ng-keydown="tryLogin(username, password, $event)" ng-disabled="dataService.loading">
+				</div>
+				<div class="column large-6">
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" class="" ng-model="password" ng-keydown="tryLogin(username, password, $event)" ng-disabled="dataService.loading">
+				</div>
+			</div>
+			<div class="modal__button-wrapper">
+				<button class="inline btn-secondary">Cancel</button>
+				<button class="inline btn-primary">Login</button>
+			</div>
+			<p class="login__error-msg" role="alert" ng-if="error">Incorrect username or password</p>
+			<p class="login__error-msg" role="alert" ng-if="server_unreachable">Server unreachable</p>
+		</form>
+	</div>
+</section>
+
+<div class="modal-overlay" tabindex="-1" ng-class="{'active': (multi_server_add) || (multi_server_login)}"></div>
