@@ -20,7 +20,7 @@ window.angular && (function (angular) {
                     password: "testpass",
                 },
                 API_CREDENTIALS: {
-                    host: 'https://9.3.185.161',
+                    host: 'https://9.3.181.64',
                     mock_host: 'http://localhost:3000'
                 },
                 API_RESPONSE: {
@@ -36,7 +36,7 @@ window.angular && (function (angular) {
                 HOST_STATE_TEXT: {
                     on: 'Running',
                     off: 'Off',
-                    booting: 'Standby',
+                    booting: 'Quiesced',
                     unreachable: 'Unreachable'
                 },
                 HOST_STATE: {
@@ -99,7 +99,17 @@ window.angular && (function (angular) {
                     warning: 'Warning',
                     good: 'Good',
                     unknown: 'Unknown'
-                }
+                },
+                SENSOR_SORT_ORDER: [
+                   'xyz.openbmc_project.Sensor.Value.Unit.DegreesC',
+                   'xyz.openbmc_project.Sensor.Value.Unit.RPMS',
+                   'xyz.openbmc_project.Sensor.Value.Unit.Meters',
+                   'xyz.openbmc_project.Sensor.Value.Unit.Volts',
+                   'xyz.openbmc_project.Sensor.Value.Unit.Amperes',
+                   'xyz.openbmc_project.Sensor.Value.Unit.Joules',
+                   'xyz.openbmc_project.Sensor.Value.Unit.Meters'
+                ],
+                SENSOR_SORT_ORDER_DEFAULT: 8
             };
         });
 
