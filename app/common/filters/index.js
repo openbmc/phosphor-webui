@@ -10,6 +10,16 @@ window.angular && (function (angular) {
                });
                return data.length;
             }
-        });
+        })
+        .filter('quiescedToStandBy', function () {
+            return function (state) {
+               if(state.toLowerCase() == 'quiesced'){
+                  return 'Standby';
+               }else{
+                return state;
+               }
+            }
+        })
+        ;
 
 })(window.angular);
