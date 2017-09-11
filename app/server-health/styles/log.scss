@@ -154,7 +154,6 @@
   .btn-export, .btn-meta-copy,
   .btn-delete,
   .btn-resolve {
-    text-transform: capitalize;
     color: black;
     font-size: .9em;
     font-weight: 700;
@@ -299,6 +298,7 @@
     -webkit-transition: 0.5s linear max-height;
     transition: 0.5s linear max-height;
     &.active {
+      max-height: 1000px;
       @include mediaQuery(small) {
         max-height: 1000px;
       }
