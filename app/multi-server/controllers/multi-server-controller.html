@@ -6,7 +6,7 @@
 	<section class="row column">
 		<div class="page-header">
 			<h2 class="inline h4">All auto-discovered and manually added servers</h2>
-			<a class="inline float-right" ng-click="multi_server_add = !multi_server_add"><span class="icon icon__plus"></span>Add a server</a>
+			<a class="inline float-right" ng-click="addServer()"><span class="icon icon__plus"></span>Add a server</a>
 		</div>
 	</section>
 	<section class="row column">
@@ -28,8 +28,8 @@
 			<div class="column large-12 header__actions-bar">
 				<div class="inline multi-server__col multi-server__title">Server name<span class="sort-heading"></span></div>
 				<div class="inline multi-server__col">BMC IP address<span class="sort-heading"></span></div>
-				<div class="inline multi-server__col">Model number<span class="sort-heading" ng-class="sort-down"></span></div>
-				<div class="inline multi-server__col narrow-col">Power<span class="sort-heading" ng-class="sort-up"></span></div>
+				<div class="inline multi-server__col">Model number<span class="sort-heading sort-down"></span></div>
+				<div class="inline multi-server__col narrow-col">Power<span class="sort-heading sort-up"></span></div>
 				<div class="inline multi-server__col narrow-col">Status<span class="sort-heading"></span></div>
 			</div>
 		</div>

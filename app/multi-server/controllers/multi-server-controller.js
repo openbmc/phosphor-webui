@@ -49,6 +49,9 @@ window.angular && (function (angular) {
                         }
                     }
                 };
+                $scope.addServer = function(){
+                    $scope.multi_server_add = ! $scope.multi_server_add
+                }
             }
         ]
     );
