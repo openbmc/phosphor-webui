@@ -18,7 +18,8 @@ window.angular && (function (angular) {
             'dataService',
             'Constants',
             '$routeParams',
-            function($scope, $window, APIUtils, dataService, Constants, $routeParams){
+            '$filter',
+            function($scope, $window, APIUtils, dataService, Constants, $routeParams, $filter){
                 $scope.dataService = dataService;
                 $scope.logs = [];
                 $scope.tmz = 'EDT';
@@ -97,10 +98,16 @@ window.angular && (function (angular) {
                 }
 
                 $scope.filterByDate = function(log){
-                    if($scope.start_date && $scope.end_date){
-                        var date = new Date(log.Timestamp);
+                    var endDate;
+                    if($scope.end_date && typeof $scope.end_date.getTime === 'function'){
+                       endDate = new Date($scope.end_date.getTime());
+                       endDate.setTime(endDate.getTime() + 86399000);
+                    }
+
+                    if($scope.start_date && endDate){
+                        var date = new Date($filter('date')(log.Timestamp, 'MM/dd/yyyy  HH:mm:ss', $scope.tmz));
                         return (date >= $scope.start_date &&
-                               date <= $scope.end_date );
+                               date <= endDate );
                     }else{
                         return true;
                     }
