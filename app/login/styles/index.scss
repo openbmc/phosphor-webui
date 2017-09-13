@@ -84,6 +84,9 @@
   li {
     padding: 1em 0;
     border-top: 1px solid $medgrey;
+    > [class^="status-"]:before {
+      top: 5px;
+    }
   }
   p {
     margin-bottom: 0;
