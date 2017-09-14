@@ -36,7 +36,7 @@ $nav__seclvlWidth: 240px;
     color: $white;
     fill: $white;
     width: 100%;
-    padding: 1em;
+    padding: 0 .8em .8em;
     display: block;
     text-align: center;
     margin-bottom: 0;
@@ -44,7 +44,7 @@ $nav__seclvlWidth: 240px;
     border-radius: 0;
     text-decoration: none;
     border-top: 1px solid transparent;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid darken($darkgrey, 15%);
     a {
       margin-bottom: 5px;
     }
@@ -69,7 +69,6 @@ $nav__seclvlWidth: 240px;
       background: $nav__second-level-color;
       fill: $black;
       color: $medblue;
-      padding: 1em;
       border-radius: 0;
       border-bottom: 1px solid $lightgrey;
       .nav__icon-help__outer {

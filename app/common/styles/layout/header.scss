@@ -79,9 +79,6 @@ header {
   }
   .logo__wrapper {
     padding-top: .5em;
-    //position: absolute;
-    //top: 50%;
-    //transform: translateY(-50%);
   }
 
   .header__logo {
@@ -97,7 +94,7 @@ header {
   .header__functions {
     position: absolute;
     top: 0;
-    right: -680px;
+    right: -650px;
     bottom: 0;
     z-index: 100;
     margin: .3em 0;
@@ -119,7 +116,7 @@ header {
       float: left;
       text-decoration: none;
       color: $darkgrey;
-      padding: 1.250em 1.688em;
+      padding: 1.25em 1.3em;
       height: 100%;
       font-size: 0.875em;
       font-weight: 400;
