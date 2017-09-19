@@ -46,7 +46,7 @@ $title-minWidth: 210px;
   @include mediaQuery(medium) {
     display: inline-block;
     width: auto;
-    min-width: calc(70% * (1 / 5) - 18px);
+    min-width: calc(70% * (1 / 5) - 15px);
   }
 }
 
@@ -80,8 +80,8 @@ $title-minWidth: 210px;
     }
   }
   .content-label {
-    font-size: 1em;
-    margin-left: .8em;
+    font-size: .9em;
+    margin-left: .5em;
     color: $darkgrey;
   }
   .sensor__reading {
