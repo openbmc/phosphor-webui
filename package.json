@@ -1,8 +1,12 @@
 {
-  "name": "openbmc-wires",
-  "description": "openbmc-wires",
+  "name": "openbmc_browser_interface",
+  "description": "openbmc_browser_interface",
   "version": "0.0.1",
   "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/openbmc/phosphor-webui"
+  },
   "scripts": {
     "bower": "node node_modules/bower/bin/bower",
     "gulp": "node node_modules/gulp/bin/gulp.js",
@@ -19,7 +23,8 @@
     "postinstall": "bower install"
   },
   "contributors": [
-    "Iftekharul Islam <iislam@us.ibm.com>"
+    "Iftekharul Islam <iffy.ryan@ibm.com>",
+    "Michael Davis <michael.s.davis@ibm.com>"
   ],
   "files": [
     "dist"
