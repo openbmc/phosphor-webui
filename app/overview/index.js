@@ -19,12 +19,12 @@ window.angular && (function (angular) {
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
                 .when('/overview/server', {
-                    'templateUrl': 'overview/controllers/system-overview-controller.html',
+                    'template': require('./controllers/system-overview-controller.html'),
                     'controller': 'systemOverviewController',
                     authenticated: true
                 })
                 .when('/overview', {
-                    'templateUrl': 'overview/controllers/system-overview-controller.html',
+                    'template': require('./controllers/system-overview-controller.html'),
                     'controller': 'systemOverviewController',
                     authenticated: true
                 });

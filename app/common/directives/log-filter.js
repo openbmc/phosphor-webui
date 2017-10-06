@@ -6,7 +6,7 @@ window.angular && (function (angular) {
         .directive('logFilter', ['APIUtils', function (APIUtils) {
             return {
                 'restrict': 'E',
-                'templateUrl': 'common/directives/log-filter.html',
+                'template': require('./log-filter.html'),
                 'controller': ['$rootScope', '$scope','dataService', '$location', function($rootScope, $scope, dataService, $location){
                     $scope.dataService = dataService;
                     $scope.toggleSeverityAll = function(){

@@ -31,11 +31,11 @@ window.angular && (function (angular) {
                       'Content-Type': 'application/json'
                   },
                   withCredentials: true
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       callback(content.data.CurrentPowerState);
-                }).error(function(error){
+                }, function(error){
                   console.log(error);
                 });
               },
@@ -48,11 +48,11 @@ window.angular && (function (angular) {
                       'Content-Type': 'application/json'
                   },
                   withCredentials: true
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       callback(content.data.CurrentHostState);
-                }).error(function(error){
+                }, function(error){
                   console.log(error);
                 });
               },
@@ -66,8 +66,8 @@ window.angular && (function (angular) {
                       'Content-Type': 'application/json'
                   },
                   withCredentials: true
-                }).success(function(response){
-                    var json = JSON.stringify(response);
+                }).then(function(response){
+                    var json = JSON.stringify(response.data);
                     var content = JSON.parse(json);
                     var hostname = "";
                     var macAddress = "";
@@ -139,7 +139,7 @@ window.angular && (function (angular) {
                       mac_address: macAddress,
                       formatted_data: parseNetworkData(content)
                     });
-                }).error(function(error){
+                }, function(error){
                   console.log(error);
                   deferred.reject(error);
                 });
@@ -155,11 +155,11 @@ window.angular && (function (angular) {
                       'Content-Type': 'application/json'
                   },
                   withCredentials: true
-                }).success(function(response){
-                    var json = JSON.stringify(response);
+                }).then(function(response){
+                    var json = JSON.stringify(response.data);
                     var content = JSON.parse(json);
                     deferred.resolve(content.data.Asserted);
-                }).error(function(error){
+                }, function(error){
                   console.log(error);
                   deferred.reject(error);
                 });
@@ -175,11 +175,11 @@ window.angular && (function (angular) {
                   },
                   withCredentials: true,
                   data: JSON.stringify({"data": [username, password]})
-                }).success(function(response){
+                }).then(function(response){
                   if(callback){
-                      callback(response);
+                      callback(response.data);
                   }
-                }).error(function(error){
+                }, function(error){
                   if(callback){
                       if(error && error.status && error.status == 'error'){
                         callback(error);
@@ -200,11 +200,11 @@ window.angular && (function (angular) {
                   },
                   withCredentials: true,
                   data: JSON.stringify({"data": []})
-                }).success(function(response){
+                }).then(function(response){
                   if(callback){
                       callback(response);
                   }
-                }).error(function(error){
+                }, function(error){
                   if(callback){
                       callback(null, error);
                   }
@@ -221,13 +221,13 @@ window.angular && (function (angular) {
                   },
                   withCredentials: true,
                   data: JSON.stringify({"data": []})
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       if(callback){
                           return callback(content.data.CurrentPowerState);
                       }
-                }).error(function(error){
+                }, function(error){
                   if(callback){
                       callback(error);
                   }else{
@@ -245,13 +245,13 @@ window.angular && (function (angular) {
                   },
                   withCredentials: true,
                   data: JSON.stringify({"data": []})
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       if(callback){
                           return callback(content.data.CurrentPowerState);
                       }
-                }).error(function(error){
+                }, function(error){
                   if(callback){
                       callback(error);
                   }else{
@@ -269,13 +269,13 @@ window.angular && (function (angular) {
                   },
                   withCredentials: true,
                   data: JSON.stringify({"data": state})
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       if(callback){
                           return callback(content.status);
                       }
-                }).error(function(error){
+                }, function(error){
                   if(callback){
                       callback(error);
                   }else{
@@ -293,13 +293,13 @@ window.angular && (function (angular) {
                   },
                   withCredentials: true,
                   data: JSON.stringify({"data": "xyz.openbmc_project.State.BMC.Transition.Reboot"})
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       if(callback){
                           return callback(content.status);
                       }
-                }).error(function(error){
+                }, function(error){
                   if(callback){
                       callback(error);
                   }else{
@@ -317,13 +317,13 @@ window.angular && (function (angular) {
                   },
                   withCredentials: true,
                   data: JSON.stringify({"data": "xyz.openbmc_project.State.Host.Transition.On"})
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       if(callback){
                           return callback(content.status);
                       }
-                }).error(function(error){
+                }, function(error){
                   if(callback){
                       callback(error);
                   }else{
@@ -341,13 +341,13 @@ window.angular && (function (angular) {
                   },
                   withCredentials: true,
                   data: JSON.stringify({"data": "xyz.openbmc_project.State.Host.Transition.Off"})
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       if(callback){
                           return callback(content.status);
                       }
-                }).error(function(error){
+                }, function(error){
                   if(callback){
                       callback(error);
                   }else{
@@ -365,13 +365,13 @@ window.angular && (function (angular) {
                   },
                   withCredentials: true,
                   data: JSON.stringify({"data": []}),
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       if(callback){
                           return callback(content);
                       }
-                }).error(function(error){
+                }, function(error){
                   if(callback){
                       callback(error);
                   }else{
@@ -389,13 +389,13 @@ window.angular && (function (angular) {
                   },
                   withCredentials: true,
                   data: JSON.stringify({"data": []})
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       if(callback){
                           return callback(content);
                       }
-                }).error(function(error){
+                }, function(error){
                   if(callback){
                       callback(error);
                   }else{
@@ -413,8 +413,8 @@ window.angular && (function (angular) {
                       'Content-Type': 'application/json'
                   },
                   withCredentials: true
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       var dataClone = JSON.parse(JSON.stringify(content.data));
                       var data = [];
@@ -455,7 +455,7 @@ window.angular && (function (angular) {
                         }
                       }
                       deferred.resolve({data: data, original: dataClone});
-                }).error(function(error){
+                }, function(error){
                   console.log(error);
                   deferred.reject(error);
                 });
@@ -471,8 +471,8 @@ window.angular && (function (angular) {
                       'Content-Type': 'application/json'
                   },
                   withCredentials: true
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       var dataClone = JSON.parse(JSON.stringify(content.data));
                       var sensorData = [];
@@ -586,7 +586,7 @@ window.angular && (function (angular) {
                       }
 
                       callback(sensorData, dataClone);
-                }).error(function(error){
+                }, function(error){
                   console.log(error);
                 });
               },
@@ -600,8 +600,8 @@ window.angular && (function (angular) {
                       'Content-Type': 'application/json'
                   },
                   withCredentials: true
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       var data = [];
                       var active = false;
@@ -681,7 +681,7 @@ window.angular && (function (angular) {
                           bmcActiveVersion: bmcActiveVersion, 
                           hostActiveVersion: hostActiveVersion
                       });
-                }).error(function(error){
+                }, function(error){
                   console.log(error);
                   deferred.reject(error);
                 });
@@ -699,11 +699,11 @@ window.angular && (function (angular) {
                   },
                   withCredentials: true,
                   data: JSON.stringify({"data": priority})
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       deferred.resolve(content);
-                }).error(function(error){
+                }, function(error){
                   console.log(error);
                   deferred.reject(error);
                 });
@@ -721,11 +721,11 @@ window.angular && (function (angular) {
                   },
                   withCredentials: true,
                   data: JSON.stringify({"data": []})
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       deferred.resolve(content);
-                }).error(function(error){
+                }, function(error){
                   console.log(error);
                   deferred.reject(error);
                 });
@@ -743,11 +743,11 @@ window.angular && (function (angular) {
                   },
                   withCredentials: true,
                   data: JSON.stringify({"data": Constants.FIRMWARE.ACTIVATE_FIRMWARE})
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       deferred.resolve(content);
-                }).error(function(error){
+                }, function(error){
                   console.log(error);
                   deferred.reject(error);
                 });
@@ -765,11 +765,11 @@ window.angular && (function (angular) {
                   },
                   withCredentials: true,
                   data: file
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       deferred.resolve(content);
-                }).error(function(error){
+                }, function(error){
                   console.log(error);
                   deferred.reject(error);
                 });
@@ -788,13 +788,13 @@ window.angular && (function (angular) {
                   withCredentials: true,
                   data: JSON.stringify({"data": [host, filename]}),
                   responseType: 'arraybuffer'
-                }).success(function(response, status, headers){
+                }).then(function(response, status, headers){
                   deferred.resolve({
                     data: response,
                     status: status,
                     headers: headers
                   });
-                }).error(function(error){
+                }, function(error){
                   console.log(error);
                   deferred.reject(error);
                 });
@@ -811,11 +811,11 @@ window.angular && (function (angular) {
                       'Content-Type': 'application/json'
                   },
                   withCredentials: true
-                }).success(function(response){
-                    var json = JSON.stringify(response);
+                }).then(function(response){
+                    var json = JSON.stringify(response.data);
                     var content = JSON.parse(json);
                     deferred.resolve(content.data);
-                }).error(function(error){
+                }, function(error){
                   console.log(error);
                   deferred.reject(error);
                 });
@@ -832,11 +832,11 @@ window.angular && (function (angular) {
                       'Content-Type': 'application/json'
                   },
                   withCredentials: true
-                }).success(function(response){
-                    var json = JSON.stringify(response);
+                }).then(function(response){
+                    var json = JSON.stringify(response.data);
                     var content = JSON.parse(json);
                     deferred.resolve(content.data);
-                }).error(function(error){
+                }, function(error){
                   console.log(error);
                   deferred.reject(error);
                 });
@@ -851,8 +851,8 @@ window.angular && (function (angular) {
                       'Content-Type': 'application/json'
                   },
                   withCredentials: true
-                }).success(function(response){
-                      var json = JSON.stringify(response);
+                }).then(function(response){
+                      var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       var hardwareData = [];
                       var keyIndexMap = {};

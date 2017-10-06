@@ -6,7 +6,7 @@ window.angular && (function (angular) {
         .directive('appNavigation', function () {
             return {
                 'restrict': 'E',
-                'templateUrl': 'common/directives/app-navigation.html',
+                'template': require('./app-navigation.html'),
                 'scope': {
                     'path': '=',
                     'showNavigation': '='
