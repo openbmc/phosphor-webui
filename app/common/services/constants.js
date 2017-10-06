@@ -12,7 +12,7 @@ window.angular && (function (angular) {
     'use strict';
 
     angular
-        .module('app.common.services')
+        .module('app.common.services', [])
         .service('Constants', function () {
             return {
                 LOGIN_CREDENTIALS: {
@@ -20,7 +20,7 @@ window.angular && (function (angular) {
                     password: "testpass",
                 },
                 API_CREDENTIALS: {
-                    host: 'https://9.3.181.15',
+                    host: '',
                     mock_host: 'http://localhost:3000'
                 },
                 API_RESPONSE: {
