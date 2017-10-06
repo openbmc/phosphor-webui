@@ -6,7 +6,7 @@ window.angular && (function (angular) {
         .directive('logSearchControl', ['APIUtils', function (APIUtils) {
             return {
                 'restrict': 'E',
-                'templateUrl': 'common/directives/log-search-control.html',
+                'template': require('./log-search-control.html'),
                 'controller': ['$rootScope', '$scope','dataService', '$location', function($rootScope, $scope, dataService, $location){
                     $scope.dataService = dataService;
                     $scope.doSearchOnEnter = function (event) {

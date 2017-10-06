@@ -6,7 +6,7 @@ window.angular && (function (angular) {
         .directive('appHeader', ['APIUtils', function (APIUtils) {
             return {
                 'restrict': 'E',
-                'templateUrl': 'common/directives/app-header.html',
+                'template': require('./app-header.html'),
                 'scope': {
                    'path': '='
                 },

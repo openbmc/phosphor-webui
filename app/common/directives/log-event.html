@@ -41,14 +41,14 @@
              <div>
                  <div class="event__actions">
                      <button class="btn-meta-copy" clipboard text="event.additional_data" on-copied="copySuccess(event)" on-error="copyfailed(err)">
-                        <img class="event__icon" src="assets/images/icon-copy.svg" alt=""/><span ng-if="!event.copied">Copy</span><span ng-if="event.copied">Copied</span>
+                        <img class="event__icon" src="../../assets/images/icon-copy.svg" alt=""/><span ng-if="!event.copied">Copy</span><span ng-if="event.copied">Copied</span>
                      </button>
                      <button class="btn-delete" ng-click="event.confirm= ! event.confirm"><img
                              class="event__icon"
-                             src="assets/images/icon-trashcan.svg"
+                             src="../../assets/images/icon-trashcan.svg"
                              alt=""/>Delete
                      </button>
-                     <button class="btn-resolve" ng-class="{'disabled': (event.Resolved == 1)}" ng-click="resolveEvent(event)" ng-disabled="event.Resolved == 1"><img class="event__icon" src="assets/images/icon-checklist.svg" alt=""/>Resolved</button>
+                     <button class="btn-resolve" ng-class="{'disabled': (event.Resolved == 1)}" ng-click="resolveEvent(event)" ng-disabled="event.Resolved == 1"><img class="event__icon" src="../../assets/images/icon-checklist.svg" alt=""/>Resolved</button>
                  </div>
                  <div class="event__related" ng-show="event.related_items.length">
                      <p class="inline event__related-label">Related items:</p>
