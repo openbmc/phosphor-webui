@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="app">
-<head>
-    <base href="/">
-    <meta charset="UTF-8">
-    <title>openBMC</title>
-    <link rel="icon" href="favicon.ico?v=2"/>
-    <!-- build:css styles/app.min.css -->
-    <link rel="stylesheet" href="styles/index.css">
+<!doctype html>
+<html ng-app="app" lang="en">
 
-    <!-- endbuild -->
+<head>
+    <meta charset="UTF-8">
+    <title>openBMC App</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <base href="/">
 </head>
 <body ng-style="dataService.bodyStyle" ng-attr-id="{{!dataService.showNavigation ? 'login': ''}}">
 
@@ -18,73 +17,5 @@
     <main ng-view ng-class="{'content__container': dataService.showNavigation, 'login__wrapper': !dataService.showNavigation}">
     </main>
 
-	<!-- build:js scripts/vendor.min.js -->
-	<script src="../bower_components/angular/angular.min.js"></script>
-	<script src="../bower_components/angular-route/angular-route.min.js"></script>
-	<script src="../bower_components/angular-clipboard/angular-clipboard.min.js"></script>
-    <script src="../bower_components/angularUtils-pagination/dirPagination.min.js"></script>
-    <script src="vendors/hterm/hterm_all.min.js"></script>
-
-	<!-- endbuild -->
-
-	<!-- build:js scripts/app.min.js -->
-	<script src="index.js"></script>
-	<script src="templates.js"></script>
-	<script src="vendors.js"></script>
-
-	<script src="constants/index.js"></script>
-	<script src="constants/environment-constants.js"></script>
-
-	<script src="common/services/index.js"></script>
-	<script src="common/services/constants.js"></script>
-	<script src="common/services/dataService.js"></script>
-	<script src="common/services/api-utils.js"></script>
-	<script src="common/services/userModel.js"></script>
-	<script src="common/services/apiInterceptor.js"></script>
-
-	<script src="common/filters/index.js"></script>
-
-	<script src="common/directives/index.js"></script>
-	<script src="common/directives/app-header.js"></script>
-	<script src="common/directives/app-navigation.js"></script>
-	<script src="common/directives/confirm.js"></script>
-	<script src="common/directives/log-event.js"></script>
-	<script src="common/directives/log-filter.js"></script>
-	<script src="common/directives/log-search-control.js"></script>
-    <script src="common/directives/toggle-flag.js"></script>
-    <script src="common/directives/firmware-list.js"></script>
-    <script src="common/directives/file.js"></script>
-    <script src="common/directives/loader.js"></script>
-
-    <script src="login/index.js"></script>
-    <script src="login/controllers/login-controller.js"></script>
-    <script src="overview/index.js"></script>
-    <script src="overview/controllers/system-overview-controller.js"></script>
-    <script src="server-control/index.js"></script>
-    <script src="server-control/controllers/bmc-reboot-controller.js"></script>
-    <script src="server-control/controllers/power-operations-controller.js"></script>
-    <script src="server-control/controllers/remote-console-controller.js"></script>
-    <script src="server-control/controllers/remote-console-window-controller.js"></script>
-    <script src="server-health/index.js"></script>
-    <script src="server-health/controllers/diagnostics-controller.js"></script>
-    <script src="server-health/controllers/inventory-controller.js"></script>
-    <script src="server-health/controllers/inventory-overview-controller.js"></script>
-    <script src="server-health/controllers/log-controller.js"></script>
-    <script src="server-health/controllers/power-consumption-controller.js"></script>
-    <script src="server-health/controllers/sensors-controller.js"></script>
-    <script src="server-health/controllers/sensors-overview-controller.js"></script>
-    <script src="server-health/controllers/unit-id-controller.js"></script>
-    <script src="configuration/index.js"></script>
-    <script src="configuration/controllers/date-time-controller.js"></script>
-    <script src="configuration/controllers/file-controller.js"></script>
-    <script src="configuration/controllers/network-controller.js"></script>
-    <script src="configuration/controllers/security-controller.js"></script>
-    <script src="configuration/controllers/firmware-controller.js"></script>
-    <script src="users/index.js"></script>
-    <script src="users/controllers/user-accounts-controller.js"></script>
-    <script src="multi-server/index.js"></script>
-    <script src="multi-server/controllers/multi-server-controller.js"></script>
-	<!-- endbuild -->
 </body>
-
 </html>

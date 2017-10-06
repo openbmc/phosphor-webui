@@ -19,12 +19,12 @@ window.angular && (function (angular) {
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
                 .when('/users/manage-accounts', {
-                    'templateUrl': 'users/controllers/user-accounts-controller.html',
+                    'template': require('./controllers/user-accounts-controller.html'),
                     'controller': 'userAccountsController',
                     authenticated: true
                 })
                 .when('/users', {
-                    'templateUrl': 'users/controllers/user-accounts-controller.html',
+                    'template': require('./controllers/user-accounts-controller.html'),
                     'controller': 'userAccountsController',
                     authenticated: true
                 });

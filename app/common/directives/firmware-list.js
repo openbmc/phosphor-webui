@@ -6,7 +6,7 @@ window.angular && (function (angular) {
         .directive('firmwareList', ['APIUtils', function (APIUtils) {
             return {
                 'restrict': 'E',
-                'templateUrl': 'common/directives/firmware-list.html',
+                'template': require('./firmware-list.html'),
                 'scope': {
                    'title': '@',
                    'firmwares': '=',

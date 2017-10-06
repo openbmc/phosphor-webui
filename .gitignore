@@ -7,3 +7,4 @@ target/
 *.swp
 .idea
 app/styles/index.css
+yarn.lock
