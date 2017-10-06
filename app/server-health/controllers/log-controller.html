@@ -54,22 +54,22 @@
                 <!-- when logs are selected, this text changes to show how many logs are checked -->
                 <div class="event__actions">
                     <button class="inline btn-delete" ng-show="selectedEvents.length || all" ng-click="confirm= ! confirm">
-                        <img class="event__icon" src="assets/images/icon-trashcan-white.svg" alt="">Delete
+                        <img class="event__icon" src="../../assets/images/icon-trashcan-white.svg" alt="">Delete
                     </button>
                     <button class="inline btn-resolve" ng-class="{'disabled': ((selectedEvents|unResolvedCount) == 0)}" ng-show="selectedEvents.length || all" ng-click="resolve()" ng-disabled="(selectedEvents|unResolvedCount) == 0">
-                        <img class="event__icon" src="assets/images/icon-check-white.svg" alt="">Mark as resolved
+                        <img class="event__icon" src="../../assets/images/icon-check-white.svg" alt="">Mark as resolved
                     </button>
                     <a ng-href="data:text/json;charset=utf-8,{{export_data}}" class="inline btn-export"  download="{{export_name}}" ng-show="selectedEvents.length || all">Export</a>
                 </div>
             </div>
         </div>
-        <log-event 
+        <log-event
         dir-paginate="event in (filteredLogs = (logs|filter:filterBySeverity|filter:filterByStatus|filter:filterByDate|filter:filterBySearchTerms | orderBy:'+Id'))| itemsPerPage: itemsPerPage" 
         event="event" 
         tmz="tmz"
         multi-selected="selectedEvents.length > 1"
         >
         </log-event>
-        <dir-pagination-controls template-url="common/directives/dirPagination.tpl.html"></dir-pagination-controls>
+        <dir-pagination-controls template-url="../../common/directives/dirPagination.tpl.html"></dir-pagination-controls>
     </section>
 </div> <!-- end event log -->

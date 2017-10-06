@@ -19,17 +19,17 @@ window.angular && (function (angular) {
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
                 .when('/firmware/bmc', {
-                    'templateUrl': 'firmware/controllers/bmc-controller.html',
+                    'template': require('./controllers/bmc-controller.html'),
                     'controller': 'bmcController',
                     authenticated: true
                 })
                 .when('/firmware/server', {
-                    'templateUrl': 'firmware/controllers/server-controller.html',
+                    'template': require('./controllers/server-controller.html'),
                     'controller': 'serverController',
                     authenticated: true
                 })
                 .when('/firmware', {
-                    'templateUrl': 'firmware/controllers/bmc-controller.html',
+                    'template': reqire('./controllers/bmc-controller.html'),
                     'controller': 'bmcController',
                     authenticated: true
                 });

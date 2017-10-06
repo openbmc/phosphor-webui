@@ -6,7 +6,7 @@ window.angular && (function (angular) {
         .directive('logEvent', ['APIUtils', function (APIUtils) {
             return {
                 'restrict': 'E',
-                'templateUrl': 'common/directives/log-event.html',
+                'template': require('./log-event.html'),
                 'scope': {
                    'event': '=',
                    'tmz': '=',

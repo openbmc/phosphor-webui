@@ -19,32 +19,32 @@ window.angular && (function (angular) {
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
                 .when('/server-control/bmc-reboot', {
-                    'templateUrl': 'server-control/controllers/bmc-reboot-controller.html',
+                    'template': require('./controllers/bmc-reboot-controller.html'),
                     'controller': 'bmcRebootController',
                     authenticated: true
                 })
                 .when('/server-control/server-led', {
-                    'templateUrl': 'server-health/controllers/unit-id-controller.html',
+                    'template': require('../server-health/controllers/unit-id-controller.html'),
                     'controller': 'unitIdController',
                     authenticated: true
                 })
                 .when('/server-control/power-operations', {
-                    'templateUrl': 'server-control/controllers/power-operations-controller.html',
+                    'template': require('./controllers/power-operations-controller.html'),
                     'controller': 'powerOperationsController',
                     authenticated: true
                 })
                 .when('/server-control/remote-console', {
-                    'templateUrl': 'server-control/controllers/remote-console-controller.html',
+                    'template': require('./controllers/remote-console-controller.html'),
                     'controller': 'remoteConsoleController',
                     authenticated: true
                 })
                 .when('/server-control/remote-console-window', {
-                    'templateUrl': 'server-control/controllers/remote-console-window-controller.html',
+                    'template': require('./controllers/remote-console-window-controller.html'),
                     'controller': 'remoteConsoleWindowController',
                     authenticated: true
                 })
                 .when('/server-control', {
-                    'templateUrl': 'server-control/controllers/power-operations-controller.html',
+                    'template': require('./controllers/power-operations-controller.html'),
                     'controller': 'powerOperationsController',
                     authenticated: true
                 });

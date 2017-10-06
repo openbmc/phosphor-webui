@@ -19,29 +19,29 @@ window.angular && (function (angular) {
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
                 .when('/configuration/network', {
-                    'templateUrl': 'configuration/controllers/network-controller.html',
+                    'template': require('./controllers/network-controller.html'),
                     'controller': 'networkController',
                     authenticated: true
                 })
                 .when('/configuration/security', {
-                    'templateUrl': 'configuration/controllers/security-controller.html',
+                    'template': require('./controllers/security-controller.html'),
                     'controller': 'securityController',
                     authenticated: true
                 }).when('/configuration/date-time', {
-                    'templateUrl': 'configuration/controllers/date-time-controller.html',
+                    'template': require('./controllers/date-time-controller.html'),
                     'controller': 'dateTimeController',
                     authenticated: true
                 })
                 .when('/configuration/file', {
-                    'templateUrl': 'configuration/controllers/file-controller.html',
+                    'template': require('./controllers/file-controller.html'),
                     'controller': 'fileController',
                     authenticated: true
                 }).when('/configuration', {
-                    'templateUrl': 'configuration/controllers/network-controller.html',
+                    'template': require('./controllers/network-controller.html'),
                     'controller': 'networkController',
                     authenticated: true
                 }).when('/configuration/firmware', {
-                'templateUrl': 'configuration/controllers/firmware-controller.html',
+                'template': require('./controllers/firmware-controller.html'),
                 'controller': 'firmwareController',
                 authenticated: true
             });

@@ -19,7 +19,7 @@ window.angular && (function (angular) {
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
                 .when('/multi-server/overview', {
-                    'templateUrl': 'multi-server/controllers/multi-server-controller.html',
+                    'template': require('./controllers/multi-server-controller.html'),
                     'controller': 'multiServerController',
                     authenticated: true
                 });
