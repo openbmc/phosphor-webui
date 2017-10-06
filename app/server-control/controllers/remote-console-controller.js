@@ -7,6 +7,8 @@
  * @version 0.1.0
  */
 
+import {hterm, lib} from 'hterm-umdjs';
+
 window.angular && (function (angular) {
     'use strict';
 

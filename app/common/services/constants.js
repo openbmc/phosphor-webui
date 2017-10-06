@@ -12,7 +12,7 @@ window.angular && (function (angular) {
     'use strict';
 
     angular
-        .module('app.common.services')
+        .module('app.common.services', [])
         .service('Constants', function () {
             return {
                 LOGIN_CREDENTIALS: {

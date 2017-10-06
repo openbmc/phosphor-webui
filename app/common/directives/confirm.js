@@ -6,7 +6,7 @@ window.angular && (function (angular) {
         .directive('confirm', ['$timeout', function($timeout){
             return {
                 'restrict': 'E',
-                'templateUrl': 'common/directives/confirm.html',
+                'template': require('./confirm.html'),
                 'scope': {
                    'title': '@',
                    'message': '@',

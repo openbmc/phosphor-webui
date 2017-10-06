@@ -19,12 +19,12 @@ window.angular && (function (angular) {
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
                 .when('/login/:fake_login', {
-                    'templateUrl': 'login/controllers/login-controller.html',
+                    'template': require('./controllers/login-controller.html'),
                     'controller': 'LoginController',
                     authenticated: false
                 })
                 .when('/login', {
-                    'templateUrl': 'login/controllers/login-controller.html',
+                    'template': require('./controllers/login-controller.html'),
                     'controller': 'LoginController',
                     authenticated: false
                 });
