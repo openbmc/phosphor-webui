@@ -6,7 +6,7 @@ window.angular && (function (angular) {
         .directive('loader', function () {
             return {
                 'restrict': 'E',
-                'templateUrl': 'common/directives/loader.html',
+                'template': require('./loader.html'),
                 scope: {
                     loading: '='
                 }

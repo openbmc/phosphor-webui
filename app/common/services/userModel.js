@@ -20,8 +20,9 @@ window.angular && (function (angular) {
                 },
                 login : function(username, password, callback){
                     APIUtils.login(username, password, function(response, error){
-                        if(response && 
-                           response.status == APIUtils.API_RESPONSE.SUCCESS_STATUS){
+                        if(response &&
+                            (response.status == APIUtils.API_RESPONSE.SUCCESS_STATUS
+                                || response.status === undefined)){
                             sessionStorage.setItem('LOGIN_ID', username);
                             callback(true);
                         }else{

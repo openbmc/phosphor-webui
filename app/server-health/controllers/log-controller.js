@@ -11,6 +11,9 @@ window.angular && (function (angular) {
     'use strict';
     angular
         .module('app.serverHealth')
+        .config(function(paginationTemplateProvider) {
+            paginationTemplateProvider.setString(require('../../common/directives/dirPagination.tpl.html'));
+        })
         .controller('logController', [
             '$scope', 
             '$window', 
