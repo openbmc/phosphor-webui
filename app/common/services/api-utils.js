@@ -11,7 +11,7 @@ window.angular && (function (angular) {
     'use strict';
     angular
         .module('app.common.services')
-        .factory('APIUtils', ['$http', 'Constants', '$q', function($http, Constants, $q){
+        .factory('APIUtils', ['$http', 'Constants', '$q', 'dataService',function($http, Constants, $q, DataService){
           var SERVICE = {
               LOGIN_CREDENTIALS: Constants.LOGIN_CREDENTIALS,
               API_CREDENTIALS: Constants.API_CREDENTIALS,
@@ -21,10 +21,11 @@ window.angular && (function (angular) {
               HOST_STATE: Constants.HOST_STATE,
               LED_STATE: Constants.LED_STATE,
               LED_STATE_TEXT: Constants.LED_STATE_TEXT,
+              HOST_SESSION_STORAGE_KEY: Constants.API_CREDENTIALS.host_storage_key,
               getChassisState: function(callback){
                 $http({
                   method: 'GET',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/state/chassis0",
+                  url: DataService.getHost() + "/xyz/openbmc_project/state/chassis0",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -41,7 +42,7 @@ window.angular && (function (angular) {
               getHostState: function(callback){
                 $http({
                   method: 'GET',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/state/host0",
+                  url: DataService.getHost() + "/xyz/openbmc_project/state/host0",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -59,7 +60,7 @@ window.angular && (function (angular) {
                 var deferred = $q.defer();
                 $http({
                   method: 'GET',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/network/enumerate",
+                  url: DataService.getHost() + "/xyz/openbmc_project/network/enumerate",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -98,7 +99,7 @@ window.angular && (function (angular) {
                 var deferred = $q.defer();
                 $http({
                   method: 'GET',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/led/groups/enclosure_identify",
+                  url: DataService.getHost() + "/xyz/openbmc_project/led/groups/enclosure_identify",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -117,7 +118,7 @@ window.angular && (function (angular) {
               login: function(username, password, callback){
                 $http({
                   method: 'POST',
-                  url: SERVICE.API_CREDENTIALS.host + "/login",
+                  url: DataService.getHost() + "/login",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -142,7 +143,7 @@ window.angular && (function (angular) {
               logout: function(callback){
                 $http({
                   method: 'POST',
-                  url: SERVICE.API_CREDENTIALS.host + "/logout",
+                  url: DataService.getHost() + "/logout",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -163,7 +164,7 @@ window.angular && (function (angular) {
               chassisPowerOn: function(callback){
                 $http({
                   method: 'POST',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/state/host0",
+                  url: DataService.getHost() + "/xyz/openbmc_project/state/host0",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -187,7 +188,7 @@ window.angular && (function (angular) {
               chassisPowerOff: function(callback){
                 $http({
                   method: 'POST',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/state/host0",
+                  url: DataService.getHost() + "/xyz/openbmc_project/state/host0",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -211,7 +212,7 @@ window.angular && (function (angular) {
               setLEDState: function(state, callback){
                 $http({
                   method: 'PUT',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/led/groups/enclosure_identify/attr/Asserted",
+                  url: DataService.getHost() + "/xyz/openbmc_project/led/groups/enclosure_identify/attr/Asserted",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -235,7 +236,7 @@ window.angular && (function (angular) {
               bmcReboot: function(callback){
                 $http({
                   method: 'PUT',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/state/bmc0/attr/RequestedBmcTransition",
+                  url: DataService.getHost() + "/xyz/openbmc_project/state/bmc0/attr/RequestedBmcTransition",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -259,7 +260,7 @@ window.angular && (function (angular) {
               hostPowerOn: function(callback){
                 $http({
                   method: 'PUT',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/state/host0/attr/RequestedHostTransition",
+                  url: DataService.getHost() + "/xyz/openbmc_project/state/host0/attr/RequestedHostTransition",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -283,7 +284,7 @@ window.angular && (function (angular) {
               hostPowerOff: function(callback){
                 $http({
                   method: 'PUT',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/state/host0/attr/RequestedHostTransition",
+                  url: DataService.getHost() + "/xyz/openbmc_project/state/host0/attr/RequestedHostTransition",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -307,7 +308,7 @@ window.angular && (function (angular) {
               hostReboot: function(callback){
                 $http({
                   method: 'POST',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/state/host0",
+                  url: DataService.getHost() + "/xyz/openbmc_project/state/host0",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -331,7 +332,7 @@ window.angular && (function (angular) {
               hostShutdown: function(callback){
                 $http({
                   method: 'POST',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/state/host0",
+                  url: DataService.getHost() + "/xyz/openbmc_project/state/host0",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -356,7 +357,7 @@ window.angular && (function (angular) {
                 var deferred = $q.defer();
                 $http({
                   method: 'GET',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/logging/enumerate",
+                  url: DataService.getHost() + "/xyz/openbmc_project/logging/enumerate",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -414,7 +415,7 @@ window.angular && (function (angular) {
               getAllSensorStatus: function(callback){
                 $http({
                   method: 'GET',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/sensors/enumerate",
+                  url: DataService.getHost() + "/xyz/openbmc_project/sensors/enumerate",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -543,7 +544,7 @@ window.angular && (function (angular) {
                 var deferred = $q.defer();
                 $http({
                   method: 'GET',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/software/enumerate",
+                  url: DataService.getHost() + "/xyz/openbmc_project/software/enumerate",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -554,6 +555,9 @@ window.angular && (function (angular) {
                       var content = JSON.parse(json);
                       var data = [];
                       var active = false;
+                      var functional = false;
+                      var ready = false;
+                      var activationStatus = {active: false, ready: false, functional: false};
                       var isExtended = false;
                       var bmcActiveVersion = "";
                       var hostActiveVersion = "";
@@ -588,7 +592,11 @@ window.angular && (function (angular) {
 
                       for(var key in content.data){
                         if(content.data.hasOwnProperty(key) && content.data[key].hasOwnProperty('Version')){
+
+                          functional = (content.data[key].Priority == 0);
                           active = (/\.Active$/).test(content.data[key].Activation);
+                          ready = (/\.Ready$/).test(content.data[key].Activation);
+                          activationStatus = {functional: functional, active: active, ready: ready};
                           imageType = content.data[key].Purpose.split(".").pop();
                           isExtended = content.data[key].hasOwnProperty('ExtendedVersion') && content.data[key].ExtendedVersion != "";
                           if(isExtended){
@@ -596,7 +604,8 @@ window.angular && (function (angular) {
                           }
                           data.push(Object.assign({
                             path: key,
-                            active: active,
+                            functional: functional,
+                            activationFlags: activationStatus,
                             imageId: key.split("/").pop(),
                             imageType: imageType,
                             isExtended: isExtended,
@@ -607,11 +616,11 @@ window.angular && (function (angular) {
                             data: {key: key, value: content.data[key]}
                           }, content.data[key]));
 
-                          if(active && imageType == 'BMC'){
+                          if(functional && imageType == 'BMC'){
                             bmcActiveVersion = content.data[key].Version;
                           }
 
-                          if(active && imageType == 'Host'){
+                          if(functional && imageType == 'Host'){
                             hostActiveVersion = content.data[key].Version;
                           }
                         }
@@ -629,12 +638,34 @@ window.angular && (function (angular) {
 
                 return deferred.promise;
               },
-              uploadImage: function(file, callback){
+              changePriority: function(imageId, priority){
+                var deferred = $q.defer();
+                $http({
+                  method: 'PUT',
+                  url: DataService.getHost() + "/xyz/openbmc_project/software/" + imageId + "/attr/Priority",
+                  headers: {
+                      'Accept': 'application/octet-stream',
+                      'Content-Type': 'application/octet-stream'
+                  },
+                  withCredentials: true,
+                  data: JSON.stringify({"data": priority})
+                }).success(function(response){
+                      var json = JSON.stringify(response);
+                      var content = JSON.parse(json);
+                      deferred.resolve(content);
+                }).error(function(error){
+                  console.log(error);
+                  deferred.reject(error);
+                });
+
+                return deferred.promise;
+              },
+              uploadImage: function(file){
+                var deferred = $q.defer();
                 $http({
                   method: 'PUT',
                   timeout: 5 * 60 * 1000,
-                  //url: 'http://localhost:3002/upload',
-                  url: SERVICE.API_CREDENTIALS.host + "/upload/image/",
+                  url: DataService.getHost() + "/upload/image/",
                   headers: {
                       'Accept': 'application/octet-stream',
                       'Content-Type': 'application/octet-stream'
@@ -644,22 +675,44 @@ window.angular && (function (angular) {
                 }).success(function(response){
                       var json = JSON.stringify(response);
                       var content = JSON.parse(json);
-                      if(callback){
-                          return callback(content);
-                      }
+                      deferred.resolve(content);
                 }).error(function(error){
-                  if(callback){
-                      callback(error);
-                  }else{
-                      console.log(error);
-                  }
+                  console.log(error);
+                  deferred.reject(error);
                 });
+
+                return deferred.promise;
+              },
+              downloadImage: function(host, filename){
+                var deferred = $q.defer();
+                $http({
+                  method: 'POST',
+                  url: DataService.getHost() + "/org/openbmc/control/flash/bmc/action/updateViaTftp",
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: true,
+                  data: JSON.stringify({"data": [host, filename]}),
+                  responseType: 'arraybuffer'
+                }).success(function(response, status, headers){
+                  deferred.resolve({
+                    data: response,
+                    status: status,
+                    headers: headers
+                  });
+                }).error(function(error){
+                  console.log(error);
+                  deferred.reject(error);
+                });
+
+                return deferred.promise;
               },
               getBMCEthernetInfo: function(){
                 var deferred = $q.defer();
                 $http({
                   method: 'GET',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory/system/chassis/motherboard/boxelder/bmc/ethernet",
+                  url: DataService.getHost() + "/xyz/openbmc_project/inventory/system/chassis/motherboard/boxelder/bmc/ethernet",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -680,7 +733,7 @@ window.angular && (function (angular) {
                 var deferred = $q.defer();
                 $http({
                   method: 'GET',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory/system/chassis/motherboard/boxelder/bmc",
+                  url: DataService.getHost() + "/xyz/openbmc_project/inventory/system/chassis/motherboard/boxelder/bmc",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -699,7 +752,7 @@ window.angular && (function (angular) {
               getHardwares: function(callback){
                 $http({
                   method: 'GET',
-                  url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/inventory/enumerate",
+                  url: DataService.getHost() + "/xyz/openbmc_project/inventory/enumerate",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -815,7 +868,7 @@ window.angular && (function (angular) {
                   logs.forEach(function(item){
                     promises.push($http({
                                       method: 'POST',
-                                      url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/logging/entry/"+item.Id+"/action/Delete",
+                                      url: DataService.getHost() + "/xyz/openbmc_project/logging/entry/"+item.Id+"/action/Delete",
                                       headers: {
                                           'Accept': 'application/json',
                                           'Content-Type': 'application/json'
@@ -840,7 +893,7 @@ window.angular && (function (angular) {
                   logs.forEach(function(item){
                     promises.push($http({
                                       method: 'PUT',
-                                      url: SERVICE.API_CREDENTIALS.host + "/xyz/openbmc_project/logging/entry/"+item.Id+"/attr/Resolved",
+                                      url: DataService.getHost() + "/xyz/openbmc_project/logging/entry/"+item.Id+"/attr/Resolved",
                                       headers: {
                                           'Accept': 'application/json',
                                           'Content-Type': 'application/json'

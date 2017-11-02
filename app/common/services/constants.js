@@ -20,8 +20,8 @@ window.angular && (function (angular) {
                     password: "testpass",
                 },
                 API_CREDENTIALS: {
-                    host: 'https://9.3.181.64',
-                    mock_host: 'http://localhost:3000'
+                    host_storage_key: 'API_HOST_KEY',
+                    default_protocol: 'https'
                 },
                 API_RESPONSE: {
                     ERROR_STATUS: 'error',
@@ -109,7 +109,15 @@ window.angular && (function (angular) {
                    'xyz.openbmc_project.Sensor.Value.Unit.Joules',
                    'xyz.openbmc_project.Sensor.Value.Unit.Meters'
                 ],
-                SENSOR_SORT_ORDER_DEFAULT: 8
+                SENSOR_SORT_ORDER_DEFAULT: 8,
+                FIRMWARE: {
+                  FALLBACK_DOWNLOAD_FILENAME: 'firmware_download.tar',
+                  TYPES: {
+                    Functional: 'Functional',
+                    Active: 'Active',
+                    Ready: 'Ready'
+                  }
+                }
             };
         });
 

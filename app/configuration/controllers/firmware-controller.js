@@ -19,7 +19,8 @@ window.angular && (function (angular) {
                 'dataService',
                 '$location',
                 '$anchorScroll',
-                function ($scope, $window, APIUtils, dataService, $location, $anchorScroll) {
+                'Constants',
+                function ($scope, $window, APIUtils, dataService, $location, $anchorScroll, Constants) {
                     $scope.dataService = dataService;
 
                     //Scroll to target anchor
@@ -37,6 +38,10 @@ window.angular && (function (angular) {
                     $scope.preserve_settings_confirm = false;
                     $scope.delete_image_id = "";
                     $scope.activate_image_id = "";
+                    $scope.priority_image_id = "";
+                    $scope.priority_from = -1;
+                    $scope.priority_to = -1;
+                    $scope.confirm_priority = false;
                     $scope.file_empty = true;
                     $scope.uploading = false;
 
@@ -73,7 +78,7 @@ window.angular && (function (angular) {
                     }
                     $scope.confirmUpload = function(){
                         $scope.uploading = true;
-                        APIUtils.uploadImage($scope.file, function(response){
+                        APIUtils.uploadImage($scope.file).then(function(response){
                             $scope.uploading = false; 
                             if(response.status == 'error'){
                                 $scope.displayError({
@@ -89,6 +94,69 @@ window.angular && (function (angular) {
                         $scope.confirm_upload_image = false;
                     }
 
+                    $scope.download = function(){
+                        $scope.downloading = true;
+                        APIUtils.downloadImage($scope.download_host, $scope.download_filename).then(function(response){
+                            var data = response.data;
+                            $scope.downloading = false;
+                            var headers = response.headers();
+
+                            var filename = headers['x-filename'];
+                            var contentType = headers['content-type'];
+
+                            if(!headers['x-filename']){
+                                filename = Constants.FIRMWARE.FALLBACK_DOWNLOAD_FILENAME;
+                            }
+
+                            var linkElement = document.createElement('a');
+                            try {
+                                var blob = new Blob([data], { type: contentType });
+                                var url = window.URL.createObjectURL(blob);
+
+                                linkElement.setAttribute('href', url);
+                                linkElement.setAttribute("download", filename);
+
+                                var clickEvent = new MouseEvent("click", {
+                                    "view": window,
+                                    "bubbles": true,
+                                    "cancelable": false
+                                });
+                                linkElement.dispatchEvent(clickEvent);
+                            } catch (ex) {
+                                console.log(ex);
+                            }
+                        });
+                    }
+
+                    $scope.changePriority = function(imageId, from, to){
+                        $scope.priority_image_id = imageId;
+                        $scope.priority_from = from;
+                        $scope.priority_to = to;
+
+                        if((from + to) == 1){
+                            $scope.confirm_priority = true;
+                        }else{
+                            $scope.confirmChangePriority();
+                        }
+                    }
+
+                    $scope.confirmChangePriority = function(){
+                        $scope.loading = true;
+                        APIUtils.changePriority($scope.priority_image_id, $scope.priority_to).then(function(response){
+                            $scope.loading = false;
+                            if(response.status == 'error'){
+                                $scope.displayError({
+                                    modal_title: response.data.description,
+                                    title: response.data.description,
+                                    desc: response.data.exception,
+                                    type: 'Error'
+                                });
+                            }else{
+                                $scope.loadFirmwares();
+                            }
+                        });
+                        $scope.confirm_priority = false;
+                    }
                     $scope.deleteImage = function(imageId){
                         $scope.delete_image_id = imageId;
                         $scope.confirm_delete = true;

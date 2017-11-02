@@ -22,6 +22,10 @@ window.angular && (function (angular) {
                     $scope.delete = function(imageId){
                         $scope.$parent.deleteImage(imageId);
                     }
+
+                    $scope.changePriority = function(imageId, from, to){
+                        $scope.$parent.changePriority(imageId, from, to);
+                    }
                 }]
             };
         }]);

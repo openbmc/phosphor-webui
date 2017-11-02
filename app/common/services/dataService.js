@@ -20,7 +20,6 @@ window.angular && (function (angular) {
             this.server_status = -2;
             this.chassis_state = 'On';
             this.LED_state = Constants.LED_STATE_TEXT.off;
-            this.server_id = Constants.API_CREDENTIALS.host.replace(/[^\d]+/m,"");
             this.last_updated = new Date();
 
             this.loading = false;
@@ -34,6 +33,35 @@ window.angular && (function (angular) {
             this.hostname = "";
             this.mac_address = "";
             this.remote_window_active = false;
+
+            this.getServerId = function(){
+                 return this.host.replace(/[^\d]+/m,"");
+            }
+
+            this.reloadServerId = function(){
+                this.server_id = this.getServerId();
+            }
+
+            this.getHost = function(){
+                if(sessionStorage.getItem(Constants.API_CREDENTIALS.host_storage_key) !== null){
+                    return sessionStorage.getItem(Constants.API_CREDENTIALS.host_storage_key);
+                }else{
+                    return Constants.API_CREDENTIALS.default_protocol + "://" +
+                           window.location.hostname + ':' +
+                           window.location.port;
+                }
+            }
+
+            this.setHost = function(hostWithPort){
+                hostWithPort = hostWithPort.replace(/^https?\:\/\//ig, '');
+                var hostURL = Constants.API_CREDENTIALS.default_protocol + "://" + hostWithPort;
+                sessionStorage.setItem(Constants.API_CREDENTIALS.host_storage_key, hostURL);
+                this.host = hostURL;
+                this.reloadServerId();
+            }
+
+            this.host = this.getHost();
+            this.server_id = this.getServerId();
 
             this.setNetworkInfo = function(data){
                 this.hostname = data.hostname;

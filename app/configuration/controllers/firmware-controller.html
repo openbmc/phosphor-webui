@@ -1,3 +1,4 @@
+<loader loading="loading"></loader>
 <div class="row column">
 	<h1>Firmware</h1>
 	<div class="column small-12 page-header">
@@ -34,14 +35,14 @@
 				<div class="row">
 					<div class="column small-12 large-4">
 						<label for="tftp-ip">TFTP Server IP address</label>
-						<input name="tftp-ip" id="tftp-ip" type="number"/>
+						<input name="tftp-ip" id="tftp-ip" type="text"  ng-model="download_host"/>
 					</div>
 					<div class="column small-12 large-4">
 						<label for="tftp-file-name">File name</label>
-						<input name="tftp-file-name" id="tftp-file-name" type="text"/>
+						<input name="tftp-file-name" id="tftp-file-name" type="text"  ng-model="download_filename"/>
 					</div>
 					<div class="column small-12 large-4">
-						<input type="submit" value="Download firmware" class="inline button btn-primary float-right"/>
+						<input type="button" value="Download firmware" class="inline button btn-primary float-right" ng-click="download()"/>
 					</div>
 				</div>
 				<div class="inline uploading" ng-show="downloading">Downloading in progress...</div>
@@ -63,6 +64,23 @@
 		</div>
 		<div class="modal__button-wrapper">
 			<button class="inline btn-primary" ng-click="display_error = false;">Close</button>
+		</div>
+	</div>
+</section>
+
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': confirm_priority}">
+	<div class="modal__tftp-unreachable" role="document">
+		<div class="screen-reader-offscreen modal-description">Update image priority</div><!-- accessibility only; used for screen readers -->
+		<div class="page-header ">
+			<span class="icon icon__warning inline"><span class="accessible-text" role="alert">Warning</span></span>
+			<h1 class="modal-title h4 inline">Change image priority</h1>
+		</div>
+		<div class="modal__content">
+			<p>Change firmware {{priority_image_id}} priority?</p>
+		</div>
+		<div class="modal__button-wrapper">
+			<button class="inline btn-secondary" ng-click="confirm_priority=false;">Cancel</button>
+			<button class="inline btn-primary" ng-click="confirmChangePriority()">Continue</button>
 		</div>
 	</div>
 </section>

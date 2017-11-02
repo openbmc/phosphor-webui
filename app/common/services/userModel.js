@@ -40,6 +40,7 @@ window.angular && (function (angular) {
                         if(response &&
                            response.status == APIUtils.API_RESPONSE.SUCCESS_STATUS){
                             sessionStorage.removeItem('LOGIN_ID');
+                            sessionStorage.removeItem(APIUtils.HOST_SESSION_STORAGE_KEY);
                             callback(true);
                         }else if(response.status == APIUtils.API_RESPONSE.ERROR_STATUS){
                             callback(false);

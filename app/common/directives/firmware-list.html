@@ -21,16 +21,23 @@
 			</div>
 		</div>
 		<div class="table__body">
-			<div class="table__row" ng-class="firmware.active ? 'firmware__primary' : ''" ng-repeat="firmware in firmwares|filter:filterBy">
+			<div class="table__row" ng-class="firmware.functional ? 'firmware__primary' : ''" ng-repeat="firmware in firmwares|filter:filterBy|orderBy:'+Priority'">
 				<div class="table__cell">
 					<span class="table__cell-label">Boot priority:</span>
-					<div class="icon icon__up-arrow icon-as-spacer" aria-hidden="true">
+					<div class="icon icon__up-arrow" aria-hidden="true" ng-class="{'icon-as-spacer':$first}"
+					     ng-click="!$first && changePriority(firmware.imageId, firmware.Priority, firmware.Priority - 1)"
+					     ng-show="firmware.activationFlags.functional || firmware.activationFlags.ready">
 						<span class="accessible-text">firmware up in priority</span></div>
-					<div class="icon icon__down-arrow" aria-hidden="true">
+					<div class="icon icon__down-arrow" aria-hidden="true" ng-class="{'icon-as-spacer':$last}"
+					    ng-click="!$last && changePriority(firmware.imageId, firmware.Priority, firmware.Priority + 1)"
+					    ng-hide="firmware.activationFlags.ready">
 						<span class="accessible-text">firmware down in priority</span></div>
 				</div>
 				<div class="table__cell firmware__active">
-					<span class="table__cell-label">Image state:</span><span ng-if="firmware.active">Active</span>
+					<span class="table__cell-label">Image state:</span>
+					<span ng-if="firmware.activationFlags.functional">Functional</span>
+					<span ng-if="firmware.activationFlags.active">Active</span>
+					<span ng-if="firmware.activationFlags.ready">Ready</span>
 				</div>
 				<div class="table__cell firmware__version" ng-class="{'active':firmware.isExtended}">
 					<span class="table__cell-label">Version:</span>{{firmware.Version}}
@@ -52,8 +59,8 @@
 				</div>
 				<div class="table__cell">
 				    <span class="table__cell-label">Action:</span>
-				    <button class="firmware__action-link" ng-show="!firmware.active" ng-click="activate(firmware.imageId)">Activate</button>
-				    <button class="firmware__action-link" ng-show="!firmware.active" ng-click="delete(firmware.imageId)">Delete</button>
+				    <button class="firmware__action-link" ng-show="firmware.activationFlags.ready" ng-click="activate(firmware.imageId)">Activate</button>
+				    <button class="firmware__action-link" ng-show="!firmware.functional" ng-click="delete(firmware.imageId)">Delete</button>
 				</div>
 			</div>
 		</div>

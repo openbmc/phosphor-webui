@@ -21,6 +21,7 @@ window.angular && (function (angular) {
             '$routeParams',
             function($scope, $window, APIUtils, dataService, userModel, $routeParams){
                 $scope.dataService = dataService;
+                $scope.host = $scope.dataService.host.replace(/^https?\:\/\//ig, '');
 
                 if($routeParams.fake_login &&
                    $routeParams.fake_login === 'fake_login'){
@@ -28,19 +29,22 @@ window.angular && (function (angular) {
                     $window.location.hash = '#/overview/server';
                 }
 
-                $scope.tryLogin = function(username, password, event){
+                $scope.tryLogin = function(host, username, password, event){
                     if(event.keyCode === 13){
-                        $scope.login(username, password);
+                        $scope.login(host, username, password);
                     }
                 }; 
-                $scope.login = function(username, password){
+                $scope.login = function(host, username, password){
                     $scope.error = false;
                     $scope.server_unreachable = false;
 
                     if(!username || username == "" ||
-                       !password || password == ""){
+                       !password || password == "" ||
+                       !host || host == ""
+                       ){
                         return false;
                     }else{
+                        $scope.dataService.setHost(host);
                         userModel.login(username, password, function(status, unreachable){
                             if(status){
                                 $scope.$emit('user-logged-in',{});
