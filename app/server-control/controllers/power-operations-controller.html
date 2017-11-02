@@ -20,28 +20,28 @@
         </div>
 
         <!-- Power on displays only when server is shutdown -->
-        <div class="row column power-option" ng-hide="dataService.server_state == 'Running' || dataService.server_state == 'Quiesced'" ng-class="{disabled: dataService.server_unreachable || (confirm && !power_confirm) || dataService.loading, transitionAll: confirm && power_confirm}">
+        <div class="row column power-option" ng-hide="dataService.server_state == 'Running' || dataService.server_state == 'Quiesced' || dataService.server_state == 'Unreachable'" ng-class="{disabled: dataService.server_unreachable || (confirm && !power_confirm) || dataService.loading, transitionAll: confirm && power_confirm}">
             <button id="power__power-on" class="btn-secondary inline" ng-click="togglePower()" role="button" ng-disabled="dataService.server_unreachable"><img src="assets/images/icon-power.svg" alt="power on" aria-hidden="true">Power on</button>
             <p class="inline">Attempts to power on the server</p>
         </div>
 
         <!-- Power reboot/shutdown options : when server is off all of these are hidden. When one option is selected, the others are disabled. -->
-        <div class="row column power-option" ng-hide="dataService.server_state == 'Off'" ng-class="{disabled: dataService.server_unreachable || (confirm && !warmboot_confirm) || dataService.loading, transitionAll: confirm && warmboot_confirm}">
+        <div class="row column power-option" ng-hide="dataService.server_state == 'Off' || dataService.server_state == 'Unreachable'" ng-class="{disabled: dataService.server_unreachable || (confirm && !warmboot_confirm) || dataService.loading, transitionAll: confirm && warmboot_confirm}">
             <button id="power__warm-boot" class="btn-secondary inline" ng-click="warmRebootConfirm()" role="button" ng-disabled="dataService.server_unreachable"><i aria-hidden="true">&#x21BB</i> Warm reboot</button>
             <p class="inline">Attempts to perform an orderly shutdown before restarting the server</p>
             <confirm title="warm reboot" confirm="warmboot_confirm" ng-show="warmboot_confirm" callback="warmReboot"></confirm>
         </div>
-        <div class="row column power-option" ng-hide="dataService.server_state == 'Off'" ng-class="{disabled: dataService.server_unreachable || (confirm && !coldboot_confirm) || dataService.loading, transitionAll: confirm && coldboot_confirm}">
+        <div class="row column power-option" ng-hide="dataService.server_state == 'Off' || dataService.server_state == 'Unreachable'" ng-class="{disabled: dataService.server_unreachable || (confirm && !coldboot_confirm) || dataService.loading, transitionAll: confirm && coldboot_confirm}">
             <button id="power__cold-boot" class="btn-secondary inline" ng-click="coldRebootConfirm()" role="button" ng-disabled="dataService.server_unreachable"><i aria-hidden="true">&#x21BB</i> Cold reboot</button>
             <p class="inline">Shuts down the server immediately, then restarts it</p>
             <confirm title="cold reboot" confirm="coldboot_confirm" ng-show="coldboot_confirm" cancel="coldbootCancel" callback="coldReboot"></confirm>
         </div>
-        <div class="row column power-option" ng-hide="dataService.server_state == 'Off'" ng-class="{disabled: dataService.server_unreachable || (confirm && !orderly_confirm) || dataService.loading, transitionAll: confirm && orderly_confirm}">
+        <div class="row column power-option" ng-hide="dataService.server_state == 'Off' || dataService.server_state == 'Unreachable'" ng-class="{disabled: dataService.server_unreachable || (confirm && !orderly_confirm) || dataService.loading, transitionAll: confirm && orderly_confirm}">
             <button id="power__soft-shutdown" class="btn-secondary inline" ng-click="orderlyShutdownConfirm()" role="button" ng-disabled="dataService.server_unreachable"><img aria-hidden="true" src="assets/images/icon-power.svg" />Orderly shutdown</button>
             <p class="inline">Attempts to stop all software on the server before removing power</p>
             <confirm title="orderly shutdown" confirm="orderly_confirm" ng-show="orderly_confirm" cancel="orderlyShutdownCancel" callback="orderlyShutdown"></confirm>
         </div>
-        <div class="row column power-option" ng-hide="dataService.server_state == 'Off'" ng-class="{disabled: dataService.server_unreachable || (confirm && !immediately_confirm) || dataService.loading, transitionAll: confirm && immediately_confirm}">
+        <div class="row column power-option" ng-hide="dataService.server_state == 'Off' || dataService.server_state == 'Unreachable'" ng-class="{disabled: dataService.server_unreachable || (confirm && !immediately_confirm) || dataService.loading, transitionAll: confirm && immediately_confirm}">
             <button id="power__hard-shutdown" class="btn-secondary inline" ng-click="immediateShutdownConfirm()" role="button" ng-disabled="dataService.server_unreachable"><img aria-hidden="true" src="assets/images/icon-power.svg" />Immediate shutdown</button>
             <p class="inline">Removes power from the server without waiting for software to stop</p>
             <confirm title="immediate shutdown" confirm="immediately_confirm" ng-show="immediately_confirm" cancel="immediatelyShutdownCancel" callback="immediateShutdown"></confirm>
