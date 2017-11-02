@@ -63,7 +63,20 @@ window.angular && (function (angular) {
                     }
 
                     $scope.preserveSettingsConfirmed = function(){
-                        //show progress..callapi..hide..iferror..show error
+                        $scope.uploading = true;
+                        APIUtils.activateImage($scope.activate_image_id).then(function(response){
+                            $scope.uploading = false; 
+                            if(response.status == 'error'){
+                                $scope.displayError({
+                                    modal_title: response.data.description,
+                                    title: response.data.description,
+                                    desc: response.data.exception,
+                                    type: 'Error'
+                                });
+                            }else{
+                                $scope.loadFirmwares();
+                            }
+                        });
                         $scope.preserve_settings_confirm = false;
                     }
 
@@ -105,7 +118,7 @@ window.angular && (function (angular) {
                             var contentType = headers['content-type'];
 
                             if(!headers['x-filename']){
-                                filename = Constants.FIRMWARE.FALLBACK_DOWNLOAD_FILENAME;
+                                filename = $scope.download_filename;
                             }
 
                             var linkElement = document.createElement('a');
@@ -161,10 +174,23 @@ window.angular && (function (angular) {
                         $scope.delete_image_id = imageId;
                         $scope.confirm_delete = true;
                     }
-                    $scope.confirmDeleteImage = function(imageId){
+                    $scope.confirmDeleteImage = function(){
+                        $scope.loading = true;
+                        APIUtils.deleteImage($scope.delete_image_id).then(function(response){
+                            $scope.loading = false;
+                            if(response.status == 'error'){
+                                $scope.displayError({
+                                    modal_title: response.data.description,
+                                    title: response.data.description,
+                                    desc: response.data.exception,
+                                    type: 'Error'
+                                });
+                            }else{
+                                $scope.loadFirmwares();
+                            }
+                        });
                         $scope.confirm_delete = false;
                     }
-
                     $scope.fileNameChanged = function(){
                         $scope.file_empty = false;
                     }

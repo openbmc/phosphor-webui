@@ -111,6 +111,7 @@ window.angular && (function (angular) {
                 ],
                 SENSOR_SORT_ORDER_DEFAULT: 8,
                 FIRMWARE: {
+                  ACTIVATE_FIRMWARE: 'xyz.openbmc_project.Software.Activation.RequestedActivations.Active',
                   FALLBACK_DOWNLOAD_FILENAME: 'firmware_download.tar',
                   TYPES: {
                     Functional: 'Functional',

@@ -72,6 +72,55 @@ window.angular && (function (angular) {
                     var hostname = "";
                     var macAddress = "";
 
+                    function parseNetworkData(content){
+                      var data = {
+                        interface_ids: [],
+                        interfaces: {
+                        }
+                      };
+                      var interfaceId = '', keyParts = [], interfaceHash = '', interfaceType = '';
+                      for(var key in content.data){
+                        if(key.match(/network\/eth\d+$/ig)){
+                          interfaceId = key.split("/").pop();
+                          if(data.interface_ids.indexOf(interfaceId) == -1){
+                            data.interface_ids.push(interfaceId);
+                            data.interfaces[interfaceId] = {
+                              interfaceIname: '',
+                              domainName:'',
+                              MACAddress:'',
+                              Nameservers: [],
+                              DHCPEnabled: 0,
+                              ipv4:
+                                {
+                                 ids: [],
+                                 values: []
+                                },
+                              ipv6:
+                                {
+                                 ids: [],
+                                 values: []
+                                }
+                            };
+                            data.interfaces[interfaceId].MACAddress = content.data[key].MACAddress;
+                            data.interfaces[interfaceId].DomainName = content.data[key].DomainName.join(" ");
+                            data.interfaces[interfaceId].Nameservers = content.data[key].Nameservers;
+                            data.interfaces[interfaceId].DHCPEnabled = content.data[key].DHCPEnabled;
+                          }
+                        }else if(key.match(/network\/eth\d+\/ipv[4|6]\/[a-z0-9]+$/ig)){
+                          keyParts = key.split("/");
+                          interfaceHash = keyParts.pop();
+                          interfaceType = keyParts.pop();
+                          interfaceId = keyParts.pop();
+
+                          if(data.interfaces[interfaceId][interfaceType].ids.indexOf(interfaceHash) == -1){
+                            data.interfaces[interfaceId][interfaceType].ids.push(interfaceHash);
+                            data.interfaces[interfaceId][interfaceType].values.push(content.data[key]);
+                          }
+                        }
+                      }
+                      return data;
+                    }
+
                     if(content.data.hasOwnProperty('/xyz/openbmc_project/network/config') &&
                       content.data['/xyz/openbmc_project/network/config'].hasOwnProperty('HostName')
                       ){
@@ -88,6 +137,7 @@ window.angular && (function (angular) {
                       data: content.data,
                       hostname: hostname,
                       mac_address: macAddress,
+                      formatted_data: parseNetworkData(content)
                     });
                 }).error(function(error){
                   console.log(error);
@@ -594,7 +644,7 @@ window.angular && (function (angular) {
                         if(content.data.hasOwnProperty(key) && content.data[key].hasOwnProperty('Version')){
 
                           functional = (content.data[key].Priority == 0);
-                          active = (/\.Active$/).test(content.data[key].Activation);
+                          active = !functional && (/\.Active$/).test(content.data[key].Activation);
                           ready = (/\.Ready$/).test(content.data[key].Activation);
                           activationStatus = {functional: functional, active: active, ready: ready};
                           imageType = content.data[key].Purpose.split(".").pop();
@@ -644,8 +694,8 @@ window.angular && (function (angular) {
                   method: 'PUT',
                   url: DataService.getHost() + "/xyz/openbmc_project/software/" + imageId + "/attr/Priority",
                   headers: {
-                      'Accept': 'application/octet-stream',
-                      'Content-Type': 'application/octet-stream'
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
                   },
                   withCredentials: true,
                   data: JSON.stringify({"data": priority})
@@ -660,15 +710,58 @@ window.angular && (function (angular) {
 
                 return deferred.promise;
               },
-              uploadImage: function(file){
+              deleteImage: function(imageId){
+                var deferred = $q.defer();
+                $http({
+                  method: 'POST',
+                  url: DataService.getHost() + "/xyz/openbmc_project/software/" + imageId + "/action/Delete",
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: true,
+                  data: JSON.stringify({"data": []})
+                }).success(function(response){
+                      var json = JSON.stringify(response);
+                      var content = JSON.parse(json);
+                      deferred.resolve(content);
+                }).error(function(error){
+                  console.log(error);
+                  deferred.reject(error);
+                });
+
+                return deferred.promise;
+              },
+              activateImage: function(imageId){
                 var deferred = $q.defer();
                 $http({
                   method: 'PUT',
+                  url: DataService.getHost() + "/xyz/openbmc_project/software/" + imageId + "/attr/RequestedActivation",
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: true,
+                  data: JSON.stringify({"data": Constants.FIRMWARE.ACTIVATE_FIRMWARE})
+                }).success(function(response){
+                      var json = JSON.stringify(response);
+                      var content = JSON.parse(json);
+                      deferred.resolve(content);
+                }).error(function(error){
+                  console.log(error);
+                  deferred.reject(error);
+                });
+
+                return deferred.promise;
+              },
+              uploadImage: function(file){
+                var deferred = $q.defer();
+                $http({
+                  method: 'POST',
                   timeout: 5 * 60 * 1000,
                   url: DataService.getHost() + "/upload/image/",
                   headers: {
-                      'Accept': 'application/octet-stream',
-                      'Content-Type': 'application/octet-stream'
+                    'Content-Type': 'application/octet-stream'
                   },
                   withCredentials: true,
                   data: file
