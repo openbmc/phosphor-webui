@@ -47,7 +47,7 @@ window.angular && (function (angular) {
                 //Print to console window
                 term.io.println('OpenBMC ver.00');
                 term.io.println('This is not an actual live connection.');
-                term.io.print('root@IBM:');
+                term.io.print('root@OpenBmc:');
                 
                 //Allows keyboard input
                 term.installKeyboard();
