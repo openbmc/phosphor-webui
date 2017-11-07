@@ -100,6 +100,7 @@ window.angular && (function (angular) {
         .module('app', [
             // Dependencies
             'ngRoute',
+            'ngSanitize',
             'angular-clipboard',
             'angularUtils.directives.dirPagination',
             // Basic resources
@@ -133,10 +134,13 @@ window.angular && (function (angular) {
             $httpProvider.defaults.timeout = 20000;
             $httpProvider.interceptors.push('apiInterceptor');
         }])
-        .run(['$rootScope', '$location', 'dataService', 'userModel',
-           function($rootScope, $location, dataService, userModel){
+        .run(['$rootScope', '$location', 'dataService', 'userModel', '$templateCache',
+          function($rootScope, $location, dataService, userModel, $templateCache){
            $rootScope.dataService = dataService;
            dataService.path = $location.path();
+
+           $templateCache.put('multi-server/controllers/multi-server-recent-controller.html', require('./multi-server/controllers/multi-server-recent-controller.html'));
+           $templateCache.put('common/directives/dirPagination.tpl.html', require('./common/directives/dirPagination.tpl.html'));
            $rootScope.$on('$routeChangeStart', function(event, next, current){
              if(next.$$route == null || next.$$route == undefined) return;
              if(next.$$route.authenticated){
