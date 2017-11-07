@@ -50,6 +50,7 @@ import firmware_list from './common/directives/firmware-list.js'
 import file from './common/directives/file.js'
 import loader from './common/directives/loader.js'
 import paginate from './common/directives/paginate.js'
+import multi_server from './common/directives/multi-server.js'
 
 import login_index from './login/index.js'
 import login_controller from './login/controllers/login-controller.js'
