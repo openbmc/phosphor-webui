@@ -169,10 +169,6 @@ window.angular && (function (angular) {
            });
 
            $rootScope.$on('timedout-user', function(){
-             if(sessionStorage.getItem('LOGIN_ID') == 'FAKE_ID'){
-                return;
-             }
-
              sessionStorage.removeItem('LOGIN_ID');
              $location.path('/login');
            });

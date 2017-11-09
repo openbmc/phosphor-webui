@@ -15,9 +15,6 @@ window.angular && (function (angular) {
         .module('app.common.services')
         .service('userModel', ['APIUtils',function(APIUtils){
             return {
-                fakeLogin: function(callback){
-                    sessionStorage.setItem('LOGIN_ID', 'FAKE_ID');
-                },
                 login : function(username, password, callback){
                     APIUtils.login(username, password, function(response, error){
                         if(response &&
