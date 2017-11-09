@@ -23,12 +23,6 @@ window.angular && (function (angular) {
                 $scope.dataService = dataService;
                 $scope.host = $scope.dataService.host.replace(/^https?\:\/\//ig, '');
 
-                if($routeParams.fake_login &&
-                   $routeParams.fake_login === 'fake_login'){
-                    userModel.fakeLogin();
-                    $window.location.hash = '#/overview/server';
-                }
-
                 $scope.tryLogin = function(host, username, password, event){
                     if(event.keyCode === 13){
                         $scope.login(host, username, password);
