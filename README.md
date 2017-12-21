@@ -4,16 +4,21 @@ UX Design repo for OpenBMC
 # OpenBMC
 TODO: Write a project description
 
+## Requirement
+nodejs
+
 ## Installation
 `npm install`
 
-## Minify vendors
-`npm run-script minifyvendors`
-
-## Distribution
-`npm run-script distribution`
-
 ## Running
-'npm run-script serve'
+`npm run-script server`
 
-This will run it locally in http://localhost:8080
+This will run it locally in `http://localhost:8080`
+
+## Example Usage with OpenBMC
+1. Browse to `https://<bmc-ip>`, and bypass the secure warning
+You will see a JSON response with `Login required` message.
+2. In the same session, navigate to `http://localhost:8080`, enter the BMC
+IP, Username and Password (defaults: `root`/`0penBmc`).
+
+Then it's logged in.
