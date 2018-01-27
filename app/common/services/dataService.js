@@ -35,7 +35,7 @@ window.angular && (function (angular) {
             this.remote_window_active = false;
 
             this.getServerId = function(){
-                 return this.host.replace(/[^\d]+/m,"");
+                 return this.host.replace(/^https?\:\/\//ig,"");
             }
 
             this.reloadServerId = function(){
