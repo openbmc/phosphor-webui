@@ -14,7 +14,7 @@ npm
 ## Running
 `npm run-script server`
 
-This will run it locally in `http://localhost:8080`.
+This will run it locally in `http://localhost:8080/web/`.
 
 ## Example Usage with OpenBMC
 1. Browse to `https://<bmc-ip>` and bypass the secure warning.

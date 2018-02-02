@@ -51,7 +51,7 @@ module.exports = [
 
       // Output path from the view of the page
       // Uses webpack-dev-server in development
-      publicPath : '/',
+      publicPath : '/web/',
 
       // Filename for entry points
       // Only adds hash in build mode
