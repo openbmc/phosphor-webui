@@ -225,7 +225,8 @@ module.exports = [
           // Reference:
           // http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
           // Minify all javascript, switch loaders to minimizing mode
-          new webpack.optimize.UglifyJsPlugin(),
+          // TODO: openbmc/openbmc#2781  This breaks the GUI currently.
+          // new webpack.optimize.UglifyJsPlugin(),
 
           // Copy assets from the public folder
           // Reference: https://github.com/kevlened/copy-webpack-plugin
