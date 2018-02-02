@@ -130,7 +130,7 @@ module.exports = [
           // Pass along the updated reference to your code
           // You can add here any file extension you want to get copied to your
           // output
-          test : /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
+          test : /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|ico)$/,
           loader : 'file-loader',
           options : {
             name(file) {
@@ -207,7 +207,11 @@ module.exports = [
       // Render index.html
       config.plugins.push(
           new HtmlWebpackPlugin(
-              {template : './app/index.html', inject : 'body'}),
+              {
+                template : './app/index.html',
+                inject : 'body',
+                favicon: './app/assets/images/favicon.ico'
+              }),
 
           // Reference: https://github.com/webpack/extract-text-webpack-plugin
           // Extract css files
