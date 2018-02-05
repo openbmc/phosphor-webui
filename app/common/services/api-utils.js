@@ -202,7 +202,7 @@ window.angular && (function (angular) {
                   data: JSON.stringify({"data": []})
                 }).then(function(response){
                   if(callback){
-                      callback(response);
+                      callback(response.data);
                   }
                 }, function(error){
                   if(callback){
