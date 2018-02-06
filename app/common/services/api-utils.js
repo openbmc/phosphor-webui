@@ -237,19 +237,19 @@ window.angular && (function (angular) {
               },
               chassisPowerOff: function(callback){
                 $http({
-                  method: 'POST',
-                  url: DataService.getHost() + "/xyz/openbmc_project/state/host0",
+                  method: 'PUT',
+                  url: DataService.getHost() + "/xyz/openbmc_project/state/chassis0/attr/RequestedPowerTransition",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
                   },
                   withCredentials: true,
-                  data: JSON.stringify({"data": []})
+                  data: JSON.stringify({"data": "xyz.openbmc_project.State.Chassis.Transition.Off"})
                 }).then(function(response){
                       var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       if(callback){
-                          return callback(content.data.CurrentPowerState);
+                          return callback(content.status);
                       }
                 }, function(error){
                   if(callback){
