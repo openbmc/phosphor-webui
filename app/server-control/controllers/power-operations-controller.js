@@ -117,7 +117,14 @@ window.angular && (function (angular) {
                 };
 
                 $scope.immediateShutdown = function(){
-                    $scope.orderlyShutdown();
+                    //@TODO:show progress
+                    APIUtils.chassisPowerOff(function(response){
+                        if(response){
+                            dataService.setPowerOffState();
+                        }else{
+                            //@TODO:hide progress & show error message
+                        }
+                    });
                 };
                 $scope.immediateShutdownConfirm = function(){
                     if($scope.confirm) {
