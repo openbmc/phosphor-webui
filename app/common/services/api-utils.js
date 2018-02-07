@@ -554,7 +554,10 @@ window.angular && (function (angular) {
                           });
 
                           content.data[key].Value = getScaledValue(content.data[key].Value, content.data[key].Scale);
-
+                          content.data[key].CriticalLow = getScaledValue(content.data[key].CriticalLow, content.data[key].Scale);
+                          content.data[key].CriticalHigh = getScaledValue(content.data[key].CriticalHigh, content.data[key].Scale);
+                          content.data[key].WarningLow = getScaledValue(content.data[key].WarningLow, content.data[key].Scale);
+                          content.data[key].WarningHigh = getScaledValue(content.data[key].WarningHigh, content.data[key].Scale);
                           if(Constants.SENSOR_SORT_ORDER.indexOf(content.data[key].Unit) > -1){
                             customOrder = Constants.SENSOR_SORT_ORDER.indexOf(content.data[key].Unit);
                           }else{
