@@ -56,18 +56,15 @@ window.angular && (function (angular) {
                     $scope.confirm = true;
                     $scope.power_confirm = true;
                 };
+
                 $scope.warmReboot = function(){
                     //@TODO:show progress
                     dataService.setBootingState();
-                    APIUtils.hostPowerOff(function(response){
+                    APIUtils.hostReboot(function(response){
                         if(response){
-                            APIUtils.hostPowerOn(function(response){
-                                if(response){
-                                    dataService.setPowerOnState();
-                                }else{
-                                    //@TODO:show error message
-                                }
-                            });
+                            dataService.setPowerOnState();
+                        }else{
+                            //@TODO:hide progress & show error message
                         }
                     });
                 };

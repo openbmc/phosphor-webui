@@ -357,19 +357,19 @@ window.angular && (function (angular) {
               },
               hostReboot: function(callback){
                 $http({
-                  method: 'POST',
-                  url: DataService.getHost() + "/xyz/openbmc_project/state/host0",
+                  method: 'PUT',
+                  url: DataService.getHost() + "/xyz/openbmc_project/state/host0/attr/RequestedHostTransition",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
                   },
                   withCredentials: true,
-                  data: JSON.stringify({"data": []}),
+                  data: JSON.stringify({"data": "xyz.openbmc_project.State.Host.Transition.Reboot"})
                 }).then(function(response){
                       var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       if(callback){
-                          return callback(content);
+                          return callback(content.status);
                       }
                 }, function(error){
                   if(callback){
