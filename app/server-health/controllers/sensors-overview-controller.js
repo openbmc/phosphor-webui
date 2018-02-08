@@ -17,7 +17,8 @@ window.angular && (function (angular) {
             '$window', 
             'APIUtils', 
             'dataService',
-            function($scope, $log, $window, APIUtils, dataService, userModel){
+            'Constants',
+            function($scope, $log, $window, APIUtils, dataService, Constants){
                 $scope.dataService = dataService;
 
                 $scope.dropdown_selected = false;
@@ -25,6 +26,7 @@ window.angular && (function (angular) {
                 $scope.$log = $log;
                 $scope.customSearch = "";
                 $scope.searchTerms = [];
+                $scope.messages = Constants.MESSAGES.SENSOR;
                 $scope.selectedSeverity = {
                     all: true,
                     normal: false,

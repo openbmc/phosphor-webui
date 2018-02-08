@@ -36,7 +36,15 @@
 
 	</section> <!-- end search -->
 
-	<section id="sensor-categories" class="row column">
+	<section class="row column" ng-show="filteredSensorData.length == 0">
+		<!-- message -->
+		<span ng-if="selectedSeverity.all">{{messages.NO_SENSOR_DATA}}</span>
+		<span ng-if="selectedSeverity.critical">{{messages.CRITICAL_NO_SENSOR_DATA}}</span>
+		<span ng-if="selectedSeverity.warning">{{messages.WARNING_NO_SENSOR_DATA}}</span>
+		<!-- end message -->
+	</section>
+
+	<section id="sensor-categories" class="row column" ng-show="filteredSensorData.length">
 		<div class="row column header-row">
 			<div class="column large-12 header__actions-bar">
 				<p class="inline sensor__title">Sensors</p>
@@ -48,7 +56,7 @@
 			</div>
 		</div>
 		<!-- sensor -->
-		<div class="sensor__readings-row" ng-repeat="sensor in (filteredSensorData = data|filter:filterBySeverity|filter:filterBySearchTerms|orderBy:'+custom_order')">
+		<div class="sensor__readings-row" ng-repeat="sensor in data|filter:filterBySeverity|filter:filterBySearchTerms|orderBy:'+custom_order' as filteredSensorData">
 			<p class="inline sensor__title"><span class="icon" ng-class="{'icon__critical': sensor.status == 'critical', 'icon__warning': sensor.status == 'warning', 'icon__normal': sensor.status == 'normal'}" aria-label="sensor.status" ></span>{{sensor.title}}</p>
 			<p class="inline sensor__reading"><span class="sensor__label">Low critical</span>{{sensor.CriticalLow}}<span class="content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></p>
 			<p class="inline sensor__reading"><span class="sensor__label">Low warning</span>{{sensor.WarningLow}}<span class="content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></p>
