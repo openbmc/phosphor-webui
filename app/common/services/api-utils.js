@@ -445,6 +445,7 @@ window.angular && (function (angular) {
                             severity_flags: severityFlags,
                             health_flags: healthFlags,
                             additional_data: content.data[key].AdditionalData.join("\n"),
+                            type: content.data[key].Message,
                             selected: false,
                             search_text: ("#" + content.data[key].Id + " " + severityCode + " " + content.data[key].Severity + " " + content.data[key].AdditionalData.join(" ")).toLowerCase(),
                             meta: false,
