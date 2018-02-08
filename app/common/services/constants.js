@@ -118,6 +118,13 @@ window.angular && (function (angular) {
                     Active: 'Active',
                     Ready: 'Ready'
                   }
+                },
+                MESSAGES: {
+                  SENSOR: {
+                    NO_SENSOR_DATA: 'There is no sensor found.',
+                    CRITICAL_NO_SENSOR_DATA: 'There are no sensors in a critical state.',
+                    WARNING_NO_SENSOR_DATA: 'There are no sensors in a warning state.'
+                  }
                 }
             };
         });
