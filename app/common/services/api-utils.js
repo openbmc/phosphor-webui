@@ -762,7 +762,7 @@ window.angular && (function (angular) {
                 $http({
                   method: 'POST',
                   timeout: 5 * 60 * 1000,
-                  url: DataService.getHost() + "/upload/image/",
+                  url: DataService.getHost() + "/upload/image",
                   headers: {
                     'Content-Type': 'application/octet-stream'
                   },
