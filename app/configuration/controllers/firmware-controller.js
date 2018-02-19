@@ -33,7 +33,6 @@ window.angular && (function (angular) {
                     $scope.bmcActiveVersion = "";
                     $scope.hostActiveVersion = "";
                     $scope.display_error = false;
-                    $scope.confirm_upload_image = false;
                     $scope.reboot_confirm = false;
                     $scope.preserve_settings_confirm = false;
                     $scope.delete_image_id = "";
@@ -85,26 +84,22 @@ window.angular && (function (angular) {
                     }
 
                     $scope.upload = function(){
-                        if(!$scope.file_empty){
-                            $scope.confirm_upload_image = true;
+                        if($scope.file) {
+                            $scope.uploading = true;
+                            APIUtils.uploadImage($scope.file).then(function(response){
+                                $scope.uploading = false;
+                                if(response.status == 'error'){
+                                    $scope.displayError({
+                                        modal_title: response.data.description,
+                                        title: response.data.description,
+                                        desc: response.data.exception,
+                                        type: 'Error'
+                                    });
+                                }else{
+                                    $scope.loadFirmwares();
+                                }
+                            });
                         }
-                    }
-                    $scope.confirmUpload = function(){
-                        $scope.uploading = true;
-                        APIUtils.uploadImage($scope.file).then(function(response){
-                            $scope.uploading = false; 
-                            if(response.status == 'error'){
-                                $scope.displayError({
-                                    modal_title: response.data.description,
-                                    title: response.data.description,
-                                    desc: response.data.exception,
-                                    type: 'Error'
-                                });
-                            }else{
-                                $scope.loadFirmwares();
-                            }
-                        });
-                        $scope.confirm_upload_image = false;
                     }
 
                     $scope.download = function(){
