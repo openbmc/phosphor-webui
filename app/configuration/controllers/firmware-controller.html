@@ -102,27 +102,6 @@
 	</div>
 </section>
 
-<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': confirm_upload_image}">
-	<div class="modal__upload" role="document">
-		<div class="screen-reader-offscreen modal-description">Upload image file modal</div><!-- accessibility only; used for screen readers -->
-		<div class="page-header ">
-			<h1 class="modal-title h4"><span class="icon icon__info"><svg xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 32 32"><path
-					d="M18 14h-6v2h1v6h-2v2h8v-2h-2z"/><circle cx="16" cy="10" r="2"/><path
-					d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z"/></svg></span>
-				Upload image file
-			</h1>
-		</div>
-		<div class="modal__content">
-			<p>Uploading this image may replace a non-active image, and prevent rollback from the current active image
-				to the previous image.</p>
-		</div>
-		<div class="modal__button-wrapper">
-			<button class="inline btn-secondary" ng-click="confirm_upload_image = false;">Cancel</button>
-			<button class="inline btn-primary" ng-click="confirmUpload()">Continue</button>
-		</div>
-	</div>
-</section>
 <section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': reboot_confirm}">
 	<div class="modal__reboot" role="document">
 		<div class="screen-reader-offscreen modal-description">Server reboot required modal</div><!-- accessibility only; used for screen readers -->
@@ -181,4 +160,4 @@
 		</div>
 	</div>
 </section>
-<div class="modal-overlay" tabindex="-1" ng-class="{'active': (display_error || confirm_upload_image || reboot_confirm || preserve_settings_confirm)}"></div>
+<div class="modal-overlay" tabindex="-1" ng-class="{'active': (display_error || reboot_confirm || preserve_settings_confirm)}"></div>
