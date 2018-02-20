@@ -783,13 +783,13 @@ window.angular && (function (angular) {
                 var deferred = $q.defer();
                 $http({
                   method: 'POST',
-                  url: DataService.getHost() + "/org/openbmc/control/flash/bmc/action/updateViaTftp",
+                  url: DataService.getHost() + "/xyz/openbmc_project/software/action/DownloadViaTFTP",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
                   },
                   withCredentials: true,
-                  data: JSON.stringify({"data": [host, filename]}),
+                  data: JSON.stringify({"data": [filename, host]}),
                   responseType: 'arraybuffer'
                 }).then(function(response, status, headers){
                   deferred.resolve({
