@@ -39,6 +39,7 @@
 .modal.active{
   top: 25%;
   @include fastTransition-all;
+  display: inline-block;
 }
 
 .modal .page-header {
