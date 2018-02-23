@@ -607,10 +607,22 @@ window.angular && (function (angular) {
                       var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       var data = [];
+                      var activating = false;
                       var active = false;
+                      var failed = false;
                       var functional = false;
+                      var invalid = false;
+                      var notready = false;
                       var ready = false;
-                      var activationStatus = {active: false, ready: false, functional: false};
+                      var activationStatus = {
+                        activating: false,
+                        active: false,
+                        failed: false,
+                        functional: false,
+                        invalid: false,
+                        notready: false,
+                        ready: false
+                      };
                       var isExtended = false;
                       var bmcActiveVersion = "";
                       var hostActiveVersion = "";
@@ -645,11 +657,23 @@ window.angular && (function (angular) {
 
                       for(var key in content.data){
                         if(content.data.hasOwnProperty(key) && content.data[key].hasOwnProperty('Version')){
-
                           functional = (content.data[key].Priority == 0);
+                          activating = (/\.Activating$/).test(content.data[key].Activation);
                           active = !functional && (/\.Active$/).test(content.data[key].Activation);
+                          failed = (/\.Failed$/).test(content.data[key].Activation);
+                          invalid = (/\.Invalid$/).test(content.data[key].Activation);
+                          notready = (/\.NotReady$/).test(content.data[key].Activation);
                           ready = (/\.Ready$/).test(content.data[key].Activation);
-                          activationStatus = {functional: functional, active: active, ready: ready};
+
+                          activationStatus = {
+                            activating: activating,
+                            active: active,
+                            failed: failed,
+                            functional: functional,
+                            invalid: invalid,
+                            notready: notready,
+                            ready: ready
+                          };
                           imageType = content.data[key].Purpose.split(".").pop();
                           isExtended = content.data[key].hasOwnProperty('ExtendedVersion') && content.data[key].ExtendedVersion != "";
                           if(isExtended){
