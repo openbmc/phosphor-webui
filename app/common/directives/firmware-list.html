@@ -35,8 +35,12 @@
 				</div>
 				<div class="table__cell firmware__active">
 					<span class="table__cell-label">Image state:</span>
-					<span ng-if="firmware.activationFlags.functional">Functional</span>
+					<span ng-if="firmware.activationFlags.activating">Activating</span>
 					<span ng-if="firmware.activationFlags.active">Active</span>
+					<span ng-if="firmware.activationFlags.failed">Failed</span>
+					<span ng-if="firmware.activationFlags.functional">Functional</span>
+					<span ng-if="firmware.activationFlags.invalid">Invalid</span>
+					<span ng-if="firmware.activationFlags.notready">NotReady</span>
 					<span ng-if="firmware.activationFlags.ready">Ready</span>
 				</div>
 				<div class="table__cell firmware__version" ng-class="{'active':firmware.isExtended}">
