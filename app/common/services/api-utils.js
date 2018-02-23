@@ -608,10 +608,7 @@ window.angular && (function (angular) {
                       var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
                       var data = [];
-                      var active = false;
-                      var functional = false;
-                      var ready = false;
-                      var activationStatus = {active: false, ready: false, functional: false};
+                      var activationStatus = "";
                       var isExtended = false;
                       var bmcActiveVersion = "";
                       var hostActiveVersion = "";
@@ -646,11 +643,14 @@ window.angular && (function (angular) {
 
                       for(var key in content.data){
                         if(content.data.hasOwnProperty(key) && content.data[key].hasOwnProperty('Version')){
-
-                          functional = (content.data[key].Priority == 0);
-                          active = !functional && (/\.Active$/).test(content.data[key].Activation);
-                          ready = (/\.Ready$/).test(content.data[key].Activation);
-                          activationStatus = {functional: functional, active: active, ready: ready};
+                          // If the image is "Functional" use that for the
+                          // activation status, else use the value of "Activation"
+                          // github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Software/Activation.interface.yaml
+                          activationStatus = content.data[key].Activation.split(".").pop();
+                          if (content.data[key].Priority == 0)
+                          {
+                            activationStatus = "Functional";
+                          }
                           imageType = content.data[key].Purpose.split(".").pop();
                           isExtended = content.data[key].hasOwnProperty('ExtendedVersion') && content.data[key].ExtendedVersion != "";
                           if(isExtended){
@@ -658,8 +658,7 @@ window.angular && (function (angular) {
                           }
                           data.push(Object.assign({
                             path: key,
-                            functional: functional,
-                            activationFlags: activationStatus,
+                            activationStatus: activationStatus,
                             imageId: key.split("/").pop(),
                             imageType: imageType,
                             isExtended: isExtended,
@@ -670,11 +669,11 @@ window.angular && (function (angular) {
                             data: {key: key, value: content.data[key]}
                           }, content.data[key]));
 
-                          if(functional && imageType == 'BMC'){
+                          if(activationStatus == 'Functional' && imageType == 'BMC'){
                             bmcActiveVersion = content.data[key].Version;
                           }
 
-                          if(functional && imageType == 'Host'){
+                          if(activationStatus == 'Functional' && imageType == 'Host'){
                             hostActiveVersion = content.data[key].Version;
                           }
                         }
