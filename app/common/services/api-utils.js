@@ -658,7 +658,10 @@ window.angular && (function (angular) {
 
                       for(var key in content.data){
                         if(content.data.hasOwnProperty(key) && content.data[key].hasOwnProperty('Version')){
-                          functional = (content.data[key].Priority == 0);
+                          // The key looks like /xyz/openbmc_project/software/<ImageId>.
+                          // If it is a functional image, /xyz/openbmc_project/software/<ImageId>/functional
+                          // will exist in the enumerate data.
+                          functional = ((key + "/functional") in content.data);
                           activating = (/\.Activating$/).test(content.data[key].Activation);
                           active = !functional && (/\.Active$/).test(content.data[key].Activation);
                           failed = (/\.Failed$/).test(content.data[key].Activation);
