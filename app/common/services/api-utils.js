@@ -614,6 +614,7 @@ window.angular && (function (angular) {
                       var hostActiveVersion = "";
                       var imageType = "";
                       var extendedVersions = [];
+                      var functionalImages = [];
 
                       function getFormatedExtendedVersions(extendedVersion){
                         var versions = [];
@@ -641,16 +642,23 @@ window.angular && (function (angular) {
                         return versions;
                       }
 
+                      // Get the list of functional images so we can compare
+                      // later if an image is functional
+                      if (content.data[Constants.FIRMWARE.FUNCTIONAL_OBJPATH])
+                      {
+                        functionalImages = content.data[Constants.FIRMWARE.FUNCTIONAL_OBJPATH].endpoints;
+                      }
                       for(var key in content.data){
                         if(content.data.hasOwnProperty(key) && content.data[key].hasOwnProperty('Version')){
                           // If the image is "Functional" use that for the
                           // activation status, else use the value of "Activation"
                           // github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Software/Activation.interface.yaml
                           activationStatus = content.data[key].Activation.split(".").pop();
-                          if (content.data[key].Priority == 0)
+                          if (functionalImages.includes(key))
                           {
                             activationStatus = "Functional";
                           }
+
                           imageType = content.data[key].Purpose.split(".").pop();
                           isExtended = content.data[key].hasOwnProperty('ExtendedVersion') && content.data[key].ExtendedVersion != "";
                           if(isExtended){
