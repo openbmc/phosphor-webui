@@ -111,7 +111,8 @@ window.angular && (function (angular) {
                 ],
                 SENSOR_SORT_ORDER_DEFAULT: 8,
                 FIRMWARE: {
-                  ACTIVATE_FIRMWARE: 'xyz.openbmc_project.Software.Activation.RequestedActivations.Active'
+                  ACTIVATE_FIRMWARE: 'xyz.openbmc_project.Software.Activation.RequestedActivations.Active',
+                  FUNCTIONAL_OBJPATH: '/xyz/openbmc_project/software/functional'
                 },
                 MESSAGES: {
                   SENSOR: {
