@@ -647,10 +647,15 @@ window.angular && (function (angular) {
                           // activation status, else use the value of "Activation"
                           // github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Software/Activation.interface.yaml
                           activationStatus = content.data[key].Activation.split(".").pop();
-                          if (content.data[key].Priority == 0)
+
+                          // The key looks like /xyz/openbmc_project/software/<ImageId>.
+                          // If it is a functional image, /xyz/openbmc_project/software/<ImageId>/functional
+                          // will exist in the enumerate data.
+                          if ((key + "/functional") in content.data)
                           {
                             activationStatus = "Functional";
                           }
+
                           imageType = content.data[key].Purpose.split(".").pop();
                           isExtended = content.data[key].hasOwnProperty('ExtendedVersion') && content.data[key].ExtendedVersion != "";
                           if(isExtended){
