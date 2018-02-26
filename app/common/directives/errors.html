@@ -1,17 +1,17 @@
 <!-- Unexpected error -->
-<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': display_error}">
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': dataService.displayErrorModal}">
     <div class="modal__upload-fail" role="document">
-        <div class="screen-reader-offscreen modal-description">Unexpected error</div><!-- accessibility only; used for screen readers -->
+        <div class="screen-reader-offscreen modal-description">{{dataService.errorModalDetails.title}}</div><!-- accessibility only; used for screen readers -->
         <div class="page-header ">
-            <span class="icon icon__warning inline"><span class="accessible-text" role="alert">Unexpected error</span></span>
-            <h1 class="modal-title h4 inline">Unexpected error</h1>
+            <span class="icon icon__warning inline"><span class="accessible-text" role="alert">{{dataService.errorModalDetails.title}}</span></span>
+            <h1 class="modal-title h4 inline">{{dataService.errorModalDetails.title}}</h1>
         </div>
         <div class="modal__content">
-            <p>Oops! An unexpected error occurred. Record specific details of the issue, then contact your company support services.</p>
+            <p>{{dataService.errorModalDetails.description}}</p>
         </div>
         <div class="modal__button-wrapper">
-            <button class="inline btn-primary" ng-click="display_error = false;">Close</button>
+            <button class="inline btn-primary" ng-click="dataService.deactivateErrorModal()">Close</button>
         </div>
     </div>
 </section>
-<div class="modal-overlay" tabindex="-1" ng-class="{'active': (multi_server_recent)}"></div>
+<div class="modal-overlay" tabindex="-1" ng-class="{'active': dataService.displayErrorModal}"></div>

@@ -27,11 +27,15 @@ window.angular && (function (angular) {
                 },
                 CHASSIS_POWER_STATE: {
                     on: 'On',
-                    off: 'Off'
+                    on_code: 'xyz.openbmc_project.State.Chassis.PowerState.On',
+                    off: 'Off',
+                    off_code: 'xyz.openbmc_project.State.Chassis.PowerState.Off'
                 },
                 HOST_STATE_TEXT: {
                     on: 'Running',
+                    on_code: 'xyz.openbmc_project.State.Host.HostState.Running',
                     off: 'Off',
+                    off_code: 'xyz.openbmc_project.State.Host.HostState.Off',
                     booting: 'Quiesced',
                     unreachable: 'Unreachable'
                 },
@@ -107,21 +111,31 @@ window.angular && (function (angular) {
                 ],
                 SENSOR_SORT_ORDER_DEFAULT: 8,
                 FIRMWARE: {
-                  ACTIVATE_FIRMWARE: 'xyz.openbmc_project.Software.Activation.RequestedActivations.Active',
-                  FUNCTIONAL_OBJPATH: '/xyz/openbmc_project/software/functional'
+                    ACTIVATE_FIRMWARE: 'xyz.openbmc_project.Software.Activation.RequestedActivations.Active',
+                    FUNCTIONAL_OBJPATH: '/xyz/openbmc_project/software/functional'
                 },
-               POLL_INTERVALS: {
-                  ACTIVATION: 5000
+                POLL_INTERVALS: {
+                    ACTIVATION: 5000,
+                    POWER_OP: 5000,
                 },
-               TIMEOUT: {
-                  ACTIVATION: 1000 * 60 * 10, // 10 mins
+                TIMEOUT: {
+                    ACTIVATION: 1000 * 60 * 10, // 10 mins
+                    CHASSIS_OFF: 1000 * 60 * 5, // 5 mins
+                    HOST_ON: 1000 * 60 * 5, // 5 mins
                 },
                 MESSAGES: {
-                  SENSOR: {
-                    NO_SENSOR_DATA: 'There are no sensors found.',
-                    CRITICAL_NO_SENSOR_DATA: 'There are no sensors in Critical state.',
-                    WARNING_NO_SENSOR_DATA: 'There are no sensors in Warning state.'
-                  }
+                    POLL: {
+                        TIMEOUT: 'Time out. Did not reach power state in allotted time.',
+                    },
+                    SENSOR: {
+                        NO_SENSOR_DATA: 'There are no sensors found.',
+                        CRITICAL_NO_SENSOR_DATA: 'There are no sensors in Critical state.',
+                        WARNING_NO_SENSOR_DATA: 'There are no sensors in Warning state.'
+                    },
+                    ERROR_MODAL: {
+                        TITLE: 'Unexpected error',
+                        DESCRIPTION: 'Oops! An unexpected error occurred. Record specific details of the issue, then contact your company support services.'
+                    }
                 },
                 POWER_CAP_TEXT: {
                     unit: 'W',
