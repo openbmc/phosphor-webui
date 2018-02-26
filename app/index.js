@@ -39,6 +39,7 @@ import apiInterceptor from './common/services/apiInterceptor.js'
 import filters_index from './common/filters/index.js'
 
 import directives_index from './common/directives/index.js'
+import errors from './common/directives/errors.js'
 import app_header from './common/directives/app-header.js'
 import app_navigation from './common/directives/app-navigation.js'
 import confirm from './common/directives/confirm.js'
