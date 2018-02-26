@@ -21,10 +21,11 @@ window.angular && (function (angular) {
               LED_STATE: Constants.LED_STATE,
               LED_STATE_TEXT: Constants.LED_STATE_TEXT,
               HOST_SESSION_STORAGE_KEY: Constants.API_CREDENTIALS.host_storage_key,
-              getChassisState: function(callback){
+              getChassisState: function(){
+                var deferred = $q.defer();
                 $http({
                   method: 'GET',
-                  url: DataService.getHost() + "/xyz/openbmc_project/state/chassis0",
+                  url: DataService.getHost() + "/xyz/openbmc_project/state/chassis0/attr/CurrentPowerState",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -33,15 +34,18 @@ window.angular && (function (angular) {
                 }).then(function(response){
                       var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
-                      callback(content.data.CurrentPowerState);
+                      deferred.resolve(content.data);
                 }, function(error){
                   console.log(error);
+                  deferred.reject(error);
                 });
+                return deferred.promise;
               },
-              getHostState: function(callback){
+              getHostState: function(){
+                var deferred = $q.defer();
                 $http({
                   method: 'GET',
-                  url: DataService.getHost() + "/xyz/openbmc_project/state/host0",
+                  url: DataService.getHost() + "/xyz/openbmc_project/state/host0/attr/CurrentHostState",
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
@@ -50,10 +54,12 @@ window.angular && (function (angular) {
                 }).then(function(response){
                       var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
-                      callback(content.data.CurrentHostState);
+                      deferred.resolve(content.data);
                 }, function(error){
                   console.log(error);
+                  deferred.reject(error);
                 });
+                return deferred.promise;
               },
               getNetworkInfo: function(){
                 var deferred = $q.defer();
@@ -283,7 +289,8 @@ window.angular && (function (angular) {
                   }
                 });
               },
-              chassisPowerOff: function(callback){
+              chassisPowerOff: function(){
+                var deferred = $q.defer();
                 $http({
                   method: 'PUT',
                   url: DataService.getHost() + "/xyz/openbmc_project/state/chassis0/attr/RequestedPowerTransition",
@@ -296,16 +303,12 @@ window.angular && (function (angular) {
                 }).then(function(response){
                       var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
-                      if(callback){
-                          return callback(content.status);
-                      }
+                      deferred.resolve(content.status);
                 }, function(error){
-                  if(callback){
-                      callback(error);
-                  }else{
-                      console.log(error);
-                  }
+                  console.log(error);
+                  deferred.reject(error);
                 });
+                return deferred.promise;
               },
               setLEDState: function(state, callback){
                 $http({
@@ -355,7 +358,8 @@ window.angular && (function (angular) {
                   }
                 });
               },
-              hostPowerOn: function(callback){
+              hostPowerOn: function(){
+                var deferred = $q.defer();
                 $http({
                   method: 'PUT',
                   url: DataService.getHost() + "/xyz/openbmc_project/state/host0/attr/RequestedHostTransition",
@@ -368,18 +372,15 @@ window.angular && (function (angular) {
                 }).then(function(response){
                       var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
-                      if(callback){
-                          return callback(content.status);
-                      }
+                      deferred.resolve(content.status);
                 }, function(error){
-                  if(callback){
-                      callback(error);
-                  }else{
-                      console.log(error);
-                  }
+                  console.log(error);
+                  deferred.reject(error);
                 });
+                return deferred.promise;
               },
-              hostPowerOff: function(callback){
+              hostPowerOff: function(){
+                var deferred = $q.defer();
                 $http({
                   method: 'PUT',
                   url: DataService.getHost() + "/xyz/openbmc_project/state/host0/attr/RequestedHostTransition",
@@ -392,18 +393,15 @@ window.angular && (function (angular) {
                 }).then(function(response){
                       var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
-                      if(callback){
-                          return callback(content.status);
-                      }
+                      deferred.resolve(content.status);
                 }, function(error){
-                  if(callback){
-                      callback(error);
-                  }else{
-                      console.log(error);
-                  }
+                  console.log(error);
+                  deferred.reject(error);
                 });
+                return deferred.promise;
               },
-              hostReboot: function(callback){
+              hostReboot: function(){
+                var deferred = $q.defer();
                 $http({
                   method: 'PUT',
                   url: DataService.getHost() + "/xyz/openbmc_project/state/host0/attr/RequestedHostTransition",
@@ -416,16 +414,13 @@ window.angular && (function (angular) {
                 }).then(function(response){
                       var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
-                      if(callback){
-                          return callback(content.status);
-                      }
+                      deferred.resolve(content.status);
                 }, function(error){
-                  if(callback){
-                      callback(error);
-                  }else{
-                      console.log(error);
-                  }
+                  console.log(error);
+                  deferred.reject(error);
                 });
+
+                return deferred.promise;
               },
               hostShutdown: function(callback){
                 $http({
