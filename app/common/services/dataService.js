@@ -33,7 +33,9 @@ window.angular && (function (angular) {
             this.hostname = "";
             this.mac_address = "";
             this.remote_window_active = false;
-            this.ignoreHttpError = false;
+            this.displayErrorModal = false;
+            this.errorModalDetails = {};
+
             this.getServerId = function(){
                  return this.host.replace(/^https?\:\/\//ig,"");
             }
@@ -47,8 +49,8 @@ window.angular && (function (angular) {
                     return sessionStorage.getItem(Constants.API_CREDENTIALS.host_storage_key);
                 }else{
                     return Constants.API_CREDENTIALS.default_protocol + "://" +
-                           window.location.hostname +
-                           (window.location.port ? ":" + window.location.port : "");
+                           window.location.hostname + ':' +
+                           window.location.port;
                 }
             }
 
@@ -58,10 +60,6 @@ window.angular && (function (angular) {
                 sessionStorage.setItem(Constants.API_CREDENTIALS.host_storage_key, hostURL);
                 this.host = hostURL;
                 this.reloadServerId();
-            }
-
-            this.getUser = function(){
-                return sessionStorage.getItem('LOGIN_ID');
             }
 
             this.host = this.getHost();
@@ -120,6 +118,25 @@ window.angular && (function (angular) {
                 }
 
                 this.server_health = Constants.SERVER_HEALTH.good;
+            }
+
+            this.activateErrorModal = function(data){
+                if(data && data.hasOwnProperty('title')){
+                    this.errorModalDetails.title = data.title;
+                }else{
+                    this.errorModalDetails.title = Constants.MESSAGES.ERROR_MODAL.TITLE;
+                }
+
+                if(data && data.hasOwnProperty('description')){
+                    this.errorModalDetails.description = data.description;
+                }else{
+                    this.errorModalDetails.description = Constants.MESSAGES.ERROR_MODAL.DESCRIPTION;
+                }
+                this.displayErrorModal = true;
+            }
+
+            this.deactivateErrorModal = function(){
+                this.displayErrorModal = false;
             }
         }]);
 

@@ -15,6 +15,10 @@ window.angular && (function (angular) {
         .module('app.common.services', [])
         .service('Constants', function () {
             return {
+                LOGIN_CREDENTIALS: {
+                    username: "test",
+                    password: "testpass",
+                },
                 API_CREDENTIALS: {
                     host_storage_key: 'API_HOST_KEY',
                     default_protocol: 'https'
@@ -27,11 +31,15 @@ window.angular && (function (angular) {
                 },
                 CHASSIS_POWER_STATE: {
                     on: 'On',
-                    off: 'Off'
+                    on_code: 'xyz.openbmc_project.State.Chassis.PowerState.Running',
+                    off: 'Off',
+                    off_code: 'xyz.openbmc_project.State.Chassis.PowerState.Off'
                 },
                 HOST_STATE_TEXT: {
                     on: 'Running',
+                    on_code: 'xyz.openbmc_project.State.Host.HostState.Running',
                     off: 'Off',
+                    off_code: 'xyz.openbmc_project.State.Host.HostState.Off',
                     booting: 'Quiesced',
                     unreachable: 'Unreachable'
                 },
@@ -108,7 +116,12 @@ window.angular && (function (angular) {
                 SENSOR_SORT_ORDER_DEFAULT: 8,
                 FIRMWARE: {
                   ACTIVATE_FIRMWARE: 'xyz.openbmc_project.Software.Activation.RequestedActivations.Active',
-                  FUNCTIONAL_OBJPATH: '/xyz/openbmc_project/software/functional'
+                  FALLBACK_DOWNLOAD_FILENAME: 'firmware_download.tar',
+                  TYPES: {
+                    Functional: 'Functional',
+                    Active: 'Active',
+                    Ready: 'Ready'
+                  }
                 },
                POLL_INTERVALS: {
                   ACTIVATION: 5000
@@ -131,6 +144,10 @@ window.angular && (function (angular) {
                     'xyz.openbmc_project.Sensor.Value.Unit.Watts': 'W',
                     notavailable: 'Not Available'
                 },
+                ERROR_MODAL: {
+                    TITLE: 'Unexpected error',
+                    DESCRIPTION: 'Oops! An unexpected error occurred. Record specific details of the issue, then contact your company support services.'
+                }
             };
         });
 
