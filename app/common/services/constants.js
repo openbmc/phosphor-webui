@@ -31,11 +31,15 @@ window.angular && (function (angular) {
                 },
                 CHASSIS_POWER_STATE: {
                     on: 'On',
-                    off: 'Off'
+                    on_code: 'xyz.openbmc_project.State.Chassis.PowerState.On',
+                    off: 'Off',
+                    off_code: 'xyz.openbmc_project.State.Chassis.PowerState.Off'
                 },
                 HOST_STATE_TEXT: {
                     on: 'Running',
+                    on_code: 'xyz.openbmc_project.State.Host.HostState.Running',
                     off: 'Off',
+                    off_code: 'xyz.openbmc_project.State.Host.HostState.Off',
                     booting: 'Quiesced',
                     unreachable: 'Unreachable'
                 },
@@ -113,6 +117,10 @@ window.angular && (function (angular) {
                 FIRMWARE: {
                   ACTIVATE_FIRMWARE: 'xyz.openbmc_project.Software.Activation.RequestedActivations.Active',
                   FUNCTIONAL_OBJPATH: '/xyz/openbmc_project/software/functional'
+                },
+                POLL_INTERVALS: {
+                  CHASSIS_STATUS: 5000,
+                  HOST_STATUS: 5000
                 },
                 MESSAGES: {
                   SENSOR: {
