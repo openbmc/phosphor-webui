@@ -33,6 +33,10 @@ window.angular && (function (angular) {
             this.hostname = "";
             this.mac_address = "";
             this.remote_window_active = false;
+
+            this.displayErrorModal = false;
+            this.errorModalDetails = {};
+
             this.ignoreHttpError = false;
             this.getServerId = function(){
                  return this.host.replace(/^https?\:\/\//ig,"");
@@ -120,6 +124,25 @@ window.angular && (function (angular) {
                 }
 
                 this.server_health = Constants.SERVER_HEALTH.good;
+            }
+
+            this.activateErrorModal = function(data){
+                if(data && data.hasOwnProperty('title')){
+                    this.errorModalDetails.title = data.title;
+                }else{
+                    this.errorModalDetails.title = Constants.MESSAGES.ERROR_MODAL.TITLE;
+                }
+
+                if(data && data.hasOwnProperty('description')){
+                    this.errorModalDetails.description = data.description;
+                }else{
+                    this.errorModalDetails.description = Constants.MESSAGES.ERROR_MODAL.DESCRIPTION;
+                }
+                this.displayErrorModal = true;
+            }
+
+            this.deactivateErrorModal = function(){
+                this.displayErrorModal = false;
             }
         }]);
 
