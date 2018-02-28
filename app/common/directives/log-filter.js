@@ -33,8 +33,8 @@ window.angular && (function (angular) {
                             }
                         }
 
-                        if($scope.selectedSeverity.low && 
-                           $scope.selectedSeverity.medium && 
+                        if($scope.selectedSeverity.low &&
+                           $scope.selectedSeverity.medium &&
                            $scope.selectedSeverity.high){
                             $scope.selectedSeverity.all = true;
                             $scope.selectedSeverity.low = false;

@@ -13,10 +13,10 @@ window.angular && (function (angular) {
     angular
         .module('app.login')
         .controller('LoginController', [
-            '$scope', 
-            '$window', 
-            'APIUtils', 
-            'dataService', 
+            '$scope',
+            '$window',
+            'APIUtils',
+            'dataService',
             'userModel',
             '$routeParams',
             function($scope, $window, APIUtils, dataService, userModel, $routeParams){
@@ -33,7 +33,7 @@ window.angular && (function (angular) {
                     if(event.keyCode === 13){
                         $scope.login(host, username, password);
                     }
-                }; 
+                };
                 $scope.login = function(host, username, password){
                     $scope.error = false;
                     $scope.server_unreachable = false;

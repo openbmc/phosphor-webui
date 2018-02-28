@@ -64,7 +64,7 @@ window.angular && (function (angular) {
                     $scope.preserveSettingsConfirmed = function(){
                         $scope.uploading = true;
                         APIUtils.activateImage($scope.activate_image_id).then(function(response){
-                            $scope.uploading = false; 
+                            $scope.uploading = false;
                             if(response.status == 'error'){
                                 $scope.displayError({
                                     modal_title: response.data.description,

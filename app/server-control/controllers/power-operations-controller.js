@@ -13,10 +13,10 @@ window.angular && (function (angular) {
     angular
         .module('app.serverControl')
         .controller('powerOperationsController', [
-            '$scope', 
-            'APIUtils', 
-            'dataService', 
-            '$timeout', 
+            '$scope',
+            'APIUtils',
+            'dataService',
+            '$timeout',
             function($scope, APIUtils, dataService, $timeout){
                 $scope.dataService = dataService;
                 $scope.confirm = false;

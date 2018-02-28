@@ -7,19 +7,19 @@ window.angular && (function (angular) {
             return {
                 restrict: 'A',
                 link: function (scope, element, attrs) {
-        
+
                     function elementClick(e) {
                         e.stopPropagation();
                     }
-        
+
                     function documentClick(e) {
                         scope[attrs.toggleFlag] = false;
                         scope.$apply();
                     }
-        
+
                     element.on('click', elementClick);
                     $document.on('click', documentClick);
-        
+
                     // remove event handlers when directive is destroyed
                     scope.$on('$destroy', function () {
                         element.off('click', elementClick);
