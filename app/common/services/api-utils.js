@@ -499,26 +499,26 @@ window.angular && (function (angular) {
                       function getSensorStatus(reading){
                         var severityFlags = {critical: false, warning: false, normal: false}, severityText = '', order = 0;
 
-                        if(reading.hasOwnProperty('CriticalLow') && 
+                        if(reading.hasOwnProperty('CriticalLow') &&
                           reading.Value < reading.CriticalLow
                           ){
                           severityFlags.critical = true;
                           severityText = 'critical';
                           order = 2;
-                        }else if(reading.hasOwnProperty('CriticalHigh') && 
-                          reading.Value > reading.CriticalHigh 
+                        }else if(reading.hasOwnProperty('CriticalHigh') &&
+                          reading.Value > reading.CriticalHigh
                           ){
                           severityFlags.critical = true;
                           severityText = 'critical';
                           order = 2;
-                        }else if(reading.hasOwnProperty('CriticalLow') && 
-                          reading.hasOwnProperty('WarningLow') && 
+                        }else if(reading.hasOwnProperty('CriticalLow') &&
+                          reading.hasOwnProperty('WarningLow') &&
                           reading.Value >= reading.CriticalLow && reading.Value <= reading.WarningLow){
                           severityFlags.warning = true;
                           severityText = 'warning';
                           order = 1;
-                        }else if(reading.hasOwnProperty('WarningHigh') && 
-                          reading.hasOwnProperty('CriticalHigh') && 
+                        }else if(reading.hasOwnProperty('WarningHigh') &&
+                          reading.hasOwnProperty('CriticalHigh') &&
                           reading.Value >= reading.WarningHigh && reading.Value <= reading.CriticalHigh){
                           severityFlags.warning = true;
                           severityText = 'warning';
@@ -576,9 +576,9 @@ window.angular && (function (angular) {
                             status: severity.severityText,
                             order: severity.order,
                             custom_order: customOrder,
-                            search_text: (title + " " + content.data[key].Value + " " + 
-                               Constants.SENSOR_UNIT_MAP[content.data[key].Unit] + " " + 
-                               severity.severityText + " " + 
+                            search_text: (title + " " + content.data[key].Value + " " +
+                               Constants.SENSOR_UNIT_MAP[content.data[key].Unit] + " " +
+                               severity.severityText + " " +
                                content.data[key].CriticalLow + " " +
                                content.data[key].CriticalHigh + " " +
                                content.data[key].WarningLow + " " +
@@ -685,8 +685,8 @@ window.angular && (function (angular) {
                       }
 
                       deferred.resolve({
-                          data: data, 
-                          bmcActiveVersion: bmcActiveVersion, 
+                          data: data,
+                          bmcActiveVersion: bmcActiveVersion,
                           hostActiveVersion: hostActiveVersion
                       });
                 }, function(error){
@@ -913,11 +913,11 @@ window.angular && (function (angular) {
                           searchText += " " + data[i].key + " " + data[i].value;
                         }
 
-                        return searchText; 
+                        return searchText;
                       }
 
                       for(var key in content.data){
-                        if(content.data.hasOwnProperty(key) && 
+                        if(content.data.hasOwnProperty(key) &&
                            key.indexOf(Constants.HARDWARE.component_key_filter) == 0){
 
                           data = camelcaseToLabel(content.data[key]);
@@ -933,7 +933,7 @@ window.angular && (function (angular) {
                                 selected: false,
                                 expanded: false,
                                 search_text: title.toLowerCase() + " " + searchText.toLowerCase(),
-                                sub_components: [], 
+                                sub_components: [],
                                 original_data: {key: key, value: content.data[key]}
                               }, {items: data}));
 

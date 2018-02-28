@@ -15,15 +15,15 @@ window.angular && (function (angular) {
     angular
         .module('app.serverControl')
         .controller('remoteConsoleController', [
-            '$scope', 
-            '$window', 
-            'APIUtils', 
+            '$scope',
+            '$window',
+            'APIUtils',
             'dataService',
             function($scope, $window, APIUtils, dataService){
                 $scope.dataService = dataService;
 
                 // See https://github.com/macton/hterm for available hterm options
-                
+
                 //Storage
                 hterm.defaultStorage = new lib.Storage.Local();
 
@@ -50,7 +50,7 @@ window.angular && (function (angular) {
                 term.io.println('OpenBMC ver.00');
                 term.io.println('This is not an actual live connection.');
                 term.io.print('root@OpenBmc:');
-                
+
                 //Allows keyboard input
                 term.installKeyboard();
 

@@ -13,9 +13,9 @@ window.angular && (function (angular) {
     angular
         .module('app.serverHealth')
         .controller('diagnosticsController', [
-            '$scope', 
-            '$window', 
-            'APIUtils', 
+            '$scope',
+            '$window',
+            'APIUtils',
             'dataService',
             function($scope, $window, APIUtils, dataService){
                 $scope.dataService = dataService;

@@ -15,9 +15,9 @@ window.angular && (function (angular) {
             paginationTemplateProvider.setString(require('../../common/directives/dirPagination.tpl.html'));
         })
         .controller('logController', [
-            '$scope', 
-            '$window', 
-            'APIUtils', 
+            '$scope',
+            '$window',
+            'APIUtils',
             'dataService',
             'Constants',
             '$routeParams',
@@ -117,7 +117,7 @@ window.angular && (function (angular) {
                 }
 
                 $scope.filterBySearchTerms = function(log){
-                    if(!$scope.searchItems.length) return true; 
+                    if(!$scope.searchItems.length) return true;
 
                     for(var i = 0, length = $scope.searchItems.length; i < length; i++){
                         if(log.search_text.indexOf($scope.searchItems[i].toLowerCase()) == -1) return false;
@@ -130,7 +130,7 @@ window.angular && (function (angular) {
                     terms.forEach(function(searchTerm){
                         if($scope.searchItems.indexOf(searchTerm) == -1){
                             $scope.searchItems.push(searchTerm);
-                        }  
+                        }
                     });
                 }
 
