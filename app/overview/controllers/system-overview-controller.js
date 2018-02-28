@@ -13,9 +13,9 @@ window.angular && (function (angular) {
     angular
         .module('app.overview')
         .controller('systemOverviewController', [
-            '$scope', 
-            '$window', 
-            'APIUtils', 
+            '$scope',
+            '$window',
+            'APIUtils',
             'dataService',
             '$q',
             function($scope, $window, APIUtils, dataService, $q){
@@ -43,8 +43,8 @@ window.angular && (function (angular) {
                       .then(function(data){
                         $scope.displayLogs(data.logs.data);
                         $scope.displayServerInfo(
-                            data.firmware.data, 
-                            data.firmware.bmcActiveVersion, 
+                            data.firmware.data,
+                            data.firmware.bmcActiveVersion,
                             data.firmware.hostActiveVersion
                         );
                         $scope.displayLEDState(data.led);

@@ -26,7 +26,7 @@ gulp.task('minifyvendorjs:minify', function () {
         .src(options.bowerFolderPath + '/**/*.js')
         .pipe(uglify({
             preserveComments: 'false'
-        })) 
+        }))
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest(function(file) {
             return file.base;
