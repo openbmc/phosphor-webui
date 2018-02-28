@@ -13,9 +13,9 @@ window.angular && (function (angular) {
     angular
         .module('app.serverHealth')
         .controller('inventoryOverviewController', [
-            '$scope', 
-            '$window', 
-            'APIUtils', 
+            '$scope',
+            '$window',
+            'APIUtils',
             'dataService',
             function($scope, $window, APIUtils, dataService){
                 $scope.dataService = dataService;
@@ -62,7 +62,7 @@ window.angular && (function (angular) {
 
                 $scope.filterBySearchTerms = function(hardware){
 
-                    if(!$scope.searchTerms.length) return true; 
+                    if(!$scope.searchTerms.length) return true;
 
                     for(var i = 0, length = $scope.searchTerms.length; i < length; i++){
                         if(hardware.search_text.indexOf($scope.searchTerms[i].toLowerCase()) == -1) return false;

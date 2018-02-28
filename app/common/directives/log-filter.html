@@ -38,17 +38,17 @@
             </button>
             <ul class="dropdown__list inline" ng-show="statusFilter">
                 <li>
-                    <button 
+                    <button
                         ng-click="selectedStatus.all = true; statusFilter = false;"
                         ng-class="{'active' : selectedStatus.all}">All events</button>
                 </li>
                 <li>
-                    <button 
+                    <button
                         ng-click="selectedStatus.all = false; selectedStatus.resolved = true; statusFilter = false;"
                         ng-class="{'active' : selectedStatus.resolved}">Resolved events</button>
                 </li>
                 <li>
-                    <button 
+                    <button
                         ng-click="selectedStatus.all = false; selectedStatus.resolved = false; statusFilter = false;"
                         ng-class="{'active' : !selectedStatus.resolved}">Unresolved events</button>
                 </li>
