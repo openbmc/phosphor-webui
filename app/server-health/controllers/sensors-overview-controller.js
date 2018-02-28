@@ -14,8 +14,8 @@ window.angular && (function (angular) {
         .controller('sensorsOverviewController', [
             '$scope',
             '$log',
-            '$window', 
-            'APIUtils', 
+            '$window',
+            'APIUtils',
             'dataService',
             'Constants',
             function($scope, $log, $window, APIUtils, dataService, Constants){
@@ -93,7 +93,7 @@ window.angular && (function (angular) {
                        }
                    }
 
-                    if($scope.selectedSeverity.warning && 
+                    if($scope.selectedSeverity.warning &&
                        $scope.selectedSeverity.critical){
                         $scope.selectedSeverity.all = true;
                         $scope.selectedSeverity.warning = false;
@@ -113,7 +113,7 @@ window.angular && (function (angular) {
                 }
                 $scope.filterBySearchTerms = function(sensor){
 
-                    if(!$scope.searchTerms.length) return true; 
+                    if(!$scope.searchTerms.length) return true;
 
                     for(var i = 0, length = $scope.searchTerms.length; i < length; i++){
                         if(sensor.search_text.indexOf($scope.searchTerms[i].toLowerCase()) == -1) return false;
