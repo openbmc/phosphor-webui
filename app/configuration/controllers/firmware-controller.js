@@ -38,6 +38,7 @@ window.angular && (function (angular) {
                     $scope.delete_image_id = "";
                     $scope.activate_image_id = "";
                     $scope.priority_image_id = "";
+                    $scope.priority_image_version = "";
                     $scope.priority_from = -1;
                     $scope.priority_to = -1;
                     $scope.confirm_priority = false;
@@ -136,8 +137,9 @@ window.angular && (function (angular) {
                         });
                     }
 
-                    $scope.changePriority = function(imageId, from, to){
+                    $scope.changePriority = function(imageId, imageVersion, from, to){
                         $scope.priority_image_id = imageId;
+                        $scope.priority_image_version = imageVersion;
                         $scope.priority_from = from;
                         $scope.priority_to = to;
 
