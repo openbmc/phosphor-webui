@@ -36,6 +36,7 @@ window.angular && (function (angular) {
                     $scope.reboot_confirm = false;
                     $scope.preserve_settings_confirm = false;
                     $scope.delete_image_id = "";
+                    $scope.delete_image_version = "";
                     $scope.activate_image_id = "";
                     $scope.priority_image_id = "";
                     $scope.priority_image_version = "";
@@ -167,8 +168,9 @@ window.angular && (function (angular) {
                         });
                         $scope.confirm_priority = false;
                     }
-                    $scope.deleteImage = function(imageId){
+                    $scope.deleteImage = function(imageId, imageVersion){
                         $scope.delete_image_id = imageId;
+                        $scope.delete_image_version = imageVersion;
                         $scope.confirm_delete = true;
                     }
                     $scope.confirmDeleteImage = function(){

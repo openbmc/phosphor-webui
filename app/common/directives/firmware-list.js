@@ -19,8 +19,8 @@ window.angular && (function (angular) {
                         $scope.$parent.activateImage(imageId);
                     }
 
-                    $scope.delete = function(imageId){
-                        $scope.$parent.deleteImage(imageId);
+                    $scope.delete = function(imageId, imageVersion){
+                        $scope.$parent.deleteImage(imageId, imageVersion);
                     }
 
                     $scope.changePriority = function(imageId, imageVersion, from, to){
