@@ -23,8 +23,8 @@ window.angular && (function (angular) {
                         $scope.$parent.deleteImage(imageId);
                     }
 
-                    $scope.changePriority = function(imageId, from, to){
-                        $scope.$parent.changePriority(imageId, from, to);
+                    $scope.changePriority = function(imageId, imageVersion, from, to){
+                        $scope.$parent.changePriority(imageId, imageVersion, from, to);
                     }
                 }]
             };
