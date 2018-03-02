@@ -15,7 +15,7 @@
 				<div class="table__cell firmware__version">
 					Version
 				</div>
-				<div class="table__cell">
+				<div class="table__cell firmware__action">
 					Action
 				</div>
 			</div>
@@ -55,7 +55,7 @@
 					<h5 class="bold">Extended version information</h5>
 					<p class="no-margin" ng-repeat="version in firmware.extended.versions">{{version.title}}: {{version.version}}</p>
 				</div>
-				<div class="table__cell">
+				<div class="table__cell firmware__action">
 				    <span class="table__cell-label">Action:</span>
 				    <button class="firmware__action-link" ng-show="firmware.activationStatus == 'Ready'" ng-click="activate(firmware.imageId)">Activate</button>
 				    <button class="firmware__action-link" ng-show="firmware.activationStatus != 'Functional'" ng-click="delete(firmware.imageId, firmware.Version)">Delete</button>
