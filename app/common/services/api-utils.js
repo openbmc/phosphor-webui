@@ -594,6 +594,26 @@ window.angular && (function (angular) {
                   console.log(error);
                 });
               },
+              getActivation: function(imageId){
+                var deferred = $q.defer();
+                $http({
+                  method: 'GET',
+                  url: DataService.getHost() + "/xyz/openbmc_project/software/" + imageId + "/attr/Activation",
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  withCredentials: true
+                }).then(function(response){
+                  var json = JSON.stringify(response.data);
+                  var content = JSON.parse(json);
+                  deferred.resolve(content.data);
+                }, function(error){
+                  console.log(error);
+                  deferred.reject(error);
+                });
+                return deferred.promise;
+              },
               getFirmwares: function(){
                 var deferred = $q.defer();
                 $http({
