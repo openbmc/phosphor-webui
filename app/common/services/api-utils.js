@@ -642,6 +642,19 @@ window.angular && (function (angular) {
                   console.log(error);
                 });
               },
+              getActivation: function(imageId){
+                return $http({
+                  method: 'GET',
+                  url: DataService.getHost() + "/xyz/openbmc_project/software/" + imageId + "/attr/Activation",
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  withCredentials: true
+                }).then(function(response){
+                  return response.data;
+                });
+              },
               getFirmwares: function(){
                 var deferred = $q.defer();
                 $http({

@@ -110,6 +110,12 @@ window.angular && (function (angular) {
                   ACTIVATE_FIRMWARE: 'xyz.openbmc_project.Software.Activation.RequestedActivations.Active',
                   FUNCTIONAL_OBJPATH: '/xyz/openbmc_project/software/functional'
                 },
+               POLL_INTERVALS: {
+                  ACTIVATION: 5000
+                },
+               TIMEOUT: {
+                  ACTIVATION: 1000 * 60 * 10, // 10 mins
+                },
                 MESSAGES: {
                   SENSOR: {
                     NO_SENSOR_DATA: 'There are no sensors found.',
