@@ -20,7 +20,9 @@ window.angular && (function (angular) {
                 '$location',
                 '$anchorScroll',
                 'Constants',
-                function ($scope, $window, APIUtils, dataService, $location, $anchorScroll, Constants) {
+                '$interval',
+                '$q',
+                function ($scope, $window, APIUtils, dataService, $location, $anchorScroll, Constants, $interval, $q) {
                     $scope.dataService = dataService;
 
                     //Scroll to target anchor
@@ -47,6 +49,8 @@ window.angular && (function (angular) {
                     $scope.file_empty = true;
                     $scope.uploading = false;
 
+                    var pollActivationTimer = undefined;
+
                     $scope.error = {
                         modal_title: "",
                         title: "",
@@ -66,22 +70,58 @@ window.angular && (function (angular) {
                         $scope.display_error = true;
                     }
 
-                    $scope.activateConfirmed = function(){
-                        $scope.uploading = true;
-                        APIUtils.activateImage($scope.activate_image_id).then(function(response){
-                            $scope.uploading = false;
-                            if(response.status == 'error'){
-                                $scope.displayError({
-                                    modal_title: response.data.description,
-                                    title: response.data.description,
-                                    desc: response.data.exception,
-                                    type: 'Error'
-                                });
-                            }else{
-                                $scope.loadFirmwares();
-                            }
+                    function waitForActive(imageId){
+                      var deferred = $q.defer();
+                      var startTime = new Date();
+                      pollActivationTimer = $interval(function(){
+                        APIUtils.getActivation(imageId).then(function(state){
+                          //@TODO: display an error message if image "Failed"
+                          if(((/\.Active$/).test(state.data)) || ((/\.Failed$/).test(state.data))){
+                            $interval.cancel(pollActivationTimer);
+                            pollActivationTimer = undefined;
+                            deferred.resolve(state);
+                          }
+                        }, function(error){
+                          $interval.cancel(pollActivationTimer);
+                          pollActivationTimer = undefined;
+                          console.log(error);
+                          deferred.reject(error);
                         });
-                        $scope.activate_confirm = false;
+                        var now = new Date();
+                        if((now.getTime() - startTime.getTime()) >= Constants.TIMEOUT.ACTIVATION){
+                          $interval.cancel(pollActivationTimer);
+                          pollActivationTimer = undefined;
+                          console.log("Time out activating image, " + imageId);
+                          deferred.reject("Time out. Image did not activate in allotted time.");
+                        }
+                      }, Constants.POLL_INTERVALS.ACTIVATION);
+                      return deferred.promise;
+                    }
+
+                    $scope.activateConfirmed = function(){
+                        APIUtils.activateImage($scope.activate_image_id).then(function(state){
+                          $scope.loadFirmwares();
+                          return state;
+                        }, function(error){
+                          $scope.displayError({
+                            modal_title: 'Error during activation call',
+                            title: 'Error during activation call',
+                            desc: JSON.stringify(error.data),
+                            type: 'Error'
+                          });
+                        }).then(function(activationState){
+                          waitForActive($scope.activate_image_id).then(function(state){
+                            $scope.loadFirmwares();
+                        }, function(error){
+                          $scope.displayError({
+                            modal_title: 'Error during image activation',
+                            title: 'Error during image activation',
+                            desc: JSON.stringify(error.data),
+                            type: 'Error'
+                          });
+                        });
+                      });
+                      $scope.activate_confirm = false;
                     }
 
                     $scope.upload = function(){
@@ -188,7 +228,6 @@ window.angular && (function (angular) {
                         $scope.file_empty = false;
                     }
 
-                    $scope.uploading = false;
                     $scope.filters = {
                         bmc: {
                             imageType: 'BMC'
