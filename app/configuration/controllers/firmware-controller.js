@@ -20,7 +20,9 @@ window.angular && (function (angular) {
                 '$location',
                 '$anchorScroll',
                 'Constants',
-                function ($scope, $window, APIUtils, dataService, $location, $anchorScroll, Constants) {
+                '$interval',
+                '$q',
+                function ($scope, $window, APIUtils, dataService, $location, $anchorScroll, Constants, $interval, $q) {
                     $scope.dataService = dataService;
 
                     //Scroll to target anchor
@@ -46,6 +48,8 @@ window.angular && (function (angular) {
                     $scope.file_empty = true;
                     $scope.uploading = false;
 
+                    var pollActivationTimer = undefined;
+
                     $scope.error = {
                         modal_title: "",
                         title: "",
@@ -63,20 +67,38 @@ window.angular && (function (angular) {
                         $scope.display_error = true;
                     }
 
+                    //@TODO: Add a timeout for the rare case the image doesn't activate or fail
+                    function waitForActive(imageId){
+                      var deferred = $q.defer();
+                      pollActivationTimer = $interval(function(){
+                        APIUtils.getActivation(imageId).then(function(state){
+                          //@TODO: display an error message if image "Failed"
+                          if(((/\.Active$/).test(state)) || ((/\.Failed$/).test(state))){
+                            $interval.cancel(pollActivationTimer);
+                            pollActivationTimer = undefined;
+                            deferred.resolve(state);
+                          }
+                        }).catch(function(error){
+                          $interval.cancel(pollActivationTimer);
+                          pollActivationTimer = undefined;
+                          deferred.reject(error);
+                        });
+                      }, Constants.POLL_INTERVALS.ACTIVATION);
+                      return deferred.promise;
+                    }
+
                     $scope.preserveSettingsConfirmed = function(){
                         $scope.uploading = true;
-                        APIUtils.activateImage($scope.activate_image_id).then(function(response){
-                            $scope.uploading = false;
-                            if(response.status == 'error'){
-                                $scope.displayError({
-                                    modal_title: response.data.description,
-                                    title: response.data.description,
-                                    desc: response.data.exception,
-                                    type: 'Error'
-                                });
-                            }else{
-                                $scope.loadFirmwares();
-                            }
+                        APIUtils.activateImage($scope.activate_image_id).then(function(state){
+                          $scope.loadFirmwares();
+                          return state;
+                        }).then(function(activationState){
+                            waitForActive($scope.activate_image_id).then(function(state){
+                              $scope.uploading = false;
+                              $scope.loadFirmwares();
+                            });
+                        }).catch(function(error){
+                          $scope.uploading = false;
                         });
                         $scope.preserve_settings_confirm = false;
                     }
@@ -213,6 +235,7 @@ window.angular && (function (angular) {
                     }
 
                     $scope.loadFirmwares();
+
                 }
             ]
         );
