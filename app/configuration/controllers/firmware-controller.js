@@ -143,12 +143,7 @@ window.angular && (function (angular) {
                         $scope.priority_image_version = imageVersion;
                         $scope.priority_from = from;
                         $scope.priority_to = to;
-
-                        if((from + to) == 1){
-                            $scope.confirm_priority = true;
-                        }else{
-                            $scope.confirmChangePriority();
-                        }
+                        $scope.confirm_priority = true;
                     }
 
                     $scope.confirmChangePriority = function(){
