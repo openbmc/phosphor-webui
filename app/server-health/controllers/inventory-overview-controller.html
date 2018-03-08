@@ -47,7 +47,7 @@
 					<div class="inventory__metadata-scroll show-scroll"> <!-- If content overflows; add 'show-scroll' class via JS to force visible scrollbar in webkit browsers-->
 						<div class="content-label">Subcomponents</div>
 						<div ng-repeat="sub_component in inventory.sub_components" class="inline inventory__metadata-block" ng-if="sub_component.Present">
-							<p class="courier-bold">{{sub_component.title}}<span class="icon icon__warning" ng-if="sub_component.Present"></span></p>
+							<p class="courier-bold">{{sub_component.title}}<span class="icon icon__warning" ng-if="!sub_component.Functional"></span></p>
 						</div>
 					</div>
 				</div>
