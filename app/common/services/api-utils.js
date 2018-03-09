@@ -998,6 +998,12 @@ window.angular && (function (angular) {
                             data.title = title;
                             hardwareData[componentIndex].sub_components.push(data);
                             hardwareData[componentIndex].search_text += " " + title.toLowerCase();
+
+                            // Sort the subcomponents alphanumeric so they are displayed on the
+                            // inventory page in order (e.g. core 0, core 1, core 2, ... core 12, core 13)
+                            hardwareData[componentIndex].sub_components.sort(function (a, b) {
+                                return a.title.localeCompare(b.title, 'en', { numeric: true });
+                            });
                           }
                       }
                     }
