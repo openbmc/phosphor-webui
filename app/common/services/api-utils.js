@@ -950,6 +950,22 @@ window.angular && (function (angular) {
                             data.title = title;
                             hardwareData[componentIndex].sub_components.push(data);
                             hardwareData[componentIndex].search_text += " " + title.toLowerCase();
+
+                            // Sort the subcomponents aplha-numeric so they are displayed on the
+                            // inventory page in order (e.g. core 0, core 1, core 2, ... core 12, core 13)
+                            hardwareData[componentIndex].sub_components.sort(function (a, b) {
+                              var regexAlphabet = /[^a-zA-Z]/g;
+                              var regexNumeric = /[^0-9]/g;
+                              var aAlphabet = a.title.replace(regexAlphabet, "");
+                              var bAlphabet = b.title.replace(regexAlphabet, "");
+                              if(aAlphabet === bAlphabet) {
+                                var aNumeric = parseInt(a.title.replace(regexNumeric, ""));
+                                var bNumeric = parseInt(b.title.replace(regexNumeric, ""));
+                                return aNumeric === bNumeric ? 0 : aNumeric > bNumeric ? 1 : -1;
+                              } else {
+                                return aAlphabet > bAlphabet ? 1 : -1;
+                              }
+                            });
                           }
                       }
                     }
