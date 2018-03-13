@@ -85,6 +85,15 @@ window.angular && (function (angular) {
                    'cpu', 'dimm'
                   ]
                 },
+                SENSOR_TYPE_MAP: {
+                  'fan': 'xyz.openbmc_project.Sensor.Value.Unit.RPMS',
+                  'temperature': 'xyz.openbmc_project.Sensor.Value.Unit.DegreesC',
+                  'voltage': 'xyz.openbmc_project.Sensor.Value.Unit.Volts',
+                  'distance': 'xyz.openbmc_project.Sensor.Value.Unit.Meters',
+                  'power': 'xyz.openbmc_project.Sensor.Value.Unit.Watts',
+                  'current': 'xyz.openbmc_project.Sensor.Value.Unit.Amperes',
+                  'energy': 'xyz.openbmc_project.Sensor.Value.Unit.Joules',
+                },
                 SENSOR_UNIT_MAP: {
                   'xyz.openbmc_project.Sensor.Value.Unit.RPMS': 'rpms',
                   'xyz.openbmc_project.Sensor.Value.Unit.DegreesC': 'C',

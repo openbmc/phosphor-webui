@@ -125,7 +125,6 @@ window.angular && (function (angular) {
 
                 if(!dataService.sensorData.sensors){
                     APIUtils.getAllSensorStatus(function(data, originalData){
-                        dataService.sensorData = data;
                         setSensorData();
                     });
                 }else{

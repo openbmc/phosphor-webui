@@ -11,7 +11,7 @@ window.angular && (function (angular) {
     'use strict';
     angular
         .module('app.common.services')
-        .factory('APIUtils', ['$http', 'Constants', '$q', 'dataService',function($http, Constants, $q, DataService){
+        .factory('APIUtils', ['$http', 'Constants', '$q', 'dataService', 'websocketService' ,function($http, Constants, $q, DataService, websocketService){
           var SERVICE = {
               LOGIN_CREDENTIALS: Constants.LOGIN_CREDENTIALS,
               API_CREDENTIALS: Constants.API_CREDENTIALS,
@@ -464,134 +464,161 @@ window.angular && (function (angular) {
                 return deferred.promise;
               },
               getAllSensorStatus: function(callback){
-                $http({
-                  method: 'GET',
-                  url: DataService.getHost() + "/xyz/openbmc_project/sensors/enumerate",
-                  headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': 'application/json'
-                  },
-                  withCredentials: true
-                }).then(function(response){
-                      var json = JSON.stringify(response.data);
-                      var content = JSON.parse(json);
-                      var dataClone = JSON.parse(JSON.stringify(content.data));
-                      var sensorData = [];
-                      var severity = {};
-                      var title = "";
-                      var tempKeyParts = [];
-                      var order = 0;
-                      var customOrder = 0;
+                return websocketService.start('/sensor_monitor', function(evt) {
+                  var content = { data: JSON.parse(evt.data) };
+                  var dataClone = JSON.parse(JSON.stringify(content.data));
+                  var sensorData = DataService.sensorData;
+                  var severity = {};
+                  var title = "";
+                  var tempKeyParts = [];
+                  var order = 0;
+                  var customOrder = 0;
+                  var unit = '';
+                  var shadow = {};
 
-                      function getScaledValue(value, scale){
-                        scale = scale + "";
-                        scale = parseInt(scale, 10);
-                        var power = Math.abs(parseInt(scale,10));
+                  function getScaledValue(value, scale){
+                    scale = scale + "";
+                    scale = parseInt(scale, 10);
+                    var power = Math.abs(parseInt(scale,10));
 
-                        if(scale > 0){
-                          value = value * Math.pow(10, power);
-                        }else if(scale < 0){
-                          value = value / Math.pow(10, power);
-                        }
-                        return value;
+                    if(scale > 0){
+                      value = value * Math.pow(10, power);
+                    }else if(scale < 0){
+                      value = value / Math.pow(10, power);
+                    }
+                    return value;
+                  }
+
+                  function getSensorStatus(reading, sensor) {
+                    var severityFlags = {
+                        critical: false, warning: false, normal: false
+                    };
+                    var severityText = '', order = 0;
+
+                    if (sensor.hasOwnProperty('CriticalLow') &&
+                            reading < sensor.CriticalLow) {
+                      severityFlags.critical = true;
+                      severityText = 'critical';
+                      order = 2;
+                    } else if (sensor.hasOwnProperty('CriticalHigh') &&
+                            reading > sensor.CriticalHigh) {
+                      severityFlags.critical = true;
+                      severityText = 'critical';
+                      order = 2;
+                    } else if (sensor.hasOwnProperty('CriticalLow') &&
+                            sensor.hasOwnProperty('WarningLow') &&
+                            reading >= sensor.CriticalLow &&
+                            reading <= sensor.WarningLow) {
+                      severityFlags.warning = true;
+                      severityText = 'warning';
+                      order = 1;
+                    } else if (sensor.hasOwnProperty('WarningHigh') &&
+                            sensor.hasOwnProperty('CriticalHigh') &&
+                            reading >= sensor.WarningHigh &&
+                            reading <= sensor.CriticalHigh) {
+                      severityFlags.warning = true;
+                      severityText = 'warning';
+                      order = 1;
+                    } else {
+                      severityFlags.normal = true;
+                      severityText = 'normal';
+                    }
+                    return {
+                        flags: severityFlags,
+                        severityText: severityText,
+                        order: order
+                    };
+                  }
+
+                  for (var key in content.data) {
+                    if (!(content.data.hasOwnProperty(key) &&
+                         content.data[key].hasOwnProperty('MaxValue'))){
+                      // this is just a value update for a sensor we should already have
+                      if (!sensorData.hasOwnProperty(key)) {
+                        console.log('skipping unknown sensor '+key);
+                        continue;
+                      }
+                      shadow = sensorData[key];
+                    } else {
+                      // this is a new sensor; parse all the things
+                      if (!content.data[key].hasOwnProperty('Scale')) {
+                        content.data[key].Scale = 0;
+                      }
+                      if (content.data[key].hasOwnProperty('Unit')) {
+                        unit = content.data[key].Unit;
+                      } else {
+                        // parse sensor type from path and lookup units
+                        var sensortype = key.split('/')[4];
+                        unit = Constants.SENSOR_TYPE_MAP[sensortype];
+                      }
+                      if(!content.data[key].hasOwnProperty('CriticalLow')){
+                        content.data[key].CriticalLow = "--";
+                        content.data[key].CriticalHigh = "--";
+                      } else {
+                        content.data[key].CriticalLow =
+                            getScaledValue(content.data[key].CriticalLow,
+                                           content.data[key].Scale);
+                        content.data[key].CriticalHigh =
+                            getScaledValue(content.data[key].CriticalHigh,
+                                           content.data[key].Scale);
                       }
 
-                      function getSensorStatus(reading){
-                        var severityFlags = {critical: false, warning: false, normal: false}, severityText = '', order = 0;
-
-                        if(reading.hasOwnProperty('CriticalLow') &&
-                          reading.Value < reading.CriticalLow
-                          ){
-                          severityFlags.critical = true;
-                          severityText = 'critical';
-                          order = 2;
-                        }else if(reading.hasOwnProperty('CriticalHigh') &&
-                          reading.Value > reading.CriticalHigh
-                          ){
-                          severityFlags.critical = true;
-                          severityText = 'critical';
-                          order = 2;
-                        }else if(reading.hasOwnProperty('CriticalLow') &&
-                          reading.hasOwnProperty('WarningLow') &&
-                          reading.Value >= reading.CriticalLow && reading.Value <= reading.WarningLow){
-                          severityFlags.warning = true;
-                          severityText = 'warning';
-                          order = 1;
-                        }else if(reading.hasOwnProperty('WarningHigh') &&
-                          reading.hasOwnProperty('CriticalHigh') &&
-                          reading.Value >= reading.WarningHigh && reading.Value <= reading.CriticalHigh){
-                          severityFlags.warning = true;
-                          severityText = 'warning';
-                          order = 1;
-                        }else{
-                          severityFlags.normal = true;
-                          severityText = 'normal';
-                        }
-                        return { flags: severityFlags, severityText: severityText, order: order};
+                      if(!content.data[key].hasOwnProperty('WarningLow')){
+                        content.data[key].WarningLow = "--";
+                        content.data[key].WarningHigh = "--";
+                      } else {
+                        content.data[key].WarningLow =
+                            getScaledValue(content.data[key].WarningLow,
+                                           content.data[key].Scale);
+                        content.data[key].WarningHigh =
+                            getScaledValue(content.data[key].WarningHigh,
+                                           content.data[key].Scale);
                       }
+                      tempKeyParts = key.split("/");
+                      title = tempKeyParts.pop();
+                      title = tempKeyParts.pop() + '_' + title;
+                      title = title.split("_").map(function(item){
+                         return item.toLowerCase().charAt(0).toUpperCase() + item.slice(1);
+                      }).reduce(function(prev, el){
+                        return prev + " " + el;
+                      });
+                      shadow = content.data[key];
+                    }
 
-                      for(var key in content.data){
-                        if(content.data.hasOwnProperty(key) && content.data[key].hasOwnProperty('Unit')){
+                    severity = getSensorStatus(content.data[key].Value, shadow);
 
-                          severity = getSensorStatus(content.data[key]);
+                    content.data[key].ScaledValue = getScaledValue(content.data[key].Value, content.data[key].Scale);
+                    if (!Number.isInteger(content.data[key].Value)) {
+                        content.data[key].Value = content.data[key].Value.toFixed(2);
+                    }
 
-                          if(!content.data[key].hasOwnProperty('CriticalLow')){
-                            content.data[key].CriticalLow = "--";
-                            content.data[key].CriticalHigh = "--";
-                          }
-
-                          if(!content.data[key].hasOwnProperty('WarningLow')){
-                            content.data[key].WarningLow = "--";
-                            content.data[key].WarningHigh = "--";
-                          }
-
-                          tempKeyParts = key.split("/");
-                          title = tempKeyParts.pop();
-                          title = tempKeyParts.pop() + '_' + title;
-                          title = title.split("_").map(function(item){
-                             return item.toLowerCase().charAt(0).toUpperCase() + item.slice(1);
-                          }).reduce(function(prev, el){
-                            return prev + " " + el;
-                          });
-
-                          content.data[key].Value = getScaledValue(content.data[key].Value, content.data[key].Scale);
-                          content.data[key].CriticalLow = getScaledValue(content.data[key].CriticalLow, content.data[key].Scale);
-                          content.data[key].CriticalHigh = getScaledValue(content.data[key].CriticalHigh, content.data[key].Scale);
-                          content.data[key].WarningLow = getScaledValue(content.data[key].WarningLow, content.data[key].Scale);
-                          content.data[key].WarningHigh = getScaledValue(content.data[key].WarningHigh, content.data[key].Scale);
-                          if(Constants.SENSOR_SORT_ORDER.indexOf(content.data[key].Unit) > -1){
-                            customOrder = Constants.SENSOR_SORT_ORDER.indexOf(content.data[key].Unit);
-                          }else{
-                            customOrder = Constants.SENSOR_SORT_ORDER_DEFAULT;
-                          }
-
-                          sensorData.push(Object.assign({
-                            path: key,
-                            selected: false,
-                            confirm: false,
-                            copied: false,
-                            title: title,
-                            unit: Constants.SENSOR_UNIT_MAP[content.data[key].Unit],
-                            severity_flags: severity.flags,
-                            status: severity.severityText,
-                            order: severity.order,
-                            custom_order: customOrder,
-                            search_text: (title + " " + content.data[key].Value + " " +
-                               Constants.SENSOR_UNIT_MAP[content.data[key].Unit] + " " +
-                               severity.severityText + " " +
-                               content.data[key].CriticalLow + " " +
-                               content.data[key].CriticalHigh + " " +
-                               content.data[key].WarningLow + " " +
-                               content.data[key].WarningHigh + " "
-                               ).toLowerCase(),
-                            original_data: {key: key, value: content.data[key]}
-                          }, content.data[key]));
-                        }
-                      }
-
-                      callback(sensorData, dataClone);
-                }, function(error){
-                  console.log(error);
+                    if (!sensorData.hasOwnProperty(key)) {
+                      sensorData[key] = Object.assign({
+                        path: key,
+                        selected: false,
+                        confirm: false,
+                        copied: false,
+                        title: title,
+                        unit: Constants.SENSOR_UNIT_MAP[unit],
+                        severity_flags: severity.flags,
+                        status: severity.severityText,
+                        order: severity.order,
+                        custom_order: customOrder,
+                        search_text: (title + " " +
+                           Constants.SENSOR_UNIT_MAP[unit]
+                           ).toLowerCase(),
+                        original_data: {key: key, value: content.data[key]}
+                      }, content.data[key]);
+                    } else {
+                      sensorData[key].severity_flags = severity.flags;
+                      sensorData[key].status = severity.severityText;
+                      sensorData[key].order = severity.order;
+                      sensorData[key].Value = content.data[key].Value;
+                      sensorData[key].ScaledValue = content.data[key].ScaledValue;
+                    }
+                    //console.log(sensorData[key]);
+                  }
+                  callback(sensorData, dataClone);
                 });
               },
               getFirmwares: function(){
@@ -1013,6 +1040,26 @@ window.angular && (function (angular) {
               },
           };
           return SERVICE;
-        }]);
+        }])
+        .factory('websocketService', [
+          '$location',
+          function($location) {
+            return {
+              start: function(url, callback) {
+                var host = $location.host();
+                var port = $location.port();
+                var protocol = 'wss://';
+                if ($location.protocol() === 'http') {
+                  protocol = 'ws://';
+                  }
+                var websocket = new WebSocket(protocol + host + ':' + port + url);
+                websocket.onopen = function() {};
+                websocket.onclose = function() {console.trace()};
+                websocket.onmessage = function(evt) { callback(evt); };
+                return websocket;
+              }
+            }
+          }
+        ]);
 
         })(window.angular);

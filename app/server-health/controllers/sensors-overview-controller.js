@@ -15,10 +15,11 @@ window.angular && (function (angular) {
             '$scope',
             '$log',
             '$window',
+            '$timeout',
             'APIUtils',
             'dataService',
             'Constants',
-            function($scope, $log, $window, APIUtils, dataService, Constants){
+            function($scope, $log, $window, $timeout, APIUtils, dataService, Constants){
                 $scope.dataService = dataService;
 
                 $scope.dropdown_selected = false;
@@ -121,20 +122,31 @@ window.angular && (function (angular) {
                     return true;
                 }
 
+                $scope.sensorws = null;
+                $scope.$on('$destroy', function() {
+                    console.log('LEAVING SENSORS');
+                    if ($scope.sensorws != null) {
+                        console.log('Closing WebSocket');
+                        $scope.sensorws.close();
+                    }
+                });
                 $scope.loadSensorData = function(){
                     $scope.loading = true;
-                    APIUtils.getAllSensorStatus(function(data, originalData){
-                        $scope.data = data;
+                    $scope.data = [];
+                    $scope.sensorws = APIUtils.getAllSensorStatus(
+                      function(data, originalData){
+                        $scope.data.length = 0;
+                        for (var key in data) { $scope.data.push(data[key]); }
                         $scope.originalData = originalData;
-                        dataService.sensorData = data;
-                        $scope.export_data = JSON.stringify(originalData);
+                        $scope.export_data = JSON.stringify(dataService.sensorData);
                         $scope.loading = false;
-                    });
+                        $timeout(angular.noop);
+                      });
                 };
 
                 $scope.loadSensorData();
             }
         ]
-    );
+     );
 
 })(angular);

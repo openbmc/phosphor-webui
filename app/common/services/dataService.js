@@ -28,7 +28,8 @@ window.angular && (function (angular) {
             this.showNavigation = false;
             this.bodyStyle = {};
             this.path = '';
-            this.sensorData = [];
+            this.sensorData = {};
+            this.sensorws = null;
 
             this.hostname = "";
             this.mac_address = "";
