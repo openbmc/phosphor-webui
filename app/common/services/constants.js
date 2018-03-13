@@ -120,7 +120,15 @@ window.angular && (function (angular) {
                     CRITICAL_NO_SENSOR_DATA: 'There are no sensors in Critical state.',
                     WARNING_NO_SENSOR_DATA: 'There are no sensors in Warning state.'
                   }
-                }
+                },
+                POWER_CAP_TEXT: {
+                    enabled: ' W',
+                    disabled: 'Not Enabled'
+                },
+                POWER_CONSUMPTION_TEXT: {
+                    'xyz.openbmc_project.Sensor.Value.Unit.Watts': ' W',
+                    notavail: 'Not Available'
+                },
             };
         });
 

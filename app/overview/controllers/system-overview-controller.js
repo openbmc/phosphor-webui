@@ -27,6 +27,8 @@ window.angular && (function (angular) {
                 $scope.bmc_info = {};
                 $scope.bmc_firmware = "";
                 $scope.server_firmware = "";
+                $scope.power_consumption = "";
+                $scope.power_cap = "";
                 $scope.loading = false;
 
                 loadOverviewData();
@@ -37,7 +39,9 @@ window.angular && (function (angular) {
                       firmware: APIUtils.getFirmwares(),
                       led: APIUtils.getLEDState(),
                       ethernet: APIUtils.getBMCEthernetInfo(),
-                      bmc_info: APIUtils.getBMCInfo()
+                      bmc_info: APIUtils.getBMCInfo(),
+                      power_consumption: APIUtils.getPowerConsumption(),
+                      power_cap: APIUtils.getPowerCap(),
                     };
                     $q.all(promises)
                       .then(function(data){
@@ -50,6 +54,8 @@ window.angular && (function (angular) {
                         $scope.displayLEDState(data.led);
                         $scope.displayBMCEthernetInfo(data.ethernet);
                         $scope.displayBMCInfo(data.bmc_info);
+                        $scope.displayPowerConsumption(data.power_consumption);
+                        $scope.displayPowerCap(data.power_cap);
                       })
                       .finally(function(){
                         $scope.loading = false;
@@ -89,6 +95,16 @@ window.angular && (function (angular) {
                         APIUtils.LED_STATE_TEXT.off : APIUtils.LED_STATE_TEXT.on;
                     APIUtils.setLEDState(toggleState, function(status){
                     });
+                }
+
+                $scope.displayPowerConsumption = function(data){
+                    $scope.power_consumption = data.power_consumption;
+                }
+
+                $scope.displayPowerCap = function(data){
+                    $scope.power_cap = (false == data.PowerCapEnable) ?
+                        APIUtils.POWER_CAP_TEXT.disabled :
+                        data.PowerCap + APIUtils.POWER_CAP_TEXT.enabled;
                 }
             }
         ]
