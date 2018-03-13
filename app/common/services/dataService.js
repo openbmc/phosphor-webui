@@ -47,8 +47,8 @@ window.angular && (function (angular) {
                     return sessionStorage.getItem(Constants.API_CREDENTIALS.host_storage_key);
                 }else{
                     return Constants.API_CREDENTIALS.default_protocol + "://" +
-                           window.location.hostname + ':' +
-                           window.location.port;
+                           window.location.hostname +
+                           (window.location.port ? ":" + window.location.port : "");
                 }
             }
 
