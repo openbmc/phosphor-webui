@@ -12,6 +12,18 @@ window.angular && (function (angular) {
     angular
         .module('app.common.services')
         .factory('APIUtils', ['$http', 'Constants', '$q', 'dataService',function($http, Constants, $q, DataService){
+          var getScaledValue = function(value, scale){
+            scale = scale + "";
+            scale = parseInt(scale, 10);
+            var power = Math.abs(parseInt(scale,10));
+
+            if(scale > 0){
+              value = value * Math.pow(10, power);
+            }else if(scale < 0){
+              value = value / Math.pow(10, power);
+            }
+            return value;
+          };
           var SERVICE = {
               API_CREDENTIALS: Constants.API_CREDENTIALS,
               API_RESPONSE: Constants.API_RESPONSE,
@@ -522,19 +534,6 @@ window.angular && (function (angular) {
                       var tempKeyParts = [];
                       var order = 0;
                       var customOrder = 0;
-
-                      function getScaledValue(value, scale){
-                        scale = scale + "";
-                        scale = parseInt(scale, 10);
-                        var power = Math.abs(parseInt(scale,10));
-
-                        if(scale > 0){
-                          value = value * Math.pow(10, power);
-                        }else if(scale < 0){
-                          value = value / Math.pow(10, power);
-                        }
-                        return value;
-                      }
 
                       function getSensorStatus(reading){
                         var severityFlags = {critical: false, warning: false, normal: false}, severityText = '', order = 0;
@@ -1059,6 +1058,50 @@ window.angular && (function (angular) {
                   $q.all(promises).then(finished);
 
                   return defer.promise;
+              },
+              getPowerConsumption: function(){
+                return $http({
+                  method: 'GET',
+                  url: DataService.getHost() + "/xyz/openbmc_project/sensors/power/total_power",
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: true
+                }).then(function(response){
+                    var json = JSON.stringify(response.data);
+                    var content = JSON.parse(json);
+
+                    return getScaledValue(content.data.Value,
+                                          content.data.Scale) + ' ' +
+                      Constants.POWER_CONSUMPTION_TEXT[content.data.Unit];
+                }, function(error){
+                  if ('Not Found' == error.statusText) {
+                    return Constants.POWER_CONSUMPTION_TEXT.notavailable;
+                  } else {
+                    console.log(error);
+                  }
+                });
+              },
+              getPowerCap: function(){
+                return $http({
+                  method: 'GET',
+                  url: DataService.getHost() + "/xyz/openbmc_project/control/host0/power_cap",
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: true
+                }).then(function(response){
+                    var json = JSON.stringify(response.data);
+                    var content = JSON.parse(json);
+
+                    return (false == content.data.PowerCapEnable) ?
+                        Constants.POWER_CAP_TEXT.disabled :
+                        content.data.PowerCap + ' ' + Constants.POWER_CAP_TEXT.unit;
+                }, function(error){
+                  console.log(error);
+                });
               },
           };
           return SERVICE;
