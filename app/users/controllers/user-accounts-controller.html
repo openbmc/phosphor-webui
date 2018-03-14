@@ -11,7 +11,7 @@
 				<legend aria-label="user manager" class="accessible-text">Change password form</legend>
 				<div class="row column">
 					<label for="user-manage__current-password">Current password</label>
-					<input id="user-manage__current-password" type="password" class="user-manage__current-password inline"/>
+					<input id="user-manage__current-password" type="password" ng-model="oldPassword" class="user-manage__current-password inline"/>
 				</div>
 				<div class="inline">
 					<label for="user-manage__new-password">New password</label>
@@ -35,7 +35,7 @@
 				</div>
 			</fieldset>
 			<div class="user-manage__submit-wrapper">
-			<button class="btn-primary inline">Save change</button>
+			<button class="btn-primary inline" ng-click="changePassword(oldPassword, password, passwordVerify)">Save change</button>
 			</div>
 		</form>
 	</section>
