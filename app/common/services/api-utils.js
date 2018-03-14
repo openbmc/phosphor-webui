@@ -211,6 +211,30 @@ window.angular && (function (angular) {
                   console.log(error);
                 });
               },
+              changePassword: function(user, newPassword){
+                var deferred = $q.defer();
+                $http({
+                  method: 'POST',
+                  url: DataService.getHost() + "/xyz/openbmc_project/user/" + user + "/action/SetPassword",
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  withCredentials: true,
+                  data: JSON.stringify({"data": [newPassword]}),
+                  responseType: 'arraybuffer'
+                }).then(function(response, status, headers){
+                  deferred.resolve({
+                    data: response,
+                    status: status,
+                    headers: headers
+                  });
+                }, function(error){
+                  console.log(error);
+                  deferred.reject(error);
+                });
+                return deferred.promise;
+              },
               chassisPowerOn: function(callback){
                 $http({
                   method: 'POST',
