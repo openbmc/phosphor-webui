@@ -60,6 +60,10 @@ window.angular && (function (angular) {
                 this.reloadServerId();
             }
 
+            this.getUser = function(){
+                return sessionStorage.getItem('LOGIN_ID');
+            }
+
             this.host = this.getHost();
             this.server_id = this.getServerId();
 
