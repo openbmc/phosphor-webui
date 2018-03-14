@@ -39,6 +39,7 @@ window.angular && (function (angular) {
                         return false;
                     }else{
                         $scope.dataService.setHost(host);
+                        $scope.dataService.setUser(username);
                         userModel.login(username, password, function(status, unreachable){
                             if(status){
                                 $scope.$emit('user-logged-in',{});
