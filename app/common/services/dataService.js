@@ -30,6 +30,7 @@ window.angular && (function (angular) {
             this.path = '';
             this.sensorData = [];
 
+            this.user = "";
             this.hostname = "";
             this.mac_address = "";
             this.remote_window_active = false;
@@ -58,6 +59,13 @@ window.angular && (function (angular) {
                 sessionStorage.setItem(Constants.API_CREDENTIALS.host_storage_key, hostURL);
                 this.host = hostURL;
                 this.reloadServerId();
+            }
+
+            this.setUser = function(user){
+                this.user = user;
+            }
+            this.getUser = function(){
+                return this.user;
             }
 
             this.host = this.getHost();
