@@ -13,7 +13,6 @@ window.angular && (function (angular) {
         .module('app.common.services')
         .factory('APIUtils', ['$http', 'Constants', '$q', 'dataService',function($http, Constants, $q, DataService){
           var SERVICE = {
-              LOGIN_CREDENTIALS: Constants.LOGIN_CREDENTIALS,
               API_CREDENTIALS: Constants.API_CREDENTIALS,
               API_RESPONSE: Constants.API_RESPONSE,
               CHASSIS_POWER_STATE: Constants.CHASSIS_POWER_STATE,
