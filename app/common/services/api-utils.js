@@ -189,6 +189,31 @@ window.angular && (function (angular) {
                   console.log(error);
                 });
               },
+              testPassword: function(username, password){
+                // Calls /login without the current session to verify the given password is correct
+                // ignore the interceptor logout
+                DataService.ignoreHttpError = true;
+                var deferred = $q.defer();
+                $http({
+                  method: 'POST',
+                  url: DataService.getHost() + "/login",
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  withCredentials: false,
+                  data: JSON.stringify({"data": [username, password]})
+                }).then(function(response){
+                  var json = JSON.stringify(response.data);
+                  var content = JSON.parse(json);
+                  DataService.ignoreHttpError = false;
+                  deferred.resolve(content.data);
+                }, function(error){
+                  DataService.ignoreHttpError = false;
+                  deferred.reject(error);
+                });
+                return deferred.promise;
+              },
               logout: function(callback){
                 $http({
                   method: 'POST',
