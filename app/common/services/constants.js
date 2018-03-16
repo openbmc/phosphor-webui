@@ -15,10 +15,6 @@ window.angular && (function (angular) {
         .module('app.common.services', [])
         .service('Constants', function () {
             return {
-                LOGIN_CREDENTIALS: {
-                    username: "test",
-                    password: "testpass",
-                },
                 API_CREDENTIALS: {
                     host_storage_key: 'API_HOST_KEY',
                     default_protocol: 'https'
