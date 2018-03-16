@@ -33,7 +33,7 @@ window.angular && (function (angular) {
             this.hostname = "";
             this.mac_address = "";
             this.remote_window_active = false;
-
+            this.ignoreHttpError = false;
             this.getServerId = function(){
                  return this.host.replace(/^https?\:\/\//ig,"");
             }
