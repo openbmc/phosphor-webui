@@ -32,13 +32,17 @@ window.angular && (function (angular) {
                         // TODO: Display error
                         return false;
                     }
-                    // TODO: Verify the oldPassword is correct
 
-                    APIUtils.changePassword($scope.dataService.getUser(), newPassword).then(function(response){
-                        // Clear the textboxes on a success
-                        $scope.passwordVerify = '';
-                        $scope.password = '';
-                        $scope.oldPassword = '';
+                    // Verify the oldPassword is correct
+                    APIUtils.testPassword($scope.dataService.getUser(), oldPassword).then(function(state){
+                        APIUtils.changePassword($scope.dataService.getUser(), newPassword).then(function(response){
+                            // Clear the textboxes on a success
+                            $scope.passwordVerify = '';
+                            $scope.password = '';
+                            $scope.oldPassword = '';
+                        }, function(error){
+                            // TODO: Display error
+                        });
                     }, function(error){
                         // TODO: Display error
                     });
