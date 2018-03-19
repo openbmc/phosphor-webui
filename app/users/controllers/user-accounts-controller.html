@@ -37,6 +37,8 @@
 			<div class="user-manage__submit-wrapper">
 			<button class="btn-primary inline" ng-click="changePassword(oldPassword, password, passwordVerify)">Save change</button>
 			</div>
+			<p class="change-password__error-msg"  role="alert" ng-if="state == 'error'">{{errorMsg}}</p>
+			<p class="change-password__success-msg" role="alert" ng-if="state == 'success'">Success! User Password has been changed!</p>
 		</form>
 	</section>
 </div>
