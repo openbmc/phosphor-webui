@@ -37,4 +37,24 @@ $userInputHeight: 40px;
     float: right;
     margin-left: .5em;
   }
+  .change-password__error
+  {
+    background: lighten($error-color, 20%);
+    padding: 1em;
+    text-align: center;
+    font-size: 1em;
+    border: 1px solid $error-color;
+    color: $black;
+    font-family: "Courier New", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    width: 325px;
+  }
+  .change-password__success
+  {
+    color: $primebtn__bg;
+    padding: 1em;
+    font-size: 1em;
+    font-family: "Courier New", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+  }
 }
