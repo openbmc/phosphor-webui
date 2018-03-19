@@ -19,32 +19,45 @@ window.angular && (function (angular) {
             'dataService',
             function($scope, $window, APIUtils, dataService){
                 $scope.dataService = dataService;
+                $scope.error = false;
+                $scope.success = false;
+                $scope.errorMsg = "";
+
                 $scope.changePassword = function(oldPassword, newPassword, confirmNewPassword){
+                    var user = $scope.dataService.getUser();
                     if(!oldPassword || !newPassword || !confirmNewPassword ){
-                        // TODO: Display error
+                        $scope.error = true;
+                        $scope.errorMsg = "Field is required!";
                         return false;
                     }
                     if (newPassword !== confirmNewPassword){
-                        // TODO: Display error
+                        $scope.error = true;
+                        $scope.errorMsg = "New passwords do not match!";
                         return false;
                     }
                     if (newPassword === oldPassword){
-                        // TODO: Display error
+                        $scope.error = true;
+                        $scope.errorMsg = "New password and old password match!";
                         return false;
                     }
 
                     // Verify the oldPassword is correct
-                    APIUtils.testPassword($scope.dataService.getUser(), oldPassword).then(function(state){
-                        APIUtils.changePassword($scope.dataService.getUser(), newPassword).then(function(response){
+                    APIUtils.testPassword(user, oldPassword).then(function(state){
+                        APIUtils.changePassword(user, newPassword).then(function(response){
                             // Clear the textboxes on a success
                             $scope.passwordVerify = '';
                             $scope.password = '';
                             $scope.oldPassword = '';
+                            // in case the previous try was an error
+                            $scope.error = false;
+                            $scope.success = true;
                         }, function(error){
-                            // TODO: Display error
+                            $scope.error = true;
+                            $scope.errorMsg = "Error changing password!";
                         });
                     }, function(error){
-                        // TODO: Display error
+                        $scope.error = true;
+                        $scope.errorMsg = "Old password is not correct!";
                     });
                 }
             }
