@@ -75,6 +75,7 @@ window.angular && (function (angular) {
                     $scope.selectedSeverity.all = !$scope.selectedSeverity.all;
 
                     if($scope.selectedSeverity.all){
+                        $scope.selectedSeverity.normal = false;
                         $scope.selectedSeverity.warning = false;
                         $scope.selectedSeverity.critical = false;
                     }
@@ -83,9 +84,10 @@ window.angular && (function (angular) {
                 $scope.toggleSeverity = function(severity){
                     $scope.selectedSeverity[severity] = !$scope.selectedSeverity[severity];
 
-                   if(['warning', 'critical'].indexOf(severity) > -1){
+                   if(['normal', 'warning', 'critical'].indexOf(severity) > -1){
                        if($scope.selectedSeverity[severity] == false &&
-                          (!$scope.selectedSeverity.warning &&
+                          (!$scope.selectedSeverity.normal &&
+                           !$scope.selectedSeverity.warning &&
                            !$scope.selectedSeverity.critical
                           )){
                            $scope.selectedSeverity.all = true;
@@ -93,9 +95,11 @@ window.angular && (function (angular) {
                        }
                    }
 
-                    if($scope.selectedSeverity.warning &&
+                    if($scope.selectedSeverity.normal &&
+                       $scope.selectedSeverity.warning &&
                        $scope.selectedSeverity.critical){
                         $scope.selectedSeverity.all = true;
+                        $scope.selectedSeverity.normal = false;
                         $scope.selectedSeverity.warning = false;
                         $scope.selectedSeverity.critical = false;
                     }else{

@@ -32,6 +32,9 @@
 			<button class="inline" ng-click="toggleSeverity('warning')"
 					ng-class="selectedSeverity.warning ? 'btn-primary' : 'btn-secondary'">Warning
 			</button>
+			<button class="inline" ng-click="toggleSeverity('normal')"
+					ng-class="selectedSeverity.normal ? 'btn-primary' : 'btn-secondary'">Normal
+			</button>
 		</div>
 
 	</section> <!-- end search -->
@@ -41,6 +44,7 @@
 		<span ng-if="selectedSeverity.all">{{messages.NO_SENSOR_DATA}}</span>
 		<span ng-if="selectedSeverity.critical">{{messages.CRITICAL_NO_SENSOR_DATA}}</span>
 		<span ng-if="selectedSeverity.warning">{{messages.WARNING_NO_SENSOR_DATA}}</span>
+		<span ng-if="selectedSeverity.normal">{{messages.NORMAL_NO_SENSOR_DATA}}</span>
 		<!-- end message -->
 	</section>
 
