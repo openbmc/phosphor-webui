@@ -130,7 +130,8 @@ window.angular && (function (angular) {
                     SENSOR: {
                         NO_SENSOR_DATA: 'There are no sensors found.',
                         CRITICAL_NO_SENSOR_DATA: 'There are no sensors in Critical state.',
-                        WARNING_NO_SENSOR_DATA: 'There are no sensors in Warning state.'
+                        WARNING_NO_SENSOR_DATA: 'There are no sensors in Warning state.',
+                        NORMAL_NO_SENSOR_DATA: 'There are no sensors in Normal state.'
                     },
                     ERROR_MODAL: {
                         TITLE: 'Unexpected error',
