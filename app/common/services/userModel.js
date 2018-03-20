@@ -22,8 +22,15 @@ window.angular && (function (angular) {
                                 || response.status === undefined)){
                             sessionStorage.setItem('LOGIN_ID', username);
                             callback(true);
+                        }else if(response && response.data && response.data.data
+                                 && response.data.data.description){
+                            callback(false, response.data.data.description);
+                        }else if(response && response.message){
+                            callback(false, response.message);
+                        }else if(error){
+                            callback(false, 'Server unreachable');
                         }else{
-                            callback(false, error);
+                            callback(false);
                         }
                     });
                 },
