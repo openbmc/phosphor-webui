@@ -30,7 +30,7 @@ window.angular && (function (angular) {
                 };
                 $scope.login = function(host, username, password){
                     $scope.error = false;
-                    $scope.server_unreachable = false;
+                    $scope.description = false;
 
                     if(!username || username == "" ||
                        !password || password == "" ||
@@ -39,15 +39,14 @@ window.angular && (function (angular) {
                         return false;
                     }else{
                         $scope.dataService.setHost(host);
-                        userModel.login(username, password, function(status, unreachable){
+                        userModel.login(username, password, function(status, description){
                             if(status){
                                 $scope.$emit('user-logged-in',{});
                                 $window.location.hash = '#/overview/server';
                             }else{
-                                if(unreachable){
-                                   $scope.server_unreachable = true;
-                                }else{
-                                    $scope.error = true;
+                                $scope.error = true;
+                                if(description){
+                                   $scope.description = description;
                                 }
                            };
                         });
