@@ -124,40 +124,35 @@
 		</div>
 	</div>
 </section>
-<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': preserve_settings_confirm}">
-	<div class="modal__preserve-settings" role="document">
-		<div class="screen-reader-offscreen modal-description">Preserve setting modal</div><!-- accessibility only; used for screen readers -->
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': activate_confirm}">
+	<div class="modal__activate" role="document">
+		<div class="screen-reader-offscreen modal-description">Activate modal</div><!-- accessibility only; used for screen readers -->
 		<div class="page-header ">
 			<h1 class="modal-title h4"><span class="icon icon__info"><svg xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 32 32"><path
 					d="M18 14h-6v2h1v6h-2v2h8v-2h-2z"/><circle cx="16" cy="10" r="2"/><path
 					d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z"/></svg></span>
-				Preserve settings
+				Confirm BMC firmware file activation
 			</h1>
 		</div>
 		<div class="modal__content">
-			<p>Booting to a different firmware image will reset the user settings for the BMC. Choose either the option to reset both the user and network settings or the option to preserve the network settings for the newly active firmware image.</p>
+			<p>When you activate the BMC firmware file, {{activate_image_version}}, the BMC must be rebooted before it will operate with the new firmware code.</p>
 			<form>
 				<fieldset>
 					<div class="row column">
-						<label class="control-radio bold" for="preserve-settings">Preserve network settings
-							<input type="radio" name="preserve-settings" id="preserve-settings" ng-checked="true" ng-model="dhcp" ng-value="true" ng-init="dhcp=true"/>
+						<label class="control-radio bold" for="activate-without-reboot">Activate firmware file without rebooting BMC
+							<input type="radio" name="activate-without-reboot" id="activate-without-reboot" ng-checked="true" ng-model="dhcp" ng-value="true" ng-init="dhcp=true"/>
 							<span class="control__indicator control__indicator-on"></span>
 						</label>
 					</div>
-					<div class="row column">
-						<label class="control-radio bold" for="reset-settings">Reset both user and network settings
-							<input type="radio" name="reset-settings" id="reset-settings" ng-model="dhcp" ng-value="false"/>
-							<span class="control__indicator control__indicator-on"></span>
-						</label>
-					</div>
+					<!-- TODO: openbmc/openbmc#3027 Add Activate firmware and reboot selection -->
 				</fieldset>
 			</form>
 		</div>
 		<div class="modal__button-wrapper">
-			<button class="inline btn-secondary" ng-click="preserve_settings_confirm=false;">Cancel</button>
-			<button class="inline btn-primary" ng-click="preserveSettingsConfirmed()">Continue</button>
+			<button class="inline btn-secondary" ng-click="activate_confirm=false;">Cancel</button>
+			<button class="inline btn-primary" ng-click="activateConfirmed()">Continue</button>
 		</div>
 	</div>
 </section>
-<div class="modal-overlay" tabindex="-1" ng-class="{'active': (display_error || reboot_confirm || preserve_settings_confirm)}"></div>
+<div class="modal-overlay" tabindex="-1" ng-class="{'active': (display_error || reboot_confirm || activate_confirm)}"></div>
