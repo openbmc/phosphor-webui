@@ -11,10 +11,10 @@ window.angular && (function (angular) {
                return data.length;
             }
         })
-        .filter('quiescedToStandBy', function () {
+        .filter('quiescedToError', function () {
             return function (state) {
                if(state.toLowerCase() == 'quiesced'){
-                  return 'Standby';
+                  return 'Error';
                }else{
                 return state;
                }
