@@ -63,7 +63,8 @@ window.angular && (function (angular) {
 
                     $scope.refresh = function(){
                         loadData();
-
+                        $scope.$emit('refresh-data');
+                        
                         //Add flash class to header timestamp on click of refresh
                         var myEl = angular.element( document.querySelector( '.header__refresh' ) );
                         myEl.addClass('flash');
