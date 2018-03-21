@@ -38,6 +38,7 @@ window.angular && (function (angular) {
                     $scope.delete_image_version = "";
                     $scope.activate_image_id = "";
                     $scope.activate_image_version = "";
+                    $scope.activate_image_type = "";
                     $scope.priority_image_id = "";
                     $scope.priority_image_version = "";
                     $scope.priority_from = -1;
@@ -53,9 +54,10 @@ window.angular && (function (angular) {
                         type: "warning"
                     };
 
-                    $scope.activateImage = function(imageId, imageVersion){
+                    $scope.activateImage = function(imageId, imageVersion, imageType){
                         $scope.activate_image_id = imageId;
                         $scope.activate_image_version = imageVersion;
+                        $scope.activate_image_type = imageType;
                         $scope.activate_confirm = true;
                     }
 
