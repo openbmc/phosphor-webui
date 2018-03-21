@@ -15,8 +15,8 @@ window.angular && (function (angular) {
                 },
                 'controller': ['$rootScope', '$scope','dataService', '$location', '$timeout', function($rootScope, $scope, dataService, $location, $timeout){
                     $scope.dataService = dataService;
-                    $scope.activate = function(imageId, imageVersion){
-                        $scope.$parent.activateImage(imageId, imageVersion);
+                    $scope.activate = function(imageId, imageVersion, imageType){
+                        $scope.$parent.activateImage(imageId, imageVersion, imageType);
                     }
 
                     $scope.delete = function(imageId, imageVersion){
