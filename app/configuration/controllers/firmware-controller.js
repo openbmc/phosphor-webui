@@ -33,7 +33,6 @@ window.angular && (function (angular) {
                     $scope.bmcActiveVersion = "";
                     $scope.hostActiveVersion = "";
                     $scope.display_error = false;
-                    $scope.reboot_confirm = false;
                     $scope.activate_confirm = false;
                     $scope.delete_image_id = "";
                     $scope.delete_image_version = "";
@@ -81,10 +80,6 @@ window.angular && (function (angular) {
                             }
                         });
                         $scope.activate_confirm = false;
-                    }
-
-                    $scope.confirmWarmReboot = function(){
-                        $scope.reboot_confirm = false;
                     }
 
                     $scope.upload = function(){
