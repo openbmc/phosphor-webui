@@ -110,12 +110,16 @@
 					viewBox="0 0 32 32"><path
 					d="M18 14h-6v2h1v6h-2v2h8v-2h-2z"/><circle cx="16" cy="10" r="2"/><path
 					d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z"/></svg></span>
-				Confirm BMC firmware file activation
+				<!-- We call "Host" firmware "server" firmware -->
+				Confirm {{activate_image_type == 'Host' ? 'server' : activate_image_type}} firmware file activation
 			</h1>
 		</div>
 		<div class="modal__content">
-			<p>When you activate the BMC firmware file, {{activate_image_version}}, the BMC must be rebooted before it will operate with the new firmware code.</p>
-			<form>
+			<div ng-switch on="activate_image_type">
+				<p ng-switch-when="BMC">When you activate the BMC firmware file, {{activate_image_version}}, the BMC must be rebooted before it will operate with the new firmware code.</p>
+				<p ng-switch-when="Host">When you activate server firmware file, {{activate_image_version}}, the new firmware will not operate until the next time the server boots.</p>
+			</div>
+			<form ng-if="activate_image_type == 'BMC'">
 				<fieldset>
 					<div class="row column">
 						<label class="control-radio bold" for="activate-without-reboot">Activate firmware file without rebooting BMC

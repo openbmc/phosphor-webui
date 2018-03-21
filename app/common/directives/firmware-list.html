@@ -57,7 +57,7 @@
 				</div>
 				<div class="table__cell firmware__action">
 				    <span class="table__cell-label">Action:</span>
-				    <button class="firmware__action-link" ng-show="firmware.activationStatus == 'Ready'" ng-click="activate(firmware.imageId, firmware.Version)">Activate</button>
+				    <button class="firmware__action-link" ng-show="firmware.activationStatus == 'Ready'" ng-click="activate(firmware.imageId, firmware.Version, firmware.imageType)">Activate</button>
 				    <button class="firmware__action-link" ng-show="firmware.activationStatus != 'Functional'" ng-click="delete(firmware.imageId, firmware.Version)">Delete</button>
 				</div>
 			</div>
