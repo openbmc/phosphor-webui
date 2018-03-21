@@ -34,10 +34,11 @@ window.angular && (function (angular) {
                     $scope.hostActiveVersion = "";
                     $scope.display_error = false;
                     $scope.reboot_confirm = false;
-                    $scope.preserve_settings_confirm = false;
+                    $scope.activate_confirm = false;
                     $scope.delete_image_id = "";
                     $scope.delete_image_version = "";
                     $scope.activate_image_id = "";
+                    $scope.activate_image_version = "";
                     $scope.priority_image_id = "";
                     $scope.priority_image_version = "";
                     $scope.priority_from = -1;
@@ -53,9 +54,10 @@ window.angular && (function (angular) {
                         type: "warning"
                     };
 
-                    $scope.activateImage = function(imageId){
+                    $scope.activateImage = function(imageId, imageVersion){
                         $scope.activate_image_id = imageId;
-                        $scope.preserve_settings_confirm = true;
+                        $scope.activate_image_version = imageVersion;
+                        $scope.activate_confirm = true;
                     }
 
                     $scope.displayError = function(data){
@@ -63,7 +65,7 @@ window.angular && (function (angular) {
                         $scope.display_error = true;
                     }
 
-                    $scope.preserveSettingsConfirmed = function(){
+                    $scope.activateConfirmed = function(){
                         $scope.uploading = true;
                         APIUtils.activateImage($scope.activate_image_id).then(function(response){
                             $scope.uploading = false;
@@ -78,7 +80,7 @@ window.angular && (function (angular) {
                                 $scope.loadFirmwares();
                             }
                         });
-                        $scope.preserve_settings_confirm = false;
+                        $scope.activate_confirm = false;
                     }
 
                     $scope.confirmWarmReboot = function(){
