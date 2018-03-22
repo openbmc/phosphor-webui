@@ -12,13 +12,14 @@ window.angular && (function (angular) {
     angular
         .module('app.overview')
         .controller('sensorsOverviewController', [
+            '$rootScope',
             '$scope',
             '$log',
             '$window',
             'APIUtils',
             'dataService',
             'Constants',
-            function($scope, $log, $window, APIUtils, dataService, Constants){
+            function($rootScope, $scope, $log, $window, APIUtils, dataService, Constants){
                 $scope.dataService = dataService;
 
                 $scope.dropdown_selected = false;
@@ -133,6 +134,14 @@ window.angular && (function (angular) {
                 };
 
                 $scope.loadSensorData();
+
+                var refreshDataListener = $rootScope.$on('refresh-data', function(event, args) {
+                    $scope.loadSensorData();
+                });
+
+                $scope.$on('$destroy', function() {
+                    refreshDataListener();
+                });
             }
         ]
     );
