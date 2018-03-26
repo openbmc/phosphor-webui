@@ -28,6 +28,8 @@ window.angular && (function (angular) {
                 $scope.tmz = 'EDT';
                 $scope.itemsPerPage = Constants.PAGINATION.LOG_ITEMS_PER_PAGE;
                 $scope.loading = false;
+                $scope.filteredExportName = "filtered_logs.json";
+
                 var expandedSelectedIdOnce = false;
 
                 var sensorType = $routeParams.type;
@@ -158,7 +160,7 @@ window.angular && (function (angular) {
                     $scope.selectedEvents.forEach(function(item){
                         data[item.data.key] = item.data.value;
                     });
-                    $scope.export_data = JSON.stringify(data);
+                    $scope.export_data = JSON.stringify(data, null, 4);
                 }
 
 
