@@ -20,6 +20,7 @@
                 </ul>
             </div>
         </div>
+        <a ng-href="data:text/json;charset=utf-8,{{filteredLogs|eventLogsToJSONString}}" class="inline btn-export float-right" download="{{filteredExportName}}">Export</a>
     </section>
     <!-- Filters -->
     <section class="row column">

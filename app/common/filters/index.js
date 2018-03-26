@@ -20,6 +20,16 @@ window.angular && (function (angular) {
                }
             }
         })
-        ;
+        .filter('eventLogsToJSONString', function () {
+            return function (logs) {
+                if(!logs) return "{}";
+
+                var data = {};
+                logs.forEach(function(item){
+                    data[item.data.key] = item.data.value;
+                });
+                return JSON.stringify(data, null, 4);
+            }
+        });
 
 })(window.angular);
