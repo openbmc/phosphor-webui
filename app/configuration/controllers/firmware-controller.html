@@ -116,18 +116,23 @@
 		</div>
 		<div class="modal__content">
 			<div ng-switch on="activate_image_type">
-				<p ng-switch-when="BMC">When you activate the BMC firmware file, {{activate_image_version}}, the BMC must be rebooted before it will operate with the new firmware code.</p>
+				<p ng-switch-when="BMC">When you activate the BMC firmware file, {{activate_image_version}}, the BMC must be rebooted before it will operate with the new firmware code. Confirm the activation by selecting either to activate without rebooting the BMC or to activate and automatically reboot the BMC when activation has completed.</p>
 				<p ng-switch-when="Host">When you activate server firmware file, {{activate_image_version}}, the new firmware will not operate until the next time the server boots.</p>
 			</div>
 			<form ng-if="activate_image_type == 'BMC'">
 				<fieldset>
 					<div class="row column">
 						<label class="control-radio bold" for="activate-without-reboot">Activate firmware file without rebooting BMC
-							<input type="radio" name="activate-without-reboot" id="activate-without-reboot" ng-checked="true" ng-model="dhcp" ng-value="true" ng-init="dhcp=true"/>
+							<input type="radio" name="activate-without-reboot" id="activate-without-reboot" ng-model="activate.reboot" ng-value="false"/>
 							<span class="control__indicator control__indicator-on"></span>
 						</label>
 					</div>
-					<!-- TODO: openbmc/openbmc#3027 Add Activate firmware and reboot selection -->
+					<div class="row column">
+						<label class="control-radio bold" for="activate-with-reboot">Activate firmware file and automatically reboot BMC
+							<input type="radio" name="activate-with-reboot" id="activate-with-reboot" ng-model="activate.reboot" ng-value="true"/>
+							<span class="control__indicator control__indicator-on"></span>
+						</label>
+					</div>
 				</fieldset>
 			</form>
 		</div>
