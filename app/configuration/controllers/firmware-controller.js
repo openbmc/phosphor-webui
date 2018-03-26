@@ -48,6 +48,7 @@ window.angular && (function (angular) {
                     $scope.confirm_priority = false;
                     $scope.file_empty = true;
                     $scope.uploading = false;
+                    $scope.activate = { reboot: true };
 
                     var pollActivationTimer = undefined;
 
@@ -119,6 +120,22 @@ window.angular && (function (angular) {
                             desc: JSON.stringify(error.data),
                             type: 'Error'
                           });
+                        }).then(function(state){
+                          if($scope.activate.reboot){
+                            APIUtils.bmcReboot(function(response){
+                              // Log out the user and redirect them to the login page.
+                              // The client side (GUI) session would be invalided by the BMC
+                              // reboot, requiring them to log in any way.
+                              $scope.$emit('timedout-user', {});
+                            }, function(error){
+                              $scope.displayError({
+                                modal_title: 'Error during BMC reboot',
+                                title: 'Error during BMC reboot',
+                                desc: JSON.stringify(error.data),
+                                type: 'Error'
+                              });
+                            });
+                          }
                         });
                       });
                       $scope.activate_confirm = false;
