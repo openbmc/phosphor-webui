@@ -46,6 +46,7 @@ window.angular && (function (angular) {
                     $scope.confirm_priority = false;
                     $scope.file_empty = true;
                     $scope.uploading = false;
+                    $scope.activate = { reboot: true };
 
                     $scope.error = {
                         modal_title: "",
