@@ -193,8 +193,7 @@ window.angular && (function (angular) {
                 // Calls /login without the current session to verify the given password is correct
                 // ignore the interceptor logout on a bad password
                 DataService.ignoreHttpError = true;
-                var deferred = $q.defer();
-                $http({
+                return $http({
                   method: 'POST',
                   url: DataService.getHost() + "/login",
                   headers: {
@@ -204,15 +203,8 @@ window.angular && (function (angular) {
                   withCredentials: false,
                   data: JSON.stringify({"data": [username, password]})
                 }).then(function(response){
-                  var json = JSON.stringify(response.data);
-                  var content = JSON.parse(json);
-                  DataService.ignoreHttpError = false;
-                  deferred.resolve(content.data);
-                }, function(error){
-                  DataService.ignoreHttpError = false;
-                  deferred.reject(error);
+                  return response.data;
                 });
-                return deferred.promise;
               },
               logout: function(callback){
                 $http({
