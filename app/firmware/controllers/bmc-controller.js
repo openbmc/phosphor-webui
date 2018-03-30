@@ -13,12 +13,21 @@ window.angular && (function (angular) {
     angular
         .module('app.firmware')
         .controller('bmcController', [
+            '$rootScope',
             '$scope',
             '$window',
             'APIUtils',
             'dataService',
-            function($scope, $window, APIUtils, dataService){
+            function($rootScope, $scope, $window, APIUtils, dataService){
                 $scope.dataService = dataService;
+
+                var refreshDataListener = $rootScope.$on('refresh-data', function(event, args){
+                    $scope.loadLogs();
+                });
+
+                $scope.$on('$destroy', function() {
+                    refreshDataListener();
+                });
             }
         ]
     );
