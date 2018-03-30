@@ -13,11 +13,12 @@ window.angular && (function (angular) {
     angular
         .module('app.configuration')
         .controller('networkController', [
+            '$rootScope',
             '$scope',
             '$window',
             'APIUtils',
             'dataService',
-            function($scope, $window, APIUtils, dataService){
+            function($rootScope, $scope, $window, APIUtils, dataService){
                 $scope.dataService = dataService;
                 $scope.network = {};
                 $scope.interface = {};
@@ -29,13 +30,24 @@ window.angular && (function (angular) {
                     $scope.selectedInterface = interfaceId;
                     $scope.networkDevice = false;
                 }
-                APIUtils.getNetworkInfo().then(function(data){
-                    $scope.network = data.formatted_data;
-                    $scope.hostname = data.hostname;
-                    if($scope.network.interface_ids.length){
-                       $scope.selectedInterface = $scope.network.interface_ids[0];
-                       $scope.interface = $scope.network.interfaces[$scope.selectedInterface];
-                    }
+                $scope.refreshNetworkInfo = function (){
+                    APIUtils.getNetworkInfo().then(function(data){
+                	    $scope.network = data.formatted_data;
+                	    $scope.hostname = data.hostname;
+                        if($scope.network.interface_ids.length){
+                            $scope.selectedInterface = $scope.network.interface_ids[0];
+                            $scope.interface = $scope.network.interfaces[$scope.selectedInterface];
+                        }
+                    });
+                }
+                $scope.refreshNetworkInfo();
+                
+                var refreshDataListener = $rootScope.$on('refresh-data', function(event, args) {
+                    $scope.refreshNetworkInfo();
+                });
+
+                $scope.$on('$destroy', function() {
+                    refreshDataListener();
                 });
             }
         ]
