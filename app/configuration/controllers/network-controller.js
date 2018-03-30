@@ -13,11 +13,12 @@ window.angular && (function (angular) {
     angular
         .module('app.configuration')
         .controller('networkController', [
+            '$rootScope',
             '$scope',
             '$window',
             'APIUtils',
             'dataService',
-            function($scope, $window, APIUtils, dataService){
+            function($rootScope, $scope, $window, APIUtils, dataService){
                 $scope.dataService = dataService;
                 $scope.network = {};
                 $scope.interface = {};
@@ -36,6 +37,15 @@ window.angular && (function (angular) {
                        $scope.selectedInterface = $scope.network.interface_ids[0];
                        $scope.interface = $scope.network.interfaces[$scope.selectedInterface];
                     }
+                });
+
+                var refreshDataListener = $rootScope.$on('refresh-data', function(event, args) {
+                    $scope.getNetworkInfo();
+                    $scope.$apply();
+                });
+
+                $scope.$on('$destroy', function() {
+                    refreshDataListener();
                 });
             }
         ]
