@@ -13,6 +13,7 @@ window.angular && (function (angular) {
     angular
         .module('app.configuration')
         .controller('firmwareController', [
+                '$rootScope',
                 '$scope',
                 '$window',
                 'APIUtils',
@@ -20,7 +21,7 @@ window.angular && (function (angular) {
                 '$location',
                 '$anchorScroll',
                 'Constants',
-                function ($scope, $window, APIUtils, dataService, $location, $anchorScroll, Constants) {
+                function ($rootScope, $scope, $window, APIUtils, dataService, $location, $anchorScroll, Constants) {
                     $scope.dataService = dataService;
 
                     //Scroll to target anchor
@@ -207,6 +208,14 @@ window.angular && (function (angular) {
                     }
 
                     $scope.loadFirmwares();
+
+                    var refreshDataListener = $rootScope.$on('refresh-data', function(event, args){
+                        $scope.loadFirmwares();
+                    });
+
+                    $scope.$on('$destroy', function() {
+        	            refreshDataListener();
+            	    });
                 }
             ]
         );
