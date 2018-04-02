@@ -143,3 +143,10 @@
   padding-top: 2em;
   padding-left: 1em;
 }
+
+.download_error
+{
+  @include mediaQuery(medium) {
+    max-width: 35%;
+  }
+}
