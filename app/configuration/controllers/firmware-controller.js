@@ -169,40 +169,22 @@ window.angular && (function (angular) {
                     $scope.download = function(){
                         $scope.download_error_msg = "";
                         if(!$scope.download_host || !$scope.download_filename){
-                            $scope.download_error_msg = "Field is required!";
-                            return false;
+                          $scope.download_error_msg = "Field is required!";
+                          return false;
                         }
                         $scope.downloading = true;
                         APIUtils.downloadImage($scope.download_host, $scope.download_filename).then(function(response){
-                            var data = response.data;
-                            $scope.downloading = false;
-                            var headers = response.headers();
-
-                            var filename = headers['x-filename'];
-                            var contentType = headers['content-type'];
-
-                            if(!headers['x-filename']){
-                                filename = $scope.download_filename;
-                            }
-
-                            var linkElement = document.createElement('a');
-                            try {
-                                var blob = new Blob([data], { type: contentType });
-                                var url = window.URL.createObjectURL(blob);
-
-                                linkElement.setAttribute('href', url);
-                                linkElement.setAttribute("download", filename);
-
-                                var clickEvent = new MouseEvent("click", {
-                                    "view": window,
-                                    "bubbles": true,
-                                    "cancelable": false
-                                });
-                                linkElement.dispatchEvent(clickEvent);
-                            } catch (ex) {
-                                console.log(ex);
-                            }
-                        });
+                          $scope.downloading = false;
+                          // TODO: refresh firmware page to display new image
+                        }, function(error){
+                          $scope.downloading = false;
+                          $scope.displayError({
+                            modal_title: 'Error during downloading Image',
+                            title: 'Error during downloading Image',
+                            desc: JSON.stringify(error),
+                            type: 'Error'
+                          });
+                      });
                     }
 
                     $scope.changePriority = function(imageId, imageVersion, from, to){
