@@ -120,6 +120,12 @@ window.angular && (function (angular) {
                             desc: JSON.stringify(error.data),
                             type: 'Error'
                           });
+                        }).then(function(state){
+                          if($scope.activate.reboot){
+                            APIUtils.bmcReboot(function(response){
+                              $scope.$emit('user-logged-in',{});
+                            });
+                          }
                         });
                       });
                       $scope.activate_confirm = false;
