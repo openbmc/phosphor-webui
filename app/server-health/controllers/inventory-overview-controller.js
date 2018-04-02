@@ -13,11 +13,12 @@ window.angular && (function (angular) {
     angular
         .module('app.serverHealth')
         .controller('inventoryOverviewController', [
+           '$rootScope',
             '$scope',
             '$window',
             'APIUtils',
             'dataService',
-            function($scope, $window, APIUtils, dataService){
+            function($rootScope, $scope, $window, APIUtils, dataService){
                 $scope.dataService = dataService;
                 $scope.hardwares = [];
                 $scope.originalData = {};
@@ -25,12 +26,15 @@ window.angular && (function (angular) {
                 $scope.searchTerms = [];
                 $scope.loading = false;
 
-                $scope.loading = true;
-                APIUtils.getHardwares(function(data, originalData){
-                    $scope.hardwares = data;
-                    $scope.originalData = JSON.stringify(originalData);
-                    $scope.loading = false;
-                });
+                $scope.refreshHardwares = function(){
+                    $scope.loading = true;
+                    APIUtils.getHardwares(function(data, originalData){
+                        $scope.hardwares = data;
+                        $scope.originalData = JSON.stringify(originalData);
+                        $scope.loading = false;
+                    });
+                }
+                $scope.refreshHardwares();
 
                 $scope.clear = function(){
                     $scope.customSearch = "";
@@ -69,6 +73,14 @@ window.angular && (function (angular) {
                     }
                     return true;
                 }
+
+                var refreshDataListener = $rootScope.$on('refresh-data', function(event, args) {
+                    $scope.refreshHardwares();
+                });
+
+                $scope.$on('$destroy', function() {
+                    refreshDataListener();
+                });
             }
         ]
     );
