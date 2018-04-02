@@ -46,6 +46,7 @@
 					</div>
 				</div>
 				<div class="inline uploading" ng-show="downloading">Downloading in progress...</div>
+				<p class="download_error" ng-show="download_error_msg" role="alert">{{download_error_msg}}</p>
 			</fieldset>
 		</div>
 	</form>
