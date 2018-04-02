@@ -841,29 +841,19 @@ window.angular && (function (angular) {
                 return deferred.promise;
               },
               downloadImage: function(host, filename){
-                var deferred = $q.defer();
-                $http({
+                return $http({
                   method: 'POST',
                   url: DataService.getHost() + "/xyz/openbmc_project/software/action/DownloadViaTFTP",
                   headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': 'application/json'
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                   },
                   withCredentials: true,
                   data: JSON.stringify({"data": [filename, host]}),
                   responseType: 'arraybuffer'
-                }).then(function(response, status, headers){
-                  deferred.resolve({
-                    data: response,
-                    status: status,
-                    headers: headers
-                  });
-                }, function(error){
-                  console.log(error);
-                  deferred.reject(error);
+                }).then(function(response){
+                  return response.data;
                 });
-
-                return deferred.promise;
               },
               getBMCEthernetInfo: function(){
                 var deferred = $q.defer();
