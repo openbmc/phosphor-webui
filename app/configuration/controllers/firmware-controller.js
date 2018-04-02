@@ -49,6 +49,7 @@ window.angular && (function (angular) {
                     $scope.file_empty = true;
                     $scope.uploading = false;
                     $scope.activate = { reboot: true };
+                    $scope.download_error_msg = "";
 
                     var pollActivationTimer = undefined;
 
@@ -156,6 +157,11 @@ window.angular && (function (angular) {
                     }
 
                     $scope.download = function(){
+                        $scope.download_error_msg = "";
+                        if(!$scope.download_host || !$scope.download_filename){
+                            $scope.download_error_msg = "Field is required!";
+                            return false;
+                        }
                         $scope.downloading = true;
                         APIUtils.downloadImage($scope.download_host, $scope.download_filename).then(function(response){
                             var data = response.data;
