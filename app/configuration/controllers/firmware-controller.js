@@ -22,7 +22,8 @@ window.angular && (function (angular) {
                 'Constants',
                 '$interval',
                 '$q',
-                function ($scope, $window, APIUtils, dataService, $location, $anchorScroll, Constants, $interval, $q) {
+                '$timeout',
+                function ($scope, $window, APIUtils, dataService, $location, $anchorScroll, Constants, $interval, $q, $timeout) {
                     $scope.dataService = dataService;
 
                     //Scroll to target anchor
@@ -123,9 +124,18 @@ window.angular && (function (angular) {
                           });
                         }).then(function(state){
                           if($scope.activate.reboot){
-                            APIUtils.bmcReboot(function(response){
-                              $scope.$emit('user-logged-in',{});
-                            });
+                            // Despite the new image being active, issue,
+                            // https://github.com/openbmc/openbmc/issues/2764, can cause a
+                            // system to brick, if the system reboots before the service to set
+                            // the U-Boot variables is complete. Wait 10 seconds before rebooting
+                            // to ensure this service is complete. This issue is fixed in newer images, but
+                            // the user may be updating from an older image that does not that have this fix.
+                            // TODO: remove this timeout after sufficient time has passed.
+                            $timeout(function() {
+                              APIUtils.bmcReboot(function(response){
+                                $scope.$emit('user-logged-in',{});
+                              });
+                            }, 10000);
                           }
                         });
                       });
