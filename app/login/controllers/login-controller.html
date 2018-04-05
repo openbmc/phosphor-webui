@@ -23,7 +23,7 @@
 
                 <input id="login__submit" class="btn-primary submit" type="button" value="Log in" role="button" ng-click="login(host, username, password)" ng-class="{error: error}" ng-disabled="dataService.loading">
 
-                <p class="login__error-msg" role="alert" ng-if="error">{{description}}</p>
+                <p class="login__error-msg error-msg" role="alert" ng-if="error">{{description}}</p>
             </form>
         </div>
     </div>
