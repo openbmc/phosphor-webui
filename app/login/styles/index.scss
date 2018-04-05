@@ -106,15 +106,6 @@
 }
 
 .login__error-msg {
-  background: lighten($error-color, 20%);
-  padding: 1em;
-  text-align: center;
-  font-size: 1em;
-  border: 1px solid $error-color;
-  color: $black;
-  font-family: "Courier New", Helvetica, Arial, sans-serif;
-  font-weight: 700;
-
   @include mediaQuery(medium) {
     max-width: 100%;
   }
