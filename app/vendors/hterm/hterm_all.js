@@ -13463,7 +13463,7 @@ hterm.Terminal.prototype.onMouse_ = function(e) {
     }
 
     if (e.type == 'click' && !e.shiftKey && e.ctrlKey) {
-      // Debounce this event with the dblclick event.  If you try to doubleclick
+      // Debounce this event with the dblclick event.  If you try to double-click
       // a URL to open it, Chrome will fire click then dblclick, but we won't
       // have expanded the selection text at the first click event.
       clearTimeout(this.timeouts_.openUrl);
