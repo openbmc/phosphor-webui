@@ -8,3 +8,4 @@ target/
 .idea
 app/styles/index.css
 yarn.lock
+coverage/
