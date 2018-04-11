@@ -13,13 +13,12 @@ window.angular && (function (angular) {
     angular
         .module('app.overview')
         .controller('systemOverviewController', [
-            '$rootScope',
             '$scope',
             '$window',
             'APIUtils',
             'dataService',
             '$q',
-            function($rootScope, $scope, $window, APIUtils, dataService, $q){
+            function($scope, $window, APIUtils, dataService, $q){
                 $scope.dataService = dataService;
                 $scope.dropdown_selected = false;
                 $scope.tmz = 'EDT';
@@ -91,14 +90,6 @@ window.angular && (function (angular) {
                     APIUtils.setLEDState(toggleState, function(status){
                     });
                 }
-
-                var refreshDataListener = $rootScope.$on('refresh-data', function(event, args) {
-                    loadOverviewData();
-                });
-
-                $scope.$on('$destroy', function() {
-                    refreshDataListener();
-                });
             }
         ]
     );
