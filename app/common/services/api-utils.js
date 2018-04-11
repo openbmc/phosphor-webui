@@ -120,7 +120,8 @@ window.angular && (function (angular) {
                             data.interfaces[interfaceId].MACAddress = content.data[key].MACAddress;
                             data.interfaces[interfaceId].DomainName = content.data[key].DomainName.join(" ");
                             data.interfaces[interfaceId].Nameservers = content.data[key].Nameservers;
-                            data.interfaces[interfaceId].DHCPEnabled = content.data[key].DHCPEnabled;
+                            // DHCPEnabled comes back as a 0 (false), 1 (true) convert to bool
+                            data.interfaces[interfaceId].DHCPEnabled = !!+content.data[key].DHCPEnabled;
                           }
                         }else if(key.match(/network\/eth\d+\/ipv[4|6]\/[a-z0-9]+$/ig)){
                           keyParts = key.split("/");
