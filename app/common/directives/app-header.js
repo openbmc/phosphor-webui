@@ -10,7 +10,8 @@ window.angular && (function (angular) {
                 'scope': {
                    'path': '='
                 },
-                'controller': ['$rootScope', '$scope','dataService', 'userModel', '$location', function($rootScope, $scope, dataService, userModel, $location){
+                'controller': ['$rootScope', '$scope','dataService', 'userModel', '$location', '$route',
+                function($rootScope, $scope, dataService, userModel, $location, $route){
                     $scope.dataService = dataService;
 
                     $scope.loadServerHealth = function(){
@@ -62,8 +63,9 @@ window.angular && (function (angular) {
                     }
 
                     $scope.refresh = function(){
+                        //reload current page controllers and header
                         loadData();
-                        $scope.$emit('refresh-data');
+                        $route.reload();
                         //Add flash class to header timestamp on click of refresh
                         var myEl = angular.element( document.querySelector( '.header__refresh' ) );
                         myEl.addClass('flash');
