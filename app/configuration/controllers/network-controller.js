@@ -35,6 +35,8 @@ window.angular && (function (angular) {
                     if($scope.network.interface_ids.length){
                        $scope.selectedInterface = $scope.network.interface_ids[0];
                        $scope.interface = $scope.network.interfaces[$scope.selectedInterface];
+                       // DHCPEnabled comes back as a 0 (false), 1 (true) convert to bool
+                       $scope.interface.DHCPEnabled = !!+$scope.interface.DHCPEnabled;
                     }
                 });
             }
