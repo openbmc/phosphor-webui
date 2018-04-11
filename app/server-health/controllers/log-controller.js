@@ -15,7 +15,6 @@ window.angular && (function (angular) {
             paginationTemplateProvider.setString(require('../../common/directives/dirPagination.tpl.html'));
         })
         .controller('logController', [
-            '$rootScope',
             '$scope',
             '$window',
             'APIUtils',
@@ -23,7 +22,7 @@ window.angular && (function (angular) {
             'Constants',
             '$routeParams',
             '$filter',
-            function($rootScope, $scope, $window, APIUtils, dataService, Constants, $routeParams, $filter){
+            function($scope, $window, APIUtils, dataService, Constants, $routeParams, $filter){
                 $scope.dataService = dataService;
                 $scope.logs = [];
                 $scope.tmz = 'EDT';
@@ -192,14 +191,6 @@ window.angular && (function (angular) {
                 }, true);
 
                 $scope.loadLogs();
-
-                var refreshDataListener = $rootScope.$on('refresh-data', function(event, args){
-                    $scope.loadLogs();
-                });
-
-                $scope.$on('$destroy', function() {
-                    refreshDataListener();
-                });
             }
         ]
     );
