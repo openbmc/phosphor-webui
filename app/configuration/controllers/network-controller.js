@@ -17,11 +17,31 @@ window.angular && (function(angular) {
       $scope.interface = {};
       $scope.networkDevice = false;
       $scope.hostname = '';
+      $scope.set_network_error = '';
+      $scope.set_network_success = false;
+      $scope.selectedInterface = '';
 
       $scope.selectInterface = function(interfaceId) {
         $scope.interface = $scope.network.interfaces[interfaceId];
         $scope.selectedInterface = interfaceId;
         $scope.networkDevice = false;
+      };
+      $scope.setNetworkSettings = function() {
+        $scope.set_network_error = '';
+        $scope.set_network_success = false;
+        // TODO openbmc/openbmc#3165: check if the network settings
+        // changed before setting
+        APIUtils
+            .setMACAddress(
+                $scope.selectedInterface, $scope.interface.MACAddress)
+            .then(
+                function(data) {
+                  $scope.set_network_success = true;
+                },
+                function(error) {
+                  console.log(error);
+                  $scope.set_network_error = 'MAC Address';
+                });
       };
       APIUtils.getNetworkInfo().then(function(data) {
         $scope.network = data.formatted_data;

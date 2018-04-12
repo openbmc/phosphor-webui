@@ -183,6 +183,23 @@ window.angular && (function(angular) {
                   });
           return deferred.promise;
         },
+        setMACAddress: function(interface_name, mac_address) {
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/network/' + interface_name +
+                       '/attr/MACAddress',
+                   headers: {
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json'
+                   },
+                   withCredentials: true,
+                   data: JSON.stringify({'data': mac_address})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         getLEDState: function() {
           var deferred = $q.defer();
           $http({
