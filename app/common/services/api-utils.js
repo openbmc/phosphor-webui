@@ -162,6 +162,20 @@ window.angular && (function (angular) {
                 });
                 return deferred.promise;
               },
+              setNetworkSetting : function(interface_name, prop_name, prop_value){
+                return $http({
+                  method: 'PUT',
+                  url: DataService.getHost() + "/xyz/openbmc_project/network/" + interface_name + "/attr/" + prop_name,
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  withCredentials: true,
+                  data: JSON.stringify({"data": prop_value})
+                }).then(function(response){
+                  return response.data;
+                });
+              },
               getLEDState: function(){
                 var deferred = $q.defer();
                 $http({
