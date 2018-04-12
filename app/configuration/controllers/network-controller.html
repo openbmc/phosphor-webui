@@ -81,9 +81,11 @@
 				</div>
 			</fieldset>
 			<div class="network-config__submit-wrapper">
-				<button class="btn-primary inline">Save settings</button>
-				<button class="btn-secondary inline">Cancel</button>
+				<button type="button" class="btn-primary inline" ng-click="setNetworkSettings()">Save settings</button>
+				<button type="button" class="btn-secondary inline">Cancel</button>
 			</div>
+			<p class="success-msg set_network_success" ng-show="set_network_success" role="alert">Success! Network settings changed!</p>
+			<p class="set_network_error error-msg" ng-show="set_network_errors" role="alert">Error setting {{set_network_errors}}!</p>
 		</section>
 	</form>
 </div>
