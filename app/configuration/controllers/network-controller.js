@@ -23,11 +23,22 @@ window.angular && (function (angular) {
                 $scope.interface = {};
                 $scope.networkDevice  = false;
                 $scope.hostname = "";
+                $scope.set_network_errors = "";
+                $scope.selectedInterface = "";
 
                 $scope.selectInterface = function(interfaceId){
                     $scope.interface = $scope.network.interfaces[interfaceId];
                     $scope.selectedInterface = interfaceId;
                     $scope.networkDevice = false;
+                }
+                $scope.setNetworkSettings = function(){
+                    $scope.set_network_errors = "";
+                    // TODO: check if the network settings changed before setting
+                    APIUtils.setNetworkSetting($scope.selectedInterface, "MACAddress", $scope.interface.MACAddress).then(function(data){},
+                    function(error){
+                        console.log(error);
+                        $scope.set_network_errors = $scope.set_network_errors + "MAC Address";
+                    });
                 }
                 APIUtils.getNetworkInfo().then(function(data){
                     $scope.network = data.formatted_data;
