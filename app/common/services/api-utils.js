@@ -85,7 +85,7 @@ window.angular && (function (angular) {
                             data.interface_ids.push(interfaceId);
                             data.interfaces[interfaceId] = {
                               interfaceIname: '',
-                              domainName:'',
+                              DomainName:'',
                               MACAddress:'',
                               Nameservers: [],
                               DHCPEnabled: 0,
