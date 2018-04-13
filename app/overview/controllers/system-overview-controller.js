@@ -50,12 +50,14 @@ window.angular && (function (angular) {
                         $scope.displayLogs(data.logs.data);
                         $scope.displayServerInfo(
                             data.server_info,
-                            data.firmware.bmcActiveVersion,
                             data.firmware.hostActiveVersion
                         );
                         $scope.displayLEDState(data.led);
                         $scope.displayBMCEthernetInfo(data.ethernet);
-                        $scope.displayBMCInfo(data.bmc_info);
+                        $scope.displayBMCInfo(
+                            data.bmc_info,
+                            data.firmware.bmcActiveVersion
+                        );
                         $scope.displayPowerConsumption(data.power_consumption);
                         $scope.displayPowerCap(data.power_cap);
                       })
@@ -67,8 +69,9 @@ window.angular && (function (angular) {
                     $scope.mac_address = data.MACAddress;
                 }
 
-                $scope.displayBMCInfo = function(data){
+                $scope.displayBMCInfo = function(data, bmcActiveVersion){
                     $scope.bmc_info = data;
+                    $scope.bmc_firmware = bmcActiveVersion;
                 }
 
                 $scope.displayLogs = function(data){
@@ -77,9 +80,8 @@ window.angular && (function (angular) {
                     });
                 }
 
-                $scope.displayServerInfo = function(data, bmcActiveVersion, hostActiveVersion){
+                $scope.displayServerInfo = function(data, hostActiveVersion){
                     $scope.server_info = data.data;
-                    $scope.bmc_firmware = bmcActiveVersion;
                     $scope.server_firmware = hostActiveVersion;
                 }
 
