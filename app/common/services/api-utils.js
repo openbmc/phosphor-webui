@@ -818,8 +818,7 @@ window.angular && (function (angular) {
                 return deferred.promise;
               },
               uploadImage: function(file){
-                var deferred = $q.defer();
-                $http({
+                return $http({
                   method: 'POST',
                   timeout: 5 * 60 * 1000,
                   url: DataService.getHost() + "/upload/image",
@@ -829,15 +828,8 @@ window.angular && (function (angular) {
                   withCredentials: true,
                   data: file
                 }).then(function(response){
-                      var json = JSON.stringify(response.data);
-                      var content = JSON.parse(json);
-                      deferred.resolve(content);
-                }, function(error){
-                  console.log(error);
-                  deferred.reject(error);
+                  return response.data;
                 });
-
-                return deferred.promise;
               },
               downloadImage: function(host, filename){
                 return $http({

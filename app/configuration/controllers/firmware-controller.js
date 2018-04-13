@@ -148,22 +148,21 @@ window.angular && (function (angular) {
                     }
 
                     $scope.upload = function(){
-                        if($scope.file) {
-                            $scope.uploading = true;
-                            APIUtils.uploadImage($scope.file).then(function(response){
-                                $scope.uploading = false;
-                                if(response.status == 'error'){
-                                    $scope.displayError({
-                                        modal_title: response.data.description,
-                                        title: response.data.description,
-                                        desc: response.data.exception,
-                                        type: 'Error'
-                                    });
-                                }else{
-                                    $scope.loadFirmwares();
-                                }
-                            });
-                        }
+                      if($scope.file) {
+                        $scope.uploading = true;
+                        APIUtils.uploadImage($scope.file).then(function(response){
+                          $scope.uploading = false;
+                          $scope.loadFirmwares();
+                        }, function(error){
+                          $scope.uploading = false;
+                          $scope.displayError({
+                            modal_title: 'Error during image upload',
+                            title: 'Error during image upload',
+                            desc: 'Error uploading image',
+                            type: 'Error uploading image, please check the image'
+                          });
+                        });
+                      }
                     }
 
                     $scope.download = function(){
