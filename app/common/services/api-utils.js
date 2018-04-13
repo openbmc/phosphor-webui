@@ -895,6 +895,19 @@ window.angular && (function (angular) {
                 });
                 return deferred.promise;
               },
+              getServerInfo: function(){
+                return $http({
+                  method: 'GET',
+                  url: DataService.getHost() + "/xyz/openbmc_project/inventory/system",
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  withCredentials: true
+                }).then(function(response){
+                  return response.data;
+                });
+              },
               getHardwares: function(callback){
                 $http({
                   method: 'GET',
