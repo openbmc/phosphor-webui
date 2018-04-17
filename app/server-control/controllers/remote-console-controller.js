@@ -23,35 +23,48 @@ window.angular && (function (angular) {
 
                 // See https://github.com/macton/hterm for available hterm options
 
-                //Storage
                 hterm.defaultStorage = new lib.Storage.Local();
+                var term = new hterm.Terminal("host-console");
+                term.decorate(document.querySelector('#terminal'));
+                //Set cursor color
+                term.prefs_.set('cursor-color', 'rgba(83, 146, 255, .5)');
+                //Set background color
+                term.prefs_.set('background-color', '#19273c');
+                //Allows keyboard input
+                term.installKeyboard();
 
-                var term = new hterm.Terminal("foo");
+                //The BMC exposes a websocket at /console0. This can be read
+                //or written to access the host serial console.
+                var hostname = dataService.getHost().replace("https://", '');
+                var host = "wss://" + hostname + "/console0";
+                var ws = new WebSocket(host);
+                ws.onmessage = function (evt) {
+                    //websocket -> terminal
+                    term.io.print(evt.data);
+                };
+
+                //terminal -> websocket
                 term.onTerminalReady = function() {
                     var io = term.io.push();
                     io.onVTKeystroke = function(str) {
-                        console.log(str)
-                        term.io.print(str);
+                        ws.send(str);
                     };
                     io.sendString = function(str) {
-                        console.log(str)
+                        ws.send(str);
                     };
                 };
-                term.decorate(document.querySelector('#terminal'));
 
-                //Set cursor color
-                term.prefs_.set('cursor-color', 'rgba(83, 146, 255, .5)');
-
-                //Set background color
-                term.prefs_.set('background-color', '#19273c');
-
-                //Print to console window
-                term.io.println('OpenBMC ver.00');
-                term.io.println('This is not an actual live connection.');
-                term.io.print('root@OpenBmc:');
-
-                //Allows keyboard input
-                term.installKeyboard();
+                ws.onopen = function() {
+                    console.log("websocket opened");
+                };
+                ws.onclose = function() {
+                    console.log("websocket closed");
+                };
+                $scope.$on("$destroy", function() {
+                    if(ws) {
+                        ws.close();
+                    }
+                });
 
                 $scope.openTerminalWindow = function(){
                     dataService.setRemoteWindowActive();
