@@ -24,16 +24,9 @@ window.angular && (function (angular) {
                         if(!userModel.isLoggedIn()){
                             return;
                         }
-                        APIUtils.getHostState().then(function(status){
-                            if(status == 'xyz.openbmc_project.State.Host.HostState.Off'){
-                                dataService.setPowerOffState();
-                            }else if(status == 'xyz.openbmc_project.State.Host.HostState.Running'){
-                                dataService.setPowerOnState();
-                            }else{
-                                dataService.setBootingState();
-                            }
-                        }, function(error){
-                            dataService.activateErrorModal();
+                        APIUtils.getHostState().then(function(status){},
+                            function(error){
+                               dataService.activateErrorModal();
                         });
                     }
 

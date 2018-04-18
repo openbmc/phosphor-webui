@@ -66,6 +66,15 @@ window.angular && (function (angular) {
                 }).then(function(response){
                       var json = JSON.stringify(response.data);
                       var content = JSON.parse(json);
+
+                      if(content.data == 'xyz.openbmc_project.State.Host.HostState.Off'){
+                          DataService.setPowerOffState();
+                      }else if(content.data == 'xyz.openbmc_project.State.Host.HostState.Running'){
+                          DataService.setPowerOnState();
+                      }else{
+                          DataService.setErrorState();
+                      }
+
                       deferred.resolve(content.data);
                 }, function(error){
                   console.log(error);
