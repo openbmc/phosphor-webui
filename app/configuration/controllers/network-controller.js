@@ -17,7 +17,8 @@ window.angular && (function (angular) {
             '$window',
             'APIUtils',
             'dataService',
-            function($scope, $window, APIUtils, dataService){
+            '$timeout',
+            function($scope, $window, APIUtils, dataService, $timeout){
                 $scope.dataService = dataService;
                 $scope.network = {};
                 $scope.interface = {};
@@ -34,11 +35,27 @@ window.angular && (function (angular) {
                 $scope.setNetworkSettings = function(){
                     $scope.set_network_errors = "";
                     // TODO: check if the network settings changed before setting
-                    APIUtils.setNetworkSetting($scope.selectedInterface, "MACAddress", $scope.interface.MACAddress).then(function(data){},
-                    function(error){
-                        console.log(error);
-                        $scope.set_network_errors = $scope.set_network_errors + "MAC Address";
-                    });
+                    APIUtils.setNetworkSetting($scope.selectedInterface, "MACAddress", $scope.interface.MACAddress).then(function(data){
+                        // Due to github.com/openbmc/openbmc/issues/1641, the REST call may return good even though
+                        // setting the MAC address failed. Follow up the set with a get 2 seconds later to check
+                        // if the set was successful.
+                        $timeout(function() {
+                            APIUtils.getNetworkInfo().then(function(data){
+                                if (data.formatted_data != $scope.network)
+                                {
+                                    $scope.set_network_errors = $scope.set_network_errors + "MAC Address";
+                                }
+                            },
+                            function(error){
+                                console.log(error);
+                                $scope.set_network_errors = $scope.set_network_errors + "MAC Address";
+                            });
+                        },
+                        function(error){
+                            console.log(error);
+                            $scope.set_network_errors = $scope.set_network_errors + "MAC Address";
+                        });
+                    }, 2000);
                 }
                 APIUtils.getNetworkInfo().then(function(data){
                     $scope.network = data.formatted_data;
