@@ -16,7 +16,8 @@ window.angular && (function (angular) {
             '$window',
             'APIUtils',
             'dataService',
-            function($scope, $window, APIUtils, dataService){
+            '$timeout',
+            function($scope, $window, APIUtils, dataService, $timeout){
                 $scope.dataService = dataService;
                 $scope.network = {};
                 $scope.interface = {};
@@ -36,7 +37,25 @@ window.angular && (function (angular) {
                     $scope.set_network_success = false;
                     // TODO: check if the network settings changed before setting
                     APIUtils.setNetworkSetting($scope.selectedInterface, "MACAddress", $scope.interface.MACAddress).then(function(data){
-                        $scope.set_network_success = true;
+                        // Due to github.com/openbmc/openbmc/issues/1641, the REST call may return good even though
+                        // setting the MAC address failed. Follow up the set with a get 2 seconds later to check
+                        // if the set was successful.
+                        $timeout(function() {
+                            APIUtils.getNetworkInfo().then(function(data){
+                                if (data.formatted_data != $scope.network)
+                                {
+                                    $scope.set_network_error = "MAC Address";
+                                }
+                                else
+                                {
+                                    $scope.set_network_success = true;
+                                }
+                            },
+                            function(error){
+                                console.log(error);
+                                $scope.set_network_error = "MAC Address";
+                            });
+                        }, 2000);
                     },
                     function(error){
                         console.log(error);
