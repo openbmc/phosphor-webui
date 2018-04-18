@@ -86,9 +86,9 @@ window.angular && (function (angular) {
                 this.server_status = Constants.HOST_STATE.off;
             }
 
-            this.setBootingState = function(){
-                this.server_state = Constants.HOST_STATE_TEXT.booting;
-                this.server_status = Constants.HOST_STATE.booting;
+            this.setErrorState = function(){
+                this.server_state = Constants.HOST_STATE_TEXT.error;
+                this.server_status = Constants.HOST_STATE.error;
             }
 
             this.setUnreachableState = function(){
