@@ -36,13 +36,14 @@ window.angular && (function (angular) {
                     on_code: 'xyz.openbmc_project.State.Host.HostState.Running',
                     off: 'Off',
                     off_code: 'xyz.openbmc_project.State.Host.HostState.Off',
-                    booting: 'Quiesced',
+                    error: 'Quiesced',
+                    error_code: 'xyz.openbmc_project.State.Host.HostState.Quiesced',
                     unreachable: 'Unreachable'
                 },
                 HOST_STATE: {
                     on: 1,
                     off: -1,
-                    booting: 0,
+                    error: 0,
                     unreachable: -2
                 },
                 LED_STATE: {
@@ -122,10 +123,14 @@ window.angular && (function (angular) {
                     ACTIVATION: 1000 * 60 * 10, // 10 mins
                     CHASSIS_OFF: 1000 * 60 * 5, // 5 mins
                     HOST_ON: 1000 * 60 * 5, // 5 mins
+                    HOST_OFF: 1000 * 60 * 5, // 5 mins
                 },
                 MESSAGES: {
                     POLL: {
-                        TIMEOUT: 'Time out. Did not reach power state in allotted time.',
+                        CHASSIS_OFF_TIMEOUT: 'Time out. Chassis did not reach power off state in allotted time.',
+                        HOST_ON_TIMEOUT: 'Time out. System did not reach Running state in allotted time.',
+                        HOST_OFF_TIMEOUT: 'Time out. System did not reach Off state in allotted time.',
+                        HOST_QUIESCED: 'System is in Error state.',
                     },
                     SENSOR: {
                         NO_SENSOR_DATA: 'There are no sensors found.',
