@@ -30,7 +30,7 @@ window.angular && (function (angular) {
                             }else if(status == 'xyz.openbmc_project.State.Host.HostState.Running'){
                                 dataService.setPowerOnState();
                             }else{
-                                dataService.setBootingState();
+                                dataService.setErrorState();
                             }
                         }, function(error){
                             dataService.activateErrorModal();

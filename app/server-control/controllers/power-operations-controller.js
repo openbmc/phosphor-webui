@@ -19,8 +19,10 @@ window.angular && (function (angular) {
             'Constants',
             '$timeout',
             '$interval',
+            '$interpolate',
             '$q',
-            function($scope, APIUtils, dataService, Constants, $timeout, $interval, $q){
+            function($scope, APIUtils, dataService, Constants, $timeout,
+                     $interval, $interpolate, $q){
                 $scope.dataService = dataService;
                 $scope.confirm = false;
                 $scope.power_confirm = false;
@@ -39,22 +41,24 @@ window.angular && (function (angular) {
                     dataService.server_state = (dataService.server_state == 'Running') ? 'Off': 'Running';
                 }
 
-                $scope.togglePower = function(){
-                    var method = (dataService.server_state == 'Running') ? 'hostPowerOff' : 'hostPowerOn';
-                    //@TODO: show progress or set class orange
-                    APIUtils[method]().then(function(response){
-                        //update state based on response
-                        //error case?
-                        if(response == null){
-                            console.log("Failed request.");
-                        }else{
-                            //@TODO::need to get the server status
-                            if(dataService.server_state == 'Running'){
-                                dataService.setPowerOffState();
-                            }else{
-                                dataService.setPowerOnState();
-                            }
-                        }
+                $scope.powerOn = function(){
+                    $scope.loading = true;
+                    dataService.setUnreachableState();
+                    APIUtils.hostPowerOn().then(function(response){
+                        return response;
+                    }).then(function(lastStatus) {
+                        pollStartTime = new Date();
+                        return pollHostStatusTillOn();
+                    }).then(function(hostState) {
+                        $scope.loading = false;
+                    }).catch(function(error){
+                        dataService.activateErrorModal(
+                          {title: Constants.MESSAGES.POWER_OP.POWER_ON_FAILED,
+                           description: error.statusText ?
+                               $interpolate(Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
+                                   {status: error.status, description: error.statusText}) :
+                               error });
+                        $scope.loading = false;
                     });
                 }
                 $scope.powerOnConfirm = function(){
@@ -65,6 +69,16 @@ window.angular && (function (angular) {
                     $scope.power_confirm = true;
                 };
 
+                function setHostState(state){
+                    if(state == 'xyz.openbmc_project.State.Host.HostState.Off'){
+                        dataService.setPowerOffState();
+                    }else if(state == 'xyz.openbmc_project.State.Host.HostState.Running'){
+                        dataService.setPowerOnState();
+                    }else{
+                        dataService.setErrorState();
+                    }
+                }
+
                 function pollChassisStatusTillOff(){
                     var deferred = $q.defer();
                     pollChassisStatusTimer = $interval(function(){
@@ -72,7 +86,7 @@ window.angular && (function (angular) {
                         if((now.getTime() - pollStartTime.getTime()) >= Constants.TIMEOUT.CHASSIS_OFF){
                             $interval.cancel(pollChassisStatusTimer);
                             pollChassisStatusTimer = undefined;
-                            deferred.reject(new Error(Constants.MESSAGES.POLL.TIMEOUT));
+                            deferred.reject(new Error(Constants.MESSAGES.POLL.CHASSIS_OFF_TIMEOUT));
                         }
                         APIUtils.getChassisState().then(function(state){
                             if(state === Constants.CHASSIS_POWER_STATE.off_code){
@@ -96,10 +110,40 @@ window.angular && (function (angular) {
                         if((now.getTime() - pollStartTime.getTime()) >= Constants.TIMEOUT.HOST_ON){
                             $interval.cancel(pollHostStatusTimer);
                             pollHostStatusTimer = undefined;
-                            deferred.reject(new Error(Constants.MESSAGES.POLL.TIMEOUT));
+                            deferred.reject(new Error(Constants.MESSAGES.POLL.HOST_ON_TIMEOUT));
                         }
                         APIUtils.getHostState().then(function(state){
+                            setHostState(state);
                             if(state === Constants.HOST_STATE_TEXT.on_code){
+                                $interval.cancel(pollHostStatusTimer);
+                                pollHostStatusTimer = undefined;
+                                deferred.resolve(state);
+                            }else if(state === Constants.HOST_STATE_TEXT.error_code){
+                                $interval.cancel(pollHostStatusTimer);
+                                pollHostStatusTimer = undefined;
+                                deferred.reject(new Error(Constants.MESSAGES.POLL.HOST_QUIESCED));
+                            }
+                        }).catch(function(error){
+                            $interval.cancel(pollHostStatusTimer);
+                            pollHostStatusTimer = undefined;
+                            deferred.reject(error);
+                        });
+                    }, Constants.POLL_INTERVALS.POWER_OP);
+
+                    return deferred.promise;
+                }
+                function pollHostStatusTillOff(){
+                    var deferred = $q.defer();
+                    pollHostStatusTimer = $interval(function(){
+                        var now = new Date();
+                        if((now.getTime() - pollStartTime.getTime()) >= Constants.TIMEOUT.HOST_OFF){
+                            $interval.cancel(pollHostStatusTimer);
+                            pollHostStatusTimer = undefined;
+                            deferred.reject(new Error(Constants.MESSAGES.POLL.HOST_OFF_TIMEOUT));
+                        }
+                        APIUtils.getHostState().then(function(state){
+                            setHostState(state);
+                            if(state === Constants.HOST_STATE_TEXT.off_code){
                                 $interval.cancel(pollHostStatusTimer);
                                 pollHostStatusTimer = undefined;
                                 deferred.resolve(state);
@@ -114,14 +158,26 @@ window.angular && (function (angular) {
                     return deferred.promise;
                 }
                 $scope.warmReboot = function(){
-                    //@TODO:show progress
-                    dataService.setBootingState();
+                    $scope.loading = true;
+                    dataService.setUnreachableState();
                     APIUtils.hostReboot().then(function(response){
-                        if(response){
-                            dataService.setPowerOnState();
-                        }else{
-                            //@TODO:hide progress & show error message
-                        }
+                        return response;
+                    }).then(function(lastStatus) {
+                        pollStartTime = new Date();
+                        return pollHostStatusTillOff();
+                    }).then(function(hostState) {
+                        pollStartTime = new Date();
+                        return pollHostStatusTillOn();
+                    }).then(function(hostState) {
+                        $scope.loading = false;
+                    }).catch(function(error){
+                        dataService.activateErrorModal(
+                          {title: Constants.MESSAGES.POWER_OP.WARM_REBOOT_FAILED,
+                           description: error.statusText ?
+                               $interpolate(Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
+                                   {status: error.status, description: error.statusText}) :
+                               error });
+                        $scope.loading = false;
                     });
                 };
                 $scope.testState = function(){
@@ -142,7 +198,7 @@ window.angular && (function (angular) {
 
                 $scope.coldReboot = function(){
                     $scope.loading = true;
-                    dataService.setBootingState();
+                    dataService.setUnreachableState();
                     APIUtils.chassisPowerOff().then(function(state){
                         return state;
                     }).then(function(lastState) {
@@ -156,9 +212,14 @@ window.angular && (function (angular) {
                         pollStartTime = new Date();
                         return pollHostStatusTillOn();
                     }).then(function(state) {
-                        dataService.setPowerOnState();
                         $scope.loading = false;
                     }).catch(function(error){
+                        dataService.activateErrorModal(
+                          {title: Constants.MESSAGES.POWER_OP.COLD_REBOOT_FAILED,
+                           description: error.statusText ?
+                               $interpolate(Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
+                                   {status: error.status, description: error.statusText}) :
+                               error });
                         $scope.loading = false;
                     });
                 };
@@ -171,13 +232,26 @@ window.angular && (function (angular) {
                 };
 
                 $scope.orderlyShutdown = function(){
-                    //@TODO:show progress
+                    $scope.loading = true;
+                    dataService.setUnreachableState();
                     APIUtils.hostPowerOff().then(function(response){
-                        if(response){
-                            dataService.setPowerOffState();
-                        }else{
-                            //@TODO:hide progress & show error message
-                        }
+                        return response;
+                    }).then(function(lastStatus) {
+                        pollStartTime = new Date();
+                        return pollHostStatusTillOff()
+                    }).then(function(hostState) {
+                        pollStartTime = new Date();
+                        return pollChassisStatusTillOff();
+                    }).then(function(chassisState) {
+                        $scope.loading = false;
+                    }).catch(function(error){
+                        dataService.activateErrorModal(
+                          {title: Constants.MESSAGES.POWER_OP.ORDERLY_SHUTDOWN_FAILED,
+                           description: error.statusText ?
+                               $interpolate(Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
+                                   {status: error.status, description: error.statusText}) :
+                               error });
+                        $scope.loading = false;
                     });
                 };
                 $scope.orderlyShutdownConfirm = function(){
@@ -189,13 +263,24 @@ window.angular && (function (angular) {
                 };
 
                 $scope.immediateShutdown = function(){
-                    //@TODO:show progress
-                    APIUtils.chassisPowerOff(function(response){
-                        if(response){
-                            dataService.setPowerOffState();
-                        }else{
-                            //@TODO:hide progress & show error message
-                        }
+                    $scope.loading = true;
+                    dataService.setUnreachableState();
+                    APIUtils.chassisPowerOff().then(function(response){
+                        return response;
+                    }).then(function(lastStatus) {
+                        pollStartTime = new Date();
+                        return pollChassisStatusTillOff();
+                    }).then(function(chassisState) {
+                        dataService.setPowerOffState();
+                        $scope.loading = false;
+                    }).catch(function(error){
+                        dataService.activateErrorModal(
+                          {title: Constants.MESSAGES.POWER_OP.IMMEDIATE_SHUTDOWN_FAILED,
+                           description: error.statusText ?
+                               $interpolate(Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
+                                   {status: error.status, description: error.statusText}) :
+                               error });
+                        $scope.loading = false;
                     });
                 };
                 $scope.immediateShutdownConfirm = function(){
