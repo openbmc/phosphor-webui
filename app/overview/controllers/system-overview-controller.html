@@ -86,7 +86,7 @@
 				</a>
 				<div class="quick-links__item no-icon">
 					<p class="inline quick-links__label">BMC time</p>
-					<p class="inline courier-bold float-right">3:20:12 5/22/2017 UTC</p>
+					<p class="inline courier-bold float-right">{{bmc_time | date:'medium'}}</p>
 				</div>
 				<div class="quick-links__item no-icon">
 					<p class="inline quick-links__label">Turn <span ng-if="dataService.LED_state == 'off'">on</span><span ng-if="dataService.LED_state == 'on'">off</span> server LED</p>
