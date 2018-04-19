@@ -883,6 +883,9 @@ window.angular && (function (angular) {
                 return deferred.promise;
               },
               getServerInfo: function(){
+                // TODO: openbmc/openbmc#3117 Need a way via REST to get
+                // interfaces so we can get the system object(s) by the looking
+                // for the system interface.
                 return $http({
                   method: 'GET',
                   url: DataService.getHost() + "/xyz/openbmc_project/inventory/system",
