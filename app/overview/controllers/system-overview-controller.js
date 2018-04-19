@@ -27,6 +27,7 @@ window.angular && (function (angular) {
                 $scope.bmc_info = {};
                 $scope.server_info = {};
                 $scope.bmc_firmware = "";
+                $scope.bmc_time = "3:20:12 5/22/2017";
                 $scope.server_firmware = "";
                 $scope.power_consumption = "";
                 $scope.power_cap = "";
@@ -41,6 +42,7 @@ window.angular && (function (angular) {
                       led: APIUtils.getLEDState(),
                       ethernet: APIUtils.getBMCEthernetInfo(),
                       bmc_info: APIUtils.getBMCInfo(),
+                      bmc_time: APIUtils.getBMCTime(),
                       server_info: APIUtils.getServerInfo(),
                       power_consumption: APIUtils.getPowerConsumption(),
                       power_cap: APIUtils.getPowerCap(),
@@ -58,6 +60,7 @@ window.angular && (function (angular) {
                             data.bmc_info,
                             data.firmware.bmcActiveVersion
                         );
+                        $scope.displayBMCTime(data.bmc_time);
                         $scope.displayPowerConsumption(data.power_consumption);
                         $scope.displayPowerCap(data.power_cap);
                       })
@@ -72,6 +75,13 @@ window.angular && (function (angular) {
                 $scope.displayBMCInfo = function(data, bmcActiveVersion){
                     $scope.bmc_info = data;
                     $scope.bmc_firmware = bmcActiveVersion;
+                }
+
+                $scope.displayBMCTime = function(data){
+                    var options = {};
+                    options.timeZone = 'UTC';
+                    options.hour12 = false;
+                    $scope.bmc_time = new Date(data.data.Elapsed / 1000).toLocaleString('en-US', options);
                 }
 
                 $scope.displayLogs = function(data){
