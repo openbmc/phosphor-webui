@@ -838,7 +838,7 @@ window.angular && (function (angular) {
                   data: JSON.stringify({"data": [filename, host]}),
                   responseType: 'arraybuffer'
                 }).then(function(response){
-                  return response.data;
+                  return response.status;
                 });
               },
               getBMCEthernetInfo: function(){
