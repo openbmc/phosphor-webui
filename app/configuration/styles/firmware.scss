@@ -142,6 +142,7 @@
 .firmware__upload-tftp {
   padding-top: 2em;
   padding-left: 1em;
+  padding-bottom: 50px;
 }
 
 .download_error
@@ -149,4 +150,10 @@
   @include mediaQuery(medium) {
     max-width: 35%;
   }
+}
+
+.download_success
+{
+  color: $primebtn__bg;
+  padding: 1em;
 }
