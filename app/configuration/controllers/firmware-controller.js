@@ -51,8 +51,10 @@ window.angular && (function (angular) {
                     $scope.uploading = false;
                     $scope.activate = { reboot: true };
                     $scope.download_error_msg = "";
+                    $scope.download_success = false;
 
                     var pollActivationTimer = undefined;
+                    var pollDownloadTimer = undefined;
 
                     $scope.error = {
                         modal_title: "",
@@ -165,25 +167,71 @@ window.angular && (function (angular) {
                       }
                     }
 
+                    //TODO: openbmc/openbmc#1691 Add support to return
+                    //the id of the newly created image, downloaded via
+                    //tftp. Polling the number of software objects is a
+                    //near term solution.
+                    function waitForDownload(){
+                        var deferred = $q.defer();
+                        var startTime = new Date();
+                        pollDownloadTimer = $interval(function(){
+                            var now = new Date();
+                            if((now.getTime() - startTime.getTime()) >= Constants.TIMEOUT.DOWNLOAD_IMAGE){
+                                $interval.cancel(pollDownloadTimer);
+                                pollDownloadTimer = undefined;
+                                deferred.reject(new Error(Constants.MESSAGES.POLL.DOWNLOAD_IMAGE_TIMEOUT));
+                            }
+
+                            APIUtils.getFirmwares().then(function(response){
+                                if(response.data.length === $scope.firmwares.length + 1){
+                                    $interval.cancel(pollDownloadTimer);
+                                    pollDownloadTimer = undefined;
+                                    deferred.resolve(response.data);
+                                }
+                            }, function(error){
+                                $interval.cancel(pollDownloadTimer);
+                                pollDownloadTimer = undefined;
+                                deferred.reject(error);
+                            });
+                        }, Constants.POLL_INTERVALS.DOWNLOAD_IMAGE);
+
+                        return deferred.promise;
+                    }
+
                     $scope.download = function(){
+                        $scope.download_success = false;
                         $scope.download_error_msg = "";
                         if(!$scope.download_host || !$scope.download_filename){
                           $scope.download_error_msg = "Field is required!";
                           return false;
                         }
+
                         $scope.downloading = true;
-                        APIUtils.downloadImage($scope.download_host, $scope.download_filename).then(function(response){
-                          $scope.downloading = false;
-                          // TODO: refresh firmware page to display new image
+                        APIUtils.getFirmwares().then(function(response){
+                            $scope.firmwares =  response.data;
+                        }).then(function(){
+                            return APIUtils.downloadImage($scope.download_host,
+                                    $scope.download_filename).then(function(downloadStatus){
+                                return downloadStatus;
+                            });
+                        }).then(function(downloadStatus){
+                            return waitForDownload();
+                        }).then(function(newFirmwareList){
+                            $scope.download_host = "";
+                            $scope.download_filename = "";
+                            $scope.downloading = false;
+                            $scope.download_success = true;
+                            $scope.loadFirmwares();
                         }, function(error){
-                          $scope.downloading = false;
-                          $scope.displayError({
-                            modal_title: 'Error during downloading Image',
-                            title: 'Error during downloading Image',
-                            desc: JSON.stringify(error),
-                            type: 'Error'
-                          });
-                      });
+                            console.log(error);
+                            $scope.displayError({
+                                modal_title: 'Error during downloading Image',
+                                title: 'Error during downloading Image',
+                                desc: error,
+                                type: 'Error'
+                            });
+                            $scope.downloading = false;
+                        });
                     }
 
                     $scope.changePriority = function(imageId, imageVersion, from, to){
