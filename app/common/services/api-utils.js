@@ -746,6 +746,21 @@ window.angular && (function (angular) {
 
                 return deferred.promise;
               },
+              getFirmwareList: function(){
+                return $http({
+                  method: 'GET',
+                  url: DataService.getHost() + "/xyz/openbmc_project/software/",
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: true
+                }).then(function(response){
+                  var json = JSON.stringify(response.data);
+                  var content = JSON.parse(json);
+                  return (content.data);
+                });
+              },
               changePriority: function(imageId, priority){
                 var deferred = $q.defer();
                 $http({
@@ -838,7 +853,7 @@ window.angular && (function (angular) {
                   data: JSON.stringify({"data": [filename, host]}),
                   responseType: 'arraybuffer'
                 }).then(function(response){
-                  return response.data;
+                  return response.status;
                 });
               },
               getBMCEthernetInfo: function(){
