@@ -117,10 +117,12 @@ window.angular && (function (angular) {
                 },
                 POLL_INTERVALS: {
                     ACTIVATION: 5000,
+                    DOWNLOAD_IMAGE: 5000,
                     POWER_OP: 5000,
                 },
                 TIMEOUT: {
                     ACTIVATION: 1000 * 60 * 10, // 10 mins
+                    DOWNLOAD_IMAGE: 1000 * 60, // 1 min
                     CHASSIS_OFF: 1000 * 60 * 5, // 5 mins
                     HOST_ON: 1000 * 60 * 5, // 5 mins
                     HOST_OFF: 1000 * 60 * 5, // 5 mins
@@ -131,6 +133,7 @@ window.angular && (function (angular) {
                         HOST_ON_TIMEOUT: 'Time out. System did not reach Running state in allotted time.',
                         HOST_OFF_TIMEOUT: 'Time out. System did not reach Off state in allotted time.',
                         HOST_QUIESCED: 'System is in Error state.',
+                        DOWNLOAD_IMAGE_TIMEOUT: 'Time out. Did not download image in allotted time.',
                     },
                     POWER_OP: {
                         POWER_ON_FAILED: 'Power On Failed',
