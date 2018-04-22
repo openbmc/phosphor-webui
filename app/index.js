@@ -78,6 +78,9 @@ import network_controller from './configuration/controllers/network-controller.j
 import snmp_controller from './configuration/controllers/snmp-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
 
+import kvm_index from './kvm/index.js';
+import kvm_controller from './kvm/controllers/kvm-controller.js';
+
 import multi_server_index from './multi-server/index.js';
 import multi_server_controller from './multi-server/controllers/multi-server-controller.js';
 
@@ -102,7 +105,7 @@ window.angular && (function(angular) {
             // Model resources
             'app.login', 'app.overview', 'app.serverControl',
             'app.serverHealth', 'app.configuration', 'app.users', 'app.redfish',
-            'app.multiServer'
+            'app.multiServer', 'app.kvm'
           ])
       // Route configuration
       .config([
