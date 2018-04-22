@@ -12,6 +12,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import "font-awesome/css/font-awesome.css"
+
 import angular from 'angular';
 import angular_cookies from 'angular-cookies';
 import angular_sanitize from 'angular-sanitize';
@@ -83,6 +84,10 @@ import firmware_controller from './configuration/controllers/firmware-controller
 
 import firmware_index from './firmware/index.js'
 import bmc_controller from './firmware/controllers/bmc-controller.js'
+
+import kvm_index from './kvm/index.js'
+import kvm_controller from './kvm/controllers/kvm-controller.js'
+
 import server_controller from './firmware/controllers/server-controller.js'
 
 import multi_server_index from './multi-server/index.js'
@@ -113,6 +118,7 @@ window.angular && (function (angular) {
             // Model resources
             'app.login',
             'app.overview',
+            'app.kvm',
             'app.serverControl',
             'app.serverHealth',
             'app.configuration',
