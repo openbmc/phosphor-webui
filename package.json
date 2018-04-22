@@ -28,6 +28,7 @@
     "node"
   ],
   "dependencies": {
+    "@novnc/novnc": "^1.0.0",
     "angular": "^1.7.3",
     "angular-animate": "^1.7.3",
     "angular-clipboard": "^1.6.2",
