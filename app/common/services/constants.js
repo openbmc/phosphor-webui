@@ -78,6 +78,10 @@ window.angular && (function (angular) {
                 },
                 HARDWARE: {
                   component_key_filter: '/xyz/openbmc_project/inventory/system',
+                  // Hardware to ignore and not display
+                  ignore_key_filter: [
+                      'activation', 'fault'
+                  ],
                   parent_components: [
                    /xyz\/openbmc_project\/inventory\/system\/chassis\/motherboard\/cpu\d+\//
                   ],
