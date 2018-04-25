@@ -1182,6 +1182,11 @@ window.angular && (function(angular) {
 
                 title = titlelize(title);
 
+                // Check if this hardware is on ignore list
+                if (Constants.HARDWARE.ignore_key_filter.indexOf(title) >= 0) {
+                  continue;
+                }
+
                 if (!isSubComponent(key)) {
                   hardwareData.push(Object.assign(
                       {
