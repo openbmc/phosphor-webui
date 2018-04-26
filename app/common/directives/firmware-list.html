@@ -20,6 +20,8 @@
 				</div>
 			</div>
 		</div>
+		<div ng-repeat="firmware in firmwares|filter: {activationStatus: 'Functional'}|filter:filterBy|orderBy:'+Priority' as functionalList"></div>
+		<div ng-repeat="firmware in firmwares|filter: {activationStatus: 'Active'}|filter:filterBy|orderBy:'+Priority' as activeList"></div>
 		<div class="table__body">
 			<div class="table__row" ng-class="firmware.activationStatus == 'Functional' ? 'firmware__primary' : ''" ng-repeat="firmware in firmwares|filter:filterBy|orderBy:'+Priority'">
 				<div class="table__cell">
@@ -28,8 +30,8 @@
 					     ng-click="!$first && changePriority(firmware.imageId, firmware.Version, firmware.Priority, firmware.Priority - 1)"
 					     ng-show="firmware.activationStatus == 'Functional' || firmware.activationStatus == 'Active'">
 						<span class="accessible-text">firmware up in priority</span></div>
-					<div class="icon icon__down-arrow" aria-hidden="true" ng-class="{'icon-as-spacer':$last}"
-					    ng-click="!$last && changePriority(firmware.imageId, firmware.Version, firmware.Priority, firmware.Priority + 2)"
+					<div class="icon icon__down-arrow" aria-hidden="true" ng-class="{'icon-as-spacer':$index == functionalList.length + activeList.length - 1}"
+					    ng-click="($index != functionalList.length + activeList.length - 1) && changePriority(firmware.imageId, firmware.Version, firmware.Priority, firmware.Priority + 2)"
 					    ng-show="firmware.activationStatus == 'Functional' || firmware.activationStatus == 'Active'">
 						<span class="accessible-text">firmware down in priority</span></div>
 				</div>
