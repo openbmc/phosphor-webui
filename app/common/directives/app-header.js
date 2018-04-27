@@ -15,6 +15,49 @@ window.angular && (function(angular) {
               $rootScope, $scope, dataService, userModel, $location, $route) {
             $scope.dataService = dataService;
 
+            // Create a secure websocket with URL as /subscribe
+            // TODO: Need to put in a generic APIUtils to avoid duplicate
+            // controller
+            var ws =
+                new WebSocket('wss://' + dataService.server_id + '/subscribe');
+
+            // Specify the required event details as JSON dictionary
+            var data = JSON.stringify({
+              'paths': ['/xyz/openbmc_project/state/host0'],
+              'interfaces': ['xyz.openbmc_project.State.Host']
+            });
+
+            // Send the JSON dictionary data to host
+            ws.onopen = function() {
+              ws.send(data);
+              console.log('host0 ws opened');
+            };
+
+            // Close the web socket
+            ws.onclose = function() {
+              console.log('host0 ws closed');
+            };
+
+            // Websocket event handling function which catches the
+            // current host state
+            ws.onmessage = function(evt) {
+              // Parse the response (JSON dictionary data)
+              var content = JSON.parse(evt.data);
+
+              // Fetch the current server power state
+              if (content.hasOwnProperty('properties') &&
+                  content['properties'].hasOwnProperty('CurrentHostState')) {
+                // Refresh the host state and status
+                // TODO: As of now not using the current host state
+                // value for updating the data Service state rather
+                // using it to detect the command line state change.
+                // Tried different methods like creating a separate
+                // function, addding ws under $scope etc.. but auto
+                // refresh is not happening.
+                $scope.loadServerStatus();
+              }
+            };
+
             $scope.loadServerHealth = function() {
               APIUtils.getLogs().then(function(result) {
                 dataService.updateServerHealth(result.data);
