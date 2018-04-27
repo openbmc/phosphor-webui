@@ -68,16 +68,6 @@ window.angular && (function(angular) {
         $scope.power_confirm = true;
       };
 
-      function setHostState(state) {
-        if (state == Constants.HOST_STATE_TEXT.off_code) {
-          dataService.setPowerOffState();
-        } else if (state == Constants.HOST_STATE_TEXT.on_code) {
-          dataService.setPowerOnState();
-        } else {
-          dataService.setErrorState();
-        }
-      }
-
       function pollChassisStatusTillOff() {
         var deferred = $q.defer();
         pollChassisStatusTimer = $interval(function() {
@@ -119,7 +109,6 @@ window.angular && (function(angular) {
           }
           APIUtils.getHostState()
               .then(function(state) {
-                setHostState(state);
                 if (state === Constants.HOST_STATE_TEXT.on_code) {
                   $interval.cancel(pollHostStatusTimer);
                   pollHostStatusTimer = undefined;
@@ -154,7 +143,6 @@ window.angular && (function(angular) {
           }
           APIUtils.getHostState()
               .then(function(state) {
-                setHostState(state);
                 if (state === Constants.HOST_STATE_TEXT.off_code) {
                   $interval.cancel(pollHostStatusTimer);
                   pollHostStatusTimer = undefined;
