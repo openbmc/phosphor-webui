@@ -21,8 +21,9 @@ window.angular && (function (angular) {
             '$interval',
             '$interpolate',
             '$q',
+            '$route',
             function($scope, APIUtils, dataService, Constants, $timeout,
-                     $interval, $interpolate, $q){
+                     $interval, $interpolate, $q, $route){
                 $scope.dataService = dataService;
                 $scope.confirm = false;
                 $scope.power_confirm = false;
@@ -35,6 +36,49 @@ window.angular && (function (angular) {
                 var pollChassisStatusTimer = undefined;
                 var pollHostStatusTimer = undefined;
                 var pollStartTime = null;
+                var curServerPowerState = null;
+
+                // Create a secure websocket with URL as /subscribe
+                var hostname = dataService.server_id;
+                var host = "wss://" + hostname + "/subscribe";
+                var ws = new WebSocket(host);
+
+                // Specify the required event details as JSON dictionary
+                var data = JSON.stringify(
+                {
+                    "paths": ["/xyz/openbmc_project/state/host0"],
+                    "interfaces": ["xyz.openbmc_project.State.Host"]
+                });
+
+                // Send the JSON dictionary data to host
+                ws.onopen = function() {
+                    ws.send(data);
+                    console.log("host0 ws opened");
+                };
+
+                // Close the web socket
+                ws.onclose = function() {
+                    console.log("host0 ws closed");
+                };
+
+                // Websocket event handling function which catches the
+                // current host state
+                ws.onmessage = function (evt) {
+                    // Parse the response (JSON dictionary data)
+                    var content = JSON.parse(evt.data);
+
+                    // Fetch the current server power state
+                    if ( (content.hasOwnProperty("properties")) &&
+                          content['properties'].
+                          hasOwnProperty('CurrentHostState')
+                       ){
+                        curServerPowerState =
+                            content['properties'].CurrentHostState;
+                            // Set the host state and status
+                            setHostState(curServerPowerState);
+                            $route.reload();
+                        }
+                };
 
                 //@TODO: call api and get proper state
                 $scope.toggleState = function(){
@@ -112,22 +156,11 @@ window.angular && (function (angular) {
                             pollHostStatusTimer = undefined;
                             deferred.reject(new Error(Constants.MESSAGES.POLL.HOST_ON_TIMEOUT));
                         }
-                        APIUtils.getHostState().then(function(state){
-                            setHostState(state);
-                            if(state === Constants.HOST_STATE_TEXT.on_code){
-                                $interval.cancel(pollHostStatusTimer);
-                                pollHostStatusTimer = undefined;
-                                deferred.resolve(state);
-                            }else if(state === Constants.HOST_STATE_TEXT.error_code){
-                                $interval.cancel(pollHostStatusTimer);
-                                pollHostStatusTimer = undefined;
-                                deferred.reject(new Error(Constants.MESSAGES.POLL.HOST_QUIESCED));
-                            }
-                        }).catch(function(error){
+                        if(curServerPowerState == Constants.HOST_STATE_TEXT.on_code){
                             $interval.cancel(pollHostStatusTimer);
                             pollHostStatusTimer = undefined;
-                            deferred.reject(error);
-                        });
+                            deferred.resolve(curServerPowerState);
+                        }
                     }, Constants.POLL_INTERVALS.POWER_OP);
 
                     return deferred.promise;
@@ -141,18 +174,11 @@ window.angular && (function (angular) {
                             pollHostStatusTimer = undefined;
                             deferred.reject(new Error(Constants.MESSAGES.POLL.HOST_OFF_TIMEOUT));
                         }
-                        APIUtils.getHostState().then(function(state){
-                            setHostState(state);
-                            if(state === Constants.HOST_STATE_TEXT.off_code){
-                                $interval.cancel(pollHostStatusTimer);
-                                pollHostStatusTimer = undefined;
-                                deferred.resolve(state);
-                            }
-                        }).catch(function(error){
+                        if(curServerPowerState == Constants.HOST_STATE_TEXT.off_code){
                             $interval.cancel(pollHostStatusTimer);
                             pollHostStatusTimer = undefined;
-                            deferred.reject(error);
-                        });
+                            deferred.resolve(curServerPowerState);
+                        }
                     }, Constants.POLL_INTERVALS.POWER_OP);
 
                     return deferred.promise;
