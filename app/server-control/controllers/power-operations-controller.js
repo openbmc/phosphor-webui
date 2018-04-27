@@ -35,6 +35,53 @@ window.angular && (function (angular) {
                 var pollChassisStatusTimer = undefined;
                 var pollHostStatusTimer = undefined;
                 var pollStartTime = null;
+ 
+                // Create a secure websocket with URL as /subscribe
+                var hostname =
+                    dataService.getHost().replace("https://", '');
+                var host = "wss://" + hostname + "/subscribe";
+                var ws = new WebSocket(host);
+
+                // Specify the required event details as JSON dictionary
+                var data = JSON.stringify(
+                {
+                    "paths": ["/xyz/openbmc_project/state/host0"],
+                    "interfaces": ["xyz.openbmc_project.State.Host"]
+                });
+
+                // Send the JSON dictionary data to host
+                ws.onopen = function() {
+                    ws.send(data);
+                    console.log("ws opened");
+                };
+
+                // Close the web socket
+                ws.onclose = function() {
+                    console.log("ws closed");
+                };
+
+                // Websocket event handling function which catches the
+                // current host state
+                ws.onmessage = function (evt) {
+                    // Parse the response (JSON dictionary data)
+                    var content = JSON.parse(evt.data);
+
+                    // Loop through the parsed data to fecth the
+                    // current server power state
+                    for (var key in content) {
+                        if ("properties" == key) {
+                            if ( (content.hasOwnProperty("properties")) &&
+                                  content['properties'].
+                                  hasOwnProperty('CurrentHostState')
+                               ){
+                                var state =
+                                    content['properties'].CurrentHostState;
+                                // Set the host state and status
+                                setHostState(state);
+                            }
+                        }
+                    }
+                };
 
                 //@TODO: call api and get proper state
                 $scope.toggleState = function(){
