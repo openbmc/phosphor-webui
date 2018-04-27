@@ -10,9 +10,58 @@ window.angular && (function (angular) {
                 'scope': {
                    'path': '='
                 },
-                'controller': ['$rootScope', '$scope','dataService', 'userModel', '$location', '$route',
-                function($rootScope, $scope, dataService, userModel, $location, $route){
+                'controller': ['$rootScope', '$scope','dataService', 'Constants', 'userModel', '$location', '$route',
+                function($rootScope, $scope, dataService, Constants, userModel, $location, $route){
                     $scope.dataService = dataService;
+
+                    // Create a secure websocket with URL as /subscribe
+                    // TODO: Need to put in a generic APIUtils to avoid duplicate controller
+                    var ws = new WebSocket("wss://" + dataService.server_id + "/subscribe");
+
+                    // Specify the required event details as JSON dictionary
+                    var data = JSON.stringify(
+                    {
+                        "paths": ["/xyz/openbmc_project/state/host0"],
+                        "interfaces": ["xyz.openbmc_project.State.Host"]
+                    });
+
+                    // Send the JSON dictionary data to host
+                    ws.onopen = function() {
+                        ws.send(data);
+                        console.log("host0 ws opened");
+                    };
+
+                    // Close the web socket
+                    ws.onclose = function() {
+                        console.log("host0 ws closed");
+                    };
+
+                    // Websocket event handling function which catches the
+                    // current host state
+                    ws.onmessage = function (evt) {
+                        // Parse the response (JSON dictionary data)
+                        var content = JSON.parse(evt.data);
+
+                        // Fetch the current server power state
+                        if ( content.hasOwnProperty("properties") &&
+                             content['properties'].
+                             hasOwnProperty('CurrentHostState') ){
+                            var curServerPowerState = null;
+                            curServerPowerState =
+                                content['properties'].CurrentHostState;
+                            // Set the host state and status
+                            if (curServerPowerState ==
+                                 Constants.HOST_STATE_TEXT.on_code){
+                                 dataService.setPowerOnState();
+                            }else if(curServerPowerState ==
+                                 Constants.HOST_STATE_TEXT.off_code){
+                                 dataService.setPowerOffState();
+                            }else{
+                                 dataService.setErrorState();
+                            }
+                            $scope.loadServerStatus();
+                        }
+                    };
 
                     $scope.loadServerHealth = function(){
                         APIUtils.getLogs().then(function(result){
