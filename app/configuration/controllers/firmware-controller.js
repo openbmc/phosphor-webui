@@ -49,6 +49,7 @@ window.angular && (function (angular) {
                     $scope.confirm_priority = false;
                     $scope.file_empty = true;
                     $scope.uploading = false;
+                    $scope.upload_success = false;
                     $scope.activate = { reboot: true };
                     $scope.download_error_msg = "";
                     $scope.download_success = false;
@@ -152,16 +153,20 @@ window.angular && (function (angular) {
                     $scope.upload = function(){
                       if($scope.file) {
                         $scope.uploading = true;
+                        $scope.upload_success = false;
                         APIUtils.uploadImage($scope.file).then(function(response){
+                          $scope.file = "";
                           $scope.uploading = false;
+                          $scope.upload_success = true;
                           $scope.loadFirmwares();
                         }, function(error){
                           $scope.uploading = false;
+                          console.log(error);
                           $scope.displayError({
                             modal_title: 'Error during image upload',
                             title: 'Error during image upload',
-                            desc: 'Error uploading image',
-                            type: 'Error uploading image, please check the image'
+                            desc: error,
+                            type: 'Error'
                           });
                         });
                       }
