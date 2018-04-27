@@ -27,6 +27,7 @@
 			</label>
 			<input type="button" value="Upload firmware" class="inline button btn-primary float-right" ng-click="upload()"/>
 			<div class="inline uploading" ng-show="uploading">Upload in progress...</div>
+			<p class="download_success" ng-show="upload_success" role="alert">{{file ? '' : 'Upload complete. Check image tables above.'}}</p>
 		</div>
 		<div class=" column firmware__upload-tftp">
 			<h3 class="h4 bold">Download image file from TFTP server</h3>
