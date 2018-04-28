@@ -5,7 +5,6 @@
  * @exports apiInterceptor
  * @name apiInterceptor
 
- * @version 0.0.1
  */
 
 window.angular && (function (angular) {

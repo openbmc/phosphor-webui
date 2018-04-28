@@ -5,7 +5,6 @@
  * @exports userModel
  * @name userModel
 
- * @version 0.0.1
  */
 
 window.angular && (function (angular) {

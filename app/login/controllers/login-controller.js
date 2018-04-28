@@ -4,7 +4,6 @@
  * @module app/login/controllers/index
  * @exports LoginController
  * @name LoginController
- * @version 0.1.0
  */
 
 window.angular && (function (angular) {

@@ -3,7 +3,6 @@
  *
  * @module app/server-health/index
  * @exports app/server-health/index
- * @version 0.0.1
  */
 
 window.angular && (function (angular) {

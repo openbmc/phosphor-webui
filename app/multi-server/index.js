@@ -3,7 +3,6 @@
  *
  * @module app/multi-server
  * @exports app/multi-server
- * @version 0.0.1
  */
 
 window.angular && (function (angular) {

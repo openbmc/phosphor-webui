@@ -5,7 +5,6 @@
  * @exports app/index
  *
  * @author Developer Developer
- * @version 0.10.0
  * @since 0.0.1
  */
 

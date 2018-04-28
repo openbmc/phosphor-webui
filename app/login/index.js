@@ -3,7 +3,6 @@
  *
  * @module app/login/index
  * @exports app/login/index
- * @version 0.0.1
  */
 
 window.angular && (function (angular) {

@@ -4,7 +4,6 @@
  * @module app/configuration
  * @exports fileController
  * @name fileController
- * @version 0.1.0
  */
 
 window.angular && (function (angular) {

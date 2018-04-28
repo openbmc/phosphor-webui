@@ -4,7 +4,6 @@
  * @module app/common/services/api-utils
  * @exports APIUtils
  * @name APIUtils
- * @version 0.0.1
  */
 
 window.angular && (function (angular) {

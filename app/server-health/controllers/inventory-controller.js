@@ -4,7 +4,6 @@
  * @module app/serverHealth
  * @exports inventoryController
  * @name inventoryController
- * @version 0.1.0
  */
 
 window.angular && (function (angular) {
