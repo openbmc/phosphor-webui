@@ -3,7 +3,6 @@
  *
  * @module app/templates
  * @exports app/templates
- * @since 0.0.1
  */
 
 window.angular && (function (angular) {
