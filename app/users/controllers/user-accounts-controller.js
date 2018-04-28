@@ -4,7 +4,6 @@
  * @module app/users
  * @exports userAccountsController
  * @name userAccountsController
- * @version 0.1.0
  */
 
 window.angular && (function (angular) {

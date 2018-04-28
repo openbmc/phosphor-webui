@@ -4,7 +4,6 @@
  * @module app/firmware
  * @exports bmcController
  * @name bmcController
- * @version 0.1.0
  */
 
 window.angular && (function (angular) {

@@ -3,7 +3,6 @@
  *
  * @module app/vendors
  * @exports app/vendors
- * @version 0.0.1
  */
 
 window.angular && (function (angular) {

@@ -4,7 +4,6 @@
  * @module app/firmware
  * @exports serverController
  * @name serverController
- * @version 0.1.0
  */
 
 window.angular && (function (angular) {

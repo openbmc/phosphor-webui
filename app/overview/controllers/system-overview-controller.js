@@ -4,7 +4,6 @@
  * @module app/overview
  * @exports systemOverviewController
  * @name systemOverviewController
- * @version 0.1.0
  */
 
 window.angular && (function (angular) {

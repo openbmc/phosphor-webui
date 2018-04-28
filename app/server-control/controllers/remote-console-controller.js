@@ -4,7 +4,6 @@
  * @module app/serverControl
  * @exports remoteConsoleController
  * @name remoteConsoleController
- * @version 0.1.0
  */
 
 import {hterm, lib} from 'hterm-umdjs';

@@ -5,7 +5,6 @@
  * @exports dataService
  * @name dataService
 
- * @version 0.0.1
  */
 
 window.angular && (function (angular) {

@@ -3,7 +3,6 @@
  *
  * @module app/configuration/index
  * @exports app/configuration/index
- * @version 0.0.1
  */
 
 window.angular && (function (angular) {

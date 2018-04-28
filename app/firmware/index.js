@@ -3,7 +3,6 @@
  *
  * @module app/firmware/index
  * @exports app/firmware/index
- * @version 0.0.1
  */
 
 window.angular && (function (angular) {

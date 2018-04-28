@@ -3,7 +3,6 @@
  *
  * @module app/templates
  * @exports app/templates
- * @version 0.0.1
  * @since 0.0.1
  */
 

@@ -4,7 +4,6 @@
  * @module app/multi-server
  * @exports multiServerController
  * @name multiServerController
- * @version 0.1.0
  */
 
 window.angular && (function (angular) {

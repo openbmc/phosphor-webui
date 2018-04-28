@@ -4,7 +4,6 @@
  * @module app/serverControl
  * @exports remoteConsoleWindowController
  * @name remoteConsoleController
- * @version 0.1.0
  */
 
 window.angular && (function (angular) {
