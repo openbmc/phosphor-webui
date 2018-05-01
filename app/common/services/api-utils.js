@@ -468,6 +468,8 @@ window.angular && (function (angular) {
                       var priority = '';
                       var health = '';
                       var relatedItems = [];
+                      var title = '';
+                      var additionalData = [];
 
                       for(var key in content.data){
                         if(content.data.hasOwnProperty(key) && content.data[key].hasOwnProperty('Id')){
@@ -483,6 +485,19 @@ window.angular && (function (angular) {
                             relatedItems.push(item[2]);
                           });
 
+                          additionalData = content.data[key].AdditionalData;
+
+                          if(content.data[key].hasOwnProperty('EventID') &&
+                             content.data[key].hasOwnProperty('Description') &&
+                             (content.data[key].EventID != 'None')){
+                              title = content.data[key].EventID + ": " +
+                                      content.data[key].Description;
+                              additionalData.push('MESSAGE=' + content.data[key].Message);
+
+                          }else{
+                            title = content.data[key].Message;
+                          }
+
                           data.push(Object.assign({
                             path: key,
                             copied: false,
@@ -490,8 +505,8 @@ window.angular && (function (angular) {
                             severity_code: severityCode,
                             severity_flags: severityFlags,
                             health_flags: healthFlags,
-                            additional_data: content.data[key].AdditionalData.join("\n"),
-                            type: content.data[key].Message,
+                            additional_data: additionalData.join("\n"),
+                            type: title,
                             selected: false,
                             search_text: ("#" + content.data[key].Id + " " + severityCode + " " + content.data[key].Severity + " " + content.data[key].AdditionalData.join(" ")).toLowerCase(),
                             meta: false,
