@@ -146,6 +146,14 @@ window.angular && (function(angular) {
             });
         $scope.loading = false;
       };
+
+      $scope.getEventLogTitle = function(event) {
+        var title = event.type;
+        if ((event.eventID != 'None') && (event.description != 'None')) {
+          title = event.eventID + ': ' + event.description;
+        }
+        return title;
+      };
     }
   ]);
 
