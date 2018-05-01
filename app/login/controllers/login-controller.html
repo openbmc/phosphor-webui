@@ -12,7 +12,7 @@
         </div>
         <div class="columns large-6 disabled">
             <form id="login__form" action="">
-                <label >Host</label>
+                <label >BMC Host or BMC IP Address</label>
                 <input type="text" ng-model="host" required  ng-class="{error: error}" autofocus ng-keydown="tryLogin(host, username, password, $event)" ng-disabled="dataService.loading">
 
                 <label for="username">Username</label>
