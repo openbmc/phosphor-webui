@@ -26,7 +26,7 @@
              <p class="inline event__severity" ng-class="{'low-priority': event.priority == 'Low', 'medium-priority': event.priority == 'Medium', 'high-priority': event.priority == 'High'}">{{event.severity_code}}</p>
              <p class="inline event__timestamp">{{event.Timestamp| date:'MM/dd/yyyy  HH:mm:ss '+tmz: tmz}}</p></div>
              <div>
-                 <p class="inline event__description">{{event.type}}</p>
+                 <p class="inline event__description">{{getTitle(event)}}</p>
              </div>
          <div class="column small-1 large-1">
              <button class="accord-trigger" ng-class="{'active': event.meta}"
@@ -36,7 +36,7 @@
      <div class="row event__metadata-row" ng-class="{'active': event.meta}">
          <div class="column small-1 large-1 event-log__col-check">&nbsp;</div>
          <div class="column small-11 large-11 end">
-             <div class="event__metadata">{{event.additional_data}}
+             <div class="event__metadata">{{getAdditionalData(event)}}
              </div>
              <div>
                  <div class="event__actions">

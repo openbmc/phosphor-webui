@@ -565,6 +565,8 @@ window.angular && (function(angular) {
                     var priority = '';
                     var health = '';
                     var relatedItems = [];
+                    var eventID = 'None';
+                    var description = 'None';
 
                     for (var key in content.data) {
                       if (content.data.hasOwnProperty(key) &&
@@ -591,6 +593,14 @@ window.angular && (function(angular) {
                           relatedItems.push(item[2]);
                         });
 
+                        if (content.data[key].hasOwnProperty(['EventID'])) {
+                          eventID = content.data[key].EventID;
+                        }
+
+                        if (content.data[key].hasOwnProperty(['Description'])) {
+                          description = content.data[key].Description;
+                        }
+
                         data.push(Object.assign(
                             {
                               path: key,
@@ -612,6 +622,8 @@ window.angular && (function(angular) {
                               meta: false,
                               confirm: false,
                               related_items: relatedItems,
+                              eventID: eventID,
+                              description: description,
                               data: {key: key, value: content.data[key]}
                             },
                             content.data[key]));

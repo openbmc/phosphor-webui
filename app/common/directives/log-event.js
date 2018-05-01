@@ -33,6 +33,24 @@ window.angular && (function(angular) {
                 $scope.$parent.accept();
               }, 10);
             };
+
+            $scope.getTitle = function(event) {
+              var title = event.type;
+              if ((event.eventID != 'None') && (event.description != 'None')) {
+                title = event.eventID + ': ' + event.description;
+              }
+              return title;
+            };
+
+            $scope.getAdditionalData = function(event) {
+              var data = event.additional_data;
+              // Stick the type into the additional data if it isn't
+              // already in the title.
+              if ($scope.getTitle(event).search(event.type) == -1) {
+                data += '\nMESSAGE=' + event.type;
+              }
+              return data;
+            };
           }
         ]
       };
