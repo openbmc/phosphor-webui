@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="row column">
-        <div id="power-indicator-bar" class="power__indicator-bar" ng-class="{'power__state-on': dataService.server_state == 'Running', 'power__state-off': dataService.server_state == 'Off', 'power__state-indet': dataService.server_state == 'Standby'}">
+        <div id="power-indicator-bar" class="power__indicator-bar" ng-class="{'power__state-on': dataService.server_state == 'Running', 'power__state-off': dataService.server_state == 'Off', 'power__state-indet': dataService.server_state == 'Standby', 'power__state-error': dataService.server_state == 'Quiesced'}">
             <p class="inline">{{dataService.hostname}} - {{dataService.server_id}}</p>
             <h3 class="power__state inline no-margin h3"><span>{{dataService.server_state | quiescedToError}}</span></h3>
         </div>
