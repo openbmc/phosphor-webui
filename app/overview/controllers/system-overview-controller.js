@@ -29,6 +29,7 @@ window.angular && (function (angular) {
                 $scope.server_firmware = "";
                 $scope.power_consumption = "";
                 $scope.power_cap = "";
+                $scope.bmc_ip_addresses = [];
                 $scope.loading = false;
 
                 loadOverviewData();
@@ -43,6 +44,7 @@ window.angular && (function (angular) {
                       server_info: APIUtils.getServerInfo(),
                       power_consumption: APIUtils.getPowerConsumption(),
                       power_cap: APIUtils.getPowerCap(),
+                      network_info: APIUtils.getNetworkInfo(),
                     };
                     $q.all(promises)
                       .then(function(data){
@@ -59,6 +61,7 @@ window.angular && (function (angular) {
                         );
                         $scope.displayPowerConsumption(data.power_consumption);
                         $scope.displayPowerCap(data.power_cap);
+                        $scope.displayNetworkInfo(data.network_info);
                       })
                       .finally(function(){
                         $scope.loading = false;
@@ -107,6 +110,12 @@ window.angular && (function (angular) {
 
                 $scope.displayPowerCap = function(data){
                     $scope.power_cap = data;
+                }
+
+                $scope.displayNetworkInfo = function(data){
+                    // TODO: openbmc/openbmc#3150 Support IPV6 when officially
+                    // supported by the backend
+                    $scope.bmc_ip_addresses = data.formatted_data.ip_addresses['ipv4'];
                 }
             }
         ]
