@@ -91,8 +91,9 @@ window.angular && (function (angular) {
                     function parseNetworkData(content){
                       var data = {
                         interface_ids: [],
-                        interfaces: {
-                        }
+                        interfaces: {},
+                        ip_addresses: {ipv4 : [],
+                                       ipv6 : []},
                       };
                       var interfaceId = '', keyParts = [], interfaceHash = '', interfaceType = '';
                       for(var key in content.data){
@@ -131,6 +132,7 @@ window.angular && (function (angular) {
                           if(data.interfaces[interfaceId][interfaceType].ids.indexOf(interfaceHash) == -1){
                             data.interfaces[interfaceId][interfaceType].ids.push(interfaceHash);
                             data.interfaces[interfaceId][interfaceType].values.push(content.data[key]);
+                            data.ip_addresses[interfaceType].push(content.data[key]['Address']);
                           }
                         }
                       }

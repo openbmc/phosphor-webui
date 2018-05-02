@@ -45,8 +45,8 @@
 							<p class="courier-bold overview__hostname">{{dataService.hostname}}</p>
 						</li>
 						<li class="overview__metadata-block">
-							<p class="content-label">BMC Host/IP address</p>
-							<p class="courier-bold">{{dataService.server_id}}</p>
+							<p class="content-label">IP addresses</p>
+							<p class="courier-bold" ng-repeat="ip_address in bmc_ip_addresses">{{ip_address}}</p>
 						</li>
 						<li class="overview__metadata-block">
 							<p class="content-label">Firmware Version</p>
