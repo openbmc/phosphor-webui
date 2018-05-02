@@ -76,6 +76,16 @@
         }
       }
     }
+    &.power__state-error {
+      background-position: 0;
+      color: $black;
+      .power__state {
+        span:before {
+          content: '';
+          @extend .icon__critical;
+        }
+      }
+    }
   }
 
   // Power button options
