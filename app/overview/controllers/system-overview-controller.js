@@ -32,6 +32,7 @@ window.angular && (function (angular) {
                 $scope.power_cap = "";
                 $scope.bmc_ip_addresses = [];
                 $scope.loading = false;
+                $scope.edit_server_name = false;
 
                 loadOverviewData();
                 function loadOverviewData(){
@@ -124,6 +125,20 @@ window.angular && (function (angular) {
                     // supported by the backend
                     $scope.bmc_ip_addresses =
                         data.formatted_data.ip_addresses.ipv4;
+                }
+
+                $scope.saveHostname = function(hostname) {
+                    $scope.edit_server_name = false;
+                    $scope.loading = true;
+                    APIUtils.setHostname(hostname).then(function(data){
+                        APIUtils.getNetworkInfo().then(function(data){
+                            dataService.setNetworkInfo(data);
+                        });
+                    },
+                    function(error){
+                        console.log(error);
+                    });
+                    $scope.loading = false;
                 }
             }
         ]
