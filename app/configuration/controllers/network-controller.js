@@ -20,6 +20,7 @@ window.angular && (function(angular) {
       $scope.set_network_error = '';
       $scope.set_network_success = false;
       $scope.selectedInterface = '';
+      $scope.confirm_settings = false;
 
       $scope.selectInterface = function(interfaceId) {
         $scope.interface = $scope.network.interfaces[interfaceId];
@@ -27,6 +28,8 @@ window.angular && (function(angular) {
         $scope.networkDevice = false;
       };
       $scope.setNetworkSettings = function() {
+        // Hides the confirm network settings modal
+        $scope.confirm_settings = false;
         $scope.set_network_error = '';
         $scope.set_network_success = false;
         // TODO openbmc/openbmc#3165: check if the network settings
