@@ -27,13 +27,19 @@ window.angular && (function (angular) {
                 $scope.set_network_error = "";
                 $scope.set_network_success = false;
                 $scope.selectedInterface = "";
+                $scope.confirm_settings = false;
 
                 $scope.selectInterface = function(interfaceId){
                     $scope.interface = $scope.network.interfaces[interfaceId];
                     $scope.selectedInterface = interfaceId;
                     $scope.networkDevice = false;
                 }
+                $scope.confirmSetNetworkSettings = function(){
+                    $scope.confirm_settings = true;
+                }
                 $scope.setNetworkSettings = function(){
+                    // Hides the confirm network settings modal
+                    $scope.confirm_settings = false;
                     $scope.set_network_error = "";
                     $scope.set_network_success = false;
                     // TODO: check if the network settings changed before setting
