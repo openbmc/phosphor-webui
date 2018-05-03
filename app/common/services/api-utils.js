@@ -1120,6 +1120,20 @@ window.angular && (function (angular) {
                   console.log(error);
                 });
               },
+              setHostname: function(hostname){
+                return $http({
+                  method: 'PUT',
+                  url: DataService.getHost() + "/xyz/openbmc_project/network/config/attr/HostName",
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: true,
+                  data: JSON.stringify({"data": hostname})
+                }).then(function(response){
+                    return response.data;
+                });
+              },
           };
           return SERVICE;
         }]);
