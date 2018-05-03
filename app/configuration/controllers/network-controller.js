@@ -24,7 +24,7 @@ window.angular && (function (angular) {
                 $scope.interface = {};
                 $scope.networkDevice  = false;
                 $scope.hostname = "";
-                $scope.set_network_errors = "";
+                $scope.set_network_error = "";
                 $scope.set_network_success = false;
                 $scope.selectedInterface = "";
 
@@ -34,44 +34,70 @@ window.angular && (function (angular) {
                     $scope.networkDevice = false;
                 }
                 $scope.setNetworkSettings = function(){
-                    $scope.set_network_errors = "";
+                    $scope.set_network_error = "";
                     $scope.set_network_success = false;
                     // TODO: check if the network settings changed before setting
                     APIUtils.setNetworkSetting($scope.selectedInterface, "MACAddress", $scope.interface.MACAddress).then(function(data){
                         // DHCPEnabled must be set as 0 (false) or 1 (true)
                         APIUtils.setNetworkSetting($scope.selectedInterface, "DHCPEnabled", +$scope.interface.DHCPEnabled).then(function(data){
 
+                            // Set IPV4 IP Addresses and gateways
+                            for (var i in $scope.interface.ipv4.values) {
+                                APIUtils.setIPV4NetworkSetting($scope.selectedInterface, $scope.interface.ipv4.ids[i], "Address", $scope.interface.ipv4.values[i].Address).then(function(data){
+                                    APIUtils.setIPV4NetworkSetting($scope.selectedInterface, $scope.interface.ipv4.ids[i], "Gateway", $scope.interface.ipv4.values[i].Gateway).then(function(data){},
+                                    function(error){
+                                        console.log(error);
+                                        $scope.set_network_error = "Gateway";
+                                        return;
+                                    });
+                                },
+                                function(error){
+                                    console.log(error);
+                                    $scope.set_network_error = "IP Address";
+                                    return;
+                                });
+                            }
                             // Due to github.com/openbmc/openbmc/issues/1641, the REST call may return good even though
                             // setting the network settings failed. Follow up the set with a get 4 seconds later to check
                             // if the set was successful.
                             $timeout(function() {
                                 APIUtils.getNetworkInfo().then(function(data){
-                                    if (data.formatted_data.interfaces[$scope.selectedInterface].MACAddress != $scope.network.interfaces[$scope.selectedInterface].MACAddress)
+                                    if (data.formatted_data.interfaces[$scope.selectedInterface].MACAddress != $scope.interface.MACAddress)
                                     {
-                                        $scope.set_network_errors = $scope.set_network_errors + "MAC Address";
+                                        $scope.set_network_error = "MAC Address";
                                     }
-                                    if (data.formatted_data.interfaces[$scope.selectedInterface].DHCPEnabled != $scope.network.interfaces[$scope.selectedInterface].DHCPEnabled)
+                                    if (data.formatted_data.interfaces[$scope.selectedInterface].DHCPEnabled != $scope.interface.DHCPEnabled)
                                     {
-                                        $scope.set_network_errors = $scope.set_network_errors + "DHCP";
+                                        $scope.set_network_error = "DHCP";
                                     }
-                                    if (!$scope.set_network_errors) {
+                                    for (var i in $scope.interface.ipv4.values) {
+                                        if (data.formatted_data.interfaces[$scope.selectedInterface].ipv4.values[i].Gateway != $scope.interface.ipv4.values[i].Gateway)
+                                        {
+                                            $scope.set_network_error = "Gateway";
+                                        }
+                                        if (data.formatted_data.interfaces[$scope.selectedInterface].ipv4.values[i].Address != $scope.interface.ipv4.values[i].Address)
+                                        {
+                                            $scope.set_network_error = "IP Address";
+                                        }
+                                    }
+                                    if (!$scope.set_network_error) {
                                         $scope.set_network_success = true;
                                     }
                                 },
                                 function(error){
                                     console.log(error);
-                                    $scope.set_network_errors = $scope.set_network_errors + "MAC Address, DHCP";
+                                    $scope.set_network_error = "network";
                                 });
                             }, 4000);
                         },
                         function(error){
                             console.log(error);
-                            $scope.set_network_errors = $scope.set_network_errors + "DHCP";
+                            $scope.set_network_error = "DHCP";
                         });
                     },
                     function(error){
                         console.log(error);
-                        $scope.set_network_errors = $scope.set_network_errors + "MAC Address";
+                        $scope.set_network_error = "MAC Address";
                     });
                 }
                 $scope.refresh = function(){

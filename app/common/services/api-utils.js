@@ -176,6 +176,21 @@ window.angular && (function (angular) {
                   return response.data;
                 });
               },
+              setIPV4NetworkSetting : function(interface_name, network_id, prop_name, prop_value){
+console.log("/xyz/openbmc_project/netwrk/" + interface_name + "/ipv4/" + network_id + "/attr/" + prop_name)
+                return $http({
+                  method: 'PUT',
+                  url: DataService.getHost() + "/xyz/openbmc_project/network/" + interface_name + "/ipv4/" + network_id + "/attr/" + prop_name,
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  withCredentials: true,
+                  data: JSON.stringify({"data": prop_value})
+                }).then(function(response){
+                  return response.data;
+                });
+              },
               getLEDState: function(){
                 var deferred = $q.defer();
                 $http({
