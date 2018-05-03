@@ -17,7 +17,8 @@ window.angular && (function (angular) {
             'APIUtils',
             'dataService',
             '$q',
-            function($scope, $window, APIUtils, dataService, $q){
+            '$route',
+            function($scope, $window, APIUtils, dataService, $q, $route){
                 $scope.dataService = dataService;
                 $scope.dropdown_selected = false;
                 $scope.tmz = 'EDT';
@@ -107,6 +108,19 @@ window.angular && (function (angular) {
 
                 $scope.displayPowerCap = function(data){
                     $scope.power_cap = data;
+                }
+
+                $scope.saveHostname = function(hostname) {
+                    console.log("Saving Hostname! " + hostname);
+                    APIUtils.setHostname(hostname).then(function(data){
+                        APIUtils.getNetworkInfo().then(function(data){
+                            dataService.setNetworkInfo(data);
+                            $route.reload();
+                        });
+                    },
+                    function(error){
+                        console.log(error);
+                    });
                 }
             }
         ]
