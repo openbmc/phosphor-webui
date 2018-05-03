@@ -61,8 +61,9 @@
 						<input id="net-config__subnet" type="text" ng-disabled="interface.DHCPEnabled" value="" ng-model="ipv4.Gateway"/>
 					</div>
 					<div class="column small-12 large-4">
+						<!-- TODO: Implement setting Origin -->
 						<label for="net-config__default-gateway" class="inline">Origin</label>
-						<input id="net-config__default-gateway" type="text" ng-disabled="interface.DHCPEnabled"  ng-model="ipv4.Origin"/>
+						<input id="net-config__default-gateway" type="text" readonly ng-disabled="interface.DHCPEnabled"  ng-model="ipv4.Origin"/>
 					</div>
 				</fieldset>
 			</fieldset>
