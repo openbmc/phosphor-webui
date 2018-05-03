@@ -17,7 +17,8 @@ window.angular && (function (angular) {
             'APIUtils',
             'dataService',
             '$q',
-            function($scope, $window, APIUtils, dataService, $q){
+            '$route',
+            function($scope, $window, APIUtils, dataService, $q, $route){
                 $scope.dataService = dataService;
                 $scope.dropdown_selected = false;
                 $scope.tmz = 'EDT';
@@ -30,6 +31,7 @@ window.angular && (function (angular) {
                 $scope.power_consumption = "";
                 $scope.power_cap = "";
                 $scope.loading = false;
+                $scope.edit_server_name = false;
 
                 loadOverviewData();
                 function loadOverviewData(){
@@ -107,6 +109,20 @@ window.angular && (function (angular) {
 
                 $scope.displayPowerCap = function(data){
                     $scope.power_cap = data;
+                }
+
+                $scope.saveHostname = function(hostname) {
+                    $scope.edit_server_name = false;
+                    $scope.loading = true;
+                    APIUtils.setHostname(hostname).then(function(data){
+                        APIUtils.getNetworkInfo().then(function(data){
+                            dataService.setNetworkInfo(data);
+                        });
+                    },
+                    function(error){
+                        console.log(error);
+                    });
+                    $scope.loading = false;
                 }
             }
         ]
