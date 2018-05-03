@@ -17,7 +17,8 @@ window.angular && (function (angular) {
             'APIUtils',
             'dataService',
             '$timeout',
-            function($scope, $window, APIUtils, dataService, $timeout){
+            '$route',
+            function($scope, $window, APIUtils, dataService, $timeout, $route){
                 $scope.dataService = dataService;
                 $scope.network = {};
                 $scope.interface = {};
@@ -72,6 +73,9 @@ window.angular && (function (angular) {
                         console.log(error);
                         $scope.set_network_error = "MAC Address";
                     });
+                }
+                $scope.refresh = function(){
+                    $route.reload();
                 }
                 APIUtils.getNetworkInfo().then(function(data){
                     $scope.network = data.formatted_data;
