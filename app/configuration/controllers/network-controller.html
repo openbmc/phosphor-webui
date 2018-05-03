@@ -83,7 +83,7 @@
 				</div>
 			</fieldset>
 			<div class="network-config__submit-wrapper">
-				<button type="button" class="btn-primary inline" ng-click="setNetworkSettings()">Save settings</button>
+				<button type="button" class="btn-primary inline" ng-click="confirmSetNetworkSettings()">Save settings</button>
 				<button type="button" class="btn-secondary inline" ng-click="refresh()">Cancel</button>
 			</div>
 			<p class="success-msg set_network_success" ng-show="set_network_success" role="alert">Success! Network settings changed!</p>
@@ -91,3 +91,19 @@
 		</section>
 	</form>
 </div>
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': confirm_settings}">
+	<div class="modal__tftp-unreachable" role="document">
+		<div class="screen-reader-offscreen modal-description">Change network settings</div><!-- accessibility only; used for screen readers -->
+		<div class="page-header ">
+			<span class="icon icon__warning inline"><span class="accessible-text" role="alert">Warning</span></span>
+			<h1 class="modal-title h4 inline">Change network settings</h1>
+		</div>
+		<div class="modal__content">
+			<p>Changing network settings may cause the system to become unavailable (e.g. changing the BMC IP address). Proceed with caution and make note of any new settings that may affect connectivity.</p>
+		</div>
+		<div class="modal__button-wrapper">
+			<button class="inline btn-secondary" ng-click="confirm_settings=false;">Cancel</button>
+			<button class="inline btn-primary" ng-click="setNetworkSettings()">Continue</button>
+		</div>
+	</div>
+</section>
