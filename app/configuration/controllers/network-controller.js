@@ -41,6 +41,22 @@ window.angular && (function (angular) {
                         // DHCPEnabled must be set as 0 (false) or 1 (true)
                         APIUtils.setNetworkSetting($scope.selectedInterface, "DHCPEnabled", +$scope.interface.DHCPEnabled).then(function(data){
 
+                            // Set IPV4 IP Addresses and gateways
+                            for (var i in $scope.interface.ipv4.values) {
+                                APIUtils.setIPV4NetworkSetting($scope.selectedInterface, $scope.interface.ipv4.ids[i], "Address", $scope.interface.ipv4.values[i].Address).then(function(data){
+                                    APIUtils.setIPV4NetworkSetting($scope.selectedInterface, $scope.interface.ipv4.ids[i], "Gateway", $scope.interface.ipv4.values[i].Gateway).then(function(data){},
+                                    function(error){
+                                        console.log(error);
+                                        $scope.set_network_error = "Gateway";
+                                        return;
+                                    });
+                                },
+                                function(error){
+                                    console.log(error);
+                                    $scope.set_network_error = "IP Address";
+                                    return;
+                                });
+                            }
                             // Due to github.com/openbmc/openbmc/issues/1641, the REST call may return good even though
                             // setting the network settings failed. Follow up the set with a get 4 seconds later to check
                             // if the set was successful.
@@ -53,6 +69,16 @@ window.angular && (function (angular) {
                                     if (data.formatted_data.interfaces[$scope.selectedInterface].DHCPEnabled != $scope.interface.DHCPEnabled)
                                     {
                                         $scope.set_network_error = "DHCP";
+                                    }
+                                    for (var i in $scope.interface.ipv4.values) {
+                                        if (data.formatted_data.interfaces[$scope.selectedInterface].ipv4.values[i].Gateway != $scope.interface.ipv4.values[i].Gateway)
+                                        {
+                                            $scope.set_network_error = "Gateway";
+                                        }
+                                        if (data.formatted_data.interfaces[$scope.selectedInterface].ipv4.values[i].Address != $scope.interface.ipv4.values[i].Address)
+                                        {
+                                            $scope.set_network_error = "IP Address";
+                                        }
                                     }
                                     if (!$scope.set_network_error) {
                                         $scope.set_network_success = true;
