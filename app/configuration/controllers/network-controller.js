@@ -50,10 +50,17 @@ window.angular && (function (angular) {
                             // Set IPV4 IP Addresses and gateways
                             for (var i in $scope.interface.ipv4.values) {
                                 APIUtils.setIPV4NetworkSetting($scope.selectedInterface, $scope.interface.ipv4.ids[i], "Address", $scope.interface.ipv4.values[i].Address).then(function(data){
-                                    APIUtils.setIPV4NetworkSetting($scope.selectedInterface, $scope.interface.ipv4.ids[i], "Gateway", $scope.interface.ipv4.values[i].Gateway).then(function(data){},
+                                    APIUtils.setIPV4NetworkSetting($scope.selectedInterface, $scope.interface.ipv4.ids[i], "PrefixLength", $scope.interface.ipv4.values[i].PrefixLength).then(function(data){
+                                        APIUtils.setIPV4NetworkSetting($scope.selectedInterface, $scope.interface.ipv4.ids[i], "Gateway", $scope.interface.ipv4.values[i].Gateway).then(function(data){},
+                                        function(error){
+                                            console.log(error);
+                                            $scope.set_network_error = "Gateway";
+                                            return;
+                                        });
+                                    },
                                     function(error){
                                         console.log(error);
-                                        $scope.set_network_error = "Gateway";
+                                        $scope.set_network_error = "Netmask";
                                         return;
                                     });
                                 },
@@ -80,6 +87,10 @@ window.angular && (function (angular) {
                                         if (data.formatted_data.interfaces[$scope.selectedInterface].ipv4.values[i].Gateway != $scope.interface.ipv4.values[i].Gateway)
                                         {
                                             $scope.set_network_error = "Gateway";
+                                        }
+                                        if (data.formatted_data.interfaces[$scope.selectedInterface].ipv4.values[i].PrefixLength != $scope.interface.ipv4.values[i].PrefixLength)
+                                        {
+                                            $scope.set_network_error = "Netmask";
                                         }
                                         if (data.formatted_data.interfaces[$scope.selectedInterface].ipv4.values[i].Address != $scope.interface.ipv4.values[i].Address)
                                         {
