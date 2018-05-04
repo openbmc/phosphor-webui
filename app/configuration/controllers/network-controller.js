@@ -123,6 +123,7 @@ window.angular && (function (angular) {
                 APIUtils.getNetworkInfo().then(function(data){
                     $scope.network = data.formatted_data;
                     $scope.hostname = data.hostname;
+                    $scope.defaultgateway = data.defaultgateway;
                     if($scope.network.interface_ids.length){
                        $scope.selectedInterface = $scope.network.interface_ids[0];
                        $scope.interface = $scope.network.interfaces[$scope.selectedInterface];
