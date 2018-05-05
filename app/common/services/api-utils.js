@@ -1081,7 +1081,7 @@ window.angular && (function (angular) {
                   if ('Not Found' == error.statusText) {
                     return Constants.POWER_CONSUMPTION_TEXT.notavailable;
                   } else {
-                    console.log(error);
+                    throw error;
                   }
                 });
               },
@@ -1101,8 +1101,6 @@ window.angular && (function (angular) {
                     return (false == content.data.PowerCapEnable) ?
                         Constants.POWER_CAP_TEXT.disabled :
                         content.data.PowerCap + ' ' + Constants.POWER_CAP_TEXT.unit;
-                }, function(error){
-                  console.log(error);
                 });
               },
           };
