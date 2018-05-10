@@ -86,6 +86,7 @@ window.angular && (function (angular) {
                     var json = JSON.stringify(response.data);
                     var content = JSON.parse(json);
                     var hostname = "";
+                    var defaultgateway = "";
                     var macAddress = "";
 
                     function parseNetworkData(content){
@@ -139,10 +140,16 @@ window.angular && (function (angular) {
                       return data;
                     }
 
-                    if(content.data.hasOwnProperty('/xyz/openbmc_project/network/config') &&
-                      content.data['/xyz/openbmc_project/network/config'].hasOwnProperty('HostName')
-                      ){
-                      hostname = content.data['/xyz/openbmc_project/network/config'].HostName;
+                    if(content.data.hasOwnProperty('/xyz/openbmc_project/network/config'))
+                    {
+                        if (content.data['/xyz/openbmc_project/network/config'].hasOwnProperty('HostName'))
+                        {
+                            hostname = content.data['/xyz/openbmc_project/network/config'].HostName;
+                        }
+                        if (content.data['/xyz/openbmc_project/network/config'].hasOwnProperty('DefaultGateway'))
+                        {
+                            defaultgateway = content.data['/xyz/openbmc_project/network/config'].DefaultGateway;
+                        }
                     }
 
                     if(content.data.hasOwnProperty('/xyz/openbmc_project/network/eth0') &&
@@ -154,6 +161,7 @@ window.angular && (function (angular) {
                     deferred.resolve({
                       data: content.data,
                       hostname: hostname,
+                      default_gateway: defaultgateway,
                       mac_address: macAddress,
                       formatted_data: parseNetworkData(content)
                     });
