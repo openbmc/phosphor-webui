@@ -86,6 +86,7 @@ window.angular && (function (angular) {
                     var json = JSON.stringify(response.data);
                     var content = JSON.parse(json);
                     var hostname = "";
+                    var defaultgateway = "";
                     var macAddress = "";
 
                     function parseNetworkData(content){
@@ -120,7 +121,14 @@ window.angular && (function (angular) {
                             data.interfaces[interfaceId].MACAddress = content.data[key].MACAddress;
                             data.interfaces[interfaceId].DomainName = content.data[key].DomainName.join(" ");
                             data.interfaces[interfaceId].Nameservers = content.data[key].Nameservers;
-                            data.interfaces[interfaceId].DHCPEnabled = content.data[key].DHCPEnabled;
+                            // TODO: openbmc/openbmc#3154 REST server
+                            // should return a proper JSON bool rather
+                            // than a string of "1" or "0". Adding '!!+'
+                            // is a workaround which should be removed
+                            // once #3154 is implemented.
+                            // DHCPEnabled comes back as a 0 (false),
+                            // 1 (true), convert to bool
+                            data.interfaces[interfaceId].DHCPEnabled = !!+content.data[key].DHCPEnabled;
                           }
                         }else if(key.match(/network\/eth\d+\/ipv[4|6]\/[a-z0-9]+$/ig)){
                           keyParts = key.split("/");
@@ -137,10 +145,16 @@ window.angular && (function (angular) {
                       return data;
                     }
 
-                    if(content.data.hasOwnProperty('/xyz/openbmc_project/network/config') &&
-                      content.data['/xyz/openbmc_project/network/config'].hasOwnProperty('HostName')
-                      ){
-                      hostname = content.data['/xyz/openbmc_project/network/config'].HostName;
+                    if(content.data.hasOwnProperty('/xyz/openbmc_project/network/config'))
+                    {
+                        if (content.data['/xyz/openbmc_project/network/config'].hasOwnProperty('HostName'))
+                        {
+                            hostname = content.data['/xyz/openbmc_project/network/config'].HostName;
+                        }
+                        if (content.data['/xyz/openbmc_project/network/config'].hasOwnProperty('DefaultGateway'))
+                        {
+                            defaultgateway = content.data['/xyz/openbmc_project/network/config'].DefaultGateway;
+                        }
                     }
 
                     if(content.data.hasOwnProperty('/xyz/openbmc_project/network/eth0') &&
@@ -152,6 +166,7 @@ window.angular && (function (angular) {
                     deferred.resolve({
                       data: content.data,
                       hostname: hostname,
+                      default_gateway: defaultgateway,
                       mac_address: macAddress,
                       formatted_data: parseNetworkData(content)
                     });
@@ -160,6 +175,76 @@ window.angular && (function (angular) {
                   deferred.reject(error);
                 });
                 return deferred.promise;
+              },
+              setMACAddress : function(interfaceName, macAddress){
+                return $http({
+                  method: 'PUT',
+                  url: DataService.getHost() + "/xyz/openbmc_project/network/" + interfaceName + "/attr/MACAddress",
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  withCredentials: true,
+                  data: JSON.stringify({"data": macAddress})
+                }).then(function(response){
+                  return response.data;
+                });
+              },
+              setDHCPEnabled : function(interfaceName, dhcpEnabled){
+                return $http({
+                  method: 'PUT',
+                  url: DataService.getHost() + "/xyz/openbmc_project/network/" + interfaceName + "/attr/DHCPEnabled",
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  withCredentials: true,
+                  data: JSON.stringify({"data": dhcpEnabled})
+                }).then(function(response){
+                  return response.data;
+                });
+              },
+              setDefaultGateway : function(defaultGateway){
+                return $http({
+                  method: 'PUT',
+                  url: DataService.getHost() + "/xyz/openbmc_project/network/config/attr/DefaultGateway",
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  withCredentials: true,
+                  data: JSON.stringify({"data": defaultGateway})
+                }).then(function(response){
+                  return response.data;
+                });
+              },
+              deleteIPV4 : function(interfaceName, networkID){
+                return $http({
+                  method: 'POST',
+                  url: DataService.getHost() + "/xyz/openbmc_project/network/" + interfaceName + "/ipv4/" + networkID + "/action/Delete",
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  withCredentials: true,
+                  data: JSON.stringify({"data": []})
+                }).then(function(response){
+                  return response.data;
+                });
+              },
+              addIPV4 : function(interfaceName, ipAddress, netmaskPrefixLength, gateway){
+                return $http({
+                  method: 'POST',
+                  url: DataService.getHost() + "/xyz/openbmc_project/network/" + interfaceName + "/action/IP",
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  withCredentials: true,
+                  data: JSON.stringify({"data": ["xyz.openbmc_project.Network.IP.Protocol.IPv4", ipAddress, +netmaskPrefixLength, gateway]})
+                }).then(function(response){
+                  return response.data;
+                });
               },
               getLEDState: function(){
                 var deferred = $q.defer();

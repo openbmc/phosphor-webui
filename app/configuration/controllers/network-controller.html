@@ -1,3 +1,4 @@
+<loader loading="loading"></loader>
 <div id="configuration-network">
 	<div class="row column">
 		<h1>BMC network settings</h1>
@@ -28,8 +29,8 @@
 					<input id="net-config__host" type="text" ng-model="interface.MACAddress"/>
 				</div>
 				<div class="column small-12 large-3">
-					<label for="net-config__domain">Domain name</label>
-					<input id="net-config__domain" type="text" ng-model="interface.DomainName"/>
+					<label for="net-config__domain">Default Gateway</label>
+					<input id="net-config__domain" type="text" ng-model="default_gateway"/>
 				</div>
 			</fieldset>
 		</section>
@@ -60,8 +61,8 @@
 						<input id="net-config__subnet" type="text" ng-disabled="interface.DHCPEnabled" value="" ng-model="ipv4.Gateway"/>
 					</div>
 					<div class="column small-12 large-4">
-						<label for="net-config__default-gateway" class="inline">Origin</label>
-						<input id="net-config__default-gateway" type="text" ng-disabled="interface.DHCPEnabled"  ng-model="ipv4.Origin"/>
+						<label for="net-config__default-gateway" class="inline">Netmask Prefix Length</label>
+						<input id="net-config__default-gateway" type="text" ng-disabled="interface.DHCPEnabled"  ng-model="ipv4.PrefixLength"/>
 					</div>
 				</fieldset>
 			</fieldset>
@@ -81,9 +82,27 @@
 				</div>
 			</fieldset>
 			<div class="network-config__submit-wrapper">
-				<button class="btn-primary inline">Save settings</button>
-				<button class="btn-secondary inline">Cancel</button>
+				<button type="button" class="btn-primary inline" ng-click="confirmSetNetworkSettings()">Save settings</button>
+				<button type="button" class="btn-secondary inline" ng-click="refresh()">Cancel</button>
 			</div>
+			<p class="success-msg set_network_success" ng-show="set_network_success" role="alert">Success! Network settings changed!</p>
+			<p class="set_network_error error-msg" ng-show="set_network_error" role="alert">Error setting {{set_network_error}}!</p>
 		</section>
 	</form>
 </div>
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': confirm_settings}">
+	<div class="modal__tftp-unreachable" role="document">
+		<div class="screen-reader-offscreen modal-description">Change network settings</div><!-- accessibility only; used for screen readers -->
+		<div class="page-header ">
+			<span class="icon icon__warning inline"><span class="accessible-text" role="alert">Warning</span></span>
+			<h1 class="modal-title h4 inline">Change network settings</h1>
+		</div>
+		<div class="modal__content">
+			<p>Changing network settings may cause the system to become unavailable (e.g. changing the BMC IP address). Proceed with caution and make note of any new settings that may affect connectivity.</p>
+		</div>
+		<div class="modal__button-wrapper">
+			<button class="inline btn-secondary" ng-click="confirm_settings=false;">Cancel</button>
+			<button class="inline btn-primary" ng-click="setNetworkSettings()">Continue</button>
+		</div>
+	</div>
+</section>
