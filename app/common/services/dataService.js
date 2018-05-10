@@ -30,6 +30,7 @@ window.angular && (function (angular) {
             this.sensorData = [];
 
             this.hostname = "";
+            this.default_gateway = "";
             this.mac_address = "";
             this.remote_window_active = false;
 
@@ -72,6 +73,7 @@ window.angular && (function (angular) {
 
             this.setNetworkInfo = function(data){
                 this.hostname = data.hostname;
+                this.default_gateway = data.default_gateway;
                 this.mac_address = data.mac_address;
             }
 

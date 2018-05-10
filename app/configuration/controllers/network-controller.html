@@ -25,11 +25,11 @@
 				</div>
 				<div class="column small-12 large-3">
 					<label for="net-config__host">MAC address</label>
-					<input id="net-config__host" type="text" ng-model="interface.MACAddress"/>
+					<input id="net-config__host" type="text" ng-disabled=true ng-model="interface.MACAddress"/>
 				</div>
 				<div class="column small-12 large-3">
-					<label for="net-config__domain">Domain name</label>
-					<input id="net-config__domain" type="text" ng-model="interface.DomainName"/>
+					<label for="net-config__domain">Default Gateway</label>
+					<input id="net-config__domain" type="text" ng-disabled=true ng-model="default_gateway"/>
 				</div>
 			</fieldset>
 		</section>
@@ -40,28 +40,28 @@
 			<fieldset>
 				<div class="row column">
 					<label class="control-radio" for="dhcp-address">Obtain an IP address automatically using DHCP
-						<input type="radio" name="ip-address" id="dhcp-address" ng-checked="true" ng-model="interface.DHCPEnabled" ng-value="true">
+						<input type="radio" name="ip-address" id="dhcp-address" ng-checked="true" ng-disabled=true ng-model="interface.DHCPEnabled" ng-value="1">
 						<span class="control__indicator control__indicator-on"></span>
 					</label>
 				</div>
 				<div class="row column">
 					<label class="control-radio" for="static-ip-address">Assign a static IP address
-						<input type="radio" name="ip-address" id="static-ip-address" ng-model="interface.DHCPEnabled" ng-value="false"/>
+						<input type="radio" name="ip-address" id="static-ip-address" ng-disabled=true ng-model="interface.DHCPEnabled" ng-value="0"/>
 						<span class="control__indicator control__indicator-on"></span>
 					</label>
 				</div>
 				<fieldset class="net-config__static-ip-wrap" ng-repeat="ipv4 in interface.ipv4.values">
 					<div class="column small-12 large-4">
 						<label for="net-config__ipv4-address" class="inline">IPV4 address</label>
-						<input id="net-config__ipv4-address" type="text" ng-disabled="interface.DHCPEnabled" ng-model="ipv4.Address"/>
+						<input id="net-config__ipv4-address" type="text" ng-disabled=true ng-model="ipv4.Address"/>
 					</div>
 					<div class="column small-12 large-4">
 						<label for="net-config__subnet" class="inline">Gateway</label>
-						<input id="net-config__subnet" type="text" ng-disabled="interface.DHCPEnabled" value="" ng-model="ipv4.Gateway"/>
+						<input id="net-config__subnet" type="text" ng-disabled=true value="" ng-model="ipv4.Gateway"/>
 					</div>
 					<div class="column small-12 large-4">
-						<label for="net-config__default-gateway" class="inline">Origin</label>
-						<input id="net-config__default-gateway" type="text" ng-disabled="interface.DHCPEnabled"  ng-model="ipv4.Origin"/>
+						<label for="net-config__default-gateway" class="inline">Netmask Prefix Length</label>
+						<input id="net-config__default-gateway" type="text" ng-disabled=true ng-model="ipv4.PrefixLength"/>
 					</div>
 				</fieldset>
 			</fieldset>
@@ -80,10 +80,12 @@
 					</ul>
 				</div>
 			</fieldset>
+        <!-- Make page read only for GA2
 			<div class="network-config__submit-wrapper">
 				<button class="btn-primary inline">Save settings</button>
 				<button class="btn-secondary inline">Cancel</button>
 			</div>
+        -->
 		</section>
 	</form>
 </div>
