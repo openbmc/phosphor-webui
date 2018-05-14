@@ -118,7 +118,7 @@
 			</div>
 
 			<!-- single event -->
-			<a href="#/server-health/event-log/high" ng-repeat="event in logs|orderBy:'+Id'">
+			<a href="#/server-health/event-log/high" ng-repeat="event in logs|orderBy:sortAscending:'+Id'">
 				<div class="row column event-log__single-event">
 					<div class="row">
 						<div class="column small-1 large-1 event-log__col-check">
