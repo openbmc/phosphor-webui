@@ -107,8 +107,7 @@ lib.rtdep = function(var_args) {
       lib.rtdep.apply(lib, path);
     } else {
       var ary = this.runtimeDependencies_[path];
-      if (!ary)
-        ary = this.runtimeDependencies_[path] = [];
+      if (!ary) ary = this.runtimeDependencies_[path] = [];
       ary.push(source);
     }
   }
@@ -141,8 +140,7 @@ lib.ensureRuntimeDependencies_ = function() {
     }
   }
 
-  if (!passed)
-    throw new Error('Failed runtime dependency check');
+  if (!passed) throw new Error('Failed runtime dependency check');
 };
 
 /**
@@ -182,8 +180,7 @@ lib.init = function(onInit, opt_logFunction) {
   var initNext = function() {
     if (ary.length) {
       var rec = ary.shift();
-      if (opt_logFunction)
-        opt_logFunction('init: ' + rec[0]);
+      if (opt_logFunction) opt_logFunction('init: ' + rec[0]);
       rec[1](lib.f.alarm(initNext));
     } else {
       onInit();
@@ -241,22 +238,25 @@ lib.colors.re_ = {
   // CSS rgb color, rgb(rrr,ggg,bbb).
   rgb: new RegExp(
       ('^/s*rgb/s*/(/s*(/d{1,3})/s*,/s*(/d{1,3})/s*,' +
-       '/s*(/d{1,3})/s*/)/s*$'
-       ).replace(/\//g, '\\'), 'i'),
+       '/s*(/d{1,3})/s*/)/s*$')
+          .replace(/\//g, '\\'),
+      'i'),
 
   // CSS rgb color, rgb(rrr,ggg,bbb,aaa).
   rgba: new RegExp(
       ('^/s*rgba/s*' +
        '/(/s*(/d{1,3})/s*,/s*(/d{1,3})/s*,/s*(/d{1,3})/s*' +
-       '(?:,/s*(/d+(?:/./d+)?)/s*)/)/s*$'
-       ).replace(/\//g, '\\'), 'i'),
+       '(?:,/s*(/d+(?:/./d+)?)/s*)/)/s*$')
+          .replace(/\//g, '\\'),
+      'i'),
 
   // Either RGB or RGBA.
   rgbx: new RegExp(
       ('^/s*rgba?/s*' +
        '/(/s*(/d{1,3})/s*,/s*(/d{1,3})/s*,/s*(/d{1,3})/s*' +
-       '(?:,/s*(/d+(?:/./d+)?)/s*)?/)/s*$'
-       ).replace(/\//g, '\\'), 'i'),
+       '(?:,/s*(/d+(?:/./d+)?)/s*)?/)/s*$')
+          .replace(/\//g, '\\'),
+      'i'),
 
   // An X11 "rgb:dddd/dddd/dddd" value.
   x11rgb: /^\s*rgb:([a-f0-9]{1,4})\/([a-f0-9]{1,4})\/([a-f0-9]{1,4})\s*$/i,
@@ -283,8 +283,7 @@ lib.colors.rgbToX11 = function(value) {
   }
 
   var ary = value.match(lib.colors.re_.rgbx);
-  if (!ary)
-    return null;
+  if (!ary) return null;
 
   return 'rgb:' + scale(ary[1]) + '/' + scale(ary[2]) + '/' + scale(ary[3]);
 };
@@ -302,18 +301,15 @@ lib.colors.rgbToX11 = function(value) {
  * Truncate values back down to 24 bit since that's all CSS supports.
  */
 lib.colors.x11HexToCSS = function(v) {
-  if (!v.startsWith('#'))
-    return null;
+  if (!v.startsWith('#')) return null;
   // Strip the leading # off.
   v = v.substr(1);
 
   // Reject unknown sizes.
-  if ([3, 6, 9, 12].indexOf(v.length) == -1)
-    return null;
+  if ([3, 6, 9, 12].indexOf(v.length) == -1) return null;
 
   // Reject non-hex values.
-  if (v.match(/[^a-f0-9]/i))
-    return null;
+  if (v.match(/[^a-f0-9]/i)) return null;
 
   // Split the colors out.
   var size = v.length / 3;
@@ -324,9 +320,9 @@ lib.colors.x11HexToCSS = function(v) {
   // Normalize to 16 bits.
   function norm16(v) {
     v = parseInt(v, 16);
-    return size == 2 ? v :         // 16 bit
-           size == 1 ? v << 4 :    // 8 bit
-           v >> (4 * (size - 2));  // 24 or 32 bit
+    return size == 2 ? v :          // 16 bit
+        size == 1 ? v << 4 :        // 8 bit
+            v >> (4 * (size - 2));  // 24 or 32 bit
   }
   return lib.colors.arrayToRGBA([r, g, b].map(norm16));
 };
@@ -405,15 +401,13 @@ lib.colors.hexToRGB = function(arg) {
   function convert(hex) {
     if (hex.length == 4) {
       hex = hex.replace(hex16, function(h, r, g, b) {
-        return "#" + r + r + g + g + b + b;
+        return '#' + r + r + g + g + b + b;
       });
     }
     var ary = hex.match(hex24);
-    if (!ary)
-      return null;
+    if (!ary) return null;
 
-    return 'rgb(' + parseInt(ary[1], 16) + ', ' +
-        parseInt(ary[2], 16) + ', ' +
+    return 'rgb(' + parseInt(ary[1], 16) + ', ' + parseInt(ary[2], 16) + ', ' +
         parseInt(ary[3], 16) + ')';
   }
 
@@ -443,11 +437,13 @@ lib.colors.hexToRGB = function(arg) {
 lib.colors.rgbToHex = function(arg) {
   function convert(rgb) {
     var ary = lib.colors.crackRGB(rgb);
-    if (!ary)
-      return null;
-    return '#' + lib.f.zpad(((parseInt(ary[0]) << 16) |
-                             (parseInt(ary[1]) <<  8) |
-                             (parseInt(ary[2]) <<  0)).toString(16), 6);
+    if (!ary) return null;
+    return '#' +
+        lib.f.zpad(
+            ((parseInt(ary[0]) << 16) | (parseInt(ary[1]) << 8) |
+             (parseInt(ary[2]) << 0))
+                .toString(16),
+            6);
   }
 
   if (arg instanceof Array) {
@@ -467,11 +463,9 @@ lib.colors.rgbToHex = function(arg) {
  * Returns null if the value could not be normalized.
  */
 lib.colors.normalizeCSS = function(def) {
-  if (def.substr(0, 1) == '#')
-    return lib.colors.hexToRGB(def);
+  if (def.substr(0, 1) == '#') return lib.colors.hexToRGB(def);
 
-  if (lib.colors.re_.rgbx.test(def))
-    return def;
+  if (lib.colors.re_.rgbx.test(def)) return def;
 
   return lib.colors.nameToRGB(def);
 };
@@ -547,16 +541,13 @@ lib.colors.crackRGB = function(color) {
  * @return {string} The corresponding CSS rgb(...) value.
  */
 lib.colors.nameToRGB = function(name) {
-  if (name in lib.colors.colorNames)
-    return lib.colors.colorNames[name];
+  if (name in lib.colors.colorNames) return lib.colors.colorNames[name];
 
   name = name.toLowerCase();
-  if (name in lib.colors.colorNames)
-    return lib.colors.colorNames[name];
+  if (name in lib.colors.colorNames) return lib.colors.colorNames[name];
 
   name = name.replace(/\s+/g, '');
-  if (name in lib.colors.colorNames)
-    return lib.colors.colorNames[name];
+  if (name in lib.colors.colorNames) return lib.colors.colorNames[name];
 
   return null;
 };
@@ -630,664 +621,664 @@ lib.colors.colorPalette = lib.colors.stockColorPalette;
  * Named colors according to the stock X11 rgb.txt file.
  */
 lib.colors.colorNames = {
-  "aliceblue": "rgb(240, 248, 255)",
-  "antiquewhite": "rgb(250, 235, 215)",
-  "antiquewhite1": "rgb(255, 239, 219)",
-  "antiquewhite2": "rgb(238, 223, 204)",
-  "antiquewhite3": "rgb(205, 192, 176)",
-  "antiquewhite4": "rgb(139, 131, 120)",
-  "aquamarine": "rgb(127, 255, 212)",
-  "aquamarine1": "rgb(127, 255, 212)",
-  "aquamarine2": "rgb(118, 238, 198)",
-  "aquamarine3": "rgb(102, 205, 170)",
-  "aquamarine4": "rgb(69, 139, 116)",
-  "azure": "rgb(240, 255, 255)",
-  "azure1": "rgb(240, 255, 255)",
-  "azure2": "rgb(224, 238, 238)",
-  "azure3": "rgb(193, 205, 205)",
-  "azure4": "rgb(131, 139, 139)",
-  "beige": "rgb(245, 245, 220)",
-  "bisque": "rgb(255, 228, 196)",
-  "bisque1": "rgb(255, 228, 196)",
-  "bisque2": "rgb(238, 213, 183)",
-  "bisque3": "rgb(205, 183, 158)",
-  "bisque4": "rgb(139, 125, 107)",
-  "black": "rgb(0, 0, 0)",
-  "blanchedalmond": "rgb(255, 235, 205)",
-  "blue": "rgb(0, 0, 255)",
-  "blue1": "rgb(0, 0, 255)",
-  "blue2": "rgb(0, 0, 238)",
-  "blue3": "rgb(0, 0, 205)",
-  "blue4": "rgb(0, 0, 139)",
-  "blueviolet": "rgb(138, 43, 226)",
-  "brown": "rgb(165, 42, 42)",
-  "brown1": "rgb(255, 64, 64)",
-  "brown2": "rgb(238, 59, 59)",
-  "brown3": "rgb(205, 51, 51)",
-  "brown4": "rgb(139, 35, 35)",
-  "burlywood": "rgb(222, 184, 135)",
-  "burlywood1": "rgb(255, 211, 155)",
-  "burlywood2": "rgb(238, 197, 145)",
-  "burlywood3": "rgb(205, 170, 125)",
-  "burlywood4": "rgb(139, 115, 85)",
-  "cadetblue": "rgb(95, 158, 160)",
-  "cadetblue1": "rgb(152, 245, 255)",
-  "cadetblue2": "rgb(142, 229, 238)",
-  "cadetblue3": "rgb(122, 197, 205)",
-  "cadetblue4": "rgb(83, 134, 139)",
-  "chartreuse": "rgb(127, 255, 0)",
-  "chartreuse1": "rgb(127, 255, 0)",
-  "chartreuse2": "rgb(118, 238, 0)",
-  "chartreuse3": "rgb(102, 205, 0)",
-  "chartreuse4": "rgb(69, 139, 0)",
-  "chocolate": "rgb(210, 105, 30)",
-  "chocolate1": "rgb(255, 127, 36)",
-  "chocolate2": "rgb(238, 118, 33)",
-  "chocolate3": "rgb(205, 102, 29)",
-  "chocolate4": "rgb(139, 69, 19)",
-  "coral": "rgb(255, 127, 80)",
-  "coral1": "rgb(255, 114, 86)",
-  "coral2": "rgb(238, 106, 80)",
-  "coral3": "rgb(205, 91, 69)",
-  "coral4": "rgb(139, 62, 47)",
-  "cornflowerblue": "rgb(100, 149, 237)",
-  "cornsilk": "rgb(255, 248, 220)",
-  "cornsilk1": "rgb(255, 248, 220)",
-  "cornsilk2": "rgb(238, 232, 205)",
-  "cornsilk3": "rgb(205, 200, 177)",
-  "cornsilk4": "rgb(139, 136, 120)",
-  "cyan": "rgb(0, 255, 255)",
-  "cyan1": "rgb(0, 255, 255)",
-  "cyan2": "rgb(0, 238, 238)",
-  "cyan3": "rgb(0, 205, 205)",
-  "cyan4": "rgb(0, 139, 139)",
-  "darkblue": "rgb(0, 0, 139)",
-  "darkcyan": "rgb(0, 139, 139)",
-  "darkgoldenrod": "rgb(184, 134, 11)",
-  "darkgoldenrod1": "rgb(255, 185, 15)",
-  "darkgoldenrod2": "rgb(238, 173, 14)",
-  "darkgoldenrod3": "rgb(205, 149, 12)",
-  "darkgoldenrod4": "rgb(139, 101, 8)",
-  "darkgray": "rgb(169, 169, 169)",
-  "darkgreen": "rgb(0, 100, 0)",
-  "darkgrey": "rgb(169, 169, 169)",
-  "darkkhaki": "rgb(189, 183, 107)",
-  "darkmagenta": "rgb(139, 0, 139)",
-  "darkolivegreen": "rgb(85, 107, 47)",
-  "darkolivegreen1": "rgb(202, 255, 112)",
-  "darkolivegreen2": "rgb(188, 238, 104)",
-  "darkolivegreen3": "rgb(162, 205, 90)",
-  "darkolivegreen4": "rgb(110, 139, 61)",
-  "darkorange": "rgb(255, 140, 0)",
-  "darkorange1": "rgb(255, 127, 0)",
-  "darkorange2": "rgb(238, 118, 0)",
-  "darkorange3": "rgb(205, 102, 0)",
-  "darkorange4": "rgb(139, 69, 0)",
-  "darkorchid": "rgb(153, 50, 204)",
-  "darkorchid1": "rgb(191, 62, 255)",
-  "darkorchid2": "rgb(178, 58, 238)",
-  "darkorchid3": "rgb(154, 50, 205)",
-  "darkorchid4": "rgb(104, 34, 139)",
-  "darkred": "rgb(139, 0, 0)",
-  "darksalmon": "rgb(233, 150, 122)",
-  "darkseagreen": "rgb(143, 188, 143)",
-  "darkseagreen1": "rgb(193, 255, 193)",
-  "darkseagreen2": "rgb(180, 238, 180)",
-  "darkseagreen3": "rgb(155, 205, 155)",
-  "darkseagreen4": "rgb(105, 139, 105)",
-  "darkslateblue": "rgb(72, 61, 139)",
-  "darkslategray": "rgb(47, 79, 79)",
-  "darkslategray1": "rgb(151, 255, 255)",
-  "darkslategray2": "rgb(141, 238, 238)",
-  "darkslategray3": "rgb(121, 205, 205)",
-  "darkslategray4": "rgb(82, 139, 139)",
-  "darkslategrey": "rgb(47, 79, 79)",
-  "darkturquoise": "rgb(0, 206, 209)",
-  "darkviolet": "rgb(148, 0, 211)",
-  "debianred": "rgb(215, 7, 81)",
-  "deeppink": "rgb(255, 20, 147)",
-  "deeppink1": "rgb(255, 20, 147)",
-  "deeppink2": "rgb(238, 18, 137)",
-  "deeppink3": "rgb(205, 16, 118)",
-  "deeppink4": "rgb(139, 10, 80)",
-  "deepskyblue": "rgb(0, 191, 255)",
-  "deepskyblue1": "rgb(0, 191, 255)",
-  "deepskyblue2": "rgb(0, 178, 238)",
-  "deepskyblue3": "rgb(0, 154, 205)",
-  "deepskyblue4": "rgb(0, 104, 139)",
-  "dimgray": "rgb(105, 105, 105)",
-  "dimgrey": "rgb(105, 105, 105)",
-  "dodgerblue": "rgb(30, 144, 255)",
-  "dodgerblue1": "rgb(30, 144, 255)",
-  "dodgerblue2": "rgb(28, 134, 238)",
-  "dodgerblue3": "rgb(24, 116, 205)",
-  "dodgerblue4": "rgb(16, 78, 139)",
-  "firebrick": "rgb(178, 34, 34)",
-  "firebrick1": "rgb(255, 48, 48)",
-  "firebrick2": "rgb(238, 44, 44)",
-  "firebrick3": "rgb(205, 38, 38)",
-  "firebrick4": "rgb(139, 26, 26)",
-  "floralwhite": "rgb(255, 250, 240)",
-  "forestgreen": "rgb(34, 139, 34)",
-  "gainsboro": "rgb(220, 220, 220)",
-  "ghostwhite": "rgb(248, 248, 255)",
-  "gold": "rgb(255, 215, 0)",
-  "gold1": "rgb(255, 215, 0)",
-  "gold2": "rgb(238, 201, 0)",
-  "gold3": "rgb(205, 173, 0)",
-  "gold4": "rgb(139, 117, 0)",
-  "goldenrod": "rgb(218, 165, 32)",
-  "goldenrod1": "rgb(255, 193, 37)",
-  "goldenrod2": "rgb(238, 180, 34)",
-  "goldenrod3": "rgb(205, 155, 29)",
-  "goldenrod4": "rgb(139, 105, 20)",
-  "gray": "rgb(190, 190, 190)",
-  "gray0": "rgb(0, 0, 0)",
-  "gray1": "rgb(3, 3, 3)",
-  "gray10": "rgb(26, 26, 26)",
-  "gray100": "rgb(255, 255, 255)",
-  "gray11": "rgb(28, 28, 28)",
-  "gray12": "rgb(31, 31, 31)",
-  "gray13": "rgb(33, 33, 33)",
-  "gray14": "rgb(36, 36, 36)",
-  "gray15": "rgb(38, 38, 38)",
-  "gray16": "rgb(41, 41, 41)",
-  "gray17": "rgb(43, 43, 43)",
-  "gray18": "rgb(46, 46, 46)",
-  "gray19": "rgb(48, 48, 48)",
-  "gray2": "rgb(5, 5, 5)",
-  "gray20": "rgb(51, 51, 51)",
-  "gray21": "rgb(54, 54, 54)",
-  "gray22": "rgb(56, 56, 56)",
-  "gray23": "rgb(59, 59, 59)",
-  "gray24": "rgb(61, 61, 61)",
-  "gray25": "rgb(64, 64, 64)",
-  "gray26": "rgb(66, 66, 66)",
-  "gray27": "rgb(69, 69, 69)",
-  "gray28": "rgb(71, 71, 71)",
-  "gray29": "rgb(74, 74, 74)",
-  "gray3": "rgb(8, 8, 8)",
-  "gray30": "rgb(77, 77, 77)",
-  "gray31": "rgb(79, 79, 79)",
-  "gray32": "rgb(82, 82, 82)",
-  "gray33": "rgb(84, 84, 84)",
-  "gray34": "rgb(87, 87, 87)",
-  "gray35": "rgb(89, 89, 89)",
-  "gray36": "rgb(92, 92, 92)",
-  "gray37": "rgb(94, 94, 94)",
-  "gray38": "rgb(97, 97, 97)",
-  "gray39": "rgb(99, 99, 99)",
-  "gray4": "rgb(10, 10, 10)",
-  "gray40": "rgb(102, 102, 102)",
-  "gray41": "rgb(105, 105, 105)",
-  "gray42": "rgb(107, 107, 107)",
-  "gray43": "rgb(110, 110, 110)",
-  "gray44": "rgb(112, 112, 112)",
-  "gray45": "rgb(115, 115, 115)",
-  "gray46": "rgb(117, 117, 117)",
-  "gray47": "rgb(120, 120, 120)",
-  "gray48": "rgb(122, 122, 122)",
-  "gray49": "rgb(125, 125, 125)",
-  "gray5": "rgb(13, 13, 13)",
-  "gray50": "rgb(127, 127, 127)",
-  "gray51": "rgb(130, 130, 130)",
-  "gray52": "rgb(133, 133, 133)",
-  "gray53": "rgb(135, 135, 135)",
-  "gray54": "rgb(138, 138, 138)",
-  "gray55": "rgb(140, 140, 140)",
-  "gray56": "rgb(143, 143, 143)",
-  "gray57": "rgb(145, 145, 145)",
-  "gray58": "rgb(148, 148, 148)",
-  "gray59": "rgb(150, 150, 150)",
-  "gray6": "rgb(15, 15, 15)",
-  "gray60": "rgb(153, 153, 153)",
-  "gray61": "rgb(156, 156, 156)",
-  "gray62": "rgb(158, 158, 158)",
-  "gray63": "rgb(161, 161, 161)",
-  "gray64": "rgb(163, 163, 163)",
-  "gray65": "rgb(166, 166, 166)",
-  "gray66": "rgb(168, 168, 168)",
-  "gray67": "rgb(171, 171, 171)",
-  "gray68": "rgb(173, 173, 173)",
-  "gray69": "rgb(176, 176, 176)",
-  "gray7": "rgb(18, 18, 18)",
-  "gray70": "rgb(179, 179, 179)",
-  "gray71": "rgb(181, 181, 181)",
-  "gray72": "rgb(184, 184, 184)",
-  "gray73": "rgb(186, 186, 186)",
-  "gray74": "rgb(189, 189, 189)",
-  "gray75": "rgb(191, 191, 191)",
-  "gray76": "rgb(194, 194, 194)",
-  "gray77": "rgb(196, 196, 196)",
-  "gray78": "rgb(199, 199, 199)",
-  "gray79": "rgb(201, 201, 201)",
-  "gray8": "rgb(20, 20, 20)",
-  "gray80": "rgb(204, 204, 204)",
-  "gray81": "rgb(207, 207, 207)",
-  "gray82": "rgb(209, 209, 209)",
-  "gray83": "rgb(212, 212, 212)",
-  "gray84": "rgb(214, 214, 214)",
-  "gray85": "rgb(217, 217, 217)",
-  "gray86": "rgb(219, 219, 219)",
-  "gray87": "rgb(222, 222, 222)",
-  "gray88": "rgb(224, 224, 224)",
-  "gray89": "rgb(227, 227, 227)",
-  "gray9": "rgb(23, 23, 23)",
-  "gray90": "rgb(229, 229, 229)",
-  "gray91": "rgb(232, 232, 232)",
-  "gray92": "rgb(235, 235, 235)",
-  "gray93": "rgb(237, 237, 237)",
-  "gray94": "rgb(240, 240, 240)",
-  "gray95": "rgb(242, 242, 242)",
-  "gray96": "rgb(245, 245, 245)",
-  "gray97": "rgb(247, 247, 247)",
-  "gray98": "rgb(250, 250, 250)",
-  "gray99": "rgb(252, 252, 252)",
-  "green": "rgb(0, 255, 0)",
-  "green1": "rgb(0, 255, 0)",
-  "green2": "rgb(0, 238, 0)",
-  "green3": "rgb(0, 205, 0)",
-  "green4": "rgb(0, 139, 0)",
-  "greenyellow": "rgb(173, 255, 47)",
-  "grey": "rgb(190, 190, 190)",
-  "grey0": "rgb(0, 0, 0)",
-  "grey1": "rgb(3, 3, 3)",
-  "grey10": "rgb(26, 26, 26)",
-  "grey100": "rgb(255, 255, 255)",
-  "grey11": "rgb(28, 28, 28)",
-  "grey12": "rgb(31, 31, 31)",
-  "grey13": "rgb(33, 33, 33)",
-  "grey14": "rgb(36, 36, 36)",
-  "grey15": "rgb(38, 38, 38)",
-  "grey16": "rgb(41, 41, 41)",
-  "grey17": "rgb(43, 43, 43)",
-  "grey18": "rgb(46, 46, 46)",
-  "grey19": "rgb(48, 48, 48)",
-  "grey2": "rgb(5, 5, 5)",
-  "grey20": "rgb(51, 51, 51)",
-  "grey21": "rgb(54, 54, 54)",
-  "grey22": "rgb(56, 56, 56)",
-  "grey23": "rgb(59, 59, 59)",
-  "grey24": "rgb(61, 61, 61)",
-  "grey25": "rgb(64, 64, 64)",
-  "grey26": "rgb(66, 66, 66)",
-  "grey27": "rgb(69, 69, 69)",
-  "grey28": "rgb(71, 71, 71)",
-  "grey29": "rgb(74, 74, 74)",
-  "grey3": "rgb(8, 8, 8)",
-  "grey30": "rgb(77, 77, 77)",
-  "grey31": "rgb(79, 79, 79)",
-  "grey32": "rgb(82, 82, 82)",
-  "grey33": "rgb(84, 84, 84)",
-  "grey34": "rgb(87, 87, 87)",
-  "grey35": "rgb(89, 89, 89)",
-  "grey36": "rgb(92, 92, 92)",
-  "grey37": "rgb(94, 94, 94)",
-  "grey38": "rgb(97, 97, 97)",
-  "grey39": "rgb(99, 99, 99)",
-  "grey4": "rgb(10, 10, 10)",
-  "grey40": "rgb(102, 102, 102)",
-  "grey41": "rgb(105, 105, 105)",
-  "grey42": "rgb(107, 107, 107)",
-  "grey43": "rgb(110, 110, 110)",
-  "grey44": "rgb(112, 112, 112)",
-  "grey45": "rgb(115, 115, 115)",
-  "grey46": "rgb(117, 117, 117)",
-  "grey47": "rgb(120, 120, 120)",
-  "grey48": "rgb(122, 122, 122)",
-  "grey49": "rgb(125, 125, 125)",
-  "grey5": "rgb(13, 13, 13)",
-  "grey50": "rgb(127, 127, 127)",
-  "grey51": "rgb(130, 130, 130)",
-  "grey52": "rgb(133, 133, 133)",
-  "grey53": "rgb(135, 135, 135)",
-  "grey54": "rgb(138, 138, 138)",
-  "grey55": "rgb(140, 140, 140)",
-  "grey56": "rgb(143, 143, 143)",
-  "grey57": "rgb(145, 145, 145)",
-  "grey58": "rgb(148, 148, 148)",
-  "grey59": "rgb(150, 150, 150)",
-  "grey6": "rgb(15, 15, 15)",
-  "grey60": "rgb(153, 153, 153)",
-  "grey61": "rgb(156, 156, 156)",
-  "grey62": "rgb(158, 158, 158)",
-  "grey63": "rgb(161, 161, 161)",
-  "grey64": "rgb(163, 163, 163)",
-  "grey65": "rgb(166, 166, 166)",
-  "grey66": "rgb(168, 168, 168)",
-  "grey67": "rgb(171, 171, 171)",
-  "grey68": "rgb(173, 173, 173)",
-  "grey69": "rgb(176, 176, 176)",
-  "grey7": "rgb(18, 18, 18)",
-  "grey70": "rgb(179, 179, 179)",
-  "grey71": "rgb(181, 181, 181)",
-  "grey72": "rgb(184, 184, 184)",
-  "grey73": "rgb(186, 186, 186)",
-  "grey74": "rgb(189, 189, 189)",
-  "grey75": "rgb(191, 191, 191)",
-  "grey76": "rgb(194, 194, 194)",
-  "grey77": "rgb(196, 196, 196)",
-  "grey78": "rgb(199, 199, 199)",
-  "grey79": "rgb(201, 201, 201)",
-  "grey8": "rgb(20, 20, 20)",
-  "grey80": "rgb(204, 204, 204)",
-  "grey81": "rgb(207, 207, 207)",
-  "grey82": "rgb(209, 209, 209)",
-  "grey83": "rgb(212, 212, 212)",
-  "grey84": "rgb(214, 214, 214)",
-  "grey85": "rgb(217, 217, 217)",
-  "grey86": "rgb(219, 219, 219)",
-  "grey87": "rgb(222, 222, 222)",
-  "grey88": "rgb(224, 224, 224)",
-  "grey89": "rgb(227, 227, 227)",
-  "grey9": "rgb(23, 23, 23)",
-  "grey90": "rgb(229, 229, 229)",
-  "grey91": "rgb(232, 232, 232)",
-  "grey92": "rgb(235, 235, 235)",
-  "grey93": "rgb(237, 237, 237)",
-  "grey94": "rgb(240, 240, 240)",
-  "grey95": "rgb(242, 242, 242)",
-  "grey96": "rgb(245, 245, 245)",
-  "grey97": "rgb(247, 247, 247)",
-  "grey98": "rgb(250, 250, 250)",
-  "grey99": "rgb(252, 252, 252)",
-  "honeydew": "rgb(240, 255, 240)",
-  "honeydew1": "rgb(240, 255, 240)",
-  "honeydew2": "rgb(224, 238, 224)",
-  "honeydew3": "rgb(193, 205, 193)",
-  "honeydew4": "rgb(131, 139, 131)",
-  "hotpink": "rgb(255, 105, 180)",
-  "hotpink1": "rgb(255, 110, 180)",
-  "hotpink2": "rgb(238, 106, 167)",
-  "hotpink3": "rgb(205, 96, 144)",
-  "hotpink4": "rgb(139, 58, 98)",
-  "indianred": "rgb(205, 92, 92)",
-  "indianred1": "rgb(255, 106, 106)",
-  "indianred2": "rgb(238, 99, 99)",
-  "indianred3": "rgb(205, 85, 85)",
-  "indianred4": "rgb(139, 58, 58)",
-  "ivory": "rgb(255, 255, 240)",
-  "ivory1": "rgb(255, 255, 240)",
-  "ivory2": "rgb(238, 238, 224)",
-  "ivory3": "rgb(205, 205, 193)",
-  "ivory4": "rgb(139, 139, 131)",
-  "khaki": "rgb(240, 230, 140)",
-  "khaki1": "rgb(255, 246, 143)",
-  "khaki2": "rgb(238, 230, 133)",
-  "khaki3": "rgb(205, 198, 115)",
-  "khaki4": "rgb(139, 134, 78)",
-  "lavender": "rgb(230, 230, 250)",
-  "lavenderblush": "rgb(255, 240, 245)",
-  "lavenderblush1": "rgb(255, 240, 245)",
-  "lavenderblush2": "rgb(238, 224, 229)",
-  "lavenderblush3": "rgb(205, 193, 197)",
-  "lavenderblush4": "rgb(139, 131, 134)",
-  "lawngreen": "rgb(124, 252, 0)",
-  "lemonchiffon": "rgb(255, 250, 205)",
-  "lemonchiffon1": "rgb(255, 250, 205)",
-  "lemonchiffon2": "rgb(238, 233, 191)",
-  "lemonchiffon3": "rgb(205, 201, 165)",
-  "lemonchiffon4": "rgb(139, 137, 112)",
-  "lightblue": "rgb(173, 216, 230)",
-  "lightblue1": "rgb(191, 239, 255)",
-  "lightblue2": "rgb(178, 223, 238)",
-  "lightblue3": "rgb(154, 192, 205)",
-  "lightblue4": "rgb(104, 131, 139)",
-  "lightcoral": "rgb(240, 128, 128)",
-  "lightcyan": "rgb(224, 255, 255)",
-  "lightcyan1": "rgb(224, 255, 255)",
-  "lightcyan2": "rgb(209, 238, 238)",
-  "lightcyan3": "rgb(180, 205, 205)",
-  "lightcyan4": "rgb(122, 139, 139)",
-  "lightgoldenrod": "rgb(238, 221, 130)",
-  "lightgoldenrod1": "rgb(255, 236, 139)",
-  "lightgoldenrod2": "rgb(238, 220, 130)",
-  "lightgoldenrod3": "rgb(205, 190, 112)",
-  "lightgoldenrod4": "rgb(139, 129, 76)",
-  "lightgoldenrodyellow": "rgb(250, 250, 210)",
-  "lightgray": "rgb(211, 211, 211)",
-  "lightgreen": "rgb(144, 238, 144)",
-  "lightgrey": "rgb(211, 211, 211)",
-  "lightpink": "rgb(255, 182, 193)",
-  "lightpink1": "rgb(255, 174, 185)",
-  "lightpink2": "rgb(238, 162, 173)",
-  "lightpink3": "rgb(205, 140, 149)",
-  "lightpink4": "rgb(139, 95, 101)",
-  "lightsalmon": "rgb(255, 160, 122)",
-  "lightsalmon1": "rgb(255, 160, 122)",
-  "lightsalmon2": "rgb(238, 149, 114)",
-  "lightsalmon3": "rgb(205, 129, 98)",
-  "lightsalmon4": "rgb(139, 87, 66)",
-  "lightseagreen": "rgb(32, 178, 170)",
-  "lightskyblue": "rgb(135, 206, 250)",
-  "lightskyblue1": "rgb(176, 226, 255)",
-  "lightskyblue2": "rgb(164, 211, 238)",
-  "lightskyblue3": "rgb(141, 182, 205)",
-  "lightskyblue4": "rgb(96, 123, 139)",
-  "lightslateblue": "rgb(132, 112, 255)",
-  "lightslategray": "rgb(119, 136, 153)",
-  "lightslategrey": "rgb(119, 136, 153)",
-  "lightsteelblue": "rgb(176, 196, 222)",
-  "lightsteelblue1": "rgb(202, 225, 255)",
-  "lightsteelblue2": "rgb(188, 210, 238)",
-  "lightsteelblue3": "rgb(162, 181, 205)",
-  "lightsteelblue4": "rgb(110, 123, 139)",
-  "lightyellow": "rgb(255, 255, 224)",
-  "lightyellow1": "rgb(255, 255, 224)",
-  "lightyellow2": "rgb(238, 238, 209)",
-  "lightyellow3": "rgb(205, 205, 180)",
-  "lightyellow4": "rgb(139, 139, 122)",
-  "limegreen": "rgb(50, 205, 50)",
-  "linen": "rgb(250, 240, 230)",
-  "magenta": "rgb(255, 0, 255)",
-  "magenta1": "rgb(255, 0, 255)",
-  "magenta2": "rgb(238, 0, 238)",
-  "magenta3": "rgb(205, 0, 205)",
-  "magenta4": "rgb(139, 0, 139)",
-  "maroon": "rgb(176, 48, 96)",
-  "maroon1": "rgb(255, 52, 179)",
-  "maroon2": "rgb(238, 48, 167)",
-  "maroon3": "rgb(205, 41, 144)",
-  "maroon4": "rgb(139, 28, 98)",
-  "mediumaquamarine": "rgb(102, 205, 170)",
-  "mediumblue": "rgb(0, 0, 205)",
-  "mediumorchid": "rgb(186, 85, 211)",
-  "mediumorchid1": "rgb(224, 102, 255)",
-  "mediumorchid2": "rgb(209, 95, 238)",
-  "mediumorchid3": "rgb(180, 82, 205)",
-  "mediumorchid4": "rgb(122, 55, 139)",
-  "mediumpurple": "rgb(147, 112, 219)",
-  "mediumpurple1": "rgb(171, 130, 255)",
-  "mediumpurple2": "rgb(159, 121, 238)",
-  "mediumpurple3": "rgb(137, 104, 205)",
-  "mediumpurple4": "rgb(93, 71, 139)",
-  "mediumseagreen": "rgb(60, 179, 113)",
-  "mediumslateblue": "rgb(123, 104, 238)",
-  "mediumspringgreen": "rgb(0, 250, 154)",
-  "mediumturquoise": "rgb(72, 209, 204)",
-  "mediumvioletred": "rgb(199, 21, 133)",
-  "midnightblue": "rgb(25, 25, 112)",
-  "mintcream": "rgb(245, 255, 250)",
-  "mistyrose": "rgb(255, 228, 225)",
-  "mistyrose1": "rgb(255, 228, 225)",
-  "mistyrose2": "rgb(238, 213, 210)",
-  "mistyrose3": "rgb(205, 183, 181)",
-  "mistyrose4": "rgb(139, 125, 123)",
-  "moccasin": "rgb(255, 228, 181)",
-  "navajowhite": "rgb(255, 222, 173)",
-  "navajowhite1": "rgb(255, 222, 173)",
-  "navajowhite2": "rgb(238, 207, 161)",
-  "navajowhite3": "rgb(205, 179, 139)",
-  "navajowhite4": "rgb(139, 121, 94)",
-  "navy": "rgb(0, 0, 128)",
-  "navyblue": "rgb(0, 0, 128)",
-  "oldlace": "rgb(253, 245, 230)",
-  "olivedrab": "rgb(107, 142, 35)",
-  "olivedrab1": "rgb(192, 255, 62)",
-  "olivedrab2": "rgb(179, 238, 58)",
-  "olivedrab3": "rgb(154, 205, 50)",
-  "olivedrab4": "rgb(105, 139, 34)",
-  "orange": "rgb(255, 165, 0)",
-  "orange1": "rgb(255, 165, 0)",
-  "orange2": "rgb(238, 154, 0)",
-  "orange3": "rgb(205, 133, 0)",
-  "orange4": "rgb(139, 90, 0)",
-  "orangered": "rgb(255, 69, 0)",
-  "orangered1": "rgb(255, 69, 0)",
-  "orangered2": "rgb(238, 64, 0)",
-  "orangered3": "rgb(205, 55, 0)",
-  "orangered4": "rgb(139, 37, 0)",
-  "orchid": "rgb(218, 112, 214)",
-  "orchid1": "rgb(255, 131, 250)",
-  "orchid2": "rgb(238, 122, 233)",
-  "orchid3": "rgb(205, 105, 201)",
-  "orchid4": "rgb(139, 71, 137)",
-  "palegoldenrod": "rgb(238, 232, 170)",
-  "palegreen": "rgb(152, 251, 152)",
-  "palegreen1": "rgb(154, 255, 154)",
-  "palegreen2": "rgb(144, 238, 144)",
-  "palegreen3": "rgb(124, 205, 124)",
-  "palegreen4": "rgb(84, 139, 84)",
-  "paleturquoise": "rgb(175, 238, 238)",
-  "paleturquoise1": "rgb(187, 255, 255)",
-  "paleturquoise2": "rgb(174, 238, 238)",
-  "paleturquoise3": "rgb(150, 205, 205)",
-  "paleturquoise4": "rgb(102, 139, 139)",
-  "palevioletred": "rgb(219, 112, 147)",
-  "palevioletred1": "rgb(255, 130, 171)",
-  "palevioletred2": "rgb(238, 121, 159)",
-  "palevioletred3": "rgb(205, 104, 137)",
-  "palevioletred4": "rgb(139, 71, 93)",
-  "papayawhip": "rgb(255, 239, 213)",
-  "peachpuff": "rgb(255, 218, 185)",
-  "peachpuff1": "rgb(255, 218, 185)",
-  "peachpuff2": "rgb(238, 203, 173)",
-  "peachpuff3": "rgb(205, 175, 149)",
-  "peachpuff4": "rgb(139, 119, 101)",
-  "peru": "rgb(205, 133, 63)",
-  "pink": "rgb(255, 192, 203)",
-  "pink1": "rgb(255, 181, 197)",
-  "pink2": "rgb(238, 169, 184)",
-  "pink3": "rgb(205, 145, 158)",
-  "pink4": "rgb(139, 99, 108)",
-  "plum": "rgb(221, 160, 221)",
-  "plum1": "rgb(255, 187, 255)",
-  "plum2": "rgb(238, 174, 238)",
-  "plum3": "rgb(205, 150, 205)",
-  "plum4": "rgb(139, 102, 139)",
-  "powderblue": "rgb(176, 224, 230)",
-  "purple": "rgb(160, 32, 240)",
-  "purple1": "rgb(155, 48, 255)",
-  "purple2": "rgb(145, 44, 238)",
-  "purple3": "rgb(125, 38, 205)",
-  "purple4": "rgb(85, 26, 139)",
-  "red": "rgb(255, 0, 0)",
-  "red1": "rgb(255, 0, 0)",
-  "red2": "rgb(238, 0, 0)",
-  "red3": "rgb(205, 0, 0)",
-  "red4": "rgb(139, 0, 0)",
-  "rosybrown": "rgb(188, 143, 143)",
-  "rosybrown1": "rgb(255, 193, 193)",
-  "rosybrown2": "rgb(238, 180, 180)",
-  "rosybrown3": "rgb(205, 155, 155)",
-  "rosybrown4": "rgb(139, 105, 105)",
-  "royalblue": "rgb(65, 105, 225)",
-  "royalblue1": "rgb(72, 118, 255)",
-  "royalblue2": "rgb(67, 110, 238)",
-  "royalblue3": "rgb(58, 95, 205)",
-  "royalblue4": "rgb(39, 64, 139)",
-  "saddlebrown": "rgb(139, 69, 19)",
-  "salmon": "rgb(250, 128, 114)",
-  "salmon1": "rgb(255, 140, 105)",
-  "salmon2": "rgb(238, 130, 98)",
-  "salmon3": "rgb(205, 112, 84)",
-  "salmon4": "rgb(139, 76, 57)",
-  "sandybrown": "rgb(244, 164, 96)",
-  "seagreen": "rgb(46, 139, 87)",
-  "seagreen1": "rgb(84, 255, 159)",
-  "seagreen2": "rgb(78, 238, 148)",
-  "seagreen3": "rgb(67, 205, 128)",
-  "seagreen4": "rgb(46, 139, 87)",
-  "seashell": "rgb(255, 245, 238)",
-  "seashell1": "rgb(255, 245, 238)",
-  "seashell2": "rgb(238, 229, 222)",
-  "seashell3": "rgb(205, 197, 191)",
-  "seashell4": "rgb(139, 134, 130)",
-  "sienna": "rgb(160, 82, 45)",
-  "sienna1": "rgb(255, 130, 71)",
-  "sienna2": "rgb(238, 121, 66)",
-  "sienna3": "rgb(205, 104, 57)",
-  "sienna4": "rgb(139, 71, 38)",
-  "skyblue": "rgb(135, 206, 235)",
-  "skyblue1": "rgb(135, 206, 255)",
-  "skyblue2": "rgb(126, 192, 238)",
-  "skyblue3": "rgb(108, 166, 205)",
-  "skyblue4": "rgb(74, 112, 139)",
-  "slateblue": "rgb(106, 90, 205)",
-  "slateblue1": "rgb(131, 111, 255)",
-  "slateblue2": "rgb(122, 103, 238)",
-  "slateblue3": "rgb(105, 89, 205)",
-  "slateblue4": "rgb(71, 60, 139)",
-  "slategray": "rgb(112, 128, 144)",
-  "slategray1": "rgb(198, 226, 255)",
-  "slategray2": "rgb(185, 211, 238)",
-  "slategray3": "rgb(159, 182, 205)",
-  "slategray4": "rgb(108, 123, 139)",
-  "slategrey": "rgb(112, 128, 144)",
-  "snow": "rgb(255, 250, 250)",
-  "snow1": "rgb(255, 250, 250)",
-  "snow2": "rgb(238, 233, 233)",
-  "snow3": "rgb(205, 201, 201)",
-  "snow4": "rgb(139, 137, 137)",
-  "springgreen": "rgb(0, 255, 127)",
-  "springgreen1": "rgb(0, 255, 127)",
-  "springgreen2": "rgb(0, 238, 118)",
-  "springgreen3": "rgb(0, 205, 102)",
-  "springgreen4": "rgb(0, 139, 69)",
-  "steelblue": "rgb(70, 130, 180)",
-  "steelblue1": "rgb(99, 184, 255)",
-  "steelblue2": "rgb(92, 172, 238)",
-  "steelblue3": "rgb(79, 148, 205)",
-  "steelblue4": "rgb(54, 100, 139)",
-  "tan": "rgb(210, 180, 140)",
-  "tan1": "rgb(255, 165, 79)",
-  "tan2": "rgb(238, 154, 73)",
-  "tan3": "rgb(205, 133, 63)",
-  "tan4": "rgb(139, 90, 43)",
-  "thistle": "rgb(216, 191, 216)",
-  "thistle1": "rgb(255, 225, 255)",
-  "thistle2": "rgb(238, 210, 238)",
-  "thistle3": "rgb(205, 181, 205)",
-  "thistle4": "rgb(139, 123, 139)",
-  "tomato": "rgb(255, 99, 71)",
-  "tomato1": "rgb(255, 99, 71)",
-  "tomato2": "rgb(238, 92, 66)",
-  "tomato3": "rgb(205, 79, 57)",
-  "tomato4": "rgb(139, 54, 38)",
-  "turquoise": "rgb(64, 224, 208)",
-  "turquoise1": "rgb(0, 245, 255)",
-  "turquoise2": "rgb(0, 229, 238)",
-  "turquoise3": "rgb(0, 197, 205)",
-  "turquoise4": "rgb(0, 134, 139)",
-  "violet": "rgb(238, 130, 238)",
-  "violetred": "rgb(208, 32, 144)",
-  "violetred1": "rgb(255, 62, 150)",
-  "violetred2": "rgb(238, 58, 140)",
-  "violetred3": "rgb(205, 50, 120)",
-  "violetred4": "rgb(139, 34, 82)",
-  "wheat": "rgb(245, 222, 179)",
-  "wheat1": "rgb(255, 231, 186)",
-  "wheat2": "rgb(238, 216, 174)",
-  "wheat3": "rgb(205, 186, 150)",
-  "wheat4": "rgb(139, 126, 102)",
-  "white": "rgb(255, 255, 255)",
-  "whitesmoke": "rgb(245, 245, 245)",
-  "yellow": "rgb(255, 255, 0)",
-  "yellow1": "rgb(255, 255, 0)",
-  "yellow2": "rgb(238, 238, 0)",
-  "yellow3": "rgb(205, 205, 0)",
-  "yellow4": "rgb(139, 139, 0)",
-  "yellowgreen": "rgb(154, 205, 50)"
+  'aliceblue': 'rgb(240, 248, 255)',
+  'antiquewhite': 'rgb(250, 235, 215)',
+  'antiquewhite1': 'rgb(255, 239, 219)',
+  'antiquewhite2': 'rgb(238, 223, 204)',
+  'antiquewhite3': 'rgb(205, 192, 176)',
+  'antiquewhite4': 'rgb(139, 131, 120)',
+  'aquamarine': 'rgb(127, 255, 212)',
+  'aquamarine1': 'rgb(127, 255, 212)',
+  'aquamarine2': 'rgb(118, 238, 198)',
+  'aquamarine3': 'rgb(102, 205, 170)',
+  'aquamarine4': 'rgb(69, 139, 116)',
+  'azure': 'rgb(240, 255, 255)',
+  'azure1': 'rgb(240, 255, 255)',
+  'azure2': 'rgb(224, 238, 238)',
+  'azure3': 'rgb(193, 205, 205)',
+  'azure4': 'rgb(131, 139, 139)',
+  'beige': 'rgb(245, 245, 220)',
+  'bisque': 'rgb(255, 228, 196)',
+  'bisque1': 'rgb(255, 228, 196)',
+  'bisque2': 'rgb(238, 213, 183)',
+  'bisque3': 'rgb(205, 183, 158)',
+  'bisque4': 'rgb(139, 125, 107)',
+  'black': 'rgb(0, 0, 0)',
+  'blanchedalmond': 'rgb(255, 235, 205)',
+  'blue': 'rgb(0, 0, 255)',
+  'blue1': 'rgb(0, 0, 255)',
+  'blue2': 'rgb(0, 0, 238)',
+  'blue3': 'rgb(0, 0, 205)',
+  'blue4': 'rgb(0, 0, 139)',
+  'blueviolet': 'rgb(138, 43, 226)',
+  'brown': 'rgb(165, 42, 42)',
+  'brown1': 'rgb(255, 64, 64)',
+  'brown2': 'rgb(238, 59, 59)',
+  'brown3': 'rgb(205, 51, 51)',
+  'brown4': 'rgb(139, 35, 35)',
+  'burlywood': 'rgb(222, 184, 135)',
+  'burlywood1': 'rgb(255, 211, 155)',
+  'burlywood2': 'rgb(238, 197, 145)',
+  'burlywood3': 'rgb(205, 170, 125)',
+  'burlywood4': 'rgb(139, 115, 85)',
+  'cadetblue': 'rgb(95, 158, 160)',
+  'cadetblue1': 'rgb(152, 245, 255)',
+  'cadetblue2': 'rgb(142, 229, 238)',
+  'cadetblue3': 'rgb(122, 197, 205)',
+  'cadetblue4': 'rgb(83, 134, 139)',
+  'chartreuse': 'rgb(127, 255, 0)',
+  'chartreuse1': 'rgb(127, 255, 0)',
+  'chartreuse2': 'rgb(118, 238, 0)',
+  'chartreuse3': 'rgb(102, 205, 0)',
+  'chartreuse4': 'rgb(69, 139, 0)',
+  'chocolate': 'rgb(210, 105, 30)',
+  'chocolate1': 'rgb(255, 127, 36)',
+  'chocolate2': 'rgb(238, 118, 33)',
+  'chocolate3': 'rgb(205, 102, 29)',
+  'chocolate4': 'rgb(139, 69, 19)',
+  'coral': 'rgb(255, 127, 80)',
+  'coral1': 'rgb(255, 114, 86)',
+  'coral2': 'rgb(238, 106, 80)',
+  'coral3': 'rgb(205, 91, 69)',
+  'coral4': 'rgb(139, 62, 47)',
+  'cornflowerblue': 'rgb(100, 149, 237)',
+  'cornsilk': 'rgb(255, 248, 220)',
+  'cornsilk1': 'rgb(255, 248, 220)',
+  'cornsilk2': 'rgb(238, 232, 205)',
+  'cornsilk3': 'rgb(205, 200, 177)',
+  'cornsilk4': 'rgb(139, 136, 120)',
+  'cyan': 'rgb(0, 255, 255)',
+  'cyan1': 'rgb(0, 255, 255)',
+  'cyan2': 'rgb(0, 238, 238)',
+  'cyan3': 'rgb(0, 205, 205)',
+  'cyan4': 'rgb(0, 139, 139)',
+  'darkblue': 'rgb(0, 0, 139)',
+  'darkcyan': 'rgb(0, 139, 139)',
+  'darkgoldenrod': 'rgb(184, 134, 11)',
+  'darkgoldenrod1': 'rgb(255, 185, 15)',
+  'darkgoldenrod2': 'rgb(238, 173, 14)',
+  'darkgoldenrod3': 'rgb(205, 149, 12)',
+  'darkgoldenrod4': 'rgb(139, 101, 8)',
+  'darkgray': 'rgb(169, 169, 169)',
+  'darkgreen': 'rgb(0, 100, 0)',
+  'darkgrey': 'rgb(169, 169, 169)',
+  'darkkhaki': 'rgb(189, 183, 107)',
+  'darkmagenta': 'rgb(139, 0, 139)',
+  'darkolivegreen': 'rgb(85, 107, 47)',
+  'darkolivegreen1': 'rgb(202, 255, 112)',
+  'darkolivegreen2': 'rgb(188, 238, 104)',
+  'darkolivegreen3': 'rgb(162, 205, 90)',
+  'darkolivegreen4': 'rgb(110, 139, 61)',
+  'darkorange': 'rgb(255, 140, 0)',
+  'darkorange1': 'rgb(255, 127, 0)',
+  'darkorange2': 'rgb(238, 118, 0)',
+  'darkorange3': 'rgb(205, 102, 0)',
+  'darkorange4': 'rgb(139, 69, 0)',
+  'darkorchid': 'rgb(153, 50, 204)',
+  'darkorchid1': 'rgb(191, 62, 255)',
+  'darkorchid2': 'rgb(178, 58, 238)',
+  'darkorchid3': 'rgb(154, 50, 205)',
+  'darkorchid4': 'rgb(104, 34, 139)',
+  'darkred': 'rgb(139, 0, 0)',
+  'darksalmon': 'rgb(233, 150, 122)',
+  'darkseagreen': 'rgb(143, 188, 143)',
+  'darkseagreen1': 'rgb(193, 255, 193)',
+  'darkseagreen2': 'rgb(180, 238, 180)',
+  'darkseagreen3': 'rgb(155, 205, 155)',
+  'darkseagreen4': 'rgb(105, 139, 105)',
+  'darkslateblue': 'rgb(72, 61, 139)',
+  'darkslategray': 'rgb(47, 79, 79)',
+  'darkslategray1': 'rgb(151, 255, 255)',
+  'darkslategray2': 'rgb(141, 238, 238)',
+  'darkslategray3': 'rgb(121, 205, 205)',
+  'darkslategray4': 'rgb(82, 139, 139)',
+  'darkslategrey': 'rgb(47, 79, 79)',
+  'darkturquoise': 'rgb(0, 206, 209)',
+  'darkviolet': 'rgb(148, 0, 211)',
+  'debianred': 'rgb(215, 7, 81)',
+  'deeppink': 'rgb(255, 20, 147)',
+  'deeppink1': 'rgb(255, 20, 147)',
+  'deeppink2': 'rgb(238, 18, 137)',
+  'deeppink3': 'rgb(205, 16, 118)',
+  'deeppink4': 'rgb(139, 10, 80)',
+  'deepskyblue': 'rgb(0, 191, 255)',
+  'deepskyblue1': 'rgb(0, 191, 255)',
+  'deepskyblue2': 'rgb(0, 178, 238)',
+  'deepskyblue3': 'rgb(0, 154, 205)',
+  'deepskyblue4': 'rgb(0, 104, 139)',
+  'dimgray': 'rgb(105, 105, 105)',
+  'dimgrey': 'rgb(105, 105, 105)',
+  'dodgerblue': 'rgb(30, 144, 255)',
+  'dodgerblue1': 'rgb(30, 144, 255)',
+  'dodgerblue2': 'rgb(28, 134, 238)',
+  'dodgerblue3': 'rgb(24, 116, 205)',
+  'dodgerblue4': 'rgb(16, 78, 139)',
+  'firebrick': 'rgb(178, 34, 34)',
+  'firebrick1': 'rgb(255, 48, 48)',
+  'firebrick2': 'rgb(238, 44, 44)',
+  'firebrick3': 'rgb(205, 38, 38)',
+  'firebrick4': 'rgb(139, 26, 26)',
+  'floralwhite': 'rgb(255, 250, 240)',
+  'forestgreen': 'rgb(34, 139, 34)',
+  'gainsboro': 'rgb(220, 220, 220)',
+  'ghostwhite': 'rgb(248, 248, 255)',
+  'gold': 'rgb(255, 215, 0)',
+  'gold1': 'rgb(255, 215, 0)',
+  'gold2': 'rgb(238, 201, 0)',
+  'gold3': 'rgb(205, 173, 0)',
+  'gold4': 'rgb(139, 117, 0)',
+  'goldenrod': 'rgb(218, 165, 32)',
+  'goldenrod1': 'rgb(255, 193, 37)',
+  'goldenrod2': 'rgb(238, 180, 34)',
+  'goldenrod3': 'rgb(205, 155, 29)',
+  'goldenrod4': 'rgb(139, 105, 20)',
+  'gray': 'rgb(190, 190, 190)',
+  'gray0': 'rgb(0, 0, 0)',
+  'gray1': 'rgb(3, 3, 3)',
+  'gray10': 'rgb(26, 26, 26)',
+  'gray100': 'rgb(255, 255, 255)',
+  'gray11': 'rgb(28, 28, 28)',
+  'gray12': 'rgb(31, 31, 31)',
+  'gray13': 'rgb(33, 33, 33)',
+  'gray14': 'rgb(36, 36, 36)',
+  'gray15': 'rgb(38, 38, 38)',
+  'gray16': 'rgb(41, 41, 41)',
+  'gray17': 'rgb(43, 43, 43)',
+  'gray18': 'rgb(46, 46, 46)',
+  'gray19': 'rgb(48, 48, 48)',
+  'gray2': 'rgb(5, 5, 5)',
+  'gray20': 'rgb(51, 51, 51)',
+  'gray21': 'rgb(54, 54, 54)',
+  'gray22': 'rgb(56, 56, 56)',
+  'gray23': 'rgb(59, 59, 59)',
+  'gray24': 'rgb(61, 61, 61)',
+  'gray25': 'rgb(64, 64, 64)',
+  'gray26': 'rgb(66, 66, 66)',
+  'gray27': 'rgb(69, 69, 69)',
+  'gray28': 'rgb(71, 71, 71)',
+  'gray29': 'rgb(74, 74, 74)',
+  'gray3': 'rgb(8, 8, 8)',
+  'gray30': 'rgb(77, 77, 77)',
+  'gray31': 'rgb(79, 79, 79)',
+  'gray32': 'rgb(82, 82, 82)',
+  'gray33': 'rgb(84, 84, 84)',
+  'gray34': 'rgb(87, 87, 87)',
+  'gray35': 'rgb(89, 89, 89)',
+  'gray36': 'rgb(92, 92, 92)',
+  'gray37': 'rgb(94, 94, 94)',
+  'gray38': 'rgb(97, 97, 97)',
+  'gray39': 'rgb(99, 99, 99)',
+  'gray4': 'rgb(10, 10, 10)',
+  'gray40': 'rgb(102, 102, 102)',
+  'gray41': 'rgb(105, 105, 105)',
+  'gray42': 'rgb(107, 107, 107)',
+  'gray43': 'rgb(110, 110, 110)',
+  'gray44': 'rgb(112, 112, 112)',
+  'gray45': 'rgb(115, 115, 115)',
+  'gray46': 'rgb(117, 117, 117)',
+  'gray47': 'rgb(120, 120, 120)',
+  'gray48': 'rgb(122, 122, 122)',
+  'gray49': 'rgb(125, 125, 125)',
+  'gray5': 'rgb(13, 13, 13)',
+  'gray50': 'rgb(127, 127, 127)',
+  'gray51': 'rgb(130, 130, 130)',
+  'gray52': 'rgb(133, 133, 133)',
+  'gray53': 'rgb(135, 135, 135)',
+  'gray54': 'rgb(138, 138, 138)',
+  'gray55': 'rgb(140, 140, 140)',
+  'gray56': 'rgb(143, 143, 143)',
+  'gray57': 'rgb(145, 145, 145)',
+  'gray58': 'rgb(148, 148, 148)',
+  'gray59': 'rgb(150, 150, 150)',
+  'gray6': 'rgb(15, 15, 15)',
+  'gray60': 'rgb(153, 153, 153)',
+  'gray61': 'rgb(156, 156, 156)',
+  'gray62': 'rgb(158, 158, 158)',
+  'gray63': 'rgb(161, 161, 161)',
+  'gray64': 'rgb(163, 163, 163)',
+  'gray65': 'rgb(166, 166, 166)',
+  'gray66': 'rgb(168, 168, 168)',
+  'gray67': 'rgb(171, 171, 171)',
+  'gray68': 'rgb(173, 173, 173)',
+  'gray69': 'rgb(176, 176, 176)',
+  'gray7': 'rgb(18, 18, 18)',
+  'gray70': 'rgb(179, 179, 179)',
+  'gray71': 'rgb(181, 181, 181)',
+  'gray72': 'rgb(184, 184, 184)',
+  'gray73': 'rgb(186, 186, 186)',
+  'gray74': 'rgb(189, 189, 189)',
+  'gray75': 'rgb(191, 191, 191)',
+  'gray76': 'rgb(194, 194, 194)',
+  'gray77': 'rgb(196, 196, 196)',
+  'gray78': 'rgb(199, 199, 199)',
+  'gray79': 'rgb(201, 201, 201)',
+  'gray8': 'rgb(20, 20, 20)',
+  'gray80': 'rgb(204, 204, 204)',
+  'gray81': 'rgb(207, 207, 207)',
+  'gray82': 'rgb(209, 209, 209)',
+  'gray83': 'rgb(212, 212, 212)',
+  'gray84': 'rgb(214, 214, 214)',
+  'gray85': 'rgb(217, 217, 217)',
+  'gray86': 'rgb(219, 219, 219)',
+  'gray87': 'rgb(222, 222, 222)',
+  'gray88': 'rgb(224, 224, 224)',
+  'gray89': 'rgb(227, 227, 227)',
+  'gray9': 'rgb(23, 23, 23)',
+  'gray90': 'rgb(229, 229, 229)',
+  'gray91': 'rgb(232, 232, 232)',
+  'gray92': 'rgb(235, 235, 235)',
+  'gray93': 'rgb(237, 237, 237)',
+  'gray94': 'rgb(240, 240, 240)',
+  'gray95': 'rgb(242, 242, 242)',
+  'gray96': 'rgb(245, 245, 245)',
+  'gray97': 'rgb(247, 247, 247)',
+  'gray98': 'rgb(250, 250, 250)',
+  'gray99': 'rgb(252, 252, 252)',
+  'green': 'rgb(0, 255, 0)',
+  'green1': 'rgb(0, 255, 0)',
+  'green2': 'rgb(0, 238, 0)',
+  'green3': 'rgb(0, 205, 0)',
+  'green4': 'rgb(0, 139, 0)',
+  'greenyellow': 'rgb(173, 255, 47)',
+  'grey': 'rgb(190, 190, 190)',
+  'grey0': 'rgb(0, 0, 0)',
+  'grey1': 'rgb(3, 3, 3)',
+  'grey10': 'rgb(26, 26, 26)',
+  'grey100': 'rgb(255, 255, 255)',
+  'grey11': 'rgb(28, 28, 28)',
+  'grey12': 'rgb(31, 31, 31)',
+  'grey13': 'rgb(33, 33, 33)',
+  'grey14': 'rgb(36, 36, 36)',
+  'grey15': 'rgb(38, 38, 38)',
+  'grey16': 'rgb(41, 41, 41)',
+  'grey17': 'rgb(43, 43, 43)',
+  'grey18': 'rgb(46, 46, 46)',
+  'grey19': 'rgb(48, 48, 48)',
+  'grey2': 'rgb(5, 5, 5)',
+  'grey20': 'rgb(51, 51, 51)',
+  'grey21': 'rgb(54, 54, 54)',
+  'grey22': 'rgb(56, 56, 56)',
+  'grey23': 'rgb(59, 59, 59)',
+  'grey24': 'rgb(61, 61, 61)',
+  'grey25': 'rgb(64, 64, 64)',
+  'grey26': 'rgb(66, 66, 66)',
+  'grey27': 'rgb(69, 69, 69)',
+  'grey28': 'rgb(71, 71, 71)',
+  'grey29': 'rgb(74, 74, 74)',
+  'grey3': 'rgb(8, 8, 8)',
+  'grey30': 'rgb(77, 77, 77)',
+  'grey31': 'rgb(79, 79, 79)',
+  'grey32': 'rgb(82, 82, 82)',
+  'grey33': 'rgb(84, 84, 84)',
+  'grey34': 'rgb(87, 87, 87)',
+  'grey35': 'rgb(89, 89, 89)',
+  'grey36': 'rgb(92, 92, 92)',
+  'grey37': 'rgb(94, 94, 94)',
+  'grey38': 'rgb(97, 97, 97)',
+  'grey39': 'rgb(99, 99, 99)',
+  'grey4': 'rgb(10, 10, 10)',
+  'grey40': 'rgb(102, 102, 102)',
+  'grey41': 'rgb(105, 105, 105)',
+  'grey42': 'rgb(107, 107, 107)',
+  'grey43': 'rgb(110, 110, 110)',
+  'grey44': 'rgb(112, 112, 112)',
+  'grey45': 'rgb(115, 115, 115)',
+  'grey46': 'rgb(117, 117, 117)',
+  'grey47': 'rgb(120, 120, 120)',
+  'grey48': 'rgb(122, 122, 122)',
+  'grey49': 'rgb(125, 125, 125)',
+  'grey5': 'rgb(13, 13, 13)',
+  'grey50': 'rgb(127, 127, 127)',
+  'grey51': 'rgb(130, 130, 130)',
+  'grey52': 'rgb(133, 133, 133)',
+  'grey53': 'rgb(135, 135, 135)',
+  'grey54': 'rgb(138, 138, 138)',
+  'grey55': 'rgb(140, 140, 140)',
+  'grey56': 'rgb(143, 143, 143)',
+  'grey57': 'rgb(145, 145, 145)',
+  'grey58': 'rgb(148, 148, 148)',
+  'grey59': 'rgb(150, 150, 150)',
+  'grey6': 'rgb(15, 15, 15)',
+  'grey60': 'rgb(153, 153, 153)',
+  'grey61': 'rgb(156, 156, 156)',
+  'grey62': 'rgb(158, 158, 158)',
+  'grey63': 'rgb(161, 161, 161)',
+  'grey64': 'rgb(163, 163, 163)',
+  'grey65': 'rgb(166, 166, 166)',
+  'grey66': 'rgb(168, 168, 168)',
+  'grey67': 'rgb(171, 171, 171)',
+  'grey68': 'rgb(173, 173, 173)',
+  'grey69': 'rgb(176, 176, 176)',
+  'grey7': 'rgb(18, 18, 18)',
+  'grey70': 'rgb(179, 179, 179)',
+  'grey71': 'rgb(181, 181, 181)',
+  'grey72': 'rgb(184, 184, 184)',
+  'grey73': 'rgb(186, 186, 186)',
+  'grey74': 'rgb(189, 189, 189)',
+  'grey75': 'rgb(191, 191, 191)',
+  'grey76': 'rgb(194, 194, 194)',
+  'grey77': 'rgb(196, 196, 196)',
+  'grey78': 'rgb(199, 199, 199)',
+  'grey79': 'rgb(201, 201, 201)',
+  'grey8': 'rgb(20, 20, 20)',
+  'grey80': 'rgb(204, 204, 204)',
+  'grey81': 'rgb(207, 207, 207)',
+  'grey82': 'rgb(209, 209, 209)',
+  'grey83': 'rgb(212, 212, 212)',
+  'grey84': 'rgb(214, 214, 214)',
+  'grey85': 'rgb(217, 217, 217)',
+  'grey86': 'rgb(219, 219, 219)',
+  'grey87': 'rgb(222, 222, 222)',
+  'grey88': 'rgb(224, 224, 224)',
+  'grey89': 'rgb(227, 227, 227)',
+  'grey9': 'rgb(23, 23, 23)',
+  'grey90': 'rgb(229, 229, 229)',
+  'grey91': 'rgb(232, 232, 232)',
+  'grey92': 'rgb(235, 235, 235)',
+  'grey93': 'rgb(237, 237, 237)',
+  'grey94': 'rgb(240, 240, 240)',
+  'grey95': 'rgb(242, 242, 242)',
+  'grey96': 'rgb(245, 245, 245)',
+  'grey97': 'rgb(247, 247, 247)',
+  'grey98': 'rgb(250, 250, 250)',
+  'grey99': 'rgb(252, 252, 252)',
+  'honeydew': 'rgb(240, 255, 240)',
+  'honeydew1': 'rgb(240, 255, 240)',
+  'honeydew2': 'rgb(224, 238, 224)',
+  'honeydew3': 'rgb(193, 205, 193)',
+  'honeydew4': 'rgb(131, 139, 131)',
+  'hotpink': 'rgb(255, 105, 180)',
+  'hotpink1': 'rgb(255, 110, 180)',
+  'hotpink2': 'rgb(238, 106, 167)',
+  'hotpink3': 'rgb(205, 96, 144)',
+  'hotpink4': 'rgb(139, 58, 98)',
+  'indianred': 'rgb(205, 92, 92)',
+  'indianred1': 'rgb(255, 106, 106)',
+  'indianred2': 'rgb(238, 99, 99)',
+  'indianred3': 'rgb(205, 85, 85)',
+  'indianred4': 'rgb(139, 58, 58)',
+  'ivory': 'rgb(255, 255, 240)',
+  'ivory1': 'rgb(255, 255, 240)',
+  'ivory2': 'rgb(238, 238, 224)',
+  'ivory3': 'rgb(205, 205, 193)',
+  'ivory4': 'rgb(139, 139, 131)',
+  'khaki': 'rgb(240, 230, 140)',
+  'khaki1': 'rgb(255, 246, 143)',
+  'khaki2': 'rgb(238, 230, 133)',
+  'khaki3': 'rgb(205, 198, 115)',
+  'khaki4': 'rgb(139, 134, 78)',
+  'lavender': 'rgb(230, 230, 250)',
+  'lavenderblush': 'rgb(255, 240, 245)',
+  'lavenderblush1': 'rgb(255, 240, 245)',
+  'lavenderblush2': 'rgb(238, 224, 229)',
+  'lavenderblush3': 'rgb(205, 193, 197)',
+  'lavenderblush4': 'rgb(139, 131, 134)',
+  'lawngreen': 'rgb(124, 252, 0)',
+  'lemonchiffon': 'rgb(255, 250, 205)',
+  'lemonchiffon1': 'rgb(255, 250, 205)',
+  'lemonchiffon2': 'rgb(238, 233, 191)',
+  'lemonchiffon3': 'rgb(205, 201, 165)',
+  'lemonchiffon4': 'rgb(139, 137, 112)',
+  'lightblue': 'rgb(173, 216, 230)',
+  'lightblue1': 'rgb(191, 239, 255)',
+  'lightblue2': 'rgb(178, 223, 238)',
+  'lightblue3': 'rgb(154, 192, 205)',
+  'lightblue4': 'rgb(104, 131, 139)',
+  'lightcoral': 'rgb(240, 128, 128)',
+  'lightcyan': 'rgb(224, 255, 255)',
+  'lightcyan1': 'rgb(224, 255, 255)',
+  'lightcyan2': 'rgb(209, 238, 238)',
+  'lightcyan3': 'rgb(180, 205, 205)',
+  'lightcyan4': 'rgb(122, 139, 139)',
+  'lightgoldenrod': 'rgb(238, 221, 130)',
+  'lightgoldenrod1': 'rgb(255, 236, 139)',
+  'lightgoldenrod2': 'rgb(238, 220, 130)',
+  'lightgoldenrod3': 'rgb(205, 190, 112)',
+  'lightgoldenrod4': 'rgb(139, 129, 76)',
+  'lightgoldenrodyellow': 'rgb(250, 250, 210)',
+  'lightgray': 'rgb(211, 211, 211)',
+  'lightgreen': 'rgb(144, 238, 144)',
+  'lightgrey': 'rgb(211, 211, 211)',
+  'lightpink': 'rgb(255, 182, 193)',
+  'lightpink1': 'rgb(255, 174, 185)',
+  'lightpink2': 'rgb(238, 162, 173)',
+  'lightpink3': 'rgb(205, 140, 149)',
+  'lightpink4': 'rgb(139, 95, 101)',
+  'lightsalmon': 'rgb(255, 160, 122)',
+  'lightsalmon1': 'rgb(255, 160, 122)',
+  'lightsalmon2': 'rgb(238, 149, 114)',
+  'lightsalmon3': 'rgb(205, 129, 98)',
+  'lightsalmon4': 'rgb(139, 87, 66)',
+  'lightseagreen': 'rgb(32, 178, 170)',
+  'lightskyblue': 'rgb(135, 206, 250)',
+  'lightskyblue1': 'rgb(176, 226, 255)',
+  'lightskyblue2': 'rgb(164, 211, 238)',
+  'lightskyblue3': 'rgb(141, 182, 205)',
+  'lightskyblue4': 'rgb(96, 123, 139)',
+  'lightslateblue': 'rgb(132, 112, 255)',
+  'lightslategray': 'rgb(119, 136, 153)',
+  'lightslategrey': 'rgb(119, 136, 153)',
+  'lightsteelblue': 'rgb(176, 196, 222)',
+  'lightsteelblue1': 'rgb(202, 225, 255)',
+  'lightsteelblue2': 'rgb(188, 210, 238)',
+  'lightsteelblue3': 'rgb(162, 181, 205)',
+  'lightsteelblue4': 'rgb(110, 123, 139)',
+  'lightyellow': 'rgb(255, 255, 224)',
+  'lightyellow1': 'rgb(255, 255, 224)',
+  'lightyellow2': 'rgb(238, 238, 209)',
+  'lightyellow3': 'rgb(205, 205, 180)',
+  'lightyellow4': 'rgb(139, 139, 122)',
+  'limegreen': 'rgb(50, 205, 50)',
+  'linen': 'rgb(250, 240, 230)',
+  'magenta': 'rgb(255, 0, 255)',
+  'magenta1': 'rgb(255, 0, 255)',
+  'magenta2': 'rgb(238, 0, 238)',
+  'magenta3': 'rgb(205, 0, 205)',
+  'magenta4': 'rgb(139, 0, 139)',
+  'maroon': 'rgb(176, 48, 96)',
+  'maroon1': 'rgb(255, 52, 179)',
+  'maroon2': 'rgb(238, 48, 167)',
+  'maroon3': 'rgb(205, 41, 144)',
+  'maroon4': 'rgb(139, 28, 98)',
+  'mediumaquamarine': 'rgb(102, 205, 170)',
+  'mediumblue': 'rgb(0, 0, 205)',
+  'mediumorchid': 'rgb(186, 85, 211)',
+  'mediumorchid1': 'rgb(224, 102, 255)',
+  'mediumorchid2': 'rgb(209, 95, 238)',
+  'mediumorchid3': 'rgb(180, 82, 205)',
+  'mediumorchid4': 'rgb(122, 55, 139)',
+  'mediumpurple': 'rgb(147, 112, 219)',
+  'mediumpurple1': 'rgb(171, 130, 255)',
+  'mediumpurple2': 'rgb(159, 121, 238)',
+  'mediumpurple3': 'rgb(137, 104, 205)',
+  'mediumpurple4': 'rgb(93, 71, 139)',
+  'mediumseagreen': 'rgb(60, 179, 113)',
+  'mediumslateblue': 'rgb(123, 104, 238)',
+  'mediumspringgreen': 'rgb(0, 250, 154)',
+  'mediumturquoise': 'rgb(72, 209, 204)',
+  'mediumvioletred': 'rgb(199, 21, 133)',
+  'midnightblue': 'rgb(25, 25, 112)',
+  'mintcream': 'rgb(245, 255, 250)',
+  'mistyrose': 'rgb(255, 228, 225)',
+  'mistyrose1': 'rgb(255, 228, 225)',
+  'mistyrose2': 'rgb(238, 213, 210)',
+  'mistyrose3': 'rgb(205, 183, 181)',
+  'mistyrose4': 'rgb(139, 125, 123)',
+  'moccasin': 'rgb(255, 228, 181)',
+  'navajowhite': 'rgb(255, 222, 173)',
+  'navajowhite1': 'rgb(255, 222, 173)',
+  'navajowhite2': 'rgb(238, 207, 161)',
+  'navajowhite3': 'rgb(205, 179, 139)',
+  'navajowhite4': 'rgb(139, 121, 94)',
+  'navy': 'rgb(0, 0, 128)',
+  'navyblue': 'rgb(0, 0, 128)',
+  'oldlace': 'rgb(253, 245, 230)',
+  'olivedrab': 'rgb(107, 142, 35)',
+  'olivedrab1': 'rgb(192, 255, 62)',
+  'olivedrab2': 'rgb(179, 238, 58)',
+  'olivedrab3': 'rgb(154, 205, 50)',
+  'olivedrab4': 'rgb(105, 139, 34)',
+  'orange': 'rgb(255, 165, 0)',
+  'orange1': 'rgb(255, 165, 0)',
+  'orange2': 'rgb(238, 154, 0)',
+  'orange3': 'rgb(205, 133, 0)',
+  'orange4': 'rgb(139, 90, 0)',
+  'orangered': 'rgb(255, 69, 0)',
+  'orangered1': 'rgb(255, 69, 0)',
+  'orangered2': 'rgb(238, 64, 0)',
+  'orangered3': 'rgb(205, 55, 0)',
+  'orangered4': 'rgb(139, 37, 0)',
+  'orchid': 'rgb(218, 112, 214)',
+  'orchid1': 'rgb(255, 131, 250)',
+  'orchid2': 'rgb(238, 122, 233)',
+  'orchid3': 'rgb(205, 105, 201)',
+  'orchid4': 'rgb(139, 71, 137)',
+  'palegoldenrod': 'rgb(238, 232, 170)',
+  'palegreen': 'rgb(152, 251, 152)',
+  'palegreen1': 'rgb(154, 255, 154)',
+  'palegreen2': 'rgb(144, 238, 144)',
+  'palegreen3': 'rgb(124, 205, 124)',
+  'palegreen4': 'rgb(84, 139, 84)',
+  'paleturquoise': 'rgb(175, 238, 238)',
+  'paleturquoise1': 'rgb(187, 255, 255)',
+  'paleturquoise2': 'rgb(174, 238, 238)',
+  'paleturquoise3': 'rgb(150, 205, 205)',
+  'paleturquoise4': 'rgb(102, 139, 139)',
+  'palevioletred': 'rgb(219, 112, 147)',
+  'palevioletred1': 'rgb(255, 130, 171)',
+  'palevioletred2': 'rgb(238, 121, 159)',
+  'palevioletred3': 'rgb(205, 104, 137)',
+  'palevioletred4': 'rgb(139, 71, 93)',
+  'papayawhip': 'rgb(255, 239, 213)',
+  'peachpuff': 'rgb(255, 218, 185)',
+  'peachpuff1': 'rgb(255, 218, 185)',
+  'peachpuff2': 'rgb(238, 203, 173)',
+  'peachpuff3': 'rgb(205, 175, 149)',
+  'peachpuff4': 'rgb(139, 119, 101)',
+  'peru': 'rgb(205, 133, 63)',
+  'pink': 'rgb(255, 192, 203)',
+  'pink1': 'rgb(255, 181, 197)',
+  'pink2': 'rgb(238, 169, 184)',
+  'pink3': 'rgb(205, 145, 158)',
+  'pink4': 'rgb(139, 99, 108)',
+  'plum': 'rgb(221, 160, 221)',
+  'plum1': 'rgb(255, 187, 255)',
+  'plum2': 'rgb(238, 174, 238)',
+  'plum3': 'rgb(205, 150, 205)',
+  'plum4': 'rgb(139, 102, 139)',
+  'powderblue': 'rgb(176, 224, 230)',
+  'purple': 'rgb(160, 32, 240)',
+  'purple1': 'rgb(155, 48, 255)',
+  'purple2': 'rgb(145, 44, 238)',
+  'purple3': 'rgb(125, 38, 205)',
+  'purple4': 'rgb(85, 26, 139)',
+  'red': 'rgb(255, 0, 0)',
+  'red1': 'rgb(255, 0, 0)',
+  'red2': 'rgb(238, 0, 0)',
+  'red3': 'rgb(205, 0, 0)',
+  'red4': 'rgb(139, 0, 0)',
+  'rosybrown': 'rgb(188, 143, 143)',
+  'rosybrown1': 'rgb(255, 193, 193)',
+  'rosybrown2': 'rgb(238, 180, 180)',
+  'rosybrown3': 'rgb(205, 155, 155)',
+  'rosybrown4': 'rgb(139, 105, 105)',
+  'royalblue': 'rgb(65, 105, 225)',
+  'royalblue1': 'rgb(72, 118, 255)',
+  'royalblue2': 'rgb(67, 110, 238)',
+  'royalblue3': 'rgb(58, 95, 205)',
+  'royalblue4': 'rgb(39, 64, 139)',
+  'saddlebrown': 'rgb(139, 69, 19)',
+  'salmon': 'rgb(250, 128, 114)',
+  'salmon1': 'rgb(255, 140, 105)',
+  'salmon2': 'rgb(238, 130, 98)',
+  'salmon3': 'rgb(205, 112, 84)',
+  'salmon4': 'rgb(139, 76, 57)',
+  'sandybrown': 'rgb(244, 164, 96)',
+  'seagreen': 'rgb(46, 139, 87)',
+  'seagreen1': 'rgb(84, 255, 159)',
+  'seagreen2': 'rgb(78, 238, 148)',
+  'seagreen3': 'rgb(67, 205, 128)',
+  'seagreen4': 'rgb(46, 139, 87)',
+  'seashell': 'rgb(255, 245, 238)',
+  'seashell1': 'rgb(255, 245, 238)',
+  'seashell2': 'rgb(238, 229, 222)',
+  'seashell3': 'rgb(205, 197, 191)',
+  'seashell4': 'rgb(139, 134, 130)',
+  'sienna': 'rgb(160, 82, 45)',
+  'sienna1': 'rgb(255, 130, 71)',
+  'sienna2': 'rgb(238, 121, 66)',
+  'sienna3': 'rgb(205, 104, 57)',
+  'sienna4': 'rgb(139, 71, 38)',
+  'skyblue': 'rgb(135, 206, 235)',
+  'skyblue1': 'rgb(135, 206, 255)',
+  'skyblue2': 'rgb(126, 192, 238)',
+  'skyblue3': 'rgb(108, 166, 205)',
+  'skyblue4': 'rgb(74, 112, 139)',
+  'slateblue': 'rgb(106, 90, 205)',
+  'slateblue1': 'rgb(131, 111, 255)',
+  'slateblue2': 'rgb(122, 103, 238)',
+  'slateblue3': 'rgb(105, 89, 205)',
+  'slateblue4': 'rgb(71, 60, 139)',
+  'slategray': 'rgb(112, 128, 144)',
+  'slategray1': 'rgb(198, 226, 255)',
+  'slategray2': 'rgb(185, 211, 238)',
+  'slategray3': 'rgb(159, 182, 205)',
+  'slategray4': 'rgb(108, 123, 139)',
+  'slategrey': 'rgb(112, 128, 144)',
+  'snow': 'rgb(255, 250, 250)',
+  'snow1': 'rgb(255, 250, 250)',
+  'snow2': 'rgb(238, 233, 233)',
+  'snow3': 'rgb(205, 201, 201)',
+  'snow4': 'rgb(139, 137, 137)',
+  'springgreen': 'rgb(0, 255, 127)',
+  'springgreen1': 'rgb(0, 255, 127)',
+  'springgreen2': 'rgb(0, 238, 118)',
+  'springgreen3': 'rgb(0, 205, 102)',
+  'springgreen4': 'rgb(0, 139, 69)',
+  'steelblue': 'rgb(70, 130, 180)',
+  'steelblue1': 'rgb(99, 184, 255)',
+  'steelblue2': 'rgb(92, 172, 238)',
+  'steelblue3': 'rgb(79, 148, 205)',
+  'steelblue4': 'rgb(54, 100, 139)',
+  'tan': 'rgb(210, 180, 140)',
+  'tan1': 'rgb(255, 165, 79)',
+  'tan2': 'rgb(238, 154, 73)',
+  'tan3': 'rgb(205, 133, 63)',
+  'tan4': 'rgb(139, 90, 43)',
+  'thistle': 'rgb(216, 191, 216)',
+  'thistle1': 'rgb(255, 225, 255)',
+  'thistle2': 'rgb(238, 210, 238)',
+  'thistle3': 'rgb(205, 181, 205)',
+  'thistle4': 'rgb(139, 123, 139)',
+  'tomato': 'rgb(255, 99, 71)',
+  'tomato1': 'rgb(255, 99, 71)',
+  'tomato2': 'rgb(238, 92, 66)',
+  'tomato3': 'rgb(205, 79, 57)',
+  'tomato4': 'rgb(139, 54, 38)',
+  'turquoise': 'rgb(64, 224, 208)',
+  'turquoise1': 'rgb(0, 245, 255)',
+  'turquoise2': 'rgb(0, 229, 238)',
+  'turquoise3': 'rgb(0, 197, 205)',
+  'turquoise4': 'rgb(0, 134, 139)',
+  'violet': 'rgb(238, 130, 238)',
+  'violetred': 'rgb(208, 32, 144)',
+  'violetred1': 'rgb(255, 62, 150)',
+  'violetred2': 'rgb(238, 58, 140)',
+  'violetred3': 'rgb(205, 50, 120)',
+  'violetred4': 'rgb(139, 34, 82)',
+  'wheat': 'rgb(245, 222, 179)',
+  'wheat1': 'rgb(255, 231, 186)',
+  'wheat2': 'rgb(238, 216, 174)',
+  'wheat3': 'rgb(205, 186, 150)',
+  'wheat4': 'rgb(139, 126, 102)',
+  'white': 'rgb(255, 255, 255)',
+  'whitesmoke': 'rgb(245, 245, 245)',
+  'yellow': 'rgb(255, 255, 0)',
+  'yellow1': 'rgb(255, 255, 0)',
+  'yellow2': 'rgb(238, 238, 0)',
+  'yellow3': 'rgb(205, 205, 0)',
+  'yellow4': 'rgb(139, 139, 0)',
+  'yellowgreen': 'rgb(154, 205, 50)'
 };
 // SOURCE FILE: libdot/js/lib_f.js
 // Copyright (c) 2012 The Chromium OS Authors. All rights reserved.
@@ -1316,19 +1307,19 @@ lib.f = {};
  */
 lib.f.replaceVars = function(str, vars) {
   return str.replace(/%([a-z]*)\(([^\)]+)\)/gi, function(match, fn, varname) {
-      if (typeof vars[varname] == 'undefined')
-        throw 'Unknown variable: ' + varname;
+    if (typeof vars[varname] == 'undefined')
+      throw 'Unknown variable: ' + varname;
 
-      var rv = vars[varname];
+    var rv = vars[varname];
 
-      if (fn in lib.f.replaceVars.functions) {
-        rv = lib.f.replaceVars.functions[fn](rv);
-      } else if (fn) {
-        throw 'Unknown escape function: ' + fn;
-      }
+    if (fn in lib.f.replaceVars.functions) {
+      rv = lib.f.replaceVars.functions[fn](rv);
+    } else if (fn) {
+      throw 'Unknown escape function: ' + fn;
+    }
 
-      return rv;
-    });
+    return rv;
+  });
 };
 
 /**
@@ -1340,15 +1331,12 @@ lib.f.replaceVars.functions = {
   encodeURI: encodeURI,
   encodeURIComponent: encodeURIComponent,
   escapeHTML: function(str) {
-    var map = {
-      '<': '&lt;',
-      '>': '&gt;',
-      '&': '&amp;',
-      '"': '&quot;',
-      "'": '&#39;'
-    };
+    var map =
+        {'<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', '\'': '&#39;'};
 
-    return str.replace(/[<>&\"\']/g, function(m) { return map[m] });
+    return str.replace(/[<>&\"\']/g, function(m) {
+      return map[m]
+    });
   }
 };
 
@@ -1363,8 +1351,8 @@ lib.f.getAcceptLanguages = function(callback) {
     chrome.i18n.getAcceptLanguages(callback);
   } else {
     setTimeout(function() {
-        callback([navigator.language.replace(/-/g, '_')]);
-      }, 0);
+      callback([navigator.language.replace(/-/g, '_')]);
+    }, 0);
   }
 };
 
@@ -1387,8 +1375,7 @@ lib.f.getAcceptLanguages.chromeSupported = function() {
  *     leading '?', the '?' will be ignored.
  */
 lib.f.parseQuery = function(queryString) {
-  if (queryString.substr(0, 1) == '?')
-    queryString = queryString.substr(1);
+  if (queryString.substr(0, 1) == '?') queryString = queryString.substr(1);
 
   var rv = {};
 
@@ -1402,8 +1389,7 @@ lib.f.parseQuery = function(queryString) {
 };
 
 lib.f.getURL = function(path) {
-  if (lib.f.getURL.chromeSupported())
-    return chrome.runtime.getURL(path);
+  if (lib.f.getURL.chromeSupported()) return chrome.runtime.getURL(path);
 
   return path;
 };
@@ -1420,10 +1406,8 @@ lib.f.getURL.chromeSupported = function() {
  * @param {integer} max The maximum acceptable value.
  */
 lib.f.clamp = function(v, min, max) {
-  if (v < min)
-    return min;
-  if (v > max)
-    return max;
+  if (v < min) return min;
+  if (v > max) return max;
   return v;
 };
 
@@ -1439,8 +1423,7 @@ lib.f.lpad = function(str, length, opt_ch) {
   str = String(str);
   opt_ch = opt_ch || ' ';
 
-  while (str.length < length)
-    str = opt_ch + str;
+  while (str.length < length) str = opt_ch + str;
 
   return str;
 };
@@ -1467,12 +1450,10 @@ lib.f.zpad = function(number, length) {
  * @param {string} A string of spaces of the requested length.
  */
 lib.f.getWhitespace = function(length) {
-  if (length <= 0)
-    return '';
+  if (length <= 0) return '';
 
   var f = this.getWhitespace;
-  if (!f.whitespace)
-    f.whitespace = '          ';
+  if (!f.whitespace) f.whitespace = '          ';
 
   while (length > f.whitespace.length) {
     f.whitespace += f.whitespace;
@@ -1481,7 +1462,7 @@ lib.f.getWhitespace = function(length) {
   return f.whitespace.substr(0, length);
 };
 
- /**
+/**
  * Ensure that a function is called within a certain time limit.
  *
  * Simple usage looks like this...
@@ -1539,8 +1520,7 @@ lib.f.alarm = function(callback, opt_ms) {
       }
     };
 
-    if (typeof callback == 'string')
-      return wrapperGenerator;
+    if (typeof callback == 'string') return wrapperGenerator;
 
     return wrapperGenerator(callback);
   })();
@@ -1594,7 +1574,7 @@ lib.f.getStack = function(opt_ignoreFrames) {
  * @param {number} denominator
  * @return {number}
  */
-lib.f.smartFloorDivide = function(numerator,  denominator) {
+lib.f.smartFloorDivide = function(numerator, denominator) {
   var val = numerator / denominator;
   var ceiling = Math.ceil(val);
   if (ceiling - val < .0001) {
@@ -1625,11 +1605,11 @@ lib.f.smartFloorDivide = function(numerator,  denominator) {
  *     automatically added as the first language if it is not already present.
  */
 lib.MessageManager = function(languages) {
-  this.languages_ = languages.map(
-      function(el) { return el.replace(/-/g, '_') });
+  this.languages_ = languages.map(function(el) {
+    return el.replace(/-/g, '_')
+  });
 
-  if (this.languages_.indexOf('en') == -1)
-    this.languages_.unshift('en');
+  if (this.languages_.indexOf('en') == -1) this.languages_.unshift('en');
 
   this.messages = {};
 };
@@ -1648,9 +1628,8 @@ lib.MessageManager.prototype.addMessages = function(defs) {
       this.messages[key] = def.message;
     } else {
       // Replace "$NAME$" placeholders with "$1", etc.
-      this.messages[key] = def.message.replace(
-          /\$([a-z][^\s\$]+)\$/ig,
-          function(m, name) {
+      this.messages[key] =
+          def.message.replace(/\$([a-z][^\s\$]+)\$/ig, function(m, name) {
             return defs[key].placeholders[name.toLowerCase()].content;
           });
     }
@@ -1688,9 +1667,10 @@ lib.MessageManager.prototype.findAndLoadMessages = function(
   }
 
   var tryNextLanguage = function() {
-    this.loadMessages(this.replaceReferences(pattern, languages),
-                      onLanguageComplete.bind(this, true),
-                      onLanguageComplete.bind(this, false));
+    this.loadMessages(
+        this.replaceReferences(pattern, languages),
+        onLanguageComplete.bind(this, true),
+        onLanguageComplete.bind(this, false));
   }.bind(this);
 
   tryNextLanguage();
@@ -1705,8 +1685,7 @@ lib.MessageManager.prototype.loadMessages = function(
 
   xhr.onloadend = function() {
     if (xhr.status != 200) {
-      if (opt_onError)
-        opt_onError(xhr.status);
+      if (opt_onError) opt_onError(xhr.status);
 
       return;
     }
@@ -1726,9 +1705,9 @@ lib.MessageManager.prototype.loadMessages = function(
  * @param {Array} args Array containing the argument values.
  */
 lib.MessageManager.replaceReferences = function(msg, args) {
-  return msg.replace(/\$(\d+)/g, function (m, index) {
-      return args[index - 1];
-    });
+  return msg.replace(/\$(\d+)/g, function(m, index) {
+    return args[index - 1];
+  });
 };
 
 /**
@@ -1752,8 +1731,7 @@ lib.MessageManager.prototype.get = function(msgname, opt_args, opt_default) {
     message = this.messages[msgname];
 
   } else {
-    if (window.chrome.i18n)
-      message = chrome.i18n.getMessage(msgname);
+    if (window.chrome.i18n) message = chrome.i18n.getMessage(msgname);
 
     if (!message) {
       console.warn('Unknown message: ' + msgname);
@@ -1761,11 +1739,9 @@ lib.MessageManager.prototype.get = function(msgname, opt_args, opt_default) {
     }
   }
 
-  if (!opt_args)
-    return message;
+  if (!opt_args) return message;
 
-  if (!(opt_args instanceof Array))
-    opt_args = [opt_args];
+  if (!(opt_args instanceof Array)) opt_args = [opt_args];
 
   return this.replaceReferences(message, opt_args);
 };
@@ -1793,7 +1769,9 @@ lib.MessageManager.prototype.get = function(msgname, opt_args, opt_default) {
 lib.MessageManager.prototype.processI18nAttributes = function(dom) {
   // Convert the "lower-and-dashes" attribute names into
   // "UPPER_AND_UNDER" style.
-  function thunk(str) { return str.replace(/-/g, '_').toUpperCase() }
+  function thunk(str) {
+    return str.replace(/-/g, '_').toUpperCase()
+  }
 
   var nodes = dom.querySelectorAll('[i18n]');
 
@@ -1801,14 +1779,13 @@ lib.MessageManager.prototype.processI18nAttributes = function(dom) {
     var node = nodes[i];
     var i18n = node.getAttribute('i18n');
 
-    if (!i18n)
-      continue;
+    if (!i18n) continue;
 
     try {
       i18n = JSON.parse(i18n);
     } catch (ex) {
-      console.error('Can\'t parse ' + node.tagName + '#' + node.id + ': ' +
-                    i18n);
+      console.error(
+          'Can\'t parse ' + node.tagName + '#' + node.id + ': ' + i18n);
       throw ex;
     }
 
@@ -1861,8 +1838,7 @@ lib.PreferenceManager = function(storage, opt_prefix) {
   this.trace = false;
 
   var prefix = opt_prefix || '/';
-  if (prefix.substr(prefix.length - 1) != '/')
-    prefix += '/';
+  if (prefix.substr(prefix.length - 1) != '/') prefix += '/';
 
   this.prefix = prefix;
 
@@ -1933,8 +1909,7 @@ lib.PreferenceManager.Record.prototype.addObserver = function(observer) {
  */
 lib.PreferenceManager.Record.prototype.removeObserver = function(observer) {
   var i = this.observers.indexOf(observer);
-  if (i >= 0)
-    this.observers.splice(i, 1);
+  if (i >= 0) this.observers.splice(i, 1);
 };
 
 /**
@@ -1964,8 +1939,7 @@ lib.PreferenceManager.Record.prototype.get = function() {
  * that you don't get notified about irrelevant changes.
  */
 lib.PreferenceManager.prototype.deactivate = function() {
-  if (!this.isActive_)
-    throw new Error('Not activated');
+  if (!this.isActive_) throw new Error('Not activated');
 
   this.isActive_ = false;
   this.storage.removeObserver(this.storageObserver_);
@@ -1979,8 +1953,7 @@ lib.PreferenceManager.prototype.deactivate = function() {
  * it's automatically called as part of the constructor.
  */
 lib.PreferenceManager.prototype.activate = function() {
-  if (this.isActive_)
-    throw new Error('Already activated');
+  if (this.isActive_) throw new Error('Already activated');
 
   this.isActive_ = true;
   this.storage.addObserver(this.storageObserver_);
@@ -2006,37 +1979,36 @@ lib.PreferenceManager.prototype.readStorage = function(opt_callback) {
   var pendingChildren = 0;
 
   function onChildComplete() {
-    if (--pendingChildren == 0 && opt_callback)
-      opt_callback();
+    if (--pendingChildren == 0 && opt_callback) opt_callback();
   }
 
-  var keys = Object.keys(this.prefRecords_).map(
-      function(el) { return this.prefix + el }.bind(this));
+  var keys = Object.keys(this.prefRecords_).map(function(el) {
+    return this.prefix + el
+  }.bind(this));
 
-  if (this.trace)
-    console.log('Preferences read: ' + this.prefix);
+  if (this.trace) console.log('Preferences read: ' + this.prefix);
 
   this.storage.getItems(keys, function(items) {
-      var prefixLength = this.prefix.length;
+    var prefixLength = this.prefix.length;
 
-      for (var key in items) {
-        var value = items[key];
-        var name = key.substr(prefixLength);
-        var needSync = (name in this.childLists_ &&
-                        (JSON.stringify(value) !=
-                         JSON.stringify(this.prefRecords_[name].currentValue)));
+    for (var key in items) {
+      var value = items[key];
+      var name = key.substr(prefixLength);
+      var needSync =
+          (name in this.childLists_ &&
+           (JSON.stringify(value) !=
+            JSON.stringify(this.prefRecords_[name].currentValue)));
 
-        this.prefRecords_[name].currentValue = value;
+      this.prefRecords_[name].currentValue = value;
 
-        if (needSync) {
-          pendingChildren++;
-          this.syncChildList(name, onChildComplete);
-        }
+      if (needSync) {
+        pendingChildren++;
+        this.syncChildList(name, onChildComplete);
       }
+    }
 
-      if (pendingChildren == 0 && opt_callback)
-        setTimeout(opt_callback);
-    }.bind(this));
+    if (pendingChildren == 0 && opt_callback) setTimeout(opt_callback);
+  }.bind(this));
 };
 
 /**
@@ -2065,8 +2037,7 @@ lib.PreferenceManager.prototype.definePreference = function(
         new lib.PreferenceManager.Record(name, value);
   }
 
-  if (opt_onChange)
-    record.addObserver(opt_onChange);
+  if (opt_onChange) record.addObserver(opt_onChange);
 };
 
 /**
@@ -2104,8 +2075,8 @@ lib.PreferenceManager.prototype.defineChildren = function(
     listName, childFactory) {
 
   // Define a preference to hold the ordered list of child ids.
-  this.definePreference(listName, [],
-                        this.onChildListChange_.bind(this, listName));
+  this.definePreference(
+      listName, [], this.onChildListChange_.bind(this, listName));
   this.childFactories_[listName] = childFactory;
   this.childLists_[listName] = {};
 };
@@ -2122,11 +2093,9 @@ lib.PreferenceManager.prototype.addObservers = function(global, map) {
   if (global && typeof global != 'function')
     throw new Error('Invalid param: globals');
 
-  if (global)
-    this.globalObservers_.push(global);
+  if (global) this.globalObservers_.push(global);
 
-  if (!map)
-    return;
+  if (!map) return;
 
   for (var name in map) {
     if (!(name in this.prefRecords_))
@@ -2158,8 +2127,7 @@ lib.PreferenceManager.prototype.notifyAll = function() {
  */
 lib.PreferenceManager.prototype.notifyChange_ = function(name) {
   var record = this.prefRecords_[name];
-  if (!record)
-    throw new Error('Unknown preference: ' + name);
+  if (!record) throw new Error('Unknown preference: ' + name);
 
   var currentValue = record.get();
 
@@ -2182,8 +2150,8 @@ lib.PreferenceManager.prototype.notifyChange_ = function(name) {
  * @param {string} opt_hint Optional hint to include in the child id.
  * @param {string} opt_id Optional id to override the generated id.
  */
-lib.PreferenceManager.prototype.createChild = function(listName, opt_hint,
-                                                       opt_id) {
+lib.PreferenceManager.prototype.createChild = function(
+    listName, opt_hint, opt_id) {
   var ids = this.get(listName);
   var id;
 
@@ -2197,8 +2165,7 @@ lib.PreferenceManager.prototype.createChild = function(listName, opt_hint,
     while (!id || ids.indexOf(id) != -1) {
       id = Math.floor(Math.random() * 0xffff + 1).toString(16);
       id = lib.f.zpad(id, 4);
-      if (opt_hint)
-        id = opt_hint + ':' + id;
+      if (opt_hint) id = opt_hint + ':' + id;
     }
   }
 
@@ -2298,8 +2265,7 @@ lib.PreferenceManager.diffChildLists = function(a, b) {
   }
 
   for (var i = 0; i < b.length; i++) {
-    if ((b[i] in rv.added) || (b[i] in rv.common))
-      continue;
+    if ((b[i] in rv.added) || (b[i] in rv.common)) continue;
 
     rv.removed[b[i]] = true;
   }
@@ -2324,8 +2290,7 @@ lib.PreferenceManager.prototype.syncChildList = function(
 
   var pendingChildren = 0;
   function onChildStorage() {
-    if (--pendingChildren == 0 && opt_callback)
-      opt_callback();
+    if (--pendingChildren == 0 && opt_callback) opt_callback();
   }
 
   // The list of child ids that we *should* have a manager for.
@@ -2341,8 +2306,7 @@ lib.PreferenceManager.prototype.syncChildList = function(
     var id = currentIds[i];
 
     var managerIndex = oldIds.indexOf(id);
-    if (managerIndex >= 0)
-      oldIds.splice(managerIndex, 1);
+    if (managerIndex >= 0) oldIds.splice(managerIndex, 1);
 
     if (!this.childLists_[listName][id]) {
       var childManager = this.childFactories_[listName](this, id);
@@ -2362,8 +2326,7 @@ lib.PreferenceManager.prototype.syncChildList = function(
     delete this.childLists_[listName][oldIds[i]];
   }
 
-  if (!pendingChildren && opt_callback)
-    setTimeout(opt_callback);
+  if (!pendingChildren && opt_callback) setTimeout(opt_callback);
 };
 
 /**
@@ -2376,8 +2339,7 @@ lib.PreferenceManager.prototype.syncChildList = function(
  */
 lib.PreferenceManager.prototype.reset = function(name) {
   var record = this.prefRecords_[name];
-  if (!record)
-    throw new Error('Unknown preference: ' + name);
+  if (!record) throw new Error('Unknown preference: ' + name);
 
   this.storage.removeItem(this.prefix + name);
 
@@ -2408,7 +2370,7 @@ lib.PreferenceManager.prototype.resetAll = function() {
   }
 
   var keys = Object.keys(this.prefRecords_).map(function(el) {
-      return this.prefix + el;
+    return this.prefix + el;
   }.bind(this));
 
   this.storage.removeItems(keys);
@@ -2453,8 +2415,7 @@ lib.PreferenceManager.prototype.diff = function(a, b) {
  */
 lib.PreferenceManager.prototype.changeDefault = function(name, newValue) {
   var record = this.prefRecords_[name];
-  if (!record)
-    throw new Error('Unknown preference: ' + name);
+  if (!record) throw new Error('Unknown preference: ' + name);
 
   if (!this.diff(record.defaultValue, newValue)) {
     // Default value hasn't changed.
@@ -2496,13 +2457,11 @@ lib.PreferenceManager.prototype.changeDefaults = function(map) {
  */
 lib.PreferenceManager.prototype.set = function(name, newValue) {
   var record = this.prefRecords_[name];
-  if (!record)
-    throw new Error('Unknown preference: ' + name);
+  if (!record) throw new Error('Unknown preference: ' + name);
 
   var oldValue = record.get();
 
-  if (!this.diff(oldValue, newValue))
-    return;
+  if (!this.diff(oldValue, newValue)) return;
 
   if (this.diff(record.defaultValue, newValue)) {
     record.currentValue = newValue;
@@ -2530,8 +2489,7 @@ lib.PreferenceManager.prototype.set = function(name, newValue) {
  */
 lib.PreferenceManager.prototype.get = function(name) {
   var record = this.prefRecords_[name];
-  if (!record)
-    throw new Error('Unknown preference: ' + name);
+  if (!record) throw new Error('Unknown preference: ' + name);
 
   return record.get();
 };
@@ -2601,8 +2559,7 @@ lib.PreferenceManager.prototype.onChildListChange_ = function(listName) {
 lib.PreferenceManager.prototype.onStorageChange_ = function(map) {
   for (var key in map) {
     if (this.prefix) {
-      if (key.lastIndexOf(this.prefix, 0) != 0)
-        continue;
+      if (key.lastIndexOf(this.prefix, 0) != 0) continue;
     }
 
     var name = key.substr(this.prefix.length);
@@ -2616,8 +2573,7 @@ lib.PreferenceManager.prototype.onStorageChange_ = function(map) {
 
     var newValue = map[key].newValue;
     var currentValue = record.currentValue;
-    if (currentValue === record.DEFAULT_VALUE)
-      currentValue = (void 0);
+    if (currentValue === record.DEFAULT_VALUE) currentValue = (void 0);
 
     if (this.diff(currentValue, newValue)) {
       if (typeof newValue == 'undefined') {
@@ -2662,11 +2618,7 @@ lib.resource = {
  * @param {*} data The value of the resource.
  */
 lib.resource.add = function(name, type, data) {
-  lib.resource.resources_[name] = {
-    type: type,
-    name: name,
-    data: data
-  };
+  lib.resource.resources_[name] = {type: type, name: name, data: data};
 };
 
 /**
@@ -2755,8 +2707,7 @@ lib.Storage.Chrome = function(storage) {
  * Called by the storage implementation when the storage is modified.
  */
 lib.Storage.Chrome.prototype.onChanged_ = function(changes, areaname) {
-  if (chrome.storage[areaname] != this.storage_)
-    return;
+  if (chrome.storage[areaname] != this.storage_) return;
 
   for (var i = 0; i < this.observers_.length; i++) {
     this.observers_[i](changes);
@@ -2780,8 +2731,7 @@ lib.Storage.Chrome.prototype.addObserver = function(callback) {
  */
 lib.Storage.Chrome.prototype.removeObserver = function(callback) {
   var i = this.observers_.indexOf(callback);
-  if (i != -1)
-    this.observers_.splice(i, 1);
+  if (i != -1) this.observers_.splice(i, 1);
 };
 
 /**
@@ -2793,8 +2743,7 @@ lib.Storage.Chrome.prototype.removeObserver = function(callback) {
 lib.Storage.Chrome.prototype.clear = function(opt_callback) {
   this.storage_.clear();
 
-  if (opt_callback)
-    setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -2891,17 +2840,13 @@ lib.Storage.Local = function() {
  * Called by the storage implementation when the storage is modified.
  */
 lib.Storage.Local.prototype.onStorage_ = function(e) {
-  if (e.storageArea != this.storage_)
-    return;
+  if (e.storageArea != this.storage_) return;
 
   // IE throws an exception if JSON.parse is given an empty string.
-  var prevValue = e.oldValue ? JSON.parse(e.oldValue) : "";
-  var curValue = e.newValue ? JSON.parse(e.newValue) : "";
+  var prevValue = e.oldValue ? JSON.parse(e.oldValue) : '';
+  var curValue = e.newValue ? JSON.parse(e.newValue) : '';
   var o = {};
-  o[e.key] = {
-    oldValue: prevValue,
-    newValue: curValue
-  };
+  o[e.key] = {oldValue: prevValue, newValue: curValue};
 
   for (var i = 0; i < this.observers_.length; i++) {
     this.observers_[i](o);
@@ -2925,8 +2870,7 @@ lib.Storage.Local.prototype.addObserver = function(callback) {
  */
 lib.Storage.Local.prototype.removeObserver = function(callback) {
   var i = this.observers_.indexOf(callback);
-  if (i != -1)
-    this.observers_.splice(i, 1);
+  if (i != -1) this.observers_.splice(i, 1);
 };
 
 /**
@@ -2938,8 +2882,7 @@ lib.Storage.Local.prototype.removeObserver = function(callback) {
 lib.Storage.Local.prototype.clear = function(opt_callback) {
   this.storage_.clear();
 
-  if (opt_callback)
-    setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -3004,8 +2947,7 @@ lib.Storage.Local.prototype.getItems = function(keys, callback) {
 lib.Storage.Local.prototype.setItem = function(key, value, opt_callback) {
   this.storage_.setItem(key, JSON.stringify(value));
 
-  if (opt_callback)
-  setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -3021,8 +2963,7 @@ lib.Storage.Local.prototype.setItems = function(obj, opt_callback) {
     this.storage_.setItem(key, JSON.stringify(obj[key]));
   }
 
-  if (opt_callback)
-  setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -3036,8 +2977,7 @@ lib.Storage.Local.prototype.setItems = function(obj, opt_callback) {
 lib.Storage.Local.prototype.removeItem = function(key, opt_callback) {
   this.storage_.removeItem(key);
 
-  if (opt_callback)
-  setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -3053,8 +2993,7 @@ lib.Storage.Local.prototype.removeItems = function(ary, opt_callback) {
     this.storage_.removeItem(ary[i]);
   }
 
-  if (opt_callback)
-  setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 // SOURCE FILE: libdot/js/lib_storage_memory.js
 // Copyright (c) 2012 The Chromium OS Authors. All rights reserved.
@@ -3089,8 +3028,7 @@ lib.Storage.Memory.prototype.addObserver = function(callback) {
  */
 lib.Storage.Memory.prototype.removeObserver = function(callback) {
   var i = this.observers_.indexOf(callback);
-  if (i != -1)
-    this.observers_.splice(i, 1);
+  if (i != -1) this.observers_.splice(i, 1);
 };
 
 /**
@@ -3113,8 +3051,7 @@ lib.Storage.Memory.prototype.clear = function(opt_callback) {
     }
   }.bind(this), 0);
 
-  if (opt_callback)
-    setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -3189,8 +3126,7 @@ lib.Storage.Memory.prototype.setItem = function(key, value, opt_callback) {
     }
   }.bind(this), 0);
 
-  if (opt_callback)
-  setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -3215,8 +3151,7 @@ lib.Storage.Memory.prototype.setItems = function(obj, opt_callback) {
     }
   }.bind(this));
 
-  if (opt_callback)
-  setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -3230,8 +3165,7 @@ lib.Storage.Memory.prototype.setItems = function(obj, opt_callback) {
 lib.Storage.Memory.prototype.removeItem = function(key, opt_callback) {
   delete this.storage_[key];
 
-  if (opt_callback)
-  setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -3247,8 +3181,7 @@ lib.Storage.Memory.prototype.removeItems = function(ary, opt_callback) {
     delete this.storage_[ary[i]];
   }
 
-  if (opt_callback)
-  setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 // SOURCE FILE: libdot/js/lib_test_manager.js
 // Copyright (c) 2012 The Chromium OS Authors. All rights reserved.
@@ -3282,19 +3215,20 @@ lib.Storage.Memory.prototype.removeItems = function(ary, opt_callback) {
  * @param {lib.TestManager.Log} opt_log Optional lib.TestManager.Log object.
  *     Logs to the JavaScript console if omitted.
  */
-lib.TestManager = function(opt_log) {
+lib.TestManager =
+    function(opt_log) {
   this.log = opt_log || new lib.TestManager.Log();
 }
 
-/**
- * Create a new test run object for this test manager.
- *
- * @param {Object} opt_cx An object to be passed to test suite setup(),
- *     preamble(), and test cases during this test run.  This object is opaque
- *     to lib.TestManager.* code.  It's entirely up to the test suite what it's
- *     used for.
- */
-lib.TestManager.prototype.createTestRun = function(opt_cx) {
+    /**
+     * Create a new test run object for this test manager.
+     *
+     * @param {Object} opt_cx An object to be passed to test suite setup(),
+     *     preamble(), and test cases during this test run.  This object is
+     * opaque to lib.TestManager.* code.  It's entirely up to the test suite
+     * what it's used for.
+     */
+    lib.TestManager.prototype.createTestRun = function(opt_cx) {
   return new lib.TestManager.TestRun(this, opt_cx);
 };
 
@@ -3333,8 +3267,7 @@ lib.TestManager.Log = function(opt_logFunction) {
   this.save = false;
   this.data = '';
   this.logFunction_ = opt_logFunction || function(s) {
-    if (this.save)
-      this.data += s + '\n';
+    if (this.save) this.data += s + '\n';
     console.log(s);
   };
   this.pending_ = '';
@@ -3394,8 +3327,7 @@ lib.TestManager.Log.prototype.print = function(str) {
  * @param {string} str The string to add to the log.
  */
 lib.TestManager.Log.prototype.println = function(str) {
-  if (this.pending_)
-    this.flush();
+  if (this.pending_) this.flush();
 
   this.logFunction_(this.prefix_ + str);
 };
@@ -3404,8 +3336,7 @@ lib.TestManager.Log.prototype.println = function(str) {
  * Flush any pending log message.
  */
 lib.TestManager.Log.prototype.flush = function() {
-  if (!this.pending_)
-    return;
+  if (!this.pending_) return;
 
   this.logFunction_(this.pending_);
   this.pending_ = '';
@@ -3487,7 +3418,7 @@ lib.TestManager.Suite = function(suiteName) {
   ctor.getTestList = lib.TestManager.Suite.getTestList;
   ctor.testList_ = [];
   ctor.testMap_ = {};
-  ctor.prototype = { __proto__: lib.TestManager.Suite.prototype };
+  ctor.prototype = {__proto__: lib.TestManager.Suite.prototype};
 
   lib.TestManager.Suite.subclasses.push(ctor);
 
@@ -3505,8 +3436,7 @@ lib.TestManager.Suite.subclasses = [];
  * This method is copied to new subclasses when they are created.
  */
 lib.TestManager.Suite.addTest = function(testName, testFunction) {
-  if (testName in this.testMap_)
-    throw 'Duplicate test name: ' + testName;
+  if (testName in this.testMap_) throw 'Duplicate test name: ' + testName;
 
   var test = new lib.TestManager.Test(this, testName, testFunction);
   this.testMap_[testName] = test;
@@ -3517,8 +3447,7 @@ lib.TestManager.Suite.addTest = function(testName, testFunction) {
  * Defines a disabled test.
  */
 lib.TestManager.Suite.disableTest = function(testName, testFunction) {
-  if (testName in this.testMap_)
-    throw 'Duplicate test name: ' + testName;
+  if (testName in this.testMap_) throw 'Duplicate test name: ' + testName;
 
   var test = new lib.TestManager.Test(this, testName, testFunction);
   console.log('Disabled test: ' + test.fullName);
@@ -3675,11 +3604,9 @@ lib.TestManager.Test = function(suiteClass, testName, testFunction) {
 lib.TestManager.Test.prototype.run = function(result) {
   try {
     // Tests are applied to the parent lib.TestManager.Suite subclass.
-    this.testFunction_.apply(result.suite,
-                             [result, result.testRun.cx]);
+    this.testFunction_.apply(result.suite, [result, result.testRun.cx]);
   } catch (ex) {
-    if (ex instanceof lib.TestManager.Result.TestComplete)
-      return;
+    if (ex instanceof lib.TestManager.Result.TestComplete) return;
 
     result.println('Test raised an exception: ' + ex);
 
@@ -3793,8 +3720,7 @@ lib.TestManager.TestRun.prototype.selectSuite = function(
     // the ALL_TESTS String object, rather than the contents of the string.
     if (pattern !== this.ALL_TESTS) {
       if (pattern instanceof RegExp) {
-        if (!pattern.test(test.testName))
-          continue;
+        if (!pattern.test(test.testName)) continue;
       } else if (test.testName != pattern) {
         continue;
       }
@@ -3824,8 +3750,8 @@ lib.TestManager.TestRun.prototype.selectPattern = function(pattern) {
   var selectCount = 0;
 
   for (var i = 0; i < lib.TestManager.Suite.subclasses.length; i++) {
-    selectCount += this.selectSuite(lib.TestManager.Suite.subclasses[i],
-                                    pattern);
+    selectCount +=
+        this.selectSuite(lib.TestManager.Suite.subclasses[i], pattern);
   }
 
   if (!selectCount) {
@@ -3850,8 +3776,7 @@ lib.TestManager.TestRun.prototype.onUncaughtException_ = function(
     return true;
   }
 
-  if (!this.currentResult)
-    return;
+  if (!this.currentResult) return;
 
   if (message == 'Uncaught ' + this.currentResult.expectedErrorMessage_) {
     // Test cases may need to raise an unhandled exception as part of the test.
@@ -3860,11 +3785,11 @@ lib.TestManager.TestRun.prototype.onUncaughtException_ = function(
 
   var when = 'during';
 
-  if (this.currentResult.status != this.currentResult.PENDING)
-    when = 'after';
+  if (this.currentResult.status != this.currentResult.PENDING) when = 'after';
 
-  this.log.println('Uncaught exception ' + when + ' test case: ' +
-                   this.currentResult.test.fullName);
+  this.log.println(
+      'Uncaught exception ' + when +
+      ' test case: ' + this.currentResult.test.fullName);
   this.log.println(message + ', ' + file + ':' + line);
 
   this.currentResult.completeTest_(this.currentResult.FAILED, false);
@@ -3897,9 +3822,9 @@ lib.TestManager.TestRun.prototype.onTestRunComplete_ = function(
   this.duration = (new Date()) - this.startDate;
 
   this.log.popPrefix();
-  this.log.println('} ' + this.passes.length + ' passed, ' +
-                   this.failures.length + ' failed, '  +
-                   this.msToSeconds_(this.duration));
+  this.log.println(
+      '} ' + this.passes.length + ' passed, ' + this.failures.length +
+      ' failed, ' + this.msToSeconds_(this.duration));
   this.log.println('');
 
   this.summarize();
@@ -3920,14 +3845,14 @@ lib.TestManager.TestRun.prototype.onResultComplete = function(result) {
     this.testManager.testPostamble(result, this.cx);
     result.suite.postamble(result, this.ctx);
   } catch (ex) {
-    this.log.println('Unexpected exception in postamble: ' +
-                     (ex.stack ? ex.stack : ex));
+    this.log.println(
+        'Unexpected exception in postamble: ' + (ex.stack ? ex.stack : ex));
     this.panic = true;
   }
 
   this.log.popPrefix();
-  this.log.print('} ' + result.status + ', ' +
-                 this.msToSeconds_(result.duration));
+  this.log.print(
+      '} ' + result.status + ', ' + this.msToSeconds_(result.duration));
   this.log.flush();
 
   if (result.status == result.FAILED) {
@@ -3936,8 +3861,9 @@ lib.TestManager.TestRun.prototype.onResultComplete = function(result) {
   } else if (result.status == result.PASSED) {
     this.passes.push(result);
   } else {
-    this.log.println('Unknown result status: ' + result.test.fullName + ': ' +
-                     result.status);
+    this.log.println(
+        'Unknown result status: ' + result.test.fullName + ': ' +
+        result.status);
     return this.panic = true;
   }
 
@@ -3965,8 +3891,8 @@ lib.TestManager.TestRun.prototype.onResultComplete = function(result) {
  */
 lib.TestManager.TestRun.prototype.onResultReComplete = function(
     result, lateStatus) {
-  this.log.println('Late complete for test: ' + result.test.fullName + ': ' +
-                   lateStatus);
+  this.log.println(
+      'Late complete for test: ' + result.test.fullName + ': ' + lateStatus);
 
   // Consider any late completion a failure, even if it's a double-pass, since
   // it's a misuse of the testing API.
@@ -3981,8 +3907,7 @@ lib.TestManager.TestRun.prototype.onResultReComplete = function(
  * Run the next test in the queue.
  */
 lib.TestManager.TestRun.prototype.runNextTest_ = function() {
-  if (this.panic || !this.testQueue_.length)
-    return this.onTestRunComplete_();
+  if (this.panic || !this.testQueue_.length) return this.onTestRunComplete_();
 
   if (this.maxFailures && this.failures.length >= this.maxFailures) {
     this.log.println('Maximum failure count reached, aborting test run.');
@@ -4018,8 +3943,9 @@ lib.TestManager.TestRun.prototype.runNextTest_ = function() {
 
     this.testQueue_.shift();
   } catch (ex) {
-    this.log.println('Unexpected exception during test preamble: ' +
-                     (ex.stack ? ex.stack : ex));
+    this.log.println(
+        'Unexpected exception during test preamble: ' +
+        (ex.stack ? ex.stack : ex));
     this.log.popPrefix();
     this.log.println('}');
 
@@ -4033,8 +3959,8 @@ lib.TestManager.TestRun.prototype.runNextTest_ = function() {
   } catch (ex) {
     // Result.run() should catch test exceptions and turn them into failures.
     // If we got here, it means there is trouble in the testing framework.
-    this.log.println('Unexpected exception during test run: ' +
-                     (ex.stack ? ex.stack : ex));
+    this.log.println(
+        'Unexpected exception during test run: ' + (ex.stack ? ex.stack : ex));
     this.panic = true;
   }
 };
@@ -4085,8 +4011,9 @@ lib.TestManager.TestRun.prototype.summarize = function() {
   }
 
   if (this.testQueue_.length) {
-    this.log.println('Test run incomplete: ' + this.testQueue_.length +
-                     ' test(s) were not run.');
+    this.log.println(
+        'Test run incomplete: ' + this.testQueue_.length +
+        ' test(s) were not run.');
   }
 };
 
@@ -4147,8 +4074,8 @@ lib.TestManager.Result = function(testRun, suite, test) {
  * Possible values for this.status.
  */
 lib.TestManager.Result.prototype.PENDING = 'pending';
-lib.TestManager.Result.prototype.FAILED  = 'FAILED';
-lib.TestManager.Result.prototype.PASSED  = 'passed';
+lib.TestManager.Result.prototype.FAILED = 'FAILED';
+lib.TestManager.Result.prototype.PASSED = 'passed';
 
 /**
  * Exception thrown when a test completes (pass or fail), to ensure no more of
@@ -4158,15 +4085,16 @@ lib.TestManager.Result.TestComplete = function(result) {
   this.result = result;
 };
 
-lib.TestManager.Result.TestComplete.prototype.toString = function() {
+lib.TestManager.Result.TestComplete.prototype.toString =
+    function() {
   return 'lib.TestManager.Result.TestComplete: ' + this.result.test.fullName +
       ', status: ' + this.result.status;
 }
 
-/**
- * Start the test associated with this result.
- */
-lib.TestManager.Result.prototype.run = function() {
+    /**
+     * Start the test associated with this result.
+     */
+    lib.TestManager.Result.prototype.run = function() {
   var self = this;
 
   this.startDate = new Date();
@@ -4197,8 +4125,7 @@ lib.TestManager.Result.prototype.expectErrorMessage = function(str) {
 lib.TestManager.Result.prototype.onTimeout_ = function() {
   this.timeout_ = null;
 
-  if (this.status != this.PENDING)
-    return;
+  if (this.status != this.PENDING) return;
 
   this.println('Test timed out.');
   this.completeTest_(this.FAILED, false);
@@ -4221,8 +4148,7 @@ lib.TestManager.Result.prototype.onTimeout_ = function() {
  * @param {int} ms Number of milliseconds requested.
  */
 lib.TestManager.Result.prototype.requestTime = function(ms) {
-  if (this.timeout_)
-    clearTimeout(this.timeout_);
+  if (this.timeout_) clearTimeout(this.timeout_);
 
   this.timeout_ = setTimeout(this.onTimeout_.bind(this), ms);
 };
@@ -4252,15 +4178,12 @@ lib.TestManager.Result.prototype.completeTest_ = function(status, opt_throw) {
  * Check that two arrays are equal.
  */
 lib.TestManager.Result.prototype.arrayEQ_ = function(actual, expected) {
-  if (!actual || !expected)
-    return (!actual && !expected);
+  if (!actual || !expected) return (!actual && !expected);
 
-  if (actual.length != expected.length)
-    return false;
+  if (actual.length != expected.length) return false;
 
   for (var i = 0; i < actual.length; ++i)
-    if (actual[i] != expected[i])
-      return false;
+    if (actual[i] != expected[i]) return false;
 
   return true;
 };
@@ -4283,11 +4206,12 @@ lib.TestManager.Result.prototype.assertEQ = function(
     actual, expected, opt_name) {
   // Utility function to pretty up the log.
   function format(value) {
-    if (typeof value == 'number')
-      return value;
+    if (typeof value == 'number') return value;
 
     var str = String(value);
-    var ary = str.split('\n').map(function (e) { return JSON.stringify(e) });
+    var ary = str.split('\n').map(function(e) {
+      return JSON.stringify(e)
+    });
     if (ary.length > 1) {
       // If the string has newlines, start it off on its own line so that
       // it's easier to compare against another string with newlines.
@@ -4297,18 +4221,17 @@ lib.TestManager.Result.prototype.assertEQ = function(
     }
   }
 
-  if (actual === expected)
-    return;
+  if (actual === expected) return;
 
   // Deal with common object types since JavaScript can't.
   if (expected instanceof Array)
-    if (this.arrayEQ_(actual, expected))
-      return;
+    if (this.arrayEQ_(actual, expected)) return;
 
   var name = opt_name ? '[' + opt_name + ']' : '';
 
-  this.fail('assertEQ' + name + ': ' + this.getCallerLocation_(1) + ': ' +
-            format(actual) + ' !== ' + format(expected));
+  this.fail(
+      'assertEQ' + name + ': ' + this.getCallerLocation_(1) + ': ' +
+      format(actual) + ' !== ' + format(expected));
 };
 
 /**
@@ -4326,13 +4249,13 @@ lib.TestManager.Result.prototype.assertEQ = function(
  *     of the caller.
  */
 lib.TestManager.Result.prototype.assert = function(actual, opt_name) {
-  if (actual === true)
-    return;
+  if (actual === true) return;
 
   var name = opt_name ? '[' + opt_name + ']' : '';
 
-  this.fail('assert' + name + ': ' + this.getCallerLocation_(1) + ': ' +
-            String(actual));
+  this.fail(
+      'assert' + name + ': ' + this.getCallerLocation_(1) + ': ' +
+      String(actual));
 };
 
 /**
@@ -4370,8 +4293,7 @@ lib.TestManager.Result.prototype.println = function(message) {
  * @param {string} opt_message Optional message to add to the log.
  */
 lib.TestManager.Result.prototype.fail = function(opt_message) {
-  if (arguments.length)
-    this.println(opt_message);
+  if (arguments.length) this.println(opt_message);
 
   this.completeTest_(this.FAILED, true);
 };
@@ -4456,9 +4378,9 @@ lib.UTF8Decoder.prototype.decode = function(str) {
           // Got a full sequence. Check if it's within bounds and
           // filter out surrogate pairs.
           var codePoint = this.codePoint;
-          if (codePoint < this.lowerBound
-              || (0xD800 <= codePoint && codePoint <= 0xDFFF)
-              || codePoint > 0x10FFFF) {
+          if (codePoint < this.lowerBound ||
+              (0xD800 <= codePoint && codePoint <= 0xDFFF) ||
+              codePoint > 0x10FFFF) {
             ret += '\ufffd';
           } else {
             // Encode as UTF-16 in the output.
@@ -4468,8 +4390,8 @@ lib.UTF8Decoder.prototype.decode = function(str) {
               // Surrogate pair.
               codePoint -= 0x10000;
               ret += String.fromCharCode(
-                0xD800 + ((codePoint >>> 10) & 0x3FF),
-                0xDC00 + (codePoint & 0x3FF));
+                  0xD800 + ((codePoint >>> 10) & 0x3FF),
+                  0xDC00 + (codePoint & 0x3FF));
             }
           }
         }
@@ -4517,8 +4439,8 @@ lib.encodeUTF8 = function(str) {
     if (0xDC00 <= c && c <= 0xDFFF) {
       c = 0xFFFD;
     } else if (0xD800 <= c && c <= 0xDBFF) {
-      if (i+1 < str.length) {
-        var d = str.charCodeAt(i+1);
+      if (i + 1 < str.length) {
+        var d = str.charCodeAt(i + 1);
         if (0xDC00 <= d && d <= 0xDFFF) {
           // Swallow a surrogate pair.
           c = 0x10000 + ((c & 0x3FF) << 10) + (d & 0x3FF);
@@ -4663,7 +4585,7 @@ lib.encodeUTF8 = function(str) {
  */
 if (!String.prototype.codePointAt) {
   (function() {
-    'use strict'; // needed to support `apply`/`call` with `undefined`/`null`
+    'use strict';  // needed to support `apply`/`call` with `undefined`/`null`
     var codePointAt = function(position) {
       if (this == null) {
         throw TypeError();
@@ -4672,7 +4594,7 @@ if (!String.prototype.codePointAt) {
       var size = string.length;
       // `ToInteger`
       var index = position ? Number(position) : 0;
-      if (index != index) { // better `isNaN`
+      if (index != index) {  // better `isNaN`
         index = 0;
       }
       // Account for out-of-bounds indices:
@@ -4682,12 +4604,13 @@ if (!String.prototype.codePointAt) {
       // Get the first code unit
       var first = string.charCodeAt(index);
       var second;
-      if ( // check if it’s the start of a surrogate pair
-        first >= 0xD800 && first <= 0xDBFF && // high surrogate
-        size > index + 1 // there is a next code unit
+      if (
+          // check if it’s the start of a surrogate pair
+          first >= 0xD800 && first <= 0xDBFF &&  // high surrogate
+          size > index + 1                       // there is a next code unit
       ) {
         second = string.charCodeAt(index + 1);
-        if (second >= 0xDC00 && second <= 0xDFFF) { // low surrogate
+        if (second >= 0xDC00 && second <= 0xDFFF) {  // low surrogate
           // http://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
           return (first - 0xD800) * 0x400 + second - 0xDC00 + 0x10000;
         }
@@ -4695,11 +4618,9 @@ if (!String.prototype.codePointAt) {
       return first;
     };
     if (Object.defineProperty) {
-      Object.defineProperty(String.prototype, 'codePointAt', {
-        'value': codePointAt,
-        'configurable': true,
-        'writable': true
-      });
+      Object.defineProperty(
+          String.prototype, 'codePointAt',
+          {'value': codePointAt, 'configurable': true, 'writable': true});
     } else {
       String.prototype.codePointAt = codePointAt;
     }
@@ -4723,111 +4644,98 @@ lib.wc.cjkAmbiguousWidth = 2;
 // Sorted list of non-overlapping intervals of non-spacing characters
 // generated by "uniset +cat=Me +cat=Mn +cat=Cf -00AD +1160-11FF +200B c"
 lib.wc.combining = [
-    [ 0x0300, 0x036F ], [ 0x0483, 0x0486 ], [ 0x0488, 0x0489 ],
-    [ 0x0591, 0x05BD ], [ 0x05BF, 0x05BF ], [ 0x05C1, 0x05C2 ],
-    [ 0x05C4, 0x05C5 ], [ 0x05C7, 0x05C7 ], [ 0x0600, 0x0603 ],
-    [ 0x0610, 0x0615 ], [ 0x064B, 0x065E ], [ 0x0670, 0x0670 ],
-    [ 0x06D6, 0x06E4 ], [ 0x06E7, 0x06E8 ], [ 0x06EA, 0x06ED ],
-    [ 0x070F, 0x070F ], [ 0x0711, 0x0711 ], [ 0x0730, 0x074A ],
-    [ 0x07A6, 0x07B0 ], [ 0x07EB, 0x07F3 ], [ 0x0901, 0x0902 ],
-    [ 0x093C, 0x093C ], [ 0x0941, 0x0948 ], [ 0x094D, 0x094D ],
-    [ 0x0951, 0x0954 ], [ 0x0962, 0x0963 ], [ 0x0981, 0x0981 ],
-    [ 0x09BC, 0x09BC ], [ 0x09C1, 0x09C4 ], [ 0x09CD, 0x09CD ],
-    [ 0x09E2, 0x09E3 ], [ 0x0A01, 0x0A02 ], [ 0x0A3C, 0x0A3C ],
-    [ 0x0A41, 0x0A42 ], [ 0x0A47, 0x0A48 ], [ 0x0A4B, 0x0A4D ],
-    [ 0x0A70, 0x0A71 ], [ 0x0A81, 0x0A82 ], [ 0x0ABC, 0x0ABC ],
-    [ 0x0AC1, 0x0AC5 ], [ 0x0AC7, 0x0AC8 ], [ 0x0ACD, 0x0ACD ],
-    [ 0x0AE2, 0x0AE3 ], [ 0x0B01, 0x0B01 ], [ 0x0B3C, 0x0B3C ],
-    [ 0x0B3F, 0x0B3F ], [ 0x0B41, 0x0B43 ], [ 0x0B4D, 0x0B4D ],
-    [ 0x0B56, 0x0B56 ], [ 0x0B82, 0x0B82 ], [ 0x0BC0, 0x0BC0 ],
-    [ 0x0BCD, 0x0BCD ], [ 0x0C3E, 0x0C40 ], [ 0x0C46, 0x0C48 ],
-    [ 0x0C4A, 0x0C4D ], [ 0x0C55, 0x0C56 ], [ 0x0CBC, 0x0CBC ],
-    [ 0x0CBF, 0x0CBF ], [ 0x0CC6, 0x0CC6 ], [ 0x0CCC, 0x0CCD ],
-    [ 0x0CE2, 0x0CE3 ], [ 0x0D41, 0x0D43 ], [ 0x0D4D, 0x0D4D ],
-    [ 0x0DCA, 0x0DCA ], [ 0x0DD2, 0x0DD4 ], [ 0x0DD6, 0x0DD6 ],
-    [ 0x0E31, 0x0E31 ], [ 0x0E34, 0x0E3A ], [ 0x0E47, 0x0E4E ],
-    [ 0x0EB1, 0x0EB1 ], [ 0x0EB4, 0x0EB9 ], [ 0x0EBB, 0x0EBC ],
-    [ 0x0EC8, 0x0ECD ], [ 0x0F18, 0x0F19 ], [ 0x0F35, 0x0F35 ],
-    [ 0x0F37, 0x0F37 ], [ 0x0F39, 0x0F39 ], [ 0x0F71, 0x0F7E ],
-    [ 0x0F80, 0x0F84 ], [ 0x0F86, 0x0F87 ], [ 0x0F90, 0x0F97 ],
-    [ 0x0F99, 0x0FBC ], [ 0x0FC6, 0x0FC6 ], [ 0x102D, 0x1030 ],
-    [ 0x1032, 0x1032 ], [ 0x1036, 0x1037 ], [ 0x1039, 0x1039 ],
-    [ 0x1058, 0x1059 ], [ 0x1160, 0x11FF ], [ 0x135F, 0x135F ],
-    [ 0x1712, 0x1714 ], [ 0x1732, 0x1734 ], [ 0x1752, 0x1753 ],
-    [ 0x1772, 0x1773 ], [ 0x17B4, 0x17B5 ], [ 0x17B7, 0x17BD ],
-    [ 0x17C6, 0x17C6 ], [ 0x17C9, 0x17D3 ], [ 0x17DD, 0x17DD ],
-    [ 0x180B, 0x180D ], [ 0x18A9, 0x18A9 ], [ 0x1920, 0x1922 ],
-    [ 0x1927, 0x1928 ], [ 0x1932, 0x1932 ], [ 0x1939, 0x193B ],
-    [ 0x1A17, 0x1A18 ], [ 0x1B00, 0x1B03 ], [ 0x1B34, 0x1B34 ],
-    [ 0x1B36, 0x1B3A ], [ 0x1B3C, 0x1B3C ], [ 0x1B42, 0x1B42 ],
-    [ 0x1B6B, 0x1B73 ], [ 0x1DC0, 0x1DCA ], [ 0x1DFE, 0x1DFF ],
-    [ 0x200B, 0x200F ], [ 0x202A, 0x202E ], [ 0x2060, 0x2063 ],
-    [ 0x206A, 0x206F ], [ 0x20D0, 0x20EF ], [ 0x302A, 0x302F ],
-    [ 0x3099, 0x309A ], [ 0xA806, 0xA806 ], [ 0xA80B, 0xA80B ],
-    [ 0xA825, 0xA826 ], [ 0xFB1E, 0xFB1E ], [ 0xFE00, 0xFE0F ],
-    [ 0xFE20, 0xFE23 ], [ 0xFEFF, 0xFEFF ], [ 0xFFF9, 0xFFFB ],
-    [ 0x10A01, 0x10A03 ], [ 0x10A05, 0x10A06 ], [ 0x10A0C, 0x10A0F ],
-    [ 0x10A38, 0x10A3A ], [ 0x10A3F, 0x10A3F ], [ 0x1D167, 0x1D169 ],
-    [ 0x1D173, 0x1D182 ], [ 0x1D185, 0x1D18B ], [ 0x1D1AA, 0x1D1AD ],
-    [ 0x1D242, 0x1D244 ], [ 0xE0001, 0xE0001 ], [ 0xE0020, 0xE007F ],
-    [ 0xE0100, 0xE01EF ]
+  [0x0300, 0x036F],   [0x0483, 0x0486],   [0x0488, 0x0489],
+  [0x0591, 0x05BD],   [0x05BF, 0x05BF],   [0x05C1, 0x05C2],
+  [0x05C4, 0x05C5],   [0x05C7, 0x05C7],   [0x0600, 0x0603],
+  [0x0610, 0x0615],   [0x064B, 0x065E],   [0x0670, 0x0670],
+  [0x06D6, 0x06E4],   [0x06E7, 0x06E8],   [0x06EA, 0x06ED],
+  [0x070F, 0x070F],   [0x0711, 0x0711],   [0x0730, 0x074A],
+  [0x07A6, 0x07B0],   [0x07EB, 0x07F3],   [0x0901, 0x0902],
+  [0x093C, 0x093C],   [0x0941, 0x0948],   [0x094D, 0x094D],
+  [0x0951, 0x0954],   [0x0962, 0x0963],   [0x0981, 0x0981],
+  [0x09BC, 0x09BC],   [0x09C1, 0x09C4],   [0x09CD, 0x09CD],
+  [0x09E2, 0x09E3],   [0x0A01, 0x0A02],   [0x0A3C, 0x0A3C],
+  [0x0A41, 0x0A42],   [0x0A47, 0x0A48],   [0x0A4B, 0x0A4D],
+  [0x0A70, 0x0A71],   [0x0A81, 0x0A82],   [0x0ABC, 0x0ABC],
+  [0x0AC1, 0x0AC5],   [0x0AC7, 0x0AC8],   [0x0ACD, 0x0ACD],
+  [0x0AE2, 0x0AE3],   [0x0B01, 0x0B01],   [0x0B3C, 0x0B3C],
+  [0x0B3F, 0x0B3F],   [0x0B41, 0x0B43],   [0x0B4D, 0x0B4D],
+  [0x0B56, 0x0B56],   [0x0B82, 0x0B82],   [0x0BC0, 0x0BC0],
+  [0x0BCD, 0x0BCD],   [0x0C3E, 0x0C40],   [0x0C46, 0x0C48],
+  [0x0C4A, 0x0C4D],   [0x0C55, 0x0C56],   [0x0CBC, 0x0CBC],
+  [0x0CBF, 0x0CBF],   [0x0CC6, 0x0CC6],   [0x0CCC, 0x0CCD],
+  [0x0CE2, 0x0CE3],   [0x0D41, 0x0D43],   [0x0D4D, 0x0D4D],
+  [0x0DCA, 0x0DCA],   [0x0DD2, 0x0DD4],   [0x0DD6, 0x0DD6],
+  [0x0E31, 0x0E31],   [0x0E34, 0x0E3A],   [0x0E47, 0x0E4E],
+  [0x0EB1, 0x0EB1],   [0x0EB4, 0x0EB9],   [0x0EBB, 0x0EBC],
+  [0x0EC8, 0x0ECD],   [0x0F18, 0x0F19],   [0x0F35, 0x0F35],
+  [0x0F37, 0x0F37],   [0x0F39, 0x0F39],   [0x0F71, 0x0F7E],
+  [0x0F80, 0x0F84],   [0x0F86, 0x0F87],   [0x0F90, 0x0F97],
+  [0x0F99, 0x0FBC],   [0x0FC6, 0x0FC6],   [0x102D, 0x1030],
+  [0x1032, 0x1032],   [0x1036, 0x1037],   [0x1039, 0x1039],
+  [0x1058, 0x1059],   [0x1160, 0x11FF],   [0x135F, 0x135F],
+  [0x1712, 0x1714],   [0x1732, 0x1734],   [0x1752, 0x1753],
+  [0x1772, 0x1773],   [0x17B4, 0x17B5],   [0x17B7, 0x17BD],
+  [0x17C6, 0x17C6],   [0x17C9, 0x17D3],   [0x17DD, 0x17DD],
+  [0x180B, 0x180D],   [0x18A9, 0x18A9],   [0x1920, 0x1922],
+  [0x1927, 0x1928],   [0x1932, 0x1932],   [0x1939, 0x193B],
+  [0x1A17, 0x1A18],   [0x1B00, 0x1B03],   [0x1B34, 0x1B34],
+  [0x1B36, 0x1B3A],   [0x1B3C, 0x1B3C],   [0x1B42, 0x1B42],
+  [0x1B6B, 0x1B73],   [0x1DC0, 0x1DCA],   [0x1DFE, 0x1DFF],
+  [0x200B, 0x200F],   [0x202A, 0x202E],   [0x2060, 0x2063],
+  [0x206A, 0x206F],   [0x20D0, 0x20EF],   [0x302A, 0x302F],
+  [0x3099, 0x309A],   [0xA806, 0xA806],   [0xA80B, 0xA80B],
+  [0xA825, 0xA826],   [0xFB1E, 0xFB1E],   [0xFE00, 0xFE0F],
+  [0xFE20, 0xFE23],   [0xFEFF, 0xFEFF],   [0xFFF9, 0xFFFB],
+  [0x10A01, 0x10A03], [0x10A05, 0x10A06], [0x10A0C, 0x10A0F],
+  [0x10A38, 0x10A3A], [0x10A3F, 0x10A3F], [0x1D167, 0x1D169],
+  [0x1D173, 0x1D182], [0x1D185, 0x1D18B], [0x1D1AA, 0x1D1AD],
+  [0x1D242, 0x1D244], [0xE0001, 0xE0001], [0xE0020, 0xE007F],
+  [0xE0100, 0xE01EF]
 ];
 
 // Sorted list of non-overlapping intervals of East Asian Ambiguous characters
 // generated by "uniset +WIDTH-A -cat=Me -cat=Mn -cat=Cf c"
 lib.wc.ambiguous = [
-    [ 0x00A1, 0x00A1 ], [ 0x00A4, 0x00A4 ], [ 0x00A7, 0x00A8 ],
-    [ 0x00AA, 0x00AA ], [ 0x00AE, 0x00AE ], [ 0x00B0, 0x00B4 ],
-    [ 0x00B6, 0x00BA ], [ 0x00BC, 0x00BF ], [ 0x00C6, 0x00C6 ],
-    [ 0x00D0, 0x00D0 ], [ 0x00D7, 0x00D8 ], [ 0x00DE, 0x00E1 ],
-    [ 0x00E6, 0x00E6 ], [ 0x00E8, 0x00EA ], [ 0x00EC, 0x00ED ],
-    [ 0x00F0, 0x00F0 ], [ 0x00F2, 0x00F3 ], [ 0x00F7, 0x00FA ],
-    [ 0x00FC, 0x00FC ], [ 0x00FE, 0x00FE ], [ 0x0101, 0x0101 ],
-    [ 0x0111, 0x0111 ], [ 0x0113, 0x0113 ], [ 0x011B, 0x011B ],
-    [ 0x0126, 0x0127 ], [ 0x012B, 0x012B ], [ 0x0131, 0x0133 ],
-    [ 0x0138, 0x0138 ], [ 0x013F, 0x0142 ], [ 0x0144, 0x0144 ],
-    [ 0x0148, 0x014B ], [ 0x014D, 0x014D ], [ 0x0152, 0x0153 ],
-    [ 0x0166, 0x0167 ], [ 0x016B, 0x016B ], [ 0x01CE, 0x01CE ],
-    [ 0x01D0, 0x01D0 ], [ 0x01D2, 0x01D2 ], [ 0x01D4, 0x01D4 ],
-    [ 0x01D6, 0x01D6 ], [ 0x01D8, 0x01D8 ], [ 0x01DA, 0x01DA ],
-    [ 0x01DC, 0x01DC ], [ 0x0251, 0x0251 ], [ 0x0261, 0x0261 ],
-    [ 0x02C4, 0x02C4 ], [ 0x02C7, 0x02C7 ], [ 0x02C9, 0x02CB ],
-    [ 0x02CD, 0x02CD ], [ 0x02D0, 0x02D0 ], [ 0x02D8, 0x02DB ],
-    [ 0x02DD, 0x02DD ], [ 0x02DF, 0x02DF ], [ 0x0391, 0x03A1 ],
-    [ 0x03A3, 0x03A9 ], [ 0x03B1, 0x03C1 ], [ 0x03C3, 0x03C9 ],
-    [ 0x0401, 0x0401 ], [ 0x0410, 0x044F ], [ 0x0451, 0x0451 ],
-    [ 0x2010, 0x2010 ], [ 0x2013, 0x2016 ], [ 0x2018, 0x2019 ],
-    [ 0x201C, 0x201D ], [ 0x2020, 0x2022 ], [ 0x2024, 0x2027 ],
-    [ 0x2030, 0x2030 ], [ 0x2032, 0x2033 ], [ 0x2035, 0x2035 ],
-    [ 0x203B, 0x203B ], [ 0x203E, 0x203E ], [ 0x2074, 0x2074 ],
-    [ 0x207F, 0x207F ], [ 0x2081, 0x2084 ], [ 0x20AC, 0x20AC ],
-    [ 0x2103, 0x2103 ], [ 0x2105, 0x2105 ], [ 0x2109, 0x2109 ],
-    [ 0x2113, 0x2113 ], [ 0x2116, 0x2116 ], [ 0x2121, 0x2122 ],
-    [ 0x2126, 0x2126 ], [ 0x212B, 0x212B ], [ 0x2153, 0x2154 ],
-    [ 0x215B, 0x215E ], [ 0x2160, 0x216B ], [ 0x2170, 0x2179 ],
-    [ 0x2190, 0x2199 ], [ 0x21B8, 0x21B9 ], [ 0x21D2, 0x21D2 ],
-    [ 0x21D4, 0x21D4 ], [ 0x21E7, 0x21E7 ], [ 0x2200, 0x2200 ],
-    [ 0x2202, 0x2203 ], [ 0x2207, 0x2208 ], [ 0x220B, 0x220B ],
-    [ 0x220F, 0x220F ], [ 0x2211, 0x2211 ], [ 0x2215, 0x2215 ],
-    [ 0x221A, 0x221A ], [ 0x221D, 0x2220 ], [ 0x2223, 0x2223 ],
-    [ 0x2225, 0x2225 ], [ 0x2227, 0x222C ], [ 0x222E, 0x222E ],
-    [ 0x2234, 0x2237 ], [ 0x223C, 0x223D ], [ 0x2248, 0x2248 ],
-    [ 0x224C, 0x224C ], [ 0x2252, 0x2252 ], [ 0x2260, 0x2261 ],
-    [ 0x2264, 0x2267 ], [ 0x226A, 0x226B ], [ 0x226E, 0x226F ],
-    [ 0x2282, 0x2283 ], [ 0x2286, 0x2287 ], [ 0x2295, 0x2295 ],
-    [ 0x2299, 0x2299 ], [ 0x22A5, 0x22A5 ], [ 0x22BF, 0x22BF ],
-    [ 0x2312, 0x2312 ], [ 0x2460, 0x24E9 ], [ 0x24EB, 0x254B ],
-    [ 0x2550, 0x2573 ], [ 0x2580, 0x258F ], [ 0x2592, 0x2595 ],
-    [ 0x25A0, 0x25A1 ], [ 0x25A3, 0x25A9 ], [ 0x25B2, 0x25B3 ],
-    [ 0x25B6, 0x25B7 ], [ 0x25BC, 0x25BD ], [ 0x25C0, 0x25C1 ],
-    [ 0x25C6, 0x25C8 ], [ 0x25CB, 0x25CB ], [ 0x25CE, 0x25D1 ],
-    [ 0x25E2, 0x25E5 ], [ 0x25EF, 0x25EF ], [ 0x2605, 0x2606 ],
-    [ 0x2609, 0x2609 ], [ 0x260E, 0x260F ], [ 0x2614, 0x2615 ],
-    [ 0x261C, 0x261C ], [ 0x261E, 0x261E ], [ 0x2640, 0x2640 ],
-    [ 0x2642, 0x2642 ], [ 0x2660, 0x2661 ], [ 0x2663, 0x2665 ],
-    [ 0x2667, 0x266A ], [ 0x266C, 0x266D ], [ 0x266F, 0x266F ],
-    [ 0x273D, 0x273D ], [ 0x2776, 0x277F ], [ 0xE000, 0xF8FF ],
-    [ 0xFFFD, 0xFFFD ], [ 0xF0000, 0xFFFFD ], [ 0x100000, 0x10FFFD ]
+  [0x00A1, 0x00A1], [0x00A4, 0x00A4], [0x00A7, 0x00A8],   [0x00AA, 0x00AA],
+  [0x00AE, 0x00AE], [0x00B0, 0x00B4], [0x00B6, 0x00BA],   [0x00BC, 0x00BF],
+  [0x00C6, 0x00C6], [0x00D0, 0x00D0], [0x00D7, 0x00D8],   [0x00DE, 0x00E1],
+  [0x00E6, 0x00E6], [0x00E8, 0x00EA], [0x00EC, 0x00ED],   [0x00F0, 0x00F0],
+  [0x00F2, 0x00F3], [0x00F7, 0x00FA], [0x00FC, 0x00FC],   [0x00FE, 0x00FE],
+  [0x0101, 0x0101], [0x0111, 0x0111], [0x0113, 0x0113],   [0x011B, 0x011B],
+  [0x0126, 0x0127], [0x012B, 0x012B], [0x0131, 0x0133],   [0x0138, 0x0138],
+  [0x013F, 0x0142], [0x0144, 0x0144], [0x0148, 0x014B],   [0x014D, 0x014D],
+  [0x0152, 0x0153], [0x0166, 0x0167], [0x016B, 0x016B],   [0x01CE, 0x01CE],
+  [0x01D0, 0x01D0], [0x01D2, 0x01D2], [0x01D4, 0x01D4],   [0x01D6, 0x01D6],
+  [0x01D8, 0x01D8], [0x01DA, 0x01DA], [0x01DC, 0x01DC],   [0x0251, 0x0251],
+  [0x0261, 0x0261], [0x02C4, 0x02C4], [0x02C7, 0x02C7],   [0x02C9, 0x02CB],
+  [0x02CD, 0x02CD], [0x02D0, 0x02D0], [0x02D8, 0x02DB],   [0x02DD, 0x02DD],
+  [0x02DF, 0x02DF], [0x0391, 0x03A1], [0x03A3, 0x03A9],   [0x03B1, 0x03C1],
+  [0x03C3, 0x03C9], [0x0401, 0x0401], [0x0410, 0x044F],   [0x0451, 0x0451],
+  [0x2010, 0x2010], [0x2013, 0x2016], [0x2018, 0x2019],   [0x201C, 0x201D],
+  [0x2020, 0x2022], [0x2024, 0x2027], [0x2030, 0x2030],   [0x2032, 0x2033],
+  [0x2035, 0x2035], [0x203B, 0x203B], [0x203E, 0x203E],   [0x2074, 0x2074],
+  [0x207F, 0x207F], [0x2081, 0x2084], [0x20AC, 0x20AC],   [0x2103, 0x2103],
+  [0x2105, 0x2105], [0x2109, 0x2109], [0x2113, 0x2113],   [0x2116, 0x2116],
+  [0x2121, 0x2122], [0x2126, 0x2126], [0x212B, 0x212B],   [0x2153, 0x2154],
+  [0x215B, 0x215E], [0x2160, 0x216B], [0x2170, 0x2179],   [0x2190, 0x2199],
+  [0x21B8, 0x21B9], [0x21D2, 0x21D2], [0x21D4, 0x21D4],   [0x21E7, 0x21E7],
+  [0x2200, 0x2200], [0x2202, 0x2203], [0x2207, 0x2208],   [0x220B, 0x220B],
+  [0x220F, 0x220F], [0x2211, 0x2211], [0x2215, 0x2215],   [0x221A, 0x221A],
+  [0x221D, 0x2220], [0x2223, 0x2223], [0x2225, 0x2225],   [0x2227, 0x222C],
+  [0x222E, 0x222E], [0x2234, 0x2237], [0x223C, 0x223D],   [0x2248, 0x2248],
+  [0x224C, 0x224C], [0x2252, 0x2252], [0x2260, 0x2261],   [0x2264, 0x2267],
+  [0x226A, 0x226B], [0x226E, 0x226F], [0x2282, 0x2283],   [0x2286, 0x2287],
+  [0x2295, 0x2295], [0x2299, 0x2299], [0x22A5, 0x22A5],   [0x22BF, 0x22BF],
+  [0x2312, 0x2312], [0x2460, 0x24E9], [0x24EB, 0x254B],   [0x2550, 0x2573],
+  [0x2580, 0x258F], [0x2592, 0x2595], [0x25A0, 0x25A1],   [0x25A3, 0x25A9],
+  [0x25B2, 0x25B3], [0x25B6, 0x25B7], [0x25BC, 0x25BD],   [0x25C0, 0x25C1],
+  [0x25C6, 0x25C8], [0x25CB, 0x25CB], [0x25CE, 0x25D1],   [0x25E2, 0x25E5],
+  [0x25EF, 0x25EF], [0x2605, 0x2606], [0x2609, 0x2609],   [0x260E, 0x260F],
+  [0x2614, 0x2615], [0x261C, 0x261C], [0x261E, 0x261E],   [0x2640, 0x2640],
+  [0x2642, 0x2642], [0x2660, 0x2661], [0x2663, 0x2665],   [0x2667, 0x266A],
+  [0x266C, 0x266D], [0x266F, 0x266F], [0x273D, 0x273D],   [0x2776, 0x277F],
+  [0xE000, 0xF8FF], [0xFFFD, 0xFFFD], [0xF0000, 0xFFFFD], [0x100000, 0x10FFFD]
 ];
 
 /**
@@ -4913,34 +4821,29 @@ lib.wc.charWidth = function(ucs) {
  */
 lib.wc.charWidthDisregardAmbiguous = function(ucs) {
   // Test for 8-bit control characters.
-  if (ucs === 0)
-    return lib.wc.nulWidth;
-  if (ucs < 32 || (ucs >= 0x7f && ucs < 0xa0))
-    return lib.wc.controlWidth;
+  if (ucs === 0) return lib.wc.nulWidth;
+  if (ucs < 32 || (ucs >= 0x7f && ucs < 0xa0)) return lib.wc.controlWidth;
 
   // Optimize for ASCII characters.
-  if (ucs < 0x7f)
-    return 1;
+  if (ucs < 0x7f) return 1;
 
   // Binary search in table of non-spacing characters.
-  if (lib.wc.isSpace(ucs))
-    return 0;
+  if (lib.wc.isSpace(ucs)) return 0;
 
   // If we arrive here, ucs is not a combining or C0/C1 control character.
   return 1 +
-    (ucs >= 0x1100 &&
-     (ucs <= 0x115f ||             // Hangul Jamo init. consonants
-      ucs == 0x2329 || ucs == 0x232a ||
-      (ucs >= 0x2e80 && ucs <= 0xa4cf &&
-       ucs != 0x303f) ||           // CJK ... Yi
-      (ucs >= 0xac00 && ucs <= 0xd7a3) ||  // Hangul Syllables
-      (ucs >= 0xf900 && ucs <= 0xfaff) ||  // CJK Compatibility Ideographs
-      (ucs >= 0xfe10 && ucs <= 0xfe19) ||  // Vertical forms
-      (ucs >= 0xfe30 && ucs <= 0xfe6f) ||  // CJK Compatibility Forms
-      (ucs >= 0xff00 && ucs <= 0xff60) ||  // Fullwidth Forms
-      (ucs >= 0xffe0 && ucs <= 0xffe6) ||
-      (ucs >= 0x20000 && ucs <= 0x2fffd) ||
-      (ucs >= 0x30000 && ucs <= 0x3fffd)));
+      (ucs >= 0x1100 &&
+       (ucs <= 0x115f ||  // Hangul Jamo init. consonants
+        ucs == 0x2329 || ucs == 0x232a ||
+        (ucs >= 0x2e80 && ucs <= 0xa4cf && ucs != 0x303f) ||  // CJK ... Yi
+        (ucs >= 0xac00 && ucs <= 0xd7a3) ||  // Hangul Syllables
+        (ucs >= 0xf900 && ucs <= 0xfaff) ||  // CJK Compatibility Ideographs
+        (ucs >= 0xfe10 && ucs <= 0xfe19) ||  // Vertical forms
+        (ucs >= 0xfe30 && ucs <= 0xfe6f) ||  // CJK Compatibility Forms
+        (ucs >= 0xff00 && ucs <= 0xff60) ||  // Fullwidth Forms
+        (ucs >= 0xffe0 && ucs <= 0xffe6) ||
+        (ucs >= 0x20000 && ucs <= 0x2fffd) ||
+        (ucs >= 0x30000 && ucs <= 0x3fffd)));
   // TODO: emoji characters usually require space for wide characters although
   // East Asian width spec says nothing. Should we add special cases for them?
 };
@@ -4954,8 +4857,7 @@ lib.wc.charWidthDisregardAmbiguous = function(ucs) {
  * @return {integer} The column width of the given character.
  */
 lib.wc.charWidthRegardAmbiguous = function(ucs) {
-  if (lib.wc.isCjkAmbiguous(ucs))
-    return lib.wc.cjkAmbiguousWidth;
+  if (lib.wc.isCjkAmbiguous(ucs)) return lib.wc.cjkAmbiguousWidth;
 
   return lib.wc.charWidthDisregardAmbiguous(ucs);
 };
@@ -4973,8 +4875,7 @@ lib.wc.strWidth = function(str) {
   for (var i = 0; i < str.length;) {
     var codePoint = str.codePointAt(i);
     width = lib.wc.charWidth(codePoint);
-    if (width < 0)
-      return -1;
+    if (width < 0) return -1;
     rv += width;
     i += (codePoint <= 0xffff) ? 1 : 2;
   }
@@ -4996,16 +4897,15 @@ lib.wc.substr = function(str, start, opt_width) {
 
   for (startIndex = 0, width = 0; startIndex < str.length; startIndex++) {
     width += lib.wc.charWidth(str.charCodeAt(startIndex));
-    if (width > start)
-      break;
+    if (width > start) break;
   }
 
   if (opt_width != undefined) {
     for (endIndex = startIndex, width = 0;
          endIndex < str.length && width < opt_width;
-         width += lib.wc.charWidth(str.charCodeAt(endIndex)), endIndex++);
-    if (width > opt_width)
-      endIndex--;
+         width += lib.wc.charWidth(str.charCodeAt(endIndex)), endIndex++)
+      ;
+    if (width > opt_width) endIndex--;
     return str.substring(startIndex, endIndex);
   }
 
@@ -5024,15 +4924,15 @@ lib.wc.substr = function(str, start, opt_width) {
 lib.wc.substring = function(str, start, end) {
   return lib.wc.substr(str, start, end - start);
 };
-lib.resource.add('libdot/changelog/version', 'text/plain',
-'1.11' +
-''
-);
+lib.resource.add(
+    'libdot/changelog/version', 'text/plain',
+    '1.11' +
+        '');
 
-lib.resource.add('libdot/changelog/date', 'text/plain',
-'2017-04-17' +
-''
-);
+lib.resource.add(
+    'libdot/changelog/date', 'text/plain',
+    '2017-04-17' +
+        '');
 
 // SOURCE FILE: hterm/js/hterm.js
 // Copyright (c) 2012 The Chromium OS Authors. All rights reserved.
@@ -5075,7 +4975,6 @@ hterm.zoomWarningMessage = 'ZOOM != 100%';
  */
 hterm.notifyCopyMessage = '\u2702';
 
-
 /**
  * Text shown in a desktop notification for the terminal
  * bell.  \u226a is a unicode EIGHTH NOTE, %(title) will
@@ -5088,9 +4987,10 @@ hterm.desktopNotificationTitle = '\u266A %(title) \u266A';
  *
  * A test harness should ensure that they all exist before running.
  */
-hterm.testDeps = ['hterm.ScrollPort.Tests', 'hterm.Screen.Tests',
-                  'hterm.Terminal.Tests', 'hterm.VT.Tests',
-                  'hterm.VT.CannedTests'];
+hterm.testDeps = [
+  'hterm.ScrollPort.Tests', 'hterm.Screen.Tests', 'hterm.Terminal.Tests',
+  'hterm.VT.Tests', 'hterm.VT.CannedTests'
+];
 
 /**
  * The hterm init function, registered with lib.registerInit().
@@ -5330,8 +5230,9 @@ hterm.RowCol.prototype.setTo = function(that) {
  *     otherwise.
  */
 hterm.RowCol.prototype.equals = function(that) {
-  return (this.row == that.row && this.column == that.column &&
-          this.overflow == that.overflow);
+  return (
+      this.row == that.row && this.column == that.column &&
+      this.overflow == that.overflow);
 };
 
 /**
@@ -5341,8 +5242,9 @@ hterm.RowCol.prototype.equals = function(that) {
  *     instance.
  */
 hterm.RowCol.prototype.toString = function() {
-  return ('[hterm.RowCol: ' + this.row + ', ' + this.column + ', ' +
-          this.overflow + ']');
+  return (
+      '[hterm.RowCol: ' + this.row + ', ' + this.column + ', ' + this.overflow +
+      ']');
 };
 // SOURCE FILE: hterm/js/hterm_frame.js
 // Copyright (c) 2012 The Chromium OS Authors. All rights reserved.
@@ -5424,17 +5326,16 @@ hterm.Frame.prototype.onLoad = function() {};
  */
 hterm.Frame.prototype.sendTerminalInfo_ = function() {
   lib.f.getAcceptLanguages(function(languages) {
-      this.postMessage('terminal-info', [{
-         acceptLanguages: languages,
-         foregroundColor: this.terminal_.getForegroundColor(),
-         backgroundColor: this.terminal_.getBackgroundColor(),
-         cursorColor: this.terminal_.getCursorColor(),
-         fontSize: this.terminal_.getFontSize(),
-         fontFamily: this.terminal_.getFontFamily(),
-         baseURL: lib.f.getURL('/')
-          }]
-        );
-    }.bind(this));
+    this.postMessage('terminal-info', [{
+                       acceptLanguages: languages,
+                       foregroundColor: this.terminal_.getForegroundColor(),
+                       backgroundColor: this.terminal_.getBackgroundColor(),
+                       cursorColor: this.terminal_.getCursorColor(),
+                       fontSize: this.terminal_.getFontSize(),
+                       fontFamily: this.terminal_.getFontFamily(),
+                       baseURL: lib.f.getURL('/')
+                     }]);
+  }.bind(this));
 };
 
 /**
@@ -5448,13 +5349,11 @@ hterm.Frame.prototype.onCloseClicked_ = function() {
  * Close this frame.
  */
 hterm.Frame.prototype.close = function() {
-  if (!this.container_ || !this.container_.parentNode)
-      return;
+  if (!this.container_ || !this.container_.parentNode) return;
 
   this.container_.parentNode.removeChild(this.container_);
   this.onClose();
 };
-
 
 /**
  * Clients may override this.
@@ -5465,8 +5364,7 @@ hterm.Frame.prototype.onClose = function() {};
  * Send a message to the iframe.
  */
 hterm.Frame.prototype.postMessage = function(name, argv) {
-  if (!this.messageChannel_)
-    throw new Error('Message channel is not set up.');
+  if (!this.messageChannel_) throw new Error('Message channel is not set up.');
 
   this.messageChannel_.port1.postMessage({name: name, argv: argv});
 };
@@ -5480,8 +5378,7 @@ hterm.Frame.prototype.show = function() {
   var self = this;
 
   function opt(name, defaultValue) {
-    if (name in self.options)
-      return self.options[name];
+    if (name in self.options) return self.options[name];
 
     return defaultValue;
   }
@@ -5505,36 +5402,36 @@ hterm.Frame.prototype.show = function() {
   var document = this.terminal_.document_;
 
   var container = this.container_ = document.createElement('div');
-  container.style.cssText = (
-      'position: absolute;' +
-      'display: -webkit-flex;' +
-      '-webkit-flex-direction: column;' +
-      'top: 10%;' +
-      'left: 4%;' +
-      'width: 90%;' +
-      'height: 80%;' +
-      'box-shadow: 0 0 2px ' + this.terminal_.getForegroundColor() + ';' +
-      'border: 2px ' + this.terminal_.getForegroundColor() + ' solid;');
+  container.style.cssText =
+      ('position: absolute;' +
+       'display: -webkit-flex;' +
+       '-webkit-flex-direction: column;' +
+       'top: 10%;' +
+       'left: 4%;' +
+       'width: 90%;' +
+       'height: 80%;' +
+       'box-shadow: 0 0 2px ' + this.terminal_.getForegroundColor() + ';' +
+       'border: 2px ' + this.terminal_.getForegroundColor() + ' solid;');
 
   var header = document.createElement('div');
-  header.style.cssText = (
-      'display: -webkit-flex;' +
-      '-webkit-justify-content: flex-end;' +
-      'height: ' + headerHeight + ';' +
-      'background-color: ' + this.terminal_.getForegroundColor() + ';' +
-      'color: ' + this.terminal_.getBackgroundColor() + ';' +
-      'font-size: 16px;' +
-      'font-family: ' + this.terminal_.getFontFamily());
+  header.style.cssText =
+      ('display: -webkit-flex;' +
+       '-webkit-justify-content: flex-end;' +
+       'height: ' + headerHeight + ';' +
+       'background-color: ' + this.terminal_.getForegroundColor() + ';' +
+       'color: ' + this.terminal_.getBackgroundColor() + ';' +
+       'font-size: 16px;' +
+       'font-family: ' + this.terminal_.getFontFamily());
   container.appendChild(header);
 
   if (false) {
     // No use for the close button.
     var button = document.createElement('div');
     button.setAttribute('role', 'button');
-    button.style.cssText = (
-        'margin-top: -3px;' +
-        'margin-right: 3px;' +
-        'cursor: pointer;');
+    button.style.cssText =
+        ('margin-top: -3px;' +
+         'margin-right: 3px;' +
+         'cursor: pointer;');
     button.textContent = '\u2a2f';
     button.addEventListener('click', this.onCloseClicked_.bind(this));
     header.appendChild(button);
@@ -5542,10 +5439,10 @@ hterm.Frame.prototype.show = function() {
 
   var iframe = this.iframe_ = document.createElement('iframe');
   iframe.onload = this.onLoad_.bind(this);
-  iframe.style.cssText = (
-      'display: -webkit-flex;' +
-      '-webkit-flex: 1;' +
-      'width: 100%');
+  iframe.style.cssText =
+      ('display: -webkit-flex;' +
+       '-webkit-flex: 1;' +
+       'width: 100%');
   iframe.setAttribute('src', this.url);
   iframe.setAttribute('seamless', true);
   container.appendChild(iframe);
@@ -5581,11 +5478,11 @@ hterm.Keyboard = function(terminal) {
   // The event handlers we are interested in, and their bound callbacks, saved
   // so they can be uninstalled with removeEventListener, when required.
   this.handlers_ = [
-      ['focusout', this.onFocusOut_.bind(this)],
-      ['keydown', this.onKeyDown_.bind(this)],
-      ['keypress', this.onKeyPress_.bind(this)],
-      ['keyup', this.onKeyUp_.bind(this)],
-      ['textInput', this.onTextInput_.bind(this)]
+    ['focusout', this.onFocusOut_.bind(this)],
+    ['keydown', this.onKeyDown_.bind(this)],
+    ['keypress', this.onKeyPress_.bind(this)],
+    ['keyup', this.onKeyUp_.bind(this)],
+    ['textInput', this.onTextInput_.bind(this)]
   ];
 
   /**
@@ -5807,11 +5704,9 @@ hterm.Keyboard.prototype.encode = function(str) {
  *     null to disable the keyboard.
  */
 hterm.Keyboard.prototype.installKeyboard = function(element) {
-  if (element == this.keyboardElement_)
-    return;
+  if (element == this.keyboardElement_) return;
 
-  if (element && this.keyboardElement_)
-    this.installKeyboard(null);
+  if (element && this.keyboardElement_) this.installKeyboard(null);
 
   for (var i = 0; i < this.handlers_.length; i++) {
     var handler = this.handlers_[i];
@@ -5841,8 +5736,7 @@ hterm.Keyboard.prototype.uninstallKeyboard = function() {
  * where a third party app sends synthetic keystrokes to Chrome.
  */
 hterm.Keyboard.prototype.onTextInput_ = function(e) {
-  if (!e.data)
-    return;
+  if (!e.data) return;
 
   e.data.split('').forEach(this.terminal.onVTKeystroke.bind(this.terminal));
 };
@@ -5870,16 +5764,14 @@ hterm.Keyboard.prototype.onKeyPress_ = function(e) {
     // This happens here only as a fallback.  Typically these platforms should
     // set altSendsWhat to either 'escape' or '8-bit'.
     var ch = String.fromCharCode(e.keyCode);
-    if (!e.shiftKey)
-      ch = ch.toLowerCase();
+    if (!e.shiftKey) ch = ch.toLowerCase();
     code = ch.charCodeAt(0) + 128;
 
   } else if (e.charCode >= 32) {
     ch = e.charCode;
   }
 
-  if (ch)
-    this.terminal.onVTKeystroke(String.fromCharCode(ch));
+  if (ch) this.terminal.onVTKeystroke(String.fromCharCode(ch));
 
   e.preventDefault();
   e.stopPropagation();
@@ -5893,10 +5785,8 @@ hterm.Keyboard.prototype.onKeyPress_ = function(e) {
  * the ESC key remains usable within fullscreen Chrome app windows.
  */
 hterm.Keyboard.prototype.preventChromeAppNonCtrlShiftDefault_ = function(e) {
-  if (!window.chrome || !window.chrome.app || !window.chrome.app.window)
-    return;
-  if (!e.ctrlKey || !e.shiftKey)
-    e.preventDefault();
+  if (!window.chrome || !window.chrome.app || !window.chrome.app.window) return;
+  if (!e.ctrlKey || !e.shiftKey) e.preventDefault();
 };
 
 hterm.Keyboard.prototype.onFocusOut_ = function(e) {
@@ -5907,8 +5797,7 @@ hterm.Keyboard.prototype.onKeyUp_ = function(e) {
   if (e.keyCode == 18)
     this.altKeyPressed = this.altKeyPressed & ~(1 << (e.location - 1));
 
-  if (e.keyCode == 27)
-    this.preventChromeAppNonCtrlShiftDefault_(e);
+  if (e.keyCode == 27) this.preventChromeAppNonCtrlShiftDefault_(e);
 };
 
 /**
@@ -5918,8 +5807,7 @@ hterm.Keyboard.prototype.onKeyDown_ = function(e) {
   if (e.keyCode == 18)
     this.altKeyPressed = this.altKeyPressed | (1 << (e.location - 1));
 
-  if (e.keyCode == 27)
-    this.preventChromeAppNonCtrlShiftDefault_(e);
+  if (e.keyCode == 27) this.preventChromeAppNonCtrlShiftDefault_(e);
 
   var keyDef = this.keyMap.keyDefs[e.keyCode];
   if (!keyDef) {
@@ -5942,8 +5830,7 @@ hterm.Keyboard.prototype.onKeyDown_ = function(e) {
     if (typeof action == 'function')
       action = action.apply(self.keyMap, [e, keyDef]);
 
-    if (action === DEFAULT && name != 'normal')
-      action = getAction('normal');
+    if (action === DEFAULT && name != 'normal') action = getAction('normal');
 
     return action;
   }
@@ -5965,27 +5852,27 @@ hterm.Keyboard.prototype.onKeyDown_ = function(e) {
 
   switch (this.altGrMode) {
     case 'ctrl-alt':
-    if (isPrintable && control && alt) {
-      // ctrl-alt-printable means altGr.  We clear out the control and
-      // alt modifiers and wait to see the charCode in the keydown event.
-      control = false;
-      alt = false;
-    }
-    break;
+      if (isPrintable && control && alt) {
+        // ctrl-alt-printable means altGr.  We clear out the control and
+        // alt modifiers and wait to see the charCode in the keydown event.
+        control = false;
+        alt = false;
+      }
+      break;
 
     case 'right-alt':
-    if (isPrintable && (this.terminal.keyboard.altKeyPressed & 2)) {
-      control = false;
-      alt = false;
-    }
-    break;
+      if (isPrintable && (this.terminal.keyboard.altKeyPressed & 2)) {
+        control = false;
+        alt = false;
+      }
+      break;
 
     case 'left-alt':
-    if (isPrintable && (this.terminal.keyboard.altKeyPressed & 1)) {
-      control = false;
-      alt = false;
-    }
-    break;
+      if (isPrintable && (this.terminal.keyboard.altKeyPressed & 1)) {
+        control = false;
+        alt = false;
+      }
+      break;
   }
 
   var action;
@@ -6008,7 +5895,7 @@ hterm.Keyboard.prototype.onKeyDown_ = function(e) {
 
   var keyDown = {
     keyCode: e.keyCode,
-    shift: e.shiftKey, // not `var shift` from above.
+    shift: e.shiftKey,  // not `var shift` from above.
     ctrl: control,
     alt: alt,
     meta: meta
@@ -6061,8 +5948,7 @@ hterm.Keyboard.prototype.onKeyDown_ = function(e) {
   e.preventDefault();
   e.stopPropagation();
 
-  if (action === CANCEL)
-    return;
+  if (action === CANCEL) return;
 
   if (action !== DEFAULT && typeof action != 'string') {
     console.warn('Invalid action: ' + JSON.stringify(action));
@@ -6161,7 +6047,7 @@ hterm.Keyboard.Bindings = function() {
 /**
  * Remove all bindings.
  */
-hterm.Keyboard.Bindings.prototype.clear = function () {
+hterm.Keyboard.Bindings.prototype.clear = function() {
   this.bindings_ = {};
 };
 
@@ -6305,13 +6191,11 @@ hterm.Keyboard.Bindings.prototype.addBindings = function(map) {
  */
 hterm.Keyboard.Bindings.prototype.getBinding = function(keyDown) {
   var list = this.bindings_[keyDown.keyCode];
-  if (!list)
-    return null;
+  if (!list) return null;
 
   for (var i = 0; i < list.length; i++) {
     var binding = list[i];
-    if (binding.keyPattern.matchKeyDown(keyDown))
-      return binding;
+    if (binding.keyPattern.matchKeyDown(keyDown)) return binding;
   }
 
   return null;
@@ -6386,8 +6270,7 @@ hterm.Keyboard.KeyMap = function(keyboard) {
  * Function Keys" from [XTERM].
  */
 hterm.Keyboard.KeyMap.prototype.addKeyDef = function(keyCode, def) {
-  if (keyCode in this.keyDefs)
-    console.warn('Duplicate keyCode: ' + keyCode);
+  if (keyCode in this.keyDefs) console.warn('Duplicate keyCode: ' + keyCode);
 
   this.keyDefs[keyCode] = def;
 };
@@ -6407,13 +6290,13 @@ hterm.Keyboard.KeyMap.prototype.addKeyDef = function(keyCode, def) {
  */
 hterm.Keyboard.KeyMap.prototype.addKeyDefs = function(var_args) {
   for (var i = 0; i < arguments.length; i++) {
-    this.addKeyDef(arguments[i][0],
-                   { keyCap: arguments[i][1],
-                     normal: arguments[i][2],
-                     control: arguments[i][3],
-                     alt: arguments[i][4],
-                     meta: arguments[i][5]
-                   });
+    this.addKeyDef(arguments[i][0], {
+      keyCap: arguments[i][1],
+      normal: arguments[i][2],
+      control: arguments[i][3],
+      alt: arguments[i][4],
+      meta: arguments[i][5]
+    });
   }
 };
 
@@ -6428,8 +6311,7 @@ hterm.Keyboard.KeyMap.prototype.reset = function() {
   // This function is used by the "macro" functions below.  It makes it
   // possible to use the call() macro as an argument to any other macro.
   function resolve(action, e, k) {
-    if (typeof action == 'function')
-      return action.apply(self, [e, k]);
+    if (typeof action == 'function') return action.apply(self, [e, k]);
 
     return action;
   }
@@ -6439,7 +6321,9 @@ hterm.Keyboard.KeyMap.prototype.reset = function() {
   function ak(a, b) {
     return function(e, k) {
       var action = (e.shiftKey || e.ctrlKey || e.altKey || e.metaKey ||
-                    !self.keyboard.applicationKeypad) ? a : b;
+                    !self.keyboard.applicationKeypad) ?
+          a :
+          b;
       return resolve(action, e, k);
     };
   }
@@ -6449,7 +6333,9 @@ hterm.Keyboard.KeyMap.prototype.reset = function() {
   function ac(a, b) {
     return function(e, k) {
       var action = (e.shiftKey || e.ctrlKey || e.altKey || e.metaKey ||
-                    !self.keyboard.applicationCursor) ? a : b;
+                    !self.keyboard.applicationCursor) ?
+          a :
+          b;
       return resolve(action, e, k);
     };
   }
@@ -6488,10 +6374,16 @@ hterm.Keyboard.KeyMap.prototype.reset = function() {
   }
 
   // Compute a control character for a given character.
-  function ctl(ch) { return String.fromCharCode(ch.charCodeAt(0) - 64) }
+  function ctl(ch) {
+    return String.fromCharCode(ch.charCodeAt(0) - 64)
+  }
 
   // Call a method on the keymap instance.
-  function c(m) { return function (e, k) { return this[m](e, k) } }
+  function c(m) {
+    return function(e, k) {
+      return this[m](e, k)
+    }
+  }
 
   // Ignore if not trapping media keys.
   function med(fn) {
@@ -6517,159 +6409,194 @@ hterm.Keyboard.KeyMap.prototype.reset = function() {
   var STRIP = hterm.Keyboard.KeyActions.STRIP;
 
   this.addKeyDefs(
-    // These fields are: [keycode, keycap, normal, control, alt, meta]
+      // These fields are: [keycode, keycap, normal, control, alt, meta]
 
-    // The browser sends the keycode 0 for some keys.  We'll just assume it's
-    // going to do the right thing by default for those keys.
-    [0,   '[UNKNOWN]', PASS, PASS, PASS, PASS],
+      // The browser sends the keycode 0 for some keys.  We'll just assume it's
+      // going to do the right thing by default for those keys.
+      [0, '[UNKNOWN]', PASS, PASS, PASS, PASS],
 
-    // First row.
-    [27,  '[ESC]', ESC,                       DEFAULT, DEFAULT,     DEFAULT],
-    [112, '[F1]',  mod(SS3 + 'P', CSI + 'P'), DEFAULT, CSI + "23~", DEFAULT],
-    [113, '[F2]',  mod(SS3 + 'Q', CSI + 'Q'), DEFAULT, CSI + "24~", DEFAULT],
-    [114, '[F3]',  mod(SS3 + 'R', CSI + 'R'), DEFAULT, CSI + "25~", DEFAULT],
-    [115, '[F4]',  mod(SS3 + 'S', CSI + 'S'), DEFAULT, CSI + "26~", DEFAULT],
-    [116, '[F5]',  CSI + '15~',               DEFAULT, CSI + "28~", DEFAULT],
-    [117, '[F6]',  CSI + '17~',               DEFAULT, CSI + "29~", DEFAULT],
-    [118, '[F7]',  CSI + '18~',               DEFAULT, CSI + "31~", DEFAULT],
-    [119, '[F8]',  CSI + '19~',               DEFAULT, CSI + "32~", DEFAULT],
-    [120, '[F9]',  CSI + '20~',               DEFAULT, CSI + "33~", DEFAULT],
-    [121, '[F10]', CSI + '21~',               DEFAULT, CSI + "34~", DEFAULT],
-    [122, '[F11]', CSI + '23~',               DEFAULT, CSI + "42~", DEFAULT],
-    [123, '[F12]', CSI + '24~',               DEFAULT, CSI + "43~", DEFAULT],
+      // First row.
+      [27, '[ESC]', ESC, DEFAULT, DEFAULT, DEFAULT],
+      [112, '[F1]', mod(SS3 + 'P', CSI + 'P'), DEFAULT, CSI + '23~', DEFAULT],
+      [113, '[F2]', mod(SS3 + 'Q', CSI + 'Q'), DEFAULT, CSI + '24~', DEFAULT],
+      [114, '[F3]', mod(SS3 + 'R', CSI + 'R'), DEFAULT, CSI + '25~', DEFAULT],
+      [115, '[F4]', mod(SS3 + 'S', CSI + 'S'), DEFAULT, CSI + '26~', DEFAULT],
+      [116, '[F5]', CSI + '15~', DEFAULT, CSI + '28~', DEFAULT],
+      [117, '[F6]', CSI + '17~', DEFAULT, CSI + '29~', DEFAULT],
+      [118, '[F7]', CSI + '18~', DEFAULT, CSI + '31~', DEFAULT],
+      [119, '[F8]', CSI + '19~', DEFAULT, CSI + '32~', DEFAULT],
+      [120, '[F9]', CSI + '20~', DEFAULT, CSI + '33~', DEFAULT],
+      [121, '[F10]', CSI + '21~', DEFAULT, CSI + '34~', DEFAULT],
+      [122, '[F11]', CSI + '23~', DEFAULT, CSI + '42~', DEFAULT],
+      [123, '[F12]', CSI + '24~', DEFAULT, CSI + '43~', DEFAULT],
 
-    // Second row.
-    [192, '`~', DEFAULT, sh(ctl('@'), ctl('^')),     DEFAULT,           PASS],
-    [49,  '1!', DEFAULT, c('onCtrlNum_'),    c('onAltNum_'), c('onMetaNum_')],
-    [50,  '2@', DEFAULT, c('onCtrlNum_'),    c('onAltNum_'), c('onMetaNum_')],
-    [51,  '3#', DEFAULT, c('onCtrlNum_'),    c('onAltNum_'), c('onMetaNum_')],
-    [52,  '4$', DEFAULT, c('onCtrlNum_'),    c('onAltNum_'), c('onMetaNum_')],
-    [53,  '5%', DEFAULT, c('onCtrlNum_'),    c('onAltNum_'), c('onMetaNum_')],
-    [54,  '6^', DEFAULT, c('onCtrlNum_'),    c('onAltNum_'), c('onMetaNum_')],
-    [55,  '7&', DEFAULT, c('onCtrlNum_'),    c('onAltNum_'), c('onMetaNum_')],
-    [56,  '8*', DEFAULT, c('onCtrlNum_'),    c('onAltNum_'), c('onMetaNum_')],
-    [57,  '9(', DEFAULT, c('onCtrlNum_'),    c('onAltNum_'), c('onMetaNum_')],
-    [48,  '0)', DEFAULT, c('onPlusMinusZero_'),c('onAltNum_'),c('onPlusMinusZero_')],
-    [189, '-_', DEFAULT, c('onPlusMinusZero_'), DEFAULT, c('onPlusMinusZero_')],
-    [187, '=+', DEFAULT, c('onPlusMinusZero_'), DEFAULT, c('onPlusMinusZero_')],
-    // Firefox -_ and =+
-    [173, '-_', DEFAULT, c('onPlusMinusZero_'), DEFAULT, c('onPlusMinusZero_')],
-    [61, '=+', DEFAULT, c('onPlusMinusZero_'), DEFAULT, c('onPlusMinusZero_')],
-    // Firefox Italian +*
-    [171, '+*', DEFAULT, c('onPlusMinusZero_'), DEFAULT, c('onPlusMinusZero_')],
+      // Second row.
+      [192, '`~', DEFAULT, sh(ctl('@'), ctl('^')), DEFAULT, PASS],
+      [49, '1!', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [50, '2@', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [51, '3#', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [52, '4$', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [53, '5%', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [54, '6^', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [55, '7&', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [56, '8*', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [57, '9(', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [
+        48, '0)', DEFAULT, c('onPlusMinusZero_'), c('onAltNum_'),
+        c('onPlusMinusZero_')
+      ],
+      [
+        189, '-_', DEFAULT, c('onPlusMinusZero_'), DEFAULT,
+        c('onPlusMinusZero_')
+      ],
+      [
+        187, '=+', DEFAULT, c('onPlusMinusZero_'), DEFAULT,
+        c('onPlusMinusZero_')
+      ],
+      // Firefox -_ and =+
+      [
+        173, '-_', DEFAULT, c('onPlusMinusZero_'), DEFAULT,
+        c('onPlusMinusZero_')
+      ],
+      [
+        61, '=+', DEFAULT, c('onPlusMinusZero_'), DEFAULT, c('onPlusMinusZero_')
+      ],
+      // Firefox Italian +*
+      [
+        171, '+*', DEFAULT, c('onPlusMinusZero_'), DEFAULT,
+        c('onPlusMinusZero_')
+      ],
 
-    [8,   '[BKSP]', bs('\x7f', '\b'), bs('\b', '\x7f'), DEFAULT,     DEFAULT],
+      [8, '[BKSP]', bs('\x7f', '\b'), bs('\b', '\x7f'), DEFAULT, DEFAULT],
 
-    // Third row.
-    [9,   '[TAB]', sh('\t', CSI + 'Z'), STRIP,     PASS,    DEFAULT],
-    [81,  'qQ',    DEFAULT,             ctl('Q'),  DEFAULT, DEFAULT],
-    [87,  'wW',    DEFAULT,             ctl('W'),  DEFAULT, DEFAULT],
-    [69,  'eE',    DEFAULT,             ctl('E'),  DEFAULT, DEFAULT],
-    [82,  'rR',    DEFAULT,             ctl('R'),  DEFAULT, DEFAULT],
-    [84,  'tT',    DEFAULT,             ctl('T'),  DEFAULT, DEFAULT],
-    [89,  'yY',    DEFAULT,             ctl('Y'),  DEFAULT, DEFAULT],
-    [85,  'uU',    DEFAULT,             ctl('U'),  DEFAULT, DEFAULT],
-    [73,  'iI',    DEFAULT,             ctl('I'),  DEFAULT, DEFAULT],
-    [79,  'oO',    DEFAULT,             ctl('O'),  DEFAULT, DEFAULT],
-    [80,  'pP',    DEFAULT,             ctl('P'),  DEFAULT, DEFAULT],
-    [219, '[{',    DEFAULT,             ctl('['),  DEFAULT, DEFAULT],
-    [221, ']}',    DEFAULT,             ctl(']'),  DEFAULT, DEFAULT],
-    [220, '\\|',   DEFAULT,             ctl('\\'), DEFAULT, DEFAULT],
+      // Third row.
+      [9, '[TAB]', sh('\t', CSI + 'Z'), STRIP, PASS, DEFAULT],
+      [81, 'qQ', DEFAULT, ctl('Q'), DEFAULT, DEFAULT],
+      [87, 'wW', DEFAULT, ctl('W'), DEFAULT, DEFAULT],
+      [69, 'eE', DEFAULT, ctl('E'), DEFAULT, DEFAULT],
+      [82, 'rR', DEFAULT, ctl('R'), DEFAULT, DEFAULT],
+      [84, 'tT', DEFAULT, ctl('T'), DEFAULT, DEFAULT],
+      [89, 'yY', DEFAULT, ctl('Y'), DEFAULT, DEFAULT],
+      [85, 'uU', DEFAULT, ctl('U'), DEFAULT, DEFAULT],
+      [73, 'iI', DEFAULT, ctl('I'), DEFAULT, DEFAULT],
+      [79, 'oO', DEFAULT, ctl('O'), DEFAULT, DEFAULT],
+      [80, 'pP', DEFAULT, ctl('P'), DEFAULT, DEFAULT],
+      [219, '[{', DEFAULT, ctl('['), DEFAULT, DEFAULT],
+      [221, ']}', DEFAULT, ctl(']'), DEFAULT, DEFAULT],
+      [220, '\\|', DEFAULT, ctl('\\'), DEFAULT, DEFAULT],
 
-    // Fourth row. (We let Ctrl-Shift-J pass for Chrome DevTools.)
-    [20,  '[CAPS]',  PASS,    PASS,                           PASS,    DEFAULT],
-    [65,  'aA',      DEFAULT, ctl('A'),                       DEFAULT, DEFAULT],
-    [83,  'sS',      DEFAULT, ctl('S'),                       DEFAULT, DEFAULT],
-    [68,  'dD',      DEFAULT, ctl('D'),                       DEFAULT, DEFAULT],
-    [70,  'fF',      DEFAULT, ctl('F'),                       DEFAULT, DEFAULT],
-    [71,  'gG',      DEFAULT, ctl('G'),                       DEFAULT, DEFAULT],
-    [72,  'hH',      DEFAULT, ctl('H'),                       DEFAULT, DEFAULT],
-    [74,  'jJ',      DEFAULT, sh(ctl('J'), PASS),             DEFAULT, DEFAULT],
-    [75,  'kK',      DEFAULT, sh(ctl('K'), c('onClear_')),    DEFAULT, DEFAULT],
-    [76,  'lL',      DEFAULT, sh(ctl('L'), PASS),             DEFAULT, DEFAULT],
-    [186, ';:',      DEFAULT, STRIP,                          DEFAULT, DEFAULT],
-    [222, '\'"',     DEFAULT, STRIP,                          DEFAULT, DEFAULT],
-    [13,  '[ENTER]', '\r',    CANCEL,                         CANCEL,  DEFAULT],
+      // Fourth row. (We let Ctrl-Shift-J pass for Chrome DevTools.)
+      [20, '[CAPS]', PASS, PASS, PASS, DEFAULT],
+      [65, 'aA', DEFAULT, ctl('A'), DEFAULT, DEFAULT],
+      [83, 'sS', DEFAULT, ctl('S'), DEFAULT, DEFAULT],
+      [68, 'dD', DEFAULT, ctl('D'), DEFAULT, DEFAULT],
+      [70, 'fF', DEFAULT, ctl('F'), DEFAULT, DEFAULT],
+      [71, 'gG', DEFAULT, ctl('G'), DEFAULT, DEFAULT],
+      [72, 'hH', DEFAULT, ctl('H'), DEFAULT, DEFAULT],
+      [74, 'jJ', DEFAULT, sh(ctl('J'), PASS), DEFAULT, DEFAULT],
+      [75, 'kK', DEFAULT, sh(ctl('K'), c('onClear_')), DEFAULT, DEFAULT],
+      [76, 'lL', DEFAULT, sh(ctl('L'), PASS), DEFAULT, DEFAULT],
+      [186, ';:', DEFAULT, STRIP, DEFAULT, DEFAULT],
+      [222, '\'"', DEFAULT, STRIP, DEFAULT, DEFAULT],
+      [13, '[ENTER]', '\r', CANCEL, CANCEL, DEFAULT],
 
-    // Fifth row.  This includes the copy/paste shortcuts.  On some
-    // platforms it's Ctrl-C/V, on others it's Meta-C/V.  We assume either
-    // Ctrl-C/Meta-C should pass to the browser when there is a selection,
-    // and Ctrl-Shift-V/Meta-*-V should always pass to the browser (since
-    // these seem to be recognized as paste too).
-    [16,  '[SHIFT]', PASS, PASS,                   PASS,    DEFAULT],
-    [90,  'zZ',   DEFAULT, ctl('Z'),               DEFAULT, DEFAULT],
-    [88,  'xX',   DEFAULT, ctl('X'),               DEFAULT, DEFAULT],
-    [67,  'cC',   DEFAULT, c('onCtrlC_'),          DEFAULT, c('onMetaC_')],
-    [86,  'vV',   DEFAULT, c('onCtrlV_'),          DEFAULT, c('onMetaV_')],
-    [66,  'bB',   DEFAULT, sh(ctl('B'), PASS),     DEFAULT, sh(DEFAULT, PASS)],
-    [78,  'nN',   DEFAULT, c('onCtrlN_'),          DEFAULT, c('onMetaN_')],
-    [77,  'mM',   DEFAULT, ctl('M'),               DEFAULT, DEFAULT],
-    [188, ',<',   DEFAULT, alt(STRIP, PASS),       DEFAULT, DEFAULT],
-    [190, '.>',   DEFAULT, alt(STRIP, PASS),       DEFAULT, DEFAULT],
-    [191, '/?',   DEFAULT, sh(ctl('_'), ctl('?')), DEFAULT, DEFAULT],
+      // Fifth row.  This includes the copy/paste shortcuts.  On some
+      // platforms it's Ctrl-C/V, on others it's Meta-C/V.  We assume either
+      // Ctrl-C/Meta-C should pass to the browser when there is a selection,
+      // and Ctrl-Shift-V/Meta-*-V should always pass to the browser (since
+      // these seem to be recognized as paste too).
+      [16, '[SHIFT]', PASS, PASS, PASS, DEFAULT],
+      [90, 'zZ', DEFAULT, ctl('Z'), DEFAULT, DEFAULT],
+      [88, 'xX', DEFAULT, ctl('X'), DEFAULT, DEFAULT],
+      [67, 'cC', DEFAULT, c('onCtrlC_'), DEFAULT, c('onMetaC_')],
+      [86, 'vV', DEFAULT, c('onCtrlV_'), DEFAULT, c('onMetaV_')],
+      [66, 'bB', DEFAULT, sh(ctl('B'), PASS), DEFAULT, sh(DEFAULT, PASS)],
+      [78, 'nN', DEFAULT, c('onCtrlN_'), DEFAULT, c('onMetaN_')],
+      [77, 'mM', DEFAULT, ctl('M'), DEFAULT, DEFAULT],
+      [188, ',<', DEFAULT, alt(STRIP, PASS), DEFAULT, DEFAULT],
+      [190, '.>', DEFAULT, alt(STRIP, PASS), DEFAULT, DEFAULT],
+      [191, '/?', DEFAULT, sh(ctl('_'), ctl('?')), DEFAULT, DEFAULT],
 
-    // Sixth and final row.
-    [17,  '[CTRL]',  PASS,    PASS,     PASS,    PASS],
-    [18,  '[ALT]',   PASS,    PASS,     PASS,    PASS],
-    [91,  '[LAPL]',  PASS,    PASS,     PASS,    PASS],
-    [32,  ' ',       DEFAULT, ctl('@'), DEFAULT, DEFAULT],
-    [92,  '[RAPL]',  PASS,    PASS,     PASS,    PASS],
-    [93,  '[RMENU]', PASS,    PASS,     PASS,    PASS],
+      // Sixth and final row.
+      [17, '[CTRL]', PASS, PASS, PASS, PASS],
+      [18, '[ALT]', PASS, PASS, PASS, PASS],
+      [91, '[LAPL]', PASS, PASS, PASS, PASS],
+      [32, ' ', DEFAULT, ctl('@'), DEFAULT, DEFAULT],
+      [92, '[RAPL]', PASS, PASS, PASS, PASS],
+      [93, '[RMENU]', PASS, PASS, PASS, PASS],
 
-    // These things.
-    [42,  '[PRTSCR]', PASS, PASS, PASS, PASS],
-    [145, '[SCRLK]',  PASS, PASS, PASS, PASS],
-    [19,  '[BREAK]',  PASS, PASS, PASS, PASS],
+      // These things.
+      [42, '[PRTSCR]', PASS, PASS, PASS, PASS],
+      [145, '[SCRLK]', PASS, PASS, PASS, PASS],
+      [19, '[BREAK]', PASS, PASS, PASS, PASS],
 
-    // The block of six keys above the arrows.
-    [45,  '[INSERT]', c('onKeyInsert_'),   DEFAULT, DEFAULT, DEFAULT],
-    [36,  '[HOME]',   c('onKeyHome_'),     DEFAULT, DEFAULT, DEFAULT],
-    [33,  '[PGUP]',   c('onKeyPageUp_'),   DEFAULT, DEFAULT, DEFAULT],
-    [46,  '[DEL]',    c('onKeyDel_'),      DEFAULT, DEFAULT, DEFAULT],
-    [35,  '[END]',    c('onKeyEnd_'),      DEFAULT, DEFAULT, DEFAULT],
-    [34,  '[PGDOWN]', c('onKeyPageDown_'), DEFAULT, DEFAULT, DEFAULT],
+      // The block of six keys above the arrows.
+      [45, '[INSERT]', c('onKeyInsert_'), DEFAULT, DEFAULT, DEFAULT],
+      [36, '[HOME]', c('onKeyHome_'), DEFAULT, DEFAULT, DEFAULT],
+      [33, '[PGUP]', c('onKeyPageUp_'), DEFAULT, DEFAULT, DEFAULT],
+      [46, '[DEL]', c('onKeyDel_'), DEFAULT, DEFAULT, DEFAULT],
+      [35, '[END]', c('onKeyEnd_'), DEFAULT, DEFAULT, DEFAULT],
+      [34, '[PGDOWN]', c('onKeyPageDown_'), DEFAULT, DEFAULT, DEFAULT],
 
-    // Arrow keys.  When unmodified they respect the application cursor state,
-    // otherwise they always send the CSI codes.
-    [38, '[UP]',    ac(CSI + 'A', SS3 + 'A'), DEFAULT, DEFAULT, DEFAULT],
-    [40, '[DOWN]',  ac(CSI + 'B', SS3 + 'B'), DEFAULT, DEFAULT, DEFAULT],
-    [39, '[RIGHT]', ac(CSI + 'C', SS3 + 'C'), DEFAULT, DEFAULT, DEFAULT],
-    [37, '[LEFT]',  ac(CSI + 'D', SS3 + 'D'), DEFAULT, DEFAULT, DEFAULT],
+      // Arrow keys.  When unmodified they respect the application cursor state,
+      // otherwise they always send the CSI codes.
+      [38, '[UP]', ac(CSI + 'A', SS3 + 'A'), DEFAULT, DEFAULT, DEFAULT],
+      [40, '[DOWN]', ac(CSI + 'B', SS3 + 'B'), DEFAULT, DEFAULT, DEFAULT],
+      [39, '[RIGHT]', ac(CSI + 'C', SS3 + 'C'), DEFAULT, DEFAULT, DEFAULT],
+      [37, '[LEFT]', ac(CSI + 'D', SS3 + 'D'), DEFAULT, DEFAULT, DEFAULT],
 
-    [144, '[NUMLOCK]', PASS, PASS, PASS, PASS],
+      [144, '[NUMLOCK]', PASS, PASS, PASS, PASS],
 
-    // With numlock off, the keypad generates the same key codes as the arrows
-    // and 'block of six' for some keys, and null key codes for the rest.
+      // With numlock off, the keypad generates the same key codes as the arrows
+      // and 'block of six' for some keys, and null key codes for the rest.
 
-    // Keypad with numlock on generates unique key codes...
-    [96,  '[KP0]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
-    [97,  '[KP1]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
-    [98,  '[KP2]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
-    [99,  '[KP3]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
-    [100, '[KP4]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
-    [101, '[KP5]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
-    [102, '[KP6]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
-    [103, '[KP7]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
-    [104, '[KP8]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
-    [105, '[KP9]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
-    [107, '[KP+]', DEFAULT, c('onPlusMinusZero_'), DEFAULT, c('onPlusMinusZero_')],
-    [109, '[KP-]', DEFAULT, c('onPlusMinusZero_'), DEFAULT, c('onPlusMinusZero_')],
-    [106, '[KP*]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
-    [111, '[KP/]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
-    [110, '[KP.]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      // Keypad with numlock on generates unique key codes...
+      [96, '[KP0]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [97, '[KP1]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [98, '[KP2]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [99, '[KP3]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [100, '[KP4]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [101, '[KP5]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [102, '[KP6]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [103, '[KP7]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [104, '[KP8]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [105, '[KP9]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [
+        107, '[KP+]', DEFAULT, c('onPlusMinusZero_'), DEFAULT,
+        c('onPlusMinusZero_')
+      ],
+      [
+        109, '[KP-]', DEFAULT, c('onPlusMinusZero_'), DEFAULT,
+        c('onPlusMinusZero_')
+      ],
+      [106, '[KP*]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [111, '[KP/]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [110, '[KP.]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
 
-    // Chrome OS keyboard top row.
-    [166, '[BACK]',   med(mod(SS3+'P', CSI+'P')), DEFAULT, CSI+"23~", DEFAULT],
-    [167, '[FWD]',    med(mod(SS3+'Q', CSI+'Q')), DEFAULT, CSI+"24~", DEFAULT],
-    [168, '[RELOAD]', med(mod(SS3+'R', CSI+'R')), DEFAULT, CSI+"25~", DEFAULT],
-    [183, '[FSCR]',   med(mod(SS3+'S', CSI+'S')), DEFAULT, CSI+"26~", DEFAULT],
-    [182, '[WINS]',   med(CSI + '15~'),           DEFAULT, CSI+"28~", DEFAULT],
-    [216, '[BRIT-]',  med(CSI + '17~'),           DEFAULT, CSI+"29~", DEFAULT],
-    [217, '[BRIT+]',  med(CSI + '18~'),           DEFAULT, CSI+"31~", DEFAULT]
+      // Chrome OS keyboard top row.
+      [
+        166, '[BACK]', med(mod(SS3 + 'P', CSI + 'P')), DEFAULT, CSI + '23~',
+        DEFAULT
+      ],
+      [
+        167, '[FWD]', med(mod(SS3 + 'Q', CSI + 'Q')), DEFAULT, CSI + '24~',
+        DEFAULT
+      ],
+      [
+        168, '[RELOAD]', med(mod(SS3 + 'R', CSI + 'R')), DEFAULT, CSI + '25~',
+        DEFAULT
+      ],
+      [
+        183, '[FSCR]', med(mod(SS3 + 'S', CSI + 'S')), DEFAULT, CSI + '26~',
+        DEFAULT
+      ],
+      [182, '[WINS]', med(CSI + '15~'), DEFAULT, CSI + '28~', DEFAULT],
+      [216, '[BRIT-]', med(CSI + '17~'), DEFAULT, CSI + '29~', DEFAULT],
+      [217, '[BRIT+]', med(CSI + '18~'), DEFAULT, CSI + '31~', DEFAULT]
 
-    // 173 [MUTE], 174 [VOL-] and 175 [VOL+] are trapped by the Chrome OS
-    // window manager, so we'll never see them. Note that 173 is also
-    // Firefox's -_ keycode.
+      // 173 [MUTE], 174 [VOL-] and 175 [VOL+] are trapped by the Chrome OS
+      // window manager, so we'll never see them. Note that 173 is also
+      // Firefox's -_ keycode.
   );
 };
 
@@ -6721,8 +6648,7 @@ hterm.Keyboard.KeyMap.prototype.onKeyEnd_ = function(e) {
  * Either scroll the scrollback buffer or send a key sequence.
  */
 hterm.Keyboard.KeyMap.prototype.onKeyPageUp_ = function(e) {
-  if (!this.keyboard.pageKeysScroll ^ e.shiftKey)
-    return '\x1b[5~';
+  if (!this.keyboard.pageKeysScroll ^ e.shiftKey) return '\x1b[5~';
 
   this.keyboard.terminal.scrollPageUp();
   return hterm.Keyboard.KeyActions.CANCEL;
@@ -6747,8 +6673,7 @@ hterm.Keyboard.KeyMap.prototype.onKeyDel_ = function(e) {
  * Either scroll the scrollback buffer or send a key sequence.
  */
 hterm.Keyboard.KeyMap.prototype.onKeyPageDown_ = function(e) {
-  if (!this.keyboard.pageKeysScroll ^ e.shiftKey)
-    return '\x1b[6~';
+  if (!this.keyboard.pageKeysScroll ^ e.shiftKey) return '\x1b[6~';
 
   this.keyboard.terminal.scrollPageDown();
   return hterm.Keyboard.KeyActions.CANCEL;
@@ -6771,21 +6696,32 @@ hterm.Keyboard.KeyMap.prototype.onClear_ = function(e, keyDef) {
  */
 hterm.Keyboard.KeyMap.prototype.onCtrlNum_ = function(e, keyDef) {
   // Compute a control character for a given character.
-  function ctl(ch) { return String.fromCharCode(ch.charCodeAt(0) - 64) }
+  function ctl(ch) {
+    return String.fromCharCode(ch.charCodeAt(0) - 64)
+  }
 
   if (this.keyboard.terminal.passCtrlNumber && !e.shiftKey)
     return hterm.Keyboard.KeyActions.PASS;
 
   switch (keyDef.keyCap.substr(0, 1)) {
-    case '1': return '1';
-    case '2': return ctl('@');
-    case '3': return ctl('[');
-    case '4': return ctl('\\');
-    case '5': return ctl(']');
-    case '6': return ctl('^');
-    case '7': return ctl('_');
-    case '8': return '\x7f';
-    case '9': return '9';
+    case '1':
+      return '1';
+    case '2':
+      return ctl('@');
+    case '3':
+      return ctl('[');
+    case '4':
+      return ctl('\\');
+    case '5':
+      return ctl(']');
+    case '6':
+      return ctl('^');
+    case '7':
+      return ctl('_');
+    case '8':
+      return '\x7f';
+    case '9':
+      return '9';
   }
 };
 
@@ -6847,10 +6783,11 @@ hterm.Keyboard.KeyMap.prototype.onCtrlC_ = function(e, keyDef) {
  */
 hterm.Keyboard.KeyMap.prototype.onCtrlN_ = function(e, keyDef) {
   if (e.shiftKey) {
-    window.open(document.location.href, '',
-                'chrome=no,close=yes,resize=yes,scrollbars=yes,' +
-                'minimizable=yes,width=' + window.innerWidth +
-                ',height=' + window.innerHeight);
+    window.open(
+        document.location.href, '',
+        'chrome=no,close=yes,resize=yes,scrollbars=yes,' +
+            'minimizable=yes,width=' + window.innerWidth +
+            ',height=' + window.innerHeight);
     return hterm.Keyboard.KeyActions.CANCEL;
   }
 
@@ -6879,10 +6816,11 @@ hterm.Keyboard.KeyMap.prototype.onCtrlV_ = function(e, keyDef) {
  */
 hterm.Keyboard.KeyMap.prototype.onMetaN_ = function(e, keyDef) {
   if (e.shiftKey) {
-    window.open(document.location.href, '',
-                'chrome=no,close=yes,resize=yes,scrollbars=yes,' +
-                'minimizable=yes,width=' + window.outerWidth +
-                ',height=' + window.outerHeight);
+    window.open(
+        document.location.href, '',
+        'chrome=no,close=yes,resize=yes,scrollbars=yes,' +
+            'minimizable=yes,width=' + window.outerWidth +
+            ',height=' + window.outerHeight);
     return hterm.Keyboard.KeyActions.CANCEL;
   }
 
@@ -6911,7 +6849,9 @@ hterm.Keyboard.KeyMap.prototype.onMetaC_ = function(e, keyDef) {
 
   // Otherwise let the browser handle it as a copy command.
   if (this.keyboard.terminal.clearSelectionAfterCopy) {
-    setTimeout(function() { document.getSelection().collapseToEnd() }, 50);
+    setTimeout(function() {
+      document.getSelection().collapseToEnd()
+    }, 50);
   }
   return hterm.Keyboard.KeyActions.PASS;
 };
@@ -6923,12 +6863,10 @@ hterm.Keyboard.KeyMap.prototype.onMetaC_ = function(e, keyDef) {
  * a paste command.
  */
 hterm.Keyboard.KeyMap.prototype.onMetaV_ = function(e, keyDef) {
-  if (e.shiftKey)
-    return hterm.Keyboard.KeyActions.PASS;
+  if (e.shiftKey) return hterm.Keyboard.KeyActions.PASS;
 
-  return this.keyboard.passMetaV ?
-      hterm.Keyboard.KeyActions.PASS :
-      hterm.Keyboard.KeyActions.DEFAULT;
+  return this.keyboard.passMetaV ? hterm.Keyboard.KeyActions.PASS :
+                                   hterm.Keyboard.KeyActions.DEFAULT;
 };
 
 /**
@@ -6946,8 +6884,7 @@ hterm.Keyboard.KeyMap.prototype.onPlusMinusZero_ = function(e, keyDef) {
     // If ctrl-PMZ controls zoom and the shift key is pressed, or
     // ctrl-shift-PMZ controls zoom and this shift key is not pressed,
     // then we want to send the control code instead of affecting zoom.
-    if (keyDef.keyCap == '-_')
-      return '\x1f';  // ^_
+    if (keyDef.keyCap == '-_') return '\x1f';  // ^_
 
     // Only ^_ is valid, the other sequences have no meaning.
     return hterm.Keyboard.KeyActions.CANCEL;
@@ -6961,7 +6898,7 @@ hterm.Keyboard.KeyMap.prototype.onPlusMinusZero_ = function(e, keyDef) {
 
   var cap = keyDef.keyCap.substr(0, 1);
   if (cap == '0') {
-      this.keyboard.terminal.setFontSize(0);
+    this.keyboard.terminal.setFontSize(0);
   } else {
     var size = this.keyboard.terminal.getFontSize();
 
@@ -6997,17 +6934,14 @@ hterm.Keyboard.KeyPattern = function(spec) {
 
   hterm.Keyboard.KeyPattern.modifiers.forEach(function(mod) {
     this[mod] = spec[mod] || false;
-    if (this[mod] == '*')
-      this.wildcardCount++;
+    if (this[mod] == '*') this.wildcardCount++;
   }.bind(this));
 };
 
 /**
  * Valid modifier names.
  */
-hterm.Keyboard.KeyPattern.modifiers = [
-  'shift', 'ctrl', 'alt', 'meta'
-];
+hterm.Keyboard.KeyPattern.modifiers = ['shift', 'ctrl', 'alt', 'meta'];
 
 /**
  * A compare callback for Array.prototype.sort().
@@ -7020,11 +6954,9 @@ hterm.Keyboard.KeyPattern.modifiers = [
  * @param {hterm.Keyboard.KeyPattern} b
  */
 hterm.Keyboard.KeyPattern.sortCompare = function(a, b) {
-  if (a.wildcardCount < b.wildcardCount)
-    return -1;
+  if (a.wildcardCount < b.wildcardCount) return -1;
 
-  if (a.wildcardCount > b.wildcardCount)
-    return 1;
+  if (a.wildcardCount > b.wildcardCount) return 1;
 
   return 0;
 };
@@ -7038,8 +6970,7 @@ hterm.Keyboard.KeyPattern.sortCompare = function(a, b) {
  *   to perform and exact match against another key pattern.
  */
 hterm.Keyboard.KeyPattern.prototype.match_ = function(obj, exactMatch) {
-  if (this.keyCode != obj.keyCode)
-    return false;
+  if (this.keyCode != obj.keyCode) return false;
 
   var rv = true;
 
@@ -7187,9 +7118,7 @@ hterm.Parser.prototype.reset = function(source, opt_pos) {
  *   properties.
  */
 hterm.Parser.prototype.parseKeySequence = function() {
-  var rv = {
-    keyCode: null
-  };
+  var rv = {keyCode: null};
 
   for (var k in hterm.Parser.identifiers.modifierKeys) {
     rv[hterm.Parser.identifiers.modifierKeys[k]] = false;
@@ -7220,8 +7149,7 @@ hterm.Parser.prototype.parseKeySequence = function() {
       if (token.value == '*') {
         for (var id in hterm.Parser.identifiers.modifierKeys) {
           var p = hterm.Parser.identifiers.modifierKeys[id];
-          if (!rv[p])
-            rv[p] =  '*';
+          if (!rv[p]) rv[p] = '*';
         }
       } else {
         throw this.error('Unexpected symbol: ' + token.value);
@@ -7232,8 +7160,7 @@ hterm.Parser.prototype.parseKeySequence = function() {
 
     this.skipSpace();
 
-    if (this.ch != '-')
-      break;
+    if (this.ch != '-') break;
 
     if (rv.keyCode != null)
       throw this.error('Extra definition after target key');
@@ -7241,8 +7168,7 @@ hterm.Parser.prototype.parseKeySequence = function() {
     this.advance(1);
   }
 
-  if (rv.keyCode == null)
-    throw this.error('Missing target key');
+  if (rv.keyCode == null) throw this.error('Missing target key');
 
   return rv;
 };
@@ -7252,8 +7178,7 @@ hterm.Parser.prototype.parseKeyAction = function() {
 
   var token = this.parseToken();
 
-  if (token.type == 'string')
-    return token.value;
+  if (token.type == 'string') return token.value;
 
   if (token.type == 'identifier') {
     if (token.value in hterm.Parser.identifiers.actions)
@@ -7288,19 +7213,15 @@ hterm.Parser.prototype.parseToken = function() {
   if (this.peekIdentifier())
     return {type: 'identifier', value: this.parseIdentifier()};
 
-  if (this.peekString())
-    return {type: 'string', value: this.parseString()};
+  if (this.peekString()) return {type: 'string', value: this.parseString()};
 
-  if (this.peekInteger())
-    return {type: 'integer', value: this.parseInteger()};
-
+  if (this.peekInteger()) return {type: 'integer', value: this.parseInteger()};
 
   throw this.error('Unexpected token');
 };
 
 hterm.Parser.prototype.parseIdentifier = function() {
-  if (!this.peekIdentifier())
-    throw this.error('Expected identifier');
+  if (!this.peekIdentifier()) throw this.error('Expected identifier');
 
   return this.parsePattern(/[a-z0-9_]+/ig);
 };
@@ -7332,8 +7253,7 @@ hterm.Parser.prototype.parseString = function() {
   var result = '';
 
   var quote = this.ch;
-  if (quote != '"' && quote != '\'')
-    throw this.error('String expected');
+  if (quote != '"' && quote != '\'') throw this.error('String expected');
 
   this.advance(1);
 
@@ -7341,8 +7261,7 @@ hterm.Parser.prototype.parseString = function() {
 
   while (this.pos < this.source.length) {
     re.lastIndex = this.pos;
-    if (!re.exec(this.source))
-      throw this.error('Unterminated string literal');
+    if (!re.exec(this.source)) throw this.error('Unterminated string literal');
 
     result += this.source.substring(this.pos, re.lastIndex - 1);
 
@@ -7368,7 +7287,6 @@ hterm.Parser.prototype.parseString = function() {
 
   throw this.error('Unterminated string literal');
 };
-
 
 /**
  * Parse an escape code from the current position (which should point to
@@ -7399,14 +7317,12 @@ hterm.Parser.prototype.parseEscape = function() {
     }
   };
 
-  if (!(this.ch in map))
-    throw this.error('Unknown escape: ' + this.ch);
+  if (!(this.ch in map)) throw this.error('Unknown escape: ' + this.ch);
 
   var value = map[this.ch];
   this.advance(1);
 
-  if (typeof value == 'function')
-    value = value.call(this);
+  if (typeof value == 'function') value = value.call(this);
 
   return value;
 };
@@ -7434,7 +7350,6 @@ hterm.Parser.prototype.parsePattern = function(pattern) {
   return ary[0];
 };
 
-
 /**
  * Advance the current position.
  *
@@ -7451,22 +7366,19 @@ hterm.Parser.prototype.advance = function(count) {
  * @return {void}
  */
 hterm.Parser.prototype.skipSpace = function(opt_expect) {
-  if (!/\s/.test(this.ch))
-    return;
+  if (!/\s/.test(this.ch)) return;
 
   var re = /\s+/gm;
   re.lastIndex = this.pos;
 
   var source = this.source;
-  if (re.exec(source))
-    this.pos = re.lastIndex;
+  if (re.exec(source)) this.pos = re.lastIndex;
 
   this.ch = this.source.substr(this.pos, 1);
 
   if (opt_expect) {
     if (this.ch.indexOf(opt_expect) == -1) {
-      throw this.error('Expected one of ' + opt_expect + ', found: ' +
-          this.ch);
+      throw this.error('Expected one of ' + opt_expect + ', found: ' + this.ch);
     }
   }
 };
@@ -7680,8 +7592,8 @@ lib.rtdep('lib.f', 'lib.Storage');
  * This is currently just an ordered list of known connection profiles.
  */
 hterm.PreferenceManager = function(profileId) {
-  lib.PreferenceManager.call(this, hterm.defaultStorage,
-                             '/hterm/profiles/' + profileId);
+  lib.PreferenceManager.call(
+      this, hterm.defaultStorage, '/hterm/profiles/' + profileId);
   var defs = hterm.PreferenceManager.defaultPreferences;
   Object.keys(defs).forEach(function(key) {
     this.definePreference(key, defs[key][1]);
@@ -7701,367 +7613,413 @@ hterm.PreferenceManager.categories.Miscellaneous = 'Miscellaneous';
  * List of categories, ordered by display order (top to bottom)
  */
 hterm.PreferenceManager.categoryDefinitions = [
-  { id: hterm.PreferenceManager.categories.Appearance,
-    text: 'Appearance (fonts, colors, images)'},
-  { id: hterm.PreferenceManager.categories.CopyPaste,
-    text: 'Copy & Paste'},
-  { id: hterm.PreferenceManager.categories.Encoding,
-    text: 'Encoding'},
-  { id: hterm.PreferenceManager.categories.Keyboard,
-    text: 'Keyboard'},
-  { id: hterm.PreferenceManager.categories.Scrolling,
-    text: 'Scrolling'},
-  { id: hterm.PreferenceManager.categories.Sounds,
-    text: 'Sounds'},
-  { id: hterm.PreferenceManager.categories.Miscellaneous,
-    text: 'Misc.'}
+  {
+    id: hterm.PreferenceManager.categories.Appearance,
+    text: 'Appearance (fonts, colors, images)'
+  },
+  {id: hterm.PreferenceManager.categories.CopyPaste, text: 'Copy & Paste'},
+  {id: hterm.PreferenceManager.categories.Encoding, text: 'Encoding'},
+  {id: hterm.PreferenceManager.categories.Keyboard, text: 'Keyboard'},
+  {id: hterm.PreferenceManager.categories.Scrolling, text: 'Scrolling'},
+  {id: hterm.PreferenceManager.categories.Sounds, text: 'Sounds'},
+  {id: hterm.PreferenceManager.categories.Miscellaneous, text: 'Misc.'}
 ];
 
-
 hterm.PreferenceManager.defaultPreferences = {
-  'alt-gr-mode':
-  [hterm.PreferenceManager.categories.Keyboard, null,
-   [null, 'none', 'ctrl-alt', 'left-alt', 'right-alt'],
-   'Select an AltGr detection hack^Wheuristic.\n' +
-   '\n' +
-   '\'null\': Autodetect based on navigator.language:\n' +
-   '      \'en-us\' => \'none\', else => \'right-alt\'\n' +
-   '\'none\': Disable any AltGr related munging.\n' +
-   '\'ctrl-alt\': Assume Ctrl+Alt means AltGr.\n' +
-   '\'left-alt\': Assume left Alt means AltGr.\n' +
-   '\'right-alt\': Assume right Alt means AltGr.\n'],
-
-  'alt-backspace-is-meta-backspace':
-  [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
-   'If set, undoes the Chrome OS Alt-Backspace->DEL remap, so that ' +
-   'alt-backspace indeed is alt-backspace.'],
-
-  'alt-is-meta':
-  [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
-   'Set whether the alt key acts as a meta key or as a distinct alt key.'],
-
-  'alt-sends-what':
-  [hterm.PreferenceManager.categories.Keyboard, 'escape',
-   ['escape', '8-bit', 'browser-key'],
-   'Controls how the alt key is handled.\n' +
-   '\n' +
-   '  escape....... Send an ESC prefix.\n' +
-   '  8-bit........ Add 128 to the unshifted character as in xterm.\n' +
-   '  browser-key.. Wait for the keypress event and see what the browser \n' +
-   '                says.  (This won\'t work well on platforms where the \n' +
-   '                browser performs a default action for some alt sequences.)'
+  'alt-gr-mode': [
+    hterm.PreferenceManager.categories.Keyboard, null,
+    [null, 'none', 'ctrl-alt', 'left-alt', 'right-alt'],
+    'Select an AltGr detection hack^Wheuristic.\n' +
+        '\n' +
+        '\'null\': Autodetect based on navigator.language:\n' +
+        '      \'en-us\' => \'none\', else => \'right-alt\'\n' +
+        '\'none\': Disable any AltGr related munging.\n' +
+        '\'ctrl-alt\': Assume Ctrl+Alt means AltGr.\n' +
+        '\'left-alt\': Assume left Alt means AltGr.\n' +
+        '\'right-alt\': Assume right Alt means AltGr.\n'
   ],
 
-  'audible-bell-sound':
-  [hterm.PreferenceManager.categories.Sounds, 'lib-resource:hterm/audio/bell',
-   'url',
-   'URL of the terminal bell sound.  Empty string for no audible bell.'],
-
-  'desktop-notification-bell':
-  [hterm.PreferenceManager.categories.Sounds, false, 'bool',
-   'If true, terminal bells in the background will create a Web ' +
-   'Notification. https://www.w3.org/TR/notifications/\n' +
-   '\n'+
-   'Displaying notifications requires permission from the user. When this ' +
-   'option is set to true, hterm will attempt to ask the user for permission ' +
-   'if necessary. Note browsers may not show this permission request if it ' +
-   'did not originate from a user action.\n' +
-   '\n' +
-   'Chrome extensions with the "notifications" permission have permission to ' +
-   'display notifications.'],
-
-  'background-color':
-  [hterm.PreferenceManager.categories.Appearance, 'rgb(16, 16, 16)', 'color',
-   'The background color for text with no other color attributes.'],
-
-  'background-image':
-  [hterm.PreferenceManager.categories.Appearance, '', 'string',
-   'CSS value of the background image.  Empty string for no image.\n' +
-   '\n' +
-   'For example:\n' +
-   '  url(https://goo.gl/anedTK)\n' +
-   '  linear-gradient(top bottom, blue, red)'],
-
-  'background-size':
-  [hterm.PreferenceManager.categories.Appearance, '', 'string',
-   'CSS value of the background image size.  Defaults to none.'],
-
-  'background-position':
-  [hterm.PreferenceManager.categories.Appearance, '', 'string',
-   'CSS value of the background image position.\n' +
-   '\n' +
-   'For example:\n' +
-   '  10% 10%\n' +
-   '  center'],
-
-  'backspace-sends-backspace':
-  [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
-   'If true, the backspace should send BS (\'\\x08\', aka ^H).  Otherwise ' +
-   'the backspace key should send \'\\x7f\'.'],
-
-  'character-map-overrides':
-  [hterm.PreferenceManager.categories.Appearance, null, 'value',
-    'This is specified as an object. It is a sparse array, where each '  +
-    'property is the character set code and the value is an object that is ' +
-    'a sparse array itself. In that sparse array, each property is the ' +
-    'received character and the value is the displayed character.\n' +
-    '\n' +
-    'For example:\n' +
-    '  {"0":{"+":"\\u2192",",":"\\u2190","-":"\\u2191",".":"\\u2193", ' +
-    '"0":"\\u2588"}}'
+  'alt-backspace-is-meta-backspace': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+    'If set, undoes the Chrome OS Alt-Backspace->DEL remap, so that ' +
+        'alt-backspace indeed is alt-backspace.'
   ],
 
-  'close-on-exit':
-  [hterm.PreferenceManager.categories.Miscellaneous, true, 'bool',
-   'Whether or not to close the window when the command exits.'],
+  'alt-is-meta': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+    'Set whether the alt key acts as a meta key or as a distinct alt key.'
+  ],
 
-  'cursor-blink':
-  [hterm.PreferenceManager.categories.Appearance, false, 'bool',
-   'Whether or not to blink the cursor by default.'],
+  'alt-sends-what': [
+    hterm.PreferenceManager.categories.Keyboard, 'escape',
+    ['escape', '8-bit', 'browser-key'],
+    'Controls how the alt key is handled.\n' +
+        '\n' +
+        '  escape....... Send an ESC prefix.\n' +
+        '  8-bit........ Add 128 to the unshifted character as in xterm.\n' +
+        '  browser-key.. Wait for the keypress event and see what the browser \n' +
+        '                says.  (This won\'t work well on platforms where the \n' +
+        '                browser performs a default action for some alt sequences.)'
+  ],
 
-  'cursor-blink-cycle':
-  [hterm.PreferenceManager.categories.Appearance, [1000, 500], 'value',
-   'The cursor blink rate in milliseconds.\n' +
-   '\n' +
-   'A two element array, the first of which is how long the cursor should be ' +
-   'on, second is how long it should be off.'],
+  'audible-bell-sound': [
+    hterm.PreferenceManager.categories.Sounds, 'lib-resource:hterm/audio/bell',
+    'url', 'URL of the terminal bell sound.  Empty string for no audible bell.'
+  ],
 
-  'cursor-color':
-  [hterm.PreferenceManager.categories.Appearance, 'rgba(255, 0, 0, 0.5)',
-   'color',
-   'The color of the visible cursor.'],
+  'desktop-notification-bell': [
+    hterm.PreferenceManager.categories.Sounds, false, 'bool',
+    'If true, terminal bells in the background will create a Web ' +
+        'Notification. https://www.w3.org/TR/notifications/\n' +
+        '\n' +
+        'Displaying notifications requires permission from the user. When this ' +
+        'option is set to true, hterm will attempt to ask the user for permission ' +
+        'if necessary. Note browsers may not show this permission request if it ' +
+        'did not originate from a user action.\n' +
+        '\n' +
+        'Chrome extensions with the "notifications" permission have permission to ' +
+        'display notifications.'
+  ],
 
-  'color-palette-overrides':
-  [hterm.PreferenceManager.categories.Appearance, null, 'value',
-   'Override colors in the default palette.\n' +
-   '\n' +
-   'This can be specified as an array or an object.  If specified as an ' +
-   'object it is assumed to be a sparse array, where each property ' +
-   'is a numeric index into the color palette.\n' +
-   '\n' +
-   'Values can be specified as almost any css color value.  This ' +
-   'includes #RGB, #RRGGBB, rgb(...), rgba(...), and any color names ' +
-   'that are also part of the stock X11 rgb.txt file.\n' +
-   '\n' +
-   'You can use \'null\' to specify that the default value should be not ' +
-   'be changed.  This is useful for skipping a small number of indices ' +
-   'when the value is specified as an array.'],
+  'background-color': [
+    hterm.PreferenceManager.categories.Appearance, 'rgb(16, 16, 16)', 'color',
+    'The background color for text with no other color attributes.'
+  ],
 
-  'copy-on-select':
-  [hterm.PreferenceManager.categories.CopyPaste, true, 'bool',
-   'Automatically copy mouse selection to the clipboard.'],
+  'background-image': [
+    hterm.PreferenceManager.categories.Appearance, '', 'string',
+    'CSS value of the background image.  Empty string for no image.\n' +
+        '\n' +
+        'For example:\n' +
+        '  url(https://goo.gl/anedTK)\n' +
+        '  linear-gradient(top bottom, blue, red)'
+  ],
 
-  'use-default-window-copy':
-  [hterm.PreferenceManager.categories.CopyPaste, false, 'bool',
-   'Whether to use the default window copy behavior'],
+  'background-size': [
+    hterm.PreferenceManager.categories.Appearance, '', 'string',
+    'CSS value of the background image size.  Defaults to none.'
+  ],
 
-  'clear-selection-after-copy':
-  [hterm.PreferenceManager.categories.CopyPaste, true, 'bool',
-   'Whether to clear the selection after copying.'],
+  'background-position': [
+    hterm.PreferenceManager.categories.Appearance, '', 'string',
+    'CSS value of the background image position.\n' +
+        '\n' +
+        'For example:\n' +
+        '  10% 10%\n' +
+        '  center'
+  ],
 
-  'ctrl-plus-minus-zero-zoom':
-  [hterm.PreferenceManager.categories.Keyboard, true, 'bool',
-   'If true, Ctrl-Plus/Minus/Zero controls zoom.\n' +
-   'If false, Ctrl-Shift-Plus/Minus/Zero controls zoom, Ctrl-Minus sends ^_, ' +
-   'Ctrl-Plus/Zero do nothing.'],
+  'backspace-sends-backspace': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+    'If true, the backspace should send BS (\'\\x08\', aka ^H).  Otherwise ' +
+        'the backspace key should send \'\\x7f\'.'
+  ],
 
-  'ctrl-c-copy':
-  [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
-   'Ctrl+C copies if true, send ^C to host if false.\n' +
-   'Ctrl+Shift+C sends ^C to host if true, copies if false.'],
+  'character-map-overrides': [
+    hterm.PreferenceManager.categories.Appearance, null, 'value',
+    'This is specified as an object. It is a sparse array, where each ' +
+        'property is the character set code and the value is an object that is ' +
+        'a sparse array itself. In that sparse array, each property is the ' +
+        'received character and the value is the displayed character.\n' +
+        '\n' +
+        'For example:\n' +
+        '  {"0":{"+":"\\u2192",",":"\\u2190","-":"\\u2191",".":"\\u2193", ' +
+        '"0":"\\u2588"}}'
+  ],
 
-  'ctrl-v-paste':
-  [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
-   'Ctrl+V pastes if true, send ^V to host if false.\n' +
-   'Ctrl+Shift+V sends ^V to host if true, pastes if false.'],
+  'close-on-exit': [
+    hterm.PreferenceManager.categories.Miscellaneous, true, 'bool',
+    'Whether or not to close the window when the command exits.'
+  ],
 
-  'east-asian-ambiguous-as-two-column':
-  [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
-   'Set whether East Asian Ambiguous characters have two column width.'],
+  'cursor-blink': [
+    hterm.PreferenceManager.categories.Appearance, false, 'bool',
+    'Whether or not to blink the cursor by default.'
+  ],
 
-  'enable-8-bit-control':
-  [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
-   'True to enable 8-bit control characters, false to ignore them.\n' +
-   '\n' +
-   'We\'ll respect the two-byte versions of these control characters ' +
-   'regardless of this setting.'],
+  'cursor-blink-cycle': [
+    hterm.PreferenceManager.categories.Appearance, [1000, 500], 'value',
+    'The cursor blink rate in milliseconds.\n' +
+        '\n' +
+        'A two element array, the first of which is how long the cursor should be ' +
+        'on, second is how long it should be off.'
+  ],
 
-  'enable-bold':
-  [hterm.PreferenceManager.categories.Appearance, null, 'tristate',
-   'True if we should use bold weight font for text with the bold/bright ' +
-   'attribute.  False to use the normal weight font.  Null to autodetect.'],
+  'cursor-color': [
+    hterm.PreferenceManager.categories.Appearance, 'rgba(255, 0, 0, 0.5)',
+    'color', 'The color of the visible cursor.'
+  ],
 
-  'enable-bold-as-bright':
-  [hterm.PreferenceManager.categories.Appearance, true, 'bool',
-   'True if we should use bright colors (8-15 on a 16 color palette) ' +
-   'for any text with the bold attribute.  False otherwise.'],
+  'color-palette-overrides': [
+    hterm.PreferenceManager.categories.Appearance, null, 'value',
+    'Override colors in the default palette.\n' +
+        '\n' +
+        'This can be specified as an array or an object.  If specified as an ' +
+        'object it is assumed to be a sparse array, where each property ' +
+        'is a numeric index into the color palette.\n' +
+        '\n' +
+        'Values can be specified as almost any css color value.  This ' +
+        'includes #RGB, #RRGGBB, rgb(...), rgba(...), and any color names ' +
+        'that are also part of the stock X11 rgb.txt file.\n' +
+        '\n' +
+        'You can use \'null\' to specify that the default value should be not ' +
+        'be changed.  This is useful for skipping a small number of indices ' +
+        'when the value is specified as an array.'
+  ],
 
-  'enable-blink':
-  [hterm.PreferenceManager.categories.Appearance, true, 'bool',
-   'True if we should respect the blink attribute.  False to ignore it.  '],
+  'copy-on-select': [
+    hterm.PreferenceManager.categories.CopyPaste, true, 'bool',
+    'Automatically copy mouse selection to the clipboard.'
+  ],
 
-  'enable-clipboard-notice':
-  [hterm.PreferenceManager.categories.CopyPaste, true, 'bool',
-   'Show a message in the terminal when the host writes to the clipboard.'],
+  'use-default-window-copy': [
+    hterm.PreferenceManager.categories.CopyPaste, false, 'bool',
+    'Whether to use the default window copy behavior'
+  ],
 
-  'enable-clipboard-write':
-  [hterm.PreferenceManager.categories.CopyPaste, true, 'bool',
-   'Allow the host to write directly to the system clipboard.'],
+  'clear-selection-after-copy': [
+    hterm.PreferenceManager.categories.CopyPaste, true, 'bool',
+    'Whether to clear the selection after copying.'
+  ],
 
-  'enable-dec12':
-  [hterm.PreferenceManager.categories.Miscellaneous, false, 'bool',
-   'Respect the host\'s attempt to change the cursor blink status using ' +
-   'DEC Private Mode 12.'],
+  'ctrl-plus-minus-zero-zoom': [
+    hterm.PreferenceManager.categories.Keyboard, true, 'bool',
+    'If true, Ctrl-Plus/Minus/Zero controls zoom.\n' +
+        'If false, Ctrl-Shift-Plus/Minus/Zero controls zoom, Ctrl-Minus sends ^_, ' +
+        'Ctrl-Plus/Zero do nothing.'
+  ],
 
-  'environment':
-  [hterm.PreferenceManager.categories.Miscellaneous, {'TERM': 'xterm-256color'},
-   'value',
-   'The default environment variables, as an object.'],
+  'ctrl-c-copy': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+    'Ctrl+C copies if true, send ^C to host if false.\n' +
+        'Ctrl+Shift+C sends ^C to host if true, copies if false.'
+  ],
 
-  'font-family':
-  [hterm.PreferenceManager.categories.Appearance,
-   '"DejaVu Sans Mono", "Everson Mono", FreeMono, "Menlo", "Terminal", ' +
-   'monospace', 'string',
-   'Default font family for the terminal text.'],
+  'ctrl-v-paste': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+    'Ctrl+V pastes if true, send ^V to host if false.\n' +
+        'Ctrl+Shift+V sends ^V to host if true, pastes if false.'
+  ],
 
-  'font-size':
-  [hterm.PreferenceManager.categories.Appearance, 15, 'int',
-   'The default font size in pixels.'],
+  'east-asian-ambiguous-as-two-column': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+    'Set whether East Asian Ambiguous characters have two column width.'
+  ],
 
-  'font-smoothing':
-  [hterm.PreferenceManager.categories.Appearance, 'antialiased', 'string',
-   'CSS font-smoothing property.'],
+  'enable-8-bit-control': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+    'True to enable 8-bit control characters, false to ignore them.\n' +
+        '\n' +
+        'We\'ll respect the two-byte versions of these control characters ' +
+        'regardless of this setting.'
+  ],
 
-  'foreground-color':
-  [hterm.PreferenceManager.categories.Appearance, 'rgb(240, 240, 240)', 'color',
-   'The foreground color for text with no other color attributes.'],
+  'enable-bold': [
+    hterm.PreferenceManager.categories.Appearance, null, 'tristate',
+    'True if we should use bold weight font for text with the bold/bright ' +
+        'attribute.  False to use the normal weight font.  Null to autodetect.'
+  ],
 
-  'home-keys-scroll':
-  [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
-   'If true, home/end will control the terminal scrollbar and shift home/end ' +
-   'will send the VT keycodes.  If false then home/end sends VT codes and ' +
-   'shift home/end scrolls.'],
+  'enable-bold-as-bright': [
+    hterm.PreferenceManager.categories.Appearance, true, 'bool',
+    'True if we should use bright colors (8-15 on a 16 color palette) ' +
+        'for any text with the bold attribute.  False otherwise.'
+  ],
 
-  'keybindings':
-  [hterm.PreferenceManager.categories.Keyboard, null, 'value',
-   'A map of key sequence to key actions.  Key sequences include zero or ' +
-   'more modifier keys followed by a key code.  Key codes can be decimal or ' +
-   'hexadecimal numbers, or a key identifier.  Key actions can be specified ' +
-   'a string to send to the host, or an action identifier.  For a full ' +
-   'list of key code and action identifiers, see https://goo.gl/8AoD09.' +
-   '\n' +
-   '\n' +
-   'Sample keybindings:\n' +
-   '{ "Ctrl-Alt-K": "clearScrollback",\n' +
-   '  "Ctrl-Shift-L": "PASS",\n' +
-   '  "Ctrl-H": "\'HELLO\\n\'"\n' +
-   '}'],
+  'enable-blink': [
+    hterm.PreferenceManager.categories.Appearance, true, 'bool',
+    'True if we should respect the blink attribute.  False to ignore it.  '
+  ],
 
-  'max-string-sequence':
-  [hterm.PreferenceManager.categories.Encoding, 100000, 'int',
-   'Max length of a DCS, OSC, PM, or APS sequence before we give up and ' +
-   'ignore the code.'],
+  'enable-clipboard-notice': [
+    hterm.PreferenceManager.categories.CopyPaste, true, 'bool',
+    'Show a message in the terminal when the host writes to the clipboard.'
+  ],
 
-  'media-keys-are-fkeys':
-  [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
-   'If true, convert media keys to their Fkey equivalent. If false, let ' +
-   'the browser handle the keys.'],
+  'enable-clipboard-write': [
+    hterm.PreferenceManager.categories.CopyPaste, true, 'bool',
+    'Allow the host to write directly to the system clipboard.'
+  ],
 
-  'meta-sends-escape':
-  [hterm.PreferenceManager.categories.Keyboard, true, 'bool',
-   'Set whether the meta key sends a leading escape or not.'],
+  'enable-dec12': [
+    hterm.PreferenceManager.categories.Miscellaneous, false, 'bool',
+    'Respect the host\'s attempt to change the cursor blink status using ' +
+        'DEC Private Mode 12.'
+  ],
 
-  'mouse-paste-button':
-  [hterm.PreferenceManager.categories.CopyPaste, null,
-   [null, 0, 1, 2, 3, 4, 5, 6],
-   'Mouse paste button, or null to autodetect.\n' +
-   '\n' +
-   'For autodetect, we\'ll try to enable middle button paste for non-X11 ' +
-   'platforms.  On X11 we move it to button 3.'],
+  'environment': [
+    hterm.PreferenceManager.categories.Miscellaneous,
+    {'TERM': 'xterm-256color'}, 'value',
+    'The default environment variables, as an object.'
+  ],
 
-  'page-keys-scroll':
-  [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
-   'If true, page up/down will control the terminal scrollbar and shift ' +
-   'page up/down will send the VT keycodes.  If false then page up/down ' +
-   'sends VT codes and shift page up/down scrolls.'],
+  'font-family': [
+    hterm.PreferenceManager.categories.Appearance,
+    '"DejaVu Sans Mono", "Everson Mono", FreeMono, "Menlo", "Terminal", ' +
+        'monospace',
+    'string', 'Default font family for the terminal text.'
+  ],
 
-  'pass-alt-number':
-  [hterm.PreferenceManager.categories.Keyboard, null, 'tristate',
-   'Set whether we should pass Alt-1..9 to the browser.\n' +
-   '\n' +
-   'This is handy when running hterm in a browser tab, so that you don\'t ' +
-   'lose Chrome\'s "switch to tab" keyboard accelerators.  When not running ' +
-   'in a tab it\'s better to send these keys to the host so they can be ' +
-   'used in vim or emacs.\n' +
-   '\n' +
-   'If true, Alt-1..9 will be handled by the browser.  If false, Alt-1..9 ' +
-   'will be sent to the host.  If null, autodetect based on browser platform ' +
-   'and window type.'],
+  'font-size': [
+    hterm.PreferenceManager.categories.Appearance, 15, 'int',
+    'The default font size in pixels.'
+  ],
 
-  'pass-ctrl-number':
-  [hterm.PreferenceManager.categories.Keyboard, null, 'tristate',
-   'Set whether we should pass Ctrl-1..9 to the browser.\n' +
-   '\n' +
-   'This is handy when running hterm in a browser tab, so that you don\'t ' +
-   'lose Chrome\'s "switch to tab" keyboard accelerators.  When not running ' +
-   'in a tab it\'s better to send these keys to the host so they can be ' +
-   'used in vim or emacs.\n' +
-   '\n' +
-   'If true, Ctrl-1..9 will be handled by the browser.  If false, Ctrl-1..9 ' +
-   'will be sent to the host.  If null, autodetect based on browser platform ' +
-   'and window type.'],
+  'font-smoothing': [
+    hterm.PreferenceManager.categories.Appearance, 'antialiased', 'string',
+    'CSS font-smoothing property.'
+  ],
 
-   'pass-meta-number':
-  [hterm.PreferenceManager.categories.Keyboard, null, 'tristate',
-   'Set whether we should pass Meta-1..9 to the browser.\n' +
-   '\n' +
-   'This is handy when running hterm in a browser tab, so that you don\'t ' +
-   'lose Chrome\'s "switch to tab" keyboard accelerators.  When not running ' +
-   'in a tab it\'s better to send these keys to the host so they can be ' +
-   'used in vim or emacs.\n' +
-   '\n' +
-   'If true, Meta-1..9 will be handled by the browser.  If false, Meta-1..9 ' +
-   'will be sent to the host.  If null, autodetect based on browser platform ' +
-   'and window type.'],
+  'foreground-color': [
+    hterm.PreferenceManager.categories.Appearance, 'rgb(240, 240, 240)',
+    'color', 'The foreground color for text with no other color attributes.'
+  ],
 
-  'pass-meta-v':
-  [hterm.PreferenceManager.categories.Keyboard, true, 'bool',
-   'Set whether meta-V gets passed to host.'],
+  'home-keys-scroll': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+    'If true, home/end will control the terminal scrollbar and shift home/end ' +
+        'will send the VT keycodes.  If false then home/end sends VT codes and ' +
+        'shift home/end scrolls.'
+  ],
 
-  'receive-encoding':
-  [hterm.PreferenceManager.categories.Encoding, 'utf-8', ['utf-8', 'raw'],
-   'Set the expected encoding for data received from the host.\n' +
-   '\n' +
-   'Valid values are \'utf-8\' and \'raw\'.'],
+  'keybindings': [
+    hterm.PreferenceManager.categories.Keyboard, null, 'value',
+    'A map of key sequence to key actions.  Key sequences include zero or ' +
+        'more modifier keys followed by a key code.  Key codes can be decimal or ' +
+        'hexadecimal numbers, or a key identifier.  Key actions can be specified ' +
+        'a string to send to the host, or an action identifier.  For a full ' +
+        'list of key code and action identifiers, see https://goo.gl/8AoD09.' +
+        '\n' +
+        '\n' +
+        'Sample keybindings:\n' +
+        '{ "Ctrl-Alt-K": "clearScrollback",\n' +
+        '  "Ctrl-Shift-L": "PASS",\n' +
+        '  "Ctrl-H": "\'HELLO\\n\'"\n' +
+        '}'
+  ],
 
-  'scroll-on-keystroke':
-  [hterm.PreferenceManager.categories.Scrolling, true, 'bool',
-   'If true, scroll to the bottom on any keystroke.'],
+  'max-string-sequence': [
+    hterm.PreferenceManager.categories.Encoding, 100000, 'int',
+    'Max length of a DCS, OSC, PM, or APS sequence before we give up and ' +
+        'ignore the code.'
+  ],
 
-  'scroll-on-output':
-  [hterm.PreferenceManager.categories.Scrolling, false, 'bool',
-   'If true, scroll to the bottom on terminal output.'],
+  'media-keys-are-fkeys': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+    'If true, convert media keys to their Fkey equivalent. If false, let ' +
+        'the browser handle the keys.'
+  ],
 
-  'scrollbar-visible':
-  [hterm.PreferenceManager.categories.Scrolling, true, 'bool',
-   'The vertical scrollbar mode.'],
+  'meta-sends-escape': [
+    hterm.PreferenceManager.categories.Keyboard, true, 'bool',
+    'Set whether the meta key sends a leading escape or not.'
+  ],
 
-  'scroll-wheel-move-multiplier':
-  [hterm.PreferenceManager.categories.Scrolling, 1, 'int',
-   'The multiplier for the pixel delta in mousewheel event caused by the ' +
-   'scroll wheel. Alters how fast the page scrolls.'],
+  'mouse-paste-button': [
+    hterm.PreferenceManager.categories.CopyPaste, null,
+    [null, 0, 1, 2, 3, 4, 5, 6],
+    'Mouse paste button, or null to autodetect.\n' +
+        '\n' +
+        'For autodetect, we\'ll try to enable middle button paste for non-X11 ' +
+        'platforms.  On X11 we move it to button 3.'
+  ],
 
-  'send-encoding':
-  [hterm.PreferenceManager.categories.Encoding, 'utf-8', ['utf-8', 'raw'],
-   'Set the encoding for data sent to host.'],
+  'page-keys-scroll': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+    'If true, page up/down will control the terminal scrollbar and shift ' +
+        'page up/down will send the VT keycodes.  If false then page up/down ' +
+        'sends VT codes and shift page up/down scrolls.'
+  ],
 
-  'shift-insert-paste':
-  [hterm.PreferenceManager.categories.Keyboard, true, 'bool',
-   'Shift + Insert pastes if true, sent to host if false.'],
+  'pass-alt-number': [
+    hterm.PreferenceManager.categories.Keyboard, null, 'tristate',
+    'Set whether we should pass Alt-1..9 to the browser.\n' +
+        '\n' +
+        'This is handy when running hterm in a browser tab, so that you don\'t ' +
+        'lose Chrome\'s "switch to tab" keyboard accelerators.  When not running ' +
+        'in a tab it\'s better to send these keys to the host so they can be ' +
+        'used in vim or emacs.\n' +
+        '\n' +
+        'If true, Alt-1..9 will be handled by the browser.  If false, Alt-1..9 ' +
+        'will be sent to the host.  If null, autodetect based on browser platform ' +
+        'and window type.'
+  ],
 
-  'user-css':
-  [hterm.PreferenceManager.categories.Appearance, '', 'url',
-   'URL of user stylesheet to include in the terminal document.']
+  'pass-ctrl-number': [
+    hterm.PreferenceManager.categories.Keyboard, null, 'tristate',
+    'Set whether we should pass Ctrl-1..9 to the browser.\n' +
+        '\n' +
+        'This is handy when running hterm in a browser tab, so that you don\'t ' +
+        'lose Chrome\'s "switch to tab" keyboard accelerators.  When not running ' +
+        'in a tab it\'s better to send these keys to the host so they can be ' +
+        'used in vim or emacs.\n' +
+        '\n' +
+        'If true, Ctrl-1..9 will be handled by the browser.  If false, Ctrl-1..9 ' +
+        'will be sent to the host.  If null, autodetect based on browser platform ' +
+        'and window type.'
+  ],
+
+  'pass-meta-number': [
+    hterm.PreferenceManager.categories.Keyboard, null, 'tristate',
+    'Set whether we should pass Meta-1..9 to the browser.\n' +
+        '\n' +
+        'This is handy when running hterm in a browser tab, so that you don\'t ' +
+        'lose Chrome\'s "switch to tab" keyboard accelerators.  When not running ' +
+        'in a tab it\'s better to send these keys to the host so they can be ' +
+        'used in vim or emacs.\n' +
+        '\n' +
+        'If true, Meta-1..9 will be handled by the browser.  If false, Meta-1..9 ' +
+        'will be sent to the host.  If null, autodetect based on browser platform ' +
+        'and window type.'
+  ],
+
+  'pass-meta-v': [
+    hterm.PreferenceManager.categories.Keyboard, true, 'bool',
+    'Set whether meta-V gets passed to host.'
+  ],
+
+  'receive-encoding': [
+    hterm.PreferenceManager.categories.Encoding, 'utf-8', ['utf-8', 'raw'],
+    'Set the expected encoding for data received from the host.\n' +
+        '\n' +
+        'Valid values are \'utf-8\' and \'raw\'.'
+  ],
+
+  'scroll-on-keystroke': [
+    hterm.PreferenceManager.categories.Scrolling, true, 'bool',
+    'If true, scroll to the bottom on any keystroke.'
+  ],
+
+  'scroll-on-output': [
+    hterm.PreferenceManager.categories.Scrolling, false, 'bool',
+    'If true, scroll to the bottom on terminal output.'
+  ],
+
+  'scrollbar-visible': [
+    hterm.PreferenceManager.categories.Scrolling, true, 'bool',
+    'The vertical scrollbar mode.'
+  ],
+
+  'scroll-wheel-move-multiplier': [
+    hterm.PreferenceManager.categories.Scrolling, 1, 'int',
+    'The multiplier for the pixel delta in mousewheel event caused by the ' +
+        'scroll wheel. Alters how fast the page scrolls.'
+  ],
+
+  'send-encoding': [
+    hterm.PreferenceManager.categories.Encoding, 'utf-8', ['utf-8', 'raw'],
+    'Set the encoding for data sent to host.'
+  ],
+
+  'shift-insert-paste': [
+    hterm.PreferenceManager.categories.Keyboard, true, 'bool',
+    'Shift + Insert pastes if true, sent to host if false.'
+  ],
+
+  'user-css': [
+    hterm.PreferenceManager.categories.Appearance, '', 'url',
+    'URL of user stylesheet to include in the terminal document.'
+  ]
 };
 
 hterm.PreferenceManager.prototype = {
@@ -8104,8 +8062,7 @@ hterm.PubSub.addBehavior = function(obj) {
  * @param {function(Object)} callback The function to invoke for notifications.
  */
 hterm.PubSub.prototype.subscribe = function(subject, callback) {
-  if (!(subject in this.observers_))
-    this.observers_[subject] = [];
+  if (!(subject in this.observers_)) this.observers_[subject] = [];
 
   this.observers_[subject].push(callback);
 };
@@ -8119,12 +8076,10 @@ hterm.PubSub.prototype.subscribe = function(subject, callback) {
  */
 hterm.PubSub.prototype.unsubscribe = function(subject, callback) {
   var list = this.observers_[subject];
-  if (!list)
-    throw 'Invalid subject: ' + subject;
+  if (!list) throw 'Invalid subject: ' + subject;
 
   var i = list.indexOf(callback);
-  if (i < 0)
-    throw 'Not subscribed: ' + subject;
+  if (i < 0) throw 'Not subscribed: ' + subject;
 
   list.splice(i, 1);
 };
@@ -8144,8 +8099,7 @@ hterm.PubSub.prototype.publish = function(subject, e, opt_lastCallback) {
   function notifyList(i) {
     // Set this timeout before invoking the callback, so we don't have to
     // concern ourselves with exceptions.
-    if (i < list.length - 1)
-      setTimeout(notifyList, 0, i + 1);
+    if (i < list.length - 1) setTimeout(notifyList, 0, i + 1);
 
     list[i](e);
   }
@@ -8164,8 +8118,7 @@ hterm.PubSub.prototype.publish = function(subject, e, opt_lastCallback) {
     }
   }
 
-  if (list)
-    setTimeout(notifyList, 0, 0);
+  if (list) setTimeout(notifyList, 0, 0);
 };
 // SOURCE FILE: hterm/js/hterm_screen.js
 // Copyright (c) 2012 The Chromium OS Authors. All rights reserved.
@@ -8174,8 +8127,8 @@ hterm.PubSub.prototype.publish = function(subject, e, opt_lastCallback) {
 
 'use strict';
 
-lib.rtdep('lib.f', 'lib.wc',
-          'hterm.RowCol', 'hterm.Size', 'hterm.TextAttributes');
+lib.rtdep(
+    'lib.f', 'lib.wc', 'hterm.RowCol', 'hterm.Size', 'hterm.TextAttributes');
 
 /**
  * @fileoverview This class represents a single terminal screen full of text.
@@ -8565,8 +8518,7 @@ hterm.Screen.prototype.splitNode_ = function(node, offset) {
 
   if (afterNode.textContent)
     node.parentNode.insertBefore(afterNode, node.nextSibling);
-  if (!node.textContent)
-    node.parentNode.removeChild(node);
+  if (!node.textContent) node.parentNode.removeChild(node);
 };
 
 /**
@@ -8658,19 +8610,17 @@ hterm.Screen.prototype.insertString = function(str) {
     // This whitespace should be completely unstyled.  Underline, background
     // color, and strikethrough would be visible on whitespace, so we can't use
     // one of those spans to hold the text.
-    if (!(this.textAttributes.underline ||
-          this.textAttributes.strikethrough ||
-          this.textAttributes.background ||
-          this.textAttributes.wcNode ||
+    if (!(this.textAttributes.underline || this.textAttributes.strikethrough ||
+          this.textAttributes.background || this.textAttributes.wcNode ||
           this.textAttributes.tileData != null)) {
       // Best case scenario, we can just pretend the spaces were part of the
       // original string.
       str = ws + str;
-    } else if (cursorNode.nodeType == 3 ||
-               !(cursorNode.wcNode ||
-                 cursorNode.tileNode ||
-                 cursorNode.style.textDecoration ||
-                 cursorNode.style.backgroundColor)) {
+    } else if (
+        cursorNode.nodeType == 3 ||
+        !(cursorNode.wcNode || cursorNode.tileNode ||
+          cursorNode.style.textDecoration ||
+          cursorNode.style.backgroundColor)) {
       // Second best case, the current node is able to hold the whitespace.
       cursorNode.textContent = (cursorNodeText += ws);
     } else {
@@ -8694,8 +8644,8 @@ hterm.Screen.prototype.insertString = function(str) {
       cursorNode.textContent = str + cursorNodeText;
     } else {
       cursorNode.textContent =
-          hterm.TextAttributes.nodeSubstr(cursorNode, 0, offset) +
-          str + hterm.TextAttributes.nodeSubstr(cursorNode, offset);
+          hterm.TextAttributes.nodeSubstr(cursorNode, 0, offset) + str +
+          hterm.TextAttributes.nodeSubstr(cursorNode, offset);
     }
 
     this.cursorOffset_ += strWidth;
@@ -8727,8 +8677,7 @@ hterm.Screen.prototype.insertString = function(str) {
   if (reverseOffset == 0) {
     // At the end of the cursor node, the check the next sibling.
     var nextSibling = cursorNode.nextSibling;
-    if (nextSibling &&
-        this.textAttributes.matchesContainer(nextSibling)) {
+    if (nextSibling && this.textAttributes.matchesContainer(nextSibling)) {
       nextSibling.textContent = str + nextSibling.textContent;
       this.cursorNode_ = nextSibling;
       this.cursorOffset_ = lib.wc.strWidth(str);
@@ -8764,8 +8713,7 @@ hterm.Screen.prototype.insertString = function(str) {
  */
 hterm.Screen.prototype.overwriteString = function(str) {
   var maxLength = this.columnCount_ - this.cursorPosition.column;
-  if (!maxLength)
-    return [str];
+  if (!maxLength) return [str];
 
   var width = lib.wc.strWidth(str);
   if (this.textAttributes.matchesContainer(this.cursorNode_) &&
@@ -8796,8 +8744,7 @@ hterm.Screen.prototype.deleteChars = function(count) {
 
   var currentCursorColumn = this.cursorPosition.column;
   count = Math.min(count, this.columnCount_ - currentCursorColumn);
-  if (!count)
-    return 0;
+  if (!count) return 0;
 
   var rv = count;
   var startLength, endLength;
@@ -8832,8 +8779,8 @@ hterm.Screen.prototype.deleteChars = function(count) {
     var cursorNode = this.cursorNode_;
     if (cursorNode.previousSibling) {
       this.cursorNode_ = cursorNode.previousSibling;
-      this.cursorOffset_ = hterm.TextAttributes.nodeWidth(
-          cursorNode.previousSibling);
+      this.cursorOffset_ =
+          hterm.TextAttributes.nodeWidth(cursorNode.previousSibling);
     } else if (cursorNode.nextSibling) {
       this.cursorNode_ = cursorNode.nextSibling;
       this.cursorOffset_ = 0;
@@ -8872,7 +8819,7 @@ hterm.Screen.prototype.getLineStartRow_ = function(row) {
  * @return {string} Text content of line.
  **/
 hterm.Screen.prototype.getLineText_ = function(row) {
-  var rowText = "";
+  var rowText = '';
   while (row) {
     rowText += row.textContent;
     if (row.hasAttribute('line-overflow')) {
@@ -8892,8 +8839,7 @@ hterm.Screen.prototype.getLineText_ = function(row) {
  **/
 hterm.Screen.prototype.getXRowAncestor_ = function(node) {
   while (node) {
-    if (node.nodeName === 'X-ROW')
-      break;
+    if (node.nodeName === 'X-ROW') break;
     node = node.parentNode;
   }
   return node;
@@ -8910,11 +8856,9 @@ hterm.Screen.prototype.getXRowAncestor_ = function(node) {
  * @return {integer} Position within line of character at offset within node.
  **/
 hterm.Screen.prototype.getPositionWithOverflow_ = function(row, node, offset) {
-  if (!node)
-    return -1;
+  if (!node) return -1;
   var ancestorRow = this.getXRowAncestor_(node);
-  if (!ancestorRow)
-    return -1;
+  if (!ancestorRow) return -1;
   var position = 0;
   while (ancestorRow != row) {
     position += hterm.TextAttributes.nodeWidth(row);
@@ -8939,13 +8883,12 @@ hterm.Screen.prototype.getPositionWithOverflow_ = function(row, node, offset) {
 hterm.Screen.prototype.getPositionWithinRow_ = function(row, node, offset) {
   if (node.parentNode != row) {
     return this.getPositionWithinRow_(node.parentNode, node, offset) +
-           this.getPositionWithinRow_(row, node.parentNode, 0);
+        this.getPositionWithinRow_(row, node.parentNode, 0);
   }
   var position = 0;
   for (var i = 0; i < row.childNodes.length; i++) {
     var currentNode = row.childNodes[i];
-    if (currentNode == node)
-      return position + offset;
+    if (currentNode == node) return position + offset;
     position += hterm.TextAttributes.nodeWidth(currentNode);
   }
   return -1;
@@ -9007,11 +8950,9 @@ hterm.Screen.prototype.getNodeAndOffsetWithinRow_ = function(row, position) {
  **/
 hterm.Screen.prototype.setRange_ = function(row, start, end, range) {
   var startNodeAndOffset = this.getNodeAndOffsetWithOverflow_(row, start);
-  if (startNodeAndOffset == null)
-    return;
+  if (startNodeAndOffset == null) return;
   var endNodeAndOffset = this.getNodeAndOffsetWithOverflow_(row, end);
-  if (endNodeAndOffset == null)
-    return;
+  if (endNodeAndOffset == null) return;
   range.setStart(startNodeAndOffset[0], startNodeAndOffset[1]);
   range.setEnd(endNodeAndOffset[0], endNodeAndOffset[1]);
 };
@@ -9022,51 +8963,41 @@ hterm.Screen.prototype.setRange_ = function(row, start, end, range) {
  * @param {Selection} selection Selection to expand.
  **/
 hterm.Screen.prototype.expandSelection = function(selection) {
-  if (!selection)
-    return;
+  if (!selection) return;
 
   var range = selection.getRangeAt(0);
-  if (!range || range.toString().match(/\s/))
-    return;
+  if (!range || range.toString().match(/\s/)) return;
 
   var row = this.getLineStartRow_(this.getXRowAncestor_(range.startContainer));
-  if (!row)
-    return;
+  if (!row) return;
 
-  var startPosition = this.getPositionWithOverflow_(row,
-                                                    range.startContainer,
-                                                    range.startOffset);
-  if (startPosition == -1)
-    return;
-  var endPosition = this.getPositionWithOverflow_(row,
-                                                  range.endContainer,
-                                                  range.endOffset);
-  if (endPosition == -1)
-    return;
+  var startPosition = this.getPositionWithOverflow_(
+      row, range.startContainer, range.startOffset);
+  if (startPosition == -1) return;
+  var endPosition =
+      this.getPositionWithOverflow_(row, range.endContainer, range.endOffset);
+  if (endPosition == -1) return;
 
   // Matches can start with '~' or '.', since paths frequently do.
-  var leftMatch   = '[^\\s\\[\\](){}<>"\'\\^!@#$%&*,;:`]';
-  var rightMatch  = '[^\\s\\[\\](){}<>"\'\\^!@#$%&*,;:~.`]';
+  var leftMatch = '[^\\s\\[\\](){}<>"\'\\^!@#$%&*,;:`]';
+  var rightMatch = '[^\\s\\[\\](){}<>"\'\\^!@#$%&*,;:~.`]';
   var insideMatch = '[^\\s\\[\\](){}<>"\'\\^]*';
 
-  //Move start to the left.
+  // Move start to the left.
   var rowText = this.getLineText_(row);
   var lineUpToRange = lib.wc.substring(rowText, 0, endPosition);
-  var leftRegularExpression = new RegExp(leftMatch + insideMatch + "$");
+  var leftRegularExpression = new RegExp(leftMatch + insideMatch + '$');
   var expandedStart = lineUpToRange.search(leftRegularExpression);
-  if (expandedStart == -1 || expandedStart > startPosition)
-    return;
+  if (expandedStart == -1 || expandedStart > startPosition) return;
 
-  //Move end to the right.
-  var lineFromRange = lib.wc.substring(rowText, startPosition,
-                                       lib.wc.strWidth(rowText));
-  var rightRegularExpression = new RegExp("^" + insideMatch + rightMatch);
+  // Move end to the right.
+  var lineFromRange =
+      lib.wc.substring(rowText, startPosition, lib.wc.strWidth(rowText));
+  var rightRegularExpression = new RegExp('^' + insideMatch + rightMatch);
   var found = lineFromRange.match(rightRegularExpression);
-  if (!found)
-    return;
+  if (!found) return;
   var expandedEnd = startPosition + lib.wc.strWidth(found[0]);
-  if (expandedEnd == -1 || expandedEnd < endPosition)
-    return;
+  if (expandedEnd == -1 || expandedEnd < endPosition) return;
 
   this.setRange_(row, expandedStart, expandedEnd, range);
   selection.addRange(range);
@@ -9104,7 +9035,8 @@ lib.rtdep('lib.f', 'hterm.PubSub', 'hterm.Size');
  * @param {RowProvider} rowProvider An object capable of providing rows as
  *     raw text or row nodes.
  */
-hterm.ScrollPort = function(rowProvider) {
+hterm.ScrollPort =
+    function(rowProvider) {
   hterm.PubSub.addBehavior(this);
 
   this.rowProvider_ = rowProvider;
@@ -9171,13 +9103,14 @@ hterm.ScrollPort = function(rowProvider) {
   this.DEBUG_ = false;
 }
 
-/**
- * Proxy for the native selection object which understands how to walk up the
- * DOM to find the containing row node and sort out which comes first.
- *
- * @param {hterm.ScrollPort} scrollPort The parent hterm.ScrollPort instance.
- */
-hterm.ScrollPort.Selection = function(scrollPort) {
+    /**
+     * Proxy for the native selection object which understands how to walk up
+     * the DOM to find the containing row node and sort out which comes first.
+     *
+     * @param {hterm.ScrollPort} scrollPort The parent hterm.ScrollPort
+     * instance.
+     */
+    hterm.ScrollPort.Selection = function(scrollPort) {
   this.scrollPort_ = scrollPort;
 
   /**
@@ -9226,13 +9159,11 @@ hterm.ScrollPort.Selection.prototype.findFirstChild = function(
   var node = parent.firstChild;
 
   while (node) {
-    if (childAry.indexOf(node) != -1)
-      return node;
+    if (childAry.indexOf(node) != -1) return node;
 
     if (node.childNodes.length) {
       var rv = this.findFirstChild(node, childAry);
-      if (rv)
-        return rv;
+      if (rv) return rv;
     }
 
     node = node.nextSibling;
@@ -9280,8 +9211,7 @@ hterm.ScrollPort.Selection.prototype.sync = function() {
   this.isMultiline = null;
   this.isCollapsed = !selection || selection.isCollapsed;
 
-  if (this.isCollapsed)
-    return;
+  if (this.isCollapsed) return;
 
   var anchorRow = selection.anchorNode;
   while (anchorRow && !('rowIndex' in anchorRow)) {
@@ -9289,8 +9219,9 @@ hterm.ScrollPort.Selection.prototype.sync = function() {
   }
 
   if (!anchorRow) {
-    console.error('Selection anchor is not rooted in a row node: ' +
-                  selection.anchorNode.nodeName);
+    console.error(
+        'Selection anchor is not rooted in a row node: ' +
+        selection.anchorNode.nodeName);
     return;
   }
 
@@ -9300,8 +9231,9 @@ hterm.ScrollPort.Selection.prototype.sync = function() {
   }
 
   if (!focusRow) {
-    console.error('Selection focus is not rooted in a row node: ' +
-                  selection.focusNode.nodeName);
+    console.error(
+        'Selection focus is not rooted in a row node: ' +
+        selection.focusNode.nodeName);
     return;
   }
 
@@ -9324,8 +9256,7 @@ hterm.ScrollPort.Selection.prototype.sync = function() {
     var firstNode = this.findFirstChild(
         anchorRow, [selection.anchorNode, selection.focusNode]);
 
-    if (!firstNode)
-      throw new Error('Unexpected error syncing selection.');
+    if (!firstNode) throw new Error('Unexpected error syncing selection.');
 
     if (firstNode == selection.anchorNode) {
       anchorFirst();
@@ -9337,7 +9268,6 @@ hterm.ScrollPort.Selection.prototype.sync = function() {
   this.isMultiline = anchorRow.rowIndex != focusRow.rowIndex;
 };
 
-
 /**
  * Turn a div into this hterm.ScrollPort.
  */
@@ -9345,11 +9275,11 @@ hterm.ScrollPort.prototype.decorate = function(div) {
   this.div_ = div;
 
   this.iframe_ = div.ownerDocument.createElement('iframe');
-  this.iframe_.style.cssText = (
-      'border: 0;' +
-      'height: 100%;' +
-      'position: absolute;' +
-      'width: 100%');
+  this.iframe_.style.cssText =
+      ('border: 0;' +
+       'height: 100%;' +
+       'position: absolute;' +
+       'width: 100%');
 
   // Set the iframe src to # in FF.  Otherwise when the frame's
   // load event fires in FF it clears out the content of the iframe.
@@ -9358,19 +9288,19 @@ hterm.ScrollPort.prototype.decorate = function(div) {
 
   div.appendChild(this.iframe_);
 
-  this.iframe_.contentWindow.addEventListener('resize',
-                                              this.onResize_.bind(this));
+  this.iframe_.contentWindow.addEventListener(
+      'resize', this.onResize_.bind(this));
 
   var doc = this.document_ = this.iframe_.contentDocument;
-  doc.body.style.cssText = (
-      'margin: 0px;' +
-      'padding: 0px;' +
-      'height: 100%;' +
-      'width: 100%;' +
-      'overflow: hidden;' +
-      'cursor: text;' +
-      '-webkit-user-select: none;' +
-      '-moz-user-select: none;');
+  doc.body.style.cssText =
+      ('margin: 0px;' +
+       'padding: 0px;' +
+       'height: 100%;' +
+       'width: 100%;' +
+       'overflow: hidden;' +
+       'cursor: text;' +
+       '-webkit-user-select: none;' +
+       '-moz-user-select: none;');
 
   var style = doc.createElement('style');
   style.textContent = 'x-row {}';
@@ -9388,16 +9318,16 @@ hterm.ScrollPort.prototype.decorate = function(div) {
   this.screen_ = doc.createElement('x-screen');
   this.screen_.setAttribute('role', 'textbox');
   this.screen_.setAttribute('tabindex', '-1');
-  this.screen_.style.cssText = (
-      'display: block;' +
-      'font-family: monospace;' +
-      'font-size: 15px;' +
-      'font-variant-ligatures: none;' +
-      'height: 100%;' +
-      'overflow-y: scroll; overflow-x: hidden;' +
-      'white-space: pre;' +
-      'width: 100%;' +
-      'outline: none !important');
+  this.screen_.style.cssText =
+      ('display: block;' +
+       'font-family: monospace;' +
+       'font-size: 15px;' +
+       'font-variant-ligatures: none;' +
+       'height: 100%;' +
+       'overflow-y: scroll; overflow-x: hidden;' +
+       'white-space: pre;' +
+       'width: 100%;' +
+       'outline: none !important');
 
   doc.body.appendChild(this.screen_);
 
@@ -9412,20 +9342,20 @@ hterm.ScrollPort.prototype.decorate = function(div) {
 
   // This is the main container for the fixed rows.
   this.rowNodes_ = doc.createElement('div');
-  this.rowNodes_.style.cssText = (
-      'display: block;' +
-      'position: fixed;' +
-      'overflow: hidden;' +
-      '-webkit-user-select: text;' +
-      '-moz-user-select: text;');
+  this.rowNodes_.style.cssText =
+      ('display: block;' +
+       'position: fixed;' +
+       'overflow: hidden;' +
+       '-webkit-user-select: text;' +
+       '-moz-user-select: text;');
   this.screen_.appendChild(this.rowNodes_);
 
   // Two nodes to hold offscreen text during the copy event.
   this.topSelectBag_ = doc.createElement('x-select-bag');
-  this.topSelectBag_.style.cssText = (
-      'display: block;' +
-      'overflow: hidden;' +
-      'white-space: pre;');
+  this.topSelectBag_.style.cssText =
+      ('display: block;' +
+       'overflow: hidden;' +
+       'white-space: pre;');
 
   this.bottomSelectBag_ = this.topSelectBag_.cloneNode();
 
@@ -9461,24 +9391,23 @@ hterm.ScrollPort.prototype.decorate = function(div) {
   this.svg_ = this.div_.ownerDocument.createElementNS(xmlns, 'svg');
   this.svg_.setAttribute('xmlns', xmlns);
   this.svg_.setAttribute('version', '1.1');
-  this.svg_.style.cssText = (
-      'position: absolute;' +
-      'top: 0;' +
-      'left: 0;' +
-      'visibility: hidden');
-
+  this.svg_.style.cssText =
+      ('position: absolute;' +
+       'top: 0;' +
+       'left: 0;' +
+       'visibility: hidden');
 
   // We send focus to this element just before a paste happens, so we can
   // capture the pasted text and forward it on to someone who cares.
   this.pasteTarget_ = doc.createElement('textarea');
   this.pasteTarget_.setAttribute('tabindex', '-1');
-  this.pasteTarget_.style.cssText = (
-    'position: absolute;' +
-    'height: 1px;' +
-    'width: 1px;' +
-    'left: 0px; ' +
-    'bottom: 0px;' +
-    'opacity: 0');
+  this.pasteTarget_.style.cssText =
+      ('position: absolute;' +
+       'height: 1px;' +
+       'width: 1px;' +
+       'left: 0px; ' +
+       'bottom: 0px;' +
+       'opacity: 0');
   this.pasteTarget_.contentEditable = true;
 
   this.screen_.appendChild(this.pasteTarget_);
@@ -9584,7 +9513,7 @@ hterm.ScrollPort.prototype.getScreenSize = function() {
  * This the widget width minus scrollbar width.
  */
 hterm.ScrollPort.prototype.getScreenWidth = function() {
-  return this.getScreenSize().width ;
+  return this.getScreenSize().width;
 };
 
 /**
@@ -9659,14 +9588,13 @@ hterm.ScrollPort.prototype.invalidate = function() {
 };
 
 hterm.ScrollPort.prototype.scheduleInvalidate = function() {
-  if (this.timeouts_.invalidate)
-    return;
+  if (this.timeouts_.invalidate) return;
 
   var self = this;
-  this.timeouts_.invalidate = setTimeout(function () {
-      delete self.timeouts_.invalidate;
-      self.invalidate();
-    }, 0);
+  this.timeouts_.invalidate = setTimeout(function() {
+    delete self.timeouts_.invalidate;
+    self.invalidate();
+  }, 0);
 };
 
 /**
@@ -9694,20 +9622,21 @@ hterm.ScrollPort.prototype.getFontSize = function() {
 hterm.ScrollPort.prototype.measureCharacterSize = function(opt_weight) {
   // Number of lines used to average the height of a single character.
   var numberOfLines = 100;
-  var rulerSingleLineContents = ('XXXXXXXXXXXXXXXXXXXX' +
-                                 'XXXXXXXXXXXXXXXXXXXX' +
-                                 'XXXXXXXXXXXXXXXXXXXX' +
-                                 'XXXXXXXXXXXXXXXXXXXX' +
-                                 'XXXXXXXXXXXXXXXXXXXX');
+  var rulerSingleLineContents =
+      ('XXXXXXXXXXXXXXXXXXXX' +
+       'XXXXXXXXXXXXXXXXXXXX' +
+       'XXXXXXXXXXXXXXXXXXXX' +
+       'XXXXXXXXXXXXXXXXXXXX' +
+       'XXXXXXXXXXXXXXXXXXXX');
   if (!this.ruler_) {
     this.ruler_ = this.document_.createElement('div');
-    this.ruler_.style.cssText = (
-        'position: absolute;' +
-        'top: 0;' +
-        'left: 0;' +
-        'visibility: hidden;' +
-        'height: auto !important;' +
-        'width: auto !important;');
+    this.ruler_.style.cssText =
+        ('position: absolute;' +
+         'top: 0;' +
+         'left: 0;' +
+         'visibility: hidden;' +
+         'height: auto !important;' +
+         'width: auto !important;');
 
     // We need to put the text in a span to make the size calculation
     // work properly in Firefox
@@ -9730,8 +9659,9 @@ hterm.ScrollPort.prototype.measureCharacterSize = function(opt_weight) {
   this.rowNodes_.appendChild(this.ruler_);
   var rulerSize = hterm.getClientSize(this.rulerSpan_);
 
-  var size = new hterm.Size(rulerSize.width / rulerSingleLineContents.length,
-                            rulerSize.height / numberOfLines);
+  var size = new hterm.Size(
+      rulerSize.width / rulerSingleLineContents.length,
+      rulerSize.height / numberOfLines);
 
   this.ruler_.appendChild(this.rulerBaseline_);
   size.baseline = this.rulerBaseline_.offsetTop;
@@ -9767,7 +9697,7 @@ hterm.ScrollPort.prototype.syncCharacterSize = function() {
     // elements are visible.
     this.document_.body.style.paddingTop =
         this.document_.body.style.paddingBottom =
-        3 * this.characterSize.height + 'px';
+            3 * this.characterSize.height + 'px';
   }
 };
 
@@ -9776,19 +9706,17 @@ hterm.ScrollPort.prototype.syncCharacterSize = function() {
  * dimensions of the 'x-screen'.
  */
 hterm.ScrollPort.prototype.resize = function() {
-  this.currentScrollbarWidthPx = hterm.getClientWidth(this.screen_) -
-    this.screen_.clientWidth;
+  this.currentScrollbarWidthPx =
+      hterm.getClientWidth(this.screen_) - this.screen_.clientWidth;
 
   this.syncScrollHeight();
   this.syncRowNodesDimensions_();
 
   var self = this;
-  this.publish(
-      'resize', { scrollPort: this },
-      function() {
-        self.scrollRowToBottom(self.rowProvider_.getRowCount());
-        self.scheduleRedraw();
-      });
+  this.publish('resize', {scrollPort: this}, function() {
+    self.scrollRowToBottom(self.rowProvider_.getRowCount());
+    self.scheduleRedraw();
+  });
 };
 
 /**
@@ -9802,8 +9730,8 @@ hterm.ScrollPort.prototype.syncRowNodesDimensions_ = function() {
 
   // We don't want to show a partial row because it would be distracting
   // in a terminal, so we floor any fractional row count.
-  this.visibleRowCount = lib.f.smartFloorDivide(
-      screenSize.height, this.characterSize.height);
+  this.visibleRowCount =
+      lib.f.smartFloorDivide(screenSize.height, this.characterSize.height);
 
   // Then compute the height of our integral number of rows.
   var visibleRowsHeight = this.visibleRowCount * this.characterSize.height;
@@ -9815,7 +9743,6 @@ hterm.ScrollPort.prototype.syncRowNodesDimensions_ = function() {
   this.visibleRowBottomMargin = screenSize.height - visibleRowsHeight;
 
   this.topFold_.style.marginBottom = this.visibleRowTopMargin + 'px';
-
 
   var topFoldOffset = 0;
   var node = this.topFold_.previousSibling;
@@ -9834,11 +9761,9 @@ hterm.ScrollPort.prototype.syncRowNodesDimensions_ = function() {
 hterm.ScrollPort.prototype.syncScrollHeight = function() {
   // Resize the scroll area to appear as though it contains every row.
   this.lastRowCount_ = this.rowProvider_.getRowCount();
-  this.scrollArea_.style.height = (this.characterSize.height *
-                                   this.lastRowCount_ +
-                                   this.visibleRowTopMargin +
-                                   this.visibleRowBottomMargin +
-                                   'px');
+  this.scrollArea_.style.height =
+      (this.characterSize.height * this.lastRowCount_ +
+       this.visibleRowTopMargin + this.visibleRowBottomMargin + 'px');
 };
 
 /**
@@ -9848,14 +9773,13 @@ hterm.ScrollPort.prototype.syncScrollHeight = function() {
  * run only one redraw occurs.
  */
 hterm.ScrollPort.prototype.scheduleRedraw = function() {
-  if (this.timeouts_.redraw)
-    return;
+  if (this.timeouts_.redraw) return;
 
   var self = this;
-  this.timeouts_.redraw = setTimeout(function () {
-      delete self.timeouts_.redraw;
-      self.redraw_();
-    }, 0);
+  this.timeouts_.redraw = setTimeout(function() {
+    delete self.timeouts_.redraw;
+    self.redraw_();
+  }, 0);
 };
 
 /**
@@ -9888,8 +9812,8 @@ hterm.ScrollPort.prototype.redraw_ = function() {
   this.previousRowNodeCache_ = this.currentRowNodeCache_;
   this.currentRowNodeCache_ = null;
 
-  this.isScrolledEnd = (
-    this.getTopRowIndex() + this.visibleRowCount >= this.lastRowCount_);
+  this.isScrolledEnd =
+      (this.getTopRowIndex() + this.visibleRowCount >= this.lastRowCount_);
 };
 
 /**
@@ -9920,23 +9844,22 @@ hterm.ScrollPort.prototype.drawTopFold_ = function(topRowIndex) {
       this.selection.endRow.rowIndex >= topRowIndex) {
     // Only the startRow is above the fold.
     if (this.selection.startRow.nextSibling != this.topFold_)
-      this.rowNodes_.insertBefore(this.topFold_,
-                                  this.selection.startRow.nextSibling);
+      this.rowNodes_.insertBefore(
+          this.topFold_, this.selection.startRow.nextSibling);
   } else {
     // Both rows are above the fold.
     if (this.selection.endRow.nextSibling != this.topFold_) {
-      this.rowNodes_.insertBefore(this.topFold_,
-                                  this.selection.endRow.nextSibling);
+      this.rowNodes_.insertBefore(
+          this.topFold_, this.selection.endRow.nextSibling);
     }
 
     // Trim any intermediate lines.
-    while (this.selection.startRow.nextSibling !=
-           this.selection.endRow) {
+    while (this.selection.startRow.nextSibling != this.selection.endRow) {
       this.rowNodes_.removeChild(this.selection.startRow.nextSibling);
     }
   }
 
-  while(this.rowNodes_.firstChild != this.selection.startRow) {
+  while (this.rowNodes_.firstChild != this.selection.startRow) {
     this.rowNodes_.removeChild(this.rowNodes_.firstChild);
   }
 };
@@ -9969,23 +9892,20 @@ hterm.ScrollPort.prototype.drawBottomFold_ = function(bottomRowIndex) {
       this.selection.startRow.rowIndex <= bottomRowIndex) {
     // Only the endRow is below the fold.
     if (this.bottomFold_.nextSibling != this.selection.endRow)
-      this.rowNodes_.insertBefore(this.bottomFold_,
-                                  this.selection.endRow);
+      this.rowNodes_.insertBefore(this.bottomFold_, this.selection.endRow);
   } else {
     // Both rows are below the fold.
     if (this.bottomFold_.nextSibling != this.selection.startRow) {
-      this.rowNodes_.insertBefore(this.bottomFold_,
-                                  this.selection.startRow);
+      this.rowNodes_.insertBefore(this.bottomFold_, this.selection.startRow);
     }
 
     // Trim any intermediate lines.
-    while (this.selection.startRow.nextSibling !=
-           this.selection.endRow) {
+    while (this.selection.startRow.nextSibling != this.selection.endRow) {
       this.rowNodes_.removeChild(this.selection.startRow.nextSibling);
     }
   }
 
-  while(this.rowNodes_.lastChild != this.selection.endRow) {
+  while (this.rowNodes_.lastChild != this.selection.endRow) {
     this.rowNodes_.removeChild(this.rowNodes_.lastChild);
   }
 };
@@ -10012,8 +9932,7 @@ hterm.ScrollPort.prototype.drawVisibleRows_ = function(
   // targetNode.  Throws on failure.
   function removeUntilNode(currentNode, targetNode) {
     while (currentNode != targetNode) {
-      if (!currentNode)
-        throw 'Did not encounter target node';
+      if (!currentNode) throw 'Did not encounter target node';
 
       if (currentNode == self.bottomFold_)
         throw 'Encountered bottom fold before target node';
@@ -10032,8 +9951,8 @@ hterm.ScrollPort.prototype.drawVisibleRows_ = function(
   // The node we're examining during the current iteration.
   var node = this.topFold_.nextSibling;
 
-  var targetDrawCount = Math.min(this.visibleRowCount,
-                                 this.rowProvider_.getRowCount());
+  var targetDrawCount =
+      Math.min(this.visibleRowCount, this.rowProvider_.getRowCount());
 
   for (var drawCount = 0; drawCount < targetDrawCount; drawCount++) {
     var rowIndex = topRowIndex + drawCount;
@@ -10042,7 +9961,7 @@ hterm.ScrollPort.prototype.drawVisibleRows_ = function(
       // We've hit the bottom fold, we need to insert a new row.
       var newNode = this.fetchRowNode_(rowIndex);
       if (!newNode) {
-        console.log("Couldn't fetch row index: " + rowIndex);
+        console.log('Couldn\'t fetch row index: ' + rowIndex);
         break;
       }
 
@@ -10077,7 +9996,7 @@ hterm.ScrollPort.prototype.drawVisibleRows_ = function(
       // yet.  Insert a new row instead.
       var newNode = this.fetchRowNode_(rowIndex);
       if (!newNode) {
-        console.log("Couldn't fetch row index: " + rowIndex);
+        console.log('Couldn\'t fetch row index: ' + rowIndex);
         break;
       }
 
@@ -10089,7 +10008,7 @@ hterm.ScrollPort.prototype.drawVisibleRows_ = function(
     // it with the node that should be here.
     var newNode = this.fetchRowNode_(rowIndex);
     if (!newNode) {
-      console.log("Couldn't fetch row index: " + rowIndex);
+      console.log('Couldn\'t fetch row index: ' + rowIndex);
       break;
     }
 
@@ -10099,14 +10018,12 @@ hterm.ScrollPort.prototype.drawVisibleRows_ = function(
     }
 
     this.rowNodes_.insertBefore(newNode, node);
-    if (!newNode.nextSibling)
-      debugger;
+    if (!newNode.nextSibling) debugger;
     this.rowNodes_.removeChild(node);
     node = newNode.nextSibling;
   }
 
-  if (node != this.bottomFold_)
-    removeUntilNode(node, bottomFold);
+  if (node != this.bottomFold_) removeUntilNode(node, bottomFold);
 };
 
 /**
@@ -10154,8 +10071,7 @@ hterm.ScrollPort.prototype.fetchRowNode_ = function(rowIndex) {
     node = this.rowProvider_.getRowNode(rowIndex);
   }
 
-  if (this.currentRowNodeCache_)
-    this.cacheRowNode_(node);
+  if (this.currentRowNodeCache_) this.cacheRowNode_(node);
 
   return node;
 };
@@ -10203,9 +10119,9 @@ hterm.ScrollPort.prototype.selectAll = function() {
  * Return the maximum scroll position in pixels.
  */
 hterm.ScrollPort.prototype.getScrollMax_ = function(e) {
-  return (hterm.getClientHeight(this.scrollArea_) +
-          this.visibleRowTopMargin + this.visibleRowBottomMargin -
-          hterm.getClientHeight(this.screen_));
+  return (
+      hterm.getClientHeight(this.scrollArea_) + this.visibleRowTopMargin +
+      this.visibleRowBottomMargin - hterm.getClientHeight(this.screen_));
 };
 
 /**
@@ -10216,18 +10132,15 @@ hterm.ScrollPort.prototype.getScrollMax_ = function(e) {
 hterm.ScrollPort.prototype.scrollRowToTop = function(rowIndex) {
   this.syncScrollHeight();
 
-  this.isScrolledEnd = (
-    rowIndex + this.visibleRowCount >= this.lastRowCount_);
+  this.isScrolledEnd = (rowIndex + this.visibleRowCount >= this.lastRowCount_);
 
-  var scrollTop = rowIndex * this.characterSize.height +
-      this.visibleRowTopMargin;
+  var scrollTop =
+      rowIndex * this.characterSize.height + this.visibleRowTopMargin;
 
   var scrollMax = this.getScrollMax_();
-  if (scrollTop > scrollMax)
-    scrollTop = scrollMax;
+  if (scrollTop > scrollMax) scrollTop = scrollMax;
 
-  if (this.screen_.scrollTop == scrollTop)
-    return;
+  if (this.screen_.scrollTop == scrollTop) return;
 
   this.screen_.scrollTop = scrollTop;
   this.scheduleRedraw();
@@ -10241,18 +10154,15 @@ hterm.ScrollPort.prototype.scrollRowToTop = function(rowIndex) {
 hterm.ScrollPort.prototype.scrollRowToBottom = function(rowIndex) {
   this.syncScrollHeight();
 
-  this.isScrolledEnd = (
-    rowIndex + this.visibleRowCount >= this.lastRowCount_);
+  this.isScrolledEnd = (rowIndex + this.visibleRowCount >= this.lastRowCount_);
 
   var scrollTop = rowIndex * this.characterSize.height +
       this.visibleRowTopMargin + this.visibleRowBottomMargin;
   scrollTop -= this.visibleRowCount * this.characterSize.height;
 
-  if (scrollTop < 0)
-    scrollTop = 0;
+  if (scrollTop < 0) scrollTop = 0;
 
-  if (this.screen_.scrollTop == scrollTop)
-    return;
+  if (this.screen_.scrollTop == scrollTop) return;
 
   this.screen_.scrollTop = scrollTop;
 };
@@ -10297,7 +10207,7 @@ hterm.ScrollPort.prototype.onScroll_ = function(e) {
   }
 
   this.redraw_();
-  this.publish('scroll', { scrollPort: this });
+  this.publish('scroll', {scrollPort: this});
 };
 
 /**
@@ -10319,8 +10229,7 @@ hterm.ScrollPort.prototype.onScrollWheel = function(e) {};
 hterm.ScrollPort.prototype.onScrollWheel_ = function(e) {
   this.onScrollWheel(e);
 
-  if (e.defaultPrevented)
-    return;
+  if (e.defaultPrevented) return;
 
   // In FF, the event is DOMMouseScroll and puts the scroll pixel delta in the
   // 'detail' field of the event.  It also flips the mapping of which direction
@@ -10329,12 +10238,10 @@ hterm.ScrollPort.prototype.onScrollWheel_ = function(e) {
   delta *= this.scrollWheelMultiplier_;
 
   var top = this.screen_.scrollTop - delta;
-  if (top < 0)
-    top = 0;
+  if (top < 0) top = 0;
 
   var scrollMax = this.getScrollMax_();
-  if (top > scrollMax)
-    top = scrollMax;
+  if (top > scrollMax) top = scrollMax;
 
   if (top != this.screen_.scrollTop) {
     // Moving scrollTop causes a scroll event, which triggers the redraw.
@@ -10365,7 +10272,7 @@ hterm.ScrollPort.prototype.onResize_ = function(e) {
  * Clients may call event.preventDefault() if they want to keep the scrollport
  * from also handling the events.
  */
-hterm.ScrollPort.prototype.onCopy = function(e) { };
+hterm.ScrollPort.prototype.onCopy = function(e) {};
 
 /**
  * Handler for copy-to-clipboard events.
@@ -10378,8 +10285,7 @@ hterm.ScrollPort.prototype.onCopy = function(e) { };
 hterm.ScrollPort.prototype.onCopy_ = function(e) {
   this.onCopy(e);
 
-  if (e.defaultPrevented)
-    return;
+  if (e.defaultPrevented) return;
 
   this.resetSelectBags_();
   this.selection.sync();
@@ -10406,8 +10312,8 @@ hterm.ScrollPort.prototype.onCopy_ = function(e) {
 
     this.topSelectBag_.textContent = this.rowProvider_.getRowsText(
         this.selection.startRow.rowIndex + 1, endBackfillIndex);
-    this.rowNodes_.insertBefore(this.topSelectBag_,
-                                this.selection.startRow.nextSibling);
+    this.rowNodes_.insertBefore(
+        this.topSelectBag_, this.selection.startRow.nextSibling);
     this.syncRowNodesDimensions_();
   }
 
@@ -10434,13 +10340,11 @@ hterm.ScrollPort.prototype.onCopy_ = function(e) {
  * FF a content editable element must be focused before the paste event.
  */
 hterm.ScrollPort.prototype.onBodyKeyDown_ = function(e) {
-  if (!this.ctrlVPaste)
-    return;
+  if (!this.ctrlVPaste) return;
 
   var key = String.fromCharCode(e.which);
   var lowerKey = key.toLowerCase();
-  if ((e.ctrlKey || e.metaKey) && lowerKey == "v")
-    this.pasteTarget_.focus();
+  if ((e.ctrlKey || e.metaKey) && lowerKey == 'v') this.pasteTarget_.focus();
 };
 
 /**
@@ -10451,10 +10355,10 @@ hterm.ScrollPort.prototype.onPaste_ = function(e) {
 
   var self = this;
   setTimeout(function() {
-      self.publish('paste', { text: self.pasteTarget_.value });
-      self.pasteTarget_.value = '';
-      self.screen_.focus();
-    }, 0);
+    self.publish('paste', {text: self.pasteTarget_.value});
+    self.pasteTarget_.value = '';
+    self.screen_.focus();
+  }, 0);
 };
 
 /**
@@ -10486,10 +10390,11 @@ hterm.ScrollPort.prototype.setScrollWheelMoveMultipler = function(multiplier) {
 
 'use strict';
 
-lib.rtdep('lib.colors', 'lib.PreferenceManager', 'lib.resource', 'lib.wc',
-          'lib.f', 'hterm.Keyboard', 'hterm.Options', 'hterm.PreferenceManager',
-          'hterm.Screen', 'hterm.ScrollPort', 'hterm.Size',
-          'hterm.TextAttributes', 'hterm.VT');
+lib.rtdep(
+    'lib.colors', 'lib.PreferenceManager', 'lib.resource', 'lib.wc', 'lib.f',
+    'hterm.Keyboard', 'hterm.Options', 'hterm.PreferenceManager',
+    'hterm.Screen', 'hterm.ScrollPort', 'hterm.Size', 'hterm.TextAttributes',
+    'hterm.VT');
 
 /**
  * Constructor for the Terminal class.
@@ -10627,8 +10532,9 @@ hterm.Terminal = function(opt_profileId) {
   this.realizeSize_(80, 24);
   this.setDefaultTabStops();
 
-  this.setProfile(opt_profileId || 'default',
-                  function() { this.onTerminalReady(); }.bind(this));
+  this.setProfile(opt_profileId || 'default', function() {
+    this.onTerminalReady();
+  }.bind(this));
 };
 
 /**
@@ -10647,7 +10553,7 @@ hterm.Terminal.cursorShape = {
  * The terminal initialization is asynchronous, and shouldn't be used before
  * this method is called.
  */
-hterm.Terminal.prototype.onTerminalReady = function() { };
+hterm.Terminal.prototype.onTerminalReady = function() {};
 
 /**
  * Default tab with of 8 to match xterm.
@@ -10670,8 +10576,7 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
 
   var terminal = this;
 
-  if (this.prefs_)
-    this.prefs_.deactivate();
+  if (this.prefs_) this.prefs_.deactivate();
 
   this.prefs_ = new hterm.PreferenceManager(this.profileId_);
   this.prefs_.addObservers(null, {
@@ -10688,8 +10593,7 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
         v = 'none';
       }
 
-      if (!/^(none|ctrl-alt|left-alt|right-alt)$/.test(v))
-        v = 'none';
+      if (!/^(none|ctrl-alt|left-alt|right-alt)$/.test(v)) v = 'none';
 
       terminal.keyboard.altGrMode = v;
     },
@@ -10703,8 +10607,7 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
     },
 
     'alt-sends-what': function(v) {
-      if (!/^(escape|8-bit|browser-key)$/.test(v))
-        v = 'escape';
+      if (!/^(escape|8-bit|browser-key)$/.test(v)) v = 'escape';
 
       terminal.keyboard.altSendsWhat = v;
     },
@@ -10712,8 +10615,8 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
     'audible-bell-sound': function(v) {
       var ary = v.match(/^lib-resource:(\S+)/);
       if (ary) {
-        terminal.bellAudio_.setAttribute('src',
-                                         lib.resource.getDataUrl(ary[1]));
+        terminal.bellAudio_.setAttribute(
+            'src', lib.resource.getDataUrl(ary[1]));
       } else {
         terminal.bellAudio_.setAttribute('src', v);
       }
@@ -10730,8 +10633,9 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
           //
           // A way of working around this would be to display a dialog in the
           // terminal with a "click-to-request-permission" button.
-          console.warn('desktop-notification-bell is true but we do not have ' +
-                       'permission to display notifications.');
+          console.warn(
+              'desktop-notification-bell is true but we do not have ' +
+              'permission to display notifications.');
         }
       } else {
         terminal.desktopNotificationBell_ = false;
@@ -10760,8 +10664,9 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
 
     'character-map-overrides': function(v) {
       if (!(v == null || v instanceof Object)) {
-        console.warn('Preference character-map-modifications is not an ' +
-                     'object: ' + v);
+        console.warn(
+            'Preference character-map-modifications is not an ' +
+            'object: ' + v);
         return;
       }
 
@@ -10779,16 +10684,15 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
     },
 
     'cursor-blink-cycle': function(v) {
-        if (v instanceof Array &&
-            typeof v[0] == 'number' &&
-            typeof v[1] == 'number') {
-          terminal.cursorBlinkCycle_ = v;
-        } else if (typeof v == 'number') {
-          terminal.cursorBlinkCycle_ = [v, v];
-        } else {
-          // Fast blink indicates an error.
-          terminal.cursorBlinkCycle_ = [100, 100];
-        }
+      if (v instanceof Array && typeof v[0] == 'number' &&
+          typeof v[1] == 'number') {
+        terminal.cursorBlinkCycle_ = v;
+      } else if (typeof v == 'number') {
+        terminal.cursorBlinkCycle_ = [v, v];
+      } else {
+        // Fast blink indicates an error.
+        terminal.cursorBlinkCycle_ = [100, 100];
+      }
     },
 
     'cursor-color': function(v) {
@@ -10797,8 +10701,9 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
 
     'color-palette-overrides': function(v) {
       if (!(v == null || v instanceof Object || v instanceof Array)) {
-        console.warn('Preference color-palette-overrides is not an array or ' +
-                     'object: ' + v);
+        console.warn(
+            'Preference color-palette-overrides is not an array or ' +
+            'object: ' + v);
         return;
       }
 
@@ -10814,8 +10719,7 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
 
           if (v[i]) {
             var rgb = lib.colors.normalizeCSS(v[i]);
-            if (rgb)
-              lib.colors.colorPalette[i] = rgb;
+            if (rgb) lib.colors.colorPalette[i] = rgb;
           }
         }
       }
@@ -10901,8 +10805,7 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
     'keybindings': function(v) {
       terminal.keyboard.bindings.clear();
 
-      if (!v)
-        return;
+      if (!v) return;
 
       if (!(v instanceof Object)) {
         console.error('Error in keybindings preference: Expected object');
@@ -10977,12 +10880,12 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
     },
 
     'receive-encoding': function(v) {
-       if (!(/^(utf-8|raw)$/).test(v)) {
-         console.warn('Invalid value for "receive-encoding": ' + v);
-         v = 'utf-8';
-       }
+      if (!(/^(utf-8|raw)$/).test(v)) {
+        console.warn('Invalid value for "receive-encoding": ' + v);
+        v = 'utf-8';
+      }
 
-       terminal.vt.characterEncoding = v;
+      terminal.vt.characterEncoding = v;
     },
 
     'scroll-on-keystroke': function(v) {
@@ -11002,12 +10905,12 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
     },
 
     'send-encoding': function(v) {
-       if (!(/^(utf-8|raw)$/).test(v)) {
-         console.warn('Invalid value for "send-encoding": ' + v);
-         v = 'utf-8';
-       }
+      if (!(/^(utf-8|raw)$/).test(v)) {
+        console.warn('Invalid value for "send-encoding": ' + v);
+        v = 'utf-8';
+      }
 
-       terminal.keyboard.characterEncoding = v;
+      terminal.keyboard.characterEncoding = v;
     },
 
     'shift-insert-paste': function(v) {
@@ -11022,11 +10925,9 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
   this.prefs_.readStorage(function() {
     this.prefs_.notifyAll();
 
-    if (opt_callback)
-      opt_callback();
+    if (opt_callback) opt_callback();
   }.bind(this));
 };
-
 
 /**
  * Returns the preferences manager used for configuring this terminal.
@@ -11144,21 +11045,19 @@ hterm.Terminal.prototype.getForegroundColor = function() {
  */
 hterm.Terminal.prototype.runCommandClass = function(commandClass, argString) {
   var environment = this.prefs_.get('environment');
-  if (typeof environment != 'object' || environment == null)
-    environment = {};
+  if (typeof environment != 'object' || environment == null) environment = {};
 
   var self = this;
-  this.command = new commandClass(
-      { argString: argString || '',
-        io: this.io.push(),
-        environment: environment,
-        onExit: function(code) {
-          self.io.pop();
-          self.uninstallKeyboard();
-          if (self.prefs_.get('close-on-exit'))
-              window.close();
-        }
-      });
+  this.command = new commandClass({
+    argString: argString || '',
+    io: this.io.push(),
+    environment: environment,
+    onExit: function(code) {
+      self.io.pop();
+      self.uninstallKeyboard();
+      if (self.prefs_.get('close-on-exit')) window.close();
+    }
+  });
 
   this.installKeyboard();
   this.command.run();
@@ -11179,34 +11078,35 @@ hterm.Terminal.prototype.isPrimaryScreen = function() {
  * This will prevent the browser from seeing any keystrokes sent to the
  * terminal.
  */
-hterm.Terminal.prototype.installKeyboard = function() {
+hterm.Terminal.prototype.installKeyboard =
+    function() {
   this.keyboard.installKeyboard(this.scrollPort_.getDocument().body);
 }
 
-/**
- * Uninstall the keyboard handler for this terminal.
- */
-hterm.Terminal.prototype.uninstallKeyboard = function() {
+    /**
+     * Uninstall the keyboard handler for this terminal.
+     */
+    hterm.Terminal.prototype.uninstallKeyboard =
+        function() {
   this.keyboard.installKeyboard(null);
 }
 
-/**
- * Set the font size for this terminal.
- *
- * Call setFontSize(0) to reset to the default font size.
- *
- * This function does not modify the font-size preference.
- *
- * @param {number} px The desired font size, in pixels.
- */
-hterm.Terminal.prototype.setFontSize = function(px) {
-  if (px === 0)
-    px = this.prefs_.get('font-size');
+        /**
+         * Set the font size for this terminal.
+         *
+         * Call setFontSize(0) to reset to the default font size.
+         *
+         * This function does not modify the font-size preference.
+         *
+         * @param {number} px The desired font size, in pixels.
+         */
+        hterm.Terminal.prototype.setFontSize = function(px) {
+  if (px === 0) px = this.prefs_.get('font-size');
 
   this.scrollPort_.setFontSize(px);
   if (this.wcCssRule_) {
-    this.wcCssRule_.style.width = this.scrollPort_.characterSize.width * 2 +
-        'px';
+    this.wcCssRule_.style.width =
+        this.scrollPort_.characterSize.width * 2 + 'px';
   }
 };
 
@@ -11232,8 +11132,8 @@ hterm.Terminal.prototype.getFontFamily = function() {
  * Set the CSS "font-family" for this terminal.
  */
 hterm.Terminal.prototype.syncFontFamily = function() {
-  this.scrollPort_.setFontFamily(this.prefs_.get('font-family'),
-                                 this.prefs_.get('font-smoothing'));
+  this.scrollPort_.setFontFamily(
+      this.prefs_.get('font-family'), this.prefs_.get('font-smoothing'));
   this.syncBoldSafeState();
 };
 
@@ -11273,9 +11173,9 @@ hterm.Terminal.prototype.syncBoldSafeState = function() {
 
   var isBoldSafe = normalSize.equals(boldSize);
   if (!isBoldSafe) {
-    console.warn('Bold characters disabled: Size of bold weight differs ' +
-                 'from normal.  Font family is: ' +
-                 this.scrollPort_.getFontFamily());
+    console.warn(
+        'Bold characters disabled: Size of bold weight differs ' +
+        'from normal.  Font family is: ' + this.scrollPort_.getFontFamily());
   }
 
   this.primaryScreen_.textAttributes.enableBold = isBoldSafe;
@@ -11345,8 +11245,7 @@ hterm.Terminal.prototype.restoreCursor = function(cursor) {
   var row = lib.f.clamp(cursor.row, 0, this.screenSize.height - 1);
   var column = lib.f.clamp(cursor.column, 0, this.screenSize.width - 1);
   this.screen_.setCursorPosition(row, column);
-  if (cursor.column > column ||
-      cursor.column == column && cursor.overflow) {
+  if (cursor.column > column || cursor.column == column && cursor.overflow) {
     this.screen_.cursorPosition.overflow = true;
   }
 };
@@ -11363,34 +11262,38 @@ hterm.Terminal.prototype.clearCursorOverflow = function() {
  *
  * @param {string} shape The shape to set.
  */
-hterm.Terminal.prototype.setCursorShape = function(shape) {
+hterm.Terminal.prototype.setCursorShape =
+    function(shape) {
   this.cursorShape_ = shape;
   this.restyleCursor_();
 }
 
-/**
- * Get the cursor shape
- *
- * @return {string}
- */
-hterm.Terminal.prototype.getCursorShape = function() {
+    /**
+     * Get the cursor shape
+     *
+     * @return {string}
+     */
+    hterm.Terminal.prototype.getCursorShape =
+        function() {
   return this.cursorShape_;
 }
 
-/**
- * Set the width of the terminal, resizing the UI to match.
- *
- * @param {number} columnCount
- */
-hterm.Terminal.prototype.setWidth = function(columnCount) {
+        /**
+         * Set the width of the terminal, resizing the UI to match.
+         *
+         * @param {number} columnCount
+         */
+        hterm.Terminal.prototype.setWidth = function(columnCount) {
   if (columnCount == null) {
     this.div_.style.width = '100%';
     return;
   }
 
-  this.div_.style.width = Math.ceil(
-      this.scrollPort_.characterSize.width *
-      columnCount + this.scrollPort_.currentScrollbarWidthPx) + 'px';
+  this.div_.style.width =
+      Math.ceil(
+          this.scrollPort_.characterSize.width * columnCount +
+          this.scrollPort_.currentScrollbarWidthPx) +
+      'px';
   this.realizeSize_(columnCount, this.screenSize.height);
   this.scheduleSyncCursorPosition_();
 };
@@ -11419,11 +11322,9 @@ hterm.Terminal.prototype.setHeight = function(rowCount) {
  * @param {number} rowCount The number of rows.
  */
 hterm.Terminal.prototype.realizeSize_ = function(columnCount, rowCount) {
-  if (columnCount != this.screenSize.width)
-    this.realizeWidth_(columnCount);
+  if (columnCount != this.screenSize.width) this.realizeWidth_(columnCount);
 
-  if (rowCount != this.screenSize.height)
-    this.realizeHeight_(rowCount);
+  if (rowCount != this.screenSize.height) this.realizeHeight_(rowCount);
 
   // Send new terminal size to plugin.
   this.io.onTerminalResize_(columnCount, rowCount);
@@ -11456,8 +11357,7 @@ hterm.Terminal.prototype.realizeWidth_ = function(columnCount) {
       this.setDefaultTabStops(this.screenSize.width - deltaColumns);
   } else {
     for (var i = this.tabStops_.length - 1; i >= 0; i--) {
-      if (this.tabStops_[i] < columnCount)
-        break;
+      if (this.tabStops_[i] < columnCount) break;
 
       this.tabStops_.pop();
     }
@@ -11494,11 +11394,9 @@ hterm.Terminal.prototype.realizeHeight_ = function(rowCount) {
     deltaRows *= -1;
     while (deltaRows) {
       var lastRow = this.getRowCount() - 1;
-      if (lastRow - this.scrollbackRows_.length == cursor.row)
-        break;
+      if (lastRow - this.scrollbackRows_.length == cursor.row) break;
 
-      if (this.getRowText(lastRow))
-        break;
+      if (this.getRowText(lastRow)) break;
 
       this.screen_.popRow();
       deltaRows--;
@@ -11522,8 +11420,7 @@ hterm.Terminal.prototype.realizeHeight_ = function(rowCount) {
       cursor.row += scrollbackCount;
     }
 
-    if (deltaRows)
-      this.appendRows_(deltaRows);
+    if (deltaRows) this.appendRows_(deltaRows);
   }
 
   this.setVTScrollRegion(null, null);
@@ -11671,8 +11568,7 @@ hterm.Terminal.prototype.backwardTabStop = function() {
  */
 hterm.Terminal.prototype.setTabStop = function(column) {
   for (var i = this.tabStops_.length - 1; i >= 0; i--) {
-    if (this.tabStops_[i] == column)
-      return;
+    if (this.tabStops_[i] == column) return;
 
     if (this.tabStops_[i] < column) {
       this.tabStops_.splice(i + 1, 0, column);
@@ -11692,8 +11588,7 @@ hterm.Terminal.prototype.clearTabStopAtCursor = function() {
   var column = this.screen_.cursorPosition.column;
 
   var i = this.tabStops_.indexOf(column);
-  if (i == -1)
-    return;
+  if (i == -1) return;
 
   this.tabStops_.splice(i, 1);
 };
@@ -11716,8 +11611,8 @@ hterm.Terminal.prototype.clearAllTabStops = function() {
  * This does not clear the existing tab stops first, use clearAllTabStops
  * for that.
  *
- * @param {integer} opt_start Optional starting zero based starting column, useful
- *     for filling out missing tab stops when the terminal is resized.
+ * @param {integer} opt_start Optional starting zero based starting column,
+ * useful for filling out missing tab stops when the terminal is resized.
  */
 hterm.Terminal.prototype.setDefaultTabStops = function(opt_start) {
   var start = opt_start || 0;
@@ -11769,7 +11664,9 @@ hterm.Terminal.prototype.decorate = function(div) {
 
   this.document_ = this.scrollPort_.getDocument();
 
-  this.document_.body.oncontextmenu = function() { return false; };
+  this.document_.body.oncontextmenu = function() {
+    return false;
+  };
 
   var onMouse = this.onMouse_.bind(this);
   var screenNode = this.scrollPort_.getScreenNode();
@@ -11778,16 +11675,14 @@ hterm.Terminal.prototype.decorate = function(div) {
   screenNode.addEventListener('mousemove', onMouse);
   this.scrollPort_.onScrollWheel = onMouse;
 
-  screenNode.addEventListener(
-      'focus', this.onFocusChange_.bind(this, true));
+  screenNode.addEventListener('focus', this.onFocusChange_.bind(this, true));
   // Listen for mousedown events on the screenNode as in FF the focus
   // events don't bubble.
   screenNode.addEventListener('mousedown', function() {
     setTimeout(this.onFocusChange_.bind(this, true));
   }.bind(this));
 
-  screenNode.addEventListener(
-      'blur', this.onFocusChange_.bind(this, false));
+  screenNode.addEventListener('blur', this.onFocusChange_.bind(this, false));
 
   var style = this.document_.createElement('style');
   style.textContent =
@@ -11856,16 +11751,20 @@ hterm.Terminal.prototype.decorate = function(div) {
   this.document_.body.appendChild(this.scrollBlockerNode_);
 
   this.scrollPort_.onScrollWheel = onMouse;
-  ['mousedown', 'mouseup', 'mousemove', 'click', 'dblclick',
-   ].forEach(function(event) {
-       this.scrollBlockerNode_.addEventListener(event, onMouse);
-       this.cursorNode_.addEventListener(event, onMouse);
-       this.document_.addEventListener(event, onMouse);
-     }.bind(this));
+  ['mousedown',
+   'mouseup',
+   'mousemove',
+   'click',
+   'dblclick',
+  ].forEach(function(event) {
+    this.scrollBlockerNode_.addEventListener(event, onMouse);
+    this.cursorNode_.addEventListener(event, onMouse);
+    this.document_.addEventListener(event, onMouse);
+  }.bind(this));
 
   this.cursorNode_.addEventListener('mousedown', function() {
-      setTimeout(this.focus.bind(this));
-    }.bind(this));
+    setTimeout(this.focus.bind(this));
+  }.bind(this));
 
   this.setReverseVideo(false);
 
@@ -11904,8 +11803,7 @@ hterm.Terminal.prototype.focus = function() {
  * @return {HTMLElement} The 'x-row' element containing for the requested row.
  */
 hterm.Terminal.prototype.getRowNode = function(index) {
-  if (index < this.scrollbackRows_.length)
-    return this.scrollbackRows_[index];
+  if (index < this.scrollbackRows_.length) return this.scrollbackRows_[index];
 
   var screenIndex = index - this.scrollbackRows_.length;
   return this.screen_.rowsArray[screenIndex];
@@ -11931,8 +11829,7 @@ hterm.Terminal.prototype.getRowsText = function(start, end) {
   for (var i = start; i < end; i++) {
     var node = this.getRowNode(i);
     ary.push(node.textContent);
-    if (i < end - 1 && !node.getAttribute('line-overflow'))
-      ary.push('\n');
+    if (i < end - 1 && !node.getAttribute('line-overflow')) ary.push('\n');
   }
 
   return ary.join('');
@@ -11999,8 +11896,7 @@ hterm.Terminal.prototype.appendRows_ = function(count) {
   if (extraRows > 0) {
     var ary = this.screen_.shiftRows(extraRows);
     Array.prototype.push.apply(this.scrollbackRows_, ary);
-    if (this.scrollPort_.isScrolledEnd)
-      this.scheduleScrollDown_();
+    if (this.scrollPort_.isScrolledEnd) this.scheduleScrollDown_();
   }
 
   if (cursorRow >= this.screen_.rowsArray.length)
@@ -12106,11 +12002,10 @@ hterm.Terminal.prototype.print = function(str) {
 
     var tokens = hterm.TextAttributes.splitWidecharString(substr);
     for (var i = 0; i < tokens.length; i++) {
-      if (tokens[i].wcNode)
-        this.screen_.textAttributes.wcNode = true;
+      if (tokens[i].wcNode) this.screen_.textAttributes.wcNode = true;
 
       if (this.options_.insertMode) {
-          this.screen_.insertString(tokens[i].str);
+        this.screen_.insertString(tokens[i].str);
       } else {
         this.screen_.overwriteString(tokens[i].str);
       }
@@ -12163,8 +12058,7 @@ hterm.Terminal.prototype.setVTScrollRegion = function(scrollTop, scrollBottom) {
  * @return {integer} The topmost row in the terminal's scroll region.
  */
 hterm.Terminal.prototype.getVTScrollTop = function() {
-  if (this.vtScrollTop_ != null)
-    return this.vtScrollTop_;
+  if (this.vtScrollTop_ != null) return this.vtScrollTop_;
 
   return 0;
 };
@@ -12178,25 +12072,25 @@ hterm.Terminal.prototype.getVTScrollTop = function() {
  *
  * @return {integer} The bottom most row in the terminal's scroll region.
  */
-hterm.Terminal.prototype.getVTScrollBottom = function() {
-  if (this.vtScrollBottom_ != null)
-    return this.vtScrollBottom_;
+hterm.Terminal.prototype.getVTScrollBottom =
+    function() {
+  if (this.vtScrollBottom_ != null) return this.vtScrollBottom_;
 
   return this.screenSize.height - 1;
 }
 
-/**
- * Process a '\n' character.
- *
- * If the cursor is on the final row of the terminal this will append a new
- * blank row to the screen and scroll the topmost row into the scrollback
- * buffer.
- *
- * Otherwise, this moves the cursor to column zero of the next row.
- */
-hterm.Terminal.prototype.newLine = function() {
-  var cursorAtEndOfScreen = (this.screen_.cursorPosition.row ==
-                             this.screen_.rowsArray.length - 1);
+    /**
+     * Process a '\n' character.
+     *
+     * If the cursor is on the final row of the terminal this will append a new
+     * blank row to the screen and scroll the topmost row into the scrollback
+     * buffer.
+     *
+     * Otherwise, this moves the cursor to column zero of the next row.
+     */
+    hterm.Terminal.prototype.newLine = function() {
+  var cursorAtEndOfScreen =
+      (this.screen_.cursorPosition.row == this.screen_.rowsArray.length - 1);
 
   if (this.vtScrollBottom_ != null) {
     // A VT Scroll region is active, we never append new rows.
@@ -12291,8 +12185,7 @@ hterm.Terminal.prototype.eraseToLeft = function() {
  * @param {number} opt_count The number of characters to erase.
  */
 hterm.Terminal.prototype.eraseToRight = function(opt_count) {
-  if (this.screen_.cursorPosition.overflow)
-    return;
+  if (this.screen_.cursorPosition.overflow) return;
 
   var maxCount = this.screenSize.width - this.screen_.cursorPosition.column;
   var count = opt_count ? Math.min(opt_count, maxCount) : maxCount;
@@ -12446,8 +12339,7 @@ hterm.Terminal.prototype.insertLines = function(count) {
   // The moveCount is the number of rows we need to relocate to make room for
   // the new row(s).  The count is the distance to move them.
   var moveCount = bottom - cursorRow - count + 1;
-  if (moveCount)
-    this.moveRows_(cursorRow, moveCount, cursorRow + count);
+  if (moveCount) this.moveRows_(cursorRow, moveCount, cursorRow + count);
 
   for (var i = count - 1; i >= 0; i--) {
     this.setAbsoluteCursorPosition(cursorRow + i, 0);
@@ -12473,8 +12365,7 @@ hterm.Terminal.prototype.deleteLines = function(count) {
   count = Math.min(count, maxCount);
 
   var moveStart = bottom - count + 1;
-  if (count != maxCount)
-    this.moveRows_(top, count, moveStart);
+  if (count != maxCount) this.moveRows_(top, count, moveStart);
 
   for (var i = 0; i < count; i++) {
     this.setAbsoluteCursorPosition(moveStart + i, 0);
@@ -12565,7 +12456,6 @@ hterm.Terminal.prototype.vtScrollDown = function(opt_count) {
   this.restoreCursor(cursor);
 };
 
-
 /**
  * Set the cursor position.
  *
@@ -12654,14 +12544,13 @@ hterm.Terminal.prototype.getCursorRow = function() {
  * Multiple calls will be coalesced into a single redraw.
  */
 hterm.Terminal.prototype.scheduleRedraw_ = function() {
-  if (this.timeouts_.redraw)
-    return;
+  if (this.timeouts_.redraw) return;
 
   var self = this;
   this.timeouts_.redraw = setTimeout(function() {
-      delete self.timeouts_.redraw;
-      self.scrollPort_.redraw_();
-    }, 0);
+    delete self.timeouts_.redraw;
+    self.scrollPort_.redraw_();
+  }, 0);
 };
 
 /**
@@ -12674,14 +12563,13 @@ hterm.Terminal.prototype.scheduleRedraw_ = function() {
  * do with the VT scroll commands.
  */
 hterm.Terminal.prototype.scheduleScrollDown_ = function() {
-  if (this.timeouts_.scrollDown)
-    return;
+  if (this.timeouts_.scrollDown) return;
 
   var self = this;
   this.timeouts_.scrollDown = setTimeout(function() {
-      delete self.timeouts_.scrollDown;
-      self.scrollPort_.scrollRowToBottom(self.getRowCount());
-    }, 10);
+    delete self.timeouts_.scrollDown;
+    self.scrollPort_.scrollRowToBottom(self.getRowCount());
+  }, 10);
 };
 
 /**
@@ -12701,11 +12589,12 @@ hterm.Terminal.prototype.cursorUp = function(count) {
 hterm.Terminal.prototype.cursorDown = function(count) {
   count = count || 1;
   var minHeight = (this.options_.originMode ? this.getVTScrollTop() : 0);
-  var maxHeight = (this.options_.originMode ? this.getVTScrollBottom() :
-                   this.screenSize.height - 1);
+  var maxHeight =
+      (this.options_.originMode ? this.getVTScrollBottom() :
+                                  this.screenSize.height - 1);
 
-  var row = lib.f.clamp(this.screen_.cursorPosition.row + count,
-                        minHeight, maxHeight);
+  var row = lib.f.clamp(
+      this.screen_.cursorPosition.row + count, minHeight, maxHeight);
   this.setAbsoluteCursorRow(row);
 };
 
@@ -12720,8 +12609,7 @@ hterm.Terminal.prototype.cursorDown = function(count) {
 hterm.Terminal.prototype.cursorLeft = function(count) {
   count = count || 1;
 
-  if (count < 1)
-    return;
+  if (count < 1) return;
 
   var currentColumn = this.screen_.cursorPosition.column;
   if (this.options_.reverseWraparound) {
@@ -12732,8 +12620,7 @@ hterm.Terminal.prototype.cursorLeft = function(count) {
       count--;
       this.clearCursorOverflow();
 
-      if (!count)
-        return;
+      if (!count) return;
     }
 
     var newRow = this.screen_.cursorPosition.row;
@@ -12763,11 +12650,10 @@ hterm.Terminal.prototype.cursorLeft = function(count) {
 hterm.Terminal.prototype.cursorRight = function(count) {
   count = count || 1;
 
-  if (count < 1)
-    return;
+  if (count < 1) return;
 
-  var column = lib.f.clamp(this.screen_.cursorPosition.column + count,
-                           0, this.screenSize.width - 1);
+  var column = lib.f.clamp(
+      this.screen_.cursorPosition.column + count, 0, this.screenSize.width - 1);
   this.setCursorColumn(column);
 };
 
@@ -12804,29 +12690,30 @@ hterm.Terminal.prototype.ringBell = function() {
 
   var self = this;
   setTimeout(function() {
-      self.cursorNode_.style.backgroundColor = self.prefs_.get('cursor-color');
-    }, 200);
+    self.cursorNode_.style.backgroundColor = self.prefs_.get('cursor-color');
+  }, 200);
 
   // bellSquelchTimeout_ affects both audio and notification bells.
-  if (this.bellSquelchTimeout_)
-    return;
+  if (this.bellSquelchTimeout_) return;
 
   if (this.bellAudio_.getAttribute('src')) {
     this.bellAudio_.play();
     this.bellSequelchTimeout_ = setTimeout(function() {
-        delete this.bellSquelchTimeout_;
-      }.bind(this), 500);
+      delete this.bellSquelchTimeout_;
+    }.bind(this), 500);
   } else {
     delete this.bellSquelchTimeout_;
   }
 
   if (this.desktopNotificationBell_ && !this.document_.hasFocus()) {
-    var n = new Notification(
-        lib.f.replaceVars(hterm.desktopNotificationTitle,
-                          {'title': window.document.title || 'hterm'}));
+    var n = new Notification(lib.f.replaceVars(
+        hterm.desktopNotificationTitle,
+        {'title': window.document.title || 'hterm'}));
     this.bellNotificationList_.push(n);
     // TODO: Should we try to raise the window here?
-    n.onclick = function() { self.closeBellNotifications_(); };
+    n.onclick = function() {
+      self.closeBellNotifications_();
+    };
   }
 };
 
@@ -12963,8 +12850,7 @@ hterm.Terminal.prototype.setCursorBlink = function(state) {
     delete this.timeouts_.cursorBlink;
   }
 
-  if (this.options_.cursorVisible)
-    this.setCursorVisible(true);
+  if (this.options_.cursorVisible) this.setCursorVisible(true);
 };
 
 /**
@@ -12993,8 +12879,7 @@ hterm.Terminal.prototype.setCursorVisible = function(state) {
   this.cursorNode_.style.opacity = '1';
 
   if (this.options_.cursorBlink) {
-    if (this.timeouts_.cursorBlink)
-      return;
+    if (this.timeouts_.cursorBlink) return;
 
     this.onCursorBlink_();
   } else {
@@ -13012,8 +12897,8 @@ hterm.Terminal.prototype.setCursorVisible = function(state) {
 hterm.Terminal.prototype.syncCursorPosition_ = function() {
   var topRowIndex = this.scrollPort_.getTopRowIndex();
   var bottomRowIndex = this.scrollPort_.getBottomRowIndex(topRowIndex);
-  var cursorRowIndex = this.scrollbackRows_.length +
-      this.screen_.cursorPosition.row;
+  var cursorRowIndex =
+      this.scrollbackRows_.length + this.screen_.cursorPosition.row;
 
   if (cursorRowIndex > bottomRowIndex) {
     // Cursor is scrolled off screen, move it outside of the visible area.
@@ -13021,23 +12906,22 @@ hterm.Terminal.prototype.syncCursorPosition_ = function() {
     return;
   }
 
-  if (this.options_.cursorVisible &&
-      this.cursorNode_.style.display == 'none') {
+  if (this.options_.cursorVisible && this.cursorNode_.style.display == 'none') {
     // Re-display the terminal cursor if it was hidden by the mouse cursor.
     this.cursorNode_.style.display = '';
   }
-
 
   this.cursorNode_.style.top = this.scrollPort_.visibleRowTopMargin +
       this.scrollPort_.characterSize.height * (cursorRowIndex - topRowIndex) +
       'px';
   this.cursorNode_.style.left = this.scrollPort_.characterSize.width *
-      this.screen_.cursorPosition.column + 'px';
+          this.screen_.cursorPosition.column +
+      'px';
 
-  this.cursorNode_.setAttribute('title',
-                                '(' + this.screen_.cursorPosition.row +
-                                ', ' + this.screen_.cursorPosition.column +
-                                ')');
+  this.cursorNode_.setAttribute(
+      'title',
+      '(' + this.screen_.cursorPosition.row + ', ' +
+          this.screen_.cursorPosition.column + ')');
 
   // Update the caret for a11y purposes.
   var selection = this.document_.getSelection();
@@ -13093,14 +12977,13 @@ hterm.Terminal.prototype.restyleCursor_ = function() {
  * Multiple calls will be coalesced into a single sync.
  */
 hterm.Terminal.prototype.scheduleSyncCursorPosition_ = function() {
-  if (this.timeouts_.syncCursor)
-    return;
+  if (this.timeouts_.syncCursor) return;
 
   var self = this;
   this.timeouts_.syncCursor = setTimeout(function() {
-      self.syncCursorPosition_();
-      delete self.timeouts_.syncCursor;
-    }, 0);
+    self.syncCursorPosition_();
+    delete self.timeouts_.syncCursor;
+  }, 0);
 };
 
 /**
@@ -13113,24 +12996,23 @@ hterm.Terminal.prototype.scheduleSyncCursorPosition_ = function() {
  */
 hterm.Terminal.prototype.showZoomWarning_ = function(state) {
   if (!this.zoomWarningNode_) {
-    if (!state)
-      return;
+    if (!state) return;
 
     this.zoomWarningNode_ = this.document_.createElement('div');
-    this.zoomWarningNode_.style.cssText = (
-        'color: black;' +
-        'background-color: #ff2222;' +
-        'font-size: large;' +
-        'border-radius: 8px;' +
-        'opacity: 0.75;' +
-        'padding: 0.2em 0.5em 0.2em 0.5em;' +
-        'top: 0.5em;' +
-        'right: 1.2em;' +
-        'position: absolute;' +
-        '-webkit-text-size-adjust: none;' +
-        '-webkit-user-select: none;' +
-        '-moz-text-size-adjust: none;' +
-        '-moz-user-select: none;');
+    this.zoomWarningNode_.style.cssText =
+        ('color: black;' +
+         'background-color: #ff2222;' +
+         'font-size: large;' +
+         'border-radius: 8px;' +
+         'opacity: 0.75;' +
+         'padding: 0.2em 0.5em 0.2em 0.5em;' +
+         'top: 0.5em;' +
+         'right: 1.2em;' +
+         'position: absolute;' +
+         '-webkit-text-size-adjust: none;' +
+         '-webkit-user-select: none;' +
+         '-moz-text-size-adjust: none;' +
+         '-moz-user-select: none;');
 
     this.zoomWarningNode_.addEventListener('click', function(e) {
       this.parentNode.removeChild(this);
@@ -13166,20 +13048,19 @@ hterm.Terminal.prototype.showZoomWarning_ = function(state) {
  */
 hterm.Terminal.prototype.showOverlay = function(msg, opt_timeout) {
   if (!this.overlayNode_) {
-    if (!this.div_)
-      return;
+    if (!this.div_) return;
 
     this.overlayNode_ = this.document_.createElement('div');
-    this.overlayNode_.style.cssText = (
-        'border-radius: 15px;' +
-        'font-size: xx-large;' +
-        'opacity: 0.75;' +
-        'padding: 0.2em 0.5em 0.2em 0.5em;' +
-        'position: absolute;' +
-        '-webkit-user-select: none;' +
-        '-webkit-transition: opacity 180ms ease-in;' +
-        '-moz-user-select: none;' +
-        '-moz-transition: opacity 180ms ease-in;');
+    this.overlayNode_.style.cssText =
+        ('border-radius: 15px;' +
+         'font-size: xx-large;' +
+         'opacity: 0.75;' +
+         'padding: 0.2em 0.5em 0.2em 0.5em;' +
+         'position: absolute;' +
+         '-webkit-user-select: none;' +
+         '-webkit-transition: opacity 180ms ease-in;' +
+         '-moz-user-select: none;' +
+         '-moz-transition: opacity 180ms ease-in;');
 
     this.overlayNode_.addEventListener('mousedown', function(e) {
       e.preventDefault();
@@ -13194,8 +13075,7 @@ hterm.Terminal.prototype.showOverlay = function(msg, opt_timeout) {
   this.overlayNode_.textContent = msg;
   this.overlayNode_.style.opacity = '0.75';
 
-  if (!this.overlayNode_.parentNode)
-    this.div_.appendChild(this.overlayNode_);
+  if (!this.overlayNode_.parentNode) this.div_.appendChild(this.overlayNode_);
 
   var divSize = hterm.getClientSize(this.div_);
   var overlaySize = hterm.getClientSize(this.overlayNode_);
@@ -13203,25 +13083,25 @@ hterm.Terminal.prototype.showOverlay = function(msg, opt_timeout) {
   this.overlayNode_.style.top =
       (divSize.height - overlaySize.height) / 2 + 'px';
   this.overlayNode_.style.left = (divSize.width - overlaySize.width -
-      this.scrollPort_.currentScrollbarWidthPx) / 2 + 'px';
+                                  this.scrollPort_.currentScrollbarWidthPx) /
+          2 +
+      'px';
 
   var self = this;
 
-  if (this.overlayTimeout_)
-    clearTimeout(this.overlayTimeout_);
+  if (this.overlayTimeout_) clearTimeout(this.overlayTimeout_);
 
-  if (opt_timeout === null)
-    return;
+  if (opt_timeout === null) return;
 
   this.overlayTimeout_ = setTimeout(function() {
-      self.overlayNode_.style.opacity = '0';
-      self.overlayTimeout_ = setTimeout(function() {
-          if (self.overlayNode_.parentNode)
-            self.overlayNode_.parentNode.removeChild(self.overlayNode_);
-          self.overlayTimeout_ = null;
-          self.overlayNode_.style.opacity = '0.75';
-        }, 200);
-    }, opt_timeout || 1500);
+    self.overlayNode_.style.opacity = '0';
+    self.overlayTimeout_ = setTimeout(function() {
+      if (self.overlayNode_.parentNode)
+        self.overlayNode_.parentNode.removeChild(self.overlayNode_);
+      self.overlayTimeout_ = null;
+      self.overlayNode_.style.opacity = '0.75';
+    }, 200);
+  }, opt_timeout || 1500);
 };
 
 /**
@@ -13244,11 +13124,11 @@ hterm.Terminal.prototype.copyStringToClipboard = function(str) {
 
   var copySource = this.document_.createElement('pre');
   copySource.textContent = str;
-  copySource.style.cssText = (
-      '-webkit-user-select: text;' +
-      '-moz-user-select: text;' +
-      'position: absolute;' +
-      'top: -99px');
+  copySource.style.cssText =
+      ('-webkit-user-select: text;' +
+       '-moz-user-select: text;' +
+       'position: absolute;' +
+       'top: -99px');
 
   this.document_.body.appendChild(copySource);
 
@@ -13281,9 +13161,7 @@ hterm.Terminal.prototype.getSelectionText = function() {
   var selection = this.scrollPort_.selection;
   selection.sync();
 
-  if (selection.isCollapsed)
-    return null;
-
+  if (selection.isCollapsed) return null;
 
   // Start offset measures from the beginning of the line.
   var startOffset = selection.startOffset;
@@ -13306,8 +13184,8 @@ hterm.Terminal.prototype.getSelectionText = function() {
   }
 
   // End offset measures from the end of the line.
-  var endOffset = (hterm.TextAttributes.nodeWidth(selection.endNode) -
-                   selection.endOffset);
+  var endOffset =
+      (hterm.TextAttributes.nodeWidth(selection.endNode) - selection.endOffset);
   node = selection.endNode;
 
   if (node.nodeName != 'X-ROW') {
@@ -13326,8 +13204,8 @@ hterm.Terminal.prototype.getSelectionText = function() {
     }
   }
 
-  var rv = this.getRowsText(selection.startRow.rowIndex,
-                            selection.endRow.rowIndex + 1);
+  var rv = this.getRowsText(
+      selection.startRow.rowIndex, selection.endRow.rowIndex + 1);
   return lib.wc.substring(rv, startOffset, lib.wc.strWidth(rv) - endOffset);
 };
 
@@ -13337,8 +13215,7 @@ hterm.Terminal.prototype.getSelectionText = function() {
  */
 hterm.Terminal.prototype.copySelectionToClipboard = function() {
   var text = this.getSelectionText();
-  if (text != null)
-    this.copyStringToClipboard(text);
+  if (text != null) this.copyStringToClipboard(text);
 };
 
 hterm.Terminal.prototype.overlaySize = function() {
@@ -13362,15 +13239,17 @@ hterm.Terminal.prototype.onVTKeystroke = function(string) {
  *
  * @param {string} url URL to launch in a new tab.
  */
-hterm.Terminal.prototype.openUrl = function(url) {
+hterm.Terminal.prototype.openUrl =
+    function(url) {
   var win = window.open(url, '_blank');
   win.focus();
 }
 
-/**
- * Open the selected url.
- */
-hterm.Terminal.prototype.openSelectedUrl_ = function() {
+    /**
+     * Open the selected url.
+     */
+    hterm.Terminal.prototype.openSelectedUrl_ =
+        function() {
   var str = this.getSelectionText();
 
   // If there is no selection, try and expand wherever they clicked.
@@ -13380,27 +13259,24 @@ hterm.Terminal.prototype.openSelectedUrl_ = function() {
   }
 
   // Make sure URL is valid before opening.
-  if (str.length > 2048 || str.search(/[\s\[\](){}<>"'\\^`]/) >= 0)
-    return;
+  if (str.length > 2048 || str.search(/[\s\[\](){}<>"'\\^`]/) >= 0) return;
   // If the URL isn't anchored, it'll open relative to the extension.
   // We have no way of knowing the correct schema, so assume http.
-  if (str.search('^[a-zA-Z][a-zA-Z0-9+.-]*://') < 0)
-    str = 'http://' + str;
+  if (str.search('^[a-zA-Z][a-zA-Z0-9+.-]*://') < 0) str = 'http://' + str;
 
   this.openUrl(str);
 }
 
-
-/**
- * Add the terminalRow and terminalColumn properties to mouse events and
- * then forward on to onMouse().
- *
- * The terminalRow and terminalColumn properties contain the (row, column)
- * coordinates for the mouse event.
- *
- * @param {Event} e The mouse event to handle.
- */
-hterm.Terminal.prototype.onMouse_ = function(e) {
+        /**
+         * Add the terminalRow and terminalColumn properties to mouse events and
+         * then forward on to onMouse().
+         *
+         * The terminalRow and terminalColumn properties contain the (row,
+         * column) coordinates for the mouse event.
+         *
+         * @param {Event} e The mouse event to handle.
+         */
+        hterm.Terminal.prototype.onMouse_ = function(e) {
   if (e.processedByTerminalHandler_) {
     // We register our event handlers on the document, as well as the cursor
     // and the scroll blocker.  Mouse events that occur on the cursor or
@@ -13412,16 +13288,19 @@ hterm.Terminal.prototype.onMouse_ = function(e) {
     return;
   }
 
-  var reportMouseEvents = (!this.defeatMouseReports_ &&
-      this.vt.mouseReport != this.vt.MOUSE_REPORT_DISABLED);
+  var reportMouseEvents =
+      (!this.defeatMouseReports_ &&
+       this.vt.mouseReport != this.vt.MOUSE_REPORT_DISABLED);
 
   e.processedByTerminalHandler_ = true;
 
   // One based row/column stored on the mouse event.
-  e.terminalRow = parseInt((e.clientY - this.scrollPort_.visibleRowTopMargin) /
-                           this.scrollPort_.characterSize.height) + 1;
-  e.terminalColumn = parseInt(e.clientX /
-                              this.scrollPort_.characterSize.width) + 1;
+  e.terminalRow = parseInt(
+                      (e.clientY - this.scrollPort_.visibleRowTopMargin) /
+                      this.scrollPort_.characterSize.height) +
+      1;
+  e.terminalColumn =
+      parseInt(e.clientX / this.scrollPort_.characterSize.width) + 1;
 
   if (e.type == 'mousedown' && e.terminalColumn > this.screenSize.width) {
     // Mousedown in the scrollbar area.
@@ -13467,13 +13346,12 @@ hterm.Terminal.prototype.onMouse_ = function(e) {
       // a URL to open it, Chrome will fire click then dblclick, but we won't
       // have expanded the selection text at the first click event.
       clearTimeout(this.timeouts_.openUrl);
-      this.timeouts_.openUrl = setTimeout(this.openSelectedUrl_.bind(this),
-                                          500);
+      this.timeouts_.openUrl =
+          setTimeout(this.openSelectedUrl_.bind(this), 500);
       return;
     }
 
-    if (e.type == 'mousedown' && e.which == this.mousePasteButton)
-      this.paste();
+    if (e.type == 'mousedown' && e.which == this.mousePasteButton) this.paste();
 
     if (e.type == 'mouseup' && e.which == 1 && this.copyOnSelect &&
         !this.document_.getSelection().isCollapsed) {
@@ -13522,7 +13400,7 @@ hterm.Terminal.prototype.onMouse_ = function(e) {
  *
  * @param {Event} e The mouse event to handle.
  */
-hterm.Terminal.prototype.onMouse = function(e) { };
+hterm.Terminal.prototype.onMouse = function(e) {};
 
 /**
  * React when focus changes.
@@ -13532,8 +13410,7 @@ hterm.Terminal.prototype.onMouse = function(e) { };
 hterm.Terminal.prototype.onFocusChange_ = function(focused) {
   this.cursorNode_.setAttribute('focus', focused);
   this.restyleCursor_();
-  if (focused === true)
-    this.closeBellNotifications_();
+  if (focused === true) this.closeBellNotifications_();
 };
 
 /**
@@ -13551,8 +13428,7 @@ hterm.Terminal.prototype.onScroll_ = function() {
 hterm.Terminal.prototype.onPaste_ = function(e) {
   var data = e.text.replace(/\n/mg, '\r');
   data = this.keyboard.encode(data);
-  if (this.options_.bracketedPaste)
-    data = '\x1b[200~' + data + '\x1b[201~';
+  if (this.options_.bracketedPaste) data = '\x1b[200~' + data + '\x1b[201~';
 
   this.io.sendString(data);
 };
@@ -13578,10 +13454,14 @@ hterm.Terminal.prototype.onCopy_ = function(e) {
  * programmatic width change.
  */
 hterm.Terminal.prototype.onResize_ = function() {
-  var columnCount = Math.floor(this.scrollPort_.getScreenWidth() /
-                               this.scrollPort_.characterSize.width) || 0;
-  var rowCount = lib.f.smartFloorDivide(this.scrollPort_.getScreenHeight(),
-                            this.scrollPort_.characterSize.height) || 0;
+  var columnCount = Math.floor(
+                        this.scrollPort_.getScreenWidth() /
+                        this.scrollPort_.characterSize.width) ||
+      0;
+  var rowCount = lib.f.smartFloorDivide(
+                     this.scrollPort_.getScreenHeight(),
+                     this.scrollPort_.characterSize.height) ||
+      0;
 
   if (columnCount <= 0 || rowCount <= 0) {
     // We avoid these situations since they happen sometimes when the terminal
@@ -13592,16 +13472,16 @@ hterm.Terminal.prototype.onResize_ = function() {
     return;
   }
 
-  var isNewSize = (columnCount != this.screenSize.width ||
-                   rowCount != this.screenSize.height);
+  var isNewSize =
+      (columnCount != this.screenSize.width ||
+       rowCount != this.screenSize.height);
 
   // We do this even if the size didn't change, just to be sure everything is
   // in sync.
   this.realizeSize_(columnCount, rowCount);
   this.showZoomWarning_(this.scrollPort_.characterSize.zoomFactor != 1);
 
-  if (isNewSize)
-    this.overlaySize();
+  if (isNewSize) this.overlaySize();
 
   this.restyleCursor_();
   this.scheduleSyncCursorPosition_();
@@ -13619,12 +13499,12 @@ hterm.Terminal.prototype.onCursorBlink_ = function() {
   if (this.cursorNode_.getAttribute('focus') == 'false' ||
       this.cursorNode_.style.opacity == '0') {
     this.cursorNode_.style.opacity = '1';
-    this.timeouts_.cursorBlink = setTimeout(this.myOnCursorBlink_,
-                                            this.cursorBlinkCycle_[0]);
+    this.timeouts_.cursorBlink =
+        setTimeout(this.myOnCursorBlink_, this.cursorBlinkCycle_[0]);
   } else {
     this.cursorNode_.style.opacity = '0';
-    this.timeouts_.cursorBlink = setTimeout(this.myOnCursorBlink_,
-                                            this.cursorBlinkCycle_[1]);
+    this.timeouts_.cursorBlink =
+        setTimeout(this.myOnCursorBlink_, this.cursorBlinkCycle_[1]);
   }
 };
 
@@ -13659,8 +13539,8 @@ hterm.Terminal.prototype.setScrollWheelMoveMultipler = function(multiplier) {
  */
 hterm.Terminal.prototype.closeBellNotifications_ = function() {
   this.bellNotificationList_.forEach(function(n) {
-      n.close();
-    });
+    n.close();
+  });
   this.bellNotificationList_.length = 0;
 };
 // SOURCE FILE: hterm/js/hterm_terminal_io.js
@@ -13847,9 +13727,9 @@ hterm.Terminal.IO.prototype.writelnUTF8 = function(string) {
  * @param {string} string The string to print.
  */
 hterm.Terminal.IO.prototype.print =
-hterm.Terminal.IO.prototype.writeUTF16 = function(string) {
-  this.writeUTF8(lib.encodeUTF8(string));
-};
+    hterm.Terminal.IO.prototype.writeUTF16 = function(string) {
+      this.writeUTF8(lib.encodeUTF8(string));
+    };
 
 /**
  * Print a UTF-16 JavaScript string to the terminal followed by a newline.
@@ -13857,9 +13737,9 @@ hterm.Terminal.IO.prototype.writeUTF16 = function(string) {
  * @param {string} string The string to print.
  */
 hterm.Terminal.IO.prototype.println =
-hterm.Terminal.IO.prototype.writelnUTF16 = function(string) {
-  this.writelnUTF8(lib.encodeUTF8(string));
-};
+    hterm.Terminal.IO.prototype.writelnUTF16 = function(string) {
+      this.writelnUTF8(lib.encodeUTF8(string));
+    };
 // SOURCE FILE: hterm/js/hterm_text_attributes.js
 // Copyright (c) 2012 The Chromium OS Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -13940,7 +13820,6 @@ hterm.TextAttributes.prototype.DEFAULT_COLOR = new String('');
  */
 hterm.TextAttributes.prototype.SRC_DEFAULT = 'default';
 
-
 /**
  * A constant string used to specify that the source of a color is a valid
  * rgb( r, g, b) specifier.
@@ -14008,18 +13887,12 @@ hterm.TextAttributes.prototype.resetColorPalette = function() {
  * @return {boolean} True if the current attributes describe unstyled text.
  */
 hterm.TextAttributes.prototype.isDefault = function() {
-  return (this.foregroundSource == this.SRC_DEFAULT &&
-          this.backgroundSource == this.SRC_DEFAULT &&
-          !this.bold &&
-          !this.faint &&
-          !this.italic &&
-          !this.blink &&
-          !this.underline &&
-          !this.strikethrough &&
-          !this.inverse &&
-          !this.invisible &&
-          !this.wcNode &&
-          this.tileData == null);
+  return (
+      this.foregroundSource == this.SRC_DEFAULT &&
+      this.backgroundSource == this.SRC_DEFAULT && !this.bold && !this.faint &&
+      !this.italic && !this.blink && !this.underline && !this.strikethrough &&
+      !this.inverse && !this.invisible && !this.wcNode &&
+      this.tileData == null);
 };
 
 /**
@@ -14038,27 +13911,22 @@ hterm.TextAttributes.prototype.isDefault = function() {
  *     attributes.
  */
 hterm.TextAttributes.prototype.createContainer = function(opt_textContent) {
-  if (this.isDefault())
-    return this.document_.createTextNode(opt_textContent);
+  if (this.isDefault()) return this.document_.createTextNode(opt_textContent);
 
   var span = this.document_.createElement('span');
   var style = span.style;
   var classes = [];
 
-  if (this.foreground != this.DEFAULT_COLOR)
-    style.color = this.foreground;
+  if (this.foreground != this.DEFAULT_COLOR) style.color = this.foreground;
 
   if (this.background != this.DEFAULT_COLOR)
     style.backgroundColor = this.background;
 
-  if (this.enableBold && this.bold)
-    style.fontWeight = 'bold';
+  if (this.enableBold && this.bold) style.fontWeight = 'bold';
 
-  if (this.faint)
-    span.faint = true;
+  if (this.faint) span.faint = true;
 
-  if (this.italic)
-    style.fontStyle = 'italic';
+  if (this.italic) style.fontStyle = 'italic';
 
   if (this.blink) {
     classes.push('blink-node');
@@ -14089,11 +13957,9 @@ hterm.TextAttributes.prototype.createContainer = function(opt_textContent) {
     span.tileNode = true;
   }
 
-  if (opt_textContent)
-    span.textContent = opt_textContent;
+  if (opt_textContent) span.textContent = opt_textContent;
 
-  if (classes.length)
-    span.className = classes.join(' ');
+  if (classes.length) span.className = classes.join(' ');
 
   return span;
 };
@@ -14112,22 +13978,21 @@ hterm.TextAttributes.prototype.createContainer = function(opt_textContent) {
  *     this attributes instance.
  */
 hterm.TextAttributes.prototype.matchesContainer = function(obj) {
-  if (typeof obj == 'string' || obj.nodeType == 3)
-    return this.isDefault();
+  if (typeof obj == 'string' || obj.nodeType == 3) return this.isDefault();
 
   var style = obj.style;
 
   // We don't want to put multiple characters in a wcNode or a tile.
   // See the comments in createContainer.
-  return (!(this.wcNode || obj.wcNode) &&
-          !(this.tileData != null || obj.tileNode) &&
-          this.foreground == style.color &&
-          this.background == style.backgroundColor &&
-          (this.enableBold && this.bold) == !!style.fontWeight &&
-          this.blink == obj.blinkNode &&
-          this.italic == !!style.fontStyle &&
-          !!this.underline == !!obj.underline &&
-          !!this.strikethrough == !!obj.strikethrough);
+  return (
+      !(this.wcNode || obj.wcNode) &&
+      !(this.tileData != null || obj.tileNode) &&
+      this.foreground == style.color &&
+      this.background == style.backgroundColor &&
+      (this.enableBold && this.bold) == !!style.fontWeight &&
+      this.blink == obj.blinkNode && this.italic == !!style.fontStyle &&
+      !!this.underline == !!obj.underline &&
+      !!this.strikethrough == !!obj.strikethrough);
 };
 
 hterm.TextAttributes.prototype.setDefaults = function(foreground, background) {
@@ -14186,19 +14051,24 @@ hterm.TextAttributes.prototype.syncColors = function() {
 
   // Set fore/background colors unless already specified in rgb(r, g, b) form.
   if (foregroundSource != this.SRC_RGB) {
-    this.foreground = ((foregroundSource == this.SRC_DEFAULT) ?
-                       defaultForeground : this.colorPalette[foregroundSource]);
+    this.foreground =
+        ((foregroundSource == this.SRC_DEFAULT) ?
+             defaultForeground :
+             this.colorPalette[foregroundSource]);
   }
 
   if (this.faint && !this.invisible) {
-    var colorToMakeFaint = ((this.foreground == this.DEFAULT_COLOR) ?
-                            this.defaultForeground : this.foreground);
+    var colorToMakeFaint =
+        ((this.foreground == this.DEFAULT_COLOR) ? this.defaultForeground :
+                                                   this.foreground);
     this.foreground = lib.colors.mix(colorToMakeFaint, 'rgb(0, 0, 0)', 0.3333);
   }
 
   if (backgroundSource != this.SRC_RGB) {
-    this.background = ((backgroundSource == this.SRC_DEFAULT) ?
-                       defaultBackground : this.colorPalette[backgroundSource]);
+    this.background =
+        ((backgroundSource == this.SRC_DEFAULT) ?
+             defaultBackground :
+             this.colorPalette[backgroundSource]);
   }
 };
 
@@ -14216,20 +14086,19 @@ hterm.TextAttributes.containersMatch = function(obj1, obj2) {
   if (typeof obj1 == 'string')
     return hterm.TextAttributes.containerIsDefault(obj2);
 
-  if (obj1.nodeType != obj2.nodeType)
-    return false;
+  if (obj1.nodeType != obj2.nodeType) return false;
 
-  if (obj1.nodeType == 3)
-    return true;
+  if (obj1.nodeType == 3) return true;
 
   var style1 = obj1.style;
   var style2 = obj2.style;
 
-  return (style1.color == style2.color &&
-          style1.backgroundColor == style2.backgroundColor &&
-          style1.fontWeight == style2.fontWeight &&
-          style1.fontStyle == style2.fontStyle &&
-          style1.textDecoration == style2.textDecoration);
+  return (
+      style1.color == style2.color &&
+      style1.backgroundColor == style2.backgroundColor &&
+      style1.fontWeight == style2.fontWeight &&
+      style1.fontStyle == style2.fontStyle &&
+      style1.textDecoration == style2.textDecoration);
 };
 
 /**
@@ -14241,7 +14110,7 @@ hterm.TextAttributes.containersMatch = function(obj1, obj2) {
  * @return {boolean} True if the object is unstyled.
  */
 hterm.TextAttributes.containerIsDefault = function(obj) {
-  return typeof obj == 'string'  || obj.nodeType == 3;
+  return typeof obj == 'string' || obj.nodeType == 3;
 };
 
 /**
@@ -14251,7 +14120,8 @@ hterm.TextAttributes.containerIsDefault = function(obj) {
  *     from.
  * @return {integer} The column width of the node's textContent.
  */
-hterm.TextAttributes.nodeWidth = function(node) {
+hterm.TextAttributes.nodeWidth =
+    function(node) {
   if (node.wcNode) {
     return lib.wc.strWidth(node.textContent);
   } else {
@@ -14259,17 +14129,18 @@ hterm.TextAttributes.nodeWidth = function(node) {
   }
 }
 
-/**
- * Static method to get the substr of a node's textContent.  The start index
- * and substr width are computed in column width.
- *
- * @param {HTMLElement} node The HTML element to get the substr of textContent
- *     from.
- * @param {integer} start The starting offset in column width.
- * @param {integer} width The width to capture in column width.
- * @return {integer} The extracted substr of the node's textContent.
- */
-hterm.TextAttributes.nodeSubstr = function(node, start, width) {
+    /**
+     * Static method to get the substr of a node's textContent.  The start index
+     * and substr width are computed in column width.
+     *
+     * @param {HTMLElement} node The HTML element to get the substr of
+     * textContent from.
+     * @param {integer} start The starting offset in column width.
+     * @param {integer} width The width to capture in column width.
+     * @return {integer} The extracted substr of the node's textContent.
+     */
+    hterm.TextAttributes.nodeSubstr =
+        function(node, start, width) {
   if (node.wcNode) {
     return lib.wc.substr(node.textContent, start, width);
   } else {
@@ -14277,17 +14148,17 @@ hterm.TextAttributes.nodeSubstr = function(node, start, width) {
   }
 }
 
-/**
- * Static method to get the substring based of a node's textContent.  The
- * start index of end index are computed in column width.
- *
- * @param {HTMLElement} node The HTML element to get the substr of textContent
- *     from.
- * @param {integer} start The starting offset in column width.
- * @param {integer} end The ending offset in column width.
- * @return {integer} The extracted substring of the node's textContent.
- */
-hterm.TextAttributes.nodeSubstring = function(node, start, end) {
+        /**
+         * Static method to get the substring based of a node's textContent. The
+         * start index of end index are computed in column width.
+         *
+         * @param {HTMLElement} node The HTML element to get the substr of
+         * textContent from.
+         * @param {integer} start The starting offset in column width.
+         * @param {integer} end The ending offset in column width.
+         * @return {integer} The extracted substring of the node's textContent.
+         */
+        hterm.TextAttributes.nodeSubstring = function(node, start, end) {
   if (node.wcNode) {
     return lib.wc.substring(node.textContent, start, end);
   } else {
@@ -14325,8 +14196,7 @@ hterm.TextAttributes.splitWidecharString = function(str) {
     i += increment;
   }
 
-  if (length)
-    rv.push({str: str.substr(base, length)});
+  if (length) rv.push({str: str.substr(base, length)});
 
   return rv;
 };
@@ -14337,8 +14207,7 @@ hterm.TextAttributes.splitWidecharString = function(str) {
 
 'use strict';
 
-lib.rtdep('lib.colors', 'lib.f', 'lib.UTF8Decoder',
-          'hterm.VT.CharacterMap');
+lib.rtdep('lib.colors', 'lib.f', 'lib.UTF8Decoder', 'hterm.VT.CharacterMap');
 
 /**
  * Constructor for the VT escape sequence interpreter.
@@ -14401,10 +14270,11 @@ hterm.VT = function(terminal) {
   // Construct a regular expression to match the known one-byte control chars.
   // This is used in parseUnknown_ to quickly scan a string for the next
   // control character.
-  var cc1 = Object.keys(hterm.VT.CC1).map(
-      function(e) {
-        return '\\x' + lib.f.zpad(e.charCodeAt().toString(16), 2)
-      }).join('');
+  var cc1 = Object.keys(hterm.VT.CC1)
+                .map(function(e) {
+                  return '\\x' + lib.f.zpad(e.charCodeAt().toString(16), 2)
+                })
+                .join('');
   this.cc1Pattern_ = new RegExp('[' + cc1 + ']');
 
   // Decoder to maintain UTF-8 decode state.
@@ -14555,8 +14425,7 @@ hterm.VT.ParseState.prototype.resetBuf = function(opt_buf) {
  */
 hterm.VT.ParseState.prototype.resetArguments = function(opt_arg_zero) {
   this.args.length = 0;
-  if (typeof opt_arg_zero != 'undefined')
-    this.args[0] = opt_arg_zero;
+  if (typeof opt_arg_zero != 'undefined') this.args[0] = opt_arg_zero;
 };
 
 /**
@@ -14569,8 +14438,7 @@ hterm.VT.ParseState.prototype.iarg = function(argnum, defaultValue) {
   if (str) {
     var ret = parseInt(str, 10);
     // An argument of zero is treated as the default value.
-    if (ret == 0)
-      ret = defaultValue;
+    if (ret == 0) ret = defaultValue;
     return ret;
   }
   return defaultValue;
@@ -14675,20 +14543,16 @@ hterm.VT.prototype.reset = function() {
  * See the "Mouse Tracking" section of [xterm].
  */
 hterm.VT.prototype.onTerminalMouse_ = function(e) {
-  if (this.mouseReport == this.MOUSE_REPORT_DISABLED)
-    return;
+  if (this.mouseReport == this.MOUSE_REPORT_DISABLED) return;
 
   // Temporary storage for our response.
   var response;
 
   // Modifier key state.
   var mod = 0;
-  if (e.shiftKey)
-    mod |= 4;
-  if (e.metaKey || (this.terminal.keyboard.altIsMeta && e.altKey))
-    mod |= 8;
-  if (e.ctrlKey)
-    mod |= 16;
+  if (e.shiftKey) mod |= 4;
+  if (e.metaKey || (this.terminal.keyboard.altIsMeta && e.altKey)) mod |= 8;
+  if (e.ctrlKey) mod |= 16;
 
   // TODO(rginda): We should also support mode 1005 and/or 1006 to extend the
   // coordinate space.  Though, after poking around just a little, I wasn't
@@ -14747,8 +14611,7 @@ hterm.VT.prototype.onTerminalMouse_ = function(e) {
       break;
   }
 
-  if (response)
-    this.terminal.io.sendString(response);
+  if (response) this.terminal.io.sendString(response);
 };
 
 /**
@@ -14778,8 +14641,7 @@ hterm.VT.prototype.interpret = function(buf) {
  * Decode a string according to the 'receive-encoding' preference.
  */
 hterm.VT.prototype.decode = function(str) {
-  if (this.characterEncoding == 'utf-8')
-    return this.decodeUTF8(str);
+  if (this.characterEncoding == 'utf-8') return this.decodeUTF8(str);
 
   return str;
 };
@@ -14811,11 +14673,9 @@ hterm.VT.prototype.parseUnknown_ = function(parseState) {
   var self = this;
 
   function print(str) {
-    if (self[self.GL].GL)
-      str = self[self.GL].GL(str);
+    if (self[self.GL].GL) str = self[self.GL].GL(str);
 
-    if (self[self.GR].GR)
-      str = self[self.GR].GR(str);
+    if (self[self.GR].GR) str = self[self.GR].GR(str);
 
     self.terminal.print(str);
   };
@@ -14854,8 +14714,8 @@ hterm.VT.prototype.parseCSI_ = function(parseState) {
 
   if (ch >= '@' && ch <= '~') {
     // This is the final character.
-    this.dispatch('CSI', this.leadingModifier_ + this.trailingModifier_ + ch,
-                  parseState);
+    this.dispatch(
+        'CSI', this.leadingModifier_ + this.trailingModifier_ + ch, parseState);
     parseState.resetParseFunction();
 
   } else if (ch == ';') {
@@ -14950,8 +14810,8 @@ hterm.VT.prototype.parseUntilStringTerminator_ = function(parseState) {
       abortReason = 'timeout expired: ' + new Date() - args[1];
 
     if (abortReason) {
-      console.log('parseUntilStringTerminator_: aborting: ' + abortReason,
-                  args[0]);
+      console.log(
+          'parseUntilStringTerminator_: aborting: ' + abortReason, args[0]);
       parseState.reset(args[0]);
       return false;
     }
@@ -14969,8 +14829,8 @@ hterm.VT.prototype.parseUntilStringTerminator_ = function(parseState) {
   args[0] += buf.substr(0, nextTerminator);
 
   parseState.resetParseFunction();
-  parseState.advance(nextTerminator +
-                     (buf.substr(nextTerminator, 1) == '\x1b' ? 2 : 1));
+  parseState.advance(
+      nextTerminator + (buf.substr(nextTerminator, 1) == '\x1b' ? 2 : 1));
 
   return true;
 };
@@ -15001,8 +14861,8 @@ hterm.VT.prototype.dispatch = function(type, code, parseState) {
     // This prevents an errant (DCS, '\x90'), (OSC, '\x9d'), (PM, '\x9e') or
     // (APC, '\x9f') from locking up the terminal waiting for its expected
     // (ST, '\x9c') or (BEL, '\x07').
-    console.warn('Ignoring 8-bit control code: 0x' +
-                 code.charCodeAt(0).toString(16));
+    console.warn(
+        'Ignoring 8-bit control code: 0x' + code.charCodeAt(0).toString(16));
     return;
   }
 
@@ -15127,8 +14987,7 @@ hterm.VT.prototype.setDECMode = function(code, state) {
       break;
 
     case '12':  // att610
-      if (this.enableDec12)
-        this.terminal.setCursorBlink(state);
+      if (this.enableDec12) this.terminal.setCursorBlink(state);
       break;
 
     case '25':  // DECTCEM
@@ -15148,13 +15007,13 @@ hterm.VT.prototype.setDECMode = function(code, state) {
       break;
 
     case '1000':  // Report on mouse clicks only.
-      this.mouseReport = (
-          state ? this.MOUSE_REPORT_CLICK : this.MOUSE_REPORT_DISABLED);
+      this.mouseReport =
+          (state ? this.MOUSE_REPORT_CLICK : this.MOUSE_REPORT_DISABLED);
       break;
 
     case '1002':  // Report on mouse clicks and drags
-      this.mouseReport = (
-          state ? this.MOUSE_REPORT_DRAG : this.MOUSE_REPORT_DISABLED);
+      this.mouseReport =
+          (state ? this.MOUSE_REPORT_DRAG : this.MOUSE_REPORT_DISABLED);
       break;
 
     case '1010':  // rxvt
@@ -15265,7 +15124,7 @@ hterm.VT.VT52 = {};
  *
  * Silently ignored.
  */
-hterm.VT.CC1['\x00'] = function () {};
+hterm.VT.CC1['\x00'] = function() {};
 
 /**
  * Enquiry (ENQ).
@@ -15407,13 +15266,11 @@ hterm.VT.CC1['\x1b'] = function(parseState) {
   function parseESC(parseState) {
     var ch = parseState.consumeChar();
 
-    if (ch == '\x1b')
-      return;
+    if (ch == '\x1b') return;
 
     this.dispatch('ESC', ch, parseState);
 
-    if (parseState.func == parseESC)
-      parseState.resetParseFunction();
+    if (parseState.func == parseESC) parseState.resetParseFunction();
   };
 
   parseState.func = parseESC;
@@ -15431,8 +15288,7 @@ hterm.VT.CC1['\x7f'] = hterm.VT.ignore;
  *
  * Like newline, only keep the X position
  */
-hterm.VT.CC1['\x84'] =
-hterm.VT.ESC['D'] = function() {
+hterm.VT.CC1['\x84'] = hterm.VT.ESC['D'] = function() {
   this.terminal.lineFeed();
 };
 
@@ -15441,8 +15297,7 @@ hterm.VT.ESC['D'] = function() {
  *
  * Like newline, but doesn't add lines.
  */
-hterm.VT.CC1['\x85'] =
-hterm.VT.ESC['E'] = function() {
+hterm.VT.CC1['\x85'] = hterm.VT.ESC['E'] = function() {
   this.terminal.setCursorColumn(0);
   this.terminal.cursorDown(1);
 };
@@ -15450,8 +15305,7 @@ hterm.VT.ESC['E'] = function() {
 /**
  * Horizontal Tabulation Set (HTS).
  */
-hterm.VT.CC1['\x88'] =
-hterm.VT.ESC['H'] = function() {
+hterm.VT.CC1['\x88'] = hterm.VT.ESC['H'] = function() {
   this.terminal.setTabStop(this.terminal.getCursorColumn());
 };
 
@@ -15460,8 +15314,7 @@ hterm.VT.ESC['H'] = function() {
  *
  * Move up one line.
  */
-hterm.VT.CC1['\x8d'] =
-hterm.VT.ESC['M'] = function() {
+hterm.VT.CC1['\x8d'] = hterm.VT.ESC['M'] = function() {
   this.terminal.reverseLineFeed();
 };
 
@@ -15472,8 +15325,7 @@ hterm.VT.ESC['M'] = function() {
  *
  * Not currently implemented.
  */
-hterm.VT.CC1['\x8e'] =
-hterm.VT.ESC['N'] = hterm.VT.ignore;
+hterm.VT.CC1['\x8e'] = hterm.VT.ESC['N'] = hterm.VT.ignore;
 
 /**
  * Single Shift 3 (SS3).
@@ -15482,8 +15334,7 @@ hterm.VT.ESC['N'] = hterm.VT.ignore;
  *
  * Not currently implemented.
  */
-hterm.VT.CC1['\x8f'] =
-hterm.VT.ESC['O'] = hterm.VT.ignore;
+hterm.VT.CC1['\x8f'] = hterm.VT.ESC['O'] = hterm.VT.ignore;
 
 /**
  * Device Control String (DCS).
@@ -15493,8 +15344,7 @@ hterm.VT.ESC['O'] = hterm.VT.ignore;
  *
  * TODO(rginda): Consider implementing DECRQSS, the rest don't seem applicable.
  */
-hterm.VT.CC1['\x90'] =
-hterm.VT.ESC['P'] = function(parseState) {
+hterm.VT.CC1['\x90'] = hterm.VT.ESC['P'] = function(parseState) {
   parseState.resetArguments();
   parseState.func = this.parseUntilStringTerminator_;
 };
@@ -15504,32 +15354,28 @@ hterm.VT.ESC['P'] = function(parseState) {
  *
  * Will not implement.
  */
-hterm.VT.CC1['\x96'] =
-hterm.VT.ESC['V'] = hterm.VT.ignore;
+hterm.VT.CC1['\x96'] = hterm.VT.ESC['V'] = hterm.VT.ignore;
 
 /**
  * End of Protected Area (EPA).
  *
  * Will not implement.
  */
-hterm.VT.CC1['\x97'] =
-hterm.VT.ESC['W'] = hterm.VT.ignore;
+hterm.VT.CC1['\x97'] = hterm.VT.ESC['W'] = hterm.VT.ignore;
 
 /**
  * Start of String (SOS).
  *
  * Will not implement.
  */
-hterm.VT.CC1['\x98'] =
-hterm.VT.ESC['X'] = hterm.VT.ignore;
+hterm.VT.CC1['\x98'] = hterm.VT.ESC['X'] = hterm.VT.ignore;
 
 /**
  * Single Character Introducer (SCI, also DECID).
  *
  * Return Terminal ID.  Obsolete form of 'ESC [ c' (DA).
  */
-hterm.VT.CC1['\x9a'] =
-hterm.VT.ESC['Z'] = function() {
+hterm.VT.CC1['\x9a'] = hterm.VT.ESC['Z'] = function() {
   this.terminal.io.sendString('\x1b[?1;2c');
 };
 
@@ -15538,8 +15384,7 @@ hterm.VT.ESC['Z'] = function() {
  *
  * The lead into most escape sequences.  See [CSI].
  */
-hterm.VT.CC1['\x9b'] =
-hterm.VT.ESC['['] = function(parseState) {
+hterm.VT.CC1['\x9b'] = hterm.VT.ESC['['] = function(parseState) {
   parseState.resetArguments();
   this.leadingModifier_ = '';
   this.trailingModifier_ = '';
@@ -15554,16 +15399,14 @@ hterm.VT.ESC['['] = function(parseState) {
  * We don't directly handle it here, as it's only used to terminate other
  * sequences.  See the 'parseUntilStringTerminator_' method.
  */
-hterm.VT.CC1['\x9c'] =
-hterm.VT.ESC['\\'] = hterm.VT.ignore;
+hterm.VT.CC1['\x9c'] = hterm.VT.ESC['\\'] = hterm.VT.ignore;
 
 /**
  * Operating System Command (OSC).
  *
  * Commands relating to the operating system.
  */
-hterm.VT.CC1['\x9d'] =
-hterm.VT.ESC[']'] = function(parseState) {
+hterm.VT.CC1['\x9d'] = hterm.VT.ESC[']'] = function(parseState) {
   parseState.resetArguments();
 
   function parseOSC(parseState) {
@@ -15595,8 +15438,7 @@ hterm.VT.ESC[']'] = function(parseState) {
  *
  * Will not implement.
  */
-hterm.VT.CC1['\x9e'] =
-hterm.VT.ESC['^'] = function(parseState) {
+hterm.VT.CC1['\x9e'] = hterm.VT.ESC['^'] = function(parseState) {
   parseState.resetArguments();
   parseState.func = this.parseUntilStringTerminator_;
 };
@@ -15606,8 +15448,7 @@ hterm.VT.ESC['^'] = function(parseState) {
  *
  * Will not implement.
  */
-hterm.VT.CC1['\x9f'] =
-hterm.VT.ESC['_'] = function(parseState) {
+hterm.VT.CC1['\x9f'] = hterm.VT.ESC['_'] = function(parseState) {
   parseState.resetArguments();
   parseState.func = this.parseUntilStringTerminator_;
 };
@@ -15650,8 +15491,7 @@ hterm.VT.ESC['\x20'] = function(parseState) {
 hterm.VT.ESC['#'] = function(parseState) {
   parseState.func = function(parseState) {
     var ch = parseState.consumeChar();
-    if (ch == '8')
-      this.terminal.fill('E');
+    if (ch == '8') this.terminal.fill('E');
 
     parseState.resetParseFunction();
   };
@@ -15707,38 +15547,34 @@ hterm.VT.ESC['%'] = function(parseState) {
  *
  * TODO(rginda): Implement.
  */
-hterm.VT.ESC['('] =
-hterm.VT.ESC[')'] =
-hterm.VT.ESC['*'] =
-hterm.VT.ESC['+'] =
-hterm.VT.ESC['-'] =
-hterm.VT.ESC['.'] =
-hterm.VT.ESC['/'] = function(parseState, code) {
-  parseState.func = function(parseState) {
-    var ch = parseState.consumeChar();
-    if (ch == '\x1b') {
-      parseState.resetParseFunction();
-      parseState.func();
-      return;
-    }
+hterm.VT.ESC['('] = hterm.VT.ESC[')'] = hterm.VT.ESC['*'] = hterm.VT.ESC['+'] =
+    hterm.VT.ESC['-'] = hterm.VT.ESC['.'] =
+        hterm.VT.ESC['/'] = function(parseState, code) {
+          parseState.func = function(parseState) {
+            var ch = parseState.consumeChar();
+            if (ch == '\x1b') {
+              parseState.resetParseFunction();
+              parseState.func();
+              return;
+            }
 
-    if (ch in hterm.VT.CharacterMap.maps) {
-      if (code == '(') {
-        this.G0 = hterm.VT.CharacterMap.maps[ch];
-      } else if (code == ')' || code == '-') {
-        this.G1 = hterm.VT.CharacterMap.maps[ch];
-      } else if (code == '*' || code == '.') {
-        this.G2 = hterm.VT.CharacterMap.maps[ch];
-      } else if (code == '+' || code == '/') {
-        this.G3 = hterm.VT.CharacterMap.maps[ch];
-      }
-    } else if (this.warnUnimplemented) {
-      console.log('Invalid character set for "' + code + '": ' + ch);
-    }
+            if (ch in hterm.VT.CharacterMap.maps) {
+              if (code == '(') {
+                this.G0 = hterm.VT.CharacterMap.maps[ch];
+              } else if (code == ')' || code == '-') {
+                this.G1 = hterm.VT.CharacterMap.maps[ch];
+              } else if (code == '*' || code == '.') {
+                this.G2 = hterm.VT.CharacterMap.maps[ch];
+              } else if (code == '+' || code == '/') {
+                this.G3 = hterm.VT.CharacterMap.maps[ch];
+              }
+            } else if (this.warnUnimplemented) {
+              console.log('Invalid character set for "' + code + '": ' + ch);
+            }
 
-    parseState.resetParseFunction();
-  };
-};
+            parseState.resetParseFunction();
+          };
+        };
 
 /**
  * Back Index (DECBI).
@@ -15805,8 +15641,7 @@ hterm.VT.ESC['c'] = function() {
  *
  * Will not implement.
  */
-hterm.VT.ESC['l'] =
-hterm.VT.ESC['m'] = hterm.VT.ignore;
+hterm.VT.ESC['l'] = hterm.VT.ESC['m'] = hterm.VT.ignore;
 
 /**
  * Lock Shift 2 (LS2)
@@ -15883,21 +15718,18 @@ hterm.VT.OSC['4'] = function(parseState) {
     var colorIndex = parseInt(args[pairNumber * 2]);
     var colorValue = args[pairNumber * 2 + 1];
 
-    if (colorIndex >= colorPalette.length)
-      continue;
+    if (colorIndex >= colorPalette.length) continue;
 
     if (colorValue == '?') {
       // '?' means we should report back the current color value.
       colorValue = lib.colors.rgbToX11(colorPalette[colorIndex]);
-      if (colorValue)
-        responseArray.push(colorIndex + ';' + colorValue);
+      if (colorValue) responseArray.push(colorIndex + ';' + colorValue);
 
       continue;
     }
 
     colorValue = lib.colors.x11ToCSS(colorValue);
-    if (colorValue)
-      colorPalette[colorIndex] = colorValue;
+    if (colorValue) colorPalette[colorIndex] = colorValue;
   }
 
   if (responseArray.length)
@@ -15955,12 +15787,10 @@ hterm.VT.OSC['52'] = function(parseState) {
   // parameter is used to select which of the X clipboards to address.  Since
   // we're not integrating with X, we treat them all the same.
   var args = parseState.args[0].match(/^[cps01234567]*;(.*)/);
-  if (!args)
-    return;
+  if (!args) return;
 
   var data = window.atob(args[1]);
-  if (data)
-    this.terminal.copyStringToClipboard(this.decode(data));
+  if (data) this.terminal.copyStringToClipboard(this.decode(data));
 };
 
 /**
@@ -16031,8 +15861,8 @@ hterm.VT.CSI['G'] = function(parseState) {
  * Cursor Position (CUP).
  */
 hterm.VT.CSI['H'] = function(parseState) {
-  this.terminal.setCursorPosition(parseState.iarg(0, 1) - 1,
-                                  parseState.iarg(1, 1) - 1);
+  this.terminal.setCursorPosition(
+      parseState.iarg(0, 1) - 1, parseState.iarg(1, 1) - 1);
 };
 
 /**
@@ -16049,12 +15879,11 @@ hterm.VT.CSI['I'] = function(parseState) {
 /**
  * Erase in Display (ED, DECSED).
  */
-hterm.VT.CSI['J'] =
-hterm.VT.CSI['?J'] = function(parseState, code) {
+hterm.VT.CSI['J'] = hterm.VT.CSI['?J'] = function(parseState, code) {
   var arg = parseState.args[0];
 
   if (!arg || arg == '0') {
-      this.terminal.eraseBelow();
+    this.terminal.eraseBelow();
   } else if (arg == '1') {
     this.terminal.eraseAbove();
   } else if (arg == '2') {
@@ -16069,13 +15898,12 @@ hterm.VT.CSI['?J'] = function(parseState, code) {
 /**
  * Erase in line (EL, DECSEL).
  */
-hterm.VT.CSI['K'] =
-hterm.VT.CSI['?K'] = function(parseState, code) {
+hterm.VT.CSI['K'] = hterm.VT.CSI['?K'] = function(parseState, code) {
   var arg = parseState.args[0];
 
   if (!arg || arg == '0') {
     this.terminal.eraseToRight();
-  } else if (arg == '1'){
+  } else if (arg == '1') {
     this.terminal.eraseToLeft();
   } else if (arg == '2') {
     this.terminal.eraseLine();
@@ -16247,8 +16075,7 @@ hterm.VT.CSI['?h'] = function(parseState) {
  *
  * These commands control the printer.  Will not implement.
  */
-hterm.VT.CSI['i'] =
-hterm.VT.CSI['?i'] = hterm.VT.ignore;
+hterm.VT.CSI['i'] = hterm.VT.CSI['?i'] = hterm.VT.ignore;
 
 /**
  * Reset Mode (RM).
@@ -16427,13 +16254,11 @@ hterm.VT.CSI['m'] = function(parseState) {
         } else {
           // Check for 256 color
           var c = get256(i);
-          if (c == null)
-            break;
+          if (c == null) break;
 
           i += 2;
 
-          if (c >= attrs.colorPalette.length)
-            continue;
+          if (c >= attrs.colorPalette.length) continue;
 
           attrs.foregroundSource = c;
         }
@@ -16455,13 +16280,11 @@ hterm.VT.CSI['m'] = function(parseState) {
         } else {
           // Check for 256 color
           var c = get256(i);
-          if (c == null)
-            break;
+          if (c == null) break;
 
           i += 2;
 
-          if (c >= attrs.colorPalette.length)
-            continue;
+          if (c >= attrs.colorPalette.length) continue;
 
           attrs.backgroundSource = c;
         }
@@ -16477,8 +16300,8 @@ hterm.VT.CSI['m'] = function(parseState) {
     }
   }
 
-  attrs.setDefaults(this.terminal.getForegroundColor(),
-                    this.terminal.getBackgroundColor());
+  attrs.setDefaults(
+      this.terminal.getForegroundColor(), this.terminal.getBackgroundColor());
 };
 
 /**
@@ -16627,7 +16450,7 @@ hterm.VT.CSI['"q'] = hterm.VT.ignore;
  */
 hterm.VT.CSI['r'] = function(parseState) {
   var args = parseState.args;
-  var scrollTop = args[0] ? parseInt(args[0], 10) -1 : null;
+  var scrollTop = args[0] ? parseInt(args[0], 10) - 1 : null;
   var scrollBottom = args[1] ? parseInt(args[1], 10) - 1 : null;
   this.terminal.setVTScrollRegion(scrollTop, scrollBottom);
   this.terminal.setCursorPosition(0, 0);
@@ -16745,13 +16568,11 @@ hterm.VT.CSI['$x'] = hterm.VT.ignore;
  * Implemented as far as we care (start a glyph and end a glyph).
  */
 hterm.VT.CSI['z'] = function(parseState) {
-  if (parseState.args.length < 1)
-    return;
+  if (parseState.args.length < 1) return;
   var arg = parseState.args[0];
   if (arg == '0') {
     // Start a glyph (one parameter, the glyph number).
-    if (parseState.args.length < 2)
-      return;
+    if (parseState.args.length < 2) return;
     this.terminal.getTextAttributes().tileData = parseState.args[1];
   } else if (arg == '1') {
     // End a glyph.
@@ -16831,8 +16652,7 @@ hterm.VT.CharacterMap = function(name, glmap) {
    */
   this.GR = null;
 
-  if (glmap)
-    this.reset(glmap);
+  if (glmap) this.reset(glmap);
 };
 
 /**
@@ -16844,8 +16664,8 @@ hterm.VT.CharacterMap.prototype.reset = function(glmap) {
   this.glmap = glmap;
 
   var glkeys = Object.keys(this.glmap).map(function(key) {
-      return '\\x' + lib.f.zpad(key.charCodeAt(0).toString(16));
-    });
+    return '\\x' + lib.f.zpad(key.charCodeAt(0).toString(16));
+  });
 
   this.glre = new RegExp('[' + glkeys.join('') + ']', 'g');
 
@@ -16854,24 +16674,26 @@ hterm.VT.CharacterMap.prototype.reset = function(glmap) {
   this.grmap = {};
 
   glkeys.forEach(function(glkey) {
-      var grkey = String.fromCharCode(glkey.charCodeAt(0) & 0x80);
-      this.grmap[grkey] = this.glmap[glkey];
-    }.bind(this));
+    var grkey = String.fromCharCode(glkey.charCodeAt(0) & 0x80);
+    this.grmap[grkey] = this.glmap[glkey];
+  }.bind(this));
 
   var grkeys = Object.keys(this.grmap).map(function(key) {
-      return '\\x' + lib.f.zpad(key.charCodeAt(0).toString(16), 2);
-    });
+    return '\\x' + lib.f.zpad(key.charCodeAt(0).toString(16), 2);
+  });
 
   this.grre = new RegExp('[' + grkeys.join('') + ']', 'g');
 
   this.GL = function(str) {
-    return str.replace(this.glre,
-                       function(ch) { return this.glmap[ch] }.bind(this));
+    return str.replace(this.glre, function(ch) {
+      return this.glmap[ch]
+    }.bind(this));
   }.bind(this);
 
   this.GR = function(str) {
-    return str.replace(this.grre,
-                       function(ch) { return this.grmap[ch] }.bind(this));
+    return str.replace(this.grre, function(ch) {
+      return this.grmap[ch]
+    }.bind(this));
   }.bind(this);
 };
 
@@ -16885,83 +16707,78 @@ hterm.VT.CharacterMap.maps = {};
  * VT100 Graphic character map.
  * http://vt100.net/docs/vt220-rm/table2-4.html
  */
-hterm.VT.CharacterMap.maps['0'] = new hterm.VT.CharacterMap(
-    'graphic', {
-      '\x60':'\u25c6',  // ` -> diamond
-      '\x61':'\u2592',  // a -> grey-box
-      '\x62':'\u2409',  // b -> h/t
-      '\x63':'\u240c',  // c -> f/f
-      '\x64':'\u240d',  // d -> c/r
-      '\x65':'\u240a',  // e -> l/f
-      '\x66':'\u00b0',  // f -> degree
-      '\x67':'\u00b1',  // g -> +/-
-      '\x68':'\u2424',  // h -> n/l
-      '\x69':'\u240b',  // i -> v/t
-      '\x6a':'\u2518',  // j -> bottom-right
-      '\x6b':'\u2510',  // k -> top-right
-      '\x6c':'\u250c',  // l -> top-left
-      '\x6d':'\u2514',  // m -> bottom-left
-      '\x6e':'\u253c',  // n -> line-cross
-      '\x6f':'\u23ba',  // o -> scan1
-      '\x70':'\u23bb',  // p -> scan3
-      '\x71':'\u2500',  // q -> scan5
-      '\x72':'\u23bc',  // r -> scan7
-      '\x73':'\u23bd',  // s -> scan9
-      '\x74':'\u251c',  // t -> left-tee
-      '\x75':'\u2524',  // u -> right-tee
-      '\x76':'\u2534',  // v -> bottom-tee
-      '\x77':'\u252c',  // w -> top-tee
-      '\x78':'\u2502',  // x -> vertical-line
-      '\x79':'\u2264',  // y -> less-equal
-      '\x7a':'\u2265',  // z -> greater-equal
-      '\x7b':'\u03c0',  // { -> pi
-      '\x7c':'\u2260',  // | -> not-equal
-      '\x7d':'\u00a3',  // } -> british-pound
-      '\x7e':'\u00b7',  // ~ -> dot
-    });
+hterm.VT.CharacterMap.maps['0'] = new hterm.VT.CharacterMap('graphic', {
+  '\x60': '\u25c6',  // ` -> diamond
+  '\x61': '\u2592',  // a -> grey-box
+  '\x62': '\u2409',  // b -> h/t
+  '\x63': '\u240c',  // c -> f/f
+  '\x64': '\u240d',  // d -> c/r
+  '\x65': '\u240a',  // e -> l/f
+  '\x66': '\u00b0',  // f -> degree
+  '\x67': '\u00b1',  // g -> +/-
+  '\x68': '\u2424',  // h -> n/l
+  '\x69': '\u240b',  // i -> v/t
+  '\x6a': '\u2518',  // j -> bottom-right
+  '\x6b': '\u2510',  // k -> top-right
+  '\x6c': '\u250c',  // l -> top-left
+  '\x6d': '\u2514',  // m -> bottom-left
+  '\x6e': '\u253c',  // n -> line-cross
+  '\x6f': '\u23ba',  // o -> scan1
+  '\x70': '\u23bb',  // p -> scan3
+  '\x71': '\u2500',  // q -> scan5
+  '\x72': '\u23bc',  // r -> scan7
+  '\x73': '\u23bd',  // s -> scan9
+  '\x74': '\u251c',  // t -> left-tee
+  '\x75': '\u2524',  // u -> right-tee
+  '\x76': '\u2534',  // v -> bottom-tee
+  '\x77': '\u252c',  // w -> top-tee
+  '\x78': '\u2502',  // x -> vertical-line
+  '\x79': '\u2264',  // y -> less-equal
+  '\x7a': '\u2265',  // z -> greater-equal
+  '\x7b': '\u03c0',  // { -> pi
+  '\x7c': '\u2260',  // | -> not-equal
+  '\x7d': '\u00a3',  // } -> british-pound
+  '\x7e': '\u00b7',  // ~ -> dot
+});
 
 /**
  * British character map.
  * http://vt100.net/docs/vt220-rm/table2-5.html
  */
-hterm.VT.CharacterMap.maps['A'] = new hterm.VT.CharacterMap(
-    'british', {
-      '\x23': '\u00a3',  // # -> british-pound
-    });
+hterm.VT.CharacterMap.maps['A'] = new hterm.VT.CharacterMap('british', {
+  '\x23': '\u00a3',  // # -> british-pound
+});
 
 /**
  * US ASCII map, no changes.
  */
-hterm.VT.CharacterMap.maps['B'] = new hterm.VT.CharacterMap(
-    'us', null);
+hterm.VT.CharacterMap.maps['B'] = new hterm.VT.CharacterMap('us', null);
 
 /**
  * Dutch character map.
  * http://vt100.net/docs/vt220-rm/table2-6.html
  */
-hterm.VT.CharacterMap.maps['4'] = new hterm.VT.CharacterMap(
-    'dutch', {
-      '\x23': '\u00a3',  // # -> british-pound
+hterm.VT.CharacterMap.maps['4'] = new hterm.VT.CharacterMap('dutch', {
+  '\x23': '\u00a3',  // # -> british-pound
 
-      '\x40': '\u00be',  // @ -> 3/4
+  '\x40': '\u00be',  // @ -> 3/4
 
-      '\x5b': '\u0132',  // [ -> 'ij' ligature (xterm goes with \u00ff?)
-      '\x5c': '\u00bd',  // \ -> 1/2
-      '\x5d': '\u007c',  // ] -> vertical bar
+  '\x5b': '\u0132',  // [ -> 'ij' ligature (xterm goes with \u00ff?)
+  '\x5c': '\u00bd',  // \ -> 1/2
+  '\x5d': '\u007c',  // ] -> vertical bar
 
-      '\x7b': '\u00a8',  // { -> two dots
-      '\x7c': '\u0066',  // | -> f
-      '\x7d': '\u00bc',  // } -> 1/4
-      '\x7e': '\u00b4',  // ~ -> acute
-    });
+  '\x7b': '\u00a8',  // { -> two dots
+  '\x7c': '\u0066',  // | -> f
+  '\x7d': '\u00bc',  // } -> 1/4
+  '\x7e': '\u00b4',  // ~ -> acute
+});
 
 /**
  * Finnish character map.
  * http://vt100.net/docs/vt220-rm/table2-7.html
  */
-hterm.VT.CharacterMap.maps['C'] =
-hterm.VT.CharacterMap.maps['5'] = new hterm.VT.CharacterMap(
-    'finnish', {
+hterm.VT.CharacterMap.maps['C'] = hterm.VT.CharacterMap.maps['5'] =
+    new hterm.VT.CharacterMap('finnish', {
       '\x5b': '\u00c4',  // [ -> 'A' umlaut
       '\x5c': '\u00d6',  // \ -> 'O' umlaut
       '\x5d': '\u00c5',  // ] -> 'A' ring
@@ -16979,90 +16796,85 @@ hterm.VT.CharacterMap.maps['5'] = new hterm.VT.CharacterMap(
  * French character map.
  * http://vt100.net/docs/vt220-rm/table2-8.html
  */
-hterm.VT.CharacterMap.maps['R'] = new hterm.VT.CharacterMap(
-    'french', {
-      '\x23': '\u00a3',  // # -> british-pound
+hterm.VT.CharacterMap.maps['R'] = new hterm.VT.CharacterMap('french', {
+  '\x23': '\u00a3',  // # -> british-pound
 
-      '\x40': '\u00e0',  // @ -> 'a' grave
+  '\x40': '\u00e0',  // @ -> 'a' grave
 
-      '\x5b': '\u00b0',  // [ -> ring
-      '\x5c': '\u00e7',  // \ -> 'c' cedilla
-      '\x5d': '\u00a7',  // ] -> section symbol (double s)
+  '\x5b': '\u00b0',  // [ -> ring
+  '\x5c': '\u00e7',  // \ -> 'c' cedilla
+  '\x5d': '\u00a7',  // ] -> section symbol (double s)
 
-      '\x7b': '\u00e9',  // { -> 'e' acute
-      '\x7c': '\u00f9',  // | -> 'u' grave
-      '\x7d': '\u00e8',  // } -> 'e' grave
-      '\x7e': '\u00a8',  // ~ -> umlaut
-    });
+  '\x7b': '\u00e9',  // { -> 'e' acute
+  '\x7c': '\u00f9',  // | -> 'u' grave
+  '\x7d': '\u00e8',  // } -> 'e' grave
+  '\x7e': '\u00a8',  // ~ -> umlaut
+});
 
 /**
  * French Canadian character map.
  * http://vt100.net/docs/vt220-rm/table2-9.html
  */
-hterm.VT.CharacterMap.maps['Q'] = new hterm.VT.CharacterMap(
-    'french canadian', {
-      '\x40': '\u00e0',  // @ -> 'a' grave
+hterm.VT.CharacterMap.maps['Q'] = new hterm.VT.CharacterMap('french canadian', {
+  '\x40': '\u00e0',  // @ -> 'a' grave
 
-      '\x5b': '\u00e2',  // [ -> 'a' circumflex
-      '\x5c': '\u00e7',  // \ -> 'c' cedilla
-      '\x5d': '\u00ea',  // ] -> 'e' circumflex
-      '\x5e': '\u00ee',  // ^ -> 'i' circumflex
+  '\x5b': '\u00e2',  // [ -> 'a' circumflex
+  '\x5c': '\u00e7',  // \ -> 'c' cedilla
+  '\x5d': '\u00ea',  // ] -> 'e' circumflex
+  '\x5e': '\u00ee',  // ^ -> 'i' circumflex
 
-      '\x60': '\u00f4',  // ` -> 'o' circumflex
+  '\x60': '\u00f4',  // ` -> 'o' circumflex
 
-      '\x7b': '\u00e9',  // { -> 'e' acute
-      '\x7c': '\u00f9',  // | -> 'u' grave
-      '\x7d': '\u00e8',  // } -> 'e' grave
-      '\x7e': '\u00fb',  // ~ -> 'u' circumflex
-    });
+  '\x7b': '\u00e9',  // { -> 'e' acute
+  '\x7c': '\u00f9',  // | -> 'u' grave
+  '\x7d': '\u00e8',  // } -> 'e' grave
+  '\x7e': '\u00fb',  // ~ -> 'u' circumflex
+});
 
 /**
  * German character map.
  * http://vt100.net/docs/vt220-rm/table2-10.html
  */
-hterm.VT.CharacterMap.maps['K'] = new hterm.VT.CharacterMap(
-    'german', {
-      '\x40': '\u00a7',  // @ -> section symbol (double s)
+hterm.VT.CharacterMap.maps['K'] = new hterm.VT.CharacterMap('german', {
+  '\x40': '\u00a7',  // @ -> section symbol (double s)
 
-      '\x5b': '\u00c4',  // [ -> 'A' umlaut
-      '\x5c': '\u00d6',  // \ -> 'O' umlaut
-      '\x5d': '\u00dc',  // ] -> 'U' umlaut
+  '\x5b': '\u00c4',  // [ -> 'A' umlaut
+  '\x5c': '\u00d6',  // \ -> 'O' umlaut
+  '\x5d': '\u00dc',  // ] -> 'U' umlaut
 
-      '\x7b': '\u00e4',  // { -> 'a' umlaut
-      '\x7c': '\u00f6',  // | -> 'o' umlaut
-      '\x7d': '\u00fc',  // } -> 'u' umlaut
-      '\x7e': '\u00df',  // ~ -> eszett
-    });
+  '\x7b': '\u00e4',  // { -> 'a' umlaut
+  '\x7c': '\u00f6',  // | -> 'o' umlaut
+  '\x7d': '\u00fc',  // } -> 'u' umlaut
+  '\x7e': '\u00df',  // ~ -> eszett
+});
 
 /**
  * Italian character map.
  * http://vt100.net/docs/vt220-rm/table2-11.html
  */
-hterm.VT.CharacterMap.maps['Y'] = new hterm.VT.CharacterMap(
-    'italian', {
-      '\x23': '\u00a3',  // # -> british-pound
+hterm.VT.CharacterMap.maps['Y'] = new hterm.VT.CharacterMap('italian', {
+  '\x23': '\u00a3',  // # -> british-pound
 
-      '\x40': '\u00a7',  // @ -> section symbol (double s)
+  '\x40': '\u00a7',  // @ -> section symbol (double s)
 
-      '\x5b': '\u00b0',  // [ -> ring
-      '\x5c': '\u00e7',  // \ -> 'c' cedilla
-      '\x5d': '\u00e9',  // ] -> 'e' acute
+  '\x5b': '\u00b0',  // [ -> ring
+  '\x5c': '\u00e7',  // \ -> 'c' cedilla
+  '\x5d': '\u00e9',  // ] -> 'e' acute
 
-      '\x60': '\u00f9',  // ` -> 'u' grave
+  '\x60': '\u00f9',  // ` -> 'u' grave
 
-      '\x7b': '\u00e0',  // { -> 'a' grave
-      '\x7c': '\u00f2',  // | -> 'o' grave
-      '\x7d': '\u00e8',  // } -> 'e' grave
-      '\x7e': '\u00ec',  // ~ -> 'i' grave
-    });
+  '\x7b': '\u00e0',  // { -> 'a' grave
+  '\x7c': '\u00f2',  // | -> 'o' grave
+  '\x7d': '\u00e8',  // } -> 'e' grave
+  '\x7e': '\u00ec',  // ~ -> 'i' grave
+});
 
 /**
  * Norwegian/Danish character map.
  * http://vt100.net/docs/vt220-rm/table2-12.html
  */
-hterm.VT.CharacterMap.maps['E'] =
-hterm.VT.CharacterMap.maps['6'] = new hterm.VT.CharacterMap(
-    'norwegian/danish', {
+hterm.VT.CharacterMap.maps['E'] = hterm.VT.CharacterMap.maps['6'] =
+    new hterm.VT.CharacterMap('norwegian/danish', {
       '\x40': '\u00c4',  // @ -> 'A' umlaut
 
       '\x5b': '\u00c6',  // [ -> 'AE' ligature
@@ -17082,28 +16894,26 @@ hterm.VT.CharacterMap.maps['6'] = new hterm.VT.CharacterMap(
  * Spanish character map.
  * http://vt100.net/docs/vt220-rm/table2-13.html
  */
-hterm.VT.CharacterMap.maps['Z'] = new hterm.VT.CharacterMap(
-    'spanish', {
-      '\x23': '\u00a3',  // # -> british-pound
+hterm.VT.CharacterMap.maps['Z'] = new hterm.VT.CharacterMap('spanish', {
+  '\x23': '\u00a3',  // # -> british-pound
 
-      '\x40': '\u00a7',  // @ -> section symbol (double s)
+  '\x40': '\u00a7',  // @ -> section symbol (double s)
 
-      '\x5b': '\u00a1',  // [ -> '!' inverted
-      '\x5c': '\u00d1',  // \ -> 'N' tilde
-      '\x5d': '\u00bf',  // ] -> '?' inverted
+  '\x5b': '\u00a1',  // [ -> '!' inverted
+  '\x5c': '\u00d1',  // \ -> 'N' tilde
+  '\x5d': '\u00bf',  // ] -> '?' inverted
 
-      '\x7b': '\u00b0',  // { -> ring
-      '\x7c': '\u00f1',  // | -> 'n' tilde
-      '\x7d': '\u00e7',  // } -> 'c' cedilla
-    });
+  '\x7b': '\u00b0',  // { -> ring
+  '\x7c': '\u00f1',  // | -> 'n' tilde
+  '\x7d': '\u00e7',  // } -> 'c' cedilla
+});
 
 /**
  * Swedish character map.
  * http://vt100.net/docs/vt220-rm/table2-14.html
  */
-hterm.VT.CharacterMap.maps['7'] =
-hterm.VT.CharacterMap.maps['H'] = new hterm.VT.CharacterMap(
-    'swedish', {
+hterm.VT.CharacterMap.maps['7'] = hterm.VT.CharacterMap.maps['H'] =
+    new hterm.VT.CharacterMap('swedish', {
       '\x40': '\u00c9',  // @ -> 'E' acute
 
       '\x5b': '\u00c4',  // [ -> 'A' umlaut
@@ -17123,173 +16933,170 @@ hterm.VT.CharacterMap.maps['H'] = new hterm.VT.CharacterMap(
  * Swiss character map.
  * http://vt100.net/docs/vt220-rm/table2-15.html
  */
-hterm.VT.CharacterMap.maps['='] = new hterm.VT.CharacterMap(
-    'swiss', {
-      '\x23': '\u00f9',  // # -> 'u' grave
+hterm.VT.CharacterMap.maps['='] = new hterm.VT.CharacterMap('swiss', {
+  '\x23': '\u00f9',  // # -> 'u' grave
 
-      '\x40': '\u00e0',  // @ -> 'a' grave
+  '\x40': '\u00e0',  // @ -> 'a' grave
 
-      '\x5b': '\u00e9',  // [ -> 'e' acute
-      '\x5c': '\u00e7',  // \ -> 'c' cedilla
-      '\x5d': '\u00ea',  // ] -> 'e' circumflex
-      '\x5e': '\u00ee',  // ^ -> 'i' circumflex
-      '\x5f': '\u00e8',  // _ -> 'e' grave
+  '\x5b': '\u00e9',  // [ -> 'e' acute
+  '\x5c': '\u00e7',  // \ -> 'c' cedilla
+  '\x5d': '\u00ea',  // ] -> 'e' circumflex
+  '\x5e': '\u00ee',  // ^ -> 'i' circumflex
+  '\x5f': '\u00e8',  // _ -> 'e' grave
 
-      '\x60': '\u00f4',  // ` -> 'o' circumflex
+  '\x60': '\u00f4',  // ` -> 'o' circumflex
 
-      '\x7b': '\u00e4',  // { -> 'a' umlaut
-      '\x7c': '\u00f6',  // | -> 'o' umlaut
-      '\x7d': '\u00fc',  // } -> 'u' umlaut
-      '\x7e': '\u00fb',  // ~ -> 'u' circumflex
-    });
-lib.resource.add('hterm/audio/bell', 'audio/ogg;base64',
-'T2dnUwACAAAAAAAAAADhqW5KAAAAAMFvEjYBHgF2b3JiaXMAAAAAAYC7AAAAAAAAAHcBAAAAAAC4' +
-'AU9nZ1MAAAAAAAAAAAAA4aluSgEAAAAAesI3EC3//////////////////8kDdm9yYmlzHQAAAFhp' +
-'cGguT3JnIGxpYlZvcmJpcyBJIDIwMDkwNzA5AAAAAAEFdm9yYmlzKUJDVgEACAAAADFMIMWA0JBV' +
-'AAAQAABgJCkOk2ZJKaWUoSh5mJRISSmllMUwiZiUicUYY4wxxhhjjDHGGGOMIDRkFQAABACAKAmO' +
-'o+ZJas45ZxgnjnKgOWlOOKcgB4pR4DkJwvUmY26mtKZrbs4pJQgNWQUAAAIAQEghhRRSSCGFFGKI' +
-'IYYYYoghhxxyyCGnnHIKKqigggoyyCCDTDLppJNOOumoo4466ii00EILLbTSSkwx1VZjrr0GXXxz' +
-'zjnnnHPOOeecc84JQkNWAQAgAAAEQgYZZBBCCCGFFFKIKaaYcgoyyIDQkFUAACAAgAAAAABHkRRJ' +
-'sRTLsRzN0SRP8ixREzXRM0VTVE1VVVVVdV1XdmXXdnXXdn1ZmIVbuH1ZuIVb2IVd94VhGIZhGIZh' +
-'GIZh+H3f933f930gNGQVACABAKAjOZbjKaIiGqLiOaIDhIasAgBkAAAEACAJkiIpkqNJpmZqrmmb' +
-'tmirtm3LsizLsgyEhqwCAAABAAQAAAAAAKBpmqZpmqZpmqZpmqZpmqZpmqZpmmZZlmVZlmVZlmVZ' +
-'lmVZlmVZlmVZlmVZlmVZlmVZlmVZlmVZlmVZQGjIKgBAAgBAx3Ecx3EkRVIkx3IsBwgNWQUAyAAA' +
-'CABAUizFcjRHczTHczzHczxHdETJlEzN9EwPCA1ZBQAAAgAIAAAAAABAMRzFcRzJ0SRPUi3TcjVX' +
-'cz3Xc03XdV1XVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVYHQkFUAAAQAACGdZpZq' +
-'gAgzkGEgNGQVAIAAAAAYoQhDDAgNWQUAAAQAAIih5CCa0JrzzTkOmuWgqRSb08GJVJsnuamYm3PO' +
-'OeecbM4Z45xzzinKmcWgmdCac85JDJqloJnQmnPOeRKbB62p0ppzzhnnnA7GGWGcc85p0poHqdlY' +
-'m3POWdCa5qi5FJtzzomUmye1uVSbc84555xzzjnnnHPOqV6czsE54Zxzzonam2u5CV2cc875ZJzu' +
-'zQnhnHPOOeecc84555xzzglCQ1YBAEAAAARh2BjGnYIgfY4GYhQhpiGTHnSPDpOgMcgppB6NjkZK' +
-'qYNQUhknpXSC0JBVAAAgAACEEFJIIYUUUkghhRRSSCGGGGKIIaeccgoqqKSSiirKKLPMMssss8wy' +
-'y6zDzjrrsMMQQwwxtNJKLDXVVmONteaec645SGultdZaK6WUUkoppSA0ZBUAAAIAQCBkkEEGGYUU' +
-'UkghhphyyimnoIIKCA1ZBQAAAgAIAAAA8CTPER3RER3RER3RER3RER3P8RxREiVREiXRMi1TMz1V' +
-'VFVXdm1Zl3Xbt4Vd2HXf133f141fF4ZlWZZlWZZlWZZlWZZlWZZlCUJDVgEAIAAAAEIIIYQUUkgh' +
-'hZRijDHHnINOQgmB0JBVAAAgAIAAAAAAR3EUx5EcyZEkS7IkTdIszfI0T/M00RNFUTRNUxVd0RV1' +
-'0xZlUzZd0zVl01Vl1XZl2bZlW7d9WbZ93/d93/d93/d93/d939d1IDRkFQAgAQCgIzmSIimSIjmO' +
-'40iSBISGrAIAZAAABACgKI7iOI4jSZIkWZImeZZniZqpmZ7pqaIKhIasAgAAAQAEAAAAAACgaIqn' +
-'mIqniIrniI4oiZZpiZqquaJsyq7ruq7ruq7ruq7ruq7ruq7ruq7ruq7ruq7ruq7ruq7ruq7rukBo' +
-'yCoAQAIAQEdyJEdyJEVSJEVyJAcIDVkFAMgAAAgAwDEcQ1Ikx7IsTfM0T/M00RM90TM9VXRFFwgN' +
-'WQUAAAIACAAAAAAAwJAMS7EczdEkUVIt1VI11VItVVQ9VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV' +
-'VVVVVVVVVVVV1TRN0zSB0JCVAAAZAAAjQQYZhBCKcpBCbj1YCDHmJAWhOQahxBiEpxAzDDkNInSQ' +
-'QSc9uJI5wwzz4FIoFURMg40lN44gDcKmXEnlOAhCQ1YEAFEAAIAxyDHEGHLOScmgRM4xCZ2UyDkn' +
-'pZPSSSktlhgzKSWmEmPjnKPSScmklBhLip2kEmOJrQAAgAAHAIAAC6HQkBUBQBQAAGIMUgophZRS' +
-'zinmkFLKMeUcUko5p5xTzjkIHYTKMQadgxAppRxTzinHHITMQeWcg9BBKAAAIMABACDAQig0ZEUA' +
-'ECcA4HAkz5M0SxQlSxNFzxRl1xNN15U0zTQ1UVRVyxNV1VRV2xZNVbYlTRNNTfRUVRNFVRVV05ZN' +
-'VbVtzzRl2VRV3RZV1bZl2xZ+V5Z13zNNWRZV1dZNVbV115Z9X9ZtXZg0zTQ1UVRVTRRV1VRV2zZV' +
-'17Y1UXRVUVVlWVRVWXZlWfdVV9Z9SxRV1VNN2RVVVbZV2fVtVZZ94XRVXVdl2fdVWRZ+W9eF4fZ9' +
-'4RhV1dZN19V1VZZ9YdZlYbd13yhpmmlqoqiqmiiqqqmqtm2qrq1bouiqoqrKsmeqrqzKsq+rrmzr' +
-'miiqrqiqsiyqqiyrsqz7qizrtqiquq3KsrCbrqvrtu8LwyzrunCqrq6rsuz7qizruq3rxnHrujB8' +
-'pinLpqvquqm6um7runHMtm0co6rqvirLwrDKsu/rui+0dSFRVXXdlF3jV2VZ921fd55b94WybTu/' +
-'rfvKceu60vg5z28cubZtHLNuG7+t+8bzKz9hOI6lZ5q2baqqrZuqq+uybivDrOtCUVV9XZVl3zdd' +
-'WRdu3zeOW9eNoqrquirLvrDKsjHcxm8cuzAcXds2jlvXnbKtC31jyPcJz2vbxnH7OuP2daOvDAnH' +
-'jwAAgAEHAIAAE8pAoSErAoA4AQAGIecUUxAqxSB0EFLqIKRUMQYhc05KxRyUUEpqIZTUKsYgVI5J' +
-'yJyTEkpoKZTSUgehpVBKa6GU1lJrsabUYu0gpBZKaS2U0lpqqcbUWowRYxAy56RkzkkJpbQWSmkt' +
-'c05K56CkDkJKpaQUS0otVsxJyaCj0kFIqaQSU0mptVBKa6WkFktKMbYUW24x1hxKaS2kEltJKcYU' +
-'U20txpojxiBkzknJnJMSSmktlNJa5ZiUDkJKmYOSSkqtlZJSzJyT0kFIqYOOSkkptpJKTKGU1kpK' +
-'sYVSWmwx1pxSbDWU0lpJKcaSSmwtxlpbTLV1EFoLpbQWSmmttVZraq3GUEprJaUYS0qxtRZrbjHm' +
-'GkppraQSW0mpxRZbji3GmlNrNabWam4x5hpbbT3WmnNKrdbUUo0txppjbb3VmnvvIKQWSmktlNJi' +
-'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' +
-'m2L/kruPM6Q7oz4tvDQy+bZ3HzOi+gNHA4DZEgA=' +
-''
-);
+  '\x7b': '\u00e4',  // { -> 'a' umlaut
+  '\x7c': '\u00f6',  // | -> 'o' umlaut
+  '\x7d': '\u00fc',  // } -> 'u' umlaut
+  '\x7e': '\u00fb',  // ~ -> 'u' circumflex
+});
+lib.resource.add(
+    'hterm/audio/bell', 'audio/ogg;base64',
+    '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' +
+        'QSc9uJI5wwzz4FIoFURMg40lN44gDcKmXEnlOAhCQ1YEAFEAAIAxyDHEGHLOScmgRM4xCZ2UyDkn' +
+        'pZPSSSktlhgzKSWmEmPjnKPSScmklBhLip2kEmOJrQAAgAAHAIAAC6HQkBUBQBQAAGIMUgophZRS' +
+        'zinmkFLKMeUcUko5p5xTzjkIHYTKMQadgxAppRxTzinHHITMQeWcg9BBKAAAIMABACDAQig0ZEUA' +
+        'ECcA4HAkz5M0SxQlSxNFzxRl1xNN15U0zTQ1UVRVyxNV1VRV2xZNVbYlTRNNTfRUVRNFVRVV05ZN' +
+        'VbVtzzRl2VRV3RZV1bZl2xZ+V5Z13zNNWRZV1dZNVbV115Z9X9ZtXZg0zTQ1UVRVTRRV1VRV2zZV' +
+        '17Y1UXRVUVVlWVRVWXZlWfdVV9Z9SxRV1VNN2RVVVbZV2fVtVZZ94XRVXVdl2fdVWRZ+W9eF4fZ9' +
+        '4RhV1dZN19V1VZZ9YdZlYbd13yhpmmlqoqiqmiiqqqmqtm2qrq1bouiqoqrKsmeqrqzKsq+rrmzr' +
+        'miiqrqiqsiyqqiyrsqz7qizrtqiquq3KsrCbrqvrtu8LwyzrunCqrq6rsuz7qizruq3rxnHrujB8' +
+        'pinLpqvquqm6um7runHMtm0co6rqvirLwrDKsu/rui+0dSFRVXXdlF3jV2VZ921fd55b94WybTu/' +
+        'rfvKceu60vg5z28cubZtHLNuG7+t+8bzKz9hOI6lZ5q2baqqrZuqq+uybivDrOtCUVV9XZVl3zdd' +
+        'WRdu3zeOW9eNoqrquirLvrDKsjHcxm8cuzAcXds2jlvXnbKtC31jyPcJz2vbxnH7OuP2daOvDAnH' +
+        'jwAAgAEHAIAAE8pAoSErAoA4AQAGIecUUxAqxSB0EFLqIKRUMQYhc05KxRyUUEpqIZTUKsYgVI5J' +
+        'yJyTEkpoKZTSUgehpVBKa6GU1lJrsabUYu0gpBZKaS2U0lpqqcbUWowRYxAy56RkzkkJpbQWSmkt' +
+        'c05K56CkDkJKpaQUS0otVsxJyaCj0kFIqaQSU0mptVBKa6WkFktKMbYUW24x1hxKaS2kEltJKcYU' +
+        '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' +
+        'm2L/kruPM6Q7oz4tvDQy+bZ3HzOi+gNHA4DZEgA=' +
+        '');
 
-lib.resource.add('hterm/concat/date', 'text/plain',
-'Tue, 25 Apr 2017 15:12:45 +0000' +
-''
-);
+lib.resource.add(
+    'hterm/concat/date', 'text/plain',
+    'Tue, 25 Apr 2017 15:12:45 +0000' +
+        '');
 
-lib.resource.add('hterm/changelog/version', 'text/plain',
-'1.62' +
-''
-);
+lib.resource.add(
+    'hterm/changelog/version', 'text/plain',
+    '1.62' +
+        '');
 
-lib.resource.add('hterm/changelog/date', 'text/plain',
-'2017-04-17' +
-''
-);
+lib.resource.add(
+    'hterm/changelog/date', 'text/plain',
+    '2017-04-17' +
+        '');
 
-lib.resource.add('hterm/git/HEAD', 'text/plain',
-'git rev-parse HEAD' +
-''
-);
-
-
+lib.resource.add(
+    'hterm/git/HEAD', 'text/plain',
+    'git rev-parse HEAD' +
+        '');

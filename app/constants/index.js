@@ -5,12 +5,9 @@
  * @exports app/constants/index
  */
 
-window.angular && (function (angular) {
-    'use strict';
+window.angular && (function(angular) {
+  'use strict';
 
-    angular
-        .module('app.constants', [])
-        .constant('AppConstants', {
-        });
+  angular.module('app.constants', []).constant('AppConstants', {});
 
 })(window.angular);
