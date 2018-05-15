@@ -6,20 +6,14 @@
  * @name dateTimeController
  */
 
-window.angular && (function (angular) {
-    'use strict';
+window.angular && (function(angular) {
+  'use strict';
 
-    angular
-        .module('app.configuration')
-        .controller('dateTimeController', [
-            '$scope',
-            '$window',
-            'APIUtils',
-            'dataService',
-            function($scope, $window, APIUtils, dataService){
-                $scope.dataService = dataService;
-            }
-        ]
-    );
+  angular.module('app.configuration').controller('dateTimeController', [
+    '$scope', '$window', 'APIUtils', 'dataService',
+    function($scope, $window, APIUtils, dataService) {
+      $scope.dataService = dataService;
+    }
+  ]);
 
 })(angular);
