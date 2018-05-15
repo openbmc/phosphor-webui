@@ -13,7 +13,6 @@ window.angular && (function (angular) {
     angular
         .module('app.common.services')
         .service('dataService', ['Constants', function (Constants) {
-            this.app_version = "V.0.0.1";
             this.server_health = Constants.SERVER_HEALTH.unknown;
             this.server_state = 'Unreachable';
             this.server_status = -2;
