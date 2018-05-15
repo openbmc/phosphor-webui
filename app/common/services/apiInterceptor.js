@@ -16,7 +16,10 @@ window.angular && (function (angular) {
             return {
                 'request': function(config){
                     dataService.loading = true;
-                    config.timeout = 20000;
+                    // If caller has not defined a timeout, set to default of 20s
+                    if (config.timeout == null){
+                        config.timeout = 20000;
+                    }
                     return config;
                 },
                 'response': function(response){

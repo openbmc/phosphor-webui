@@ -129,6 +129,8 @@ window.angular && (function (angular) {
           $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|data|blob):/);
         }])
         .config(['$httpProvider', function($httpProvider){
+            // Note that this timeout does not actually do anything
+            // The real logic for this is in the apiInterceptor
             $httpProvider.defaults.timeout = 20000;
             $httpProvider.interceptors.push('apiInterceptor');
         }])
