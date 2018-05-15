@@ -5,13 +5,12 @@
  * @exports app/templates
  */
 
-window.angular && (function (angular) {
-    'use strict';
+window.angular && (function(angular) {
+  'use strict';
 
-    /**
-     * Used for gulp template cache plugin.
-     */
-    angular
-        .module('app.templates', []);
+  /**
+   * Used for gulp template cache plugin.
+   */
+  angular.module('app.templates', []);
 
 })(window.angular);

@@ -1,5 +1,5 @@
 // Reference: http://karma-runner.github.io/0.12/config/configuration-file.html
-module.exports = function karmaConfig (config) {
+module.exports = function karmaConfig(config) {
   config.set({
     frameworks: [
       // Reference: https://github.com/karma-runner/karma-jasmine
@@ -37,19 +37,12 @@ module.exports = function karmaConfig (config) {
     singleRun: true,
 
     // Configure code coverage reporter
-    coverageReporter: {
-      dir: 'coverage/',
-      reporters: [
-        {type: 'text-summary'},
-        {type: 'html'}
-      ]
-    },
+    coverageReporter:
+        {dir: 'coverage/', reporters: [{type: 'text-summary'}, {type: 'html'}]},
 
     webpack: require('./webpack.config'),
 
     // Hide webpack build information from output
-    webpackMiddleware: {
-      noInfo: 'errors-only'
-    }
+    webpackMiddleware: {noInfo: 'errors-only'}
   });
 };
