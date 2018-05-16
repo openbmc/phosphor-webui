@@ -49,7 +49,7 @@ window.angular && (function (angular) {
                     $scope.file_empty = true;
                     $scope.uploading = false;
                     $scope.upload_success = false;
-                    $scope.activate = { reboot: true };
+                    $scope.activate = { reboot: false };
                     $scope.download_error_msg = "";
                     $scope.download_success = false;
 
