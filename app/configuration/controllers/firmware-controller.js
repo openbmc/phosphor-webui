@@ -125,7 +125,8 @@ window.angular && (function (angular) {
                             type: 'Error'
                           });
                         }).then(function(state){
-                          if($scope.activate.reboot){
+                          // Only look at reboot if it's a BMC image
+                          if($scope.activate.reboot && ($scope.activate_image_type == 'BMC')){
                             // Despite the new image being active, issue,
                             // https://github.com/openbmc/openbmc/issues/2764, can cause a
                             // system to brick, if the system reboots before the service to set
