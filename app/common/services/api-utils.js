@@ -238,7 +238,6 @@ window.angular && (function(angular) {
         testPassword: function(username, password) {
           // Calls /login without the current session to verify the given
           // password is correct ignore the interceptor logout on a bad password
-          DataService.ignoreHttpError = true;
           return $http({
                    method: 'POST',
                    url: DataService.getHost() + '/login',
