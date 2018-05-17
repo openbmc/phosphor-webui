@@ -40,7 +40,9 @@ window.angular && (function (angular) {
                     }
 
                     // Verify the oldPassword is correct
+                    dataService.ignoreHttpError = true;
                     APIUtils.testPassword(user, oldPassword).then(function(state){
+                        dataService.ignoreHttpError = false;
                         APIUtils.changePassword(user, newPassword).then(function(response){
                             // Clear the textboxes on a success
                             $scope.passwordVerify = '';
@@ -52,6 +54,7 @@ window.angular && (function (angular) {
                             $scope.errorMsg = "Error changing password!";
                         });
                     }, function(error){
+                        dataService.ignoreHttpError = false;
                         $scope.state = "error";
                         $scope.errorMsg = "Old password is not correct!";
                     });
