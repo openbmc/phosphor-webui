@@ -2,7 +2,7 @@
 <div class="overview">
 	<div class="row column">
 		<h1 class="inline">{{dataService.hostname}}</h1>
-		<button class="link" ng-click="edit_server_name = !edit_server_name">edit</button><!-- this is default name. Will show custom server name if set -->
+		<button class="link" ng-click="edit_hostname = !edit_hostname">edit</button><!-- this is default name. Will show custom server name if set -->
 	</div>
 	<section class="row">
 		<div class="column large-8">
@@ -154,19 +154,19 @@
 	</section>
 </div>
 <!-- edit server name modal -->
-<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': edit_server_name}">
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': edit_hostname}">
 	<div class="modal__upload" role="document">
-		<div class="screen-reader-offscreen modal-description">Edit server name</div><!-- accessibility only; used for screen readers -->
+		<div class="screen-reader-offscreen modal-description">Edit hostname</div><!-- accessibility only; used for screen readers -->
 		<div class="page-header ">
 			<h1 class="modal-title h4"><span class="icon icon__info"><svg xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 32 32"><path
 					d="M18 14h-6v2h1v6h-2v2h8v-2h-2z"/><circle cx="16" cy="10" r="2"/><path
 					d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z"/></svg></span>
-				Edit server name
+				Edit hostname
 			</h1>
 		</div>
 		<div class="modal__content">
-			<p>The server name is displayed in the header and can contain any characters up to a total of 64</p>
+			<p>The hostname is displayed in the header and can contain any characters up to a total of 64</p>
 			<form>
 				<label for="editServerName" class="hide"></label>
 				<input id="editServerName" class="modal__edit-server-name" maxlength="64" type="text" ng-model="char_count" ng-trim="false">
@@ -174,9 +174,9 @@
 			</form>
 		</div>
 		<div class="modal__button-wrapper">
-			<button class="inline btn-secondary" ng-click="edit_server_name= false;">Cancel</button>
+			<button class="inline btn-secondary" ng-click="edit_hostname= false;">Cancel</button>
 			<button class="inline btn-primary" ng-click="saveHostname(char_count);">Save</button>
 		</div>
 	</div>
 </section>
-<div class="modal-overlay" tabindex="-1" ng-class="{'active': edit_server_name}"></div>
+<div class="modal-overlay" tabindex="-1" ng-class="{'active': edit_hostname}"></div>
