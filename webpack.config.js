@@ -230,7 +230,7 @@ module.exports = [
           // Reference:
           // http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
           // Minify all javascript, switch loaders to minimizing mode
-          // TODO: openbmc/openbmc#2781  Mangling currently breaks the GUI.
+          // TODO: openbmc/openbmc#2871  Mangling currently breaks the GUI.
           new UglifyJsPlugin({
             uglifyOptions:{
               mangle: false
