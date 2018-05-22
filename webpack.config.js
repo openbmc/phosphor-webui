@@ -10,6 +10,7 @@ var CompressionPlugin = require('compression-webpack-plugin');
 var AssetsPlugin = require('assets-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var path = require('path');
+var UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 /**
  * Env
@@ -96,7 +97,7 @@ module.exports = [
           // Transpile .js files using babel-loader
           // Compiles ES6 and ES7 into ES5 code
           test : /\.js$/,
-          loader : 'babel-loader',
+          use : 'babel-loader',
           exclude : /node_modules/
         },
         {
@@ -230,8 +231,10 @@ module.exports = [
           // http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
           // Minify all javascript, switch loaders to minimizing mode
           // TODO: openbmc/openbmc#2781  Mangling currently breaks the GUI.
-          new webpack.optimize.UglifyJsPlugin({
-            mangle: false
+          new UglifyJsPlugin({
+            uglifyOptions:{
+              mangle: false
+            }
           }),
 
           // Copy assets from the public folder
