@@ -8,6 +8,5 @@
 window.angular && (function(angular) {
   'use strict';
 
-  angular
-    .module('app.vendors', []);
+  angular.module('app.vendors', []);
 })(window.angular);

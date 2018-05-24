@@ -8,10 +8,9 @@
 window.angular && (function(angular) {
   'use strict';
 
-  angular
-    .module('app.common.services', [
-      // Dependencies
-      // Basic resources
-    ]);
+  angular.module('app.common.services', [
+    // Dependencies
+    // Basic resources
+  ]);
 
 })(window.angular);

@@ -10,9 +10,9 @@
 window.angular && (function(angular) {
   'use strict';
 
-  angular
-    .module('app.common.services')
-    .service('apiInterceptor', ['$q', '$rootScope', 'dataService', function($q, $rootScope, dataService) {
+  angular.module('app.common.services').service('apiInterceptor', [
+    '$q', '$rootScope', 'dataService',
+    function($q, $rootScope, dataService) {
       return {
         'request': function(config) {
           dataService.loading = true;
@@ -25,7 +25,7 @@ window.angular && (function(angular) {
         'response': function(response) {
           dataService.loading = false;
 
-          //not interested in template requests
+          // not interested in template requests
           if (!/^https?\:/i.test(response.config.url)) {
             return response;
           }
@@ -33,13 +33,12 @@ window.angular && (function(angular) {
           dataService.last_updated = new Date();
           if (!response) {
             dataService.server_unreachable = true;
-          }
-          else {
+          } else {
             dataService.server_unreachable = false;
           }
 
           if (response && response.status == 'error' &&
-            dataService.path != '/login') {
+              dataService.path != '/login') {
             $rootScope.$emit('timedout-user', {});
           }
 
@@ -52,8 +51,7 @@ window.angular && (function(angular) {
               if (dataService.path != '/login') {
                 $rootScope.$emit('timedout-user', {});
               }
-            }
-            else if (rejection.status == -1) {
+            } else if (rejection.status == -1) {
               dataService.server_unreachable = true;
             }
 
@@ -62,6 +60,7 @@ window.angular && (function(angular) {
           return $q.reject(rejection);
         }
       };
-    }]);
+    }
+  ]);
 
 })(window.angular);

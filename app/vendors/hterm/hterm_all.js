@@ -90,15 +90,13 @@ lib.rtdep = function(var_args) {
 
   try {
     throw new Error();
-  }
-  catch (ex) {
+  } catch (ex) {
     var stackArray = ex.stack.split('\n');
     // In Safari, the resulting stackArray will only have 2 elements and the
     // individual strings are formatted differently.
     if (stackArray.length >= 3) {
       source = stackArray[2].replace(/^\s*at\s+/, '');
-    }
-    else {
+    } else {
       source = stackArray[1].replace(/^\s*global code@/, '');
     }
   }
@@ -107,11 +105,9 @@ lib.rtdep = function(var_args) {
     var path = arguments[i];
     if (path instanceof Array) {
       lib.rtdep.apply(lib, path);
-    }
-    else {
+    } else {
       var ary = this.runtimeDependencies_[path];
-      if (!ary)
-        ary = this.runtimeDependencies_[path] = [];
+      if (!ary) ary = this.runtimeDependencies_[path] = [];
       ary.push(source);
     }
   }
@@ -144,8 +140,7 @@ lib.ensureRuntimeDependencies_ = function() {
     }
   }
 
-  if (!passed)
-    throw new Error('Failed runtime dependency check');
+  if (!passed) throw new Error('Failed runtime dependency check');
 };
 
 /**
@@ -185,11 +180,9 @@ lib.init = function(onInit, opt_logFunction) {
   var initNext = function() {
     if (ary.length) {
       var rec = ary.shift();
-      if (opt_logFunction)
-        opt_logFunction('init: ' + rec[0]);
+      if (opt_logFunction) opt_logFunction('init: ' + rec[0]);
       rec[1](lib.f.alarm(initNext));
-    }
-    else {
+    } else {
       onInit();
     }
   };
@@ -244,23 +237,26 @@ lib.colors.re_ = {
 
   // CSS rgb color, rgb(rrr,ggg,bbb).
   rgb: new RegExp(
-    ('^/s*rgb/s*/(/s*(/d{1,3})/s*,/s*(/d{1,3})/s*,' +
-      '/s*(/d{1,3})/s*/)/s*$'
-    ).replace(/\//g, '\\'), 'i'),
+      ('^/s*rgb/s*/(/s*(/d{1,3})/s*,/s*(/d{1,3})/s*,' +
+       '/s*(/d{1,3})/s*/)/s*$')
+          .replace(/\//g, '\\'),
+      'i'),
 
   // CSS rgb color, rgb(rrr,ggg,bbb,aaa).
   rgba: new RegExp(
-    ('^/s*rgba/s*' +
-      '/(/s*(/d{1,3})/s*,/s*(/d{1,3})/s*,/s*(/d{1,3})/s*' +
-      '(?:,/s*(/d+(?:/./d+)?)/s*)/)/s*$'
-    ).replace(/\//g, '\\'), 'i'),
+      ('^/s*rgba/s*' +
+       '/(/s*(/d{1,3})/s*,/s*(/d{1,3})/s*,/s*(/d{1,3})/s*' +
+       '(?:,/s*(/d+(?:/./d+)?)/s*)/)/s*$')
+          .replace(/\//g, '\\'),
+      'i'),
 
   // Either RGB or RGBA.
   rgbx: new RegExp(
-    ('^/s*rgba?/s*' +
-      '/(/s*(/d{1,3})/s*,/s*(/d{1,3})/s*,/s*(/d{1,3})/s*' +
-      '(?:,/s*(/d+(?:/./d+)?)/s*)?/)/s*$'
-    ).replace(/\//g, '\\'), 'i'),
+      ('^/s*rgba?/s*' +
+       '/(/s*(/d{1,3})/s*,/s*(/d{1,3})/s*,/s*(/d{1,3})/s*' +
+       '(?:,/s*(/d+(?:/./d+)?)/s*)?/)/s*$')
+          .replace(/\//g, '\\'),
+      'i'),
 
   // An X11 "rgb:dddd/dddd/dddd" value.
   x11rgb: /^\s*rgb:([a-f0-9]{1,4})\/([a-f0-9]{1,4})\/([a-f0-9]{1,4})\s*$/i,
@@ -287,8 +283,7 @@ lib.colors.rgbToX11 = function(value) {
   }
 
   var ary = value.match(lib.colors.re_.rgbx);
-  if (!ary)
-    return null;
+  if (!ary) return null;
 
   return 'rgb:' + scale(ary[1]) + '/' + scale(ary[2]) + '/' + scale(ary[3]);
 };
@@ -306,18 +301,15 @@ lib.colors.rgbToX11 = function(value) {
  * Truncate values back down to 24 bit since that's all CSS supports.
  */
 lib.colors.x11HexToCSS = function(v) {
-  if (!v.startsWith('#'))
-    return null;
+  if (!v.startsWith('#')) return null;
   // Strip the leading # off.
   v = v.substr(1);
 
   // Reject unknown sizes.
-  if ([3, 6, 9, 12].indexOf(v.length) == -1)
-    return null;
+  if ([3, 6, 9, 12].indexOf(v.length) == -1) return null;
 
   // Reject non-hex values.
-  if (v.match(/[^a-f0-9]/i))
-    return null;
+  if (v.match(/[^a-f0-9]/i)) return null;
 
   // Split the colors out.
   var size = v.length / 3;
@@ -328,9 +320,9 @@ lib.colors.x11HexToCSS = function(v) {
   // Normalize to 16 bits.
   function norm16(v) {
     v = parseInt(v, 16);
-    return size == 2 ? v : // 16 bit
-      size == 1 ? v << 4 : // 8 bit
-      v >> (4 * (size - 2)); // 24 or 32 bit
+    return size == 2 ? v :          // 16 bit
+        size == 1 ? v << 4 :        // 8 bit
+            v >> (4 * (size - 2));  // 24 or 32 bit
   }
   return lib.colors.arrayToRGBA([r, g, b].map(norm16));
 };
@@ -413,20 +405,17 @@ lib.colors.hexToRGB = function(arg) {
       });
     }
     var ary = hex.match(hex24);
-    if (!ary)
-      return null;
+    if (!ary) return null;
 
-    return 'rgb(' + parseInt(ary[1], 16) + ', ' +
-      parseInt(ary[2], 16) + ', ' +
-      parseInt(ary[3], 16) + ')';
+    return 'rgb(' + parseInt(ary[1], 16) + ', ' + parseInt(ary[2], 16) + ', ' +
+        parseInt(ary[3], 16) + ')';
   }
 
   if (arg instanceof Array) {
     for (var i = 0; i < arg.length; i++) {
       arg[i] = convert(arg[i]);
     }
-  }
-  else {
+  } else {
     arg = convert(arg);
   }
 
@@ -448,19 +437,20 @@ lib.colors.hexToRGB = function(arg) {
 lib.colors.rgbToHex = function(arg) {
   function convert(rgb) {
     var ary = lib.colors.crackRGB(rgb);
-    if (!ary)
-      return null;
-    return '#' + lib.f.zpad(((parseInt(ary[0]) << 16) |
-      (parseInt(ary[1]) << 8) |
-      (parseInt(ary[2]) << 0)).toString(16), 6);
+    if (!ary) return null;
+    return '#' +
+        lib.f.zpad(
+            ((parseInt(ary[0]) << 16) | (parseInt(ary[1]) << 8) |
+             (parseInt(ary[2]) << 0))
+                .toString(16),
+            6);
   }
 
   if (arg instanceof Array) {
     for (var i = 0; i < arg.length; i++) {
       arg[i] = convert(arg[i]);
     }
-  }
-  else {
+  } else {
     arg = convert(arg);
   }
 
@@ -473,11 +463,9 @@ lib.colors.rgbToHex = function(arg) {
  * Returns null if the value could not be normalized.
  */
 lib.colors.normalizeCSS = function(def) {
-  if (def.substr(0, 1) == '#')
-    return lib.colors.hexToRGB(def);
+  if (def.substr(0, 1) == '#') return lib.colors.hexToRGB(def);
 
-  if (lib.colors.re_.rgbx.test(def))
-    return def;
+  if (lib.colors.re_.rgbx.test(def)) return def;
 
   return lib.colors.nameToRGB(def);
 };
@@ -527,8 +515,7 @@ lib.colors.crackRGB = function(color) {
       ary.shift();
       return ary;
     }
-  }
-  else {
+  } else {
     var ary = color.match(lib.colors.re_.rgb);
     if (ary) {
       ary.shift();
@@ -554,16 +541,13 @@ lib.colors.crackRGB = function(color) {
  * @return {string} The corresponding CSS rgb(...) value.
  */
 lib.colors.nameToRGB = function(name) {
-  if (name in lib.colors.colorNames)
-    return lib.colors.colorNames[name];
+  if (name in lib.colors.colorNames) return lib.colors.colorNames[name];
 
   name = name.toLowerCase();
-  if (name in lib.colors.colorNames)
-    return lib.colors.colorNames[name];
+  if (name in lib.colors.colorNames) return lib.colors.colorNames[name];
 
   name = name.replace(/\s+/g, '');
-  if (name in lib.colors.colorNames)
-    return lib.colors.colorNames[name];
+  if (name in lib.colors.colorNames) return lib.colors.colorNames[name];
 
   return null;
 };
@@ -1329,8 +1313,7 @@ lib.f.replaceVars = function(str, vars) {
 
     if (fn in lib.f.replaceVars.functions) {
       rv = lib.f.replaceVars.functions[fn](rv);
-    }
-    else if (fn) {
+    } else if (fn) {
       throw 'Unknown escape function: ' + fn;
     }
 
@@ -1347,13 +1330,8 @@ lib.f.replaceVars.functions = {
   encodeURI: encodeURI,
   encodeURIComponent: encodeURIComponent,
   escapeHTML: function(str) {
-    var map = {
-      '<': '&lt;',
-      '>': '&gt;',
-      '&': '&amp;',
-      '"': '&quot;',
-      "'": '&#39;'
-    };
+    var map =
+        {'<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', '\'': '&#39;'};
 
     return str.replace(/[<>&\"\']/g, function(m) {
       return map[m];
@@ -1370,8 +1348,7 @@ lib.f.replaceVars.functions = {
 lib.f.getAcceptLanguages = function(callback) {
   if (lib.f.getAcceptLanguages.chromeSupported()) {
     chrome.i18n.getAcceptLanguages(callback);
-  }
-  else {
+  } else {
     setTimeout(function() {
       callback([navigator.language.replace(/-/g, '_')]);
     }, 0);
@@ -1397,8 +1374,7 @@ lib.f.getAcceptLanguages.chromeSupported = function() {
  *     leading '?', the '?' will be ignored.
  */
 lib.f.parseQuery = function(queryString) {
-  if (queryString.substr(0, 1) == '?')
-    queryString = queryString.substr(1);
+  if (queryString.substr(0, 1) == '?') queryString = queryString.substr(1);
 
   var rv = {};
 
@@ -1412,8 +1388,7 @@ lib.f.parseQuery = function(queryString) {
 };
 
 lib.f.getURL = function(path) {
-  if (lib.f.getURL.chromeSupported())
-    return chrome.runtime.getURL(path);
+  if (lib.f.getURL.chromeSupported()) return chrome.runtime.getURL(path);
 
   return path;
 };
@@ -1430,10 +1405,8 @@ lib.f.getURL.chromeSupported = function() {
  * @param {integer} max The maximum acceptable value.
  */
 lib.f.clamp = function(v, min, max) {
-  if (v < min)
-    return min;
-  if (v > max)
-    return max;
+  if (v < min) return min;
+  if (v > max) return max;
   return v;
 };
 
@@ -1449,8 +1422,7 @@ lib.f.lpad = function(str, length, opt_ch) {
   str = String(str);
   opt_ch = opt_ch || ' ';
 
-  while (str.length < length)
-    str = opt_ch + str;
+  while (str.length < length) str = opt_ch + str;
 
   return str;
 };
@@ -1477,12 +1449,10 @@ lib.f.zpad = function(number, length) {
  * @param {string} A string of spaces of the requested length.
  */
 lib.f.getWhitespace = function(length) {
-  if (length <= 0)
-    return '';
+  if (length <= 0) return '';
 
   var f = this.getWhitespace;
-  if (!f.whitespace)
-    f.whitespace = '          ';
+  if (!f.whitespace) f.whitespace = '          ';
 
   while (length > f.whitespace.length) {
     f.whitespace += f.whitespace;
@@ -1549,8 +1519,7 @@ lib.f.alarm = function(callback, opt_ms) {
       }
     };
 
-    if (typeof callback == 'string')
-      return wrapperGenerator;
+    if (typeof callback == 'string') return wrapperGenerator;
 
     return wrapperGenerator(callback);
   })();
@@ -1581,8 +1550,7 @@ lib.f.getStack = function(opt_ignoreFrames) {
 
   try {
     throw new Error();
-  }
-  catch (ex) {
+  } catch (ex) {
     stackArray = ex.stack.split('\n');
   }
 
@@ -1610,8 +1578,7 @@ lib.f.smartFloorDivide = function(numerator, denominator) {
   var ceiling = Math.ceil(val);
   if (ceiling - val < .0001) {
     return ceiling;
-  }
-  else {
+  } else {
     return Math.floor(val);
   }
 };
@@ -1637,13 +1604,11 @@ lib.f.smartFloorDivide = function(numerator, denominator) {
  *     automatically added as the first language if it is not already present.
  */
 lib.MessageManager = function(languages) {
-  this.languages_ = languages.map(
-    function(el) {
-      return el.replace(/-/g, '_');
-    });
+  this.languages_ = languages.map(function(el) {
+    return el.replace(/-/g, '_');
+  });
 
-  if (this.languages_.indexOf('en') == -1)
-    this.languages_.unshift('en');
+  if (this.languages_.indexOf('en') == -1) this.languages_.unshift('en');
 
   this.messages = {};
 };
@@ -1660,14 +1625,12 @@ lib.MessageManager.prototype.addMessages = function(defs) {
 
     if (!def.placeholders) {
       this.messages[key] = def.message;
-    }
-    else {
+    } else {
       // Replace "$NAME$" placeholders with "$1", etc.
-      this.messages[key] = def.message.replace(
-        /\$([a-z][^\s\$]+)\$/ig,
-        function(m, name) {
-          return defs[key].placeholders[name.toLowerCase()].content;
-        });
+      this.messages[key] =
+          def.message.replace(/\$([a-z][^\s\$]+)\$/ig, function(m, name) {
+            return defs[key].placeholders[name.toLowerCase()].content;
+          });
     }
   }
 };
@@ -1683,7 +1646,7 @@ lib.MessageManager.prototype.addMessages = function(defs) {
  *     loaded.
  */
 lib.MessageManager.prototype.findAndLoadMessages = function(
-  pattern, onComplete) {
+    pattern, onComplete) {
   var languages = this.languages_.concat();
   var loaded = [];
   var failed = [];
@@ -1691,23 +1654,22 @@ lib.MessageManager.prototype.findAndLoadMessages = function(
   function onLanguageComplete(state) {
     if (state) {
       loaded = languages.shift();
-    }
-    else {
+    } else {
       failed = languages.shift();
     }
 
     if (languages.length) {
       tryNextLanguage();
-    }
-    else {
+    } else {
       onComplete(loaded, failed);
     }
   }
 
   var tryNextLanguage = function() {
-    this.loadMessages(this.replaceReferences(pattern, languages),
-      onLanguageComplete.bind(this, true),
-      onLanguageComplete.bind(this, false));
+    this.loadMessages(
+        this.replaceReferences(pattern, languages),
+        onLanguageComplete.bind(this, true),
+        onLanguageComplete.bind(this, false));
   }.bind(this);
 
   tryNextLanguage();
@@ -1717,13 +1679,12 @@ lib.MessageManager.prototype.findAndLoadMessages = function(
  * Load messages from a messages.json file.
  */
 lib.MessageManager.prototype.loadMessages = function(
-  url, onSuccess, opt_onError) {
+    url, onSuccess, opt_onError) {
   var xhr = new XMLHttpRequest();
 
   xhr.onloadend = function() {
     if (xhr.status != 200) {
-      if (opt_onError)
-        opt_onError(xhr.status);
+      if (opt_onError) opt_onError(xhr.status);
 
       return;
     }
@@ -1752,7 +1713,7 @@ lib.MessageManager.replaceReferences = function(msg, args) {
  * Per-instance copy of replaceReferences.
  */
 lib.MessageManager.prototype.replaceReferences =
-  lib.MessageManager.replaceReferences;
+    lib.MessageManager.replaceReferences;
 
 /**
  * Get a message by name, optionally replacing arguments too.
@@ -1768,10 +1729,8 @@ lib.MessageManager.prototype.get = function(msgname, opt_args, opt_default) {
   if (msgname in this.messages) {
     message = this.messages[msgname];
 
-  }
-  else {
-    if (window.chrome.i18n)
-      message = chrome.i18n.getMessage(msgname);
+  } else {
+    if (window.chrome.i18n) message = chrome.i18n.getMessage(msgname);
 
     if (!message) {
       console.warn('Unknown message: ' + msgname);
@@ -1779,11 +1738,9 @@ lib.MessageManager.prototype.get = function(msgname, opt_args, opt_default) {
     }
   }
 
-  if (!opt_args)
-    return message;
+  if (!opt_args) return message;
 
-  if (!(opt_args instanceof Array))
-    opt_args = [opt_args];
+  if (!(opt_args instanceof Array)) opt_args = [opt_args];
 
   return this.replaceReferences(message, opt_args);
 };
@@ -1821,15 +1778,13 @@ lib.MessageManager.prototype.processI18nAttributes = function(dom) {
     var node = nodes[i];
     var i18n = node.getAttribute('i18n');
 
-    if (!i18n)
-      continue;
+    if (!i18n) continue;
 
     try {
       i18n = JSON.parse(i18n);
-    }
-    catch (ex) {
-      console.error('Can\'t parse ' + node.tagName + '#' + node.id + ': ' +
-        i18n);
+    } catch (ex) {
+      console.error(
+          'Can\'t parse ' + node.tagName + '#' + node.id + ': ' + i18n);
       throw ex;
     }
 
@@ -1841,8 +1796,7 @@ lib.MessageManager.prototype.processI18nAttributes = function(dom) {
       var msg = this.get(msgname);
       if (key == '_') {
         node.textContent = msg;
-      }
-      else {
+      } else {
         node.setAttribute(key, msg);
       }
     }
@@ -1883,8 +1837,7 @@ lib.PreferenceManager = function(storage, opt_prefix) {
   this.trace = false;
 
   var prefix = opt_prefix || '/';
-  if (prefix.substr(prefix.length - 1) != '/')
-    prefix += '/';
+  if (prefix.substr(prefix.length - 1) != '/') prefix += '/';
 
   this.prefix = prefix;
 
@@ -1935,7 +1888,7 @@ lib.PreferenceManager.Record = function(name, defaultValue) {
  * A local copy of the DEFAULT_VALUE constant to make it less verbose.
  */
 lib.PreferenceManager.Record.prototype.DEFAULT_VALUE =
-  lib.PreferenceManager.prototype.DEFAULT_VALUE;
+    lib.PreferenceManager.prototype.DEFAULT_VALUE;
 
 /**
  * Register a callback to be invoked when this preference changes.
@@ -1955,8 +1908,7 @@ lib.PreferenceManager.Record.prototype.addObserver = function(observer) {
  */
 lib.PreferenceManager.Record.prototype.removeObserver = function(observer) {
   var i = this.observers.indexOf(observer);
-  if (i >= 0)
-    this.observers.splice(i, 1);
+  if (i >= 0) this.observers.splice(i, 1);
 };
 
 /**
@@ -1986,8 +1938,7 @@ lib.PreferenceManager.Record.prototype.get = function() {
  * that you don't get notified about irrelevant changes.
  */
 lib.PreferenceManager.prototype.deactivate = function() {
-  if (!this.isActive_)
-    throw new Error('Not activated');
+  if (!this.isActive_) throw new Error('Not activated');
 
   this.isActive_ = false;
   this.storage.removeObserver(this.storageObserver_);
@@ -2001,8 +1952,7 @@ lib.PreferenceManager.prototype.deactivate = function() {
  * it's automatically called as part of the constructor.
  */
 lib.PreferenceManager.prototype.activate = function() {
-  if (this.isActive_)
-    throw new Error('Already activated');
+  if (this.isActive_) throw new Error('Already activated');
 
   this.isActive_ = true;
   this.storage.addObserver(this.storageObserver_);
@@ -2028,17 +1978,14 @@ lib.PreferenceManager.prototype.readStorage = function(opt_callback) {
   var pendingChildren = 0;
 
   function onChildComplete() {
-    if (--pendingChildren == 0 && opt_callback)
-      opt_callback();
+    if (--pendingChildren == 0 && opt_callback) opt_callback();
   }
 
-  var keys = Object.keys(this.prefRecords_).map(
-    function(el) {
-      return this.prefix + el;
-    }.bind(this));
+  var keys = Object.keys(this.prefRecords_).map(function(el) {
+    return this.prefix + el;
+  }.bind(this));
 
-  if (this.trace)
-    console.log('Preferences read: ' + this.prefix);
+  if (this.trace) console.log('Preferences read: ' + this.prefix);
 
   this.storage.getItems(keys, function(items) {
     var prefixLength = this.prefix.length;
@@ -2046,9 +1993,10 @@ lib.PreferenceManager.prototype.readStorage = function(opt_callback) {
     for (var key in items) {
       var value = items[key];
       var name = key.substr(prefixLength);
-      var needSync = (name in this.childLists_ &&
-        (JSON.stringify(value) !=
-          JSON.stringify(this.prefRecords_[name].currentValue)));
+      var needSync =
+          (name in this.childLists_ &&
+           (JSON.stringify(value) !=
+            JSON.stringify(this.prefRecords_[name].currentValue)));
 
       this.prefRecords_[name].currentValue = value;
 
@@ -2058,8 +2006,7 @@ lib.PreferenceManager.prototype.readStorage = function(opt_callback) {
       }
     }
 
-    if (pendingChildren == 0 && opt_callback)
-      setTimeout(opt_callback);
+    if (pendingChildren == 0 && opt_callback) setTimeout(opt_callback);
   }.bind(this));
 };
 
@@ -2079,19 +2026,17 @@ lib.PreferenceManager.prototype.readStorage = function(opt_callback) {
  *     PreferenceManager as parameters.
  */
 lib.PreferenceManager.prototype.definePreference = function(
-  name, value, opt_onChange) {
+    name, value, opt_onChange) {
 
   var record = this.prefRecords_[name];
   if (record) {
     this.changeDefault(name, value);
-  }
-  else {
+  } else {
     record = this.prefRecords_[name] =
-      new lib.PreferenceManager.Record(name, value);
+        new lib.PreferenceManager.Record(name, value);
   }
 
-  if (opt_onChange)
-    record.addObserver(opt_onChange);
+  if (opt_onChange) record.addObserver(opt_onChange);
 };
 
 /**
@@ -2126,11 +2071,11 @@ lib.PreferenceManager.prototype.definePreferences = function(defaults) {
  *     preferences.
  */
 lib.PreferenceManager.prototype.defineChildren = function(
-  listName, childFactory) {
+    listName, childFactory) {
 
   // Define a preference to hold the ordered list of child ids.
-  this.definePreference(listName, [],
-    this.onChildListChange_.bind(this, listName));
+  this.definePreference(
+      listName, [], this.onChildListChange_.bind(this, listName));
   this.childFactories_[listName] = childFactory;
   this.childLists_[listName] = {};
 };
@@ -2147,11 +2092,9 @@ lib.PreferenceManager.prototype.addObservers = function(global, map) {
   if (global && typeof global != 'function')
     throw new Error('Invalid param: globals');
 
-  if (global)
-    this.globalObservers_.push(global);
+  if (global) this.globalObservers_.push(global);
 
-  if (!map)
-    return;
+  if (!map) return;
 
   for (var name in map) {
     if (!(name in this.prefRecords_))
@@ -2183,8 +2126,7 @@ lib.PreferenceManager.prototype.notifyAll = function() {
  */
 lib.PreferenceManager.prototype.notifyChange_ = function(name) {
   var record = this.prefRecords_[name];
-  if (!record)
-    throw new Error('Unknown preference: ' + name);
+  if (!record) throw new Error('Unknown preference: ' + name);
 
   var currentValue = record.get();
 
@@ -2207,8 +2149,8 @@ lib.PreferenceManager.prototype.notifyChange_ = function(name) {
  * @param {string} opt_hint Optional hint to include in the child id.
  * @param {string} opt_id Optional id to override the generated id.
  */
-lib.PreferenceManager.prototype.createChild = function(listName, opt_hint,
-  opt_id) {
+lib.PreferenceManager.prototype.createChild = function(
+    listName, opt_hint, opt_id) {
   var ids = this.get(listName);
   var id;
 
@@ -2217,14 +2159,12 @@ lib.PreferenceManager.prototype.createChild = function(listName, opt_hint,
     if (ids.indexOf(id) != -1)
       throw new Error('Duplicate child: ' + listName + ': ' + id);
 
-  }
-  else {
+  } else {
     // Pick a random, unique 4-digit hex identifier for the new profile.
     while (!id || ids.indexOf(id) != -1) {
       id = Math.floor(Math.random() * 0xffff + 1).toString(16);
       id = lib.f.zpad(id, 4);
-      if (opt_hint)
-        id = opt_hint + ':' + id;
+      if (opt_hint) id = opt_hint + ':' + id;
     }
   }
 
@@ -2318,15 +2258,13 @@ lib.PreferenceManager.diffChildLists = function(a, b) {
   for (var i = 0; i < a.length; i++) {
     if (b.indexOf(a[i]) != -1) {
       rv.common[a[i]] = true;
-    }
-    else {
+    } else {
       rv.added[a[i]] = true;
     }
   }
 
   for (var i = 0; i < b.length; i++) {
-    if ((b[i] in rv.added) || (b[i] in rv.common))
-      continue;
+    if ((b[i] in rv.added) || (b[i] in rv.common)) continue;
 
     rv.removed[b[i]] = true;
   }
@@ -2347,13 +2285,12 @@ lib.PreferenceManager.diffChildLists = function(a, b) {
  *     is complete.
  */
 lib.PreferenceManager.prototype.syncChildList = function(
-  listName, opt_callback) {
+    listName, opt_callback) {
 
   var pendingChildren = 0;
 
   function onChildStorage() {
-    if (--pendingChildren == 0 && opt_callback)
-      opt_callback();
+    if (--pendingChildren == 0 && opt_callback) opt_callback();
   }
 
   // The list of child ids that we *should* have a manager for.
@@ -2369,8 +2306,7 @@ lib.PreferenceManager.prototype.syncChildList = function(
     var id = currentIds[i];
 
     var managerIndex = oldIds.indexOf(id);
-    if (managerIndex >= 0)
-      oldIds.splice(managerIndex, 1);
+    if (managerIndex >= 0) oldIds.splice(managerIndex, 1);
 
     if (!this.childLists_[listName][id]) {
       var childManager = this.childFactories_[listName](this, id);
@@ -2390,8 +2326,7 @@ lib.PreferenceManager.prototype.syncChildList = function(
     delete this.childLists_[listName][oldIds[i]];
   }
 
-  if (!pendingChildren && opt_callback)
-    setTimeout(opt_callback);
+  if (!pendingChildren && opt_callback) setTimeout(opt_callback);
 };
 
 /**
@@ -2404,8 +2339,7 @@ lib.PreferenceManager.prototype.syncChildList = function(
  */
 lib.PreferenceManager.prototype.reset = function(name) {
   var record = this.prefRecords_[name];
-  if (!record)
-    throw new Error('Unknown preference: ' + name);
+  if (!record) throw new Error('Unknown preference: ' + name);
 
   this.storage.removeItem(this.prefix + name);
 
@@ -2460,7 +2394,7 @@ lib.PreferenceManager.prototype.resetAll = function() {
 lib.PreferenceManager.prototype.diff = function(a, b) {
   // If the types are different, or the type is not a simple primitive one.
   if ((typeof a) !== (typeof b) ||
-    !(/^(undefined|boolean|number|string)$/.test(typeof a))) {
+      !(/^(undefined|boolean|number|string)$/.test(typeof a))) {
     return true;
   }
 
@@ -2481,8 +2415,7 @@ lib.PreferenceManager.prototype.diff = function(a, b) {
  */
 lib.PreferenceManager.prototype.changeDefault = function(name, newValue) {
   var record = this.prefRecords_[name];
-  if (!record)
-    throw new Error('Unknown preference: ' + name);
+  if (!record) throw new Error('Unknown preference: ' + name);
 
   if (!this.diff(record.defaultValue, newValue)) {
     // Default value hasn't changed.
@@ -2524,19 +2457,16 @@ lib.PreferenceManager.prototype.changeDefaults = function(map) {
  */
 lib.PreferenceManager.prototype.set = function(name, newValue) {
   var record = this.prefRecords_[name];
-  if (!record)
-    throw new Error('Unknown preference: ' + name);
+  if (!record) throw new Error('Unknown preference: ' + name);
 
   var oldValue = record.get();
 
-  if (!this.diff(oldValue, newValue))
-    return;
+  if (!this.diff(oldValue, newValue)) return;
 
   if (this.diff(record.defaultValue, newValue)) {
     record.currentValue = newValue;
     this.storage.setItem(this.prefix + name, newValue);
-  }
-  else {
+  } else {
     record.currentValue = this.DEFAULT_VALUE;
     this.storage.removeItem(this.prefix + name);
   }
@@ -2559,8 +2489,7 @@ lib.PreferenceManager.prototype.set = function(name, newValue) {
  */
 lib.PreferenceManager.prototype.get = function(name) {
   var record = this.prefRecords_[name];
-  if (!record)
-    throw new Error('Unknown preference: ' + name);
+  if (!record) throw new Error('Unknown preference: ' + name);
 
   return record.get();
 };
@@ -2579,14 +2508,10 @@ lib.PreferenceManager.prototype.exportAsJson = function() {
       var childIds = this.get(name);
       for (var i = 0; i < childIds.length; i++) {
         var id = childIds[i];
-        rv[name].push({
-          id: id,
-          json: this.getChild(name, id).exportAsJson()
-        });
+        rv[name].push({id: id, json: this.getChild(name, id).exportAsJson()});
       }
 
-    }
-    else {
+    } else {
       var record = this.prefRecords_[name];
       if (record.currentValue != this.DEFAULT_VALUE)
         rv[name] = record.currentValue;
@@ -2615,8 +2540,7 @@ lib.PreferenceManager.prototype.importFromJson = function(json) {
         childPrefManager.importFromJson(childList[i].json);
       }
 
-    }
-    else {
+    } else {
       this.set(name, json[name]);
     }
   }
@@ -2635,8 +2559,7 @@ lib.PreferenceManager.prototype.onChildListChange_ = function(listName) {
 lib.PreferenceManager.prototype.onStorageChange_ = function(map) {
   for (var key in map) {
     if (this.prefix) {
-      if (key.lastIndexOf(this.prefix, 0) != 0)
-        continue;
+      if (key.lastIndexOf(this.prefix, 0) != 0) continue;
     }
 
     var name = key.substr(this.prefix.length);
@@ -2650,14 +2573,12 @@ lib.PreferenceManager.prototype.onStorageChange_ = function(map) {
 
     var newValue = map[key].newValue;
     var currentValue = record.currentValue;
-    if (currentValue === record.DEFAULT_VALUE)
-      currentValue = (void 0);
+    if (currentValue === record.DEFAULT_VALUE) currentValue = (void 0);
 
     if (this.diff(currentValue, newValue)) {
       if (typeof newValue == 'undefined') {
         record.currentValue = record.DEFAULT_VALUE;
-      }
-      else {
+      } else {
         record.currentValue = newValue;
       }
 
@@ -2697,11 +2618,7 @@ lib.resource = {
  * @param {*} data The value of the resource.
  */
 lib.resource.add = function(name, type, data) {
-  lib.resource.resources_[name] = {
-    type: type,
-    name: name,
-    data: data
-  };
+  lib.resource.resources_[name] = {type: type, name: name, data: data};
 };
 
 /**
@@ -2790,8 +2707,7 @@ lib.Storage.Chrome = function(storage) {
  * Called by the storage implementation when the storage is modified.
  */
 lib.Storage.Chrome.prototype.onChanged_ = function(changes, areaname) {
-  if (chrome.storage[areaname] != this.storage_)
-    return;
+  if (chrome.storage[areaname] != this.storage_) return;
 
   for (var i = 0; i < this.observers_.length; i++) {
     this.observers_[i](changes);
@@ -2815,8 +2731,7 @@ lib.Storage.Chrome.prototype.addObserver = function(callback) {
  */
 lib.Storage.Chrome.prototype.removeObserver = function(callback) {
   var i = this.observers_.indexOf(callback);
-  if (i != -1)
-    this.observers_.splice(i, 1);
+  if (i != -1) this.observers_.splice(i, 1);
 };
 
 /**
@@ -2828,8 +2743,7 @@ lib.Storage.Chrome.prototype.removeObserver = function(callback) {
 lib.Storage.Chrome.prototype.clear = function(opt_callback) {
   this.storage_.clear();
 
-  if (opt_callback)
-    setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -2926,17 +2840,13 @@ lib.Storage.Local = function() {
  * Called by the storage implementation when the storage is modified.
  */
 lib.Storage.Local.prototype.onStorage_ = function(e) {
-  if (e.storageArea != this.storage_)
-    return;
+  if (e.storageArea != this.storage_) return;
 
   // IE throws an exception if JSON.parse is given an empty string.
   var prevValue = e.oldValue ? JSON.parse(e.oldValue) : '';
   var curValue = e.newValue ? JSON.parse(e.newValue) : '';
   var o = {};
-  o[e.key] = {
-    oldValue: prevValue,
-    newValue: curValue
-  };
+  o[e.key] = {oldValue: prevValue, newValue: curValue};
 
   for (var i = 0; i < this.observers_.length; i++) {
     this.observers_[i](o);
@@ -2960,8 +2870,7 @@ lib.Storage.Local.prototype.addObserver = function(callback) {
  */
 lib.Storage.Local.prototype.removeObserver = function(callback) {
   var i = this.observers_.indexOf(callback);
-  if (i != -1)
-    this.observers_.splice(i, 1);
+  if (i != -1) this.observers_.splice(i, 1);
 };
 
 /**
@@ -2973,8 +2882,7 @@ lib.Storage.Local.prototype.removeObserver = function(callback) {
 lib.Storage.Local.prototype.clear = function(opt_callback) {
   this.storage_.clear();
 
-  if (opt_callback)
-    setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -2990,8 +2898,7 @@ lib.Storage.Local.prototype.getItem = function(key, callback) {
   if (typeof value == 'string') {
     try {
       value = JSON.parse(value);
-    }
-    catch (e) {
+    } catch (e) {
       // If we can't parse the value, just return it unparsed.
     }
   }
@@ -3015,13 +2922,11 @@ lib.Storage.Local.prototype.getItems = function(keys, callback) {
     if (typeof value == 'string') {
       try {
         rv[key] = JSON.parse(value);
-      }
-      catch (e) {
+      } catch (e) {
         // If we can't parse the value, just return it unparsed.
         rv[key] = value;
       }
-    }
-    else {
+    } else {
       keys.splice(i, 1);
     }
   }
@@ -3042,8 +2947,7 @@ lib.Storage.Local.prototype.getItems = function(keys, callback) {
 lib.Storage.Local.prototype.setItem = function(key, value, opt_callback) {
   this.storage_.setItem(key, JSON.stringify(value));
 
-  if (opt_callback)
-    setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -3059,8 +2963,7 @@ lib.Storage.Local.prototype.setItems = function(obj, opt_callback) {
     this.storage_.setItem(key, JSON.stringify(obj[key]));
   }
 
-  if (opt_callback)
-    setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -3074,8 +2977,7 @@ lib.Storage.Local.prototype.setItems = function(obj, opt_callback) {
 lib.Storage.Local.prototype.removeItem = function(key, opt_callback) {
   this.storage_.removeItem(key);
 
-  if (opt_callback)
-    setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -3091,8 +2993,7 @@ lib.Storage.Local.prototype.removeItems = function(ary, opt_callback) {
     this.storage_.removeItem(ary[i]);
   }
 
-  if (opt_callback)
-    setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 // SOURCE FILE: libdot/js/lib_storage_memory.js
 // Copyright (c) 2012 The Chromium OS Authors. All rights reserved.
@@ -3127,8 +3028,7 @@ lib.Storage.Memory.prototype.addObserver = function(callback) {
  */
 lib.Storage.Memory.prototype.removeObserver = function(callback) {
   var i = this.observers_.indexOf(callback);
-  if (i != -1)
-    this.observers_.splice(i, 1);
+  if (i != -1) this.observers_.splice(i, 1);
 };
 
 /**
@@ -3140,10 +3040,7 @@ lib.Storage.Memory.prototype.removeObserver = function(callback) {
 lib.Storage.Memory.prototype.clear = function(opt_callback) {
   var e = {};
   for (var key in this.storage_) {
-    e[key] = {
-      oldValue: this.storage_[key],
-      newValue: (void 0)
-    };
+    e[key] = {oldValue: this.storage_[key], newValue: (void 0)};
   }
 
   this.storage_ = {};
@@ -3154,8 +3051,7 @@ lib.Storage.Memory.prototype.clear = function(opt_callback) {
     }
   }.bind(this), 0);
 
-  if (opt_callback)
-    setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -3171,8 +3067,7 @@ lib.Storage.Memory.prototype.getItem = function(key, callback) {
   if (typeof value == 'string') {
     try {
       value = JSON.parse(value);
-    }
-    catch (e) {
+    } catch (e) {
       // If we can't parse the value, just return it unparsed.
     }
   }
@@ -3196,13 +3091,11 @@ lib.Storage.Memory.prototype.getItems = function(keys, callback) {
     if (typeof value == 'string') {
       try {
         rv[key] = JSON.parse(value);
-      }
-      catch (e) {
+      } catch (e) {
         // If we can't parse the value, just return it unparsed.
         rv[key] = value;
       }
-    }
-    else {
+    } else {
       keys.splice(i, 1);
     }
   }
@@ -3225,10 +3118,7 @@ lib.Storage.Memory.prototype.setItem = function(key, value, opt_callback) {
   this.storage_[key] = JSON.stringify(value);
 
   var e = {};
-  e[key] = {
-    oldValue: oldValue,
-    newValue: value
-  };
+  e[key] = {oldValue: oldValue, newValue: value};
 
   setTimeout(function() {
     for (var i = 0; i < this.observers_.length; i++) {
@@ -3236,8 +3126,7 @@ lib.Storage.Memory.prototype.setItem = function(key, value, opt_callback) {
     }
   }.bind(this), 0);
 
-  if (opt_callback)
-    setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -3252,10 +3141,7 @@ lib.Storage.Memory.prototype.setItems = function(obj, opt_callback) {
   var e = {};
 
   for (var key in obj) {
-    e[key] = {
-      oldValue: this.storage_[key],
-      newValue: obj[key]
-    };
+    e[key] = {oldValue: this.storage_[key], newValue: obj[key]};
     this.storage_[key] = JSON.stringify(obj[key]);
   }
 
@@ -3265,8 +3151,7 @@ lib.Storage.Memory.prototype.setItems = function(obj, opt_callback) {
     }
   }.bind(this));
 
-  if (opt_callback)
-    setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -3280,8 +3165,7 @@ lib.Storage.Memory.prototype.setItems = function(obj, opt_callback) {
 lib.Storage.Memory.prototype.removeItem = function(key, opt_callback) {
   delete this.storage_[key];
 
-  if (opt_callback)
-    setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 
 /**
@@ -3297,8 +3181,7 @@ lib.Storage.Memory.prototype.removeItems = function(ary, opt_callback) {
     delete this.storage_[ary[i]];
   }
 
-  if (opt_callback)
-    setTimeout(opt_callback, 0);
+  if (opt_callback) setTimeout(opt_callback, 0);
 };
 // SOURCE FILE: libdot/js/lib_test_manager.js
 // Copyright (c) 2012 The Chromium OS Authors. All rights reserved.
@@ -3383,8 +3266,7 @@ lib.TestManager.Log = function(opt_logFunction) {
   this.save = false;
   this.data = '';
   this.logFunction_ = opt_logFunction || function(s) {
-    if (this.save)
-      this.data += s + '\n';
+    if (this.save) this.data += s + '\n';
     console.log(s);
   };
   this.pending_ = '';
@@ -3433,8 +3315,7 @@ lib.TestManager.Log.prototype.popPrefix = function() {
 lib.TestManager.Log.prototype.print = function(str) {
   if (this.pending_) {
     this.pending_ += str;
-  }
-  else {
+  } else {
     this.pending_ = this.prefix_ + str;
   }
 };
@@ -3445,8 +3326,7 @@ lib.TestManager.Log.prototype.print = function(str) {
  * @param {string} str The string to add to the log.
  */
 lib.TestManager.Log.prototype.println = function(str) {
-  if (this.pending_)
-    this.flush();
+  if (this.pending_) this.flush();
 
   this.logFunction_(this.prefix_ + str);
 };
@@ -3455,8 +3335,7 @@ lib.TestManager.Log.prototype.println = function(str) {
  * Flush any pending log message.
  */
 lib.TestManager.Log.prototype.flush = function() {
-  if (!this.pending_)
-    return;
+  if (!this.pending_) return;
 
   this.logFunction_(this.pending_);
   this.pending_ = '';
@@ -3538,9 +3417,7 @@ lib.TestManager.Suite = function(suiteName) {
   ctor.getTestList = lib.TestManager.Suite.getTestList;
   ctor.testList_ = [];
   ctor.testMap_ = {};
-  ctor.prototype = {
-    __proto__: lib.TestManager.Suite.prototype
-  };
+  ctor.prototype = {__proto__: lib.TestManager.Suite.prototype};
 
   lib.TestManager.Suite.subclasses.push(ctor);
 
@@ -3558,8 +3435,7 @@ lib.TestManager.Suite.subclasses = [];
  * This method is copied to new subclasses when they are created.
  */
 lib.TestManager.Suite.addTest = function(testName, testFunction) {
-  if (testName in this.testMap_)
-    throw 'Duplicate test name: ' + testName;
+  if (testName in this.testMap_) throw 'Duplicate test name: ' + testName;
 
   var test = new lib.TestManager.Test(this, testName, testFunction);
   this.testMap_[testName] = test;
@@ -3570,8 +3446,7 @@ lib.TestManager.Suite.addTest = function(testName, testFunction) {
  * Defines a disabled test.
  */
 lib.TestManager.Suite.disableTest = function(testName, testFunction) {
-  if (testName in this.testMap_)
-    throw 'Duplicate test name: ' + testName;
+  if (testName in this.testMap_) throw 'Duplicate test name: ' + testName;
 
   var test = new lib.TestManager.Test(this, testName, testFunction);
   console.log('Disabled test: ' + test.fullName);
@@ -3729,18 +3604,15 @@ lib.TestManager.Test.prototype.run = function(result) {
   try {
     // Tests are applied to the parent lib.TestManager.Suite subclass.
     this.testFunction_.apply(result.suite, [result, result.testRun.cx]);
-  }
-  catch (ex) {
-    if (ex instanceof lib.TestManager.Result.TestComplete)
-      return;
+  } catch (ex) {
+    if (ex instanceof lib.TestManager.Result.TestComplete) return;
 
     result.println('Test raised an exception: ' + ex);
 
     if (ex.stack) {
       if (ex.stack instanceof Array) {
         result.println(ex.stack.join('\n'));
-      }
-      else {
+      } else {
         result.println(ex.stack);
       }
     }
@@ -3836,7 +3708,7 @@ lib.TestManager.TestRun.prototype.selectTest = function(test) {
 };
 
 lib.TestManager.TestRun.prototype.selectSuite = function(
-  suiteClass, opt_pattern) {
+    suiteClass, opt_pattern) {
   var pattern = opt_pattern || this.ALL_TESTS;
   var selectCount = 0;
   var testList = suiteClass.getTestList();
@@ -3847,10 +3719,8 @@ lib.TestManager.TestRun.prototype.selectSuite = function(
     // the ALL_TESTS String object, rather than the contents of the string.
     if (pattern !== this.ALL_TESTS) {
       if (pattern instanceof RegExp) {
-        if (!pattern.test(test.testName))
-          continue;
-      }
-      else if (test.testName != pattern) {
+        if (!pattern.test(test.testName)) continue;
+      } else if (test.testName != pattern) {
         continue;
       }
     }
@@ -3879,8 +3749,8 @@ lib.TestManager.TestRun.prototype.selectPattern = function(pattern) {
   var selectCount = 0;
 
   for (var i = 0; i < lib.TestManager.Suite.subclasses.length; i++) {
-    selectCount += this.selectSuite(lib.TestManager.Suite.subclasses[i],
-      pattern);
+    selectCount +=
+        this.selectSuite(lib.TestManager.Suite.subclasses[i], pattern);
   }
 
   if (!selectCount) {
@@ -3895,18 +3765,17 @@ lib.TestManager.TestRun.prototype.selectPattern = function(pattern) {
  * that would otherwise go uncaught.
  */
 lib.TestManager.TestRun.prototype.onUncaughtException_ = function(
-  message, file, line) {
+    message, file, line) {
 
   if (message.indexOf('Uncaught lib.TestManager.Result.TestComplete') == 0 ||
-    message.indexOf('status: passed') != -1) {
+      message.indexOf('status: passed') != -1) {
     // This is a result.pass() or result.fail() call from a callback.  We're
     // already going to deal with it as part of the completeTest_() call
     // that raised it.  We can safely squelch this error message.
     return true;
   }
 
-  if (!this.currentResult)
-    return;
+  if (!this.currentResult) return;
 
   if (message == 'Uncaught ' + this.currentResult.expectedErrorMessage_) {
     // Test cases may need to raise an unhandled exception as part of the test.
@@ -3915,11 +3784,11 @@ lib.TestManager.TestRun.prototype.onUncaughtException_ = function(
 
   var when = 'during';
 
-  if (this.currentResult.status != this.currentResult.PENDING)
-    when = 'after';
+  if (this.currentResult.status != this.currentResult.PENDING) when = 'after';
 
-  this.log.println('Uncaught exception ' + when + ' test case: ' +
-    this.currentResult.test.fullName);
+  this.log.println(
+      'Uncaught exception ' + when +
+      ' test case: ' + this.currentResult.test.fullName);
   this.log.println(message + ', ' + file + ':' + line);
 
   this.currentResult.completeTest_(this.currentResult.FAILED, false);
@@ -3939,7 +3808,7 @@ lib.TestManager.TestRun.prototype.onUncaughtException_ = function(
  *     this function.
  */
 lib.TestManager.TestRun.prototype.onTestRunComplete_ = function(
-  opt_skipTimeout) {
+    opt_skipTimeout) {
   if (!opt_skipTimeout) {
     // The final test may have left a lingering setTimeout(..., 0), or maybe
     // poked at the DOM in a way that will trigger a event to fire at the end
@@ -3952,9 +3821,9 @@ lib.TestManager.TestRun.prototype.onTestRunComplete_ = function(
   this.duration = (new Date()) - this.startDate;
 
   this.log.popPrefix();
-  this.log.println('} ' + this.passes.length + ' passed, ' +
-    this.failures.length + ' failed, ' +
-    this.msToSeconds_(this.duration));
+  this.log.println(
+      '} ' + this.passes.length + ' passed, ' + this.failures.length +
+      ' failed, ' + this.msToSeconds_(this.duration));
   this.log.println('');
 
   this.summarize();
@@ -3974,28 +3843,26 @@ lib.TestManager.TestRun.prototype.onResultComplete = function(result) {
   try {
     this.testManager.testPostamble(result, this.cx);
     result.suite.postamble(result, this.ctx);
-  }
-  catch (ex) {
-    this.log.println('Unexpected exception in postamble: ' +
-      (ex.stack ? ex.stack : ex));
+  } catch (ex) {
+    this.log.println(
+        'Unexpected exception in postamble: ' + (ex.stack ? ex.stack : ex));
     this.panic = true;
   }
 
   this.log.popPrefix();
-  this.log.print('} ' + result.status + ', ' +
-    this.msToSeconds_(result.duration));
+  this.log.print(
+      '} ' + result.status + ', ' + this.msToSeconds_(result.duration));
   this.log.flush();
 
   if (result.status == result.FAILED) {
     this.failures.push(result);
     this.currentSuite = null;
-  }
-  else if (result.status == result.PASSED) {
+  } else if (result.status == result.PASSED) {
     this.passes.push(result);
-  }
-  else {
-    this.log.println('Unknown result status: ' + result.test.fullName + ': ' +
-      result.status);
+  } else {
+    this.log.println(
+        'Unknown result status: ' + result.test.fullName + ': ' +
+        result.status);
     return this.panic = true;
   }
 
@@ -4022,9 +3889,9 @@ lib.TestManager.TestRun.prototype.onResultComplete = function(result) {
  *     time around.
  */
 lib.TestManager.TestRun.prototype.onResultReComplete = function(
-  result, lateStatus) {
-  this.log.println('Late complete for test: ' + result.test.fullName + ': ' +
-    lateStatus);
+    result, lateStatus) {
+  this.log.println(
+      'Late complete for test: ' + result.test.fullName + ': ' + lateStatus);
 
   // Consider any late completion a failure, even if it's a double-pass, since
   // it's a misuse of the testing API.
@@ -4039,8 +3906,7 @@ lib.TestManager.TestRun.prototype.onResultReComplete = function(
  * Run the next test in the queue.
  */
 lib.TestManager.TestRun.prototype.runNextTest_ = function() {
-  if (this.panic || !this.testQueue_.length)
-    return this.onTestRunComplete_();
+  if (this.panic || !this.testQueue_.length) return this.onTestRunComplete_();
 
   if (this.maxFailures && this.failures.length >= this.maxFailures) {
     this.log.println('Maximum failure count reached, aborting test run.');
@@ -4058,8 +3924,7 @@ lib.TestManager.TestRun.prototype.runNextTest_ = function() {
       this.log.println('Initializing suite: ' + test.suiteClass.suiteName);
       suite = new test.suiteClass(this.testManager, this.cx);
     }
-  }
-  catch (ex) {
+  } catch (ex) {
     // If test suite setup fails we're not even going to try to run the tests.
     this.log.println('Exception during setup: ' + (ex.stack ? ex.stack : ex));
     this.panic = true;
@@ -4076,10 +3941,10 @@ lib.TestManager.TestRun.prototype.runNextTest_ = function() {
     suite.preamble(this.currentResult, this.cx);
 
     this.testQueue_.shift();
-  }
-  catch (ex) {
-    this.log.println('Unexpected exception during test preamble: ' +
-      (ex.stack ? ex.stack : ex));
+  } catch (ex) {
+    this.log.println(
+        'Unexpected exception during test preamble: ' +
+        (ex.stack ? ex.stack : ex));
     this.log.popPrefix();
     this.log.println('}');
 
@@ -4090,12 +3955,11 @@ lib.TestManager.TestRun.prototype.runNextTest_ = function() {
 
   try {
     this.currentResult.run();
-  }
-  catch (ex) {
+  } catch (ex) {
     // Result.run() should catch test exceptions and turn them into failures.
     // If we got here, it means there is trouble in the testing framework.
-    this.log.println('Unexpected exception during test run: ' +
-      (ex.stack ? ex.stack : ex));
+    this.log.println(
+        'Unexpected exception during test run: ' + (ex.stack ? ex.stack : ex));
     this.panic = true;
   }
 };
@@ -4146,8 +4010,9 @@ lib.TestManager.TestRun.prototype.summarize = function() {
   }
 
   if (this.testQueue_.length) {
-    this.log.println('Test run incomplete: ' + this.testQueue_.length +
-      ' test(s) were not run.');
+    this.log.println(
+        'Test run incomplete: ' + this.testQueue_.length +
+        ' test(s) were not run.');
   }
 };
 
@@ -4221,7 +4086,7 @@ lib.TestManager.Result.TestComplete = function(result) {
 
 lib.TestManager.Result.TestComplete.prototype.toString = function() {
   return 'lib.TestManager.Result.TestComplete: ' + this.result.test.fullName +
-    ', status: ' + this.result.status;
+      ', status: ' + this.result.status;
 };
 
 /**
@@ -4258,8 +4123,7 @@ lib.TestManager.Result.prototype.expectErrorMessage = function(str) {
 lib.TestManager.Result.prototype.onTimeout_ = function() {
   this.timeout_ = null;
 
-  if (this.status != this.PENDING)
-    return;
+  if (this.status != this.PENDING) return;
 
   this.println('Test timed out.');
   this.completeTest_(this.FAILED, false);
@@ -4282,8 +4146,7 @@ lib.TestManager.Result.prototype.onTimeout_ = function() {
  * @param {int} ms Number of milliseconds requested.
  */
 lib.TestManager.Result.prototype.requestTime = function(ms) {
-  if (this.timeout_)
-    clearTimeout(this.timeout_);
+  if (this.timeout_) clearTimeout(this.timeout_);
 
   this.timeout_ = setTimeout(this.onTimeout_.bind(this), ms);
 };
@@ -4301,8 +4164,7 @@ lib.TestManager.Result.prototype.completeTest_ = function(status, opt_throw) {
     this.status = status;
 
     this.testRun.onResultComplete(this);
-  }
-  else {
+  } else {
     this.testRun.onResultReComplete(this, status);
   }
 
@@ -4314,15 +4176,12 @@ lib.TestManager.Result.prototype.completeTest_ = function(status, opt_throw) {
  * Check that two arrays are equal.
  */
 lib.TestManager.Result.prototype.arrayEQ_ = function(actual, expected) {
-  if (!actual || !expected)
-    return (!actual && !expected);
+  if (!actual || !expected) return (!actual && !expected);
 
-  if (actual.length != expected.length)
-    return false;
+  if (actual.length != expected.length) return false;
 
   for (var i = 0; i < actual.length; ++i)
-    if (actual[i] != expected[i])
-      return false;
+    if (actual[i] != expected[i]) return false;
 
   return true;
 };
@@ -4342,11 +4201,10 @@ lib.TestManager.Result.prototype.arrayEQ_ = function(actual, expected) {
  *     of the caller.
  */
 lib.TestManager.Result.prototype.assertEQ = function(
-  actual, expected, opt_name) {
+    actual, expected, opt_name) {
   // Utility function to pretty up the log.
   function format(value) {
-    if (typeof value == 'number')
-      return value;
+    if (typeof value == 'number') return value;
 
     var str = String(value);
     var ary = str.split('\n').map(function(e) {
@@ -4356,24 +4214,22 @@ lib.TestManager.Result.prototype.assertEQ = function(
       // If the string has newlines, start it off on its own line so that
       // it's easier to compare against another string with newlines.
       return '\n' + ary.join('\n');
-    }
-    else {
+    } else {
       return ary.join('\n');
     }
   }
 
-  if (actual === expected)
-    return;
+  if (actual === expected) return;
 
   // Deal with common object types since JavaScript can't.
   if (expected instanceof Array)
-    if (this.arrayEQ_(actual, expected))
-      return;
+    if (this.arrayEQ_(actual, expected)) return;
 
   var name = opt_name ? '[' + opt_name + ']' : '';
 
-  this.fail('assertEQ' + name + ': ' + this.getCallerLocation_(1) + ': ' +
-    format(actual) + ' !== ' + format(expected));
+  this.fail(
+      'assertEQ' + name + ': ' + this.getCallerLocation_(1) + ': ' +
+      format(actual) + ' !== ' + format(expected));
 };
 
 /**
@@ -4391,13 +4247,13 @@ lib.TestManager.Result.prototype.assertEQ = function(
  *     of the caller.
  */
 lib.TestManager.Result.prototype.assert = function(actual, opt_name) {
-  if (actual === true)
-    return;
+  if (actual === true) return;
 
   var name = opt_name ? '[' + opt_name + ']' : '';
 
-  this.fail('assert' + name + ': ' + this.getCallerLocation_(1) + ': ' +
-    String(actual));
+  this.fail(
+      'assert' + name + ': ' + this.getCallerLocation_(1) + ': ' +
+      String(actual));
 };
 
 /**
@@ -4413,8 +4269,7 @@ lib.TestManager.Result.prototype.assert = function(actual, opt_name) {
 lib.TestManager.Result.prototype.getCallerLocation_ = function(frameIndex) {
   try {
     throw new Error();
-  }
-  catch (ex) {
+  } catch (ex) {
     var frame = ex.stack.split('\n')[frameIndex + 2];
     var ary = frame.match(/([^/]+:\d+):\d+\)?$/);
     return ary ? ary[1] : '???';
@@ -4436,8 +4291,7 @@ lib.TestManager.Result.prototype.println = function(message) {
  * @param {string} opt_message Optional message to add to the log.
  */
 lib.TestManager.Result.prototype.fail = function(opt_message) {
-  if (arguments.length)
-    this.println(opt_message);
+  if (arguments.length) this.println(opt_message);
 
   this.completeTest_(this.FAILED, true);
 };
@@ -4491,37 +4345,30 @@ lib.UTF8Decoder.prototype.decode = function(str) {
     if (this.bytesLeft == 0) {
       if (c <= 0x7F) {
         ret += str.charAt(i);
-      }
-      else if (0xC0 <= c && c <= 0xDF) {
+      } else if (0xC0 <= c && c <= 0xDF) {
         this.codePoint = c - 0xC0;
         this.bytesLeft = 1;
         this.lowerBound = 0x80;
-      }
-      else if (0xE0 <= c && c <= 0xEF) {
+      } else if (0xE0 <= c && c <= 0xEF) {
         this.codePoint = c - 0xE0;
         this.bytesLeft = 2;
         this.lowerBound = 0x800;
-      }
-      else if (0xF0 <= c && c <= 0xF7) {
+      } else if (0xF0 <= c && c <= 0xF7) {
         this.codePoint = c - 0xF0;
         this.bytesLeft = 3;
         this.lowerBound = 0x10000;
-      }
-      else if (0xF8 <= c && c <= 0xFB) {
+      } else if (0xF8 <= c && c <= 0xFB) {
         this.codePoint = c - 0xF8;
         this.bytesLeft = 4;
         this.lowerBound = 0x200000;
-      }
-      else if (0xFC <= c && c <= 0xFD) {
+      } else if (0xFC <= c && c <= 0xFD) {
         this.codePoint = c - 0xFC;
         this.bytesLeft = 5;
         this.lowerBound = 0x4000000;
-      }
-      else {
+      } else {
         ret += '�';
       }
-    }
-    else {
+    } else {
       if (0x80 <= c && c <= 0xBF) {
         this.bytesLeft--;
         this.codePoint = (this.codePoint << 6) + (c - 0x80);
@@ -4530,26 +4377,23 @@ lib.UTF8Decoder.prototype.decode = function(str) {
           // filter out surrogate pairs.
           var codePoint = this.codePoint;
           if (codePoint < this.lowerBound ||
-            (0xD800 <= codePoint && codePoint <= 0xDFFF) ||
-            codePoint > 0x10FFFF) {
+              (0xD800 <= codePoint && codePoint <= 0xDFFF) ||
+              codePoint > 0x10FFFF) {
             ret += '�';
-          }
-          else {
+          } else {
             // Encode as UTF-16 in the output.
             if (codePoint < 0x10000) {
               ret += String.fromCharCode(codePoint);
-            }
-            else {
+            } else {
               // Surrogate pair.
               codePoint -= 0x10000;
               ret += String.fromCharCode(
-                0xD800 + ((codePoint >>> 10) & 0x3FF),
-                0xDC00 + (codePoint & 0x3FF));
+                  0xD800 + ((codePoint >>> 10) & 0x3FF),
+                  0xDC00 + (codePoint & 0x3FF));
             }
           }
         }
-      }
-      else {
+      } else {
         // Too few bytes in multi-byte sequence. Rewind stream so we
         // don't lose the next byte.
         ret += '�';
@@ -4592,20 +4436,17 @@ lib.encodeUTF8 = function(str) {
     var c = str.charCodeAt(i);
     if (0xDC00 <= c && c <= 0xDFFF) {
       c = 0xFFFD;
-    }
-    else if (0xD800 <= c && c <= 0xDBFF) {
+    } else if (0xD800 <= c && c <= 0xDBFF) {
       if (i + 1 < str.length) {
         var d = str.charCodeAt(i + 1);
         if (0xDC00 <= d && d <= 0xDFFF) {
           // Swallow a surrogate pair.
           c = 0x10000 + ((c & 0x3FF) << 10) + (d & 0x3FF);
           i++;
-        }
-        else {
+        } else {
           c = 0xFFFD;
         }
-      }
-      else {
+      } else {
         c = 0xFFFD;
       }
     }
@@ -4615,16 +4456,13 @@ lib.encodeUTF8 = function(str) {
     if (c <= 0x7F) {
       ret += str.charAt(i);
       continue;
-    }
-    else if (c <= 0x7FF) {
+    } else if (c <= 0x7FF) {
       ret += String.fromCharCode(0xC0 | (c >>> 6));
       bytesLeft = 1;
-    }
-    else if (c <= 0xFFFF) {
+    } else if (c <= 0xFFFF) {
       ret += String.fromCharCode(0xE0 | (c >>> 12));
       bytesLeft = 2;
-    }
-    else /* if (c <= 0x10FFFF) */ {
+    } else /* if (c <= 0x10FFFF) */ {
       ret += String.fromCharCode(0xF0 | (c >>> 18));
       bytesLeft = 3;
     }
@@ -4745,7 +4583,7 @@ lib.encodeUTF8 = function(str) {
  */
 if (!String.prototype.codePointAt) {
   (function() {
-    'use strict'; // needed to support `apply`/`call` with `undefined`/`null`
+    'use strict';  // needed to support `apply`/`call` with `undefined`/`null`
     var codePointAt = function(position) {
       if (this == null) {
         throw TypeError();
@@ -4754,7 +4592,7 @@ if (!String.prototype.codePointAt) {
       var size = string.length;
       // `ToInteger`
       var index = position ? Number(position) : 0;
-      if (index != index) { // better `isNaN`
+      if (index != index) {  // better `isNaN`
         index = 0;
       }
       // Account for out-of-bounds indices:
@@ -4764,12 +4602,13 @@ if (!String.prototype.codePointAt) {
       // Get the first code unit
       var first = string.charCodeAt(index);
       var second;
-      if ( // check if it’s the start of a surrogate pair
-        first >= 0xD800 && first <= 0xDBFF && // high surrogate
-        size > index + 1 // there is a next code unit
+      if (
+          // check if it’s the start of a surrogate pair
+          first >= 0xD800 && first <= 0xDBFF &&  // high surrogate
+          size > index + 1                       // there is a next code unit
       ) {
         second = string.charCodeAt(index + 1);
-        if (second >= 0xDC00 && second <= 0xDFFF) { // low surrogate
+        if (second >= 0xDC00 && second <= 0xDFFF) {  // low surrogate
           // http://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
           return (first - 0xD800) * 0x400 + second - 0xDC00 + 0x10000;
         }
@@ -4777,13 +4616,10 @@ if (!String.prototype.codePointAt) {
       return first;
     };
     if (Object.defineProperty) {
-      Object.defineProperty(String.prototype, 'codePointAt', {
-        'value': codePointAt,
-        'configurable': true,
-        'writable': true
-      });
-    }
-    else {
+      Object.defineProperty(
+          String.prototype, 'codePointAt',
+          {'value': codePointAt, 'configurable': true, 'writable': true});
+    } else {
       String.prototype.codePointAt = codePointAt;
     }
   }());
@@ -4806,309 +4642,98 @@ lib.wc.cjkAmbiguousWidth = 2;
 // Sorted list of non-overlapping intervals of non-spacing characters
 // generated by "uniset +cat=Me +cat=Mn +cat=Cf -00AD +1160-11FF +200B c"
 lib.wc.combining = [
-  [0x0300, 0x036F],
-  [0x0483, 0x0486],
-  [0x0488, 0x0489],
-  [0x0591, 0x05BD],
-  [0x05BF, 0x05BF],
-  [0x05C1, 0x05C2],
-  [0x05C4, 0x05C5],
-  [0x05C7, 0x05C7],
-  [0x0600, 0x0603],
-  [0x0610, 0x0615],
-  [0x064B, 0x065E],
-  [0x0670, 0x0670],
-  [0x06D6, 0x06E4],
-  [0x06E7, 0x06E8],
-  [0x06EA, 0x06ED],
-  [0x070F, 0x070F],
-  [0x0711, 0x0711],
-  [0x0730, 0x074A],
-  [0x07A6, 0x07B0],
-  [0x07EB, 0x07F3],
-  [0x0901, 0x0902],
-  [0x093C, 0x093C],
-  [0x0941, 0x0948],
-  [0x094D, 0x094D],
-  [0x0951, 0x0954],
-  [0x0962, 0x0963],
-  [0x0981, 0x0981],
-  [0x09BC, 0x09BC],
-  [0x09C1, 0x09C4],
-  [0x09CD, 0x09CD],
-  [0x09E2, 0x09E3],
-  [0x0A01, 0x0A02],
-  [0x0A3C, 0x0A3C],
-  [0x0A41, 0x0A42],
-  [0x0A47, 0x0A48],
-  [0x0A4B, 0x0A4D],
-  [0x0A70, 0x0A71],
-  [0x0A81, 0x0A82],
-  [0x0ABC, 0x0ABC],
-  [0x0AC1, 0x0AC5],
-  [0x0AC7, 0x0AC8],
-  [0x0ACD, 0x0ACD],
-  [0x0AE2, 0x0AE3],
-  [0x0B01, 0x0B01],
-  [0x0B3C, 0x0B3C],
-  [0x0B3F, 0x0B3F],
-  [0x0B41, 0x0B43],
-  [0x0B4D, 0x0B4D],
-  [0x0B56, 0x0B56],
-  [0x0B82, 0x0B82],
-  [0x0BC0, 0x0BC0],
-  [0x0BCD, 0x0BCD],
-  [0x0C3E, 0x0C40],
-  [0x0C46, 0x0C48],
-  [0x0C4A, 0x0C4D],
-  [0x0C55, 0x0C56],
-  [0x0CBC, 0x0CBC],
-  [0x0CBF, 0x0CBF],
-  [0x0CC6, 0x0CC6],
-  [0x0CCC, 0x0CCD],
-  [0x0CE2, 0x0CE3],
-  [0x0D41, 0x0D43],
-  [0x0D4D, 0x0D4D],
-  [0x0DCA, 0x0DCA],
-  [0x0DD2, 0x0DD4],
-  [0x0DD6, 0x0DD6],
-  [0x0E31, 0x0E31],
-  [0x0E34, 0x0E3A],
-  [0x0E47, 0x0E4E],
-  [0x0EB1, 0x0EB1],
-  [0x0EB4, 0x0EB9],
-  [0x0EBB, 0x0EBC],
-  [0x0EC8, 0x0ECD],
-  [0x0F18, 0x0F19],
-  [0x0F35, 0x0F35],
-  [0x0F37, 0x0F37],
-  [0x0F39, 0x0F39],
-  [0x0F71, 0x0F7E],
-  [0x0F80, 0x0F84],
-  [0x0F86, 0x0F87],
-  [0x0F90, 0x0F97],
-  [0x0F99, 0x0FBC],
-  [0x0FC6, 0x0FC6],
-  [0x102D, 0x1030],
-  [0x1032, 0x1032],
-  [0x1036, 0x1037],
-  [0x1039, 0x1039],
-  [0x1058, 0x1059],
-  [0x1160, 0x11FF],
-  [0x135F, 0x135F],
-  [0x1712, 0x1714],
-  [0x1732, 0x1734],
-  [0x1752, 0x1753],
-  [0x1772, 0x1773],
-  [0x17B4, 0x17B5],
-  [0x17B7, 0x17BD],
-  [0x17C6, 0x17C6],
-  [0x17C9, 0x17D3],
-  [0x17DD, 0x17DD],
-  [0x180B, 0x180D],
-  [0x18A9, 0x18A9],
-  [0x1920, 0x1922],
-  [0x1927, 0x1928],
-  [0x1932, 0x1932],
-  [0x1939, 0x193B],
-  [0x1A17, 0x1A18],
-  [0x1B00, 0x1B03],
-  [0x1B34, 0x1B34],
-  [0x1B36, 0x1B3A],
-  [0x1B3C, 0x1B3C],
-  [0x1B42, 0x1B42],
-  [0x1B6B, 0x1B73],
-  [0x1DC0, 0x1DCA],
-  [0x1DFE, 0x1DFF],
-  [0x200B, 0x200F],
-  [0x202A, 0x202E],
-  [0x2060, 0x2063],
-  [0x206A, 0x206F],
-  [0x20D0, 0x20EF],
-  [0x302A, 0x302F],
-  [0x3099, 0x309A],
-  [0xA806, 0xA806],
-  [0xA80B, 0xA80B],
-  [0xA825, 0xA826],
-  [0xFB1E, 0xFB1E],
-  [0xFE00, 0xFE0F],
-  [0xFE20, 0xFE23],
-  [0xFEFF, 0xFEFF],
-  [0xFFF9, 0xFFFB],
-  [0x10A01, 0x10A03],
-  [0x10A05, 0x10A06],
-  [0x10A0C, 0x10A0F],
-  [0x10A38, 0x10A3A],
-  [0x10A3F, 0x10A3F],
-  [0x1D167, 0x1D169],
-  [0x1D173, 0x1D182],
-  [0x1D185, 0x1D18B],
-  [0x1D1AA, 0x1D1AD],
-  [0x1D242, 0x1D244],
-  [0xE0001, 0xE0001],
-  [0xE0020, 0xE007F],
+  [0x0300, 0x036F],   [0x0483, 0x0486],   [0x0488, 0x0489],
+  [0x0591, 0x05BD],   [0x05BF, 0x05BF],   [0x05C1, 0x05C2],
+  [0x05C4, 0x05C5],   [0x05C7, 0x05C7],   [0x0600, 0x0603],
+  [0x0610, 0x0615],   [0x064B, 0x065E],   [0x0670, 0x0670],
+  [0x06D6, 0x06E4],   [0x06E7, 0x06E8],   [0x06EA, 0x06ED],
+  [0x070F, 0x070F],   [0x0711, 0x0711],   [0x0730, 0x074A],
+  [0x07A6, 0x07B0],   [0x07EB, 0x07F3],   [0x0901, 0x0902],
+  [0x093C, 0x093C],   [0x0941, 0x0948],   [0x094D, 0x094D],
+  [0x0951, 0x0954],   [0x0962, 0x0963],   [0x0981, 0x0981],
+  [0x09BC, 0x09BC],   [0x09C1, 0x09C4],   [0x09CD, 0x09CD],
+  [0x09E2, 0x09E3],   [0x0A01, 0x0A02],   [0x0A3C, 0x0A3C],
+  [0x0A41, 0x0A42],   [0x0A47, 0x0A48],   [0x0A4B, 0x0A4D],
+  [0x0A70, 0x0A71],   [0x0A81, 0x0A82],   [0x0ABC, 0x0ABC],
+  [0x0AC1, 0x0AC5],   [0x0AC7, 0x0AC8],   [0x0ACD, 0x0ACD],
+  [0x0AE2, 0x0AE3],   [0x0B01, 0x0B01],   [0x0B3C, 0x0B3C],
+  [0x0B3F, 0x0B3F],   [0x0B41, 0x0B43],   [0x0B4D, 0x0B4D],
+  [0x0B56, 0x0B56],   [0x0B82, 0x0B82],   [0x0BC0, 0x0BC0],
+  [0x0BCD, 0x0BCD],   [0x0C3E, 0x0C40],   [0x0C46, 0x0C48],
+  [0x0C4A, 0x0C4D],   [0x0C55, 0x0C56],   [0x0CBC, 0x0CBC],
+  [0x0CBF, 0x0CBF],   [0x0CC6, 0x0CC6],   [0x0CCC, 0x0CCD],
+  [0x0CE2, 0x0CE3],   [0x0D41, 0x0D43],   [0x0D4D, 0x0D4D],
+  [0x0DCA, 0x0DCA],   [0x0DD2, 0x0DD4],   [0x0DD6, 0x0DD6],
+  [0x0E31, 0x0E31],   [0x0E34, 0x0E3A],   [0x0E47, 0x0E4E],
+  [0x0EB1, 0x0EB1],   [0x0EB4, 0x0EB9],   [0x0EBB, 0x0EBC],
+  [0x0EC8, 0x0ECD],   [0x0F18, 0x0F19],   [0x0F35, 0x0F35],
+  [0x0F37, 0x0F37],   [0x0F39, 0x0F39],   [0x0F71, 0x0F7E],
+  [0x0F80, 0x0F84],   [0x0F86, 0x0F87],   [0x0F90, 0x0F97],
+  [0x0F99, 0x0FBC],   [0x0FC6, 0x0FC6],   [0x102D, 0x1030],
+  [0x1032, 0x1032],   [0x1036, 0x1037],   [0x1039, 0x1039],
+  [0x1058, 0x1059],   [0x1160, 0x11FF],   [0x135F, 0x135F],
+  [0x1712, 0x1714],   [0x1732, 0x1734],   [0x1752, 0x1753],
+  [0x1772, 0x1773],   [0x17B4, 0x17B5],   [0x17B7, 0x17BD],
+  [0x17C6, 0x17C6],   [0x17C9, 0x17D3],   [0x17DD, 0x17DD],
+  [0x180B, 0x180D],   [0x18A9, 0x18A9],   [0x1920, 0x1922],
+  [0x1927, 0x1928],   [0x1932, 0x1932],   [0x1939, 0x193B],
+  [0x1A17, 0x1A18],   [0x1B00, 0x1B03],   [0x1B34, 0x1B34],
+  [0x1B36, 0x1B3A],   [0x1B3C, 0x1B3C],   [0x1B42, 0x1B42],
+  [0x1B6B, 0x1B73],   [0x1DC0, 0x1DCA],   [0x1DFE, 0x1DFF],
+  [0x200B, 0x200F],   [0x202A, 0x202E],   [0x2060, 0x2063],
+  [0x206A, 0x206F],   [0x20D0, 0x20EF],   [0x302A, 0x302F],
+  [0x3099, 0x309A],   [0xA806, 0xA806],   [0xA80B, 0xA80B],
+  [0xA825, 0xA826],   [0xFB1E, 0xFB1E],   [0xFE00, 0xFE0F],
+  [0xFE20, 0xFE23],   [0xFEFF, 0xFEFF],   [0xFFF9, 0xFFFB],
+  [0x10A01, 0x10A03], [0x10A05, 0x10A06], [0x10A0C, 0x10A0F],
+  [0x10A38, 0x10A3A], [0x10A3F, 0x10A3F], [0x1D167, 0x1D169],
+  [0x1D173, 0x1D182], [0x1D185, 0x1D18B], [0x1D1AA, 0x1D1AD],
+  [0x1D242, 0x1D244], [0xE0001, 0xE0001], [0xE0020, 0xE007F],
   [0xE0100, 0xE01EF]
 ];
 
 // Sorted list of non-overlapping intervals of East Asian Ambiguous characters
 // generated by "uniset +WIDTH-A -cat=Me -cat=Mn -cat=Cf c"
 lib.wc.ambiguous = [
-  [0x00A1, 0x00A1],
-  [0x00A4, 0x00A4],
-  [0x00A7, 0x00A8],
-  [0x00AA, 0x00AA],
-  [0x00AE, 0x00AE],
-  [0x00B0, 0x00B4],
-  [0x00B6, 0x00BA],
-  [0x00BC, 0x00BF],
-  [0x00C6, 0x00C6],
-  [0x00D0, 0x00D0],
-  [0x00D7, 0x00D8],
-  [0x00DE, 0x00E1],
-  [0x00E6, 0x00E6],
-  [0x00E8, 0x00EA],
-  [0x00EC, 0x00ED],
-  [0x00F0, 0x00F0],
-  [0x00F2, 0x00F3],
-  [0x00F7, 0x00FA],
-  [0x00FC, 0x00FC],
-  [0x00FE, 0x00FE],
-  [0x0101, 0x0101],
-  [0x0111, 0x0111],
-  [0x0113, 0x0113],
-  [0x011B, 0x011B],
-  [0x0126, 0x0127],
-  [0x012B, 0x012B],
-  [0x0131, 0x0133],
-  [0x0138, 0x0138],
-  [0x013F, 0x0142],
-  [0x0144, 0x0144],
-  [0x0148, 0x014B],
-  [0x014D, 0x014D],
-  [0x0152, 0x0153],
-  [0x0166, 0x0167],
-  [0x016B, 0x016B],
-  [0x01CE, 0x01CE],
-  [0x01D0, 0x01D0],
-  [0x01D2, 0x01D2],
-  [0x01D4, 0x01D4],
-  [0x01D6, 0x01D6],
-  [0x01D8, 0x01D8],
-  [0x01DA, 0x01DA],
-  [0x01DC, 0x01DC],
-  [0x0251, 0x0251],
-  [0x0261, 0x0261],
-  [0x02C4, 0x02C4],
-  [0x02C7, 0x02C7],
-  [0x02C9, 0x02CB],
-  [0x02CD, 0x02CD],
-  [0x02D0, 0x02D0],
-  [0x02D8, 0x02DB],
-  [0x02DD, 0x02DD],
-  [0x02DF, 0x02DF],
-  [0x0391, 0x03A1],
-  [0x03A3, 0x03A9],
-  [0x03B1, 0x03C1],
-  [0x03C3, 0x03C9],
-  [0x0401, 0x0401],
-  [0x0410, 0x044F],
-  [0x0451, 0x0451],
-  [0x2010, 0x2010],
-  [0x2013, 0x2016],
-  [0x2018, 0x2019],
-  [0x201C, 0x201D],
-  [0x2020, 0x2022],
-  [0x2024, 0x2027],
-  [0x2030, 0x2030],
-  [0x2032, 0x2033],
-  [0x2035, 0x2035],
-  [0x203B, 0x203B],
-  [0x203E, 0x203E],
-  [0x2074, 0x2074],
-  [0x207F, 0x207F],
-  [0x2081, 0x2084],
-  [0x20AC, 0x20AC],
-  [0x2103, 0x2103],
-  [0x2105, 0x2105],
-  [0x2109, 0x2109],
-  [0x2113, 0x2113],
-  [0x2116, 0x2116],
-  [0x2121, 0x2122],
-  [0x2126, 0x2126],
-  [0x212B, 0x212B],
-  [0x2153, 0x2154],
-  [0x215B, 0x215E],
-  [0x2160, 0x216B],
-  [0x2170, 0x2179],
-  [0x2190, 0x2199],
-  [0x21B8, 0x21B9],
-  [0x21D2, 0x21D2],
-  [0x21D4, 0x21D4],
-  [0x21E7, 0x21E7],
-  [0x2200, 0x2200],
-  [0x2202, 0x2203],
-  [0x2207, 0x2208],
-  [0x220B, 0x220B],
-  [0x220F, 0x220F],
-  [0x2211, 0x2211],
-  [0x2215, 0x2215],
-  [0x221A, 0x221A],
-  [0x221D, 0x2220],
-  [0x2223, 0x2223],
-  [0x2225, 0x2225],
-  [0x2227, 0x222C],
-  [0x222E, 0x222E],
-  [0x2234, 0x2237],
-  [0x223C, 0x223D],
-  [0x2248, 0x2248],
-  [0x224C, 0x224C],
-  [0x2252, 0x2252],
-  [0x2260, 0x2261],
-  [0x2264, 0x2267],
-  [0x226A, 0x226B],
-  [0x226E, 0x226F],
-  [0x2282, 0x2283],
-  [0x2286, 0x2287],
-  [0x2295, 0x2295],
-  [0x2299, 0x2299],
-  [0x22A5, 0x22A5],
-  [0x22BF, 0x22BF],
-  [0x2312, 0x2312],
-  [0x2460, 0x24E9],
-  [0x24EB, 0x254B],
-  [0x2550, 0x2573],
-  [0x2580, 0x258F],
-  [0x2592, 0x2595],
-  [0x25A0, 0x25A1],
-  [0x25A3, 0x25A9],
-  [0x25B2, 0x25B3],
-  [0x25B6, 0x25B7],
-  [0x25BC, 0x25BD],
-  [0x25C0, 0x25C1],
-  [0x25C6, 0x25C8],
-  [0x25CB, 0x25CB],
-  [0x25CE, 0x25D1],
-  [0x25E2, 0x25E5],
-  [0x25EF, 0x25EF],
-  [0x2605, 0x2606],
-  [0x2609, 0x2609],
-  [0x260E, 0x260F],
-  [0x2614, 0x2615],
-  [0x261C, 0x261C],
-  [0x261E, 0x261E],
-  [0x2640, 0x2640],
-  [0x2642, 0x2642],
-  [0x2660, 0x2661],
-  [0x2663, 0x2665],
-  [0x2667, 0x266A],
-  [0x266C, 0x266D],
-  [0x266F, 0x266F],
-  [0x273D, 0x273D],
-  [0x2776, 0x277F],
-  [0xE000, 0xF8FF],
-  [0xFFFD, 0xFFFD],
-  [0xF0000, 0xFFFFD],
-  [0x100000, 0x10FFFD]
+  [0x00A1, 0x00A1], [0x00A4, 0x00A4], [0x00A7, 0x00A8],   [0x00AA, 0x00AA],
+  [0x00AE, 0x00AE], [0x00B0, 0x00B4], [0x00B6, 0x00BA],   [0x00BC, 0x00BF],
+  [0x00C6, 0x00C6], [0x00D0, 0x00D0], [0x00D7, 0x00D8],   [0x00DE, 0x00E1],
+  [0x00E6, 0x00E6], [0x00E8, 0x00EA], [0x00EC, 0x00ED],   [0x00F0, 0x00F0],
+  [0x00F2, 0x00F3], [0x00F7, 0x00FA], [0x00FC, 0x00FC],   [0x00FE, 0x00FE],
+  [0x0101, 0x0101], [0x0111, 0x0111], [0x0113, 0x0113],   [0x011B, 0x011B],
+  [0x0126, 0x0127], [0x012B, 0x012B], [0x0131, 0x0133],   [0x0138, 0x0138],
+  [0x013F, 0x0142], [0x0144, 0x0144], [0x0148, 0x014B],   [0x014D, 0x014D],
+  [0x0152, 0x0153], [0x0166, 0x0167], [0x016B, 0x016B],   [0x01CE, 0x01CE],
+  [0x01D0, 0x01D0], [0x01D2, 0x01D2], [0x01D4, 0x01D4],   [0x01D6, 0x01D6],
+  [0x01D8, 0x01D8], [0x01DA, 0x01DA], [0x01DC, 0x01DC],   [0x0251, 0x0251],
+  [0x0261, 0x0261], [0x02C4, 0x02C4], [0x02C7, 0x02C7],   [0x02C9, 0x02CB],
+  [0x02CD, 0x02CD], [0x02D0, 0x02D0], [0x02D8, 0x02DB],   [0x02DD, 0x02DD],
+  [0x02DF, 0x02DF], [0x0391, 0x03A1], [0x03A3, 0x03A9],   [0x03B1, 0x03C1],
+  [0x03C3, 0x03C9], [0x0401, 0x0401], [0x0410, 0x044F],   [0x0451, 0x0451],
+  [0x2010, 0x2010], [0x2013, 0x2016], [0x2018, 0x2019],   [0x201C, 0x201D],
+  [0x2020, 0x2022], [0x2024, 0x2027], [0x2030, 0x2030],   [0x2032, 0x2033],
+  [0x2035, 0x2035], [0x203B, 0x203B], [0x203E, 0x203E],   [0x2074, 0x2074],
+  [0x207F, 0x207F], [0x2081, 0x2084], [0x20AC, 0x20AC],   [0x2103, 0x2103],
+  [0x2105, 0x2105], [0x2109, 0x2109], [0x2113, 0x2113],   [0x2116, 0x2116],
+  [0x2121, 0x2122], [0x2126, 0x2126], [0x212B, 0x212B],   [0x2153, 0x2154],
+  [0x215B, 0x215E], [0x2160, 0x216B], [0x2170, 0x2179],   [0x2190, 0x2199],
+  [0x21B8, 0x21B9], [0x21D2, 0x21D2], [0x21D4, 0x21D4],   [0x21E7, 0x21E7],
+  [0x2200, 0x2200], [0x2202, 0x2203], [0x2207, 0x2208],   [0x220B, 0x220B],
+  [0x220F, 0x220F], [0x2211, 0x2211], [0x2215, 0x2215],   [0x221A, 0x221A],
+  [0x221D, 0x2220], [0x2223, 0x2223], [0x2225, 0x2225],   [0x2227, 0x222C],
+  [0x222E, 0x222E], [0x2234, 0x2237], [0x223C, 0x223D],   [0x2248, 0x2248],
+  [0x224C, 0x224C], [0x2252, 0x2252], [0x2260, 0x2261],   [0x2264, 0x2267],
+  [0x226A, 0x226B], [0x226E, 0x226F], [0x2282, 0x2283],   [0x2286, 0x2287],
+  [0x2295, 0x2295], [0x2299, 0x2299], [0x22A5, 0x22A5],   [0x22BF, 0x22BF],
+  [0x2312, 0x2312], [0x2460, 0x24E9], [0x24EB, 0x254B],   [0x2550, 0x2573],
+  [0x2580, 0x258F], [0x2592, 0x2595], [0x25A0, 0x25A1],   [0x25A3, 0x25A9],
+  [0x25B2, 0x25B3], [0x25B6, 0x25B7], [0x25BC, 0x25BD],   [0x25C0, 0x25C1],
+  [0x25C6, 0x25C8], [0x25CB, 0x25CB], [0x25CE, 0x25D1],   [0x25E2, 0x25E5],
+  [0x25EF, 0x25EF], [0x2605, 0x2606], [0x2609, 0x2609],   [0x260E, 0x260F],
+  [0x2614, 0x2615], [0x261C, 0x261C], [0x261E, 0x261E],   [0x2640, 0x2640],
+  [0x2642, 0x2642], [0x2660, 0x2661], [0x2663, 0x2665],   [0x2667, 0x266A],
+  [0x266C, 0x266D], [0x266F, 0x266F], [0x273D, 0x273D],   [0x2776, 0x277F],
+  [0xE000, 0xF8FF], [0xFFFD, 0xFFFD], [0xF0000, 0xFFFFD], [0x100000, 0x10FFFD]
 ];
 
 /**
@@ -5121,8 +4746,7 @@ lib.wc.ambiguous = [
  */
 lib.wc.isSpace = function(ucs) {
   // Auxiliary function for binary search in interval table.
-  var min = 0,
-    max = lib.wc.combining.length - 1;
+  var min = 0, max = lib.wc.combining.length - 1;
   var mid;
 
   if (ucs < lib.wc.combining[0][0] || ucs > lib.wc.combining[max][1])
@@ -5131,11 +4755,9 @@ lib.wc.isSpace = function(ucs) {
     mid = Math.floor((min + max) / 2);
     if (ucs > lib.wc.combining[mid][1]) {
       min = mid + 1;
-    }
-    else if (ucs < lib.wc.combining[mid][0]) {
+    } else if (ucs < lib.wc.combining[mid][0]) {
       max = mid - 1;
-    }
-    else {
+    } else {
       return true;
     }
   }
@@ -5153,8 +4775,7 @@ lib.wc.isSpace = function(ucs) {
  * character.
  */
 lib.wc.isCjkAmbiguous = function(ucs) {
-  var min = 0,
-    max = lib.wc.ambiguous.length - 1;
+  var min = 0, max = lib.wc.ambiguous.length - 1;
   var mid;
 
   if (ucs < lib.wc.ambiguous[0][0] || ucs > lib.wc.ambiguous[max][1])
@@ -5163,11 +4784,9 @@ lib.wc.isCjkAmbiguous = function(ucs) {
     mid = Math.floor((min + max) / 2);
     if (ucs > lib.wc.ambiguous[mid][1]) {
       min = mid + 1;
-    }
-    else if (ucs < lib.wc.ambiguous[mid][0]) {
+    } else if (ucs < lib.wc.ambiguous[mid][0]) {
       max = mid - 1;
-    }
-    else {
+    } else {
       return true;
     }
   }
@@ -5185,8 +4804,7 @@ lib.wc.isCjkAmbiguous = function(ucs) {
 lib.wc.charWidth = function(ucs) {
   if (lib.wc.regardCjkAmbiguous) {
     return lib.wc.charWidthRegardAmbiguous(ucs);
-  }
-  else {
+  } else {
     return lib.wc.charWidthDisregardAmbiguous(ucs);
   }
 };
@@ -5201,31 +4819,26 @@ lib.wc.charWidth = function(ucs) {
  */
 lib.wc.charWidthDisregardAmbiguous = function(ucs) {
   // Test for 8-bit control characters.
-  if (ucs === 0)
-    return lib.wc.nulWidth;
-  if (ucs < 32 || (ucs >= 0x7f && ucs < 0xa0))
-    return lib.wc.controlWidth;
+  if (ucs === 0) return lib.wc.nulWidth;
+  if (ucs < 32 || (ucs >= 0x7f && ucs < 0xa0)) return lib.wc.controlWidth;
 
   // Optimize for ASCII characters.
-  if (ucs < 0x7f)
-    return 1;
+  if (ucs < 0x7f) return 1;
 
   // Binary search in table of non-spacing characters.
-  if (lib.wc.isSpace(ucs))
-    return 0;
+  if (lib.wc.isSpace(ucs)) return 0;
 
   // If we arrive here, ucs is not a combining or C0/C1 control character.
   return 1 +
-    (ucs >= 0x1100 &&
-      (ucs <= 0x115f || // Hangul Jamo init. consonants
+      (ucs >= 0x1100 &&
+       (ucs <= 0x115f ||  // Hangul Jamo init. consonants
         ucs == 0x2329 || ucs == 0x232a ||
-        (ucs >= 0x2e80 && ucs <= 0xa4cf &&
-          ucs != 0x303f) || // CJK ... Yi
-        (ucs >= 0xac00 && ucs <= 0xd7a3) || // Hangul Syllables
-        (ucs >= 0xf900 && ucs <= 0xfaff) || // CJK Compatibility Ideographs
-        (ucs >= 0xfe10 && ucs <= 0xfe19) || // Vertical forms
-        (ucs >= 0xfe30 && ucs <= 0xfe6f) || // CJK Compatibility Forms
-        (ucs >= 0xff00 && ucs <= 0xff60) || // Fullwidth Forms
+        (ucs >= 0x2e80 && ucs <= 0xa4cf && ucs != 0x303f) ||  // CJK ... Yi
+        (ucs >= 0xac00 && ucs <= 0xd7a3) ||  // Hangul Syllables
+        (ucs >= 0xf900 && ucs <= 0xfaff) ||  // CJK Compatibility Ideographs
+        (ucs >= 0xfe10 && ucs <= 0xfe19) ||  // Vertical forms
+        (ucs >= 0xfe30 && ucs <= 0xfe6f) ||  // CJK Compatibility Forms
+        (ucs >= 0xff00 && ucs <= 0xff60) ||  // Fullwidth Forms
         (ucs >= 0xffe0 && ucs <= 0xffe6) ||
         (ucs >= 0x20000 && ucs <= 0x2fffd) ||
         (ucs >= 0x30000 && ucs <= 0x3fffd)));
@@ -5242,8 +4855,7 @@ lib.wc.charWidthDisregardAmbiguous = function(ucs) {
  * @return {integer} The column width of the given character.
  */
 lib.wc.charWidthRegardAmbiguous = function(ucs) {
-  if (lib.wc.isCjkAmbiguous(ucs))
-    return lib.wc.cjkAmbiguousWidth;
+  if (lib.wc.isCjkAmbiguous(ucs)) return lib.wc.cjkAmbiguousWidth;
 
   return lib.wc.charWidthDisregardAmbiguous(ucs);
 };
@@ -5261,8 +4873,7 @@ lib.wc.strWidth = function(str) {
   for (var i = 0; i < str.length;) {
     var codePoint = str.codePointAt(i);
     width = lib.wc.charWidth(codePoint);
-    if (width < 0)
-      return -1;
+    if (width < 0) return -1;
     rv += width;
     i += (codePoint <= 0xffff) ? 1 : 2;
   }
@@ -5284,14 +4895,15 @@ lib.wc.substr = function(str, start, opt_width) {
 
   for (startIndex = 0, width = 0; startIndex < str.length; startIndex++) {
     width += lib.wc.charWidth(str.charCodeAt(startIndex));
-    if (width > start)
-      break;
+    if (width > start) break;
   }
 
   if (opt_width != undefined) {
-    for (endIndex = startIndex, width = 0; endIndex < str.length && width < opt_width; width += lib.wc.charWidth(str.charCodeAt(endIndex)), endIndex++);
-    if (width > opt_width)
-      endIndex--;
+    for (endIndex = startIndex, width = 0;
+         endIndex < str.length && width < opt_width;
+         width += lib.wc.charWidth(str.charCodeAt(endIndex)), endIndex++)
+      ;
+    if (width > opt_width) endIndex--;
     return str.substring(startIndex, endIndex);
   }
 
@@ -5310,15 +4922,15 @@ lib.wc.substr = function(str, start, opt_width) {
 lib.wc.substring = function(str, start, end) {
   return lib.wc.substr(str, start, end - start);
 };
-lib.resource.add('libdot/changelog/version', 'text/plain',
-  '1.11' +
-  ''
-);
+lib.resource.add(
+    'libdot/changelog/version', 'text/plain',
+    '1.11' +
+        '');
 
-lib.resource.add('libdot/changelog/date', 'text/plain',
-  '2017-04-17' +
-  ''
-);
+lib.resource.add(
+    'libdot/changelog/date', 'text/plain',
+    '2017-04-17' +
+        '');
 
 // SOURCE FILE: hterm/js/hterm.js
 // Copyright (c) 2012 The Chromium OS Authors. All rights reserved.
@@ -5361,7 +4973,6 @@ hterm.zoomWarningMessage = 'ZOOM != 100%';
  */
 hterm.notifyCopyMessage = '✂';
 
-
 /**
  * Text shown in a desktop notification for the terminal
  * bell.  \u226a is a unicode EIGHTH NOTE, %(title) will
@@ -5374,9 +4985,9 @@ hterm.desktopNotificationTitle = '♪ %(title) ♪';
  *
  * A test harness should ensure that they all exist before running.
  */
-hterm.testDeps = ['hterm.ScrollPort.Tests', 'hterm.Screen.Tests',
-  'hterm.Terminal.Tests', 'hterm.VT.Tests',
-  'hterm.VT.CannedTests'
+hterm.testDeps = [
+  'hterm.ScrollPort.Tests', 'hterm.Screen.Tests', 'hterm.Terminal.Tests',
+  'hterm.VT.Tests', 'hterm.VT.CannedTests'
 ];
 
 /**
@@ -5396,8 +5007,7 @@ lib.registerInit('hterm', function(onInit) {
   function onTab(tab) {
     if (tab && window.chrome) {
       chrome.windows.get(tab.windowId, null, onWindow);
-    }
-    else {
+    } else {
       // TODO(rginda): This is where we end up for a v1 app's background page.
       // Maybe windowType = 'none' would be more appropriate, or something.
       hterm.windowType = 'normal';
@@ -5409,10 +5019,9 @@ lib.registerInit('hterm', function(onInit) {
     var ary = navigator.userAgent.match(/\sChrome\/(\d\d)/);
     var version = ary ? parseInt(ary[1]) : -1;
     if (window.chrome && chrome.storage && chrome.storage.sync &&
-      version > 21) {
+        version > 21) {
       hterm.defaultStorage = new lib.Storage.Chrome(chrome.storage.sync);
-    }
-    else {
+    } else {
       hterm.defaultStorage = new lib.Storage.Local();
     }
   }
@@ -5427,20 +5036,14 @@ lib.registerInit('hterm', function(onInit) {
 
   if (isPackagedApp) {
     // Packaged apps are never displayed in browser tabs.
-    setTimeout(onWindow.bind(null, {
-      type: 'popup'
-    }), 0);
-  }
-  else {
+    setTimeout(onWindow.bind(null, {type: 'popup'}), 0);
+  } else {
     if (window.chrome && chrome.tabs) {
       // The getCurrent method gets the tab that is "currently running", not the
       // topmost or focused tab.
       chrome.tabs.getCurrent(onTab);
-    }
-    else {
-      setTimeout(onWindow.bind(null, {
-        type: 'normal'
-      }), 0);
+    } else {
+      setTimeout(onWindow.bind(null, {type: 'normal'}), 0);
     }
   }
 });
@@ -5474,8 +5077,7 @@ hterm.getClientHeight = function(dom) {
 hterm.copySelectionToClipboard = function(document) {
   try {
     document.execCommand('copy');
-  }
-  catch (firefoxException) {
+  } catch (firefoxException) {
     // Ignore this. FF throws an exception if there was an error, even though
     // the spec says just return false.
   }
@@ -5489,8 +5091,7 @@ hterm.copySelectionToClipboard = function(document) {
 hterm.pasteFromClipboard = function(document) {
   try {
     document.execCommand('paste');
-  }
-  catch (firefoxException) {
+  } catch (firefoxException) {
     // Ignore this. FF throws an exception if there was an error, even though
     // the spec says just return false.
   }
@@ -5627,8 +5228,9 @@ hterm.RowCol.prototype.setTo = function(that) {
  *     otherwise.
  */
 hterm.RowCol.prototype.equals = function(that) {
-  return (this.row == that.row && this.column == that.column &&
-    this.overflow == that.overflow);
+  return (
+      this.row == that.row && this.column == that.column &&
+      this.overflow == that.overflow);
 };
 
 /**
@@ -5638,8 +5240,9 @@ hterm.RowCol.prototype.equals = function(that) {
  *     instance.
  */
 hterm.RowCol.prototype.toString = function() {
-  return ('[hterm.RowCol: ' + this.row + ', ' + this.column + ', ' +
-    this.overflow + ']');
+  return (
+      '[hterm.RowCol: ' + this.row + ', ' + this.column + ', ' + this.overflow +
+      ']');
 };
 // SOURCE FILE: hterm/js/hterm_frame.js
 // Copyright (c) 2012 The Chromium OS Authors. All rights reserved.
@@ -5706,13 +5309,9 @@ hterm.Frame.prototype.onLoad_ = function() {
   this.messageChannel_ = new MessageChannel();
   this.messageChannel_.port1.onmessage = this.onMessage_.bind(this);
   this.messageChannel_.port1.start();
-  this.iframe_.contentWindow.postMessage({
-      name: 'ipc-init',
-      argv: [{
-        messagePort: this.messageChannel_.port2
-      }]
-    },
-    this.url, [this.messageChannel_.port2]);
+  this.iframe_.contentWindow.postMessage(
+      {name: 'ipc-init', argv: [{messagePort: this.messageChannel_.port2}]},
+      this.url, [this.messageChannel_.port2]);
 };
 
 /**
@@ -5726,14 +5325,14 @@ hterm.Frame.prototype.onLoad = function() {};
 hterm.Frame.prototype.sendTerminalInfo_ = function() {
   lib.f.getAcceptLanguages(function(languages) {
     this.postMessage('terminal-info', [{
-      acceptLanguages: languages,
-      foregroundColor: this.terminal_.getForegroundColor(),
-      backgroundColor: this.terminal_.getBackgroundColor(),
-      cursorColor: this.terminal_.getCursorColor(),
-      fontSize: this.terminal_.getFontSize(),
-      fontFamily: this.terminal_.getFontFamily(),
-      baseURL: lib.f.getURL('/')
-    }]);
+                       acceptLanguages: languages,
+                       foregroundColor: this.terminal_.getForegroundColor(),
+                       backgroundColor: this.terminal_.getBackgroundColor(),
+                       cursorColor: this.terminal_.getCursorColor(),
+                       fontSize: this.terminal_.getFontSize(),
+                       fontFamily: this.terminal_.getFontFamily(),
+                       baseURL: lib.f.getURL('/')
+                     }]);
   }.bind(this));
 };
 
@@ -5748,13 +5347,11 @@ hterm.Frame.prototype.onCloseClicked_ = function() {
  * Close this frame.
  */
 hterm.Frame.prototype.close = function() {
-  if (!this.container_ || !this.container_.parentNode)
-    return;
+  if (!this.container_ || !this.container_.parentNode) return;
 
   this.container_.parentNode.removeChild(this.container_);
   this.onClose();
 };
-
 
 /**
  * Clients may override this.
@@ -5765,13 +5362,9 @@ hterm.Frame.prototype.onClose = function() {};
  * Send a message to the iframe.
  */
 hterm.Frame.prototype.postMessage = function(name, argv) {
-  if (!this.messageChannel_)
-    throw new Error('Message channel is not set up.');
+  if (!this.messageChannel_) throw new Error('Message channel is not set up.');
 
-  this.messageChannel_.port1.postMessage({
-    name: name,
-    argv: argv
-  });
+  this.messageChannel_.port1.postMessage({name: name, argv: argv});
 };
 
 /**
@@ -5783,8 +5376,7 @@ hterm.Frame.prototype.show = function() {
   var self = this;
 
   function opt(name, defaultValue) {
-    if (name in self.options)
-      return self.options[name];
+    if (name in self.options) return self.options[name];
 
     return defaultValue;
   }
@@ -5808,36 +5400,36 @@ hterm.Frame.prototype.show = function() {
   var document = this.terminal_.document_;
 
   var container = this.container_ = document.createElement('div');
-  container.style.cssText = (
-    'position: absolute;' +
-    'display: -webkit-flex;' +
-    '-webkit-flex-direction: column;' +
-    'top: 10%;' +
-    'left: 4%;' +
-    'width: 90%;' +
-    'height: 80%;' +
-    'box-shadow: 0 0 2px ' + this.terminal_.getForegroundColor() + ';' +
-    'border: 2px ' + this.terminal_.getForegroundColor() + ' solid;');
+  container.style.cssText =
+      ('position: absolute;' +
+       'display: -webkit-flex;' +
+       '-webkit-flex-direction: column;' +
+       'top: 10%;' +
+       'left: 4%;' +
+       'width: 90%;' +
+       'height: 80%;' +
+       'box-shadow: 0 0 2px ' + this.terminal_.getForegroundColor() + ';' +
+       'border: 2px ' + this.terminal_.getForegroundColor() + ' solid;');
 
   var header = document.createElement('div');
-  header.style.cssText = (
-    'display: -webkit-flex;' +
-    '-webkit-justify-content: flex-end;' +
-    'height: ' + headerHeight + ';' +
-    'background-color: ' + this.terminal_.getForegroundColor() + ';' +
-    'color: ' + this.terminal_.getBackgroundColor() + ';' +
-    'font-size: 16px;' +
-    'font-family: ' + this.terminal_.getFontFamily());
+  header.style.cssText =
+      ('display: -webkit-flex;' +
+       '-webkit-justify-content: flex-end;' +
+       'height: ' + headerHeight + ';' +
+       'background-color: ' + this.terminal_.getForegroundColor() + ';' +
+       'color: ' + this.terminal_.getBackgroundColor() + ';' +
+       'font-size: 16px;' +
+       'font-family: ' + this.terminal_.getFontFamily());
   container.appendChild(header);
 
   if (false) {
     // No use for the close button.
     var button = document.createElement('div');
     button.setAttribute('role', 'button');
-    button.style.cssText = (
-      'margin-top: -3px;' +
-      'margin-right: 3px;' +
-      'cursor: pointer;');
+    button.style.cssText =
+        ('margin-top: -3px;' +
+         'margin-right: 3px;' +
+         'cursor: pointer;');
     button.textContent = '⨯';
     button.addEventListener('click', this.onCloseClicked_.bind(this));
     header.appendChild(button);
@@ -5845,10 +5437,10 @@ hterm.Frame.prototype.show = function() {
 
   var iframe = this.iframe_ = document.createElement('iframe');
   iframe.onload = this.onLoad_.bind(this);
-  iframe.style.cssText = (
-    'display: -webkit-flex;' +
-    '-webkit-flex: 1;' +
-    'width: 100%');
+  iframe.style.cssText =
+      ('display: -webkit-flex;' +
+       '-webkit-flex: 1;' +
+       'width: 100%');
   iframe.setAttribute('src', this.url);
   iframe.setAttribute('seamless', true);
   container.appendChild(iframe);
@@ -6110,18 +5702,15 @@ hterm.Keyboard.prototype.encode = function(str) {
  *     null to disable the keyboard.
  */
 hterm.Keyboard.prototype.installKeyboard = function(element) {
-  if (element == this.keyboardElement_)
-    return;
+  if (element == this.keyboardElement_) return;
 
-  if (element && this.keyboardElement_)
-    this.installKeyboard(null);
+  if (element && this.keyboardElement_) this.installKeyboard(null);
 
   for (var i = 0; i < this.handlers_.length; i++) {
     var handler = this.handlers_[i];
     if (element) {
       element.addEventListener(handler[0], handler[1]);
-    }
-    else {
+    } else {
       this.keyboardElement_.removeEventListener(handler[0], handler[1]);
     }
   }
@@ -6145,8 +5734,7 @@ hterm.Keyboard.prototype.uninstallKeyboard = function() {
  * where a third party app sends synthetic keystrokes to Chrome.
  */
 hterm.Keyboard.prototype.onTextInput_ = function(e) {
-  if (!e.data)
-    return;
+  if (!e.data) return;
 
   e.data.split('').forEach(this.terminal.onVTKeystroke.bind(this.terminal));
 };
@@ -6174,17 +5762,14 @@ hterm.Keyboard.prototype.onKeyPress_ = function(e) {
     // This happens here only as a fallback.  Typically these platforms should
     // set altSendsWhat to either 'escape' or '8-bit'.
     var ch = String.fromCharCode(e.keyCode);
-    if (!e.shiftKey)
-      ch = ch.toLowerCase();
+    if (!e.shiftKey) ch = ch.toLowerCase();
     code = ch.charCodeAt(0) + 128;
 
-  }
-  else if (e.charCode >= 32) {
+  } else if (e.charCode >= 32) {
     ch = e.charCode;
   }
 
-  if (ch)
-    this.terminal.onVTKeystroke(String.fromCharCode(ch));
+  if (ch) this.terminal.onVTKeystroke(String.fromCharCode(ch));
 
   e.preventDefault();
   e.stopPropagation();
@@ -6198,10 +5783,8 @@ hterm.Keyboard.prototype.onKeyPress_ = function(e) {
  * the ESC key remains usable within fullscreen Chrome app windows.
  */
 hterm.Keyboard.prototype.preventChromeAppNonCtrlShiftDefault_ = function(e) {
-  if (!window.chrome || !window.chrome.app || !window.chrome.app.window)
-    return;
-  if (!e.ctrlKey || !e.shiftKey)
-    e.preventDefault();
+  if (!window.chrome || !window.chrome.app || !window.chrome.app.window) return;
+  if (!e.ctrlKey || !e.shiftKey) e.preventDefault();
 };
 
 hterm.Keyboard.prototype.onFocusOut_ = function(e) {
@@ -6212,8 +5795,7 @@ hterm.Keyboard.prototype.onKeyUp_ = function(e) {
   if (e.keyCode == 18)
     this.altKeyPressed = this.altKeyPressed & ~(1 << (e.location - 1));
 
-  if (e.keyCode == 27)
-    this.preventChromeAppNonCtrlShiftDefault_(e);
+  if (e.keyCode == 27) this.preventChromeAppNonCtrlShiftDefault_(e);
 };
 
 /**
@@ -6223,8 +5805,7 @@ hterm.Keyboard.prototype.onKeyDown_ = function(e) {
   if (e.keyCode == 18)
     this.altKeyPressed = this.altKeyPressed | (1 << (e.location - 1));
 
-  if (e.keyCode == 27)
-    this.preventChromeAppNonCtrlShiftDefault_(e);
+  if (e.keyCode == 27) this.preventChromeAppNonCtrlShiftDefault_(e);
 
   var keyDef = this.keyMap.keyDefs[e.keyCode];
   if (!keyDef) {
@@ -6248,8 +5829,7 @@ hterm.Keyboard.prototype.onKeyDown_ = function(e) {
     if (typeof action == 'function')
       action = action.apply(self.keyMap, [e, keyDef]);
 
-    if (action === DEFAULT && name != 'normal')
-      action = getAction('normal');
+    if (action === DEFAULT && name != 'normal') action = getAction('normal');
 
     return action;
   }
@@ -6298,14 +5878,11 @@ hterm.Keyboard.prototype.onKeyDown_ = function(e) {
 
   if (control) {
     action = getAction('control');
-  }
-  else if (alt) {
+  } else if (alt) {
     action = getAction('alt');
-  }
-  else if (meta) {
+  } else if (meta) {
     action = getAction('meta');
-  }
-  else {
+  } else {
     action = getAction('normal');
   }
 
@@ -6317,7 +5894,7 @@ hterm.Keyboard.prototype.onKeyDown_ = function(e) {
 
   var keyDown = {
     keyCode: e.keyCode,
-    shift: e.shiftKey, // not `var shift` from above.
+    shift: e.shiftKey,  // not `var shift` from above.
     ctrl: control,
     alt: alt,
     meta: meta
@@ -6370,8 +5947,7 @@ hterm.Keyboard.prototype.onKeyDown_ = function(e) {
   e.preventDefault();
   e.stopPropagation();
 
-  if (action === CANCEL)
-    return;
+  if (action === CANCEL) return;
 
   if (action !== DEFAULT && typeof action != 'string') {
     console.warn('Invalid action: ' + JSON.stringify(action));
@@ -6382,11 +5958,9 @@ hterm.Keyboard.prototype.onKeyDown_ = function(e) {
   // modifier has already been accounted for in the action.
   if (resolvedActionType == 'control') {
     control = false;
-  }
-  else if (resolvedActionType == 'alt') {
+  } else if (resolvedActionType == 'alt') {
     alt = false;
-  }
-  else if (resolvedActionType == 'meta') {
+  } else if (resolvedActionType == 'meta') {
     meta = false;
   }
 
@@ -6399,38 +5973,30 @@ hterm.Keyboard.prototype.onKeyDown_ = function(e) {
 
     if (shift && !(alt || control)) {
       mod = ';2';
-    }
-    else if (alt && !(shift || control)) {
+    } else if (alt && !(shift || control)) {
       mod = ';3';
-    }
-    else if (shift && alt && !control) {
+    } else if (shift && alt && !control) {
       mod = ';4';
-    }
-    else if (control && !(shift || alt)) {
+    } else if (control && !(shift || alt)) {
       mod = ';5';
-    }
-    else if (shift && control && !alt) {
+    } else if (shift && control && !alt) {
       mod = ';6';
-    }
-    else if (alt && control && !shift) {
+    } else if (alt && control && !shift) {
       mod = ';7';
-    }
-    else if (shift && alt && control) {
+    } else if (shift && alt && control) {
       mod = ';8';
     }
 
     if (action.length == 3) {
       // Some of the CSI sequences have zero parameters unless modified.
       action = '\x1b[1' + mod + action.substr(2, 1);
-    }
-    else {
+    } else {
       // Others always have at least one parameter.
       action = action.substr(0, action.length - 1) + mod +
-        action.substr(action.length - 1);
+          action.substr(action.length - 1);
     }
 
-  }
-  else {
+  } else {
     if (action === DEFAULT) {
       action = keyDef.keyCap.substr((shift ? 1 : 0), 1);
 
@@ -6452,7 +6018,7 @@ hterm.Keyboard.prototype.onKeyDown_ = function(e) {
     // string.  Otherwise, every overridden alt/meta action would have to
     // check alt/metaSendsEscape.
     if ((alt && this.altSendsWhat == 'escape') ||
-      (meta && this.metaSendsEscape)) {
+        (meta && this.metaSendsEscape)) {
       action = '\x1b' + action;
     }
   }
@@ -6507,22 +6073,17 @@ hterm.Keyboard.Bindings.prototype.addBinding_ = function(keyPattern, action) {
 
   if (binding) {
     binding.action = action;
-  }
-  else {
-    binding = {
-      keyPattern: keyPattern,
-      action: action
-    };
+  } else {
+    binding = {keyPattern: keyPattern, action: action};
 
     if (!list) {
       this.bindings_[keyPattern.keyCode] = [binding];
-    }
-    else {
+    } else {
       this.bindings_[keyPattern.keyCode].push(binding);
 
       list.sort(function(a, b) {
         return hterm.Keyboard.KeyPattern.sortCompare(
-          a.keyPattern, b.keyPattern);
+            a.keyPattern, b.keyPattern);
       });
     }
   }
@@ -6568,8 +6129,7 @@ hterm.Keyboard.Bindings.prototype.addBinding = function(key, action) {
 
   try {
     sequence = p.parseKeySequence();
-  }
-  catch (ex) {
+  } catch (ex) {
     console.error(ex);
     return;
   }
@@ -6584,8 +6144,7 @@ hterm.Keyboard.Bindings.prototype.addBinding = function(key, action) {
     p.reset(action);
     try {
       action = p.parseKeyAction();
-    }
-    catch (ex) {
+    } catch (ex) {
       console.error(ex);
       return;
     }
@@ -6631,13 +6190,11 @@ hterm.Keyboard.Bindings.prototype.addBindings = function(map) {
  */
 hterm.Keyboard.Bindings.prototype.getBinding = function(keyDown) {
   var list = this.bindings_[keyDown.keyCode];
-  if (!list)
-    return null;
+  if (!list) return null;
 
   for (var i = 0; i < list.length; i++) {
     var binding = list[i];
-    if (binding.keyPattern.matchKeyDown(keyDown))
-      return binding;
+    if (binding.keyPattern.matchKeyDown(keyDown)) return binding;
   }
 
   return null;
@@ -6712,8 +6269,7 @@ hterm.Keyboard.KeyMap = function(keyboard) {
  * Function Keys" from [XTERM].
  */
 hterm.Keyboard.KeyMap.prototype.addKeyDef = function(keyCode, def) {
-  if (keyCode in this.keyDefs)
-    console.warn('Duplicate keyCode: ' + keyCode);
+  if (keyCode in this.keyDefs) console.warn('Duplicate keyCode: ' + keyCode);
 
   this.keyDefs[keyCode] = def;
 };
@@ -6754,8 +6310,7 @@ hterm.Keyboard.KeyMap.prototype.reset = function() {
   // This function is used by the "macro" functions below.  It makes it
   // possible to use the call() macro as an argument to any other macro.
   function resolve(action, e, k) {
-    if (typeof action == 'function')
-      return action.apply(self, [e, k]);
+    if (typeof action == 'function') return action.apply(self, [e, k]);
 
     return action;
   }
@@ -6765,7 +6320,9 @@ hterm.Keyboard.KeyMap.prototype.reset = function() {
   function ak(a, b) {
     return function(e, k) {
       var action = (e.shiftKey || e.ctrlKey || e.altKey || e.metaKey ||
-        !self.keyboard.applicationKeypad) ? a : b;
+                    !self.keyboard.applicationKeypad) ?
+          a :
+          b;
       return resolve(action, e, k);
     };
   }
@@ -6775,7 +6332,9 @@ hterm.Keyboard.KeyMap.prototype.reset = function() {
   function ac(a, b) {
     return function(e, k) {
       var action = (e.shiftKey || e.ctrlKey || e.altKey || e.metaKey ||
-        !self.keyboard.applicationCursor) ? a : b;
+                    !self.keyboard.applicationCursor) ?
+          a :
+          b;
       return resolve(action, e, k);
     };
   }
@@ -6832,8 +6391,8 @@ hterm.Keyboard.KeyMap.prototype.reset = function() {
         // Block Back, Forward, and Reload keys to avoid navigating away from
         // the current page.
         return (e.keyCode == 166 || e.keyCode == 167 || e.keyCode == 168) ?
-          hterm.Keyboard.KeyActions.CANCEL :
-          hterm.Keyboard.KeyActions.PASS;
+            hterm.Keyboard.KeyActions.CANCEL :
+            hterm.Keyboard.KeyActions.PASS;
       }
       return resolve(fn, e, k);
     };
@@ -6849,64 +6408,194 @@ hterm.Keyboard.KeyMap.prototype.reset = function() {
   var STRIP = hterm.Keyboard.KeyActions.STRIP;
 
   this.addKeyDefs(
-    // These fields are: [keycode, keycap, normal, control, alt, meta]
+      // These fields are: [keycode, keycap, normal, control, alt, meta]
 
-    // The browser sends the keycode 0 for some keys.  We'll just assume it's
-    // going to do the right thing by default for those keys.
-    [0, '[UNKNOWN]', PASS, PASS, PASS, PASS],
+      // The browser sends the keycode 0 for some keys.  We'll just assume it's
+      // going to do the right thing by default for those keys.
+      [0, '[UNKNOWN]', PASS, PASS, PASS, PASS],
 
-    // First row.
-    [27, '[ESC]', ESC, DEFAULT, DEFAULT, DEFAULT], [112, '[F1]', mod(SS3 + 'P', CSI + 'P'), DEFAULT, CSI + '23~', DEFAULT], [113, '[F2]', mod(SS3 + 'Q', CSI + 'Q'), DEFAULT, CSI + '24~', DEFAULT], [114, '[F3]', mod(SS3 + 'R', CSI + 'R'), DEFAULT, CSI + '25~', DEFAULT], [115, '[F4]', mod(SS3 + 'S', CSI + 'S'), DEFAULT, CSI + '26~', DEFAULT], [116, '[F5]', CSI + '15~', DEFAULT, CSI + '28~', DEFAULT], [117, '[F6]', CSI + '17~', DEFAULT, CSI + '29~', DEFAULT], [118, '[F7]', CSI + '18~', DEFAULT, CSI + '31~', DEFAULT], [119, '[F8]', CSI + '19~', DEFAULT, CSI + '32~', DEFAULT], [120, '[F9]', CSI + '20~', DEFAULT, CSI + '33~', DEFAULT], [121, '[F10]', CSI + '21~', DEFAULT, CSI + '34~', DEFAULT], [122, '[F11]', CSI + '23~', DEFAULT, CSI + '42~', DEFAULT], [123, '[F12]', CSI + '24~', DEFAULT, CSI + '43~', DEFAULT],
+      // First row.
+      [27, '[ESC]', ESC, DEFAULT, DEFAULT, DEFAULT],
+      [112, '[F1]', mod(SS3 + 'P', CSI + 'P'), DEFAULT, CSI + '23~', DEFAULT],
+      [113, '[F2]', mod(SS3 + 'Q', CSI + 'Q'), DEFAULT, CSI + '24~', DEFAULT],
+      [114, '[F3]', mod(SS3 + 'R', CSI + 'R'), DEFAULT, CSI + '25~', DEFAULT],
+      [115, '[F4]', mod(SS3 + 'S', CSI + 'S'), DEFAULT, CSI + '26~', DEFAULT],
+      [116, '[F5]', CSI + '15~', DEFAULT, CSI + '28~', DEFAULT],
+      [117, '[F6]', CSI + '17~', DEFAULT, CSI + '29~', DEFAULT],
+      [118, '[F7]', CSI + '18~', DEFAULT, CSI + '31~', DEFAULT],
+      [119, '[F8]', CSI + '19~', DEFAULT, CSI + '32~', DEFAULT],
+      [120, '[F9]', CSI + '20~', DEFAULT, CSI + '33~', DEFAULT],
+      [121, '[F10]', CSI + '21~', DEFAULT, CSI + '34~', DEFAULT],
+      [122, '[F11]', CSI + '23~', DEFAULT, CSI + '42~', DEFAULT],
+      [123, '[F12]', CSI + '24~', DEFAULT, CSI + '43~', DEFAULT],
 
-    // Second row.
-    [192, '`~', DEFAULT, sh(ctl('@'), ctl('^')), DEFAULT, PASS], [49, '1!', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')], [50, '2@', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')], [51, '3#', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')], [52, '4$', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')], [53, '5%', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')], [54, '6^', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')], [55, '7&', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')], [56, '8*', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')], [57, '9(', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')], [48, '0)', DEFAULT, c('onPlusMinusZero_'), c('onAltNum_'), c('onPlusMinusZero_')], [189, '-_', DEFAULT, c('onPlusMinusZero_'), DEFAULT, c('onPlusMinusZero_')], [187, '=+', DEFAULT, c('onPlusMinusZero_'), DEFAULT, c('onPlusMinusZero_')],
-    // Firefox -_ and =+
-    [173, '-_', DEFAULT, c('onPlusMinusZero_'), DEFAULT, c('onPlusMinusZero_')], [61, '=+', DEFAULT, c('onPlusMinusZero_'), DEFAULT, c('onPlusMinusZero_')],
-    // Firefox Italian +*
-    [171, '+*', DEFAULT, c('onPlusMinusZero_'), DEFAULT, c('onPlusMinusZero_')],
+      // Second row.
+      [192, '`~', DEFAULT, sh(ctl('@'), ctl('^')), DEFAULT, PASS],
+      [49, '1!', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [50, '2@', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [51, '3#', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [52, '4$', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [53, '5%', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [54, '6^', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [55, '7&', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [56, '8*', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [57, '9(', DEFAULT, c('onCtrlNum_'), c('onAltNum_'), c('onMetaNum_')],
+      [
+        48, '0)', DEFAULT, c('onPlusMinusZero_'), c('onAltNum_'),
+        c('onPlusMinusZero_')
+      ],
+      [
+        189, '-_', DEFAULT, c('onPlusMinusZero_'), DEFAULT,
+        c('onPlusMinusZero_')
+      ],
+      [
+        187, '=+', DEFAULT, c('onPlusMinusZero_'), DEFAULT,
+        c('onPlusMinusZero_')
+      ],
+      // Firefox -_ and =+
+      [
+        173, '-_', DEFAULT, c('onPlusMinusZero_'), DEFAULT,
+        c('onPlusMinusZero_')
+      ],
+      [
+        61, '=+', DEFAULT, c('onPlusMinusZero_'), DEFAULT, c('onPlusMinusZero_')
+      ],
+      // Firefox Italian +*
+      [
+        171, '+*', DEFAULT, c('onPlusMinusZero_'), DEFAULT,
+        c('onPlusMinusZero_')
+      ],
 
-    [8, '[BKSP]', bs('\x7f', '\b'), bs('\b', '\x7f'), DEFAULT, DEFAULT],
+      [8, '[BKSP]', bs('\x7f', '\b'), bs('\b', '\x7f'), DEFAULT, DEFAULT],
 
-    // Third row.
-    [9, '[TAB]', sh('\t', CSI + 'Z'), STRIP, PASS, DEFAULT], [81, 'qQ', DEFAULT, ctl('Q'), DEFAULT, DEFAULT], [87, 'wW', DEFAULT, ctl('W'), DEFAULT, DEFAULT], [69, 'eE', DEFAULT, ctl('E'), DEFAULT, DEFAULT], [82, 'rR', DEFAULT, ctl('R'), DEFAULT, DEFAULT], [84, 'tT', DEFAULT, ctl('T'), DEFAULT, DEFAULT], [89, 'yY', DEFAULT, ctl('Y'), DEFAULT, DEFAULT], [85, 'uU', DEFAULT, ctl('U'), DEFAULT, DEFAULT], [73, 'iI', DEFAULT, ctl('I'), DEFAULT, DEFAULT], [79, 'oO', DEFAULT, ctl('O'), DEFAULT, DEFAULT], [80, 'pP', DEFAULT, ctl('P'), DEFAULT, DEFAULT], [219, '[{', DEFAULT, ctl('['), DEFAULT, DEFAULT], [221, ']}', DEFAULT, ctl(']'), DEFAULT, DEFAULT], [220, '\\|', DEFAULT, ctl('\\'), DEFAULT, DEFAULT],
+      // Third row.
+      [9, '[TAB]', sh('\t', CSI + 'Z'), STRIP, PASS, DEFAULT],
+      [81, 'qQ', DEFAULT, ctl('Q'), DEFAULT, DEFAULT],
+      [87, 'wW', DEFAULT, ctl('W'), DEFAULT, DEFAULT],
+      [69, 'eE', DEFAULT, ctl('E'), DEFAULT, DEFAULT],
+      [82, 'rR', DEFAULT, ctl('R'), DEFAULT, DEFAULT],
+      [84, 'tT', DEFAULT, ctl('T'), DEFAULT, DEFAULT],
+      [89, 'yY', DEFAULT, ctl('Y'), DEFAULT, DEFAULT],
+      [85, 'uU', DEFAULT, ctl('U'), DEFAULT, DEFAULT],
+      [73, 'iI', DEFAULT, ctl('I'), DEFAULT, DEFAULT],
+      [79, 'oO', DEFAULT, ctl('O'), DEFAULT, DEFAULT],
+      [80, 'pP', DEFAULT, ctl('P'), DEFAULT, DEFAULT],
+      [219, '[{', DEFAULT, ctl('['), DEFAULT, DEFAULT],
+      [221, ']}', DEFAULT, ctl(']'), DEFAULT, DEFAULT],
+      [220, '\\|', DEFAULT, ctl('\\'), DEFAULT, DEFAULT],
 
-    // Fourth row. (We let Ctrl-Shift-J pass for Chrome DevTools.)
-    [20, '[CAPS]', PASS, PASS, PASS, DEFAULT], [65, 'aA', DEFAULT, ctl('A'), DEFAULT, DEFAULT], [83, 'sS', DEFAULT, ctl('S'), DEFAULT, DEFAULT], [68, 'dD', DEFAULT, ctl('D'), DEFAULT, DEFAULT], [70, 'fF', DEFAULT, ctl('F'), DEFAULT, DEFAULT], [71, 'gG', DEFAULT, ctl('G'), DEFAULT, DEFAULT], [72, 'hH', DEFAULT, ctl('H'), DEFAULT, DEFAULT], [74, 'jJ', DEFAULT, sh(ctl('J'), PASS), DEFAULT, DEFAULT], [75, 'kK', DEFAULT, sh(ctl('K'), c('onClear_')), DEFAULT, DEFAULT], [76, 'lL', DEFAULT, sh(ctl('L'), PASS), DEFAULT, DEFAULT], [186, ';:', DEFAULT, STRIP, DEFAULT, DEFAULT], [222, '\'"', DEFAULT, STRIP, DEFAULT, DEFAULT], [13, '[ENTER]', '\r', CANCEL, CANCEL, DEFAULT],
+      // Fourth row. (We let Ctrl-Shift-J pass for Chrome DevTools.)
+      [20, '[CAPS]', PASS, PASS, PASS, DEFAULT],
+      [65, 'aA', DEFAULT, ctl('A'), DEFAULT, DEFAULT],
+      [83, 'sS', DEFAULT, ctl('S'), DEFAULT, DEFAULT],
+      [68, 'dD', DEFAULT, ctl('D'), DEFAULT, DEFAULT],
+      [70, 'fF', DEFAULT, ctl('F'), DEFAULT, DEFAULT],
+      [71, 'gG', DEFAULT, ctl('G'), DEFAULT, DEFAULT],
+      [72, 'hH', DEFAULT, ctl('H'), DEFAULT, DEFAULT],
+      [74, 'jJ', DEFAULT, sh(ctl('J'), PASS), DEFAULT, DEFAULT],
+      [75, 'kK', DEFAULT, sh(ctl('K'), c('onClear_')), DEFAULT, DEFAULT],
+      [76, 'lL', DEFAULT, sh(ctl('L'), PASS), DEFAULT, DEFAULT],
+      [186, ';:', DEFAULT, STRIP, DEFAULT, DEFAULT],
+      [222, '\'"', DEFAULT, STRIP, DEFAULT, DEFAULT],
+      [13, '[ENTER]', '\r', CANCEL, CANCEL, DEFAULT],
 
-    // Fifth row.  This includes the copy/paste shortcuts.  On some
-    // platforms it's Ctrl-C/V, on others it's Meta-C/V.  We assume either
-    // Ctrl-C/Meta-C should pass to the browser when there is a selection,
-    // and Ctrl-Shift-V/Meta-*-V should always pass to the browser (since
-    // these seem to be recognized as paste too).
-    [16, '[SHIFT]', PASS, PASS, PASS, DEFAULT], [90, 'zZ', DEFAULT, ctl('Z'), DEFAULT, DEFAULT], [88, 'xX', DEFAULT, ctl('X'), DEFAULT, DEFAULT], [67, 'cC', DEFAULT, c('onCtrlC_'), DEFAULT, c('onMetaC_')], [86, 'vV', DEFAULT, c('onCtrlV_'), DEFAULT, c('onMetaV_')], [66, 'bB', DEFAULT, sh(ctl('B'), PASS), DEFAULT, sh(DEFAULT, PASS)], [78, 'nN', DEFAULT, c('onCtrlN_'), DEFAULT, c('onMetaN_')], [77, 'mM', DEFAULT, ctl('M'), DEFAULT, DEFAULT], [188, ',<', DEFAULT, alt(STRIP, PASS), DEFAULT, DEFAULT], [190, '.>', DEFAULT, alt(STRIP, PASS), DEFAULT, DEFAULT], [191, '/?', DEFAULT, sh(ctl('_'), ctl('?')), DEFAULT, DEFAULT],
+      // Fifth row.  This includes the copy/paste shortcuts.  On some
+      // platforms it's Ctrl-C/V, on others it's Meta-C/V.  We assume either
+      // Ctrl-C/Meta-C should pass to the browser when there is a selection,
+      // and Ctrl-Shift-V/Meta-*-V should always pass to the browser (since
+      // these seem to be recognized as paste too).
+      [16, '[SHIFT]', PASS, PASS, PASS, DEFAULT],
+      [90, 'zZ', DEFAULT, ctl('Z'), DEFAULT, DEFAULT],
+      [88, 'xX', DEFAULT, ctl('X'), DEFAULT, DEFAULT],
+      [67, 'cC', DEFAULT, c('onCtrlC_'), DEFAULT, c('onMetaC_')],
+      [86, 'vV', DEFAULT, c('onCtrlV_'), DEFAULT, c('onMetaV_')],
+      [66, 'bB', DEFAULT, sh(ctl('B'), PASS), DEFAULT, sh(DEFAULT, PASS)],
+      [78, 'nN', DEFAULT, c('onCtrlN_'), DEFAULT, c('onMetaN_')],
+      [77, 'mM', DEFAULT, ctl('M'), DEFAULT, DEFAULT],
+      [188, ',<', DEFAULT, alt(STRIP, PASS), DEFAULT, DEFAULT],
+      [190, '.>', DEFAULT, alt(STRIP, PASS), DEFAULT, DEFAULT],
+      [191, '/?', DEFAULT, sh(ctl('_'), ctl('?')), DEFAULT, DEFAULT],
 
-    // Sixth and final row.
-    [17, '[CTRL]', PASS, PASS, PASS, PASS], [18, '[ALT]', PASS, PASS, PASS, PASS], [91, '[LAPL]', PASS, PASS, PASS, PASS], [32, ' ', DEFAULT, ctl('@'), DEFAULT, DEFAULT], [92, '[RAPL]', PASS, PASS, PASS, PASS], [93, '[RMENU]', PASS, PASS, PASS, PASS],
+      // Sixth and final row.
+      [17, '[CTRL]', PASS, PASS, PASS, PASS],
+      [18, '[ALT]', PASS, PASS, PASS, PASS],
+      [91, '[LAPL]', PASS, PASS, PASS, PASS],
+      [32, ' ', DEFAULT, ctl('@'), DEFAULT, DEFAULT],
+      [92, '[RAPL]', PASS, PASS, PASS, PASS],
+      [93, '[RMENU]', PASS, PASS, PASS, PASS],
 
-    // These things.
-    [42, '[PRTSCR]', PASS, PASS, PASS, PASS], [145, '[SCRLK]', PASS, PASS, PASS, PASS], [19, '[BREAK]', PASS, PASS, PASS, PASS],
+      // These things.
+      [42, '[PRTSCR]', PASS, PASS, PASS, PASS],
+      [145, '[SCRLK]', PASS, PASS, PASS, PASS],
+      [19, '[BREAK]', PASS, PASS, PASS, PASS],
 
-    // The block of six keys above the arrows.
-    [45, '[INSERT]', c('onKeyInsert_'), DEFAULT, DEFAULT, DEFAULT], [36, '[HOME]', c('onKeyHome_'), DEFAULT, DEFAULT, DEFAULT], [33, '[PGUP]', c('onKeyPageUp_'), DEFAULT, DEFAULT, DEFAULT], [46, '[DEL]', c('onKeyDel_'), DEFAULT, DEFAULT, DEFAULT], [35, '[END]', c('onKeyEnd_'), DEFAULT, DEFAULT, DEFAULT], [34, '[PGDOWN]', c('onKeyPageDown_'), DEFAULT, DEFAULT, DEFAULT],
+      // The block of six keys above the arrows.
+      [45, '[INSERT]', c('onKeyInsert_'), DEFAULT, DEFAULT, DEFAULT],
+      [36, '[HOME]', c('onKeyHome_'), DEFAULT, DEFAULT, DEFAULT],
+      [33, '[PGUP]', c('onKeyPageUp_'), DEFAULT, DEFAULT, DEFAULT],
+      [46, '[DEL]', c('onKeyDel_'), DEFAULT, DEFAULT, DEFAULT],
+      [35, '[END]', c('onKeyEnd_'), DEFAULT, DEFAULT, DEFAULT],
+      [34, '[PGDOWN]', c('onKeyPageDown_'), DEFAULT, DEFAULT, DEFAULT],
 
-    // Arrow keys.  When unmodified they respect the application cursor state,
-    // otherwise they always send the CSI codes.
-    [38, '[UP]', ac(CSI + 'A', SS3 + 'A'), DEFAULT, DEFAULT, DEFAULT], [40, '[DOWN]', ac(CSI + 'B', SS3 + 'B'), DEFAULT, DEFAULT, DEFAULT], [39, '[RIGHT]', ac(CSI + 'C', SS3 + 'C'), DEFAULT, DEFAULT, DEFAULT], [37, '[LEFT]', ac(CSI + 'D', SS3 + 'D'), DEFAULT, DEFAULT, DEFAULT],
+      // Arrow keys.  When unmodified they respect the application cursor state,
+      // otherwise they always send the CSI codes.
+      [38, '[UP]', ac(CSI + 'A', SS3 + 'A'), DEFAULT, DEFAULT, DEFAULT],
+      [40, '[DOWN]', ac(CSI + 'B', SS3 + 'B'), DEFAULT, DEFAULT, DEFAULT],
+      [39, '[RIGHT]', ac(CSI + 'C', SS3 + 'C'), DEFAULT, DEFAULT, DEFAULT],
+      [37, '[LEFT]', ac(CSI + 'D', SS3 + 'D'), DEFAULT, DEFAULT, DEFAULT],
 
-    [144, '[NUMLOCK]', PASS, PASS, PASS, PASS],
+      [144, '[NUMLOCK]', PASS, PASS, PASS, PASS],
 
-    // With numlock off, the keypad generates the same key codes as the arrows
-    // and 'block of six' for some keys, and null key codes for the rest.
+      // With numlock off, the keypad generates the same key codes as the arrows
+      // and 'block of six' for some keys, and null key codes for the rest.
 
-    // Keypad with numlock on generates unique key codes...
-    [96, '[KP0]', DEFAULT, DEFAULT, DEFAULT, DEFAULT], [97, '[KP1]', DEFAULT, DEFAULT, DEFAULT, DEFAULT], [98, '[KP2]', DEFAULT, DEFAULT, DEFAULT, DEFAULT], [99, '[KP3]', DEFAULT, DEFAULT, DEFAULT, DEFAULT], [100, '[KP4]', DEFAULT, DEFAULT, DEFAULT, DEFAULT], [101, '[KP5]', DEFAULT, DEFAULT, DEFAULT, DEFAULT], [102, '[KP6]', DEFAULT, DEFAULT, DEFAULT, DEFAULT], [103, '[KP7]', DEFAULT, DEFAULT, DEFAULT, DEFAULT], [104, '[KP8]', DEFAULT, DEFAULT, DEFAULT, DEFAULT], [105, '[KP9]', DEFAULT, DEFAULT, DEFAULT, DEFAULT], [107, '[KP+]', DEFAULT, c('onPlusMinusZero_'), DEFAULT, c('onPlusMinusZero_')], [109, '[KP-]', DEFAULT, c('onPlusMinusZero_'), DEFAULT, c('onPlusMinusZero_')], [106, '[KP*]', DEFAULT, DEFAULT, DEFAULT, DEFAULT], [111, '[KP/]', DEFAULT, DEFAULT, DEFAULT, DEFAULT], [110, '[KP.]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      // Keypad with numlock on generates unique key codes...
+      [96, '[KP0]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [97, '[KP1]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [98, '[KP2]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [99, '[KP3]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [100, '[KP4]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [101, '[KP5]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [102, '[KP6]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [103, '[KP7]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [104, '[KP8]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [105, '[KP9]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [
+        107, '[KP+]', DEFAULT, c('onPlusMinusZero_'), DEFAULT,
+        c('onPlusMinusZero_')
+      ],
+      [
+        109, '[KP-]', DEFAULT, c('onPlusMinusZero_'), DEFAULT,
+        c('onPlusMinusZero_')
+      ],
+      [106, '[KP*]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [111, '[KP/]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
+      [110, '[KP.]', DEFAULT, DEFAULT, DEFAULT, DEFAULT],
 
-    // Chrome OS keyboard top row.
-    [166, '[BACK]', med(mod(SS3 + 'P', CSI + 'P')), DEFAULT, CSI + '23~', DEFAULT], [167, '[FWD]', med(mod(SS3 + 'Q', CSI + 'Q')), DEFAULT, CSI + '24~', DEFAULT], [168, '[RELOAD]', med(mod(SS3 + 'R', CSI + 'R')), DEFAULT, CSI + '25~', DEFAULT], [183, '[FSCR]', med(mod(SS3 + 'S', CSI + 'S')), DEFAULT, CSI + '26~', DEFAULT], [182, '[WINS]', med(CSI + '15~'), DEFAULT, CSI + '28~', DEFAULT], [216, '[BRIT-]', med(CSI + '17~'), DEFAULT, CSI + '29~', DEFAULT], [217, '[BRIT+]', med(CSI + '18~'), DEFAULT, CSI + '31~', DEFAULT]
+      // Chrome OS keyboard top row.
+      [
+        166, '[BACK]', med(mod(SS3 + 'P', CSI + 'P')), DEFAULT, CSI + '23~',
+        DEFAULT
+      ],
+      [
+        167, '[FWD]', med(mod(SS3 + 'Q', CSI + 'Q')), DEFAULT, CSI + '24~',
+        DEFAULT
+      ],
+      [
+        168, '[RELOAD]', med(mod(SS3 + 'R', CSI + 'R')), DEFAULT, CSI + '25~',
+        DEFAULT
+      ],
+      [
+        183, '[FSCR]', med(mod(SS3 + 'S', CSI + 'S')), DEFAULT, CSI + '26~',
+        DEFAULT
+      ],
+      [182, '[WINS]', med(CSI + '15~'), DEFAULT, CSI + '28~', DEFAULT],
+      [216, '[BRIT-]', med(CSI + '17~'), DEFAULT, CSI + '29~', DEFAULT],
+      [217, '[BRIT+]', med(CSI + '18~'), DEFAULT, CSI + '31~', DEFAULT]
 
-    // 173 [MUTE], 174 [VOL-] and 175 [VOL+] are trapped by the Chrome OS
-    // window manager, so we'll never see them. Note that 173 is also
-    // Firefox's -_ keycode.
+      // 173 [MUTE], 174 [VOL-] and 175 [VOL+] are trapped by the Chrome OS
+      // window manager, so we'll never see them. Note that 173 is also
+      // Firefox's -_ keycode.
   );
 };
 
@@ -6926,7 +6615,7 @@ hterm.Keyboard.KeyMap.prototype.onKeyInsert_ = function(e) {
 hterm.Keyboard.KeyMap.prototype.onKeyHome_ = function(e) {
   if (!this.keyboard.homeKeysScroll ^ e.shiftKey) {
     if ((e.altey || e.ctrlKey || e.shiftKey) ||
-      !this.keyboard.applicationCursor) {
+        !this.keyboard.applicationCursor) {
       return '\x1b[H';
     }
 
@@ -6943,7 +6632,7 @@ hterm.Keyboard.KeyMap.prototype.onKeyHome_ = function(e) {
 hterm.Keyboard.KeyMap.prototype.onKeyEnd_ = function(e) {
   if (!this.keyboard.homeKeysScroll ^ e.shiftKey) {
     if ((e.altKey || e.ctrlKey || e.shiftKey) ||
-      !this.keyboard.applicationCursor) {
+        !this.keyboard.applicationCursor) {
       return '\x1b[F';
     }
 
@@ -6958,8 +6647,7 @@ hterm.Keyboard.KeyMap.prototype.onKeyEnd_ = function(e) {
  * Either scroll the scrollback buffer or send a key sequence.
  */
 hterm.Keyboard.KeyMap.prototype.onKeyPageUp_ = function(e) {
-  if (!this.keyboard.pageKeysScroll ^ e.shiftKey)
-    return '\x1b[5~';
+  if (!this.keyboard.pageKeysScroll ^ e.shiftKey) return '\x1b[5~';
 
   this.keyboard.terminal.scrollPageUp();
   return hterm.Keyboard.KeyActions.CANCEL;
@@ -6975,7 +6663,7 @@ hterm.Keyboard.KeyMap.prototype.onKeyPageUp_ = function(e) {
  */
 hterm.Keyboard.KeyMap.prototype.onKeyDel_ = function(e) {
   if (this.keyboard.altBackspaceIsMetaBackspace &&
-    this.keyboard.altKeyPressed && !e.altKey)
+      this.keyboard.altKeyPressed && !e.altKey)
     return '\x1b\x7f';
   return '\x1b[3~';
 };
@@ -6984,8 +6672,7 @@ hterm.Keyboard.KeyMap.prototype.onKeyDel_ = function(e) {
  * Either scroll the scrollback buffer or send a key sequence.
  */
 hterm.Keyboard.KeyMap.prototype.onKeyPageDown_ = function(e) {
-  if (!this.keyboard.pageKeysScroll ^ e.shiftKey)
-    return '\x1b[6~';
+  if (!this.keyboard.pageKeysScroll ^ e.shiftKey) return '\x1b[6~';
 
   this.keyboard.terminal.scrollPageDown();
   return hterm.Keyboard.KeyActions.CANCEL;
@@ -7095,10 +6782,11 @@ hterm.Keyboard.KeyMap.prototype.onCtrlC_ = function(e, keyDef) {
  */
 hterm.Keyboard.KeyMap.prototype.onCtrlN_ = function(e, keyDef) {
   if (e.shiftKey) {
-    window.open(document.location.href, '',
-      'chrome=no,close=yes,resize=yes,scrollbars=yes,' +
-      'minimizable=yes,width=' + window.innerWidth +
-      ',height=' + window.innerHeight);
+    window.open(
+        document.location.href, '',
+        'chrome=no,close=yes,resize=yes,scrollbars=yes,' +
+            'minimizable=yes,width=' + window.innerWidth +
+            ',height=' + window.innerHeight);
     return hterm.Keyboard.KeyActions.CANCEL;
   }
 
@@ -7115,7 +6803,7 @@ hterm.Keyboard.KeyMap.prototype.onCtrlN_ = function(e, keyDef) {
  */
 hterm.Keyboard.KeyMap.prototype.onCtrlV_ = function(e, keyDef) {
   if ((!e.shiftKey && this.keyboard.ctrlVPaste) ||
-    (e.shiftKey && !this.keyboard.ctrlVPaste)) {
+      (e.shiftKey && !this.keyboard.ctrlVPaste)) {
     return hterm.Keyboard.KeyActions.PASS;
   }
 
@@ -7127,10 +6815,11 @@ hterm.Keyboard.KeyMap.prototype.onCtrlV_ = function(e, keyDef) {
  */
 hterm.Keyboard.KeyMap.prototype.onMetaN_ = function(e, keyDef) {
   if (e.shiftKey) {
-    window.open(document.location.href, '',
-      'chrome=no,close=yes,resize=yes,scrollbars=yes,' +
-      'minimizable=yes,width=' + window.outerWidth +
-      ',height=' + window.outerHeight);
+    window.open(
+        document.location.href, '',
+        'chrome=no,close=yes,resize=yes,scrollbars=yes,' +
+            'minimizable=yes,width=' + window.outerWidth +
+            ',height=' + window.outerHeight);
     return hterm.Keyboard.KeyActions.CANCEL;
   }
 
@@ -7173,12 +6862,10 @@ hterm.Keyboard.KeyMap.prototype.onMetaC_ = function(e, keyDef) {
  * a paste command.
  */
 hterm.Keyboard.KeyMap.prototype.onMetaV_ = function(e, keyDef) {
-  if (e.shiftKey)
-    return hterm.Keyboard.KeyActions.PASS;
+  if (e.shiftKey) return hterm.Keyboard.KeyActions.PASS;
 
-  return this.keyboard.passMetaV ?
-    hterm.Keyboard.KeyActions.PASS :
-    hterm.Keyboard.KeyActions.DEFAULT;
+  return this.keyboard.passMetaV ? hterm.Keyboard.KeyActions.PASS :
+                                   hterm.Keyboard.KeyActions.DEFAULT;
 };
 
 /**
@@ -7196,8 +6883,7 @@ hterm.Keyboard.KeyMap.prototype.onPlusMinusZero_ = function(e, keyDef) {
     // If ctrl-PMZ controls zoom and the shift key is pressed, or
     // ctrl-shift-PMZ controls zoom and this shift key is not pressed,
     // then we want to send the control code instead of affecting zoom.
-    if (keyDef.keyCap == '-_')
-      return '\x1f'; // ^_
+    if (keyDef.keyCap == '-_') return '\x1f';  // ^_
 
     // Only ^_ is valid, the other sequences have no meaning.
     return hterm.Keyboard.KeyActions.CANCEL;
@@ -7212,14 +6898,12 @@ hterm.Keyboard.KeyMap.prototype.onPlusMinusZero_ = function(e, keyDef) {
   var cap = keyDef.keyCap.substr(0, 1);
   if (cap == '0') {
     this.keyboard.terminal.setFontSize(0);
-  }
-  else {
+  } else {
     var size = this.keyboard.terminal.getFontSize();
 
     if (cap == '-' || keyDef.keyCap == '[KP-]') {
       size -= 1;
-    }
-    else {
+    } else {
       size += 1;
     }
 
@@ -7249,17 +6933,14 @@ hterm.Keyboard.KeyPattern = function(spec) {
 
   hterm.Keyboard.KeyPattern.modifiers.forEach(function(mod) {
     this[mod] = spec[mod] || false;
-    if (this[mod] == '*')
-      this.wildcardCount++;
+    if (this[mod] == '*') this.wildcardCount++;
   }.bind(this));
 };
 
 /**
  * Valid modifier names.
  */
-hterm.Keyboard.KeyPattern.modifiers = [
-  'shift', 'ctrl', 'alt', 'meta'
-];
+hterm.Keyboard.KeyPattern.modifiers = ['shift', 'ctrl', 'alt', 'meta'];
 
 /**
  * A compare callback for Array.prototype.sort().
@@ -7272,11 +6953,9 @@ hterm.Keyboard.KeyPattern.modifiers = [
  * @param {hterm.Keyboard.KeyPattern} b
  */
 hterm.Keyboard.KeyPattern.sortCompare = function(a, b) {
-  if (a.wildcardCount < b.wildcardCount)
-    return -1;
+  if (a.wildcardCount < b.wildcardCount) return -1;
 
-  if (a.wildcardCount > b.wildcardCount)
-    return 1;
+  if (a.wildcardCount > b.wildcardCount) return 1;
 
   return 0;
 };
@@ -7290,8 +6969,7 @@ hterm.Keyboard.KeyPattern.sortCompare = function(a, b) {
  *   to perform and exact match against another key pattern.
  */
 hterm.Keyboard.KeyPattern.prototype.match_ = function(obj, exactMatch) {
-  if (this.keyCode != obj.keyCode)
-    return false;
+  if (this.keyCode != obj.keyCode) return false;
 
   var rv = true;
 
@@ -7439,9 +7117,7 @@ hterm.Parser.prototype.reset = function(source, opt_pos) {
  *   properties.
  */
 hterm.Parser.prototype.parseKeySequence = function() {
-  var rv = {
-    keyCode: null
-  };
+  var rv = {keyCode: null};
 
   for (var k in hterm.Parser.identifiers.modifierKeys) {
     rv[hterm.Parser.identifiers.modifierKeys[k]] = false;
@@ -7454,44 +7130,36 @@ hterm.Parser.prototype.parseKeySequence = function() {
     if (token.type == 'integer') {
       rv.keyCode = token.value;
 
-    }
-    else if (token.type == 'identifier') {
+    } else if (token.type == 'identifier') {
       if (token.value in hterm.Parser.identifiers.modifierKeys) {
         var mod = hterm.Parser.identifiers.modifierKeys[token.value];
         if (rv[mod] && rv[mod] != '*')
           throw this.error('Duplicate modifier: ' + token.value);
         rv[mod] = true;
 
-      }
-      else if (token.value in hterm.Parser.identifiers.keyCodes) {
+      } else if (token.value in hterm.Parser.identifiers.keyCodes) {
         rv.keyCode = hterm.Parser.identifiers.keyCodes[token.value];
 
-      }
-      else {
+      } else {
         throw this.error('Unknown key: ' + token.value);
       }
 
-    }
-    else if (token.type == 'symbol') {
+    } else if (token.type == 'symbol') {
       if (token.value == '*') {
         for (var id in hterm.Parser.identifiers.modifierKeys) {
           var p = hterm.Parser.identifiers.modifierKeys[id];
-          if (!rv[p])
-            rv[p] = '*';
+          if (!rv[p]) rv[p] = '*';
         }
-      }
-      else {
+      } else {
         throw this.error('Unexpected symbol: ' + token.value);
       }
-    }
-    else {
+    } else {
       throw this.error('Expected integer or identifier');
     }
 
     this.skipSpace();
 
-    if (this.ch != '-')
-      break;
+    if (this.ch != '-') break;
 
     if (rv.keyCode != null)
       throw this.error('Extra definition after target key');
@@ -7499,8 +7167,7 @@ hterm.Parser.prototype.parseKeySequence = function() {
     this.advance(1);
   }
 
-  if (rv.keyCode == null)
-    throw this.error('Missing target key');
+  if (rv.keyCode == null) throw this.error('Missing target key');
 
   return rv;
 };
@@ -7510,8 +7177,7 @@ hterm.Parser.prototype.parseKeyAction = function() {
 
   var token = this.parseToken();
 
-  if (token.type == 'string')
-    return token.value;
+  if (token.type == 'string') return token.value;
 
   if (token.type == 'identifier') {
     if (token.value in hterm.Parser.identifiers.actions)
@@ -7538,39 +7204,23 @@ hterm.Parser.prototype.peekInteger = function() {
 
 hterm.Parser.prototype.parseToken = function() {
   if (this.ch == '*') {
-    var rv = {
-      type: 'symbol',
-      value: this.ch
-    };
+    var rv = {type: 'symbol', value: this.ch};
     this.advance(1);
     return rv;
   }
 
   if (this.peekIdentifier())
-    return {
-      type: 'identifier',
-      value: this.parseIdentifier()
-    };
+    return {type: 'identifier', value: this.parseIdentifier()};
 
-  if (this.peekString())
-    return {
-      type: 'string',
-      value: this.parseString()
-    };
+  if (this.peekString()) return {type: 'string', value: this.parseString()};
 
-  if (this.peekInteger())
-    return {
-      type: 'integer',
-      value: this.parseInteger()
-    };
-
+  if (this.peekInteger()) return {type: 'integer', value: this.parseInteger()};
 
   throw this.error('Unexpected token');
 };
 
 hterm.Parser.prototype.parseIdentifier = function() {
-  if (!this.peekIdentifier())
-    throw this.error('Expected identifier');
+  if (!this.peekIdentifier()) throw this.error('Expected identifier');
 
   return this.parsePattern(/[a-z0-9_]+/ig);
 };
@@ -7579,7 +7229,7 @@ hterm.Parser.prototype.parseInteger = function() {
   var base = 10;
 
   if (this.ch == '0' && this.pos < this.source.length - 1 &&
-    this.source.substr(this.pos + 1, 1) == 'x') {
+      this.source.substr(this.pos + 1, 1) == 'x') {
     return parseInt(this.parsePattern(/0x[0-9a-f]+/gi));
   }
 
@@ -7602,8 +7252,7 @@ hterm.Parser.prototype.parseString = function() {
   var result = '';
 
   var quote = this.ch;
-  if (quote != '"' && quote != '\'')
-    throw this.error('String expected');
+  if (quote != '"' && quote != '\'') throw this.error('String expected');
 
   this.advance(1);
 
@@ -7611,8 +7260,7 @@ hterm.Parser.prototype.parseString = function() {
 
   while (this.pos < this.source.length) {
     re.lastIndex = this.pos;
-    if (!re.exec(this.source))
-      throw this.error('Unterminated string literal');
+    if (!re.exec(this.source)) throw this.error('Unterminated string literal');
 
     result += this.source.substring(this.pos, re.lastIndex - 1);
 
@@ -7638,7 +7286,6 @@ hterm.Parser.prototype.parseString = function() {
 
   throw this.error('Unterminated string literal');
 };
-
 
 /**
  * Parse an escape code from the current position (which should point to
@@ -7669,14 +7316,12 @@ hterm.Parser.prototype.parseEscape = function() {
     }
   };
 
-  if (!(this.ch in map))
-    throw this.error('Unknown escape: ' + this.ch);
+  if (!(this.ch in map)) throw this.error('Unknown escape: ' + this.ch);
 
   var value = map[this.ch];
   this.advance(1);
 
-  if (typeof value == 'function')
-    value = value.call(this);
+  if (typeof value == 'function') value = value.call(this);
 
   return value;
 };
@@ -7704,7 +7349,6 @@ hterm.Parser.prototype.parsePattern = function(pattern) {
   return ary[0];
 };
 
-
 /**
  * Advance the current position.
  *
@@ -7721,22 +7365,19 @@ hterm.Parser.prototype.advance = function(count) {
  * @return {void}
  */
 hterm.Parser.prototype.skipSpace = function(opt_expect) {
-  if (!/\s/.test(this.ch))
-    return;
+  if (!/\s/.test(this.ch)) return;
 
   var re = /\s+/gm;
   re.lastIndex = this.pos;
 
   var source = this.source;
-  if (re.exec(source))
-    this.pos = re.lastIndex;
+  if (re.exec(source)) this.pos = re.lastIndex;
 
   this.ch = this.source.substr(this.pos, 1);
 
   if (opt_expect) {
     if (this.ch.indexOf(opt_expect) == -1) {
-      throw this.error('Expected one of ' + opt_expect + ', found: ' +
-        this.ch);
+      throw this.error('Expected one of ' + opt_expect + ', found: ' + this.ch);
     }
   }
 };
@@ -7950,8 +7591,8 @@ lib.rtdep('lib.f', 'lib.Storage');
  * This is currently just an ordered list of known connection profiles.
  */
 hterm.PreferenceManager = function(profileId) {
-  lib.PreferenceManager.call(this, hterm.defaultStorage,
-    '/hterm/profiles/' + profileId);
+  lib.PreferenceManager.call(
+      this, hterm.defaultStorage, '/hterm/profiles/' + profileId);
   var defs = hterm.PreferenceManager.defaultPreferences;
   Object.keys(defs).forEach(function(key) {
     this.definePreference(key, defs[key][1]);
@@ -7970,376 +7611,412 @@ hterm.PreferenceManager.categories.Miscellaneous = 'Miscellaneous';
 /**
  * List of categories, ordered by display order (top to bottom)
  */
-hterm.PreferenceManager.categoryDefinitions = [{
+hterm.PreferenceManager.categoryDefinitions = [
+  {
     id: hterm.PreferenceManager.categories.Appearance,
     text: 'Appearance (fonts, colors, images)'
   },
-  {
-    id: hterm.PreferenceManager.categories.CopyPaste,
-    text: 'Copy & Paste'
-  },
-  {
-    id: hterm.PreferenceManager.categories.Encoding,
-    text: 'Encoding'
-  },
-  {
-    id: hterm.PreferenceManager.categories.Keyboard,
-    text: 'Keyboard'
-  },
-  {
-    id: hterm.PreferenceManager.categories.Scrolling,
-    text: 'Scrolling'
-  },
-  {
-    id: hterm.PreferenceManager.categories.Sounds,
-    text: 'Sounds'
-  },
-  {
-    id: hterm.PreferenceManager.categories.Miscellaneous,
-    text: 'Misc.'
-  }
+  {id: hterm.PreferenceManager.categories.CopyPaste, text: 'Copy & Paste'},
+  {id: hterm.PreferenceManager.categories.Encoding, text: 'Encoding'},
+  {id: hterm.PreferenceManager.categories.Keyboard, text: 'Keyboard'},
+  {id: hterm.PreferenceManager.categories.Scrolling, text: 'Scrolling'},
+  {id: hterm.PreferenceManager.categories.Sounds, text: 'Sounds'},
+  {id: hterm.PreferenceManager.categories.Miscellaneous, text: 'Misc.'}
 ];
 
-
 hterm.PreferenceManager.defaultPreferences = {
-  'alt-gr-mode': [hterm.PreferenceManager.categories.Keyboard, null, [null, 'none', 'ctrl-alt', 'left-alt', 'right-alt'],
+  'alt-gr-mode': [
+    hterm.PreferenceManager.categories.Keyboard, null,
+    [null, 'none', 'ctrl-alt', 'left-alt', 'right-alt'],
     'Select an AltGr detection hack^Wheuristic.\n' +
-    '\n' +
-    '\'null\': Autodetect based on navigator.language:\n' +
-    '      \'en-us\' => \'none\', else => \'right-alt\'\n' +
-    '\'none\': Disable any AltGr related munging.\n' +
-    '\'ctrl-alt\': Assume Ctrl+Alt means AltGr.\n' +
-    '\'left-alt\': Assume left Alt means AltGr.\n' +
-    '\'right-alt\': Assume right Alt means AltGr.\n'
+        '\n' +
+        '\'null\': Autodetect based on navigator.language:\n' +
+        '      \'en-us\' => \'none\', else => \'right-alt\'\n' +
+        '\'none\': Disable any AltGr related munging.\n' +
+        '\'ctrl-alt\': Assume Ctrl+Alt means AltGr.\n' +
+        '\'left-alt\': Assume left Alt means AltGr.\n' +
+        '\'right-alt\': Assume right Alt means AltGr.\n'
   ],
 
-  'alt-backspace-is-meta-backspace': [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+  'alt-backspace-is-meta-backspace': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
     'If set, undoes the Chrome OS Alt-Backspace->DEL remap, so that ' +
-    'alt-backspace indeed is alt-backspace.'
+        'alt-backspace indeed is alt-backspace.'
   ],
 
-  'alt-is-meta': [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+  'alt-is-meta': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
     'Set whether the alt key acts as a meta key or as a distinct alt key.'
   ],
 
-  'alt-sends-what': [hterm.PreferenceManager.categories.Keyboard, 'escape', ['escape', '8-bit', 'browser-key'],
+  'alt-sends-what': [
+    hterm.PreferenceManager.categories.Keyboard, 'escape',
+    ['escape', '8-bit', 'browser-key'],
     'Controls how the alt key is handled.\n' +
-    '\n' +
-    '  escape....... Send an ESC prefix.\n' +
-    '  8-bit........ Add 128 to the unshifted character as in xterm.\n' +
-    '  browser-key.. Wait for the keypress event and see what the browser \n' +
-    '                says.  (This won\'t work well on platforms where the \n' +
-    '                browser performs a default action for some alt sequences.)'
+        '\n' +
+        '  escape....... Send an ESC prefix.\n' +
+        '  8-bit........ Add 128 to the unshifted character as in xterm.\n' +
+        '  browser-key.. Wait for the keypress event and see what the browser \n' +
+        '                says.  (This won\'t work well on platforms where the \n' +
+        '                browser performs a default action for some alt sequences.)'
   ],
 
-  'audible-bell-sound': [hterm.PreferenceManager.categories.Sounds, 'lib-resource:hterm/audio/bell',
-    'url',
-    'URL of the terminal bell sound.  Empty string for no audible bell.'
+  'audible-bell-sound': [
+    hterm.PreferenceManager.categories.Sounds, 'lib-resource:hterm/audio/bell',
+    'url', 'URL of the terminal bell sound.  Empty string for no audible bell.'
   ],
 
-  'desktop-notification-bell': [hterm.PreferenceManager.categories.Sounds, false, 'bool',
+  'desktop-notification-bell': [
+    hterm.PreferenceManager.categories.Sounds, false, 'bool',
     'If true, terminal bells in the background will create a Web ' +
-    'Notification. https://www.w3.org/TR/notifications/\n' +
-    '\n' +
-    'Displaying notifications requires permission from the user. When this ' +
-    'option is set to true, hterm will attempt to ask the user for permission ' +
-    'if necessary. Note browsers may not show this permission request if it ' +
-    'did not originate from a user action.\n' +
-    '\n' +
-    'Chrome extensions with the "notifications" permission have permission to ' +
-    'display notifications.'
+        'Notification. https://www.w3.org/TR/notifications/\n' +
+        '\n' +
+        'Displaying notifications requires permission from the user. When this ' +
+        'option is set to true, hterm will attempt to ask the user for permission ' +
+        'if necessary. Note browsers may not show this permission request if it ' +
+        'did not originate from a user action.\n' +
+        '\n' +
+        'Chrome extensions with the "notifications" permission have permission to ' +
+        'display notifications.'
   ],
 
-  'background-color': [hterm.PreferenceManager.categories.Appearance, 'rgb(16, 16, 16)', 'color',
+  'background-color': [
+    hterm.PreferenceManager.categories.Appearance, 'rgb(16, 16, 16)', 'color',
     'The background color for text with no other color attributes.'
   ],
 
-  'background-image': [hterm.PreferenceManager.categories.Appearance, '', 'string',
+  'background-image': [
+    hterm.PreferenceManager.categories.Appearance, '', 'string',
     'CSS value of the background image.  Empty string for no image.\n' +
-    '\n' +
-    'For example:\n' +
-    '  url(https://goo.gl/anedTK)\n' +
-    '  linear-gradient(top bottom, blue, red)'
+        '\n' +
+        'For example:\n' +
+        '  url(https://goo.gl/anedTK)\n' +
+        '  linear-gradient(top bottom, blue, red)'
   ],
 
-  'background-size': [hterm.PreferenceManager.categories.Appearance, '', 'string',
+  'background-size': [
+    hterm.PreferenceManager.categories.Appearance, '', 'string',
     'CSS value of the background image size.  Defaults to none.'
   ],
 
-  'background-position': [hterm.PreferenceManager.categories.Appearance, '', 'string',
+  'background-position': [
+    hterm.PreferenceManager.categories.Appearance, '', 'string',
     'CSS value of the background image position.\n' +
-    '\n' +
-    'For example:\n' +
-    '  10% 10%\n' +
-    '  center'
+        '\n' +
+        'For example:\n' +
+        '  10% 10%\n' +
+        '  center'
   ],
 
-  'backspace-sends-backspace': [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+  'backspace-sends-backspace': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
     'If true, the backspace should send BS (\'\\x08\', aka ^H).  Otherwise ' +
-    'the backspace key should send \'\\x7f\'.'
+        'the backspace key should send \'\\x7f\'.'
   ],
 
-  'character-map-overrides': [hterm.PreferenceManager.categories.Appearance, null, 'value',
+  'character-map-overrides': [
+    hterm.PreferenceManager.categories.Appearance, null, 'value',
     'This is specified as an object. It is a sparse array, where each ' +
-    'property is the character set code and the value is an object that is ' +
-    'a sparse array itself. In that sparse array, each property is the ' +
-    'received character and the value is the displayed character.\n' +
-    '\n' +
-    'For example:\n' +
-    '  {"0":{"+":"\\u2192",",":"\\u2190","-":"\\u2191",".":"\\u2193", ' +
-    '"0":"\\u2588"}}'
+        'property is the character set code and the value is an object that is ' +
+        'a sparse array itself. In that sparse array, each property is the ' +
+        'received character and the value is the displayed character.\n' +
+        '\n' +
+        'For example:\n' +
+        '  {"0":{"+":"\\u2192",",":"\\u2190","-":"\\u2191",".":"\\u2193", ' +
+        '"0":"\\u2588"}}'
   ],
 
-  'close-on-exit': [hterm.PreferenceManager.categories.Miscellaneous, true, 'bool',
+  'close-on-exit': [
+    hterm.PreferenceManager.categories.Miscellaneous, true, 'bool',
     'Whether or not to close the window when the command exits.'
   ],
 
-  'cursor-blink': [hterm.PreferenceManager.categories.Appearance, false, 'bool',
+  'cursor-blink': [
+    hterm.PreferenceManager.categories.Appearance, false, 'bool',
     'Whether or not to blink the cursor by default.'
   ],
 
-  'cursor-blink-cycle': [hterm.PreferenceManager.categories.Appearance, [1000, 500], 'value',
+  'cursor-blink-cycle': [
+    hterm.PreferenceManager.categories.Appearance, [1000, 500], 'value',
     'The cursor blink rate in milliseconds.\n' +
-    '\n' +
-    'A two element array, the first of which is how long the cursor should be ' +
-    'on, second is how long it should be off.'
+        '\n' +
+        'A two element array, the first of which is how long the cursor should be ' +
+        'on, second is how long it should be off.'
   ],
 
-  'cursor-color': [hterm.PreferenceManager.categories.Appearance, 'rgba(255, 0, 0, 0.5)',
-    'color',
-    'The color of the visible cursor.'
+  'cursor-color': [
+    hterm.PreferenceManager.categories.Appearance, 'rgba(255, 0, 0, 0.5)',
+    'color', 'The color of the visible cursor.'
   ],
 
-  'color-palette-overrides': [hterm.PreferenceManager.categories.Appearance, null, 'value',
+  'color-palette-overrides': [
+    hterm.PreferenceManager.categories.Appearance, null, 'value',
     'Override colors in the default palette.\n' +
-    '\n' +
-    'This can be specified as an array or an object.  If specified as an ' +
-    'object it is assumed to be a sparse array, where each property ' +
-    'is a numeric index into the color palette.\n' +
-    '\n' +
-    'Values can be specified as almost any css color value.  This ' +
-    'includes #RGB, #RRGGBB, rgb(...), rgba(...), and any color names ' +
-    'that are also part of the stock X11 rgb.txt file.\n' +
-    '\n' +
-    'You can use \'null\' to specify that the default value should be not ' +
-    'be changed.  This is useful for skipping a small number of indices ' +
-    'when the value is specified as an array.'
+        '\n' +
+        'This can be specified as an array or an object.  If specified as an ' +
+        'object it is assumed to be a sparse array, where each property ' +
+        'is a numeric index into the color palette.\n' +
+        '\n' +
+        'Values can be specified as almost any css color value.  This ' +
+        'includes #RGB, #RRGGBB, rgb(...), rgba(...), and any color names ' +
+        'that are also part of the stock X11 rgb.txt file.\n' +
+        '\n' +
+        'You can use \'null\' to specify that the default value should be not ' +
+        'be changed.  This is useful for skipping a small number of indices ' +
+        'when the value is specified as an array.'
   ],
 
-  'copy-on-select': [hterm.PreferenceManager.categories.CopyPaste, true, 'bool',
+  'copy-on-select': [
+    hterm.PreferenceManager.categories.CopyPaste, true, 'bool',
     'Automatically copy mouse selection to the clipboard.'
   ],
 
-  'use-default-window-copy': [hterm.PreferenceManager.categories.CopyPaste, false, 'bool',
+  'use-default-window-copy': [
+    hterm.PreferenceManager.categories.CopyPaste, false, 'bool',
     'Whether to use the default window copy behavior'
   ],
 
-  'clear-selection-after-copy': [hterm.PreferenceManager.categories.CopyPaste, true, 'bool',
+  'clear-selection-after-copy': [
+    hterm.PreferenceManager.categories.CopyPaste, true, 'bool',
     'Whether to clear the selection after copying.'
   ],
 
-  'ctrl-plus-minus-zero-zoom': [hterm.PreferenceManager.categories.Keyboard, true, 'bool',
+  'ctrl-plus-minus-zero-zoom': [
+    hterm.PreferenceManager.categories.Keyboard, true, 'bool',
     'If true, Ctrl-Plus/Minus/Zero controls zoom.\n' +
-    'If false, Ctrl-Shift-Plus/Minus/Zero controls zoom, Ctrl-Minus sends ^_, ' +
-    'Ctrl-Plus/Zero do nothing.'
+        'If false, Ctrl-Shift-Plus/Minus/Zero controls zoom, Ctrl-Minus sends ^_, ' +
+        'Ctrl-Plus/Zero do nothing.'
   ],
 
-  'ctrl-c-copy': [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+  'ctrl-c-copy': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
     'Ctrl+C copies if true, send ^C to host if false.\n' +
-    'Ctrl+Shift+C sends ^C to host if true, copies if false.'
+        'Ctrl+Shift+C sends ^C to host if true, copies if false.'
   ],
 
-  'ctrl-v-paste': [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+  'ctrl-v-paste': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
     'Ctrl+V pastes if true, send ^V to host if false.\n' +
-    'Ctrl+Shift+V sends ^V to host if true, pastes if false.'
+        'Ctrl+Shift+V sends ^V to host if true, pastes if false.'
   ],
 
-  'east-asian-ambiguous-as-two-column': [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+  'east-asian-ambiguous-as-two-column': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
     'Set whether East Asian Ambiguous characters have two column width.'
   ],
 
-  'enable-8-bit-control': [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+  'enable-8-bit-control': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
     'True to enable 8-bit control characters, false to ignore them.\n' +
-    '\n' +
-    'We\'ll respect the two-byte versions of these control characters ' +
-    'regardless of this setting.'
+        '\n' +
+        'We\'ll respect the two-byte versions of these control characters ' +
+        'regardless of this setting.'
   ],
 
-  'enable-bold': [hterm.PreferenceManager.categories.Appearance, null, 'tristate',
+  'enable-bold': [
+    hterm.PreferenceManager.categories.Appearance, null, 'tristate',
     'True if we should use bold weight font for text with the bold/bright ' +
-    'attribute.  False to use the normal weight font.  Null to autodetect.'
+        'attribute.  False to use the normal weight font.  Null to autodetect.'
   ],
 
-  'enable-bold-as-bright': [hterm.PreferenceManager.categories.Appearance, true, 'bool',
+  'enable-bold-as-bright': [
+    hterm.PreferenceManager.categories.Appearance, true, 'bool',
     'True if we should use bright colors (8-15 on a 16 color palette) ' +
-    'for any text with the bold attribute.  False otherwise.'
+        'for any text with the bold attribute.  False otherwise.'
   ],
 
-  'enable-blink': [hterm.PreferenceManager.categories.Appearance, true, 'bool',
+  'enable-blink': [
+    hterm.PreferenceManager.categories.Appearance, true, 'bool',
     'True if we should respect the blink attribute.  False to ignore it.  '
   ],
 
-  'enable-clipboard-notice': [hterm.PreferenceManager.categories.CopyPaste, true, 'bool',
+  'enable-clipboard-notice': [
+    hterm.PreferenceManager.categories.CopyPaste, true, 'bool',
     'Show a message in the terminal when the host writes to the clipboard.'
   ],
 
-  'enable-clipboard-write': [hterm.PreferenceManager.categories.CopyPaste, true, 'bool',
+  'enable-clipboard-write': [
+    hterm.PreferenceManager.categories.CopyPaste, true, 'bool',
     'Allow the host to write directly to the system clipboard.'
   ],
 
-  'enable-dec12': [hterm.PreferenceManager.categories.Miscellaneous, false, 'bool',
+  'enable-dec12': [
+    hterm.PreferenceManager.categories.Miscellaneous, false, 'bool',
     'Respect the host\'s attempt to change the cursor blink status using ' +
-    'DEC Private Mode 12.'
+        'DEC Private Mode 12.'
   ],
 
-  'environment': [hterm.PreferenceManager.categories.Miscellaneous, {
-      'TERM': 'xterm-256color'
-    },
-    'value',
+  'environment': [
+    hterm.PreferenceManager.categories.Miscellaneous,
+    {'TERM': 'xterm-256color'}, 'value',
     'The default environment variables, as an object.'
   ],
 
-  'font-family': [hterm.PreferenceManager.categories.Appearance,
+  'font-family': [
+    hterm.PreferenceManager.categories.Appearance,
     '"DejaVu Sans Mono", "Everson Mono", FreeMono, "Menlo", "Terminal", ' +
-    'monospace', 'string',
-    'Default font family for the terminal text.'
+        'monospace',
+    'string', 'Default font family for the terminal text.'
   ],
 
-  'font-size': [hterm.PreferenceManager.categories.Appearance, 15, 'int',
+  'font-size': [
+    hterm.PreferenceManager.categories.Appearance, 15, 'int',
     'The default font size in pixels.'
   ],
 
-  'font-smoothing': [hterm.PreferenceManager.categories.Appearance, 'antialiased', 'string',
+  'font-smoothing': [
+    hterm.PreferenceManager.categories.Appearance, 'antialiased', 'string',
     'CSS font-smoothing property.'
   ],
 
-  'foreground-color': [hterm.PreferenceManager.categories.Appearance, 'rgb(240, 240, 240)', 'color',
-    'The foreground color for text with no other color attributes.'
+  'foreground-color': [
+    hterm.PreferenceManager.categories.Appearance, 'rgb(240, 240, 240)',
+    'color', 'The foreground color for text with no other color attributes.'
   ],
 
-  'home-keys-scroll': [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+  'home-keys-scroll': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
     'If true, home/end will control the terminal scrollbar and shift home/end ' +
-    'will send the VT keycodes.  If false then home/end sends VT codes and ' +
-    'shift home/end scrolls.'
+        'will send the VT keycodes.  If false then home/end sends VT codes and ' +
+        'shift home/end scrolls.'
   ],
 
-  'keybindings': [hterm.PreferenceManager.categories.Keyboard, null, 'value',
+  'keybindings': [
+    hterm.PreferenceManager.categories.Keyboard, null, 'value',
     'A map of key sequence to key actions.  Key sequences include zero or ' +
-    'more modifier keys followed by a key code.  Key codes can be decimal or ' +
-    'hexadecimal numbers, or a key identifier.  Key actions can be specified ' +
-    'a string to send to the host, or an action identifier.  For a full ' +
-    'list of key code and action identifiers, see https://goo.gl/8AoD09.' +
-    '\n' +
-    '\n' +
-    'Sample keybindings:\n' +
-    '{ "Ctrl-Alt-K": "clearScrollback",\n' +
-    '  "Ctrl-Shift-L": "PASS",\n' +
-    '  "Ctrl-H": "\'HELLO\\n\'"\n' +
-    '}'
+        'more modifier keys followed by a key code.  Key codes can be decimal or ' +
+        'hexadecimal numbers, or a key identifier.  Key actions can be specified ' +
+        'a string to send to the host, or an action identifier.  For a full ' +
+        'list of key code and action identifiers, see https://goo.gl/8AoD09.' +
+        '\n' +
+        '\n' +
+        'Sample keybindings:\n' +
+        '{ "Ctrl-Alt-K": "clearScrollback",\n' +
+        '  "Ctrl-Shift-L": "PASS",\n' +
+        '  "Ctrl-H": "\'HELLO\\n\'"\n' +
+        '}'
   ],
 
-  'max-string-sequence': [hterm.PreferenceManager.categories.Encoding, 100000, 'int',
+  'max-string-sequence': [
+    hterm.PreferenceManager.categories.Encoding, 100000, 'int',
     'Max length of a DCS, OSC, PM, or APS sequence before we give up and ' +
-    'ignore the code.'
+        'ignore the code.'
   ],
 
-  'media-keys-are-fkeys': [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+  'media-keys-are-fkeys': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
     'If true, convert media keys to their Fkey equivalent. If false, let ' +
-    'the browser handle the keys.'
+        'the browser handle the keys.'
   ],
 
-  'meta-sends-escape': [hterm.PreferenceManager.categories.Keyboard, true, 'bool',
+  'meta-sends-escape': [
+    hterm.PreferenceManager.categories.Keyboard, true, 'bool',
     'Set whether the meta key sends a leading escape or not.'
   ],
 
-  'mouse-paste-button': [hterm.PreferenceManager.categories.CopyPaste, null, [null, 0, 1, 2, 3, 4, 5, 6],
+  'mouse-paste-button': [
+    hterm.PreferenceManager.categories.CopyPaste, null,
+    [null, 0, 1, 2, 3, 4, 5, 6],
     'Mouse paste button, or null to autodetect.\n' +
-    '\n' +
-    'For autodetect, we\'ll try to enable middle button paste for non-X11 ' +
-    'platforms.  On X11 we move it to button 3.'
+        '\n' +
+        'For autodetect, we\'ll try to enable middle button paste for non-X11 ' +
+        'platforms.  On X11 we move it to button 3.'
   ],
 
-  'page-keys-scroll': [hterm.PreferenceManager.categories.Keyboard, false, 'bool',
+  'page-keys-scroll': [
+    hterm.PreferenceManager.categories.Keyboard, false, 'bool',
     'If true, page up/down will control the terminal scrollbar and shift ' +
-    'page up/down will send the VT keycodes.  If false then page up/down ' +
-    'sends VT codes and shift page up/down scrolls.'
+        'page up/down will send the VT keycodes.  If false then page up/down ' +
+        'sends VT codes and shift page up/down scrolls.'
   ],
 
-  'pass-alt-number': [hterm.PreferenceManager.categories.Keyboard, null, 'tristate',
+  'pass-alt-number': [
+    hterm.PreferenceManager.categories.Keyboard, null, 'tristate',
     'Set whether we should pass Alt-1..9 to the browser.\n' +
-    '\n' +
-    'This is handy when running hterm in a browser tab, so that you don\'t ' +
-    'lose Chrome\'s "switch to tab" keyboard accelerators.  When not running ' +
-    'in a tab it\'s better to send these keys to the host so they can be ' +
-    'used in vim or emacs.\n' +
-    '\n' +
-    'If true, Alt-1..9 will be handled by the browser.  If false, Alt-1..9 ' +
-    'will be sent to the host.  If null, autodetect based on browser platform ' +
-    'and window type.'
+        '\n' +
+        'This is handy when running hterm in a browser tab, so that you don\'t ' +
+        'lose Chrome\'s "switch to tab" keyboard accelerators.  When not running ' +
+        'in a tab it\'s better to send these keys to the host so they can be ' +
+        'used in vim or emacs.\n' +
+        '\n' +
+        'If true, Alt-1..9 will be handled by the browser.  If false, Alt-1..9 ' +
+        'will be sent to the host.  If null, autodetect based on browser platform ' +
+        'and window type.'
   ],
 
-  'pass-ctrl-number': [hterm.PreferenceManager.categories.Keyboard, null, 'tristate',
+  'pass-ctrl-number': [
+    hterm.PreferenceManager.categories.Keyboard, null, 'tristate',
     'Set whether we should pass Ctrl-1..9 to the browser.\n' +
-    '\n' +
-    'This is handy when running hterm in a browser tab, so that you don\'t ' +
-    'lose Chrome\'s "switch to tab" keyboard accelerators.  When not running ' +
-    'in a tab it\'s better to send these keys to the host so they can be ' +
-    'used in vim or emacs.\n' +
-    '\n' +
-    'If true, Ctrl-1..9 will be handled by the browser.  If false, Ctrl-1..9 ' +
-    'will be sent to the host.  If null, autodetect based on browser platform ' +
-    'and window type.'
+        '\n' +
+        'This is handy when running hterm in a browser tab, so that you don\'t ' +
+        'lose Chrome\'s "switch to tab" keyboard accelerators.  When not running ' +
+        'in a tab it\'s better to send these keys to the host so they can be ' +
+        'used in vim or emacs.\n' +
+        '\n' +
+        'If true, Ctrl-1..9 will be handled by the browser.  If false, Ctrl-1..9 ' +
+        'will be sent to the host.  If null, autodetect based on browser platform ' +
+        'and window type.'
   ],
 
-  'pass-meta-number': [hterm.PreferenceManager.categories.Keyboard, null, 'tristate',
+  'pass-meta-number': [
+    hterm.PreferenceManager.categories.Keyboard, null, 'tristate',
     'Set whether we should pass Meta-1..9 to the browser.\n' +
-    '\n' +
-    'This is handy when running hterm in a browser tab, so that you don\'t ' +
-    'lose Chrome\'s "switch to tab" keyboard accelerators.  When not running ' +
-    'in a tab it\'s better to send these keys to the host so they can be ' +
-    'used in vim or emacs.\n' +
-    '\n' +
-    'If true, Meta-1..9 will be handled by the browser.  If false, Meta-1..9 ' +
-    'will be sent to the host.  If null, autodetect based on browser platform ' +
-    'and window type.'
+        '\n' +
+        'This is handy when running hterm in a browser tab, so that you don\'t ' +
+        'lose Chrome\'s "switch to tab" keyboard accelerators.  When not running ' +
+        'in a tab it\'s better to send these keys to the host so they can be ' +
+        'used in vim or emacs.\n' +
+        '\n' +
+        'If true, Meta-1..9 will be handled by the browser.  If false, Meta-1..9 ' +
+        'will be sent to the host.  If null, autodetect based on browser platform ' +
+        'and window type.'
   ],
 
-  'pass-meta-v': [hterm.PreferenceManager.categories.Keyboard, true, 'bool',
+  'pass-meta-v': [
+    hterm.PreferenceManager.categories.Keyboard, true, 'bool',
     'Set whether meta-V gets passed to host.'
   ],
 
-  'receive-encoding': [hterm.PreferenceManager.categories.Encoding, 'utf-8', ['utf-8', 'raw'],
+  'receive-encoding': [
+    hterm.PreferenceManager.categories.Encoding, 'utf-8', ['utf-8', 'raw'],
     'Set the expected encoding for data received from the host.\n' +
-    '\n' +
-    'Valid values are \'utf-8\' and \'raw\'.'
+        '\n' +
+        'Valid values are \'utf-8\' and \'raw\'.'
   ],
 
-  'scroll-on-keystroke': [hterm.PreferenceManager.categories.Scrolling, true, 'bool',
+  'scroll-on-keystroke': [
+    hterm.PreferenceManager.categories.Scrolling, true, 'bool',
     'If true, scroll to the bottom on any keystroke.'
   ],
 
-  'scroll-on-output': [hterm.PreferenceManager.categories.Scrolling, false, 'bool',
+  'scroll-on-output': [
+    hterm.PreferenceManager.categories.Scrolling, false, 'bool',
     'If true, scroll to the bottom on terminal output.'
   ],
 
-  'scrollbar-visible': [hterm.PreferenceManager.categories.Scrolling, true, 'bool',
+  'scrollbar-visible': [
+    hterm.PreferenceManager.categories.Scrolling, true, 'bool',
     'The vertical scrollbar mode.'
   ],
 
-  'scroll-wheel-move-multiplier': [hterm.PreferenceManager.categories.Scrolling, 1, 'int',
+  'scroll-wheel-move-multiplier': [
+    hterm.PreferenceManager.categories.Scrolling, 1, 'int',
     'The multiplier for the pixel delta in mousewheel event caused by the ' +
-    'scroll wheel. Alters how fast the page scrolls.'
+        'scroll wheel. Alters how fast the page scrolls.'
   ],
 
-  'send-encoding': [hterm.PreferenceManager.categories.Encoding, 'utf-8', ['utf-8', 'raw'],
+  'send-encoding': [
+    hterm.PreferenceManager.categories.Encoding, 'utf-8', ['utf-8', 'raw'],
     'Set the encoding for data sent to host.'
   ],
 
-  'shift-insert-paste': [hterm.PreferenceManager.categories.Keyboard, true, 'bool',
+  'shift-insert-paste': [
+    hterm.PreferenceManager.categories.Keyboard, true, 'bool',
     'Shift + Insert pastes if true, sent to host if false.'
   ],
 
-  'user-css': [hterm.PreferenceManager.categories.Appearance, '', 'url',
+  'user-css': [
+    hterm.PreferenceManager.categories.Appearance, '', 'url',
     'URL of user stylesheet to include in the terminal document.'
   ]
 };
@@ -8384,8 +8061,7 @@ hterm.PubSub.addBehavior = function(obj) {
  * @param {function(Object)} callback The function to invoke for notifications.
  */
 hterm.PubSub.prototype.subscribe = function(subject, callback) {
-  if (!(subject in this.observers_))
-    this.observers_[subject] = [];
+  if (!(subject in this.observers_)) this.observers_[subject] = [];
 
   this.observers_[subject].push(callback);
 };
@@ -8399,12 +8075,10 @@ hterm.PubSub.prototype.subscribe = function(subject, callback) {
  */
 hterm.PubSub.prototype.unsubscribe = function(subject, callback) {
   var list = this.observers_[subject];
-  if (!list)
-    throw 'Invalid subject: ' + subject;
+  if (!list) throw 'Invalid subject: ' + subject;
 
   var i = list.indexOf(callback);
-  if (i < 0)
-    throw 'Not subscribed: ' + subject;
+  if (i < 0) throw 'Not subscribed: ' + subject;
 
   list.splice(i, 1);
 };
@@ -8424,8 +8098,7 @@ hterm.PubSub.prototype.publish = function(subject, e, opt_lastCallback) {
   function notifyList(i) {
     // Set this timeout before invoking the callback, so we don't have to
     // concern ourselves with exceptions.
-    if (i < list.length - 1)
-      setTimeout(notifyList, 0, i + 1);
+    if (i < list.length - 1) setTimeout(notifyList, 0, i + 1);
 
     list[i](e);
   }
@@ -8439,14 +8112,12 @@ hterm.PubSub.prototype.publish = function(subject, e, opt_lastCallback) {
   if (opt_lastCallback) {
     if (list) {
       list.push(opt_lastCallback);
-    }
-    else {
+    } else {
       list = [opt_lastCallback];
     }
   }
 
-  if (list)
-    setTimeout(notifyList, 0, 0);
+  if (list) setTimeout(notifyList, 0, 0);
 };
 // SOURCE FILE: hterm/js/hterm_screen.js
 // Copyright (c) 2012 The Chromium OS Authors. All rights reserved.
@@ -8455,8 +8126,8 @@ hterm.PubSub.prototype.publish = function(subject, e, opt_lastCallback) {
 
 'use strict';
 
-lib.rtdep('lib.f', 'lib.wc',
-  'hterm.RowCol', 'hterm.Size', 'hterm.TextAttributes');
+lib.rtdep(
+    'lib.f', 'lib.wc', 'hterm.RowCol', 'hterm.Size', 'hterm.TextAttributes');
 
 /**
  * @fileoverview This class represents a single terminal screen full of text.
@@ -8709,8 +8380,7 @@ hterm.Screen.prototype.clearCursorRow = function() {
   var text;
   if (this.textAttributes.isDefault()) {
     text = '';
-  }
-  else {
+  } else {
     text = lib.f.getWhitespace(this.columnCount_);
   }
 
@@ -8759,8 +8429,7 @@ hterm.Screen.prototype.setCursorPosition = function(row, column) {
   if (row >= this.rowsArray.length) {
     console.error('Row out of bounds: ' + row);
     row = this.rowsArray.length - 1;
-  }
-  else if (row < 0) {
+  } else if (row < 0) {
     console.error('Row out of bounds: ' + row);
     row = 0;
   }
@@ -8768,8 +8437,7 @@ hterm.Screen.prototype.setCursorPosition = function(row, column) {
   if (column >= this.columnCount_) {
     console.error('Column out of bounds: ' + column);
     column = this.columnCount_ - 1;
-  }
-  else if (column < 0) {
+  } else if (column < 0) {
     console.error('Column out of bounds: ' + column);
     column = 0;
   }
@@ -8791,8 +8459,7 @@ hterm.Screen.prototype.setCursorPosition = function(row, column) {
       node = this.cursorNode_;
       currentColumn = this.cursorPosition.column - this.cursorOffset_;
     }
-  }
-  else {
+  } else {
     this.cursorRowNode_ = rowNode;
   }
 
@@ -8819,8 +8486,7 @@ hterm.Screen.prototype.setCursorPosition = function(row, column) {
 hterm.Screen.prototype.syncSelectionCaret = function(selection) {
   try {
     selection.collapse(this.cursorNode_, this.cursorOffset_);
-  }
-  catch (firefoxIgnoredException) {
+  } catch (firefoxIgnoredException) {
     // FF can throw an exception if the range is off, rather than just not
     // performing the collapse.
   }
@@ -8851,8 +8517,7 @@ hterm.Screen.prototype.splitNode_ = function(node, offset) {
 
   if (afterNode.textContent)
     node.parentNode.insertBefore(afterNode, node.nextSibling);
-  if (!node.textContent)
-    node.parentNode.removeChild(node);
+  if (!node.textContent) node.parentNode.removeChild(node);
 };
 
 /**
@@ -8882,7 +8547,7 @@ hterm.Screen.prototype.maybeClipCurrentRow = function() {
 
   if (this.cursorOffset_ < width - 1) {
     this.cursorNode_.textContent = hterm.TextAttributes.nodeSubstr(
-      this.cursorNode_, 0, this.cursorOffset_ + 1);
+        this.cursorNode_, 0, this.cursorOffset_ + 1);
   }
 
   // Remove all nodes after the cursor.
@@ -8898,8 +8563,7 @@ hterm.Screen.prototype.maybeClipCurrentRow = function() {
     // If the cursor was within the screen before we started then restore its
     // position.
     this.setCursorPosition(this.cursorPosition.row, currentColumn);
-  }
-  else {
+  } else {
     // Otherwise leave it at the the last column in the overflow state.
     this.cursorPosition.overflow = true;
   }
@@ -8945,24 +8609,20 @@ hterm.Screen.prototype.insertString = function(str) {
     // This whitespace should be completely unstyled.  Underline, background
     // color, and strikethrough would be visible on whitespace, so we can't use
     // one of those spans to hold the text.
-    if (!(this.textAttributes.underline ||
-        this.textAttributes.strikethrough ||
-        this.textAttributes.background ||
-        this.textAttributes.wcNode ||
-        this.textAttributes.tileData != null)) {
+    if (!(this.textAttributes.underline || this.textAttributes.strikethrough ||
+          this.textAttributes.background || this.textAttributes.wcNode ||
+          this.textAttributes.tileData != null)) {
       // Best case scenario, we can just pretend the spaces were part of the
       // original string.
       str = ws + str;
-    }
-    else if (cursorNode.nodeType == 3 ||
-      !(cursorNode.wcNode ||
-        cursorNode.tileNode ||
-        cursorNode.style.textDecoration ||
-        cursorNode.style.backgroundColor)) {
+    } else if (
+        cursorNode.nodeType == 3 ||
+        !(cursorNode.wcNode || cursorNode.tileNode ||
+          cursorNode.style.textDecoration ||
+          cursorNode.style.backgroundColor)) {
       // Second best case, the current node is able to hold the whitespace.
       cursorNode.textContent = (cursorNodeText += ws);
-    }
-    else {
+    } else {
       // Worst case, we have to create a new node to hold the whitespace.
       var wsNode = cursorNode.ownerDocument.createTextNode(ws);
       this.cursorRowNode_.insertBefore(wsNode, cursorNode.nextSibling);
@@ -8979,14 +8639,12 @@ hterm.Screen.prototype.insertString = function(str) {
     // The new text can be placed directly in the cursor node.
     if (reverseOffset == 0) {
       cursorNode.textContent = cursorNodeText + str;
-    }
-    else if (offset == 0) {
+    } else if (offset == 0) {
       cursorNode.textContent = str + cursorNodeText;
-    }
-    else {
+    } else {
       cursorNode.textContent =
-        hterm.TextAttributes.nodeSubstr(cursorNode, 0, offset) +
-        str + hterm.TextAttributes.nodeSubstr(cursorNode, offset);
+          hterm.TextAttributes.nodeSubstr(cursorNode, 0, offset) + str +
+          hterm.TextAttributes.nodeSubstr(cursorNode, offset);
     }
 
     this.cursorOffset_ += strWidth;
@@ -9001,7 +8659,7 @@ hterm.Screen.prototype.insertString = function(str) {
     // At the beginning of the cursor node, the check the previous sibling.
     var previousSibling = cursorNode.previousSibling;
     if (previousSibling &&
-      this.textAttributes.matchesContainer(previousSibling)) {
+        this.textAttributes.matchesContainer(previousSibling)) {
       previousSibling.textContent += str;
       this.cursorNode_ = previousSibling;
       this.cursorOffset_ = lib.wc.strWidth(previousSibling.textContent);
@@ -9018,8 +8676,7 @@ hterm.Screen.prototype.insertString = function(str) {
   if (reverseOffset == 0) {
     // At the end of the cursor node, the check the next sibling.
     var nextSibling = cursorNode.nextSibling;
-    if (nextSibling &&
-      this.textAttributes.matchesContainer(nextSibling)) {
+    if (nextSibling && this.textAttributes.matchesContainer(nextSibling)) {
       nextSibling.textContent = str + nextSibling.textContent;
       this.cursorNode_ = nextSibling;
       this.cursorOffset_ = lib.wc.strWidth(str);
@@ -9055,12 +8712,11 @@ hterm.Screen.prototype.insertString = function(str) {
  */
 hterm.Screen.prototype.overwriteString = function(str) {
   var maxLength = this.columnCount_ - this.cursorPosition.column;
-  if (!maxLength)
-    return [str];
+  if (!maxLength) return [str];
 
   var width = lib.wc.strWidth(str);
   if (this.textAttributes.matchesContainer(this.cursorNode_) &&
-    this.cursorNode_.textContent.substr(this.cursorOffset_) == str) {
+      this.cursorNode_.textContent.substr(this.cursorOffset_) == str) {
     // This overwrite would be a no-op, just move the cursor and return.
     this.cursorOffset_ += width;
     this.cursorPosition.column += width;
@@ -9087,8 +8743,7 @@ hterm.Screen.prototype.deleteChars = function(count) {
 
   var currentCursorColumn = this.cursorPosition.column;
   count = Math.min(count, this.columnCount_ - currentCursorColumn);
-  if (!count)
-    return 0;
+  if (!count) return 0;
 
   var rv = count;
   var startLength, endLength;
@@ -9096,7 +8751,7 @@ hterm.Screen.prototype.deleteChars = function(count) {
   while (node && count) {
     startLength = hterm.TextAttributes.nodeWidth(node);
     node.textContent = hterm.TextAttributes.nodeSubstr(node, 0, offset) +
-      hterm.TextAttributes.nodeSubstr(node, offset + count);
+        hterm.TextAttributes.nodeSubstr(node, offset + count);
     endLength = hterm.TextAttributes.nodeWidth(node);
     count -= startLength - endLength;
     if (offset < startLength && endLength && startLength == endLength) {
@@ -9123,14 +8778,12 @@ hterm.Screen.prototype.deleteChars = function(count) {
     var cursorNode = this.cursorNode_;
     if (cursorNode.previousSibling) {
       this.cursorNode_ = cursorNode.previousSibling;
-      this.cursorOffset_ = hterm.TextAttributes.nodeWidth(
-        cursorNode.previousSibling);
-    }
-    else if (cursorNode.nextSibling) {
+      this.cursorOffset_ =
+          hterm.TextAttributes.nodeWidth(cursorNode.previousSibling);
+    } else if (cursorNode.nextSibling) {
       this.cursorNode_ = cursorNode.nextSibling;
       this.cursorOffset_ = 0;
-    }
-    else {
+    } else {
       var emptyNode = this.cursorRowNode_.ownerDocument.createTextNode('');
       this.cursorRowNode_.appendChild(emptyNode);
       this.cursorNode_ = emptyNode;
@@ -9151,7 +8804,7 @@ hterm.Screen.prototype.deleteChars = function(count) {
  **/
 hterm.Screen.prototype.getLineStartRow_ = function(row) {
   while (row.previousSibling &&
-    row.previousSibling.hasAttribute('line-overflow')) {
+         row.previousSibling.hasAttribute('line-overflow')) {
     row = row.previousSibling;
   }
   return row;
@@ -9170,8 +8823,7 @@ hterm.Screen.prototype.getLineText_ = function(row) {
     rowText += row.textContent;
     if (row.hasAttribute('line-overflow')) {
       row = row.nextSibling;
-    }
-    else {
+    } else {
       break;
     }
   }
@@ -9186,8 +8838,7 @@ hterm.Screen.prototype.getLineText_ = function(row) {
  **/
 hterm.Screen.prototype.getXRowAncestor_ = function(node) {
   while (node) {
-    if (node.nodeName === 'X-ROW')
-      break;
+    if (node.nodeName === 'X-ROW') break;
     node = node.parentNode;
   }
   return node;
@@ -9204,18 +8855,15 @@ hterm.Screen.prototype.getXRowAncestor_ = function(node) {
  * @return {integer} Position within line of character at offset within node.
  **/
 hterm.Screen.prototype.getPositionWithOverflow_ = function(row, node, offset) {
-  if (!node)
-    return -1;
+  if (!node) return -1;
   var ancestorRow = this.getXRowAncestor_(node);
-  if (!ancestorRow)
-    return -1;
+  if (!ancestorRow) return -1;
   var position = 0;
   while (ancestorRow != row) {
     position += hterm.TextAttributes.nodeWidth(row);
     if (row.hasAttribute('line-overflow') && row.nextSibling) {
       row = row.nextSibling;
-    }
-    else {
+    } else {
       return -1;
     }
   }
@@ -9234,13 +8882,12 @@ hterm.Screen.prototype.getPositionWithOverflow_ = function(row, node, offset) {
 hterm.Screen.prototype.getPositionWithinRow_ = function(row, node, offset) {
   if (node.parentNode != row) {
     return this.getPositionWithinRow_(node.parentNode, node, offset) +
-      this.getPositionWithinRow_(row, node.parentNode, 0);
+        this.getPositionWithinRow_(row, node.parentNode, 0);
   }
   var position = 0;
   for (var i = 0; i < row.childNodes.length; i++) {
     var currentNode = row.childNodes[i];
-    if (currentNode == node)
-      return position + offset;
+    if (currentNode == node) return position + offset;
     position += hterm.TextAttributes.nodeWidth(currentNode);
   }
   return -1;
@@ -9259,8 +8906,7 @@ hterm.Screen.prototype.getNodeAndOffsetWithOverflow_ = function(row, position) {
     if (row.hasAttribute('line-overflow') && row.nextSibling) {
       position -= hterm.TextAttributes.nodeWidth(row);
       row = row.nextSibling;
-    }
-    else {
+    } else {
       return -1;
     }
   }
@@ -9283,8 +8929,7 @@ hterm.Screen.prototype.getNodeAndOffsetWithinRow_ = function(row, position) {
       if (node.nodeName === 'SPAN') {
         /** Drill down to node contained by SPAN. **/
         return this.getNodeAndOffsetWithinRow_(node, position);
-      }
-      else {
+      } else {
         return [node, position];
       }
     }
@@ -9304,11 +8949,9 @@ hterm.Screen.prototype.getNodeAndOffsetWithinRow_ = function(row, position) {
  **/
 hterm.Screen.prototype.setRange_ = function(row, start, end, range) {
   var startNodeAndOffset = this.getNodeAndOffsetWithOverflow_(row, start);
-  if (startNodeAndOffset == null)
-    return;
+  if (startNodeAndOffset == null) return;
   var endNodeAndOffset = this.getNodeAndOffsetWithOverflow_(row, end);
-  if (endNodeAndOffset == null)
-    return;
+  if (endNodeAndOffset == null) return;
   range.setStart(startNodeAndOffset[0], startNodeAndOffset[1]);
   range.setEnd(endNodeAndOffset[0], endNodeAndOffset[1]);
 };
@@ -9319,51 +8962,41 @@ hterm.Screen.prototype.setRange_ = function(row, start, end, range) {
  * @param {Selection} selection Selection to expand.
  **/
 hterm.Screen.prototype.expandSelection = function(selection) {
-  if (!selection)
-    return;
+  if (!selection) return;
 
   var range = selection.getRangeAt(0);
-  if (!range || range.toString().match(/\s/))
-    return;
+  if (!range || range.toString().match(/\s/)) return;
 
   var row = this.getLineStartRow_(this.getXRowAncestor_(range.startContainer));
-  if (!row)
-    return;
+  if (!row) return;
 
-  var startPosition = this.getPositionWithOverflow_(row,
-    range.startContainer,
-    range.startOffset);
-  if (startPosition == -1)
-    return;
-  var endPosition = this.getPositionWithOverflow_(row,
-    range.endContainer,
-    range.endOffset);
-  if (endPosition == -1)
-    return;
+  var startPosition = this.getPositionWithOverflow_(
+      row, range.startContainer, range.startOffset);
+  if (startPosition == -1) return;
+  var endPosition =
+      this.getPositionWithOverflow_(row, range.endContainer, range.endOffset);
+  if (endPosition == -1) return;
 
   // Matches can start with '~' or '.', since paths frequently do.
   var leftMatch = '[^\\s\\[\\](){}<>"\'\\^!@#$%&*,;:`]';
   var rightMatch = '[^\\s\\[\\](){}<>"\'\\^!@#$%&*,;:~.`]';
   var insideMatch = '[^\\s\\[\\](){}<>"\'\\^]*';
 
-  //Move start to the left.
+  // Move start to the left.
   var rowText = this.getLineText_(row);
   var lineUpToRange = lib.wc.substring(rowText, 0, endPosition);
   var leftRegularExpression = new RegExp(leftMatch + insideMatch + '$');
   var expandedStart = lineUpToRange.search(leftRegularExpression);
-  if (expandedStart == -1 || expandedStart > startPosition)
-    return;
+  if (expandedStart == -1 || expandedStart > startPosition) return;
 
-  //Move end to the right.
-  var lineFromRange = lib.wc.substring(rowText, startPosition,
-    lib.wc.strWidth(rowText));
+  // Move end to the right.
+  var lineFromRange =
+      lib.wc.substring(rowText, startPosition, lib.wc.strWidth(rowText));
   var rightRegularExpression = new RegExp('^' + insideMatch + rightMatch);
   var found = lineFromRange.match(rightRegularExpression);
-  if (!found)
-    return;
+  if (!found) return;
   var expandedEnd = startPosition + lib.wc.strWidth(found[0]);
-  if (expandedEnd == -1 || expandedEnd < endPosition)
-    return;
+  if (expandedEnd == -1 || expandedEnd < endPosition) return;
 
   this.setRange_(row, expandedStart, expandedEnd, range);
   selection.addRange(range);
@@ -9519,17 +9152,15 @@ hterm.ScrollPort.Selection = function(scrollPort) {
  * Returns null if none of the children are found.
  */
 hterm.ScrollPort.Selection.prototype.findFirstChild = function(
-  parent, childAry) {
+    parent, childAry) {
   var node = parent.firstChild;
 
   while (node) {
-    if (childAry.indexOf(node) != -1)
-      return node;
+    if (childAry.indexOf(node) != -1) return node;
 
     if (node.childNodes.length) {
       var rv = this.findFirstChild(node, childAry);
-      if (rv)
-        return rv;
+      if (rv) return rv;
     }
 
     node = node.nextSibling;
@@ -9577,8 +9208,7 @@ hterm.ScrollPort.Selection.prototype.sync = function() {
   this.isMultiline = null;
   this.isCollapsed = !selection || selection.isCollapsed;
 
-  if (this.isCollapsed)
-    return;
+  if (this.isCollapsed) return;
 
   var anchorRow = selection.anchorNode;
   while (anchorRow && !('rowIndex' in anchorRow)) {
@@ -9586,8 +9216,9 @@ hterm.ScrollPort.Selection.prototype.sync = function() {
   }
 
   if (!anchorRow) {
-    console.error('Selection anchor is not rooted in a row node: ' +
-      selection.anchorNode.nodeName);
+    console.error(
+        'Selection anchor is not rooted in a row node: ' +
+        selection.anchorNode.nodeName);
     return;
   }
 
@@ -9597,48 +9228,42 @@ hterm.ScrollPort.Selection.prototype.sync = function() {
   }
 
   if (!focusRow) {
-    console.error('Selection focus is not rooted in a row node: ' +
-      selection.focusNode.nodeName);
+    console.error(
+        'Selection focus is not rooted in a row node: ' +
+        selection.focusNode.nodeName);
     return;
   }
 
   if (anchorRow.rowIndex < focusRow.rowIndex) {
     anchorFirst();
 
-  }
-  else if (anchorRow.rowIndex > focusRow.rowIndex) {
+  } else if (anchorRow.rowIndex > focusRow.rowIndex) {
     focusFirst();
 
-  }
-  else if (selection.focusNode == selection.anchorNode) {
+  } else if (selection.focusNode == selection.anchorNode) {
     if (selection.anchorOffset < selection.focusOffset) {
       anchorFirst();
-    }
-    else {
+    } else {
       focusFirst();
     }
 
-  }
-  else {
+  } else {
     // The selection starts and ends in the same row, but isn't contained all
     // in a single node.
     var firstNode = this.findFirstChild(
-      anchorRow, [selection.anchorNode, selection.focusNode]);
+        anchorRow, [selection.anchorNode, selection.focusNode]);
 
-    if (!firstNode)
-      throw new Error('Unexpected error syncing selection.');
+    if (!firstNode) throw new Error('Unexpected error syncing selection.');
 
     if (firstNode == selection.anchorNode) {
       anchorFirst();
-    }
-    else {
+    } else {
       focusFirst();
     }
   }
 
   this.isMultiline = anchorRow.rowIndex != focusRow.rowIndex;
 };
-
 
 /**
  * Turn a div into this hterm.ScrollPort.
@@ -9647,32 +9272,32 @@ hterm.ScrollPort.prototype.decorate = function(div) {
   this.div_ = div;
 
   this.iframe_ = div.ownerDocument.createElement('iframe');
-  this.iframe_.style.cssText = (
-    'border: 0;' +
-    'height: 100%;' +
-    'position: absolute;' +
-    'width: 100%');
+  this.iframe_.style.cssText =
+      ('border: 0;' +
+       'height: 100%;' +
+       'position: absolute;' +
+       'width: 100%');
 
   // Set the iframe src to # in FF.  Otherwise when the frame's
   // load event fires in FF it clears out the content of the iframe.
-  if ('mozInnerScreenX' in window) // detect a FF only property
+  if ('mozInnerScreenX' in window)  // detect a FF only property
     this.iframe_.src = '#';
 
   div.appendChild(this.iframe_);
 
-  this.iframe_.contentWindow.addEventListener('resize',
-    this.onResize_.bind(this));
+  this.iframe_.contentWindow.addEventListener(
+      'resize', this.onResize_.bind(this));
 
   var doc = this.document_ = this.iframe_.contentDocument;
-  doc.body.style.cssText = (
-    'margin: 0px;' +
-    'padding: 0px;' +
-    'height: 100%;' +
-    'width: 100%;' +
-    'overflow: hidden;' +
-    'cursor: text;' +
-    '-webkit-user-select: none;' +
-    '-moz-user-select: none;');
+  doc.body.style.cssText =
+      ('margin: 0px;' +
+       'padding: 0px;' +
+       'height: 100%;' +
+       'width: 100%;' +
+       'overflow: hidden;' +
+       'cursor: text;' +
+       '-webkit-user-select: none;' +
+       '-moz-user-select: none;');
 
   var style = doc.createElement('style');
   style.textContent = 'x-row {}';
@@ -9690,23 +9315,23 @@ hterm.ScrollPort.prototype.decorate = function(div) {
   this.screen_ = doc.createElement('x-screen');
   this.screen_.setAttribute('role', 'textbox');
   this.screen_.setAttribute('tabindex', '-1');
-  this.screen_.style.cssText = (
-    'display: block;' +
-    'font-family: monospace;' +
-    'font-size: 15px;' +
-    'font-variant-ligatures: none;' +
-    'height: 100%;' +
-    'overflow-y: scroll; overflow-x: hidden;' +
-    'white-space: pre;' +
-    'width: 100%;' +
-    'outline: none !important');
+  this.screen_.style.cssText =
+      ('display: block;' +
+       'font-family: monospace;' +
+       'font-size: 15px;' +
+       'font-variant-ligatures: none;' +
+       'height: 100%;' +
+       'overflow-y: scroll; overflow-x: hidden;' +
+       'white-space: pre;' +
+       'width: 100%;' +
+       'outline: none !important');
 
   doc.body.appendChild(this.screen_);
 
   this.screen_.addEventListener('scroll', this.onScroll_.bind(this));
   this.screen_.addEventListener('mousewheel', this.onScrollWheel_.bind(this));
   this.screen_.addEventListener(
-    'DOMMouseScroll', this.onScrollWheel_.bind(this));
+      'DOMMouseScroll', this.onScrollWheel_.bind(this));
   this.screen_.addEventListener('copy', this.onCopy_.bind(this));
   this.screen_.addEventListener('paste', this.onPaste_.bind(this));
 
@@ -9714,20 +9339,20 @@ hterm.ScrollPort.prototype.decorate = function(div) {
 
   // This is the main container for the fixed rows.
   this.rowNodes_ = doc.createElement('div');
-  this.rowNodes_.style.cssText = (
-    'display: block;' +
-    'position: fixed;' +
-    'overflow: hidden;' +
-    '-webkit-user-select: text;' +
-    '-moz-user-select: text;');
+  this.rowNodes_.style.cssText =
+      ('display: block;' +
+       'position: fixed;' +
+       'overflow: hidden;' +
+       '-webkit-user-select: text;' +
+       '-moz-user-select: text;');
   this.screen_.appendChild(this.rowNodes_);
 
   // Two nodes to hold offscreen text during the copy event.
   this.topSelectBag_ = doc.createElement('x-select-bag');
-  this.topSelectBag_.style.cssText = (
-    'display: block;' +
-    'overflow: hidden;' +
-    'white-space: pre;');
+  this.topSelectBag_.style.cssText =
+      ('display: block;' +
+       'overflow: hidden;' +
+       'white-space: pre;');
 
   this.bottomSelectBag_ = this.topSelectBag_.cloneNode();
 
@@ -9763,29 +9388,28 @@ hterm.ScrollPort.prototype.decorate = function(div) {
   this.svg_ = this.div_.ownerDocument.createElementNS(xmlns, 'svg');
   this.svg_.setAttribute('xmlns', xmlns);
   this.svg_.setAttribute('version', '1.1');
-  this.svg_.style.cssText = (
-    'position: absolute;' +
-    'top: 0;' +
-    'left: 0;' +
-    'visibility: hidden');
-
+  this.svg_.style.cssText =
+      ('position: absolute;' +
+       'top: 0;' +
+       'left: 0;' +
+       'visibility: hidden');
 
   // We send focus to this element just before a paste happens, so we can
   // capture the pasted text and forward it on to someone who cares.
   this.pasteTarget_ = doc.createElement('textarea');
   this.pasteTarget_.setAttribute('tabindex', '-1');
-  this.pasteTarget_.style.cssText = (
-    'position: absolute;' +
-    'height: 1px;' +
-    'width: 1px;' +
-    'left: 0px; ' +
-    'bottom: 0px;' +
-    'opacity: 0');
+  this.pasteTarget_.style.cssText =
+      ('position: absolute;' +
+       'height: 1px;' +
+       'width: 1px;' +
+       'left: 0px; ' +
+       'bottom: 0px;' +
+       'opacity: 0');
   this.pasteTarget_.contentEditable = true;
 
   this.screen_.appendChild(this.pasteTarget_);
   this.pasteTarget_.addEventListener(
-    'textInput', this.handlePasteTargetTextInput_.bind(this));
+      'textInput', this.handlePasteTargetTextInput_.bind(this));
 
   this.resize();
 };
@@ -9802,8 +9426,7 @@ hterm.ScrollPort.prototype.setFontFamily = function(fontFamily, opt_smoothing) {
   this.screen_.style.fontFamily = fontFamily;
   if (opt_smoothing) {
     this.screen_.style.webkitFontSmoothing = opt_smoothing;
-  }
-  else {
+  } else {
     this.screen_.style.webkitFontSmoothing = '';
   }
 
@@ -9826,8 +9449,7 @@ hterm.ScrollPort.prototype.setUserCss = function(url) {
 
     if (!this.userCssLink_.parentNode)
       this.document_.head.appendChild(this.userCssLink_);
-  }
-  else if (this.userCssLink_.parentNode) {
+  } else if (this.userCssLink_.parentNode) {
     this.document_.head.removeChild(this.userCssLink_);
   }
 };
@@ -9963,8 +9585,7 @@ hterm.ScrollPort.prototype.invalidate = function() {
 };
 
 hterm.ScrollPort.prototype.scheduleInvalidate = function() {
-  if (this.timeouts_.invalidate)
-    return;
+  if (this.timeouts_.invalidate) return;
 
   var self = this;
   this.timeouts_.invalidate = setTimeout(function() {
@@ -9998,20 +9619,21 @@ hterm.ScrollPort.prototype.getFontSize = function() {
 hterm.ScrollPort.prototype.measureCharacterSize = function(opt_weight) {
   // Number of lines used to average the height of a single character.
   var numberOfLines = 100;
-  var rulerSingleLineContents = ('XXXXXXXXXXXXXXXXXXXX' +
-    'XXXXXXXXXXXXXXXXXXXX' +
-    'XXXXXXXXXXXXXXXXXXXX' +
-    'XXXXXXXXXXXXXXXXXXXX' +
-    'XXXXXXXXXXXXXXXXXXXX');
+  var rulerSingleLineContents =
+      ('XXXXXXXXXXXXXXXXXXXX' +
+       'XXXXXXXXXXXXXXXXXXXX' +
+       'XXXXXXXXXXXXXXXXXXXX' +
+       'XXXXXXXXXXXXXXXXXXXX' +
+       'XXXXXXXXXXXXXXXXXXXX');
   if (!this.ruler_) {
     this.ruler_ = this.document_.createElement('div');
-    this.ruler_.style.cssText = (
-      'position: absolute;' +
-      'top: 0;' +
-      'left: 0;' +
-      'visibility: hidden;' +
-      'height: auto !important;' +
-      'width: auto !important;');
+    this.ruler_.style.cssText =
+        ('position: absolute;' +
+         'top: 0;' +
+         'left: 0;' +
+         'visibility: hidden;' +
+         'height: auto !important;' +
+         'width: auto !important;');
 
     // We need to put the text in a span to make the size calculation
     // work properly in Firefox
@@ -10034,8 +9656,9 @@ hterm.ScrollPort.prototype.measureCharacterSize = function(opt_weight) {
   this.rowNodes_.appendChild(this.ruler_);
   var rulerSize = hterm.getClientSize(this.rulerSpan_);
 
-  var size = new hterm.Size(rulerSize.width / rulerSingleLineContents.length,
-    rulerSize.height / numberOfLines);
+  var size = new hterm.Size(
+      rulerSize.width / rulerSingleLineContents.length,
+      rulerSize.height / numberOfLines);
 
   this.ruler_.appendChild(this.rulerBaseline_);
   size.baseline = this.rulerBaseline_.offsetTop;
@@ -10070,8 +9693,8 @@ hterm.ScrollPort.prototype.syncCharacterSize = function() {
     // When we're debugging we add padding to the body so that the offscreen
     // elements are visible.
     this.document_.body.style.paddingTop =
-      this.document_.body.style.paddingBottom =
-      3 * this.characterSize.height + 'px';
+        this.document_.body.style.paddingBottom =
+            3 * this.characterSize.height + 'px';
   }
 };
 
@@ -10080,21 +9703,17 @@ hterm.ScrollPort.prototype.syncCharacterSize = function() {
  * dimensions of the 'x-screen'.
  */
 hterm.ScrollPort.prototype.resize = function() {
-  this.currentScrollbarWidthPx = hterm.getClientWidth(this.screen_) -
-    this.screen_.clientWidth;
+  this.currentScrollbarWidthPx =
+      hterm.getClientWidth(this.screen_) - this.screen_.clientWidth;
 
   this.syncScrollHeight();
   this.syncRowNodesDimensions_();
 
   var self = this;
-  this.publish(
-    'resize', {
-      scrollPort: this
-    },
-    function() {
-      self.scrollRowToBottom(self.rowProvider_.getRowCount());
-      self.scheduleRedraw();
-    });
+  this.publish('resize', {scrollPort: this}, function() {
+    self.scrollRowToBottom(self.rowProvider_.getRowCount());
+    self.scheduleRedraw();
+  });
 };
 
 /**
@@ -10108,8 +9727,8 @@ hterm.ScrollPort.prototype.syncRowNodesDimensions_ = function() {
 
   // We don't want to show a partial row because it would be distracting
   // in a terminal, so we floor any fractional row count.
-  this.visibleRowCount = lib.f.smartFloorDivide(
-    screenSize.height, this.characterSize.height);
+  this.visibleRowCount =
+      lib.f.smartFloorDivide(screenSize.height, this.characterSize.height);
 
   // Then compute the height of our integral number of rows.
   var visibleRowsHeight = this.visibleRowCount * this.characterSize.height;
@@ -10121,7 +9740,6 @@ hterm.ScrollPort.prototype.syncRowNodesDimensions_ = function() {
   this.visibleRowBottomMargin = screenSize.height - visibleRowsHeight;
 
   this.topFold_.style.marginBottom = this.visibleRowTopMargin + 'px';
-
 
   var topFoldOffset = 0;
   var node = this.topFold_.previousSibling;
@@ -10140,11 +9758,9 @@ hterm.ScrollPort.prototype.syncRowNodesDimensions_ = function() {
 hterm.ScrollPort.prototype.syncScrollHeight = function() {
   // Resize the scroll area to appear as though it contains every row.
   this.lastRowCount_ = this.rowProvider_.getRowCount();
-  this.scrollArea_.style.height = (this.characterSize.height *
-    this.lastRowCount_ +
-    this.visibleRowTopMargin +
-    this.visibleRowBottomMargin +
-    'px');
+  this.scrollArea_.style.height =
+      (this.characterSize.height * this.lastRowCount_ +
+       this.visibleRowTopMargin + this.visibleRowBottomMargin + 'px');
 };
 
 /**
@@ -10154,8 +9770,7 @@ hterm.ScrollPort.prototype.syncScrollHeight = function() {
  * run only one redraw occurs.
  */
 hterm.ScrollPort.prototype.scheduleRedraw = function() {
-  if (this.timeouts_.redraw)
-    return;
+  if (this.timeouts_.redraw) return;
 
   var self = this;
   this.timeouts_.redraw = setTimeout(function() {
@@ -10194,8 +9809,8 @@ hterm.ScrollPort.prototype.redraw_ = function() {
   this.previousRowNodeCache_ = this.currentRowNodeCache_;
   this.currentRowNodeCache_ = null;
 
-  this.isScrolledEnd = (
-    this.getTopRowIndex() + this.visibleRowCount >= this.lastRowCount_);
+  this.isScrolledEnd =
+      (this.getTopRowIndex() + this.visibleRowCount >= this.lastRowCount_);
 };
 
 /**
@@ -10213,7 +9828,7 @@ hterm.ScrollPort.prototype.redraw_ = function() {
  */
 hterm.ScrollPort.prototype.drawTopFold_ = function(topRowIndex) {
   if (!this.selection.startRow ||
-    this.selection.startRow.rowIndex >= topRowIndex) {
+      this.selection.startRow.rowIndex >= topRowIndex) {
     // Selection is entirely below the top fold, just make sure the fold is
     // the first child.
     if (this.rowNodes_.firstChild != this.topFold_)
@@ -10223,22 +9838,20 @@ hterm.ScrollPort.prototype.drawTopFold_ = function(topRowIndex) {
   }
 
   if (!this.selection.isMultiline ||
-    this.selection.endRow.rowIndex >= topRowIndex) {
+      this.selection.endRow.rowIndex >= topRowIndex) {
     // Only the startRow is above the fold.
     if (this.selection.startRow.nextSibling != this.topFold_)
-      this.rowNodes_.insertBefore(this.topFold_,
-        this.selection.startRow.nextSibling);
-  }
-  else {
+      this.rowNodes_.insertBefore(
+          this.topFold_, this.selection.startRow.nextSibling);
+  } else {
     // Both rows are above the fold.
     if (this.selection.endRow.nextSibling != this.topFold_) {
-      this.rowNodes_.insertBefore(this.topFold_,
-        this.selection.endRow.nextSibling);
+      this.rowNodes_.insertBefore(
+          this.topFold_, this.selection.endRow.nextSibling);
     }
 
     // Trim any intermediate lines.
-    while (this.selection.startRow.nextSibling !=
-      this.selection.endRow) {
+    while (this.selection.startRow.nextSibling != this.selection.endRow) {
       this.rowNodes_.removeChild(this.selection.startRow.nextSibling);
     }
   }
@@ -10263,7 +9876,7 @@ hterm.ScrollPort.prototype.drawTopFold_ = function(topRowIndex) {
  */
 hterm.ScrollPort.prototype.drawBottomFold_ = function(bottomRowIndex) {
   if (!this.selection.endRow ||
-    this.selection.endRow.rowIndex <= bottomRowIndex) {
+      this.selection.endRow.rowIndex <= bottomRowIndex) {
     // Selection is entirely above the bottom fold, just make sure the fold is
     // the last child.
     if (this.rowNodes_.lastChild != this.bottomFold_)
@@ -10273,22 +9886,18 @@ hterm.ScrollPort.prototype.drawBottomFold_ = function(bottomRowIndex) {
   }
 
   if (!this.selection.isMultiline ||
-    this.selection.startRow.rowIndex <= bottomRowIndex) {
+      this.selection.startRow.rowIndex <= bottomRowIndex) {
     // Only the endRow is below the fold.
     if (this.bottomFold_.nextSibling != this.selection.endRow)
-      this.rowNodes_.insertBefore(this.bottomFold_,
-        this.selection.endRow);
-  }
-  else {
+      this.rowNodes_.insertBefore(this.bottomFold_, this.selection.endRow);
+  } else {
     // Both rows are below the fold.
     if (this.bottomFold_.nextSibling != this.selection.startRow) {
-      this.rowNodes_.insertBefore(this.bottomFold_,
-        this.selection.startRow);
+      this.rowNodes_.insertBefore(this.bottomFold_, this.selection.startRow);
     }
 
     // Trim any intermediate lines.
-    while (this.selection.startRow.nextSibling !=
-      this.selection.endRow) {
+    while (this.selection.startRow.nextSibling != this.selection.endRow) {
       this.rowNodes_.removeChild(this.selection.startRow.nextSibling);
     }
   }
@@ -10313,15 +9922,14 @@ hterm.ScrollPort.prototype.drawBottomFold_ = function(bottomRowIndex) {
  * adjusted around them.
  */
 hterm.ScrollPort.prototype.drawVisibleRows_ = function(
-  topRowIndex, bottomRowIndex) {
+    topRowIndex, bottomRowIndex) {
   var self = this;
 
   // Keep removing nodes, starting with currentNode, until we encounter
   // targetNode.  Throws on failure.
   function removeUntilNode(currentNode, targetNode) {
     while (currentNode != targetNode) {
-      if (!currentNode)
-        throw 'Did not encounter target node';
+      if (!currentNode) throw 'Did not encounter target node';
 
       if (currentNode == self.bottomFold_)
         throw 'Encountered bottom fold before target node';
@@ -10340,8 +9948,8 @@ hterm.ScrollPort.prototype.drawVisibleRows_ = function(
   // The node we're examining during the current iteration.
   var node = this.topFold_.nextSibling;
 
-  var targetDrawCount = Math.min(this.visibleRowCount,
-    this.rowProvider_.getRowCount());
+  var targetDrawCount =
+      Math.min(this.visibleRowCount, this.rowProvider_.getRowCount());
 
   for (var drawCount = 0; drawCount < targetDrawCount; drawCount++) {
     var rowIndex = topRowIndex + drawCount;
@@ -10350,7 +9958,7 @@ hterm.ScrollPort.prototype.drawVisibleRows_ = function(
       // We've hit the bottom fold, we need to insert a new row.
       var newNode = this.fetchRowNode_(rowIndex);
       if (!newNode) {
-        console.log("Couldn't fetch row index: " + rowIndex);
+        console.log('Couldn\'t fetch row index: ' + rowIndex);
         break;
       }
 
@@ -10385,7 +9993,7 @@ hterm.ScrollPort.prototype.drawVisibleRows_ = function(
       // yet.  Insert a new row instead.
       var newNode = this.fetchRowNode_(rowIndex);
       if (!newNode) {
-        console.log("Couldn't fetch row index: " + rowIndex);
+        console.log('Couldn\'t fetch row index: ' + rowIndex);
         break;
       }
 
@@ -10397,7 +10005,7 @@ hterm.ScrollPort.prototype.drawVisibleRows_ = function(
     // it with the node that should be here.
     var newNode = this.fetchRowNode_(rowIndex);
     if (!newNode) {
-      console.log("Couldn't fetch row index: " + rowIndex);
+      console.log('Couldn\'t fetch row index: ' + rowIndex);
       break;
     }
 
@@ -10407,14 +10015,12 @@ hterm.ScrollPort.prototype.drawVisibleRows_ = function(
     }
 
     this.rowNodes_.insertBefore(newNode, node);
-    if (!newNode.nextSibling)
-      debugger;
+    if (!newNode.nextSibling) debugger;
     this.rowNodes_.removeChild(node);
     node = newNode.nextSibling;
   }
 
-  if (node != this.bottomFold_)
-    removeUntilNode(node, bottomFold);
+  if (node != this.bottomFold_) removeUntilNode(node, bottomFold);
 };
 
 /**
@@ -10458,13 +10064,11 @@ hterm.ScrollPort.prototype.fetchRowNode_ = function(rowIndex) {
 
   if (this.previousRowNodeCache_ && rowIndex in this.previousRowNodeCache_) {
     node = this.previousRowNodeCache_[rowIndex];
-  }
-  else {
+  } else {
     node = this.rowProvider_.getRowNode(rowIndex);
   }
 
-  if (this.currentRowNodeCache_)
-    this.cacheRowNode_(node);
+  if (this.currentRowNodeCache_) this.cacheRowNode_(node);
 
   return node;
 };
@@ -10483,8 +10087,7 @@ hterm.ScrollPort.prototype.selectAll = function() {
     firstRow = this.fetchRowNode_(0);
     this.rowNodes_.insertBefore(firstRow, this.topFold_);
     this.syncRowNodesDimensions_();
-  }
-  else {
+  } else {
     firstRow = this.topFold_.nextSibling;
   }
 
@@ -10498,8 +10101,7 @@ hterm.ScrollPort.prototype.selectAll = function() {
 
     lastRow = this.fetchRowNode_(lastRowIndex);
     this.rowNodes_.appendChild(lastRow);
-  }
-  else {
+  } else {
     lastRow = this.bottomFold_.previousSibling.rowIndex;
   }
 
@@ -10514,9 +10116,9 @@ hterm.ScrollPort.prototype.selectAll = function() {
  * Return the maximum scroll position in pixels.
  */
 hterm.ScrollPort.prototype.getScrollMax_ = function(e) {
-  return (hterm.getClientHeight(this.scrollArea_) +
-    this.visibleRowTopMargin + this.visibleRowBottomMargin -
-    hterm.getClientHeight(this.screen_));
+  return (
+      hterm.getClientHeight(this.scrollArea_) + this.visibleRowTopMargin +
+      this.visibleRowBottomMargin - hterm.getClientHeight(this.screen_));
 };
 
 /**
@@ -10527,18 +10129,15 @@ hterm.ScrollPort.prototype.getScrollMax_ = function(e) {
 hterm.ScrollPort.prototype.scrollRowToTop = function(rowIndex) {
   this.syncScrollHeight();
 
-  this.isScrolledEnd = (
-    rowIndex + this.visibleRowCount >= this.lastRowCount_);
+  this.isScrolledEnd = (rowIndex + this.visibleRowCount >= this.lastRowCount_);
 
-  var scrollTop = rowIndex * this.characterSize.height +
-    this.visibleRowTopMargin;
+  var scrollTop =
+      rowIndex * this.characterSize.height + this.visibleRowTopMargin;
 
   var scrollMax = this.getScrollMax_();
-  if (scrollTop > scrollMax)
-    scrollTop = scrollMax;
+  if (scrollTop > scrollMax) scrollTop = scrollMax;
 
-  if (this.screen_.scrollTop == scrollTop)
-    return;
+  if (this.screen_.scrollTop == scrollTop) return;
 
   this.screen_.scrollTop = scrollTop;
   this.scheduleRedraw();
@@ -10552,18 +10151,15 @@ hterm.ScrollPort.prototype.scrollRowToTop = function(rowIndex) {
 hterm.ScrollPort.prototype.scrollRowToBottom = function(rowIndex) {
   this.syncScrollHeight();
 
-  this.isScrolledEnd = (
-    rowIndex + this.visibleRowCount >= this.lastRowCount_);
+  this.isScrolledEnd = (rowIndex + this.visibleRowCount >= this.lastRowCount_);
 
   var scrollTop = rowIndex * this.characterSize.height +
-    this.visibleRowTopMargin + this.visibleRowBottomMargin;
+      this.visibleRowTopMargin + this.visibleRowBottomMargin;
   scrollTop -= this.visibleRowCount * this.characterSize.height;
 
-  if (scrollTop < 0)
-    scrollTop = 0;
+  if (scrollTop < 0) scrollTop = 0;
 
-  if (this.screen_.scrollTop == scrollTop)
-    return;
+  if (this.screen_.scrollTop == scrollTop) return;
 
   this.screen_.scrollTop = scrollTop;
 };
@@ -10597,7 +10193,7 @@ hterm.ScrollPort.prototype.getBottomRowIndex = function(topRowIndex) {
 hterm.ScrollPort.prototype.onScroll_ = function(e) {
   var screenSize = this.getScreenSize();
   if (screenSize.width != this.lastScreenWidth_ ||
-    screenSize.height != this.lastScreenHeight_) {
+      screenSize.height != this.lastScreenHeight_) {
     // This event may also fire during a resize (but before the resize event!).
     // This happens when the browser moves the scrollbar as part of the resize.
     // In these cases, we want to ignore the scroll event and let onResize
@@ -10608,9 +10204,7 @@ hterm.ScrollPort.prototype.onScroll_ = function(e) {
   }
 
   this.redraw_();
-  this.publish('scroll', {
-    scrollPort: this
-  });
+  this.publish('scroll', {scrollPort: this});
 };
 
 /**
@@ -10632,8 +10226,7 @@ hterm.ScrollPort.prototype.onScrollWheel = function(e) {};
 hterm.ScrollPort.prototype.onScrollWheel_ = function(e) {
   this.onScrollWheel(e);
 
-  if (e.defaultPrevented)
-    return;
+  if (e.defaultPrevented) return;
 
   // In FF, the event is DOMMouseScroll and puts the scroll pixel delta in the
   // 'detail' field of the event.  It also flips the mapping of which direction
@@ -10642,12 +10235,10 @@ hterm.ScrollPort.prototype.onScrollWheel_ = function(e) {
   delta *= this.scrollWheelMultiplier_;
 
   var top = this.screen_.scrollTop - delta;
-  if (top < 0)
-    top = 0;
+  if (top < 0) top = 0;
 
   var scrollMax = this.getScrollMax_();
-  if (top > scrollMax)
-    top = scrollMax;
+  if (top > scrollMax) top = scrollMax;
 
   if (top != this.screen_.scrollTop) {
     // Moving scrollTop causes a scroll event, which triggers the redraw.
@@ -10691,14 +10282,13 @@ hterm.ScrollPort.prototype.onCopy = function(e) {};
 hterm.ScrollPort.prototype.onCopy_ = function(e) {
   this.onCopy(e);
 
-  if (e.defaultPrevented)
-    return;
+  if (e.defaultPrevented) return;
 
   this.resetSelectBags_();
   this.selection.sync();
 
   if (!this.selection.startRow ||
-    this.selection.endRow.rowIndex - this.selection.startRow.rowIndex < 2) {
+      this.selection.endRow.rowIndex - this.selection.startRow.rowIndex < 2) {
     return;
   }
 
@@ -10712,16 +10302,15 @@ hterm.ScrollPort.prototype.onCopy_ = function(e) {
     if (this.selection.endRow.rowIndex < topRowIndex) {
       // Entire selection is above the top fold.
       endBackfillIndex = this.selection.endRow.rowIndex;
-    }
-    else {
+    } else {
       // Selection extends below the top fold.
       endBackfillIndex = this.topFold_.nextSibling.rowIndex;
     }
 
     this.topSelectBag_.textContent = this.rowProvider_.getRowsText(
-      this.selection.startRow.rowIndex + 1, endBackfillIndex);
-    this.rowNodes_.insertBefore(this.topSelectBag_,
-      this.selection.startRow.nextSibling);
+        this.selection.startRow.rowIndex + 1, endBackfillIndex);
+    this.rowNodes_.insertBefore(
+        this.topSelectBag_, this.selection.startRow.nextSibling);
     this.syncRowNodesDimensions_();
   }
 
@@ -10732,14 +10321,13 @@ hterm.ScrollPort.prototype.onCopy_ = function(e) {
     if (this.selection.startRow.rowIndex > bottomRowIndex) {
       // Entire selection is below the bottom fold.
       startBackfillIndex = this.selection.startRow.rowIndex + 1;
-    }
-    else {
+    } else {
       // Selection starts above the bottom fold.
       startBackfillIndex = this.bottomFold_.previousSibling.rowIndex + 1;
     }
 
     this.bottomSelectBag_.textContent = this.rowProvider_.getRowsText(
-      startBackfillIndex, this.selection.endRow.rowIndex);
+        startBackfillIndex, this.selection.endRow.rowIndex);
     this.rowNodes_.insertBefore(this.bottomSelectBag_, this.selection.endRow);
   }
 };
@@ -10749,13 +10337,11 @@ hterm.ScrollPort.prototype.onCopy_ = function(e) {
  * FF a content editable element must be focused before the paste event.
  */
 hterm.ScrollPort.prototype.onBodyKeyDown_ = function(e) {
-  if (!this.ctrlVPaste)
-    return;
+  if (!this.ctrlVPaste) return;
 
   var key = String.fromCharCode(e.which);
   var lowerKey = key.toLowerCase();
-  if ((e.ctrlKey || e.metaKey) && lowerKey == 'v')
-    this.pasteTarget_.focus();
+  if ((e.ctrlKey || e.metaKey) && lowerKey == 'v') this.pasteTarget_.focus();
 };
 
 /**
@@ -10766,9 +10352,7 @@ hterm.ScrollPort.prototype.onPaste_ = function(e) {
 
   var self = this;
   setTimeout(function() {
-    self.publish('paste', {
-      text: self.pasteTarget_.value
-    });
+    self.publish('paste', {text: self.pasteTarget_.value});
     self.pasteTarget_.value = '';
     self.screen_.focus();
   }, 0);
@@ -10803,10 +10387,11 @@ hterm.ScrollPort.prototype.setScrollWheelMoveMultipler = function(multiplier) {
 
 'use strict';
 
-lib.rtdep('lib.colors', 'lib.PreferenceManager', 'lib.resource', 'lib.wc',
-  'lib.f', 'hterm.Keyboard', 'hterm.Options', 'hterm.PreferenceManager',
-  'hterm.Screen', 'hterm.ScrollPort', 'hterm.Size',
-  'hterm.TextAttributes', 'hterm.VT');
+lib.rtdep(
+    'lib.colors', 'lib.PreferenceManager', 'lib.resource', 'lib.wc', 'lib.f',
+    'hterm.Keyboard', 'hterm.Options', 'hterm.PreferenceManager',
+    'hterm.Screen', 'hterm.ScrollPort', 'hterm.Size', 'hterm.TextAttributes',
+    'hterm.VT');
 
 /**
  * Constructor for the Terminal class.
@@ -10944,10 +10529,9 @@ hterm.Terminal = function(opt_profileId) {
   this.realizeSize_(80, 24);
   this.setDefaultTabStops();
 
-  this.setProfile(opt_profileId || 'default',
-    function() {
-      this.onTerminalReady();
-    }.bind(this));
+  this.setProfile(opt_profileId || 'default', function() {
+    this.onTerminalReady();
+  }.bind(this));
 };
 
 /**
@@ -10989,8 +10573,7 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
 
   var terminal = this;
 
-  if (this.prefs_)
-    this.prefs_.deactivate();
+  if (this.prefs_) this.prefs_.deactivate();
 
   this.prefs_ = new hterm.PreferenceManager(this.profileId_);
   this.prefs_.addObservers(null, {
@@ -10998,20 +10581,16 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
       if (v == null) {
         if (navigator.language.toLowerCase() == 'en-us') {
           v = 'none';
-        }
-        else {
+        } else {
           v = 'right-alt';
         }
-      }
-      else if (typeof v == 'string') {
+      } else if (typeof v == 'string') {
         v = v.toLowerCase();
-      }
-      else {
+      } else {
         v = 'none';
       }
 
-      if (!/^(none|ctrl-alt|left-alt|right-alt)$/.test(v))
-        v = 'none';
+      if (!/^(none|ctrl-alt|left-alt|right-alt)$/.test(v)) v = 'none';
 
       terminal.keyboard.altGrMode = v;
     },
@@ -11025,8 +10604,7 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
     },
 
     'alt-sends-what': function(v) {
-      if (!/^(escape|8-bit|browser-key)$/.test(v))
-        v = 'escape';
+      if (!/^(escape|8-bit|browser-key)$/.test(v)) v = 'escape';
 
       terminal.keyboard.altSendsWhat = v;
     },
@@ -11034,10 +10612,9 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
     'audible-bell-sound': function(v) {
       var ary = v.match(/^lib-resource:(\S+)/);
       if (ary) {
-        terminal.bellAudio_.setAttribute('src',
-          lib.resource.getDataUrl(ary[1]));
-      }
-      else {
+        terminal.bellAudio_.setAttribute(
+            'src', lib.resource.getDataUrl(ary[1]));
+      } else {
         terminal.bellAudio_.setAttribute('src', v);
       }
     },
@@ -11045,7 +10622,7 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
     'desktop-notification-bell': function(v) {
       if (v && Notification) {
         terminal.desktopNotificationBell_ =
-          Notification.permission === 'granted';
+            Notification.permission === 'granted';
         if (!terminal.desktopNotificationBell_) {
           // Note: We don't call Notification.requestPermission here because
           // Chrome requires the call be the result of a user action (such as an
@@ -11053,11 +10630,11 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
           //
           // A way of working around this would be to display a dialog in the
           // terminal with a "click-to-request-permission" button.
-          console.warn('desktop-notification-bell is true but we do not have ' +
-            'permission to display notifications.');
+          console.warn(
+              'desktop-notification-bell is true but we do not have ' +
+              'permission to display notifications.');
         }
-      }
-      else {
+      } else {
         terminal.desktopNotificationBell_ = false;
       }
     },
@@ -11084,8 +10661,9 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
 
     'character-map-overrides': function(v) {
       if (!(v == null || v instanceof Object)) {
-        console.warn('Preference character-map-modifications is not an ' +
-          'object: ' + v);
+        console.warn(
+            'Preference character-map-modifications is not an ' +
+            'object: ' + v);
         return;
       }
 
@@ -11103,15 +10681,12 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
     },
 
     'cursor-blink-cycle': function(v) {
-      if (v instanceof Array &&
-        typeof v[0] == 'number' &&
-        typeof v[1] == 'number') {
+      if (v instanceof Array && typeof v[0] == 'number' &&
+          typeof v[1] == 'number') {
         terminal.cursorBlinkCycle_ = v;
-      }
-      else if (typeof v == 'number') {
+      } else if (typeof v == 'number') {
         terminal.cursorBlinkCycle_ = [v, v];
-      }
-      else {
+      } else {
         // Fast blink indicates an error.
         terminal.cursorBlinkCycle_ = [100, 100];
       }
@@ -11123,8 +10698,9 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
 
     'color-palette-overrides': function(v) {
       if (!(v == null || v instanceof Object || v instanceof Array)) {
-        console.warn('Preference color-palette-overrides is not an array or ' +
-          'object: ' + v);
+        console.warn(
+            'Preference color-palette-overrides is not an array or ' +
+            'object: ' + v);
         return;
       }
 
@@ -11140,8 +10716,7 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
 
           if (v[i]) {
             var rgb = lib.colors.normalizeCSS(v[i]);
-            if (rgb)
-              lib.colors.colorPalette[i] = rgb;
+            if (rgb) lib.colors.colorPalette[i] = rgb;
           }
         }
       }
@@ -11227,8 +10802,7 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
     'keybindings': function(v) {
       terminal.keyboard.bindings.clear();
 
-      if (!v)
-        return;
+      if (!v) return;
 
       if (!(v instanceof Object)) {
         console.error('Error in keybindings preference: Expected object');
@@ -11237,8 +10811,7 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
 
       try {
         terminal.keyboard.bindings.addBindings(v);
-      }
-      catch (ex) {
+      } catch (ex) {
         console.error('Error in keybindings preference: ' + ex);
       }
     },
@@ -11349,11 +10922,9 @@ hterm.Terminal.prototype.setProfile = function(profileId, opt_callback) {
   this.prefs_.readStorage(function() {
     this.prefs_.notifyAll();
 
-    if (opt_callback)
-      opt_callback();
+    if (opt_callback) opt_callback();
   }.bind(this));
 };
-
 
 /**
  * Returns the preferences manager used for configuring this terminal.
@@ -11415,9 +10986,9 @@ hterm.Terminal.prototype.setSelectionEnabled = function(state) {
 hterm.Terminal.prototype.setBackgroundColor = function(color) {
   this.backgroundColor_ = lib.colors.normalizeCSS(color);
   this.primaryScreen_.textAttributes.setDefaults(
-    this.foregroundColor_, this.backgroundColor_);
+      this.foregroundColor_, this.backgroundColor_);
   this.alternateScreen_.textAttributes.setDefaults(
-    this.foregroundColor_, this.backgroundColor_);
+      this.foregroundColor_, this.backgroundColor_);
   this.scrollPort_.setBackgroundColor(color);
 };
 
@@ -11444,9 +11015,9 @@ hterm.Terminal.prototype.getBackgroundColor = function() {
 hterm.Terminal.prototype.setForegroundColor = function(color) {
   this.foregroundColor_ = lib.colors.normalizeCSS(color);
   this.primaryScreen_.textAttributes.setDefaults(
-    this.foregroundColor_, this.backgroundColor_);
+      this.foregroundColor_, this.backgroundColor_);
   this.alternateScreen_.textAttributes.setDefaults(
-    this.foregroundColor_, this.backgroundColor_);
+      this.foregroundColor_, this.backgroundColor_);
   this.scrollPort_.setForegroundColor(color);
 };
 
@@ -11471,8 +11042,7 @@ hterm.Terminal.prototype.getForegroundColor = function() {
  */
 hterm.Terminal.prototype.runCommandClass = function(commandClass, argString) {
   var environment = this.prefs_.get('environment');
-  if (typeof environment != 'object' || environment == null)
-    environment = {};
+  if (typeof environment != 'object' || environment == null) environment = {};
 
   var self = this;
   this.command = new commandClass({
@@ -11482,8 +11052,7 @@ hterm.Terminal.prototype.runCommandClass = function(commandClass, argString) {
     onExit: function(code) {
       self.io.pop();
       self.uninstallKeyboard();
-      if (self.prefs_.get('close-on-exit'))
-        window.close();
+      if (self.prefs_.get('close-on-exit')) window.close();
     }
   });
 
@@ -11527,13 +11096,12 @@ hterm.Terminal.prototype.uninstallKeyboard = function() {
  * @param {number} px The desired font size, in pixels.
  */
 hterm.Terminal.prototype.setFontSize = function(px) {
-  if (px === 0)
-    px = this.prefs_.get('font-size');
+  if (px === 0) px = this.prefs_.get('font-size');
 
   this.scrollPort_.setFontSize(px);
   if (this.wcCssRule_) {
-    this.wcCssRule_.style.width = this.scrollPort_.characterSize.width * 2 +
-      'px';
+    this.wcCssRule_.style.width =
+        this.scrollPort_.characterSize.width * 2 + 'px';
   }
 };
 
@@ -11559,8 +11127,8 @@ hterm.Terminal.prototype.getFontFamily = function() {
  * Set the CSS "font-family" for this terminal.
  */
 hterm.Terminal.prototype.syncFontFamily = function() {
-  this.scrollPort_.setFontFamily(this.prefs_.get('font-family'),
-    this.prefs_.get('font-smoothing'));
+  this.scrollPort_.setFontFamily(
+      this.prefs_.get('font-family'), this.prefs_.get('font-smoothing'));
   this.syncBoldSafeState();
 };
 
@@ -11578,8 +11146,7 @@ hterm.Terminal.prototype.syncMousePasteButton = function() {
   var ary = navigator.userAgent.match(/\(X11;\s+(\S+)/);
   if (!ary || ary[2] == 'CrOS') {
     this.mousePasteButton = 2;
-  }
-  else {
+  } else {
     this.mousePasteButton = 3;
   }
 };
@@ -11601,9 +11168,9 @@ hterm.Terminal.prototype.syncBoldSafeState = function() {
 
   var isBoldSafe = normalSize.equals(boldSize);
   if (!isBoldSafe) {
-    console.warn('Bold characters disabled: Size of bold weight differs ' +
-      'from normal.  Font family is: ' +
-      this.scrollPort_.getFontFamily());
+    console.warn(
+        'Bold characters disabled: Size of bold weight differs ' +
+        'from normal.  Font family is: ' + this.scrollPort_.getFontFamily());
   }
 
   this.primaryScreen_.textAttributes.enableBold = isBoldSafe;
@@ -11615,8 +11182,8 @@ hterm.Terminal.prototype.syncBoldSafeState = function() {
  */
 hterm.Terminal.prototype.syncBlinkState = function() {
   this.document_.documentElement.style.setProperty(
-    '--hterm-blink-node-duration',
-    this.prefs_.get('enable-blink') ? '0.7s' : '0');
+      '--hterm-blink-node-duration',
+      this.prefs_.get('enable-blink') ? '0.7s' : '0');
 };
 
 /**
@@ -11673,8 +11240,7 @@ hterm.Terminal.prototype.restoreCursor = function(cursor) {
   var row = lib.f.clamp(cursor.row, 0, this.screenSize.height - 1);
   var column = lib.f.clamp(cursor.column, 0, this.screenSize.width - 1);
   this.screen_.setCursorPosition(row, column);
-  if (cursor.column > column ||
-    cursor.column == column && cursor.overflow) {
+  if (cursor.column > column || cursor.column == column && cursor.overflow) {
     this.screen_.cursorPosition.overflow = true;
   }
 };
@@ -11716,9 +11282,11 @@ hterm.Terminal.prototype.setWidth = function(columnCount) {
     return;
   }
 
-  this.div_.style.width = Math.ceil(
-    this.scrollPort_.characterSize.width *
-    columnCount + this.scrollPort_.currentScrollbarWidthPx) + 'px';
+  this.div_.style.width =
+      Math.ceil(
+          this.scrollPort_.characterSize.width * columnCount +
+          this.scrollPort_.currentScrollbarWidthPx) +
+      'px';
   this.realizeSize_(columnCount, this.screenSize.height);
   this.scheduleSyncCursorPosition_();
 };
@@ -11735,7 +11303,7 @@ hterm.Terminal.prototype.setHeight = function(rowCount) {
   }
 
   this.div_.style.height =
-    this.scrollPort_.characterSize.height * rowCount + 'px';
+      this.scrollPort_.characterSize.height * rowCount + 'px';
   this.realizeSize_(this.screenSize.width, rowCount);
   this.scheduleSyncCursorPosition_();
 };
@@ -11747,11 +11315,9 @@ hterm.Terminal.prototype.setHeight = function(rowCount) {
  * @param {number} rowCount The number of rows.
  */
 hterm.Terminal.prototype.realizeSize_ = function(columnCount, rowCount) {
-  if (columnCount != this.screenSize.width)
-    this.realizeWidth_(columnCount);
+  if (columnCount != this.screenSize.width) this.realizeWidth_(columnCount);
 
-  if (rowCount != this.screenSize.height)
-    this.realizeHeight_(rowCount);
+  if (rowCount != this.screenSize.height) this.realizeHeight_(rowCount);
 
   // Send new terminal size to plugin.
   this.io.onTerminalResize_(columnCount, rowCount);
@@ -11782,11 +11348,9 @@ hterm.Terminal.prototype.realizeWidth_ = function(columnCount) {
   if (deltaColumns > 0) {
     if (this.defaultTabStops)
       this.setDefaultTabStops(this.screenSize.width - deltaColumns);
-  }
-  else {
+  } else {
     for (var i = this.tabStops_.length - 1; i >= 0; i--) {
-      if (this.tabStops_[i] < columnCount)
-        break;
+      if (this.tabStops_[i] < columnCount) break;
 
       this.tabStops_.pop();
     }
@@ -11823,11 +11387,9 @@ hterm.Terminal.prototype.realizeHeight_ = function(rowCount) {
     deltaRows *= -1;
     while (deltaRows) {
       var lastRow = this.getRowCount() - 1;
-      if (lastRow - this.scrollbackRows_.length == cursor.row)
-        break;
+      if (lastRow - this.scrollbackRows_.length == cursor.row) break;
 
-      if (this.getRowText(lastRow))
-        break;
+      if (this.getRowText(lastRow)) break;
 
       this.screen_.popRow();
       deltaRows--;
@@ -11839,21 +11401,19 @@ hterm.Terminal.prototype.realizeHeight_ = function(rowCount) {
     // We just removed rows from the top of the screen, we need to update
     // the cursor to match.
     cursor.row = Math.max(cursor.row - deltaRows, 0);
-  }
-  else if (deltaRows > 0) {
+  } else if (deltaRows > 0) {
     // Screen got larger.
 
     if (deltaRows <= this.scrollbackRows_.length) {
       var scrollbackCount = Math.min(deltaRows, this.scrollbackRows_.length);
       var rows = this.scrollbackRows_.splice(
-        this.scrollbackRows_.length - scrollbackCount, scrollbackCount);
+          this.scrollbackRows_.length - scrollbackCount, scrollbackCount);
       this.screen_.unshiftRows(rows);
       deltaRows -= scrollbackCount;
       cursor.row += scrollbackCount;
     }
 
-    if (deltaRows)
-      this.appendRows_(deltaRows);
+    if (deltaRows) this.appendRows_(deltaRows);
   }
 
   this.setVTScrollRegion(null, null);
@@ -12001,8 +11561,7 @@ hterm.Terminal.prototype.backwardTabStop = function() {
  */
 hterm.Terminal.prototype.setTabStop = function(column) {
   for (var i = this.tabStops_.length - 1; i >= 0; i--) {
-    if (this.tabStops_[i] == column)
-      return;
+    if (this.tabStops_[i] == column) return;
 
     if (this.tabStops_[i] < column) {
       this.tabStops_.splice(i + 1, 0, column);
@@ -12022,8 +11581,7 @@ hterm.Terminal.prototype.clearTabStopAtCursor = function() {
   var column = this.screen_.cursorPosition.column;
 
   var i = this.tabStops_.indexOf(column);
-  if (i == -1)
-    return;
+  if (i == -1) return;
 
   this.tabStops_.splice(i, 1);
 };
@@ -12046,8 +11604,8 @@ hterm.Terminal.prototype.clearAllTabStops = function() {
  * This does not clear the existing tab stops first, use clearAllTabStops
  * for that.
  *
- * @param {integer} opt_start Optional starting zero based starting column, useful
- *     for filling out missing tab stops when the terminal is resized.
+ * @param {integer} opt_start Optional starting zero based starting column,
+ * useful for filling out missing tab stops when the terminal is resized.
  */
 hterm.Terminal.prototype.setDefaultTabStops = function(opt_start) {
   var start = opt_start || 0;
@@ -12085,7 +11643,7 @@ hterm.Terminal.prototype.decorate = function(div) {
   this.scrollPort_.setBackgroundImage(this.prefs_.get('background-image'));
   this.scrollPort_.setBackgroundSize(this.prefs_.get('background-size'));
   this.scrollPort_.setBackgroundPosition(
-    this.prefs_.get('background-position'));
+      this.prefs_.get('background-position'));
   this.scrollPort_.setUserCss(this.prefs_.get('user-css'));
 
   this.div_.focus = this.focus.bind(this);
@@ -12095,7 +11653,7 @@ hterm.Terminal.prototype.decorate = function(div) {
 
   this.setScrollbarVisible(this.prefs_.get('scrollbar-visible'));
   this.setScrollWheelMoveMultipler(
-    this.prefs_.get('scroll-wheel-move-multiplier'));
+      this.prefs_.get('scroll-wheel-move-multiplier'));
 
   this.document_ = this.scrollPort_.getDocument();
 
@@ -12110,44 +11668,42 @@ hterm.Terminal.prototype.decorate = function(div) {
   screenNode.addEventListener('mousemove', onMouse);
   this.scrollPort_.onScrollWheel = onMouse;
 
-  screenNode.addEventListener(
-    'focus', this.onFocusChange_.bind(this, true));
+  screenNode.addEventListener('focus', this.onFocusChange_.bind(this, true));
   // Listen for mousedown events on the screenNode as in FF the focus
   // events don't bubble.
   screenNode.addEventListener('mousedown', function() {
     setTimeout(this.onFocusChange_.bind(this, true));
   }.bind(this));
 
-  screenNode.addEventListener(
-    'blur', this.onFocusChange_.bind(this, false));
+  screenNode.addEventListener('blur', this.onFocusChange_.bind(this, false));
 
   var style = this.document_.createElement('style');
   style.textContent =
-    ('.cursor-node[focus="false"] {' +
-      '  box-sizing: border-box;' +
-      '  background-color: transparent !important;' +
-      '  border-width: 2px;' +
-      '  border-style: solid;' +
-      '}' +
-      '.wc-node {' +
-      '  display: inline-block;' +
-      '  text-align: center;' +
-      '  width: ' + this.scrollPort_.characterSize.width * 2 + 'px;' +
-      '}' +
-      ':root {' +
-      '  --hterm-blink-node-duration: 0.7s;' +
-      '}' +
-      '@keyframes blink {' +
-      '  from { opacity: 1.0; }' +
-      '  to { opacity: 0.0; }' +
-      '}' +
-      '.blink-node {' +
-      '  animation-name: blink;' +
-      '  animation-duration: var(--hterm-blink-node-duration);' +
-      '  animation-iteration-count: infinite;' +
-      '  animation-timing-function: ease-in-out;' +
-      '  animation-direction: alternate;' +
-      '}');
+      ('.cursor-node[focus="false"] {' +
+       '  box-sizing: border-box;' +
+       '  background-color: transparent !important;' +
+       '  border-width: 2px;' +
+       '  border-style: solid;' +
+       '}' +
+       '.wc-node {' +
+       '  display: inline-block;' +
+       '  text-align: center;' +
+       '  width: ' + this.scrollPort_.characterSize.width * 2 + 'px;' +
+       '}' +
+       ':root {' +
+       '  --hterm-blink-node-duration: 0.7s;' +
+       '}' +
+       '@keyframes blink {' +
+       '  from { opacity: 1.0; }' +
+       '  to { opacity: 0.0; }' +
+       '}' +
+       '.blink-node {' +
+       '  animation-name: blink;' +
+       '  animation-duration: var(--hterm-blink-node-duration);' +
+       '  animation-iteration-count: infinite;' +
+       '  animation-timing-function: ease-in-out;' +
+       '  animation-direction: alternate;' +
+       '}');
   this.document_.head.appendChild(style);
 
   var styleSheets = this.document_.styleSheets;
@@ -12157,13 +11713,13 @@ hterm.Terminal.prototype.decorate = function(div) {
   this.cursorNode_ = this.document_.createElement('div');
   this.cursorNode_.className = 'cursor-node';
   this.cursorNode_.style.cssText =
-    ('position: absolute;' +
-      'top: -99px;' +
-      'display: block;' +
-      'width: ' + this.scrollPort_.characterSize.width + 'px;' +
-      'height: ' + this.scrollPort_.characterSize.height + 'px;' +
-      '-webkit-transition: opacity, background-color 100ms linear;' +
-      '-moz-transition: opacity, background-color 100ms linear;');
+      ('position: absolute;' +
+       'top: -99px;' +
+       'display: block;' +
+       'width: ' + this.scrollPort_.characterSize.width + 'px;' +
+       'height: ' + this.scrollPort_.characterSize.height + 'px;' +
+       '-webkit-transition: opacity, background-color 100ms linear;' +
+       '-moz-transition: opacity, background-color 100ms linear;');
 
   this.setCursorColor(this.prefs_.get('cursor-color'));
   this.setCursorBlink(!!this.prefs_.get('cursor-blink'));
@@ -12180,15 +11736,20 @@ hterm.Terminal.prototype.decorate = function(div) {
   // It's a hack, but it's the cleanest way I could find.
   this.scrollBlockerNode_ = this.document_.createElement('div');
   this.scrollBlockerNode_.style.cssText =
-    ('position: absolute;' +
-      'top: -99px;' +
-      'display: block;' +
-      'width: 10px;' +
-      'height: 10px;');
+      ('position: absolute;' +
+       'top: -99px;' +
+       'display: block;' +
+       'width: 10px;' +
+       'height: 10px;');
   this.document_.body.appendChild(this.scrollBlockerNode_);
 
   this.scrollPort_.onScrollWheel = onMouse;
-  ['mousedown', 'mouseup', 'mousemove', 'click', 'dblclick',].forEach(function(event) {
+  ['mousedown',
+   'mouseup',
+   'mousemove',
+   'click',
+   'dblclick',
+  ].forEach(function(event) {
     this.scrollBlockerNode_.addEventListener(event, onMouse);
     this.cursorNode_.addEventListener(event, onMouse);
     this.document_.addEventListener(event, onMouse);
@@ -12235,8 +11796,7 @@ hterm.Terminal.prototype.focus = function() {
  * @return {HTMLElement} The 'x-row' element containing for the requested row.
  */
 hterm.Terminal.prototype.getRowNode = function(index) {
-  if (index < this.scrollbackRows_.length)
-    return this.scrollbackRows_[index];
+  if (index < this.scrollbackRows_.length) return this.scrollbackRows_[index];
 
   var screenIndex = index - this.scrollbackRows_.length;
   return this.screen_.rowsArray[screenIndex];
@@ -12262,8 +11822,7 @@ hterm.Terminal.prototype.getRowsText = function(start, end) {
   for (var i = start; i < end; i++) {
     var node = this.getRowNode(i);
     ary.push(node.textContent);
-    if (i < end - 1 && !node.getAttribute('line-overflow'))
-      ary.push('\n');
+    if (i < end - 1 && !node.getAttribute('line-overflow')) ary.push('\n');
   }
 
   return ary.join('');
@@ -12330,8 +11889,7 @@ hterm.Terminal.prototype.appendRows_ = function(count) {
   if (extraRows > 0) {
     var ary = this.screen_.shiftRows(extraRows);
     Array.prototype.push.apply(this.scrollbackRows_, ary);
-    if (this.scrollPort_.isScrolledEnd)
-      this.scheduleScrollDown_();
+    if (this.scrollPort_.isScrolledEnd) this.scheduleScrollDown_();
   }
 
   if (cursorRow >= this.screen_.rowsArray.length)
@@ -12362,8 +11920,7 @@ hterm.Terminal.prototype.moveRows_ = function(fromIndex, count, toIndex) {
   if (fromIndex < toIndex) {
     start = fromIndex;
     end = toIndex + count;
-  }
-  else {
+  } else {
     start = toIndex;
     end = fromIndex + count;
   }
@@ -12430,22 +11987,19 @@ hterm.Terminal.prototype.print = function(str) {
       // last printed character should be the last of the string.
       // TODO: This will add to our problems with multibyte UTF-16 characters.
       substr = lib.wc.substr(str, startOffset, count - 1) +
-        lib.wc.substr(str, strWidth - 1);
+          lib.wc.substr(str, strWidth - 1);
       count = strWidth;
-    }
-    else {
+    } else {
       substr = lib.wc.substr(str, startOffset, count);
     }
 
     var tokens = hterm.TextAttributes.splitWidecharString(substr);
     for (var i = 0; i < tokens.length; i++) {
-      if (tokens[i].wcNode)
-        this.screen_.textAttributes.wcNode = true;
+      if (tokens[i].wcNode) this.screen_.textAttributes.wcNode = true;
 
       if (this.options_.insertMode) {
         this.screen_.insertString(tokens[i].str);
-      }
-      else {
+      } else {
         this.screen_.overwriteString(tokens[i].str);
       }
       this.screen_.textAttributes.wcNode = false;
@@ -12481,8 +12035,7 @@ hterm.Terminal.prototype.setVTScrollRegion = function(scrollTop, scrollBottom) {
   if (scrollTop == 0 && scrollBottom == this.screenSize.height - 1) {
     this.vtScrollTop_ = null;
     this.vtScrollBottom_ = null;
-  }
-  else {
+  } else {
     this.vtScrollTop_ = scrollTop;
     this.vtScrollBottom_ = scrollBottom;
   }
@@ -12498,8 +12051,7 @@ hterm.Terminal.prototype.setVTScrollRegion = function(scrollTop, scrollBottom) {
  * @return {integer} The topmost row in the terminal's scroll region.
  */
 hterm.Terminal.prototype.getVTScrollTop = function() {
-  if (this.vtScrollTop_ != null)
-    return this.vtScrollTop_;
+  if (this.vtScrollTop_ != null) return this.vtScrollTop_;
 
   return 0;
 };
@@ -12514,8 +12066,7 @@ hterm.Terminal.prototype.getVTScrollTop = function() {
  * @return {integer} The bottom most row in the terminal's scroll region.
  */
 hterm.Terminal.prototype.getVTScrollBottom = function() {
-  if (this.vtScrollBottom_ != null)
-    return this.vtScrollBottom_;
+  if (this.vtScrollBottom_ != null) return this.vtScrollBottom_;
 
   return this.screenSize.height - 1;
 };
@@ -12530,8 +12081,8 @@ hterm.Terminal.prototype.getVTScrollBottom = function() {
  * Otherwise, this moves the cursor to column zero of the next row.
  */
 hterm.Terminal.prototype.newLine = function() {
-  var cursorAtEndOfScreen = (this.screen_.cursorPosition.row ==
-    this.screen_.rowsArray.length - 1);
+  var cursorAtEndOfScreen =
+      (this.screen_.cursorPosition.row == this.screen_.rowsArray.length - 1);
 
   if (this.vtScrollBottom_ != null) {
     // A VT Scroll region is active, we never append new rows.
@@ -12539,23 +12090,19 @@ hterm.Terminal.prototype.newLine = function() {
       // We're at the end of the VT Scroll Region, perform a VT scroll.
       this.vtScrollUp(1);
       this.setAbsoluteCursorPosition(this.screen_.cursorPosition.row, 0);
-    }
-    else if (cursorAtEndOfScreen) {
+    } else if (cursorAtEndOfScreen) {
       // We're at the end of the screen, the only thing to do is put the
       // cursor to column 0.
       this.setAbsoluteCursorPosition(this.screen_.cursorPosition.row, 0);
-    }
-    else {
+    } else {
       // Anywhere else, advance the cursor row, and reset the column.
       this.setAbsoluteCursorPosition(this.screen_.cursorPosition.row + 1, 0);
     }
-  }
-  else if (cursorAtEndOfScreen) {
+  } else if (cursorAtEndOfScreen) {
     // We're at the end of the screen.  Append a new row to the terminal,
     // shifting the top row into the scrollback.
     this.appendRows_(1);
-  }
-  else {
+  } else {
     // Anywhere else in the screen just moves the cursor.
     this.setAbsoluteCursorPosition(this.screen_.cursorPosition.row + 1, 0);
   }
@@ -12576,8 +12123,7 @@ hterm.Terminal.prototype.lineFeed = function() {
 hterm.Terminal.prototype.formFeed = function() {
   if (this.options_.autoCarriageReturn) {
     this.newLine();
-  }
-  else {
+  } else {
     this.lineFeed();
   }
 };
@@ -12593,8 +12139,7 @@ hterm.Terminal.prototype.reverseLineFeed = function() {
 
   if (currentRow == scrollTop) {
     this.insertLines(1);
-  }
-  else {
+  } else {
     this.setAbsoluteCursorRow(currentRow - 1);
   }
 };
@@ -12632,17 +12177,16 @@ hterm.Terminal.prototype.eraseToLeft = function() {
  * @param {number} opt_count The number of characters to erase.
  */
 hterm.Terminal.prototype.eraseToRight = function(opt_count) {
-  if (this.screen_.cursorPosition.overflow)
-    return;
+  if (this.screen_.cursorPosition.overflow) return;
 
   var maxCount = this.screenSize.width - this.screen_.cursorPosition.column;
   var count = opt_count ? Math.min(opt_count, maxCount) : maxCount;
 
   if (this.screen_.textAttributes.background ===
-    this.screen_.textAttributes.DEFAULT_COLOR) {
+      this.screen_.textAttributes.DEFAULT_COLOR) {
     var cursorRow = this.screen_.rowsArray[this.screen_.cursorPosition.row];
     if (hterm.TextAttributes.nodeWidth(cursorRow) <=
-      this.screen_.cursorPosition.column + count) {
+        this.screen_.cursorPosition.column + count) {
       this.screen_.deleteChars(count);
       this.clearCursorOverflow();
       return;
@@ -12787,8 +12331,7 @@ hterm.Terminal.prototype.insertLines = function(count) {
   // The moveCount is the number of rows we need to relocate to make room for
   // the new row(s).  The count is the distance to move them.
   var moveCount = bottom - cursorRow - count + 1;
-  if (moveCount)
-    this.moveRows_(cursorRow, moveCount, cursorRow + count);
+  if (moveCount) this.moveRows_(cursorRow, moveCount, cursorRow + count);
 
   for (var i = count - 1; i >= 0; i--) {
     this.setAbsoluteCursorPosition(cursorRow + i, 0);
@@ -12814,8 +12357,7 @@ hterm.Terminal.prototype.deleteLines = function(count) {
   count = Math.min(count, maxCount);
 
   var moveStart = bottom - count + 1;
-  if (count != maxCount)
-    this.moveRows_(top, count, moveStart);
+  if (count != maxCount) this.moveRows_(top, count, moveStart);
 
   for (var i = 0; i < count; i++) {
     this.setAbsoluteCursorPosition(moveStart + i, 0);
@@ -12906,7 +12448,6 @@ hterm.Terminal.prototype.vtScrollDown = function(opt_count) {
   this.restoreCursor(cursor);
 };
 
-
 /**
  * Set the cursor position.
  *
@@ -12919,8 +12460,7 @@ hterm.Terminal.prototype.vtScrollDown = function(opt_count) {
 hterm.Terminal.prototype.setCursorPosition = function(row, column) {
   if (this.options_.originMode) {
     this.setRelativeCursorPosition(row, column);
-  }
-  else {
+  } else {
     this.setAbsoluteCursorPosition(row, column);
   }
 };
@@ -12996,8 +12536,7 @@ hterm.Terminal.prototype.getCursorRow = function() {
  * Multiple calls will be coalesced into a single redraw.
  */
 hterm.Terminal.prototype.scheduleRedraw_ = function() {
-  if (this.timeouts_.redraw)
-    return;
+  if (this.timeouts_.redraw) return;
 
   var self = this;
   this.timeouts_.redraw = setTimeout(function() {
@@ -13016,8 +12555,7 @@ hterm.Terminal.prototype.scheduleRedraw_ = function() {
  * do with the VT scroll commands.
  */
 hterm.Terminal.prototype.scheduleScrollDown_ = function() {
-  if (this.timeouts_.scrollDown)
-    return;
+  if (this.timeouts_.scrollDown) return;
 
   var self = this;
   this.timeouts_.scrollDown = setTimeout(function() {
@@ -13043,11 +12581,12 @@ hterm.Terminal.prototype.cursorUp = function(count) {
 hterm.Terminal.prototype.cursorDown = function(count) {
   count = count || 1;
   var minHeight = (this.options_.originMode ? this.getVTScrollTop() : 0);
-  var maxHeight = (this.options_.originMode ? this.getVTScrollBottom() :
-    this.screenSize.height - 1);
+  var maxHeight =
+      (this.options_.originMode ? this.getVTScrollBottom() :
+                                  this.screenSize.height - 1);
 
-  var row = lib.f.clamp(this.screen_.cursorPosition.row + count,
-    minHeight, maxHeight);
+  var row = lib.f.clamp(
+      this.screen_.cursorPosition.row + count, minHeight, maxHeight);
   this.setAbsoluteCursorRow(row);
 };
 
@@ -13062,8 +12601,7 @@ hterm.Terminal.prototype.cursorDown = function(count) {
 hterm.Terminal.prototype.cursorLeft = function(count) {
   count = count || 1;
 
-  if (count < 1)
-    return;
+  if (count < 1) return;
 
   var currentColumn = this.screen_.cursorPosition.column;
   if (this.options_.reverseWraparound) {
@@ -13074,8 +12612,7 @@ hterm.Terminal.prototype.cursorLeft = function(count) {
       count--;
       this.clearCursorOverflow();
 
-      if (!count)
-        return;
+      if (!count) return;
     }
 
     var newRow = this.screen_.cursorPosition.row;
@@ -13091,8 +12628,7 @@ hterm.Terminal.prototype.cursorLeft = function(count) {
 
     this.setCursorPosition(Math.max(newRow, 0), newColumn);
 
-  }
-  else {
+  } else {
     var newColumn = Math.max(currentColumn - count, 0);
     this.setCursorColumn(newColumn);
   }
@@ -13106,11 +12642,10 @@ hterm.Terminal.prototype.cursorLeft = function(count) {
 hterm.Terminal.prototype.cursorRight = function(count) {
   count = count || 1;
 
-  if (count < 1)
-    return;
+  if (count < 1) return;
 
-  var column = lib.f.clamp(this.screen_.cursorPosition.column + count,
-    0, this.screenSize.width - 1);
+  var column = lib.f.clamp(
+      this.screen_.cursorPosition.column + count, 0, this.screenSize.width - 1);
   this.setCursorColumn(column);
 };
 
@@ -13130,8 +12665,7 @@ hterm.Terminal.prototype.setReverseVideo = function(state) {
   if (state) {
     this.scrollPort_.setForegroundColor(this.prefs_.get('background-color'));
     this.scrollPort_.setBackgroundColor(this.prefs_.get('foreground-color'));
-  }
-  else {
+  } else {
     this.scrollPort_.setForegroundColor(this.prefs_.get('foreground-color'));
     this.scrollPort_.setBackgroundColor(this.prefs_.get('background-color'));
   }
@@ -13144,7 +12678,7 @@ hterm.Terminal.prototype.setReverseVideo = function(state) {
  */
 hterm.Terminal.prototype.ringBell = function() {
   this.cursorNode_.style.backgroundColor =
-    this.scrollPort_.getForegroundColor();
+      this.scrollPort_.getForegroundColor();
 
   var self = this;
   setTimeout(function() {
@@ -13152,24 +12686,21 @@ hterm.Terminal.prototype.ringBell = function() {
   }, 200);
 
   // bellSquelchTimeout_ affects both audio and notification bells.
-  if (this.bellSquelchTimeout_)
-    return;
+  if (this.bellSquelchTimeout_) return;
 
   if (this.bellAudio_.getAttribute('src')) {
     this.bellAudio_.play();
     this.bellSequelchTimeout_ = setTimeout(function() {
       delete this.bellSquelchTimeout_;
     }.bind(this), 500);
-  }
-  else {
+  } else {
     delete this.bellSquelchTimeout_;
   }
 
   if (this.desktopNotificationBell_ && !this.document_.hasFocus()) {
-    var n = new Notification(
-      lib.f.replaceVars(hterm.desktopNotificationTitle, {
-        'title': window.document.title || 'hterm'
-      }));
+    var n = new Notification(lib.f.replaceVars(
+        hterm.desktopNotificationTitle,
+        {'title': window.document.title || 'hterm'}));
     this.bellNotificationList_.push(n);
     // TODO: Should we try to raise the window here?
     n.onclick = function() {
@@ -13271,7 +12802,7 @@ hterm.Terminal.prototype.setAlternateMode = function(state) {
   this.screen_ = state ? this.alternateScreen_ : this.primaryScreen_;
 
   if (this.screen_.rowsArray.length &&
-    this.screen_.rowsArray[0].rowIndex != this.scrollbackRows_.length) {
+      this.screen_.rowsArray[0].rowIndex != this.scrollbackRows_.length) {
     // If the screen changed sizes while we were away, our rowIndexes may
     // be incorrect.
     var offset = this.scrollbackRows_.length;
@@ -13311,8 +12842,7 @@ hterm.Terminal.prototype.setCursorBlink = function(state) {
     delete this.timeouts_.cursorBlink;
   }
 
-  if (this.options_.cursorVisible)
-    this.setCursorVisible(true);
+  if (this.options_.cursorVisible) this.setCursorVisible(true);
 };
 
 /**
@@ -13341,12 +12871,10 @@ hterm.Terminal.prototype.setCursorVisible = function(state) {
   this.cursorNode_.style.opacity = '1';
 
   if (this.options_.cursorBlink) {
-    if (this.timeouts_.cursorBlink)
-      return;
+    if (this.timeouts_.cursorBlink) return;
 
     this.onCursorBlink_();
-  }
-  else {
+  } else {
     if (this.timeouts_.cursorBlink) {
       clearTimeout(this.timeouts_.cursorBlink);
       delete this.timeouts_.cursorBlink;
@@ -13361,8 +12889,8 @@ hterm.Terminal.prototype.setCursorVisible = function(state) {
 hterm.Terminal.prototype.syncCursorPosition_ = function() {
   var topRowIndex = this.scrollPort_.getTopRowIndex();
   var bottomRowIndex = this.scrollPort_.getBottomRowIndex(topRowIndex);
-  var cursorRowIndex = this.scrollbackRows_.length +
-    this.screen_.cursorPosition.row;
+  var cursorRowIndex =
+      this.scrollbackRows_.length + this.screen_.cursorPosition.row;
 
   if (cursorRowIndex > bottomRowIndex) {
     // Cursor is scrolled off screen, move it outside of the visible area.
@@ -13370,23 +12898,22 @@ hterm.Terminal.prototype.syncCursorPosition_ = function() {
     return;
   }
 
-  if (this.options_.cursorVisible &&
-    this.cursorNode_.style.display == 'none') {
+  if (this.options_.cursorVisible && this.cursorNode_.style.display == 'none') {
     // Re-display the terminal cursor if it was hidden by the mouse cursor.
     this.cursorNode_.style.display = '';
   }
 
-
   this.cursorNode_.style.top = this.scrollPort_.visibleRowTopMargin +
-    this.scrollPort_.characterSize.height * (cursorRowIndex - topRowIndex) +
-    'px';
+      this.scrollPort_.characterSize.height * (cursorRowIndex - topRowIndex) +
+      'px';
   this.cursorNode_.style.left = this.scrollPort_.characterSize.width *
-    this.screen_.cursorPosition.column + 'px';
+          this.screen_.cursorPosition.column +
+      'px';
 
-  this.cursorNode_.setAttribute('title',
-    '(' + this.screen_.cursorPosition.row +
-    ', ' + this.screen_.cursorPosition.column +
-    ')');
+  this.cursorNode_.setAttribute(
+      'title',
+      '(' + this.screen_.cursorPosition.row + ', ' +
+          this.screen_.cursorPosition.column + ')');
 
   // Update the caret for a11y purposes.
   var selection = this.document_.getSelection();
@@ -13442,8 +12969,7 @@ hterm.Terminal.prototype.restyleCursor_ = function() {
  * Multiple calls will be coalesced into a single sync.
  */
 hterm.Terminal.prototype.scheduleSyncCursorPosition_ = function() {
-  if (this.timeouts_.syncCursor)
-    return;
+  if (this.timeouts_.syncCursor) return;
 
   var self = this;
   this.timeouts_.syncCursor = setTimeout(function() {
@@ -13462,24 +12988,23 @@ hterm.Terminal.prototype.scheduleSyncCursorPosition_ = function() {
  */
 hterm.Terminal.prototype.showZoomWarning_ = function(state) {
   if (!this.zoomWarningNode_) {
-    if (!state)
-      return;
+    if (!state) return;
 
     this.zoomWarningNode_ = this.document_.createElement('div');
-    this.zoomWarningNode_.style.cssText = (
-      'color: black;' +
-      'background-color: #ff2222;' +
-      'font-size: large;' +
-      'border-radius: 8px;' +
-      'opacity: 0.75;' +
-      'padding: 0.2em 0.5em 0.2em 0.5em;' +
-      'top: 0.5em;' +
-      'right: 1.2em;' +
-      'position: absolute;' +
-      '-webkit-text-size-adjust: none;' +
-      '-webkit-user-select: none;' +
-      '-moz-text-size-adjust: none;' +
-      '-moz-user-select: none;');
+    this.zoomWarningNode_.style.cssText =
+        ('color: black;' +
+         'background-color: #ff2222;' +
+         'font-size: large;' +
+         'border-radius: 8px;' +
+         'opacity: 0.75;' +
+         'padding: 0.2em 0.5em 0.2em 0.5em;' +
+         'top: 0.5em;' +
+         'right: 1.2em;' +
+         'position: absolute;' +
+         '-webkit-text-size-adjust: none;' +
+         '-webkit-user-select: none;' +
+         '-moz-text-size-adjust: none;' +
+         '-moz-user-select: none;');
 
     this.zoomWarningNode_.addEventListener('click', function(e) {
       this.parentNode.removeChild(this);
@@ -13487,15 +13012,15 @@ hterm.Terminal.prototype.showZoomWarning_ = function(state) {
   }
 
   this.zoomWarningNode_.textContent = lib.MessageManager.replaceReferences(
-    hterm.zoomWarningMessage, [parseInt(this.scrollPort_.characterSize.zoomFactor * 100)]);
+      hterm.zoomWarningMessage,
+      [parseInt(this.scrollPort_.characterSize.zoomFactor * 100)]);
 
   this.zoomWarningNode_.style.fontFamily = this.prefs_.get('font-family');
 
   if (state) {
     if (!this.zoomWarningNode_.parentNode)
       this.div_.parentNode.appendChild(this.zoomWarningNode_);
-  }
-  else if (this.zoomWarningNode_.parentNode) {
+  } else if (this.zoomWarningNode_.parentNode) {
     this.zoomWarningNode_.parentNode.removeChild(this.zoomWarningNode_);
   }
 };
@@ -13515,20 +13040,19 @@ hterm.Terminal.prototype.showZoomWarning_ = function(state) {
  */
 hterm.Terminal.prototype.showOverlay = function(msg, opt_timeout) {
   if (!this.overlayNode_) {
-    if (!this.div_)
-      return;
+    if (!this.div_) return;
 
     this.overlayNode_ = this.document_.createElement('div');
-    this.overlayNode_.style.cssText = (
-      'border-radius: 15px;' +
-      'font-size: xx-large;' +
-      'opacity: 0.75;' +
-      'padding: 0.2em 0.5em 0.2em 0.5em;' +
-      'position: absolute;' +
-      '-webkit-user-select: none;' +
-      '-webkit-transition: opacity 180ms ease-in;' +
-      '-moz-user-select: none;' +
-      '-moz-transition: opacity 180ms ease-in;');
+    this.overlayNode_.style.cssText =
+        ('border-radius: 15px;' +
+         'font-size: xx-large;' +
+         'opacity: 0.75;' +
+         'padding: 0.2em 0.5em 0.2em 0.5em;' +
+         'position: absolute;' +
+         '-webkit-user-select: none;' +
+         '-webkit-transition: opacity 180ms ease-in;' +
+         '-moz-user-select: none;' +
+         '-moz-transition: opacity 180ms ease-in;');
 
     this.overlayNode_.addEventListener('mousedown', function(e) {
       e.preventDefault();
@@ -13543,24 +13067,23 @@ hterm.Terminal.prototype.showOverlay = function(msg, opt_timeout) {
   this.overlayNode_.textContent = msg;
   this.overlayNode_.style.opacity = '0.75';
 
-  if (!this.overlayNode_.parentNode)
-    this.div_.appendChild(this.overlayNode_);
+  if (!this.overlayNode_.parentNode) this.div_.appendChild(this.overlayNode_);
 
   var divSize = hterm.getClientSize(this.div_);
   var overlaySize = hterm.getClientSize(this.overlayNode_);
 
   this.overlayNode_.style.top =
-    (divSize.height - overlaySize.height) / 2 + 'px';
+      (divSize.height - overlaySize.height) / 2 + 'px';
   this.overlayNode_.style.left = (divSize.width - overlaySize.width -
-    this.scrollPort_.currentScrollbarWidthPx) / 2 + 'px';
+                                  this.scrollPort_.currentScrollbarWidthPx) /
+          2 +
+      'px';
 
   var self = this;
 
-  if (this.overlayTimeout_)
-    clearTimeout(this.overlayTimeout_);
+  if (this.overlayTimeout_) clearTimeout(this.overlayTimeout_);
 
-  if (opt_timeout === null)
-    return;
+  if (opt_timeout === null) return;
 
   this.overlayTimeout_ = setTimeout(function() {
     self.overlayNode_.style.opacity = '0';
@@ -13593,11 +13116,11 @@ hterm.Terminal.prototype.copyStringToClipboard = function(str) {
 
   var copySource = this.document_.createElement('pre');
   copySource.textContent = str;
-  copySource.style.cssText = (
-    '-webkit-user-select: text;' +
-    '-moz-user-select: text;' +
-    'position: absolute;' +
-    'top: -99px');
+  copySource.style.cssText =
+      ('-webkit-user-select: text;' +
+       '-moz-user-select: text;' +
+       'position: absolute;' +
+       'top: -99px');
 
   this.document_.body.appendChild(copySource);
 
@@ -13630,9 +13153,7 @@ hterm.Terminal.prototype.getSelectionText = function() {
   var selection = this.scrollPort_.selection;
   selection.sync();
 
-  if (selection.isCollapsed)
-    return null;
-
+  if (selection.isCollapsed) return null;
 
   // Start offset measures from the beginning of the line.
   var startOffset = selection.startOffset;
@@ -13655,8 +13176,8 @@ hterm.Terminal.prototype.getSelectionText = function() {
   }
 
   // End offset measures from the end of the line.
-  var endOffset = (hterm.TextAttributes.nodeWidth(selection.endNode) -
-    selection.endOffset);
+  var endOffset =
+      (hterm.TextAttributes.nodeWidth(selection.endNode) - selection.endOffset);
   node = selection.endNode;
 
   if (node.nodeName != 'X-ROW') {
@@ -13675,8 +13196,8 @@ hterm.Terminal.prototype.getSelectionText = function() {
     }
   }
 
-  var rv = this.getRowsText(selection.startRow.rowIndex,
-    selection.endRow.rowIndex + 1);
+  var rv = this.getRowsText(
+      selection.startRow.rowIndex, selection.endRow.rowIndex + 1);
   return lib.wc.substring(rv, startOffset, lib.wc.strWidth(rv) - endOffset);
 };
 
@@ -13686,8 +13207,7 @@ hterm.Terminal.prototype.getSelectionText = function() {
  */
 hterm.Terminal.prototype.copySelectionToClipboard = function() {
   var text = this.getSelectionText();
-  if (text != null)
-    this.copyStringToClipboard(text);
+  if (text != null) this.copyStringToClipboard(text);
 };
 
 hterm.Terminal.prototype.overlaySize = function() {
@@ -13729,16 +13249,13 @@ hterm.Terminal.prototype.openSelectedUrl_ = function() {
   }
 
   // Make sure URL is valid before opening.
-  if (str.length > 2048 || str.search(/[\s\[\](){}<>"'\\^`]/) >= 0)
-    return;
+  if (str.length > 2048 || str.search(/[\s\[\](){}<>"'\\^`]/) >= 0) return;
   // If the URL isn't anchored, it'll open relative to the extension.
   // We have no way of knowing the correct schema, so assume http.
-  if (str.search('^[a-zA-Z][a-zA-Z0-9+.-]*://') < 0)
-    str = 'http://' + str;
+  if (str.search('^[a-zA-Z][a-zA-Z0-9+.-]*://') < 0) str = 'http://' + str;
 
   this.openUrl(str);
 };
-
 
 /**
  * Add the terminalRow and terminalColumn properties to mouse events and
@@ -13761,16 +13278,19 @@ hterm.Terminal.prototype.onMouse_ = function(e) {
     return;
   }
 
-  var reportMouseEvents = (!this.defeatMouseReports_ &&
-    this.vt.mouseReport != this.vt.MOUSE_REPORT_DISABLED);
+  var reportMouseEvents =
+      (!this.defeatMouseReports_ &&
+       this.vt.mouseReport != this.vt.MOUSE_REPORT_DISABLED);
 
   e.processedByTerminalHandler_ = true;
 
   // One based row/column stored on the mouse event.
-  e.terminalRow = parseInt((e.clientY - this.scrollPort_.visibleRowTopMargin) /
-    this.scrollPort_.characterSize.height) + 1;
-  e.terminalColumn = parseInt(e.clientX /
-    this.scrollPort_.characterSize.width) + 1;
+  e.terminalRow = parseInt(
+                      (e.clientY - this.scrollPort_.visibleRowTopMargin) /
+                      this.scrollPort_.characterSize.height) +
+      1;
+  e.terminalColumn =
+      parseInt(e.clientX / this.scrollPort_.characterSize.width) + 1;
 
   if (e.type == 'mousedown' && e.terminalColumn > this.screenSize.width) {
     // Mousedown in the scrollbar area.
@@ -13783,10 +13303,9 @@ hterm.Terminal.prototype.onMouse_ = function(e) {
     // cursor is over top.  This keeps the terminal cursor from interfering
     // with local text selection.
     if (e.terminalRow - 1 == this.screen_.cursorPosition.row &&
-      e.terminalColumn - 1 == this.screen_.cursorPosition.column) {
+        e.terminalColumn - 1 == this.screen_.cursorPosition.column) {
       this.cursorNode_.style.display = 'none';
-    }
-    else if (this.cursorNode_.style.display == 'none') {
+    } else if (this.cursorNode_.style.display == 'none') {
       this.cursorNode_.style.display = '';
     }
   }
@@ -13797,8 +13316,7 @@ hterm.Terminal.prototype.onMouse_ = function(e) {
       // alt-mousedown, then the mouse will act on the local selection.
       this.defeatMouseReports_ = true;
       this.setSelectionEnabled(true);
-    }
-    else {
+    } else {
       // Otherwise we defer ownership of the mouse to the VT.
       this.defeatMouseReports_ = false;
       this.document_.getSelection().collapseToEnd();
@@ -13818,28 +13336,26 @@ hterm.Terminal.prototype.onMouse_ = function(e) {
       // a URL to open it, Chrome will fire click then dblclick, but we won't
       // have expanded the selection text at the first click event.
       clearTimeout(this.timeouts_.openUrl);
-      this.timeouts_.openUrl = setTimeout(this.openSelectedUrl_.bind(this),
-        500);
+      this.timeouts_.openUrl =
+          setTimeout(this.openSelectedUrl_.bind(this), 500);
       return;
     }
 
-    if (e.type == 'mousedown' && e.which == this.mousePasteButton)
-      this.paste();
+    if (e.type == 'mousedown' && e.which == this.mousePasteButton) this.paste();
 
     if (e.type == 'mouseup' && e.which == 1 && this.copyOnSelect &&
-      !this.document_.getSelection().isCollapsed) {
+        !this.document_.getSelection().isCollapsed) {
       this.copySelectionToClipboard(this.document_);
     }
 
     if ((e.type == 'mousemove' || e.type == 'mouseup') &&
-      this.scrollBlockerNode_.engaged) {
+        this.scrollBlockerNode_.engaged) {
       // Disengage the scroll-blocker after one of these events.
       this.scrollBlockerNode_.engaged = false;
       this.scrollBlockerNode_.style.top = '-99px';
     }
 
-  }
-  else /* if (this.reportMouseEvents) */ {
+  } else /* if (this.reportMouseEvents) */ {
     if (!this.scrollBlockerNode_.engaged) {
       if (e.type == 'mousedown') {
         // Move the scroll-blocker into place if we want to keep the scrollport
@@ -13847,8 +13363,7 @@ hterm.Terminal.prototype.onMouse_ = function(e) {
         this.scrollBlockerNode_.engaged = true;
         this.scrollBlockerNode_.style.top = (e.clientY - 5) + 'px';
         this.scrollBlockerNode_.style.left = (e.clientX - 5) + 'px';
-      }
-      else if (e.type == 'mousemove') {
+      } else if (e.type == 'mousemove') {
         // Oh.  This means that drag-scroll was disabled AFTER the mouse down,
         // in which case it's too late to engage the scroll-blocker.
         this.document_.getSelection().collapseToEnd();
@@ -13885,8 +13400,7 @@ hterm.Terminal.prototype.onMouse = function(e) {};
 hterm.Terminal.prototype.onFocusChange_ = function(focused) {
   this.cursorNode_.setAttribute('focus', focused);
   this.restyleCursor_();
-  if (focused === true)
-    this.closeBellNotifications_();
+  if (focused === true) this.closeBellNotifications_();
 };
 
 /**
@@ -13904,8 +13418,7 @@ hterm.Terminal.prototype.onScroll_ = function() {
 hterm.Terminal.prototype.onPaste_ = function(e) {
   var data = e.text.replace(/\n/mg, '\r');
   data = this.keyboard.encode(data);
-  if (this.options_.bracketedPaste)
-    data = '\x1b[200~' + data + '\x1b[201~';
+  if (this.options_.bracketedPaste) data = '\x1b[200~' + data + '\x1b[201~';
 
   this.io.sendString(data);
 };
@@ -13931,10 +13444,14 @@ hterm.Terminal.prototype.onCopy_ = function(e) {
  * programmatic width change.
  */
 hterm.Terminal.prototype.onResize_ = function() {
-  var columnCount = Math.floor(this.scrollPort_.getScreenWidth() /
-    this.scrollPort_.characterSize.width) || 0;
-  var rowCount = lib.f.smartFloorDivide(this.scrollPort_.getScreenHeight(),
-    this.scrollPort_.characterSize.height) || 0;
+  var columnCount = Math.floor(
+                        this.scrollPort_.getScreenWidth() /
+                        this.scrollPort_.characterSize.width) ||
+      0;
+  var rowCount = lib.f.smartFloorDivide(
+                     this.scrollPort_.getScreenHeight(),
+                     this.scrollPort_.characterSize.height) ||
+      0;
 
   if (columnCount <= 0 || rowCount <= 0) {
     // We avoid these situations since they happen sometimes when the terminal
@@ -13945,16 +13462,16 @@ hterm.Terminal.prototype.onResize_ = function() {
     return;
   }
 
-  var isNewSize = (columnCount != this.screenSize.width ||
-    rowCount != this.screenSize.height);
+  var isNewSize =
+      (columnCount != this.screenSize.width ||
+       rowCount != this.screenSize.height);
 
   // We do this even if the size didn't change, just to be sure everything is
   // in sync.
   this.realizeSize_(columnCount, rowCount);
   this.showZoomWarning_(this.scrollPort_.characterSize.zoomFactor != 1);
 
-  if (isNewSize)
-    this.overlaySize();
+  if (isNewSize) this.overlaySize();
 
   this.restyleCursor_();
   this.scheduleSyncCursorPosition_();
@@ -13970,15 +13487,14 @@ hterm.Terminal.prototype.onCursorBlink_ = function() {
   }
 
   if (this.cursorNode_.getAttribute('focus') == 'false' ||
-    this.cursorNode_.style.opacity == '0') {
+      this.cursorNode_.style.opacity == '0') {
     this.cursorNode_.style.opacity = '1';
-    this.timeouts_.cursorBlink = setTimeout(this.myOnCursorBlink_,
-      this.cursorBlinkCycle_[0]);
-  }
-  else {
+    this.timeouts_.cursorBlink =
+        setTimeout(this.myOnCursorBlink_, this.cursorBlinkCycle_[0]);
+  } else {
     this.cursorNode_.style.opacity = '0';
-    this.timeouts_.cursorBlink = setTimeout(this.myOnCursorBlink_,
-      this.cursorBlinkCycle_[1]);
+    this.timeouts_.cursorBlink =
+        setTimeout(this.myOnCursorBlink_, this.cursorBlinkCycle_[1]);
   }
 };
 
@@ -14201,9 +13717,9 @@ hterm.Terminal.IO.prototype.writelnUTF8 = function(string) {
  * @param {string} string The string to print.
  */
 hterm.Terminal.IO.prototype.print =
-  hterm.Terminal.IO.prototype.writeUTF16 = function(string) {
-    this.writeUTF8(lib.encodeUTF8(string));
-  };
+    hterm.Terminal.IO.prototype.writeUTF16 = function(string) {
+      this.writeUTF8(lib.encodeUTF8(string));
+    };
 
 /**
  * Print a UTF-16 JavaScript string to the terminal followed by a newline.
@@ -14211,9 +13727,9 @@ hterm.Terminal.IO.prototype.print =
  * @param {string} string The string to print.
  */
 hterm.Terminal.IO.prototype.println =
-  hterm.Terminal.IO.prototype.writelnUTF16 = function(string) {
-    this.writelnUTF8(lib.encodeUTF8(string));
-  };
+    hterm.Terminal.IO.prototype.writelnUTF16 = function(string) {
+      this.writelnUTF8(lib.encodeUTF8(string));
+    };
 // SOURCE FILE: hterm/js/hterm_text_attributes.js
 // Copyright (c) 2012 The Chromium OS Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -14294,7 +13810,6 @@ hterm.TextAttributes.prototype.DEFAULT_COLOR = new String('');
  */
 hterm.TextAttributes.prototype.SRC_DEFAULT = 'default';
 
-
 /**
  * A constant string used to specify that the source of a color is a valid
  * rgb( r, g, b) specifier.
@@ -14362,18 +13877,12 @@ hterm.TextAttributes.prototype.resetColorPalette = function() {
  * @return {boolean} True if the current attributes describe unstyled text.
  */
 hterm.TextAttributes.prototype.isDefault = function() {
-  return (this.foregroundSource == this.SRC_DEFAULT &&
-    this.backgroundSource == this.SRC_DEFAULT &&
-    !this.bold &&
-    !this.faint &&
-    !this.italic &&
-    !this.blink &&
-    !this.underline &&
-    !this.strikethrough &&
-    !this.inverse &&
-    !this.invisible &&
-    !this.wcNode &&
-    this.tileData == null);
+  return (
+      this.foregroundSource == this.SRC_DEFAULT &&
+      this.backgroundSource == this.SRC_DEFAULT && !this.bold && !this.faint &&
+      !this.italic && !this.blink && !this.underline && !this.strikethrough &&
+      !this.inverse && !this.invisible && !this.wcNode &&
+      this.tileData == null);
 };
 
 /**
@@ -14392,27 +13901,22 @@ hterm.TextAttributes.prototype.isDefault = function() {
  *     attributes.
  */
 hterm.TextAttributes.prototype.createContainer = function(opt_textContent) {
-  if (this.isDefault())
-    return this.document_.createTextNode(opt_textContent);
+  if (this.isDefault()) return this.document_.createTextNode(opt_textContent);
 
   var span = this.document_.createElement('span');
   var style = span.style;
   var classes = [];
 
-  if (this.foreground != this.DEFAULT_COLOR)
-    style.color = this.foreground;
+  if (this.foreground != this.DEFAULT_COLOR) style.color = this.foreground;
 
   if (this.background != this.DEFAULT_COLOR)
     style.backgroundColor = this.background;
 
-  if (this.enableBold && this.bold)
-    style.fontWeight = 'bold';
+  if (this.enableBold && this.bold) style.fontWeight = 'bold';
 
-  if (this.faint)
-    span.faint = true;
+  if (this.faint) span.faint = true;
 
-  if (this.italic)
-    style.fontStyle = 'italic';
+  if (this.italic) style.fontStyle = 'italic';
 
   if (this.blink) {
     classes.push('blink-node');
@@ -14443,11 +13947,9 @@ hterm.TextAttributes.prototype.createContainer = function(opt_textContent) {
     span.tileNode = true;
   }
 
-  if (opt_textContent)
-    span.textContent = opt_textContent;
+  if (opt_textContent) span.textContent = opt_textContent;
 
-  if (classes.length)
-    span.className = classes.join(' ');
+  if (classes.length) span.className = classes.join(' ');
 
   return span;
 };
@@ -14466,22 +13968,21 @@ hterm.TextAttributes.prototype.createContainer = function(opt_textContent) {
  *     this attributes instance.
  */
 hterm.TextAttributes.prototype.matchesContainer = function(obj) {
-  if (typeof obj == 'string' || obj.nodeType == 3)
-    return this.isDefault();
+  if (typeof obj == 'string' || obj.nodeType == 3) return this.isDefault();
 
   var style = obj.style;
 
   // We don't want to put multiple characters in a wcNode or a tile.
   // See the comments in createContainer.
-  return (!(this.wcNode || obj.wcNode) &&
-    !(this.tileData != null || obj.tileNode) &&
-    this.foreground == style.color &&
-    this.background == style.backgroundColor &&
-    (this.enableBold && this.bold) == !!style.fontWeight &&
-    this.blink == obj.blinkNode &&
-    this.italic == !!style.fontStyle &&
-    !!this.underline == !!obj.underline &&
-    !!this.strikethrough == !!obj.strikethrough);
+  return (
+      !(this.wcNode || obj.wcNode) &&
+      !(this.tileData != null || obj.tileNode) &&
+      this.foreground == style.color &&
+      this.background == style.backgroundColor &&
+      (this.enableBold && this.bold) == !!style.fontWeight &&
+      this.blink == obj.blinkNode && this.italic == !!style.fontStyle &&
+      !!this.underline == !!obj.underline &&
+      !!this.strikethrough == !!obj.strikethrough);
 };
 
 hterm.TextAttributes.prototype.setDefaults = function(foreground, background) {
@@ -14528,7 +14029,7 @@ hterm.TextAttributes.prototype.syncColors = function() {
 
   if (this.enableBoldAsBright && this.bold) {
     if (foregroundSource != this.SRC_DEFAULT &&
-      foregroundSource != this.SRC_RGB) {
+        foregroundSource != this.SRC_RGB) {
       foregroundSource = getBrightIndex(foregroundSource);
     }
   }
@@ -14540,19 +14041,24 @@ hterm.TextAttributes.prototype.syncColors = function() {
 
   // Set fore/background colors unless already specified in rgb(r, g, b) form.
   if (foregroundSource != this.SRC_RGB) {
-    this.foreground = ((foregroundSource == this.SRC_DEFAULT) ?
-      defaultForeground : this.colorPalette[foregroundSource]);
+    this.foreground =
+        ((foregroundSource == this.SRC_DEFAULT) ?
+             defaultForeground :
+             this.colorPalette[foregroundSource]);
   }
 
   if (this.faint && !this.invisible) {
-    var colorToMakeFaint = ((this.foreground == this.DEFAULT_COLOR) ?
-      this.defaultForeground : this.foreground);
+    var colorToMakeFaint =
+        ((this.foreground == this.DEFAULT_COLOR) ? this.defaultForeground :
+                                                   this.foreground);
     this.foreground = lib.colors.mix(colorToMakeFaint, 'rgb(0, 0, 0)', 0.3333);
   }
 
   if (backgroundSource != this.SRC_RGB) {
-    this.background = ((backgroundSource == this.SRC_DEFAULT) ?
-      defaultBackground : this.colorPalette[backgroundSource]);
+    this.background =
+        ((backgroundSource == this.SRC_DEFAULT) ?
+             defaultBackground :
+             this.colorPalette[backgroundSource]);
   }
 };
 
@@ -14570,20 +14076,19 @@ hterm.TextAttributes.containersMatch = function(obj1, obj2) {
   if (typeof obj1 == 'string')
     return hterm.TextAttributes.containerIsDefault(obj2);
 
-  if (obj1.nodeType != obj2.nodeType)
-    return false;
+  if (obj1.nodeType != obj2.nodeType) return false;
 
-  if (obj1.nodeType == 3)
-    return true;
+  if (obj1.nodeType == 3) return true;
 
   var style1 = obj1.style;
   var style2 = obj2.style;
 
-  return (style1.color == style2.color &&
-    style1.backgroundColor == style2.backgroundColor &&
-    style1.fontWeight == style2.fontWeight &&
-    style1.fontStyle == style2.fontStyle &&
-    style1.textDecoration == style2.textDecoration);
+  return (
+      style1.color == style2.color &&
+      style1.backgroundColor == style2.backgroundColor &&
+      style1.fontWeight == style2.fontWeight &&
+      style1.fontStyle == style2.fontStyle &&
+      style1.textDecoration == style2.textDecoration);
 };
 
 /**
@@ -14608,8 +14113,7 @@ hterm.TextAttributes.containerIsDefault = function(obj) {
 hterm.TextAttributes.nodeWidth = function(node) {
   if (node.wcNode) {
     return lib.wc.strWidth(node.textContent);
-  }
-  else {
+  } else {
     return node.textContent.length;
   }
 };
@@ -14627,8 +14131,7 @@ hterm.TextAttributes.nodeWidth = function(node) {
 hterm.TextAttributes.nodeSubstr = function(node, start, width) {
   if (node.wcNode) {
     return lib.wc.substr(node.textContent, start, width);
-  }
-  else {
+  } else {
     return node.textContent.substr(start, width);
   }
 };
@@ -14646,8 +14149,7 @@ hterm.TextAttributes.nodeSubstr = function(node, start, width) {
 hterm.TextAttributes.nodeSubstring = function(node, start, end) {
   if (node.wcNode) {
     return lib.wc.substring(node.textContent, start, end);
-  }
-  else {
+  } else {
     return node.textContent.substring(start, end);
   }
 };
@@ -14664,35 +14166,25 @@ hterm.TextAttributes.nodeSubstring = function(node, start, end) {
  */
 hterm.TextAttributes.splitWidecharString = function(str) {
   var rv = [];
-  var base = 0,
-    length = 0;
+  var base = 0, length = 0;
 
   for (var i = 0; i < str.length;) {
     var c = str.codePointAt(i);
     var increment = (c <= 0xffff) ? 1 : 2;
     if (c < 128 || lib.wc.charWidth(c) == 1) {
       length += increment;
-    }
-    else {
+    } else {
       if (length) {
-        rv.push({
-          str: str.substr(base, length)
-        });
+        rv.push({str: str.substr(base, length)});
       }
-      rv.push({
-        str: str.substr(i, increment),
-        wcNode: true
-      });
+      rv.push({str: str.substr(i, increment), wcNode: true});
       base = i + increment;
       length = 0;
     }
     i += increment;
   }
 
-  if (length)
-    rv.push({
-      str: str.substr(base, length)
-    });
+  if (length) rv.push({str: str.substr(base, length)});
 
   return rv;
 };
@@ -14703,8 +14195,7 @@ hterm.TextAttributes.splitWidecharString = function(str) {
 
 'use strict';
 
-lib.rtdep('lib.colors', 'lib.f', 'lib.UTF8Decoder',
-  'hterm.VT.CharacterMap');
+lib.rtdep('lib.colors', 'lib.f', 'lib.UTF8Decoder', 'hterm.VT.CharacterMap');
 
 /**
  * Constructor for the VT escape sequence interpreter.
@@ -14767,10 +14258,11 @@ hterm.VT = function(terminal) {
   // Construct a regular expression to match the known one-byte control chars.
   // This is used in parseUnknown_ to quickly scan a string for the next
   // control character.
-  var cc1 = Object.keys(hterm.VT.CC1).map(
-    function(e) {
-      return '\\x' + lib.f.zpad(e.charCodeAt().toString(16), 2);
-    }).join('');
+  var cc1 = Object.keys(hterm.VT.CC1)
+                .map(function(e) {
+                  return '\\x' + lib.f.zpad(e.charCodeAt().toString(16), 2);
+                })
+                .join('');
   this.cc1Pattern_ = new RegExp('[' + cc1 + ']');
 
   // Decoder to maintain UTF-8 decode state.
@@ -14921,8 +14413,7 @@ hterm.VT.ParseState.prototype.resetBuf = function(opt_buf) {
  */
 hterm.VT.ParseState.prototype.resetArguments = function(opt_arg_zero) {
   this.args.length = 0;
-  if (typeof opt_arg_zero != 'undefined')
-    this.args[0] = opt_arg_zero;
+  if (typeof opt_arg_zero != 'undefined') this.args[0] = opt_arg_zero;
 };
 
 /**
@@ -14935,8 +14426,7 @@ hterm.VT.ParseState.prototype.iarg = function(argnum, defaultValue) {
   if (str) {
     var ret = parseInt(str, 10);
     // An argument of zero is treated as the default value.
-    if (ret == 0)
-      ret = defaultValue;
+    if (ret == 0) ret = defaultValue;
     return ret;
   }
   return defaultValue;
@@ -15041,20 +14531,16 @@ hterm.VT.prototype.reset = function() {
  * See the "Mouse Tracking" section of [xterm].
  */
 hterm.VT.prototype.onTerminalMouse_ = function(e) {
-  if (this.mouseReport == this.MOUSE_REPORT_DISABLED)
-    return;
+  if (this.mouseReport == this.MOUSE_REPORT_DISABLED) return;
 
   // Temporary storage for our response.
   var response;
 
   // Modifier key state.
   var mod = 0;
-  if (e.shiftKey)
-    mod |= 4;
-  if (e.metaKey || (this.terminal.keyboard.altIsMeta && e.altKey))
-    mod |= 8;
-  if (e.ctrlKey)
-    mod |= 16;
+  if (e.shiftKey) mod |= 4;
+  if (e.metaKey || (this.terminal.keyboard.altIsMeta && e.altKey)) mod |= 8;
+  if (e.ctrlKey) mod |= 16;
 
   // TODO(rginda): We should also support mode 1005 and/or 1006 to extend the
   // coordinate space.  Though, after poking around just a little, I wasn't
@@ -15113,8 +14599,7 @@ hterm.VT.prototype.onTerminalMouse_ = function(e) {
       break;
   }
 
-  if (response)
-    this.terminal.io.sendString(response);
+  if (response) this.terminal.io.sendString(response);
 };
 
 /**
@@ -15134,7 +14619,7 @@ hterm.VT.prototype.interpret = function(buf) {
     this.parseState_.func.call(this, this.parseState_);
 
     if (this.parseState_.func == func && this.parseState_.pos == pos &&
-      this.parseState_.buf == buf) {
+        this.parseState_.buf == buf) {
       throw 'Parser did not alter the state!';
     }
   }
@@ -15144,8 +14629,7 @@ hterm.VT.prototype.interpret = function(buf) {
  * Decode a string according to the 'receive-encoding' preference.
  */
 hterm.VT.prototype.decode = function(str) {
-  if (this.characterEncoding == 'utf-8')
-    return this.decodeUTF8(str);
+  if (this.characterEncoding == 'utf-8') return this.decodeUTF8(str);
 
   return str;
 };
@@ -15177,11 +14661,9 @@ hterm.VT.prototype.parseUnknown_ = function(parseState) {
   var self = this;
 
   function print(str) {
-    if (self[self.GL].GL)
-      str = self[self.GL].GL(str);
+    if (self[self.GL].GL) str = self[self.GL].GL(str);
 
-    if (self[self.GR].GR)
-      str = self[self.GR].GR(str);
+    if (self[self.GR].GR) str = self[self.GR].GR(str);
 
     self.terminal.print(str);
   };
@@ -15220,19 +14702,17 @@ hterm.VT.prototype.parseCSI_ = function(parseState) {
 
   if (ch >= '@' && ch <= '~') {
     // This is the final character.
-    this.dispatch('CSI', this.leadingModifier_ + this.trailingModifier_ + ch,
-      parseState);
+    this.dispatch(
+        'CSI', this.leadingModifier_ + this.trailingModifier_ + ch, parseState);
     parseState.resetParseFunction();
 
-  }
-  else if (ch == ';') {
+  } else if (ch == ';') {
     // Parameter delimiter.
     if (this.trailingModifier_) {
       // Parameter delimiter after the trailing modifier.  That's a paddlin'.
       parseState.resetParseFunction();
 
-    }
-    else {
+    } else {
       if (!args.length) {
         // They omitted the first param, we need to supply it.
         args.push('');
@@ -15241,40 +14721,33 @@ hterm.VT.prototype.parseCSI_ = function(parseState) {
       args.push('');
     }
 
-  }
-  else if (ch >= '0' && ch <= '9') {
+  } else if (ch >= '0' && ch <= '9') {
     // Next byte in the current parameter.
 
     if (this.trailingModifier_) {
       // Numeric parameter after the trailing modifier.  That's a paddlin'.
       parseState.resetParseFunction();
-    }
-    else {
+    } else {
       if (!args.length) {
         args[0] = ch;
-      }
-      else {
+      } else {
         args[args.length - 1] += ch;
       }
     }
 
-  }
-  else if (ch >= ' ' && ch <= '?' && ch != ':') {
+  } else if (ch >= ' ' && ch <= '?' && ch != ':') {
     // Modifier character.
     if (!args.length) {
       this.leadingModifier_ += ch;
-    }
-    else {
+    } else {
       this.trailingModifier_ += ch;
     }
 
-  }
-  else if (this.cc1Pattern_.test(ch)) {
+  } else if (this.cc1Pattern_.test(ch)) {
     // Control character.
     this.dispatch('CC1', ch, parseState);
 
-  }
-  else {
+  } else {
     // Unexpected character in sequence, bail out.
     parseState.resetParseFunction();
   }
@@ -15325,8 +14798,8 @@ hterm.VT.prototype.parseUntilStringTerminator_ = function(parseState) {
       abortReason = 'timeout expired: ' + new Date() - args[1];
 
     if (abortReason) {
-      console.log('parseUntilStringTerminator_: aborting: ' + abortReason,
-        args[0]);
+      console.log(
+          'parseUntilStringTerminator_: aborting: ' + abortReason, args[0]);
       parseState.reset(args[0]);
       return false;
     }
@@ -15344,8 +14817,8 @@ hterm.VT.prototype.parseUntilStringTerminator_ = function(parseState) {
   args[0] += buf.substr(0, nextTerminator);
 
   parseState.resetParseFunction();
-  parseState.advance(nextTerminator +
-    (buf.substr(nextTerminator, 1) == '\x1b' ? 2 : 1));
+  parseState.advance(
+      nextTerminator + (buf.substr(nextTerminator, 1) == '\x1b' ? 2 : 1));
 
   return true;
 };
@@ -15376,8 +14849,8 @@ hterm.VT.prototype.dispatch = function(type, code, parseState) {
     // This prevents an errant (DCS, '\x90'), (OSC, '\x9d'), (PM, '\x9e') or
     // (APC, '\x9f') from locking up the terminal waiting for its expected
     // (ST, '\x9c') or (BEL, '\x07').
-    console.warn('Ignoring 8-bit control code: 0x' +
-      code.charCodeAt(0).toString(16));
+    console.warn(
+        'Ignoring 8-bit control code: 0x' + code.charCodeAt(0).toString(16));
     return;
   }
 
@@ -15400,11 +14873,9 @@ hterm.VT.prototype.dispatch = function(type, code, parseState) {
 hterm.VT.prototype.setANSIMode = function(code, state) {
   if (code == '4') {
     this.terminal.setInsertMode(state);
-  }
-  else if (code == '20') {
+  } else if (code == '20') {
     this.terminal.setAutoCarriageReturn(state);
-  }
-  else if (this.warnUnimplemented) {
+  } else if (this.warnUnimplemented) {
     console.warn('Unimplemented ANSI Mode: ' + code);
   }
 };
@@ -15478,11 +14949,11 @@ hterm.VT.prototype.setANSIMode = function(code, state) {
  */
 hterm.VT.prototype.setDECMode = function(code, state) {
   switch (code) {
-    case '1': // DECCKM
+    case '1':  // DECCKM
       this.terminal.keyboard.applicationCursor = state;
       break;
 
-    case '3': // DECCOLM
+    case '3':  // DECCOLM
       if (this.allowColumnWidthChanges_) {
         this.terminal.setWidth(state ? 132 : 80);
 
@@ -15491,98 +14962,95 @@ hterm.VT.prototype.setDECMode = function(code, state) {
       }
       break;
 
-    case '5': // DECSCNM
+    case '5':  // DECSCNM
       this.terminal.setReverseVideo(state);
       break;
 
-    case '6': // DECOM
+    case '6':  // DECOM
       this.terminal.setOriginMode(state);
       break;
 
-    case '7': // DECAWM
+    case '7':  // DECAWM
       this.terminal.setWraparound(state);
       break;
 
-    case '12': // att610
-      if (this.enableDec12)
-        this.terminal.setCursorBlink(state);
+    case '12':  // att610
+      if (this.enableDec12) this.terminal.setCursorBlink(state);
       break;
 
-    case '25': // DECTCEM
+    case '25':  // DECTCEM
       this.terminal.setCursorVisible(state);
       break;
 
-    case '40': // no-spec
+    case '40':  // no-spec
       this.terminal.allowColumnWidthChanges_ = state;
       break;
 
-    case '45': // no-spec
+    case '45':  // no-spec
       this.terminal.setReverseWraparound(state);
       break;
 
-    case '67': // DECBKM
+    case '67':  // DECBKM
       this.terminal.keyboard.backspaceSendsBackspace = state;
       break;
 
-    case '1000': // Report on mouse clicks only.
-      this.mouseReport = (
-        state ? this.MOUSE_REPORT_CLICK : this.MOUSE_REPORT_DISABLED);
+    case '1000':  // Report on mouse clicks only.
+      this.mouseReport =
+          (state ? this.MOUSE_REPORT_CLICK : this.MOUSE_REPORT_DISABLED);
       break;
 
-    case '1002': // Report on mouse clicks and drags
-      this.mouseReport = (
-        state ? this.MOUSE_REPORT_DRAG : this.MOUSE_REPORT_DISABLED);
+    case '1002':  // Report on mouse clicks and drags
+      this.mouseReport =
+          (state ? this.MOUSE_REPORT_DRAG : this.MOUSE_REPORT_DISABLED);
       break;
 
-    case '1010': // rxvt
+    case '1010':  // rxvt
       this.terminal.scrollOnOutput = state;
       break;
 
-    case '1011': // rxvt
+    case '1011':  // rxvt
       this.terminal.scrollOnKeystroke = state;
       break;
 
-    case '1036': // no-spec
+    case '1036':  // no-spec
       this.terminal.keyboard.metaSendsEscape = state;
       break;
 
-    case '1039': // no-spec
+    case '1039':  // no-spec
       if (state) {
         if (!this.terminal.keyboard.previousAltSendsWhat_) {
           this.terminal.keyboard.previousAltSendsWhat_ =
-            this.terminal.keyboard.altSendsWhat;
+              this.terminal.keyboard.altSendsWhat;
           this.terminal.keyboard.altSendsWhat = 'escape';
         }
-      }
-      else if (this.terminal.keyboard.previousAltSendsWhat_) {
+      } else if (this.terminal.keyboard.previousAltSendsWhat_) {
         this.terminal.keyboard.altSendsWhat =
-          this.terminal.keyboard.previousAltSendsWhat_;
+            this.terminal.keyboard.previousAltSendsWhat_;
         this.terminal.keyboard.previousAltSendsWhat_ = null;
       }
       break;
 
     case '47':
-    case '1047': // no-spec
+    case '1047':  // no-spec
       this.terminal.setAlternateMode(state);
       break;
 
-    case '1048': // Save cursor as in DECSC.
+    case '1048':  // Save cursor as in DECSC.
       this.savedState_.save();
 
-    case '1049': // 1047 + 1048 + clear.
+    case '1049':  // 1047 + 1048 + clear.
       if (state) {
         this.savedState_.save();
         this.terminal.setAlternateMode(state);
         this.terminal.clear();
-      }
-      else {
+      } else {
         this.terminal.setAlternateMode(state);
         this.savedState_.restore();
       }
 
       break;
 
-    case '2004': // Bracketed paste mode.
+    case '2004':  // Bracketed paste mode.
       this.terminal.setBracketedPaste(state);
       break;
 
@@ -15786,13 +15254,11 @@ hterm.VT.CC1['\x1b'] = function(parseState) {
   function parseESC(parseState) {
     var ch = parseState.consumeChar();
 
-    if (ch == '\x1b')
-      return;
+    if (ch == '\x1b') return;
 
     this.dispatch('ESC', ch, parseState);
 
-    if (parseState.func == parseESC)
-      parseState.resetParseFunction();
+    if (parseState.func == parseESC) parseState.resetParseFunction();
   };
 
   parseState.func = parseESC;
@@ -15810,39 +15276,35 @@ hterm.VT.CC1['\x7f'] = hterm.VT.ignore;
  *
  * Like newline, only keep the X position
  */
-hterm.VT.CC1['\x84'] =
-  hterm.VT.ESC['D'] = function() {
-    this.terminal.lineFeed();
-  };
+hterm.VT.CC1['\x84'] = hterm.VT.ESC['D'] = function() {
+  this.terminal.lineFeed();
+};
 
 /**
  * Next Line (NEL).
  *
  * Like newline, but doesn't add lines.
  */
-hterm.VT.CC1['\x85'] =
-  hterm.VT.ESC['E'] = function() {
-    this.terminal.setCursorColumn(0);
-    this.terminal.cursorDown(1);
-  };
+hterm.VT.CC1['\x85'] = hterm.VT.ESC['E'] = function() {
+  this.terminal.setCursorColumn(0);
+  this.terminal.cursorDown(1);
+};
 
 /**
  * Horizontal Tabulation Set (HTS).
  */
-hterm.VT.CC1['\x88'] =
-  hterm.VT.ESC['H'] = function() {
-    this.terminal.setTabStop(this.terminal.getCursorColumn());
-  };
+hterm.VT.CC1['\x88'] = hterm.VT.ESC['H'] = function() {
+  this.terminal.setTabStop(this.terminal.getCursorColumn());
+};
 
 /**
  * Reverse Index (RI).
  *
  * Move up one line.
  */
-hterm.VT.CC1['\x8d'] =
-  hterm.VT.ESC['M'] = function() {
-    this.terminal.reverseLineFeed();
-  };
+hterm.VT.CC1['\x8d'] = hterm.VT.ESC['M'] = function() {
+  this.terminal.reverseLineFeed();
+};
 
 /**
  * Single Shift 2 (SS2).
@@ -15851,8 +15313,7 @@ hterm.VT.CC1['\x8d'] =
  *
  * Not currently implemented.
  */
-hterm.VT.CC1['\x8e'] =
-  hterm.VT.ESC['N'] = hterm.VT.ignore;
+hterm.VT.CC1['\x8e'] = hterm.VT.ESC['N'] = hterm.VT.ignore;
 
 /**
  * Single Shift 3 (SS3).
@@ -15861,8 +15322,7 @@ hterm.VT.CC1['\x8e'] =
  *
  * Not currently implemented.
  */
-hterm.VT.CC1['\x8f'] =
-  hterm.VT.ESC['O'] = hterm.VT.ignore;
+hterm.VT.CC1['\x8f'] = hterm.VT.ESC['O'] = hterm.VT.ignore;
 
 /**
  * Device Control String (DCS).
@@ -15872,58 +15332,52 @@ hterm.VT.CC1['\x8f'] =
  *
  * TODO(rginda): Consider implementing DECRQSS, the rest don't seem applicable.
  */
-hterm.VT.CC1['\x90'] =
-  hterm.VT.ESC['P'] = function(parseState) {
-    parseState.resetArguments();
-    parseState.func = this.parseUntilStringTerminator_;
-  };
+hterm.VT.CC1['\x90'] = hterm.VT.ESC['P'] = function(parseState) {
+  parseState.resetArguments();
+  parseState.func = this.parseUntilStringTerminator_;
+};
 
 /**
  * Start of Protected Area (SPA).
  *
  * Will not implement.
  */
-hterm.VT.CC1['\x96'] =
-  hterm.VT.ESC['V'] = hterm.VT.ignore;
+hterm.VT.CC1['\x96'] = hterm.VT.ESC['V'] = hterm.VT.ignore;
 
 /**
  * End of Protected Area (EPA).
  *
  * Will not implement.
  */
-hterm.VT.CC1['\x97'] =
-  hterm.VT.ESC['W'] = hterm.VT.ignore;
+hterm.VT.CC1['\x97'] = hterm.VT.ESC['W'] = hterm.VT.ignore;
 
 /**
  * Start of String (SOS).
  *
  * Will not implement.
  */
-hterm.VT.CC1['\x98'] =
-  hterm.VT.ESC['X'] = hterm.VT.ignore;
+hterm.VT.CC1['\x98'] = hterm.VT.ESC['X'] = hterm.VT.ignore;
 
 /**
  * Single Character Introducer (SCI, also DECID).
  *
  * Return Terminal ID.  Obsolete form of 'ESC [ c' (DA).
  */
-hterm.VT.CC1['\x9a'] =
-  hterm.VT.ESC['Z'] = function() {
-    this.terminal.io.sendString('\x1b[?1;2c');
-  };
+hterm.VT.CC1['\x9a'] = hterm.VT.ESC['Z'] = function() {
+  this.terminal.io.sendString('\x1b[?1;2c');
+};
 
 /**
  * Control Sequence Introducer (CSI).
  *
  * The lead into most escape sequences.  See [CSI].
  */
-hterm.VT.CC1['\x9b'] =
-  hterm.VT.ESC['['] = function(parseState) {
-    parseState.resetArguments();
-    this.leadingModifier_ = '';
-    this.trailingModifier_ = '';
-    parseState.func = this.parseCSI_;
-  };
+hterm.VT.CC1['\x9b'] = hterm.VT.ESC['['] = function(parseState) {
+  parseState.resetArguments();
+  this.leadingModifier_ = '';
+  this.trailingModifier_ = '';
+  parseState.func = this.parseCSI_;
+};
 
 /**
  * String Terminator (ST).
@@ -15933,64 +15387,59 @@ hterm.VT.CC1['\x9b'] =
  * We don't directly handle it here, as it's only used to terminate other
  * sequences.  See the 'parseUntilStringTerminator_' method.
  */
-hterm.VT.CC1['\x9c'] =
-  hterm.VT.ESC['\\'] = hterm.VT.ignore;
+hterm.VT.CC1['\x9c'] = hterm.VT.ESC['\\'] = hterm.VT.ignore;
 
 /**
  * Operating System Command (OSC).
  *
  * Commands relating to the operating system.
  */
-hterm.VT.CC1['\x9d'] =
-  hterm.VT.ESC[']'] = function(parseState) {
-    parseState.resetArguments();
+hterm.VT.CC1['\x9d'] = hterm.VT.ESC[']'] = function(parseState) {
+  parseState.resetArguments();
 
-    function parseOSC(parseState) {
-      if (!this.parseUntilStringTerminator_(parseState)) {
-        // The string sequence was too long.
-        return;
-      }
+  function parseOSC(parseState) {
+    if (!this.parseUntilStringTerminator_(parseState)) {
+      // The string sequence was too long.
+      return;
+    }
 
-      if (parseState.func == parseOSC) {
-        // We're not done parsing the string yet.
-        return;
-      }
+    if (parseState.func == parseOSC) {
+      // We're not done parsing the string yet.
+      return;
+    }
 
-      // We're done.
-      var ary = parseState.args[0].match(/^(\d+);(.*)$/);
-      if (ary) {
-        parseState.args[0] = ary[2];
-        this.dispatch('OSC', ary[1], parseState);
-      }
-      else {
-        console.warn('Invalid OSC: ' + JSON.stringify(parseState.args[0]));
-      }
-    };
-
-    parseState.func = parseOSC;
+    // We're done.
+    var ary = parseState.args[0].match(/^(\d+);(.*)$/);
+    if (ary) {
+      parseState.args[0] = ary[2];
+      this.dispatch('OSC', ary[1], parseState);
+    } else {
+      console.warn('Invalid OSC: ' + JSON.stringify(parseState.args[0]));
+    }
   };
+
+  parseState.func = parseOSC;
+};
 
 /**
  * Privacy Message (PM).
  *
  * Will not implement.
  */
-hterm.VT.CC1['\x9e'] =
-  hterm.VT.ESC['^'] = function(parseState) {
-    parseState.resetArguments();
-    parseState.func = this.parseUntilStringTerminator_;
-  };
+hterm.VT.CC1['\x9e'] = hterm.VT.ESC['^'] = function(parseState) {
+  parseState.resetArguments();
+  parseState.func = this.parseUntilStringTerminator_;
+};
 
 /**
  * Application Program Control (APC).
  *
  * Will not implement.
  */
-hterm.VT.CC1['\x9f'] =
-  hterm.VT.ESC['_'] = function(parseState) {
-    parseState.resetArguments();
-    parseState.func = this.parseUntilStringTerminator_;
-  };
+hterm.VT.CC1['\x9f'] = hterm.VT.ESC['_'] = function(parseState) {
+  parseState.resetArguments();
+  parseState.func = this.parseUntilStringTerminator_;
+};
 
 /**
  * ESC \x20 - Unclear to me where these originated, possibly in xterm.
@@ -16030,8 +15479,7 @@ hterm.VT.ESC[' '] = function(parseState) {
 hterm.VT.ESC['#'] = function(parseState) {
   parseState.func = function(parseState) {
     var ch = parseState.consumeChar();
-    if (ch == '8')
-      this.terminal.fill('E');
+    if (ch == '8') this.terminal.fill('E');
 
     parseState.resetParseFunction();
   };
@@ -16087,42 +15535,34 @@ hterm.VT.ESC['%'] = function(parseState) {
  *
  * TODO(rginda): Implement.
  */
-hterm.VT.ESC['('] =
-  hterm.VT.ESC[')'] =
-  hterm.VT.ESC['*'] =
-  hterm.VT.ESC['+'] =
-  hterm.VT.ESC['-'] =
-  hterm.VT.ESC['.'] =
-  hterm.VT.ESC['/'] = function(parseState, code) {
-    parseState.func = function(parseState) {
-      var ch = parseState.consumeChar();
-      if (ch == '\x1b') {
-        parseState.resetParseFunction();
-        parseState.func();
-        return;
-      }
+hterm.VT.ESC['('] = hterm.VT.ESC[')'] = hterm.VT.ESC['*'] = hterm.VT.ESC['+'] =
+    hterm.VT.ESC['-'] = hterm.VT.ESC['.'] =
+        hterm.VT.ESC['/'] = function(parseState, code) {
+          parseState.func = function(parseState) {
+            var ch = parseState.consumeChar();
+            if (ch == '\x1b') {
+              parseState.resetParseFunction();
+              parseState.func();
+              return;
+            }
 
-      if (ch in hterm.VT.CharacterMap.maps) {
-        if (code == '(') {
-          this.G0 = hterm.VT.CharacterMap.maps[ch];
-        }
-        else if (code == ')' || code == '-') {
-          this.G1 = hterm.VT.CharacterMap.maps[ch];
-        }
-        else if (code == '*' || code == '.') {
-          this.G2 = hterm.VT.CharacterMap.maps[ch];
-        }
-        else if (code == '+' || code == '/') {
-          this.G3 = hterm.VT.CharacterMap.maps[ch];
-        }
-      }
-      else if (this.warnUnimplemented) {
-        console.log('Invalid character set for "' + code + '": ' + ch);
-      }
+            if (ch in hterm.VT.CharacterMap.maps) {
+              if (code == '(') {
+                this.G0 = hterm.VT.CharacterMap.maps[ch];
+              } else if (code == ')' || code == '-') {
+                this.G1 = hterm.VT.CharacterMap.maps[ch];
+              } else if (code == '*' || code == '.') {
+                this.G2 = hterm.VT.CharacterMap.maps[ch];
+              } else if (code == '+' || code == '/') {
+                this.G3 = hterm.VT.CharacterMap.maps[ch];
+              }
+            } else if (this.warnUnimplemented) {
+              console.log('Invalid character set for "' + code + '": ' + ch);
+            }
 
-      parseState.resetParseFunction();
-    };
-  };
+            parseState.resetParseFunction();
+          };
+        };
 
 /**
  * Back Index (DECBI).
@@ -16189,8 +15629,7 @@ hterm.VT.ESC['c'] = function() {
  *
  * Will not implement.
  */
-hterm.VT.ESC['l'] =
-  hterm.VT.ESC['m'] = hterm.VT.ignore;
+hterm.VT.ESC['l'] = hterm.VT.ESC['m'] = hterm.VT.ignore;
 
 /**
  * Lock Shift 2 (LS2)
@@ -16267,21 +15706,18 @@ hterm.VT.OSC['4'] = function(parseState) {
     var colorIndex = parseInt(args[pairNumber * 2]);
     var colorValue = args[pairNumber * 2 + 1];
 
-    if (colorIndex >= colorPalette.length)
-      continue;
+    if (colorIndex >= colorPalette.length) continue;
 
     if (colorValue == '?') {
       // '?' means we should report back the current color value.
       colorValue = lib.colors.rgbToX11(colorPalette[colorIndex]);
-      if (colorValue)
-        responseArray.push(colorIndex + ';' + colorValue);
+      if (colorValue) responseArray.push(colorIndex + ';' + colorValue);
 
       continue;
     }
 
     colorValue = lib.colors.x11ToCSS(colorValue);
-    if (colorValue)
-      colorPalette[colorIndex] = colorValue;
+    if (colorValue) colorPalette[colorIndex] = colorValue;
   }
 
   if (responseArray.length)
@@ -16339,12 +15775,10 @@ hterm.VT.OSC['52'] = function(parseState) {
   // parameter is used to select which of the X clipboards to address.  Since
   // we're not integrating with X, we treat them all the same.
   var args = parseState.args[0].match(/^[cps01234567]*;(.*)/);
-  if (!args)
-    return;
+  if (!args) return;
 
   var data = window.atob(args[1]);
-  if (data)
-    this.terminal.copyStringToClipboard(this.decode(data));
+  if (data) this.terminal.copyStringToClipboard(this.decode(data));
 };
 
 /**
@@ -16415,8 +15849,8 @@ hterm.VT.CSI['G'] = function(parseState) {
  * Cursor Position (CUP).
  */
 hterm.VT.CSI['H'] = function(parseState) {
-  this.terminal.setCursorPosition(parseState.iarg(0, 1) - 1,
-    parseState.iarg(1, 1) - 1);
+  this.terminal.setCursorPosition(
+      parseState.iarg(0, 1) - 1, parseState.iarg(1, 1) - 1);
 };
 
 /**
@@ -16433,43 +15867,36 @@ hterm.VT.CSI['I'] = function(parseState) {
 /**
  * Erase in Display (ED, DECSED).
  */
-hterm.VT.CSI['J'] =
-  hterm.VT.CSI['?J'] = function(parseState, code) {
-    var arg = parseState.args[0];
+hterm.VT.CSI['J'] = hterm.VT.CSI['?J'] = function(parseState, code) {
+  var arg = parseState.args[0];
 
-    if (!arg || arg == '0') {
-      this.terminal.eraseBelow();
-    }
-    else if (arg == '1') {
-      this.terminal.eraseAbove();
-    }
-    else if (arg == '2') {
-      this.terminal.clear();
-    }
-    else if (arg == '3') {
-      // The xterm docs say this means "Erase saved lines", but we'll just clear
-      // the display since killing the scrollback seems rude.
-      this.terminal.clear();
-    }
-  };
+  if (!arg || arg == '0') {
+    this.terminal.eraseBelow();
+  } else if (arg == '1') {
+    this.terminal.eraseAbove();
+  } else if (arg == '2') {
+    this.terminal.clear();
+  } else if (arg == '3') {
+    // The xterm docs say this means "Erase saved lines", but we'll just clear
+    // the display since killing the scrollback seems rude.
+    this.terminal.clear();
+  }
+};
 
 /**
  * Erase in line (EL, DECSEL).
  */
-hterm.VT.CSI['K'] =
-  hterm.VT.CSI['?K'] = function(parseState, code) {
-    var arg = parseState.args[0];
+hterm.VT.CSI['K'] = hterm.VT.CSI['?K'] = function(parseState, code) {
+  var arg = parseState.args[0];
 
-    if (!arg || arg == '0') {
-      this.terminal.eraseToRight();
-    }
-    else if (arg == '1') {
-      this.terminal.eraseToLeft();
-    }
-    else if (arg == '2') {
-      this.terminal.eraseLine();
-    }
-  };
+  if (!arg || arg == '0') {
+    this.terminal.eraseToRight();
+  } else if (arg == '1') {
+    this.terminal.eraseToLeft();
+  } else if (arg == '2') {
+    this.terminal.eraseLine();
+  }
+};
 
 /**
  * Insert Lines (IL).
@@ -16606,8 +16033,7 @@ hterm.VT.CSI['g'] = function(parseState) {
   if (!parseState.args[0] || parseState.args[0] == '0') {
     // Clear tab stop at cursor.
     this.terminal.clearTabStopAtCursor(false);
-  }
-  else if (parseState.args[0] == '3') {
+  } else if (parseState.args[0] == '3') {
     // Clear all tab stops.
     this.terminal.clearAllTabStops();
   }
@@ -16637,8 +16063,7 @@ hterm.VT.CSI['?h'] = function(parseState) {
  *
  * These commands control the printer.  Will not implement.
  */
-hterm.VT.CSI['i'] =
-  hterm.VT.CSI['?i'] = hterm.VT.ignore;
+hterm.VT.CSI['i'] = hterm.VT.CSI['?i'] = hterm.VT.ignore;
 
 /**
  * Reset Mode (RM).
@@ -16766,64 +16191,47 @@ hterm.VT.CSI['m'] = function(parseState) {
     if (arg < 30) {
       if (arg == 0) {
         attrs.reset();
-      }
-      else if (arg == 1) {
+      } else if (arg == 1) {
         attrs.bold = true;
-      }
-      else if (arg == 2) {
+      } else if (arg == 2) {
         attrs.faint = true;
-      }
-      else if (arg == 3) {
+      } else if (arg == 3) {
         attrs.italic = true;
-      }
-      else if (arg == 4) {
+      } else if (arg == 4) {
         attrs.underline = true;
-      }
-      else if (arg == 5) {
+      } else if (arg == 5) {
         attrs.blink = true;
-      }
-      else if (arg == 7) { // Inverse.
+      } else if (arg == 7) {  // Inverse.
         attrs.inverse = true;
-      }
-      else if (arg == 8) { // Invisible.
+      } else if (arg == 8) {  // Invisible.
         attrs.invisible = true;
-      }
-      else if (arg == 9) {
+      } else if (arg == 9) {
         attrs.strikethrough = true;
-      }
-      else if (arg == 22) {
+      } else if (arg == 22) {
         attrs.bold = false;
         attrs.faint = false;
-      }
-      else if (arg == 23) {
+      } else if (arg == 23) {
         attrs.italic = false;
-      }
-      else if (arg == 24) {
+      } else if (arg == 24) {
         attrs.underline = false;
-      }
-      else if (arg == 25) {
+      } else if (arg == 25) {
         attrs.blink = false;
-      }
-      else if (arg == 27) {
+      } else if (arg == 27) {
         attrs.inverse = false;
-      }
-      else if (arg == 28) {
+      } else if (arg == 28) {
         attrs.invisible = false;
-      }
-      else if (arg == 29) {
+      } else if (arg == 29) {
         attrs.strikethrough = false;
       }
 
-    }
-    else if (arg < 50) {
+    } else if (arg < 50) {
       // Select fore/background color from bottom half of 16 color palette
       // or from the 256 color palette or alternative specify color in fully
       // qualified rgb(r, g, b) form.
       if (arg < 38) {
         attrs.foregroundSource = arg - 30;
 
-      }
-      else if (arg == 38) {
+      } else if (arg == 38) {
         // First check for true color definition
         var trueColor = getTrueColor(i);
         if (trueColor != null) {
@@ -16831,31 +16239,25 @@ hterm.VT.CSI['m'] = function(parseState) {
           attrs.foreground = trueColor;
 
           i += 5;
-        }
-        else {
+        } else {
           // Check for 256 color
           var c = get256(i);
-          if (c == null)
-            break;
+          if (c == null) break;
 
           i += 2;
 
-          if (c >= attrs.colorPalette.length)
-            continue;
+          if (c >= attrs.colorPalette.length) continue;
 
           attrs.foregroundSource = c;
         }
 
-      }
-      else if (arg == 39) {
+      } else if (arg == 39) {
         attrs.foregroundSource = attrs.SRC_DEFAULT;
 
-      }
-      else if (arg < 48) {
+      } else if (arg < 48) {
         attrs.backgroundSource = arg - 40;
 
-      }
-      else if (arg == 48) {
+      } else if (arg == 48) {
         // First check for true color definition
         var trueColor = getTrueColor(i);
         if (trueColor != null) {
@@ -16863,37 +16265,31 @@ hterm.VT.CSI['m'] = function(parseState) {
           attrs.background = trueColor;
 
           i += 5;
-        }
-        else {
+        } else {
           // Check for 256 color
           var c = get256(i);
-          if (c == null)
-            break;
+          if (c == null) break;
 
           i += 2;
 
-          if (c >= attrs.colorPalette.length)
-            continue;
+          if (c >= attrs.colorPalette.length) continue;
 
           attrs.backgroundSource = c;
         }
-      }
-      else {
+      } else {
         attrs.backgroundSource = attrs.SRC_DEFAULT;
       }
 
-    }
-    else if (arg >= 90 && arg <= 97) {
+    } else if (arg >= 90 && arg <= 97) {
       attrs.foregroundSource = arg - 90 + 8;
 
-    }
-    else if (arg >= 100 && arg <= 107) {
+    } else if (arg >= 100 && arg <= 107) {
       attrs.backgroundSource = arg - 100 + 8;
     }
   }
 
-  attrs.setDefaults(this.terminal.getForegroundColor(),
-    this.terminal.getBackgroundColor());
+  attrs.setDefaults(
+      this.terminal.getForegroundColor(), this.terminal.getBackgroundColor());
 };
 
 /**
@@ -16912,8 +16308,7 @@ hterm.VT.CSI['>m'] = hterm.VT.ignore;
 hterm.VT.CSI['n'] = function(parseState) {
   if (parseState.args[0] == '5') {
     this.terminal.io.sendString('\x1b0n');
-  }
-  else if (parseState.args[0] == '6') {
+  } else if (parseState.args[0] == '6') {
     var row = this.terminal.getCursorRow() + 1;
     var col = this.terminal.getCursorColumn() + 1;
     this.terminal.io.sendString('\x1b[' + row + ';' + col + 'R');
@@ -16945,17 +16340,13 @@ hterm.VT.CSI['?n'] = function(parseState) {
     var row = this.terminal.getCursorRow() + 1;
     var col = this.terminal.getCursorColumn() + 1;
     this.terminal.io.sendString('\x1b[' + row + ';' + col + 'R');
-  }
-  else if (parseState.args[0] == '15') {
+  } else if (parseState.args[0] == '15') {
     this.terminal.io.sendString('\x1b[?11n');
-  }
-  else if (parseState.args[0] == '25') {
+  } else if (parseState.args[0] == '25') {
     this.terminal.io.sendString('\x1b[?21n');
-  }
-  else if (parseState.args[0] == '26') {
+  } else if (parseState.args[0] == '26') {
     this.terminal.io.sendString('\x1b[?12;1;0;0n');
-  }
-  else if (parseState.args[0] == '53') {
+  } else if (parseState.args[0] == '53') {
     this.terminal.io.sendString('\x1b[?50n');
   }
 };
@@ -17021,20 +16412,16 @@ hterm.VT.CSI[' q'] = function(parseState) {
   if (arg == '0' || arg == '1') {
     this.terminal.setCursorShape(hterm.Terminal.cursorShape.BLOCK);
     this.terminal.setCursorBlink(true);
-  }
-  else if (arg == '2') {
+  } else if (arg == '2') {
     this.terminal.setCursorShape(hterm.Terminal.cursorShape.BLOCK);
     this.terminal.setCursorBlink(false);
-  }
-  else if (arg == '3') {
+  } else if (arg == '3') {
     this.terminal.setCursorShape(hterm.Terminal.cursorShape.UNDERLINE);
     this.terminal.setCursorBlink(true);
-  }
-  else if (arg == '4') {
+  } else if (arg == '4') {
     this.terminal.setCursorShape(hterm.Terminal.cursorShape.UNDERLINE);
     this.terminal.setCursorBlink(false);
-  }
-  else {
+  } else {
     console.warn('Unknown cursor style: ' + arg);
   }
 };
@@ -17169,16 +16556,13 @@ hterm.VT.CSI['$x'] = hterm.VT.ignore;
  * Implemented as far as we care (start a glyph and end a glyph).
  */
 hterm.VT.CSI['z'] = function(parseState) {
-  if (parseState.args.length < 1)
-    return;
+  if (parseState.args.length < 1) return;
   var arg = parseState.args[0];
   if (arg == '0') {
     // Start a glyph (one parameter, the glyph number).
-    if (parseState.args.length < 2)
-      return;
+    if (parseState.args.length < 2) return;
     this.terminal.getTextAttributes().tileData = parseState.args[1];
-  }
-  else if (arg == '1') {
+  } else if (arg == '1') {
     // End a glyph.
     this.terminal.getTextAttributes().tileData = null;
   }
@@ -17256,8 +16640,7 @@ hterm.VT.CharacterMap = function(name, glmap) {
    */
   this.GR = null;
 
-  if (glmap)
-    this.reset(glmap);
+  if (glmap) this.reset(glmap);
 };
 
 /**
@@ -17290,17 +16673,15 @@ hterm.VT.CharacterMap.prototype.reset = function(glmap) {
   this.grre = new RegExp('[' + grkeys.join('') + ']', 'g');
 
   this.GL = function(str) {
-    return str.replace(this.glre,
-      function(ch) {
-        return this.glmap[ch];
-      }.bind(this));
+    return str.replace(this.glre, function(ch) {
+      return this.glmap[ch];
+    }.bind(this));
   }.bind(this);
 
   this.GR = function(str) {
-    return str.replace(this.grre,
-      function(ch) {
-        return this.grmap[ch];
-      }.bind(this));
+    return str.replace(this.grre, function(ch) {
+      return this.grmap[ch];
+    }.bind(this));
   }.bind(this);
 };
 
@@ -17314,409 +16695,396 @@ hterm.VT.CharacterMap.maps = {};
  * VT100 Graphic character map.
  * http://vt100.net/docs/vt220-rm/table2-4.html
  */
-hterm.VT.CharacterMap.maps['0'] = new hterm.VT.CharacterMap(
-  'graphic', {
-    '`': '◆', // ` -> diamond
-    'a': '▒', // a -> grey-box
-    'b': '␉', // b -> h/t
-    'c': '␌', // c -> f/f
-    'd': '␍', // d -> c/r
-    'e': '␊', // e -> l/f
-    'f': '°', // f -> degree
-    'g': '±', // g -> +/-
-    'h': '␤', // h -> n/l
-    'i': '␋', // i -> v/t
-    'j': '┘', // j -> bottom-right
-    'k': '┐', // k -> top-right
-    'l': '┌', // l -> top-left
-    'm': '└', // m -> bottom-left
-    'n': '┼', // n -> line-cross
-    'o': '⎺', // o -> scan1
-    'p': '⎻', // p -> scan3
-    'q': '─', // q -> scan5
-    'r': '⎼', // r -> scan7
-    's': '⎽', // s -> scan9
-    't': '├', // t -> left-tee
-    'u': '┤', // u -> right-tee
-    'v': '┴', // v -> bottom-tee
-    'w': '┬', // w -> top-tee
-    'x': '│', // x -> vertical-line
-    'y': '≤', // y -> less-equal
-    'z': '≥', // z -> greater-equal
-    '{': 'π', // { -> pi
-    '|': '≠', // | -> not-equal
-    '}': '£', // } -> british-pound
-    '~': '·', // ~ -> dot
-  });
+hterm.VT.CharacterMap.maps['0'] = new hterm.VT.CharacterMap('graphic', {
+  '`': '◆',  // ` -> diamond
+  'a': '▒',  // a -> grey-box
+  'b': '␉',  // b -> h/t
+  'c': '␌',  // c -> f/f
+  'd': '␍',  // d -> c/r
+  'e': '␊',  // e -> l/f
+  'f': '°',  // f -> degree
+  'g': '±',  // g -> +/-
+  'h': '␤',  // h -> n/l
+  'i': '␋',  // i -> v/t
+  'j': '┘',  // j -> bottom-right
+  'k': '┐',  // k -> top-right
+  'l': '┌',  // l -> top-left
+  'm': '└',  // m -> bottom-left
+  'n': '┼',  // n -> line-cross
+  'o': '⎺',  // o -> scan1
+  'p': '⎻',  // p -> scan3
+  'q': '─',  // q -> scan5
+  'r': '⎼',  // r -> scan7
+  's': '⎽',  // s -> scan9
+  't': '├',  // t -> left-tee
+  'u': '┤',  // u -> right-tee
+  'v': '┴',  // v -> bottom-tee
+  'w': '┬',  // w -> top-tee
+  'x': '│',  // x -> vertical-line
+  'y': '≤',  // y -> less-equal
+  'z': '≥',  // z -> greater-equal
+  '{': 'π',  // { -> pi
+  '|': '≠',  // | -> not-equal
+  '}': '£',  // } -> british-pound
+  '~': '·',  // ~ -> dot
+});
 
 /**
  * British character map.
  * http://vt100.net/docs/vt220-rm/table2-5.html
  */
-hterm.VT.CharacterMap.maps['A'] = new hterm.VT.CharacterMap(
-  'british', {
-    '#': '£', // # -> british-pound
-  });
+hterm.VT.CharacterMap.maps['A'] = new hterm.VT.CharacterMap('british', {
+  '#': '£',  // # -> british-pound
+});
 
 /**
  * US ASCII map, no changes.
  */
-hterm.VT.CharacterMap.maps['B'] = new hterm.VT.CharacterMap(
-  'us', null);
+hterm.VT.CharacterMap.maps['B'] = new hterm.VT.CharacterMap('us', null);
 
 /**
  * Dutch character map.
  * http://vt100.net/docs/vt220-rm/table2-6.html
  */
-hterm.VT.CharacterMap.maps['4'] = new hterm.VT.CharacterMap(
-  'dutch', {
-    '#': '£', // # -> british-pound
+hterm.VT.CharacterMap.maps['4'] = new hterm.VT.CharacterMap('dutch', {
+  '#': '£',  // # -> british-pound
 
-    '@': '¾', // @ -> 3/4
+  '@': '¾',  // @ -> 3/4
 
-    '[': 'Ĳ', // [ -> 'ij' ligature (xterm goes with \u00ff?)
-    '\\': '½', // \ -> 1/2
-    ']': '|', // ] -> vertical bar
+  '[': 'Ĳ',   // [ -> 'ij' ligature (xterm goes with \u00ff?)
+  '\\': '½',  // \ -> 1/2
+  ']': '|',   // ] -> vertical bar
 
-    '{': '¨', // { -> two dots
-    '|': 'f', // | -> f
-    '}': '¼', // } -> 1/4
-    '~': '´', // ~ -> acute
-  });
+  '{': '¨',  // { -> two dots
+  '|': 'f',  // | -> f
+  '}': '¼',  // } -> 1/4
+  '~': '´',  // ~ -> acute
+});
 
 /**
  * Finnish character map.
  * http://vt100.net/docs/vt220-rm/table2-7.html
  */
-hterm.VT.CharacterMap.maps['C'] =
-  hterm.VT.CharacterMap.maps['5'] = new hterm.VT.CharacterMap(
-    'finnish', {
-      '[': 'Ä', // [ -> 'A' umlaut
-      '\\': 'Ö', // \ -> 'O' umlaut
-      ']': 'Å', // ] -> 'A' ring
-      '^': 'Ü', // ~ -> 'u' umlaut
+hterm.VT.CharacterMap.maps['C'] = hterm.VT.CharacterMap.maps['5'] =
+    new hterm.VT.CharacterMap('finnish', {
+      '[': 'Ä',   // [ -> 'A' umlaut
+      '\\': 'Ö',  // \ -> 'O' umlaut
+      ']': 'Å',   // ] -> 'A' ring
+      '^': 'Ü',   // ~ -> 'u' umlaut
 
-      '`': 'é', // ` -> 'e' acute
+      '`': 'é',  // ` -> 'e' acute
 
-      '{': 'ä', // { -> 'a' umlaut
-      '|': 'ö', // | -> 'o' umlaut
-      '}': 'å', // } -> 'a' ring
-      '~': 'ü', // ~ -> 'u' umlaut
+      '{': 'ä',  // { -> 'a' umlaut
+      '|': 'ö',  // | -> 'o' umlaut
+      '}': 'å',  // } -> 'a' ring
+      '~': 'ü',  // ~ -> 'u' umlaut
     });
 
 /**
  * French character map.
  * http://vt100.net/docs/vt220-rm/table2-8.html
  */
-hterm.VT.CharacterMap.maps['R'] = new hterm.VT.CharacterMap(
-  'french', {
-    '#': '£', // # -> british-pound
+hterm.VT.CharacterMap.maps['R'] = new hterm.VT.CharacterMap('french', {
+  '#': '£',  // # -> british-pound
 
-    '@': 'à', // @ -> 'a' grave
+  '@': 'à',  // @ -> 'a' grave
 
-    '[': '°', // [ -> ring
-    '\\': 'ç', // \ -> 'c' cedilla
-    ']': '§', // ] -> section symbol (double s)
+  '[': '°',   // [ -> ring
+  '\\': 'ç',  // \ -> 'c' cedilla
+  ']': '§',   // ] -> section symbol (double s)
 
-    '{': 'é', // { -> 'e' acute
-    '|': 'ù', // | -> 'u' grave
-    '}': 'è', // } -> 'e' grave
-    '~': '¨', // ~ -> umlaut
-  });
+  '{': 'é',  // { -> 'e' acute
+  '|': 'ù',  // | -> 'u' grave
+  '}': 'è',  // } -> 'e' grave
+  '~': '¨',  // ~ -> umlaut
+});
 
 /**
  * French Canadian character map.
  * http://vt100.net/docs/vt220-rm/table2-9.html
  */
-hterm.VT.CharacterMap.maps['Q'] = new hterm.VT.CharacterMap(
-  'french canadian', {
-    '@': 'à', // @ -> 'a' grave
+hterm.VT.CharacterMap.maps['Q'] = new hterm.VT.CharacterMap('french canadian', {
+  '@': 'à',  // @ -> 'a' grave
 
-    '[': 'â', // [ -> 'a' circumflex
-    '\\': 'ç', // \ -> 'c' cedilla
-    ']': 'ê', // ] -> 'e' circumflex
-    '^': 'î', // ^ -> 'i' circumflex
+  '[': 'â',   // [ -> 'a' circumflex
+  '\\': 'ç',  // \ -> 'c' cedilla
+  ']': 'ê',   // ] -> 'e' circumflex
+  '^': 'î',   // ^ -> 'i' circumflex
 
-    '`': 'ô', // ` -> 'o' circumflex
+  '`': 'ô',  // ` -> 'o' circumflex
 
-    '{': 'é', // { -> 'e' acute
-    '|': 'ù', // | -> 'u' grave
-    '}': 'è', // } -> 'e' grave
-    '~': 'û', // ~ -> 'u' circumflex
-  });
+  '{': 'é',  // { -> 'e' acute
+  '|': 'ù',  // | -> 'u' grave
+  '}': 'è',  // } -> 'e' grave
+  '~': 'û',  // ~ -> 'u' circumflex
+});
 
 /**
  * German character map.
  * http://vt100.net/docs/vt220-rm/table2-10.html
  */
-hterm.VT.CharacterMap.maps['K'] = new hterm.VT.CharacterMap(
-  'german', {
-    '@': '§', // @ -> section symbol (double s)
+hterm.VT.CharacterMap.maps['K'] = new hterm.VT.CharacterMap('german', {
+  '@': '§',  // @ -> section symbol (double s)
 
-    '[': 'Ä', // [ -> 'A' umlaut
-    '\\': 'Ö', // \ -> 'O' umlaut
-    ']': 'Ü', // ] -> 'U' umlaut
+  '[': 'Ä',   // [ -> 'A' umlaut
+  '\\': 'Ö',  // \ -> 'O' umlaut
+  ']': 'Ü',   // ] -> 'U' umlaut
 
-    '{': 'ä', // { -> 'a' umlaut
-    '|': 'ö', // | -> 'o' umlaut
-    '}': 'ü', // } -> 'u' umlaut
-    '~': 'ß', // ~ -> eszett
-  });
+  '{': 'ä',  // { -> 'a' umlaut
+  '|': 'ö',  // | -> 'o' umlaut
+  '}': 'ü',  // } -> 'u' umlaut
+  '~': 'ß',  // ~ -> eszett
+});
 
 /**
  * Italian character map.
  * http://vt100.net/docs/vt220-rm/table2-11.html
  */
-hterm.VT.CharacterMap.maps['Y'] = new hterm.VT.CharacterMap(
-  'italian', {
-    '#': '£', // # -> british-pound
+hterm.VT.CharacterMap.maps['Y'] = new hterm.VT.CharacterMap('italian', {
+  '#': '£',  // # -> british-pound
 
-    '@': '§', // @ -> section symbol (double s)
+  '@': '§',  // @ -> section symbol (double s)
 
-    '[': '°', // [ -> ring
-    '\\': 'ç', // \ -> 'c' cedilla
-    ']': 'é', // ] -> 'e' acute
+  '[': '°',   // [ -> ring
+  '\\': 'ç',  // \ -> 'c' cedilla
+  ']': 'é',   // ] -> 'e' acute
 
-    '`': 'ù', // ` -> 'u' grave
+  '`': 'ù',  // ` -> 'u' grave
 
-    '{': 'à', // { -> 'a' grave
-    '|': 'ò', // | -> 'o' grave
-    '}': 'è', // } -> 'e' grave
-    '~': 'ì', // ~ -> 'i' grave
-  });
+  '{': 'à',  // { -> 'a' grave
+  '|': 'ò',  // | -> 'o' grave
+  '}': 'è',  // } -> 'e' grave
+  '~': 'ì',  // ~ -> 'i' grave
+});
 
 /**
  * Norwegian/Danish character map.
  * http://vt100.net/docs/vt220-rm/table2-12.html
  */
-hterm.VT.CharacterMap.maps['E'] =
-  hterm.VT.CharacterMap.maps['6'] = new hterm.VT.CharacterMap(
-    'norwegian/danish', {
-      '@': 'Ä', // @ -> 'A' umlaut
+hterm.VT.CharacterMap.maps['E'] = hterm.VT.CharacterMap.maps['6'] =
+    new hterm.VT.CharacterMap('norwegian/danish', {
+      '@': 'Ä',  // @ -> 'A' umlaut
 
-      '[': 'Æ', // [ -> 'AE' ligature
-      '\\': 'Ø', // \ -> 'O' stroke
-      ']': 'Å', // ] -> 'A' ring
-      '^': 'Ü', // ^ -> 'U' umlaut
+      '[': 'Æ',   // [ -> 'AE' ligature
+      '\\': 'Ø',  // \ -> 'O' stroke
+      ']': 'Å',   // ] -> 'A' ring
+      '^': 'Ü',   // ^ -> 'U' umlaut
 
-      '`': 'ä', // ` -> 'a' umlaut
+      '`': 'ä',  // ` -> 'a' umlaut
 
-      '{': 'æ', // { -> 'ae' ligature
-      '|': 'ø', // | -> 'o' stroke
-      '}': 'å', // } -> 'a' ring
-      '~': 'ü', // ~ -> 'u' umlaut
+      '{': 'æ',  // { -> 'ae' ligature
+      '|': 'ø',  // | -> 'o' stroke
+      '}': 'å',  // } -> 'a' ring
+      '~': 'ü',  // ~ -> 'u' umlaut
     });
 
 /**
  * Spanish character map.
  * http://vt100.net/docs/vt220-rm/table2-13.html
  */
-hterm.VT.CharacterMap.maps['Z'] = new hterm.VT.CharacterMap(
-  'spanish', {
-    '#': '£', // # -> british-pound
+hterm.VT.CharacterMap.maps['Z'] = new hterm.VT.CharacterMap('spanish', {
+  '#': '£',  // # -> british-pound
 
-    '@': '§', // @ -> section symbol (double s)
+  '@': '§',  // @ -> section symbol (double s)
 
-    '[': '¡', // [ -> '!' inverted
-    '\\': 'Ñ', // \ -> 'N' tilde
-    ']': '¿', // ] -> '?' inverted
+  '[': '¡',   // [ -> '!' inverted
+  '\\': 'Ñ',  // \ -> 'N' tilde
+  ']': '¿',   // ] -> '?' inverted
 
-    '{': '°', // { -> ring
-    '|': 'ñ', // | -> 'n' tilde
-    '}': 'ç', // } -> 'c' cedilla
-  });
+  '{': '°',  // { -> ring
+  '|': 'ñ',  // | -> 'n' tilde
+  '}': 'ç',  // } -> 'c' cedilla
+});
 
 /**
  * Swedish character map.
  * http://vt100.net/docs/vt220-rm/table2-14.html
  */
-hterm.VT.CharacterMap.maps['7'] =
-  hterm.VT.CharacterMap.maps['H'] = new hterm.VT.CharacterMap(
-    'swedish', {
-      '@': 'É', // @ -> 'E' acute
+hterm.VT.CharacterMap.maps['7'] = hterm.VT.CharacterMap.maps['H'] =
+    new hterm.VT.CharacterMap('swedish', {
+      '@': 'É',  // @ -> 'E' acute
 
-      '[': 'Ä', // [ -> 'A' umlaut
-      '\\': 'Ö', // \ -> 'O' umlaut
-      ']': 'Å', // ] -> 'A' ring
-      '^': 'Ü', // ^ -> 'U' umlaut
+      '[': 'Ä',   // [ -> 'A' umlaut
+      '\\': 'Ö',  // \ -> 'O' umlaut
+      ']': 'Å',   // ] -> 'A' ring
+      '^': 'Ü',   // ^ -> 'U' umlaut
 
-      '`': 'é', // ` -> 'e' acute
+      '`': 'é',  // ` -> 'e' acute
 
-      '{': 'ä', // { -> 'a' umlaut
-      '|': 'ö', // | -> 'o' umlaut
-      '}': 'å', // } -> 'a' ring
-      '~': 'ü', // ~ -> 'u' umlaut
+      '{': 'ä',  // { -> 'a' umlaut
+      '|': 'ö',  // | -> 'o' umlaut
+      '}': 'å',  // } -> 'a' ring
+      '~': 'ü',  // ~ -> 'u' umlaut
     });
 
 /**
  * Swiss character map.
  * http://vt100.net/docs/vt220-rm/table2-15.html
  */
-hterm.VT.CharacterMap.maps['='] = new hterm.VT.CharacterMap(
-  'swiss', {
-    '#': 'ù', // # -> 'u' grave
+hterm.VT.CharacterMap.maps['='] = new hterm.VT.CharacterMap('swiss', {
+  '#': 'ù',  // # -> 'u' grave
 
-    '@': 'à', // @ -> 'a' grave
+  '@': 'à',  // @ -> 'a' grave
 
-    '[': 'é', // [ -> 'e' acute
-    '\\': 'ç', // \ -> 'c' cedilla
-    ']': 'ê', // ] -> 'e' circumflex
-    '^': 'î', // ^ -> 'i' circumflex
-    '_': 'è', // _ -> 'e' grave
+  '[': 'é',   // [ -> 'e' acute
+  '\\': 'ç',  // \ -> 'c' cedilla
+  ']': 'ê',   // ] -> 'e' circumflex
+  '^': 'î',   // ^ -> 'i' circumflex
+  '_': 'è',   // _ -> 'e' grave
 
-    '`': 'ô', // ` -> 'o' circumflex
+  '`': 'ô',  // ` -> 'o' circumflex
 
-    '{': 'ä', // { -> 'a' umlaut
-    '|': 'ö', // | -> 'o' umlaut
-    '}': 'ü', // } -> 'u' umlaut
-    '~': 'û', // ~ -> 'u' circumflex
-  });
-lib.resource.add('hterm/audio/bell', 'audio/ogg;base64',
-  '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' +
-  'zinmkFLKMeUcUko5p5xTzjkIHYTKMQadgxAppRxTzinHHITMQeWcg9BBKAAAIMABACDAQig0ZEUA' +
-  'ECcA4HAkz5M0SxQlSxNFzxRl1xNN15U0zTQ1UVRVyxNV1VRV2xZNVbYlTRNNTfRUVRNFVRVV05ZN' +
-  'VbVtzzRl2VRV3RZV1bZl2xZ+V5Z13zNNWRZV1dZNVbV115Z9X9ZtXZg0zTQ1UVRVTRRV1VRV2zZV' +
-  '17Y1UXRVUVVlWVRVWXZlWfdVV9Z9SxRV1VNN2RVVVbZV2fVtVZZ94XRVXVdl2fdVWRZ+W9eF4fZ9' +
-  '4RhV1dZN19V1VZZ9YdZlYbd13yhpmmlqoqiqmiiqqqmqtm2qrq1bouiqoqrKsmeqrqzKsq+rrmzr' +
-  'miiqrqiqsiyqqiyrsqz7qizrtqiquq3KsrCbrqvrtu8LwyzrunCqrq6rsuz7qizruq3rxnHrujB8' +
-  'pinLpqvquqm6um7runHMtm0co6rqvirLwrDKsu/rui+0dSFRVXXdlF3jV2VZ921fd55b94WybTu/' +
-  'rfvKceu60vg5z28cubZtHLNuG7+t+8bzKz9hOI6lZ5q2baqqrZuqq+uybivDrOtCUVV9XZVl3zdd' +
-  'WRdu3zeOW9eNoqrquirLvrDKsjHcxm8cuzAcXds2jlvXnbKtC31jyPcJz2vbxnH7OuP2daOvDAnH' +
-  'jwAAgAEHAIAAE8pAoSErAoA4AQAGIecUUxAqxSB0EFLqIKRUMQYhc05KxRyUUEpqIZTUKsYgVI5J' +
-  'yJyTEkpoKZTSUgehpVBKa6GU1lJrsabUYu0gpBZKaS2U0lpqqcbUWowRYxAy56RkzkkJpbQWSmkt' +
-  'c05K56CkDkJKpaQUS0otVsxJyaCj0kFIqaQSU0mptVBKa6WkFktKMbYUW24x1hxKaS2kEltJKcYU' +
-  'U20txpojxiBkzknJnJMSSmktlNJa5ZiUDkJKmYOSSkqtlZJSzJyT0kFIqYOOSkkptpJKTKGU1kpK' +
-  'sYVSWmwx1pxSbDWU0lpJKcaSSmwtxlpbTLV1EFoLpbQWSmmttVZraq3GUEprJaUYS0qxtRZrbjHm' +
-  'GkppraQSW0mpxRZbji3GmlNrNabWam4x5hpbbT3WmnNKrdbUUo0txppjbb3VmnvvIKQWSmktlNJi' +
-  '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' +
-  'm2L/kruPM6Q7oz4tvDQy+bZ3HzOi+gNHA4DZEgA=' +
-  ''
-);
+  '{': 'ä',  // { -> 'a' umlaut
+  '|': 'ö',  // | -> 'o' umlaut
+  '}': 'ü',  // } -> 'u' umlaut
+  '~': 'û',  // ~ -> 'u' circumflex
+});
+lib.resource.add(
+    'hterm/audio/bell', 'audio/ogg;base64',
+    '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' +
+        'QSc9uJI5wwzz4FIoFURMg40lN44gDcKmXEnlOAhCQ1YEAFEAAIAxyDHEGHLOScmgRM4xCZ2UyDkn' +
+        'pZPSSSktlhgzKSWmEmPjnKPSScmklBhLip2kEmOJrQAAgAAHAIAAC6HQkBUBQBQAAGIMUgophZRS' +
+        'zinmkFLKMeUcUko5p5xTzjkIHYTKMQadgxAppRxTzinHHITMQeWcg9BBKAAAIMABACDAQig0ZEUA' +
+        'ECcA4HAkz5M0SxQlSxNFzxRl1xNN15U0zTQ1UVRVyxNV1VRV2xZNVbYlTRNNTfRUVRNFVRVV05ZN' +
+        'VbVtzzRl2VRV3RZV1bZl2xZ+V5Z13zNNWRZV1dZNVbV115Z9X9ZtXZg0zTQ1UVRVTRRV1VRV2zZV' +
+        '17Y1UXRVUVVlWVRVWXZlWfdVV9Z9SxRV1VNN2RVVVbZV2fVtVZZ94XRVXVdl2fdVWRZ+W9eF4fZ9' +
+        '4RhV1dZN19V1VZZ9YdZlYbd13yhpmmlqoqiqmiiqqqmqtm2qrq1bouiqoqrKsmeqrqzKsq+rrmzr' +
+        'miiqrqiqsiyqqiyrsqz7qizrtqiquq3KsrCbrqvrtu8LwyzrunCqrq6rsuz7qizruq3rxnHrujB8' +
+        'pinLpqvquqm6um7runHMtm0co6rqvirLwrDKsu/rui+0dSFRVXXdlF3jV2VZ921fd55b94WybTu/' +
+        'rfvKceu60vg5z28cubZtHLNuG7+t+8bzKz9hOI6lZ5q2baqqrZuqq+uybivDrOtCUVV9XZVl3zdd' +
+        'WRdu3zeOW9eNoqrquirLvrDKsjHcxm8cuzAcXds2jlvXnbKtC31jyPcJz2vbxnH7OuP2daOvDAnH' +
+        'jwAAgAEHAIAAE8pAoSErAoA4AQAGIecUUxAqxSB0EFLqIKRUMQYhc05KxRyUUEpqIZTUKsYgVI5J' +
+        'yJyTEkpoKZTSUgehpVBKa6GU1lJrsabUYu0gpBZKaS2U0lpqqcbUWowRYxAy56RkzkkJpbQWSmkt' +
+        'c05K56CkDkJKpaQUS0otVsxJyaCj0kFIqaQSU0mptVBKa6WkFktKMbYUW24x1hxKaS2kEltJKcYU' +
+        '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' +
+        'm2L/kruPM6Q7oz4tvDQy+bZ3HzOi+gNHA4DZEgA=' +
+        '');
 
-lib.resource.add('hterm/concat/date', 'text/plain',
-  'Tue, 25 Apr 2017 15:12:45 +0000' +
-  ''
-);
+lib.resource.add(
+    'hterm/concat/date', 'text/plain',
+    'Tue, 25 Apr 2017 15:12:45 +0000' +
+        '');
 
-lib.resource.add('hterm/changelog/version', 'text/plain',
-  '1.62' +
-  ''
-);
+lib.resource.add(
+    'hterm/changelog/version', 'text/plain',
+    '1.62' +
+        '');
 
-lib.resource.add('hterm/changelog/date', 'text/plain',
-  '2017-04-17' +
-  ''
-);
+lib.resource.add(
+    'hterm/changelog/date', 'text/plain',
+    '2017-04-17' +
+        '');
 
-lib.resource.add('hterm/git/HEAD', 'text/plain',
-  'git rev-parse HEAD' +
-  ''
-);
+lib.resource.add(
+    'hterm/git/HEAD', 'text/plain',
+    'git rev-parse HEAD' +
+        '');

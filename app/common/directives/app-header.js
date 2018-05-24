@@ -1,17 +1,18 @@
 window.angular && (function(angular) {
   'use strict';
 
-  angular
-    .module('app.common.directives')
-    .directive('appHeader', ['APIUtils', function(APIUtils) {
+  angular.module('app.common.directives').directive('appHeader', [
+    'APIUtils',
+    function(APIUtils) {
       return {
         'restrict': 'E',
         'template': require('./app-header.html'),
-        'scope': {
-          'path': '='
-        },
-        'controller': ['$rootScope', '$scope', 'dataService', 'userModel', '$location', '$route',
-          function($rootScope, $scope, dataService, userModel, $location, $route) {
+        'scope': {'path': '='},
+        'controller': [
+          '$rootScope', '$scope', 'dataService', 'userModel', '$location',
+          '$route',
+          function(
+              $rootScope, $scope, dataService, userModel, $location, $route) {
             $scope.dataService = dataService;
 
             $scope.loadServerHealth = function() {
@@ -24,19 +25,22 @@ window.angular && (function(angular) {
               if (!userModel.isLoggedIn()) {
                 return;
               }
-              APIUtils.getHostState().then(function(status) {
-                if (status == 'xyz.openbmc_project.State.Host.HostState.Off') {
-                  dataService.setPowerOffState();
-                }
-                else if (status == 'xyz.openbmc_project.State.Host.HostState.Running') {
-                  dataService.setPowerOnState();
-                }
-                else {
-                  dataService.setErrorState();
-                }
-              }, function(error) {
-                dataService.activateErrorModal();
-              });
+              APIUtils.getHostState().then(
+                  function(status) {
+                    if (status ==
+                        'xyz.openbmc_project.State.Host.HostState.Off') {
+                      dataService.setPowerOffState();
+                    } else if (
+                        status ==
+                        'xyz.openbmc_project.State.Host.HostState.Running') {
+                      dataService.setPowerOnState();
+                    } else {
+                      dataService.setErrorState();
+                    }
+                  },
+                  function(error) {
+                    dataService.activateErrorModal();
+                  });
             };
 
             $scope.loadNetworkInfo = function() {
@@ -60,19 +64,19 @@ window.angular && (function(angular) {
               userModel.logout(function(status, error) {
                 if (status) {
                   $location.path('/logout');
-                }
-                else {
+                } else {
                   console.log(error);
                 }
               });
             };
 
             $scope.refresh = function() {
-              //reload current page controllers and header
+              // reload current page controllers and header
               loadData();
               $route.reload();
-              //Add flash class to header timestamp on click of refresh
-              var myEl = angular.element(document.querySelector('.header__refresh'));
+              // Add flash class to header timestamp on click of refresh
+              var myEl =
+                  angular.element(document.querySelector('.header__refresh'));
               myEl.addClass('flash');
               setTimeout(function() {
                 myEl.removeClass('flash');
@@ -80,9 +84,10 @@ window.angular && (function(angular) {
 
             };
 
-            var loginListener = $rootScope.$on('user-logged-in', function(event, arg) {
-              loadData();
-            });
+            var loginListener =
+                $rootScope.$on('user-logged-in', function(event, arg) {
+                  loadData();
+                });
 
             $scope.$on('$destroy', function() {
               loginListener();
@@ -94,5 +99,6 @@ window.angular && (function(angular) {
           }
         ]
       };
-    }]);
+    }
+  ]);
 })(window.angular);

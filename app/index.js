@@ -1,5 +1,6 @@
 /**
- * A module which contains the definition of the application and the base of configuration
+ * A module which contains the definition of the application and the base of
+ * configuration
  *
  * @module app/index/services/index
  * @exports app/index
@@ -10,16 +11,18 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'font-awesome/css/font-awesome.css';
+
 import angular from 'angular';
-import angular_cookies from 'angular-cookies';
-import angular_sanitize from 'angular-sanitize';
-import angular_ui_router from 'angular-ui-router';
 import angular_animate from 'angular-animate';
 import angular_clipboard from 'angular-clipboard';
-import angular_ui_bootstrap from 'angular-ui-bootstrap';
+import angular_cookies from 'angular-cookies';
 import angular_route from 'angular-route';
+import angular_sanitize from 'angular-sanitize';
+import angular_ui_bootstrap from 'angular-ui-bootstrap';
+import angular_ui_router from 'angular-ui-router';
 import angular_utils from 'angularUtils/src/angularUtils.js';
 import angular_utils_pagination from 'angularUtils/src/directives/pagination/dirPagination.js';
+
 require('./styles/index.scss');
 
 // TODO(Ed)  clean this up, add the appropriate imports to phosphor-webui
@@ -96,82 +99,82 @@ window.angular && (function(angular) {
   'use strict';
 
   angular
-    .module('app', [
-      // Dependencies
-      'ngRoute',
-      'angular-clipboard',
-      'angularUtils.directives.dirPagination',
-      // Basic resources
-      'app.constants',
-      'app.templates',
-      'app.vendors',
-      'app.common.services',
-      'app.common.directives',
-      'app.common.filters',
-      // Model resources
-      'app.login',
-      'app.overview',
-      'app.serverControl',
-      'app.serverHealth',
-      'app.configuration',
-      'app.users',
-      'app.multiServer'
-    ])
-    // Route configuration
-    .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-      $locationProvider.hashPrefix('');
-      $routeProvider
-        .otherwise({
-          'redirectTo': '/login'
-        });
-    }])
-    .config(['$compileProvider', function($compileProvider) {
-      $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|data|blob):/);
-    }])
-    .config(['$httpProvider', function($httpProvider) {
-      $httpProvider.interceptors.push('apiInterceptor');
-    }])
-    .run(['$rootScope', '$location', 'dataService', 'userModel',
-      function($rootScope, $location, dataService, userModel) {
-        $rootScope.dataService = dataService;
-        dataService.path = $location.path();
-        $rootScope.$on('$routeChangeStart', function(event, next, current) {
-          if (next.$$route == null || next.$$route == undefined) return;
-          if (next.$$route.authenticated) {
-            if (!userModel.isLoggedIn()) {
-              $location.path('/login');
-            }
-          }
-
-          if (next.$$route.originalPath == '/' ||
-            next.$$route.originalPath == '/login') {
-            if (userModel.isLoggedIn()) {
-              if (current && current.$$route) {
-                $location.path(current.$$route.originalPath);
-              }
-              else {
-                $location.path('/overview/server');
+      .module(
+          'app',
+          [
+            // Dependencies
+            'ngRoute', 'angular-clipboard',
+            'angularUtils.directives.dirPagination',
+            // Basic resources
+            'app.constants', 'app.templates', 'app.vendors',
+            'app.common.services', 'app.common.directives',
+            'app.common.filters',
+            // Model resources
+            'app.login', 'app.overview', 'app.serverControl',
+            'app.serverHealth', 'app.configuration', 'app.users',
+            'app.multiServer'
+          ])
+      // Route configuration
+      .config([
+        '$routeProvider', '$locationProvider',
+        function($routeProvider, $locationProvider) {
+          $locationProvider.hashPrefix('');
+          $routeProvider.otherwise({'redirectTo': '/login'});
+        }
+      ])
+      .config([
+        '$compileProvider',
+        function($compileProvider) {
+          $compileProvider.aHrefSanitizationWhitelist(
+              /^\s*(https?|ftp|mailto|tel|file|data|blob):/);
+        }
+      ])
+      .config([
+        '$httpProvider',
+        function($httpProvider) {
+          $httpProvider.interceptors.push('apiInterceptor');
+        }
+      ])
+      .run([
+        '$rootScope', '$location', 'dataService', 'userModel',
+        function($rootScope, $location, dataService, userModel) {
+          $rootScope.dataService = dataService;
+          dataService.path = $location.path();
+          $rootScope.$on('$routeChangeStart', function(event, next, current) {
+            if (next.$$route == null || next.$$route == undefined) return;
+            if (next.$$route.authenticated) {
+              if (!userModel.isLoggedIn()) {
+                $location.path('/login');
               }
             }
-          }
-        });
-        $rootScope.$on('$locationChangeSuccess', function(event) {
-          var path = $location.path();
-          dataService.path = path;
-          if (['/', '/login', '/logout'].indexOf(path) == -1 &&
-            path.indexOf('/login') == -1) {
-            dataService.showNavigation = true;
-          }
-          else {
-            dataService.showNavigation = false;
-          }
-        });
 
-        $rootScope.$on('timedout-user', function() {
-          sessionStorage.removeItem('LOGIN_ID');
-          $location.path('/login');
-        });
-      }
-    ]);
+            if (next.$$route.originalPath == '/' ||
+                next.$$route.originalPath == '/login') {
+              if (userModel.isLoggedIn()) {
+                if (current && current.$$route) {
+                  $location.path(current.$$route.originalPath);
+                } else {
+                  $location.path('/overview/server');
+                }
+              }
+            }
+          });
+          $rootScope.$on('$locationChangeSuccess', function(event) {
+            var path = $location.path();
+            dataService.path = path;
+            if (['/', '/login', '/logout'].indexOf(path) == -1 &&
+                path.indexOf('/login') == -1) {
+              dataService.showNavigation = true;
+            } else {
+              dataService.showNavigation = false;
+            }
+          });
+
+          $rootScope.$on('timedout-user', function() {
+            sessionStorage.removeItem('LOGIN_ID');
+            $location.path('/login');
+          });
+        }
+      ]);
 
 })(window.angular);

@@ -9,19 +9,17 @@ window.angular && (function(angular) {
   'use strict';
 
   angular
-    .module('app.login', [
-      'ngRoute',
-      'app.constants',
-      'app.common.services'
-    ])
-    // Route configuration
-    .config(['$routeProvider', function($routeProvider) {
-      $routeProvider
-        .when('/login', {
-          'template': require('./controllers/login-controller.html'),
-          'controller': 'LoginController',
-          authenticated: false
-        });
-    }]);
+      .module('app.login', ['ngRoute', 'app.constants', 'app.common.services'])
+      // Route configuration
+      .config([
+        '$routeProvider',
+        function($routeProvider) {
+          $routeProvider.when('/login', {
+            'template': require('./controllers/login-controller.html'),
+            'controller': 'LoginController',
+            authenticated: false
+          });
+        }
+      ]);
 
 })(window.angular);

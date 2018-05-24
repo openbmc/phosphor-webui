@@ -11,7 +11,6 @@ window.angular && (function(angular) {
   /**
    * Used for gulp template cache plugin.
    */
-  angular
-    .module('app.templates', []);
+  angular.module('app.templates', []);
 
 })(window.angular);
