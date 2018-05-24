@@ -10,7 +10,7 @@ var CompressionPlugin = require('compression-webpack-plugin');
 var AssetsPlugin = require('assets-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var path = require('path');
-var UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 /**
  * Env
@@ -36,7 +36,7 @@ module.exports = [
      * Karma will set this when it's a test build
      */
     config.entry = isTest ? void 0 : {
-      app : './app/index.js'
+      app: './app/index.js'
 
     };
 
@@ -48,19 +48,19 @@ module.exports = [
      */
     config.output = isTest ? {} : {
       // Absolute output directory
-      path : __dirname + '/dist',
+      path: __dirname + '/dist',
 
       // Output path from the view of the page
       // Uses webpack-dev-server in development
-      publicPath : '/',
+      publicPath: '/',
 
       // Filename for entry points
       // Only adds hash in build mode
-      filename : isProd ? '[name].[hash].js' : '[name].bundle.js',
+      filename: isProd ? '[name].[hash].js' : '[name].bundle.js',
 
       // Filename for non-entry points
       // Only adds hash in build mode
-      chunkFilename : isProd ? '[name].[hash].js' : '[name].bundle.js'
+      chunkFilename: isProd ? '[name].[hash].js' : '[name].bundle.js'
     };
 
     /**
@@ -70,12 +70,12 @@ module.exports = [
      */
     if (isTest) {
       https:
-          // unix.stackexchange.com/questions/144208/find-files-without-extension
-          config.devtool = 'inline-source-map';
-      }
+        // unix.stackexchange.com/questions/144208/find-files-without-extension
+        config.devtool = 'inline-source-map';
+    }
     else if (isProd) {
       config.devtool = 'source-map';
-      }
+    }
     else {
       config.devtool = 'eval-source-map';
     }
@@ -90,15 +90,14 @@ module.exports = [
 
     // Initialize module
     config.module = {
-      rules : [
-        {
+      rules: [{
           // JS LOADER
           // Reference: https://github.com/babel/babel-loader
           // Transpile .js files using babel-loader
           // Compiles ES6 and ES7 into ES5 code
-          test : /\.js$/,
-          use : 'babel-loader',
-          exclude : /node_modules/
+          test: /\.js$/,
+          use: 'babel-loader',
+          exclude: /node_modules/
         },
         {
           // CSS LOADER
@@ -107,18 +106,24 @@ module.exports = [
           //
           // Reference: https://github.com/postcss/postcss-loader
           // Postprocess your css with PostCSS plugins
-          test : /\.css$/,
+          test: /\.css$/,
           // Reference: https://github.com/webpack/extract-text-webpack-plugin
           // Extract css files in production builds
           //
           // Reference: https://github.com/webpack/style-loader
           // Use style-loader in development.
 
-          loader : isTest ? 'null-loader' : ExtractTextPlugin.extract({
-            fallback : 'style-loader',
-            use : [
-              {loader : 'css-loader', query : {sourceMap : true}},
-              {loader : 'postcss-loader'}
+          loader: isTest ? 'null-loader' : ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: [{
+                loader: 'css-loader',
+                query: {
+                  sourceMap: true
+                }
+              },
+              {
+                loader: 'postcss-loader'
+              }
             ],
           })
         },
@@ -131,15 +136,15 @@ module.exports = [
           // Pass along the updated reference to your code
           // You can add here any file extension you want to get copied to your
           // output
-          test : /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|ico)$/,
-          loader : 'file-loader',
-          options : {
+          test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|ico)$/,
+          loader: 'file-loader',
+          options: {
             name(file) {
               if (!isProd) {
-                return '[path][name].[ext]'
-                }
+                return '[path][name].[ext]';
+              }
 
-              return '[hash].[ext]'
+              return '[hash].[ext]';
             }
           }
         },
@@ -147,21 +152,25 @@ module.exports = [
           // HTML LOADER
           // Reference: https://github.com/webpack/raw-loader
           // Allow loading html through js
-          test : /\.html$/,
-          use : {loader : 'html-loader'}
+          test: /\.html$/,
+          use: {
+            loader: 'html-loader'
+          }
         },
         // JSON LOADER
-        {test : /\.json$/, loader : 'json-loader'}, {
-          test : /\.scss$/,
-          use : [
-            {
-              loader : 'style-loader'  // creates style nodes from JS strings
+        {
+          test: /\.json$/,
+          loader: 'json-loader'
+        }, {
+          test: /\.scss$/,
+          use: [{
+              loader: 'style-loader' // creates style nodes from JS strings
             },
             {
-              loader : 'css-loader'  // translates CSS into CommonJS
+              loader: 'css-loader' // translates CSS into CommonJS
             },
             {
-              loader : 'sass-loader'  // compiles Sass to CSS
+              loader: 'sass-loader' // compiles Sass to CSS
             }
           ]
         }
@@ -175,12 +184,14 @@ module.exports = [
     // Skips node_modules and files that end with .spec.js
     if (isTest) {
       config.module.rules.push({
-        enforce : 'pre',
-        test : /\.js$/,
-        exclude : [ /node_modules/, /\.spec\.js$/],
-        loader : 'istanbul-instrumenter-loader',
-        query : {esModules : true}
-      })
+        enforce: 'pre',
+        test: /\.js$/,
+        exclude: [/node_modules/, /\.spec\.js$/],
+        loader: 'istanbul-instrumenter-loader',
+        query: {
+          esModules: true
+        }
+      });
     }
 
     /**
@@ -196,51 +207,58 @@ module.exports = [
      * Reference: http://webpack.github.io/docs/configuration.html#plugins
      * List: http://webpack.github.io/docs/list-of-plugins.html
      */
-    config.plugins = [ new webpack.LoaderOptionsPlugin({
-      test : /\.scss$/i,
-      options : {postcss : {plugins : [ autoprefixer ]}},
-      debug : !isProd
-    }) ];
+    config.plugins = [new webpack.LoaderOptionsPlugin({
+      test: /\.scss$/i,
+      options: {
+        postcss: {
+          plugins: [autoprefixer]
+        }
+      },
+      debug: !isProd
+    })];
 
     // Skip rendering index.html in test mode
     if (!isTest) {
       // Reference: https://github.com/ampedandwired/html-webpack-plugin
       // Render index.html
       config.plugins.push(
-          new HtmlWebpackPlugin(
-              {
-                template : './app/index.html',
-                inject : 'body',
-                favicon: './app/assets/images/favicon.ico'
-              }),
+        new HtmlWebpackPlugin({
+          template: './app/index.html',
+          inject: 'body',
+          favicon: './app/assets/images/favicon.ico'
+        }),
 
-          // Reference: https://github.com/webpack/extract-text-webpack-plugin
-          // Extract css files
-          // Disabled when in test mode or not in build mode
-          new ExtractTextPlugin({
-            filename : 'css/[name].css',
-            disable : !isProd,
-            allChunks : true
-          }))
-      }
+        // Reference: https://github.com/webpack/extract-text-webpack-plugin
+        // Extract css files
+        // Disabled when in test mode or not in build mode
+        new ExtractTextPlugin({
+          filename: 'css/[name].css',
+          disable: !isProd,
+          allChunks: true
+        }));
+    }
 
     // Add build specific plugins
     if (isProd) {
       config.plugins.push(
-          // Reference:
-          // http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
-          // Minify all javascript, switch loaders to minimizing mode
-          // TODO: openbmc/openbmc#2871  Mangling currently breaks the GUI.
-          new UglifyJsPlugin({
-            uglifyOptions:{
-              mangle: false
-            }
-          }),
+        // Reference:
+        // http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
+        // Minify all javascript, switch loaders to minimizing mode
+        // TODO: openbmc/openbmc#2871  Mangling currently breaks the GUI.
+        new UglifyJsPlugin({
+          uglifyOptions: {
+            mangle: false
+          }
+        }),
 
-          // Copy assets from the public folder
-          // Reference: https://github.com/kevlened/copy-webpack-plugin
-          new CopyWebpackPlugin([ {from : __dirname + '/app/assets'} ]),
-          new CompressionPlugin({deleteOriginalAssets : true}))
+        // Copy assets from the public folder
+        // Reference: https://github.com/kevlened/copy-webpack-plugin
+        new CopyWebpackPlugin([{
+          from: __dirname + '/app/assets'
+        }]),
+        new CompressionPlugin({
+          deleteOriginalAssets: true
+        }));
     }
 
     /**
@@ -248,7 +266,11 @@ module.exports = [
      * Reference: http://webpack.github.io/docs/configuration.html#devserver
      * Reference: http://webpack.github.io/docs/webpack-dev-server.html
      */
-    config.devServer = {contentBase : './src/public', stats : 'minimal'};
+    config.devServer = {
+      contentBase: './src/public',
+      stats: 'minimal'
+    };
 
     return config;
-  }()];
+  }()
+];

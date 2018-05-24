@@ -1,5 +1,5 @@
 // Reference: http://karma-runner.github.io/0.12/config/configuration-file.html
-module.exports = function karmaConfig (config) {
+module.exports = function karmaConfig(config) {
   config.set({
     frameworks: [
       // Reference: https://github.com/karma-runner/karma-jasmine
@@ -39,9 +39,12 @@ module.exports = function karmaConfig (config) {
     // Configure code coverage reporter
     coverageReporter: {
       dir: 'coverage/',
-      reporters: [
-        {type: 'text-summary'},
-        {type: 'html'}
+      reporters: [{
+          type: 'text-summary'
+        },
+        {
+          type: 'html'
+        }
       ]
     },
 
