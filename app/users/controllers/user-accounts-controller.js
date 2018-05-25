@@ -57,9 +57,10 @@ window.angular && (function(angular) {
                 function(error) {
                   $scope.state = 'error';
                   $scope.errorMsg = 'Old password is not correct!';
-                }).finally(function() {
-                  dataService.ignoreHttpError = false;
-                });
+                })
+            .finally(function() {
+              dataService.ignoreHttpError = false;
+            });
       };
     }
   ]);
