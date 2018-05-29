@@ -547,6 +547,7 @@ window.angular && (function(angular) {
           var deferred = $q.defer();
           $http({
             method: 'GET',
+            timeout: 50 * 1000,
             url: DataService.getHost() +
                 '/xyz/openbmc_project/logging/enumerate',
             headers: {
