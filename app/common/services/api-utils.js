@@ -209,6 +209,22 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        setDefaultGateway: function(defaultGateway) {
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/network/config/attr/DefaultGateway',
+                   headers: {
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json'
+                   },
+                   withCredentials: true,
+                   data: JSON.stringify({'data': defaultGateway})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         getLEDState: function() {
           var deferred = $q.defer();
           $http({
