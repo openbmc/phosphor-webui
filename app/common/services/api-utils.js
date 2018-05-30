@@ -225,6 +225,46 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        deleteIPV4: function(interfaceName, networkID) {
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/network/' + interfaceName +
+                       '/ipv4/' + networkID + '/action/Delete',
+                   headers: {
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json'
+                   },
+                   withCredentials: true,
+                   data: JSON.stringify({'data': []})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        addIPV4: function(
+            interfaceName, ipAddress, netmaskPrefixLength, gateway) {
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/network/' + interfaceName +
+                       '/action/IP',
+                   headers: {
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json'
+                   },
+                   withCredentials: true,
+                   data: JSON.stringify({
+                     'data': [
+                       'xyz.openbmc_project.Network.IP.Protocol.IPv4',
+                       ipAddress, +netmaskPrefixLength, gateway
+                     ]
+                   })
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         getLEDState: function() {
           var deferred = $q.defer();
           $http({
