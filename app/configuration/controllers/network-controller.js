@@ -10,8 +10,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.configuration').controller('networkController', [
-    '$scope', '$window', 'APIUtils', 'dataService', '$route',
-    function($scope, $window, APIUtils, dataService, $route) {
+    '$scope', '$window', 'APIUtils', 'dataService', '$route', '$q',
+    function($scope, $window, APIUtils, dataService, $route, $q) {
       $scope.dataService = dataService;
       $scope.network = {};
       $scope.interface = {};
@@ -33,20 +33,41 @@ window.angular && (function(angular) {
         $scope.confirm_settings = false;
         $scope.set_network_error = '';
         $scope.set_network_success = false;
+        var promises = [];
+
         // TODO openbmc/openbmc#3165: check if the network settings
         // changed before setting
-        APIUtils
+        promises.push(setMACAddress());
+        promises.push(setDefaultGateway());
+        $q.all(promises).finally(function() {
+          if (!$scope.set_network_error) {
+            $scope.set_network_success = true;
+          }
+        });
+
+      };
+
+      function setMACAddress() {
+        return APIUtils
             .setMACAddress(
                 $scope.selectedInterface, $scope.interface.MACAddress)
             .then(
-                function(data) {
-                  $scope.set_network_success = true;
-                },
+                function(data) {},
                 function(error) {
-                  console.log(error);
+                  console.log(JSON.stringify(error));
                   $scope.set_network_error = 'MAC Address';
                 });
-      };
+      }
+
+      function setDefaultGateway() {
+        return APIUtils.setDefaultGateway($scope.defaultgateway)
+            .then(
+                function(data) {},
+                function(error) {
+                  console.log(JSON.stringify(error));
+                  $scope.set_network_error = 'Default Gateway';
+                });
+      }
       $scope.refresh = function() {
         $route.reload();
       };
