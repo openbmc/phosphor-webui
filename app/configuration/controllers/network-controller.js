@@ -14,6 +14,7 @@ window.angular && (function(angular) {
     function($scope, $window, APIUtils, dataService, $route, $q) {
       $scope.dataService = dataService;
       $scope.network = {};
+      $scope.old_interface = {};
       $scope.interface = {};
       $scope.networkDevice = false;
       $scope.hostname = '';
@@ -26,6 +27,8 @@ window.angular && (function(angular) {
 
       $scope.selectInterface = function(interfaceId) {
         $scope.interface = $scope.network.interfaces[interfaceId];
+        // Copy the interface so we know later if changes were made to the page
+        $scope.old_interface = JSON.parse(JSON.stringify($scope.interface));
         $scope.selectedInterface = interfaceId;
         $scope.networkDevice = false;
       };
@@ -46,6 +49,20 @@ window.angular && (function(angular) {
         }
         if ($scope.hostname != dataService.hostname) {
           promises.push(setHostname());
+        }
+
+        // Set IPV4 IP Addresses, Netmask Prefix Lengths, and Gateways
+        if (!$scope.interface.DHCPEnabled) {
+          for (var i in $scope.interface.ipv4.values) {
+            if ($scope.interface.ipv4.values[i].Address !=
+                    $scope.old_interface.ipv4.values[i].Address ||
+                $scope.interface.ipv4.values[i].PrefixLength !=
+                    $scope.old_interface.ipv4.values[i].PrefixLength ||
+                $scope.interface.ipv4.values[i].Gateway !=
+                    $scope.old_interface.ipv4.values[i].Gateway) {
+              promises.push(setIPV4(i));
+            }
+          }
         }
 
         if (promises.length) {
@@ -90,6 +107,35 @@ window.angular && (function(angular) {
                 });
       }
 
+      function setIPV4(index) {
+        // The correct way to edit an IPV4 interface is to remove it and then
+        // add a new one
+        return APIUtils
+            .deleteIPV4(
+                $scope.selectedInterface, $scope.interface.ipv4.ids[index])
+            .then(
+                function(data) {
+                  return APIUtils
+                      .addIPV4(
+                          $scope.selectedInterface,
+                          $scope.interface.ipv4.values[index].Address,
+                          $scope.interface.ipv4.values[index].PrefixLength,
+                          $scope.interface.ipv4.values[index].Gateway)
+                      .then(
+                          function(data) {},
+                          function(error) {
+                            console.log(error);
+                            $scope.set_network_error =
+                                $scope.interface.ipv4.values[index].Address;
+                          });
+                },
+                function(error) {
+                  console.log(error);
+                  $scope.set_network_error =
+                      $scope.interface.ipv4.values[index].Address;
+                });
+      }
+
       $scope.refresh = function() {
         $route.reload();
       };
@@ -103,6 +149,9 @@ window.angular && (function(angular) {
           $scope.selectedInterface = $scope.network.interface_ids[0];
           $scope.interface =
               $scope.network.interfaces[$scope.selectedInterface];
+          // Copy the interface so we know later if changes were made to the
+          // page
+          $scope.old_interface = JSON.parse(JSON.stringify($scope.interface));
         }
       });
     }
