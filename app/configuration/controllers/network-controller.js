@@ -39,6 +39,8 @@ window.angular && (function(angular) {
         // changed before setting
         promises.push(setMACAddress());
         promises.push(setDefaultGateway());
+        promises.push(setHostname());
+
         $q.all(promises).finally(function() {
           if (!$scope.set_network_error) {
             $scope.set_network_success = true;
@@ -68,6 +70,17 @@ window.angular && (function(angular) {
                   $scope.set_network_error = 'Default Gateway';
                 });
       }
+
+      function setHostname() {
+        return APIUtils.setHostname($scope.hostname)
+            .then(
+                function(data) {},
+                function(error) {
+                  console.log(JSON.stringify(error));
+                  $scope.set_network_error = 'Hostname';
+                });
+      }
+
       $scope.refresh = function() {
         $route.reload();
       };
