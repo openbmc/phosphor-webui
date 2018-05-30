@@ -35,17 +35,25 @@ window.angular && (function(angular) {
         $scope.set_network_success = false;
         var promises = [];
 
-        // TODO openbmc/openbmc#3165: check if the network settings
-        // changed before setting
-        promises.push(setMACAddress());
-        promises.push(setDefaultGateway());
-        promises.push(setHostname());
+        // MAC Address are case-insensitive
+        if ($scope.interface.MACAddress.toLowerCase() !=
+            dataService.mac_address.toLowerCase()) {
+          promises.push(setMACAddress());
+        }
+        if ($scope.defaultgateway != dataService.defaultgateway) {
+          promises.push(setDefaultGateway());
+        }
+        if ($scope.hostname != dataService.hostname) {
+          promises.push(setHostname());
+        }
 
-        $q.all(promises).finally(function() {
-          if (!$scope.set_network_error) {
-            $scope.set_network_success = true;
-          }
-        });
+        if (promises.length) {
+          $q.all(promises).finally(function() {
+            if (!$scope.set_network_error) {
+              $scope.set_network_success = true;
+            }
+          });
+        }
 
       };
 
@@ -85,6 +93,7 @@ window.angular && (function(angular) {
         $route.reload();
       };
       APIUtils.getNetworkInfo().then(function(data) {
+        dataService.setNetworkInfo(data);
         $scope.network = data.formatted_data;
         $scope.hostname = data.hostname;
         $scope.defaultgateway = data.defaultgateway;

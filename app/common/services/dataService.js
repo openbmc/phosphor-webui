@@ -30,6 +30,7 @@ window.angular && (function(angular) {
 
       this.hostname = '';
       this.mac_address = '';
+      this.defaultgateway = '';
       this.remote_window_active = false;
 
       this.displayErrorModal = false;
@@ -75,6 +76,7 @@ window.angular && (function(angular) {
 
       this.setNetworkInfo = function(data) {
         this.hostname = data.hostname;
+        this.defaultgateway = data.defaultgateway;
         this.mac_address = data.mac_address;
       };
 
