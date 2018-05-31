@@ -225,6 +225,23 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        setDHCPEnabled: function(interfaceName, dhcpEnabled) {
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/network/' + interfaceName +
+                       '/attr/DHCPEnabled',
+                   headers: {
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json'
+                   },
+                   withCredentials: true,
+                   data: JSON.stringify({'data': dhcpEnabled})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         deleteIPV4: function(interfaceName, networkID) {
           return $http({
                    method: 'POST',
