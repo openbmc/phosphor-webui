@@ -49,6 +49,9 @@ window.angular && (function(angular) {
         if ($scope.hostname != dataService.hostname) {
           promises.push(setHostname());
         }
+        if ($scope.interface.DHCPEnabled != $scope.old_interface.DHCPEnabled) {
+          promises.push(setDHCPEnabled());
+        }
 
         // Set IPV4 IP Addresses, Netmask Prefix Lengths, and Gateways
         if (!$scope.interface.DHCPEnabled) {
@@ -103,6 +106,18 @@ window.angular && (function(angular) {
                 function(error) {
                   console.log(JSON.stringify(error));
                   $scope.set_network_error = 'Hostname';
+                });
+      }
+
+      function setDHCPEnabled() {
+        return APIUtils
+            .setDHCPEnabled(
+                $scope.selectedInterface, $scope.interface.DHCPEnabled)
+            .then(
+                function(data) {},
+                function(error) {
+                  console.log(JSON.stringify(error));
+                  $scope.set_network_error = 'DHCP';
                 });
       }
 
