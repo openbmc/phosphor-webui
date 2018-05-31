@@ -23,6 +23,7 @@ window.angular && (function(angular) {
       $scope.set_network_success = false;
       $scope.selectedInterface = '';
       $scope.confirm_settings = false;
+      $scope.loading = false;
 
       $scope.selectInterface = function(interfaceId) {
         $scope.interface = $scope.network.interfaces[interfaceId];
@@ -36,6 +37,7 @@ window.angular && (function(angular) {
         $scope.confirm_settings = false;
         $scope.set_network_error = '';
         $scope.set_network_success = false;
+        $scope.loading = true;
         var promises = [];
 
         // MAC Address are case-insensitive
@@ -69,6 +71,7 @@ window.angular && (function(angular) {
 
         if (promises.length) {
           $q.all(promises).finally(function() {
+            $scope.loading = false;
             if (!$scope.set_network_error) {
               $scope.set_network_success = true;
             }
