@@ -10,8 +10,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.configuration').controller('networkController', [
-    '$scope', '$window', 'APIUtils', 'dataService', '$route', '$q',
-    function($scope, $window, APIUtils, dataService, $route, $q) {
+    '$scope', '$window', 'APIUtils', 'dataService', '$timeout', '$route', '$q',
+    function($scope, $window, APIUtils, dataService, $timeout, $route, $q) {
       $scope.dataService = dataService;
       $scope.network = {};
       $scope.old_interface = {};
@@ -69,14 +69,30 @@ window.angular && (function(angular) {
           }
         }
 
-        $q.all(promises).finally(function() {
+        if (promises.length) {
+          $q.all(promises).finally(function() {
+            $scope.loading = false;
+            if (!$scope.set_network_error) {
+              $scope.set_network_success = true;
+              // Since an IPV4 interface (e.g. IP address, gateway, or netmask)
+              // edit is a delete then an add and the GUI can't calculate the
+              // interface id (e.g. 5c083707) beforehand and it is not returned
+              // by the REST call, openbmc#3227, reload the page after an edit,
+              // which makes a 2nd REST call.
+              // Do this for all network changes due to the possibility of a set
+              // network failing even though it returned success, openbmc#1641,
+              // and to update dataService and old_interface to know which
+              // data has changed if the user continues to edit network
+              // settings.
+              // TODO: Revisit how we do this. The reload is not ideal.
+              $timeout(function() {
+                $route.reload();
+              }, 4000);
+            }
+          });
+        } else {
           $scope.loading = false;
-          // $q.all with an empty array resolves immediately but don't show
-          // the success message
-          if (!$scope.set_network_error && promises.length) {
-            $scope.set_network_success = true;
-          }
-        });
+        }
 
       };
 
