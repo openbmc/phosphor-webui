@@ -58,6 +58,31 @@ window.angular && (function(angular) {
         // Set IPV4 IP Addresses, Netmask Prefix Lengths, and Gateways
         if (!$scope.interface.DHCPEnabled) {
           for (var i in $scope.interface.ipv4.values) {
+            if (!APIUtils.validIPV4IP(
+                    $scope.interface.ipv4.values[i].Address)) {
+              $scope.set_network_error =
+                  $scope.interface.ipv4.values[i].Address +
+                  ' invalid IP parameter';
+              $scope.loading = false;
+              return;
+            }
+            if (!APIUtils.validIPV4IP(
+                    $scope.interface.ipv4.values[i].Gateway)) {
+              $scope.set_network_error =
+                  $scope.interface.ipv4.values[i].Address +
+                  ' invalid gateway parameter';
+              $scope.loading = false;
+              return;
+            }
+            // This netmask prefix length match only works with IPV4
+            if ($scope.interface.ipv4.values[i].PrefixLength < 1 ||
+                $scope.interface.ipv4.values[i].PrefixLength > 32) {
+              $scope.set_network_error =
+                  $scope.interface.ipv4.values[i].Address +
+                  ' invalid Prefix Length parameter';
+              $scope.loading = false;
+              return;
+            }
             if ($scope.interface.ipv4.values[i].Address !=
                     $scope.old_interface.ipv4.values[i].Address ||
                 $scope.interface.ipv4.values[i].PrefixLength !=
