@@ -55,6 +55,12 @@ window.angular && (function(angular) {
           promises.push(setDHCPEnabled());
         }
 
+        // toString() is a cheap way to compare 2 string arrays
+        if ($scope.interface.Nameservers.toString() !=
+            $scope.old_interface.Nameservers.toString()) {
+          promises.push(setNameservers());
+        }
+
         // Set IPV4 IP Addresses, Netmask Prefix Lengths, and Gateways
         if (!$scope.interface.DHCPEnabled) {
           for (var i in $scope.interface.ipv4.values) {
@@ -158,6 +164,18 @@ window.angular && (function(angular) {
                 function(error) {
                   console.log(JSON.stringify(error));
                   $scope.set_network_error = 'DHCP';
+                });
+      }
+
+      function setNameservers() {
+        return APIUtils
+            .setNameservers(
+                $scope.selectedInterface, $scope.interface.Nameservers)
+            .then(
+                function(data) {},
+                function(error) {
+                  console.log(JSON.stringify(error));
+                  $scope.set_network_error = 'DNS Servers';
                 });
       }
 
