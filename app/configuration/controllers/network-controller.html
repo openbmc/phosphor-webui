@@ -80,6 +80,7 @@
 							<label for="net-config__prime-dns">DNS Server {{$index+1}}</label>
 							<input id="net-config__prime-dns" type="text" ng-model="dns" ng-blur="interface.Nameservers[$index] = dns"/>
 						</fieldset>
+				        <button type="button" class="btn-primary inline" ng-click="interface.Nameservers.push('');">Add new DNS server</button>
 				</div>
 			</fieldset>
 			<div class="network-config__submit-wrapper">
