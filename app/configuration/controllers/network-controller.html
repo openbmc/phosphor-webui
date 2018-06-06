@@ -75,12 +75,11 @@
 			</div>
 			<fieldset>
 				<div class="column small-12 large-4">
-					<ul>
-						<li ng-repeat="dns in interface.Nameservers track by $index">
-							<label for="net-config__prime-dns">DNS Server {{$index+1}}</label>{{dns}}
-							<br/>
-						</li>
-					</ul>
+                        <!-- Call Nameservers "DNS Servers" on the GUI -->
+						<fieldset class="net-config__static-ip-wrap" ng-repeat="dns in interface.Nameservers track by $index">
+							<label for="net-config__prime-dns">DNS Server {{$index+1}}</label>
+							<input id="net-config__prime-dns" type="text" ng-model="dns" ng-blur="interface.Nameservers[$index] = dns"/>
+						</fieldset>
 				</div>
 			</fieldset>
 			<div class="network-config__submit-wrapper">
