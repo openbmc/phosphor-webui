@@ -55,6 +55,11 @@ window.angular && (function(angular) {
           promises.push(setDHCPEnabled());
         }
 
+        // Remove any empty strings from the array. Important because we add an
+        // empty string to the end so the user can add a new DNS server, if the
+        // user doesn't fill out the field, we don't want to add.
+        $scope.interface.Nameservers =
+            $scope.interface.Nameservers.filter(Boolean);
         // toString() is a cheap way to compare 2 string arrays
         if ($scope.interface.Nameservers.toString() !=
             $scope.old_interface.Nameservers.toString()) {
@@ -171,6 +176,11 @@ window.angular && (function(angular) {
       }
 
       function setNameservers() {
+        // Nameservers does not allow an empty array, since we remove all empty
+        // strings above, could have an empty array.
+        if ($scope.interface.Nameservers.length == 0) {
+          $scope.interface.Nameservers.push('');
+        }
         return APIUtils
             .setNameservers(
                 $scope.selectedInterface, $scope.interface.Nameservers)
