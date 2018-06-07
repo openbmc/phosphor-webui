@@ -39,7 +39,8 @@ window.angular && (function(angular) {
                     }
                   },
                   function(error) {
-                    dataService.activateErrorModal();
+                    console.log(
+                        'getHostState returned an error due to connection loss');
                   });
             };
 
