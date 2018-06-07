@@ -39,7 +39,7 @@ window.angular && (function(angular) {
                     }
                   },
                   function(error) {
-                    dataService.activateErrorModal();
+                    console.log(error);
                   });
             };
 
