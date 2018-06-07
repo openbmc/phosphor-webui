@@ -109,7 +109,7 @@ window.angular && (function(angular) {
                       var interfaceId = '', keyParts = [], interfaceHash = '',
                           interfaceType = '';
                       for (var key in content.data) {
-                        if (key.match(/network\/eth\d+$/ig)) {
+                        if (key.match(/network\/eth\d+(_\d+)?$/ig)) {
                           interfaceId = key.split('/').pop();
                           if (data.interface_ids.indexOf(interfaceId) == -1) {
                             data.interface_ids.push(interfaceId);
@@ -133,7 +133,7 @@ window.angular && (function(angular) {
                           }
                         } else if (
                             key.match(
-                                /network\/eth\d+\/ipv[4|6]\/[a-z0-9]+$/ig)) {
+                                /network\/eth\d+(_\d+)?\/ipv[4|6]\/[a-z0-9]+$/ig)) {
                           keyParts = key.split('/');
                           interfaceHash = keyParts.pop();
                           interfaceType = keyParts.pop();
