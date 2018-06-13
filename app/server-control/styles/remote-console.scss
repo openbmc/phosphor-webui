@@ -1,19 +1,20 @@
-.serial-lan__wrapper {
-  overflow: hidden;
-  .btn-export {
-    margin: 1.8em 0 1.8em 2em;
+.serial - lan__wrapper {
+    overflow: hidden;
+    .btn -
+    export {
+      margin: 1.8e m 0 1.8e m 2e m;
+    }
   }
-}
 
-.serial-lan__copy {
-  padding: 1em 0;
-}
-.serial-lan__terminal {
-  position: relative;
-  width: 101%; //extra 1% to fix redraw issue with terminal window
-  height: 400px;
-  border: 1em solid #19273c;
-  overflow: scroll;
+  .serial - lan__copy {
+    padding: 1e m 0;
+  }
+  .serial - lan__terminal {
+    position: relative;
+    width: 101 % ; //extra 1% to fix redraw issue with terminal window
+    height: 400 px;
+    border: 1e m solid #19273c;
+    overflow-x: hidden;
 }
 
 .serial-lan__actions {
