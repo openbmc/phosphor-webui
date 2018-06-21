@@ -34,6 +34,12 @@ window.angular && (function(angular) {
                 'controller': 'powerOperationsController',
                 authenticated: true
               })
+              .when('/server-control/power-usage', {
+                'template':
+                    require('./controllers/power-usage-controller.html'),
+                'controller': 'powerUsageController',
+                authenticated: true
+              })
               .when('/server-control/remote-console', {
                 'template':
                     require('./controllers/remote-console-controller.html'),
