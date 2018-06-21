@@ -52,12 +52,6 @@ window.angular && (function(angular) {
                 'controller': 'sensorsController',
                 authenticated: true
               })
-              .when('/server-health/power-consumption', {
-                'template':
-                    require('./controllers/power-consumption-controller.html'),
-                'controller': 'powerConsumptionController',
-                authenticated: true
-              })
               .when('/server-health/diagnostics', {
                 'template':
                     require('./controllers/diagnostics-controller.html'),
