@@ -1,0 +1,25 @@
+// Power Usage SCSS
+
+.power__usage-metadata {
+  border-bottom: 1px solid $medgrey;
+  padding: 1.8em 0 0 0;
+}
+
+.power__usage-metadata-wrapper {
+  margin: 0;
+  padding: 0;
+}
+
+.power__usage-metadata-block {
+  list-style-type: none;
+  min-width: 47%;
+  margin-bottom: 1.8em;
+  margin-right: .7em;
+  display: inline-block;
+  white-space: normal;
+  word-break: break-all;
+  @include mediaQuery(small) {
+    float: left;
+  }
+}
+
