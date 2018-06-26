@@ -53,18 +53,14 @@
 					</label>
 				</div>
 				<fieldset class="net-config__static-ip-wrap" ng-repeat="ipv4 in interface.ipv4.values">
-					<div class="column small-12 large-4">
+					<div class="column small-12 large-2">
 						<label for="net-config__ipv4-address" class="inline">IPV4 address</label>
 						<input id="net-config__ipv4-address" type="text" ng-disabled="interface.DHCPEnabled" ng-model="ipv4.Address"/>
 					</div>
-					<div class="column small-12 large-4">
-						<label for="net-config__subnet" class="inline">Gateway</label>
-						<input id="net-config__subnet" type="text" ng-disabled="interface.DHCPEnabled" value="" ng-model="ipv4.Gateway"/>
-					</div>
 					<!-- This netmask prefix length max only works with IPV4 -->
-					<div class="column small-12 large-4">
-						<label for="net-config__default-gateway" class="inline">Netmask Prefix Length</label>
-						<input id="net-config__default-gateway" type="number" min="1" max="32" step="1" ng-disabled="interface.DHCPEnabled"  ng-model="ipv4.PrefixLength"/>
+					<div class="column small-12 large-adjacent-1">
+						<label for="net-config__subnet" class="inline">Netmask Prefix Length</label>
+						<input id="net-config__subnet" type="number" min="1" max="32" step="1" ng-disabled="interface.DHCPEnabled"  ng-model="ipv4.PrefixLength"/>
 					</div>
 				</fieldset>
 			</fieldset>

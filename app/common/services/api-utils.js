@@ -282,7 +282,7 @@ window.angular && (function(angular) {
               });
         },
         addIPV4: function(
-            interfaceName, ipAddress, netmaskPrefixLength, gateway) {
+            interfaceName, ipAddress, netmaskPrefixLength) {
           return $http({
                    method: 'POST',
                    url: DataService.getHost() +
@@ -296,7 +296,7 @@ window.angular && (function(angular) {
                    data: JSON.stringify({
                      'data': [
                        'xyz.openbmc_project.Network.IP.Protocol.IPv4',
-                       ipAddress, +netmaskPrefixLength, gateway
+                       ipAddress, +netmaskPrefixLength, '0.0.0.0'
                      ]
                    })
                  })

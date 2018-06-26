@@ -66,7 +66,7 @@ window.angular && (function(angular) {
           promises.push(setNameservers());
         }
 
-        // Set IPV4 IP Addresses, Netmask Prefix Lengths, and Gateways
+        // Set IPV4 IP Addresses and Netmask Prefix Lengths
         if (!$scope.interface.DHCPEnabled) {
           for (var i in $scope.interface.ipv4.values) {
             if (!APIUtils.validIPV4IP(
@@ -74,14 +74,6 @@ window.angular && (function(angular) {
               $scope.set_network_error =
                   $scope.interface.ipv4.values[i].Address +
                   ' invalid IP parameter';
-              $scope.loading = false;
-              return;
-            }
-            if (!APIUtils.validIPV4IP(
-                    $scope.interface.ipv4.values[i].Gateway)) {
-              $scope.set_network_error =
-                  $scope.interface.ipv4.values[i].Address +
-                  ' invalid gateway parameter';
               $scope.loading = false;
               return;
             }
@@ -96,9 +88,7 @@ window.angular && (function(angular) {
             if ($scope.interface.ipv4.values[i].Address !=
                     $scope.old_interface.ipv4.values[i].Address ||
                 $scope.interface.ipv4.values[i].PrefixLength !=
-                    $scope.old_interface.ipv4.values[i].PrefixLength ||
-                $scope.interface.ipv4.values[i].Gateway !=
-                    $scope.old_interface.ipv4.values[i].Gateway) {
+                    $scope.old_interface.ipv4.values[i].PrefixLength) {
               promises.push(setIPV4(i));
             }
           }
@@ -109,7 +99,7 @@ window.angular && (function(angular) {
             $scope.loading = false;
             if (!$scope.set_network_error) {
               $scope.set_network_success = true;
-              // Since an IPV4 interface (e.g. IP address, gateway, or netmask)
+              // Since an IPV4 interface (e.g. IP address or netmask)
               // edit is a delete then an add and the GUI can't calculate the
               // interface id (e.g. 5c083707) beforehand and it is not returned
               // by the REST call, openbmc#3227, reload the page after an edit,
@@ -204,8 +194,7 @@ window.angular && (function(angular) {
                       .addIPV4(
                           $scope.selectedInterface,
                           $scope.interface.ipv4.values[index].Address,
-                          $scope.interface.ipv4.values[index].PrefixLength,
-                          $scope.interface.ipv4.values[index].Gateway)
+                          $scope.interface.ipv4.values[index].PrefixLength)
                       .then(
                           function(data) {},
                           function(error) {

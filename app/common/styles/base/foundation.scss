@@ -1353,6 +1353,11 @@ select[multiple] {
 @media print, screen and (min-width: 64em) {
   .large-1 {
     width: 8.33333%; }
+  .large-adjacent-1 {
+    position: relative;
+    width: 8.33333%;
+    left: -75%;
+  }
   .large-push-1 {
     position: relative;
     left: 8.33333%; }
