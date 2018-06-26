@@ -1,25 +1,49 @@
 // Power Usage SCSS
+.power-usage__form {
 
-.power__usage-metadata {
-  border-bottom: 1px solid $medgrey;
-  padding: 1.8em 0 0 0;
-}
+  input {
+    height: 2.1em;
+    margin-bottom: 0em;
+  }
 
-.power__usage-metadata-wrapper {
-  margin: 0;
-  padding: 0;
-}
+  fieldset {
+    padding-left: 1.8em;
+  }
 
-.power__usage-metadata-block {
-  list-style-type: none;
-  min-width: 47%;
-  margin-bottom: 1.8em;
-  margin-right: .7em;
-  display: inline-block;
-  white-space: normal;
-  word-break: break-all;
-  @include mediaQuery(small) {
-    float: left;
+  .power-usage__switch-label {
+    padding-bottom: .5em;
+  }
+
+  .power-usage__switch-label p {
+    margin: 0;
+    &:first-child {font-weight: 700;}
+  }
+
+  .power-usage__metadata-wrapper {
+    margin: 0;
+    padding: 0;
+  }
+
+  .power-usage__metadata-block {
+    min-width: 47%;
+    margin-bottom: 1.8em;
+    margin-right: .7em;
+    display: inline-block;
+    white-space: normal;
+    word-break: break-all;
+    @include mediaQuery(small) {
+      float: left;
+    }
+  }
+
+  .power-usage__submit-wrapper {
+    width: 100%;
+    margin-top: 3em;
+    padding-top: 1em;
+    border-top: 1px solid $medgrey;
+    button {
+      float: right;
+      margin: .5em;
+    }
   }
 }
-

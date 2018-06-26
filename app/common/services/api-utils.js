@@ -1388,12 +1388,39 @@ window.angular && (function(angular) {
                    withCredentials: true
                  })
               .then(function(response) {
-                var json = JSON.stringify(response.data);
-                var content = JSON.parse(json);
-
-                return (false == content.data.PowerCapEnable) ?
-                    Constants.POWER_CAP_TEXT.disabled :
-                    content.data.PowerCap + ' ' + Constants.POWER_CAP_TEXT.unit;
+                return response.data;
+              });
+        },
+        setPowerCapEnable: function(powerCapEnable) {
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/control/host0/power_cap/attr/PowerCapEnable',
+                   headers: {
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json'
+                   },
+                   withCredentials: true,
+                   data: JSON.stringify({'data': powerCapEnable})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        setPowerCap: function(powerCap) {
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/control/host0/power_cap/attr/PowerCap',
+                   headers: {
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json'
+                   },
+                   withCredentials: true,
+                   data: JSON.stringify({'data': powerCap})
+                 })
+              .then(function(response) {
+                return response.data;
               });
         },
         setHostname: function(hostname) {
