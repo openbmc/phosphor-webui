@@ -1,22 +1,38 @@
 <loader loading="loading"></loader>
 <div id="power-usage">
-	<div class="row power__usage-metadata">
-		<div class="row column">
-			<h1>Manage Power Usage</h1>
-		</div>
-		<div class="page-header">
-			<h2 class="bold h4">Power information</h2>
-		</div>
-		<fieldset>
-			<div class="column large-8">
-				<ul class="power__usage-metadata-wrapper">
-					<li class="power__usage-metadata-block">
-						<p class="content-label">Power Consumption</p>
-						<p class="courier-bold">{{power_consumption}}</p>
-					</li>
-				</ul>
-			</div>
-		</fieldset>
+	<div class="row column">
+		<h1>Manage Power Usage</h1>
 	</div>
+	<form class="power-usage__form" role="form" action="">
+		<section class="row column">
+			<div class="page-header">
+				<h2 class="bold h4">Power information</h2>
+			</div>
+			<fieldset>
+				<div class="column large-8">
+					<ul class="power-usage__metadata-wrapper">
+						<li class="power-usage__metadata-block">
+							<p class="content-label">Power Consumption</p>
+							<p class="courier-bold">{{power_consumption}}</p>
+						</li>
+						<li class="power-usage__metadata-block">
+							<div class="power-usage__checkbox-container">
+								<input type="checkbox" name="power-cap-enable" class="power-cap-enable" ng-model="power_cap.PowerCapEnable" ng-checked="power_cap.PowerCapEnable"/>
+								<label for="power-cap-enable" class="bold h5 power-cap-enable-label">SET A POWER CAP TO KEEP POWER CONSUMPTION AT OR BELOW A CERTAIN VALUE</label>
+							</div>
+							<p class="content-label power-cap-value-label">POWER CAP VALUE IN WATTS</p>
+							<input id="power-cap" type="number" min="100" max="10000" step="1" ng-disabled="!power_cap.PowerCapEnable"  ng-model="power_cap.PowerCap"/>
+						</li>
+					</ul>
+				</div>
+			</fieldset>
+			<div class="power-usage__submit-wrapper">
+				<button type="button" class="btn-primary inline" ng-click="setPowerCap()">Save settings</button>
+				<button type="button" class="btn-secondary inline" ng-click="refresh()">Cancel</button>
+			</div>
+			<p class="success-msg" ng-show="set_power_cap_success" role="alert">Success! Power cap changed!</p>
+			<p class="set_powercap_error error-msg" ng-show="set_power_cap_error" role="alert">Error setting Power Cap!</p>
+		</section>
+	</form>
 </div>
 

@@ -1,25 +1,65 @@
 // Power Usage SCSS
+.power-usage__form {
 
-.power__usage-metadata {
-  border-bottom: 1px solid $medgrey;
-  padding: 1.8em 0 0 0;
-}
+  input {
+    height: 2.1em;
+    margin-bottom: 1.2em;
+  }
 
-.power__usage-metadata-wrapper {
-  margin: 0;
-  padding: 0;
-}
+  label {
+    min-width: 300px;
+  }
 
-.power__usage-metadata-block {
-  list-style-type: none;
-  min-width: 47%;
-  margin-bottom: 1.8em;
-  margin-right: .7em;
-  display: inline-block;
-  white-space: normal;
-  word-break: break-all;
-  @include mediaQuery(small) {
-    float: left;
+  fieldset {
+    padding-left: 1.8em;
+  }
+
+  .power-usage__checkbox-container {
+    display:flex;
+    height: 30px;
+  }
+
+  .power-cap-enable-label {
+    margin-left: 7px;
+    width: 640px;
+  }
+
+  .power-usage__metadata {
+    border-bottom: 1px solid $medgrey;
+    padding: 1.8em 0 0 0;
+  }
+
+  .power-usage__metadata-wrapper {
+    margin: 0;
+    padding: 0;
+  }
+
+  .power-usage__metadata-block {
+    list-style-type: none;
+    min-width: 47%;
+    margin-bottom: 1.8em;
+    margin-right: .7em;
+    display: inline-block;
+    white-space: normal;
+    word-break: break-all;
+    @include mediaQuery(small) {
+      float: left;
+    }
+  }
+
+  .power-usage__submit-wrapper {
+    width: 100%;
+    margin-top: 3em;
+    padding-top: 1em;
+    border-top: 1px solid $medgrey;
+    button {
+      float: right;
+      margin: .5em;
+    }
+  }
+
+  .set_powercap_error
+  {
+    margin-left: 3em;
   }
 }
-

@@ -10,8 +10,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.overview').controller('systemOverviewController', [
-    '$scope', '$window', 'APIUtils', 'dataService', '$q',
-    function($scope, $window, APIUtils, dataService, $q) {
+    '$scope', '$window', 'APIUtils', 'dataService', 'Constants', '$q',
+    function($scope, $window, APIUtils, dataService, Constants, $q) {
       $scope.dataService = dataService;
       $scope.dropdown_selected = false;
       $scope.tmz = 'EDT';
@@ -88,7 +88,12 @@ window.angular && (function(angular) {
 
         var getPowerCapPromise = APIUtils.getPowerCap().then(
             function(data) {
-              $scope.power_cap = data;
+              if (data.data.PowerCapEnable == false) {
+                $scope.power_cap = Constants.POWER_CAP_TEXT.disabled;
+              } else {
+                $scope.power_cap =
+                    data.data.PowerCap + ' ' + Constants.POWER_CAP_TEXT.unit;
+              }
             },
             function(error) {
               console.log(JSON.stringify(error));
