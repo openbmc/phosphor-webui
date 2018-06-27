@@ -24,6 +24,7 @@ import angular_utils from 'angularUtils/src/angularUtils.js';
 import angular_utils_pagination from 'angularUtils/src/directives/pagination/dirPagination.js';
 
 require('./styles/index.scss');
+var config = require('../config.json');
 
 // TODO(Ed)  clean this up, add the appropriate imports to phosphor-webui
 
