@@ -711,6 +711,7 @@ window.angular && (function(angular) {
                               search_text:
                                   ('#' + content.data[key].Id + ' ' +
                                    severityCode + ' ' +
+                                   content.data[key].Message + ' ' +
                                    content.data[key].Severity + ' ' +
                                    content.data[key].AdditionalData.join(' '))
                                       .toLowerCase(),
