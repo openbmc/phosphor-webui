@@ -25,6 +25,8 @@ window.angular && (function(angular) {
       $scope.confirm_settings = false;
       $scope.loading = false;
 
+      loadNetworkInfo();
+
       $scope.selectInterface = function(interfaceId) {
         $scope.interface = $scope.network.interfaces[interfaceId];
         // Copy the interface so we know later if changes were made to the page
@@ -121,7 +123,7 @@ window.angular && (function(angular) {
               // settings.
               // TODO: The reload is not ideal. Revisit this.
               $timeout(function() {
-                $route.reload();
+                loadNetworkInfo();
               }, 4000);
             }
           });
@@ -222,22 +224,29 @@ window.angular && (function(angular) {
       }
 
       $scope.refresh = function() {
-        $route.reload();
+        loadNetworkInfo();
       };
-      APIUtils.getNetworkInfo().then(function(data) {
-        dataService.setNetworkInfo(data);
-        $scope.network = data.formatted_data;
-        $scope.hostname = data.hostname;
-        $scope.defaultgateway = data.defaultgateway;
-        if ($scope.network.interface_ids.length) {
-          $scope.selectedInterface = $scope.network.interface_ids[0];
-          $scope.interface =
-              $scope.network.interfaces[$scope.selectedInterface];
-          // Copy the interface so we know later if changes were made to the
-          // page
-          $scope.old_interface = JSON.parse(JSON.stringify($scope.interface));
-        }
-      });
+
+      function loadNetworkInfo() {
+        APIUtils.getNetworkInfo().then(function(data) {
+          dataService.setNetworkInfo(data);
+          $scope.network = data.formatted_data;
+          $scope.hostname = data.hostname;
+          $scope.defaultgateway = data.defaultgateway;
+          if ($scope.network.interface_ids.length) {
+            // Use the first network interface if the user hasn't choosen one
+            if (!$scope.selectedInterface ||
+                !$scope.network.interfaces[$scope.selectedInterface]) {
+              $scope.selectedInterface = $scope.network.interface_ids[0];
+            }
+            $scope.interface =
+                $scope.network.interfaces[$scope.selectedInterface];
+            // Copy the interface so we know later if changes were made to the
+            // page
+            $scope.old_interface = JSON.parse(JSON.stringify($scope.interface));
+          }
+        });
+      }
     }
   ]);
 
