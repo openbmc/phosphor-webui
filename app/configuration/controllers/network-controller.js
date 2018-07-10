@@ -22,6 +22,7 @@ window.angular && (function(angular) {
       $scope.set_network_error = '';
       $scope.set_network_success = false;
       $scope.selectedInterface = '';
+      $scope.new_DNS_server = false;
       $scope.confirm_settings = false;
       $scope.loading = false;
 
@@ -32,6 +33,21 @@ window.angular && (function(angular) {
         $scope.selectedInterface = interfaceId;
         $scope.networkDevice = false;
       };
+
+      $scope.addDNSField = function() {
+        $scope.interface.Nameservers.push('');
+        // Focus on the newly created DNS server field
+        // Timeout allows the element to be created before focus
+        $timeout(function() {
+          var element = $window.document.getElementById(
+              'net-config__prime-dns' +
+              String($scope.interface.Nameservers.length));
+          if (element) {
+            element.focus();
+          }
+        });
+      };
+
       $scope.setNetworkSettings = function() {
         // Hides the confirm network settings modal
         $scope.confirm_settings = false;
