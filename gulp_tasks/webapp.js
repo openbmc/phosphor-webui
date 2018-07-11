@@ -62,13 +62,6 @@ gulp.task('webapp:copycss', function() {
       .pipe(gulp.dest(options.tempFolderPath + '/styles'));
 });
 
-gulp.task('webapp:constants', function() {
-  return gulp.src('environment-constants.json')
-      .pipe(ngConstant({'name': 'app.constants', 'deps': false}))
-      .pipe(rename('environment-constants.js'))
-      .pipe(gulp.dest(options.tempFolderPath + '/constants'));
-});
-
 // ----- To target/webapp from .temp and bower_components
 gulp.task('webapp:template', function() {
   return gulp
@@ -108,6 +101,6 @@ module.exports = function(callback) {
   return runSequence(
       'webapp:clean', 'webapp:sasscompile',
       ['webapp:copyjs', 'webapp:copycss', 'webapp:copyothers'],
-      ['webapp:constants', 'webapp:template'], ['webapp:useref'],
-      ['webapp:copyresources'], callback);
+      ['webapp:template'], ['webapp:useref'], ['webapp:copyresources'],
+      callback);
 };

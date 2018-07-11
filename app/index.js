@@ -27,9 +27,6 @@ require('./styles/index.scss');
 
 // TODO(Ed)  clean this up, add the appropriate imports to phosphor-webui
 
-import constants_index from './constants/index.js';
-import environment_constants from './constants/environment-constants.js';
-
 import services_index from './common/services/index.js';
 import constants from './common/services/constants.js';
 import dataService from './common/services/dataService.js';
@@ -102,9 +99,8 @@ window.angular && (function(angular) {
             'ngRoute', 'angular-clipboard',
             'angularUtils.directives.dirPagination',
             // Basic resources
-            'app.constants', 'app.templates', 'app.vendors',
-            'app.common.services', 'app.common.directives',
-            'app.common.filters',
+            'app.templates', 'app.vendors', 'app.common.services',
+            'app.common.directives', 'app.common.filters',
             // Model resources
             'app.login', 'app.overview', 'app.serverControl',
             'app.serverHealth', 'app.configuration', 'app.users',
