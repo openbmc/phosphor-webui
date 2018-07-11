@@ -9,8 +9,7 @@ window.angular && (function(angular) {
   'use strict';
 
   angular
-      .module(
-          'app.overview', ['ngRoute', 'app.constants', 'app.common.services'])
+      .module('app.overview', ['ngRoute', 'app.common.services'])
       // Route configuration
       .config([
         '$routeProvider',
