@@ -10,7 +10,7 @@ window.angular && (function(angular) {
 
   angular
       .module(
-          'app.overview', ['ngRoute', 'app.constants', 'app.common.services'])
+          'app.overview', ['ngRoute', 'app.common.services'])
       // Route configuration
       .config([
         '$routeProvider',

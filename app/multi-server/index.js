@@ -11,7 +11,7 @@ window.angular && (function(angular) {
   angular
       .module(
           'app.multiServer',
-          ['ngRoute', 'app.constants', 'app.common.services'])
+          ['ngRoute', 'app.common.services'])
       // Route configuration
       .config([
         '$routeProvider',
