@@ -21,8 +21,8 @@ window.angular && (function(angular) {
                 authenticated: true
               })
               .when('/server-control/server-led', {
-                'template': require('./controllers/unit-id-controller.html'),
-                'controller': 'unitIdController',
+                'template': require('./controllers/server-led-controller.html'),
+                'controller': 'serverLEDController',
                 authenticated: true
               })
               .when('/server-control/power-operations', {
