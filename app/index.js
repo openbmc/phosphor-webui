@@ -82,10 +82,6 @@ import network_controller from './configuration/controllers/network-controller.j
 import security_controller from './configuration/controllers/security-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
 
-import firmware_index from './firmware/index.js';
-import bmc_controller from './firmware/controllers/bmc-controller.js';
-import server_controller from './firmware/controllers/server-controller.js';
-
 import multi_server_index from './multi-server/index.js';
 import multi_server_controller from './multi-server/controllers/multi-server-controller.js';
 
