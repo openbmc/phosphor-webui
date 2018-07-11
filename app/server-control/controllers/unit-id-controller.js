@@ -1,7 +1,7 @@
 /**
  * Controller for unit Id
  *
- * @module app/serverHealth
+ * @module app/serverControl
  * @exports unitIdController
  * @name unitIdController
  */
@@ -9,7 +9,7 @@
 window.angular && (function(angular) {
   'use strict';
 
-  angular.module('app.serverHealth').controller('unitIdController', [
+  angular.module('app.serverControl').controller('unitIdController', [
     '$scope', '$window', 'APIUtils', 'dataService',
     function($scope, $window, APIUtils, dataService) {
       $scope.dataService = dataService;

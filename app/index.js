@@ -64,6 +64,7 @@ import bmc_reboot_controller from './server-control/controllers/bmc-reboot-contr
 import power_operations_controller from './server-control/controllers/power-operations-controller.js';
 import remote_console_controller from './server-control/controllers/remote-console-controller.js';
 import remote_console_window_controller from './server-control/controllers/remote-console-window-controller.js';
+import unit_id_controller from './server-control/controllers/unit-id-controller.js';
 
 import server_health_index from './server-health/index.js';
 import diagnostics_controller from './server-health/controllers/diagnostics-controller.js';
@@ -73,7 +74,6 @@ import log_controller from './server-health/controllers/log-controller.js';
 import power_consumption_controller from './server-health/controllers/power-consumption-controller.js';
 import sensors_controller from './server-health/controllers/sensors-controller.js';
 import sensors_overview_controller from './server-health/controllers/sensors-overview-controller.js';
-import unit_id_controller from './server-health/controllers/unit-id-controller.js';
 
 import configuration_index from './configuration/index.js';
 import date_time_controller from './configuration/controllers/date-time-controller.js';
