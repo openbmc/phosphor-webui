@@ -23,8 +23,7 @@ window.angular && (function(angular) {
                 authenticated: true
               })
               .when('/server-control/server-led', {
-                'template': require(
-                    '../server-health/controllers/unit-id-controller.html'),
+                'template': require('./controllers/unit-id-controller.html'),
                 'controller': 'unitIdController',
                 authenticated: true
               })
