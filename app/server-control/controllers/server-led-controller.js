@@ -1,15 +1,15 @@
 /**
- * Controller for unit Id
+ * Controller for server LED
  *
  * @module app/serverControl
- * @exports unitIdController
- * @name unitIdController
+ * @exports serverLEDController
+ * @name serverLEDController
  */
 
 window.angular && (function(angular) {
   'use strict';
 
-  angular.module('app.serverControl').controller('unitIdController', [
+  angular.module('app.serverControl').controller('serverLEDController', [
     '$scope', '$window', 'APIUtils', 'dataService',
     function($scope, $window, APIUtils, dataService) {
       $scope.dataService = dataService;
