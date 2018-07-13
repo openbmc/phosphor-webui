@@ -924,7 +924,6 @@ window.angular && (function(angular) {
                     var json = JSON.stringify(response.data);
                     var content = JSON.parse(json);
                     var data = [];
-                    var activationStatus = '';
                     var isExtended = false;
                     var bmcActiveVersion = '';
                     var hostActiveVersion = '';
@@ -966,11 +965,16 @@ window.angular && (function(angular) {
                     for (var key in content.data) {
                       if (content.data.hasOwnProperty(key) &&
                           content.data[key].hasOwnProperty('Version')) {
+                        var activationStatus = '';
+
                         // If the image is "Functional" use that for the
                         // activation status, else use the value of "Activation"
                         // github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Software/Activation.interface.yaml
-                        activationStatus =
-                            content.data[key].Activation.split('.').pop();
+                        if (content.data[key].Activation) {
+                          activationStatus =
+                              content.data[key].Activation.split('.').pop();
+                        }
+
                         if (functionalImages.includes(key)) {
                           activationStatus = 'Functional';
                         }
