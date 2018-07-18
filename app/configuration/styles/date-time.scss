@@ -1,0 +1,19 @@
+// Date Time SCSS
+
+.date-time__metadata-wrapper {
+  margin: 0;
+  padding: 0;
+}
+
+.date-time__metadata-block {
+  list-style-type: none;
+  width: 47%;
+  margin-bottom: 1.8em;
+  margin-right: .7em;
+  display: inline-block;
+  white-space: normal;
+  word-break: break-all;
+  @include mediaQuery(small) {
+    float: left;
+  }
+}
