@@ -1,5 +1,19 @@
+<loader loading="loading"></loader>
 <div id="configuration-date-time">
-    <div class="row column">
-        <h1>Date time</h1>
-    </div>
+	<div class="row column">
+		<h1>Date time settings</h1>
+	</div>
+	<div class="page-header">
+		<h2 class="bold h4">Time information</h2>
+	</div>
+	<fieldset>
+		<div class="column large-8">
+			<ul class="date-time__metadata-wrapper">
+				<li class="date-time__metadata-block">
+					<p class="content-label">BMC Time</p>
+					<p class="courier-bold">{{bmc_time | date:'medium'}}</p>
+				</li>
+			</ul>
+		</div>
+	</fieldset>
 </div>
