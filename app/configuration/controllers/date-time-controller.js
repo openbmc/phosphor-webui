@@ -21,6 +21,9 @@ window.angular && (function(angular) {
           function(data) {
             $scope.bmc_time =
                 data.data['/xyz/openbmc_project/time/bmc'].Elapsed / 1000;
+            $scope.host_time =
+                data.data['/xyz/openbmc_project/time/host'].Elapsed / 1000;
+
             $scope.time_owner = data.data['/xyz/openbmc_project/time/owner']
                                     .TimeOwner.split('.')
                                     .pop();
