@@ -58,12 +58,6 @@ window.angular && (function(angular) {
                 'controller': 'powerConsumptionController',
                 authenticated: true
               })
-              .when('/server-health/diagnostics', {
-                'template':
-                    require('./controllers/diagnostics-controller.html'),
-                'controller': 'diagnosticsController',
-                authenticated: true
-              })
               .when('/server-health', {
                 'template': require('./controllers/log-controller.html'),
                 'controller': 'logController',

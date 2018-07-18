@@ -64,7 +64,6 @@ import remote_console_window_controller from './server-control/controllers/remot
 import server_led_controller from './server-control/controllers/server-led-controller.js';
 
 import server_health_index from './server-health/index.js';
-import diagnostics_controller from './server-health/controllers/diagnostics-controller.js';
 import inventory_controller from './server-health/controllers/inventory-controller.js';
 import inventory_overview_controller from './server-health/controllers/inventory-overview-controller.js';
 import log_controller from './server-health/controllers/log-controller.js';
