@@ -77,7 +77,7 @@
 						<!-- Call Nameservers "DNS Servers" on the GUI -->
 						<fieldset class="net-config__static-ip-wrap" ng-repeat="dns in interface.Nameservers track by $index">
 							<label for="net-config__prime-dns{{$index+1}}">DNS Server {{$index+1}}</label>
-							<input id="net-config__prime-dns{{$index+1}}" type="text" ng-model="dns" ng-blur="interface.Nameservers[$index] = dns" set-focus-dns-field/>
+							<input id="net-config__prime-dns{{$index+1}}" type="text" ng-model="dns" ng-blur="interface.Nameservers[$index] = dns" set-focus-on-new-input//>
 						</fieldset>
 						<button type="button" class="btn-primary inline" ng-click="addDNSField()">Add new DNS server</button>
 				</div>
