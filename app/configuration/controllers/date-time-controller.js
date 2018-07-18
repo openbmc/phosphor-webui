@@ -14,22 +14,32 @@ window.angular && (function(angular) {
     function($scope, $window, APIUtils, dataService, $q) {
       $scope.dataService = dataService;
       $scope.bmc_time = '';
+      $scope.time_mode = '';
+      $scope.time_owner = '';
       $scope.loading = false;
       loadTimeData();
 
       function loadTimeData() {
         $scope.loading = true;
 
-        var getBMCTimePromise = APIUtils.getBMCTime().then(
+        var getTimePromise = APIUtils.getTime().then(
             function(data) {
-              $scope.bmc_time = data.data.Elapsed / 1000;
+              $scope.bmc_time =
+                  data.data['/xyz/openbmc_project/time/bmc'].Elapsed / 1000;
+              $scope.time_owner = data.data['/xyz/openbmc_project/time/owner']
+                                      .TimeOwner.split('.')
+                                      .pop();
+              $scope.time_mode =
+                  data.data['/xyz/openbmc_project/time/sync_method']
+                      .TimeSyncMethod.split('.')
+                      .pop();
             },
             function(error) {
               console.log(JSON.stringify(error));
             });
 
         var promises = [
-          getBMCTimePromise,
+          getTimePromise,
         ];
 
         $q.all(promises).finally(function() {
