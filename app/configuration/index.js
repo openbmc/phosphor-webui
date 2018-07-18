@@ -20,11 +20,6 @@ window.angular && (function(angular) {
                 'controller': 'networkController',
                 authenticated: true
               })
-              .when('/configuration/security', {
-                'template': require('./controllers/security-controller.html'),
-                'controller': 'securityController',
-                authenticated: true
-              })
               .when('/configuration/date-time', {
                 'template': require('./controllers/date-time-controller.html'),
                 'controller': 'dateTimeController',
