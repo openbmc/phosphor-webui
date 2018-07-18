@@ -1196,6 +1196,21 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        getTime: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/time/enumerate',
+                   headers: {
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json'
+                   },
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         getHardwares: function(callback) {
           $http({
             method: 'GET',
