@@ -25,11 +25,6 @@ window.angular && (function(angular) {
                 'controller': 'dateTimeController',
                 authenticated: true
               })
-              .when('/configuration/file', {
-                'template': require('./controllers/file-controller.html'),
-                'controller': 'fileController',
-                authenticated: true
-              })
               .when('/configuration', {
                 'template': require('./controllers/network-controller.html'),
                 'controller': 'networkController',
