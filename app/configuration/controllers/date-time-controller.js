@@ -10,9 +10,31 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.configuration').controller('dateTimeController', [
-    '$scope', '$window', 'APIUtils', 'dataService',
-    function($scope, $window, APIUtils, dataService) {
-      $scope.dataService = dataService;
+    '$scope', '$window', 'APIUtils', '$q',
+    function($scope, $window, APIUtils, $q) {
+      $scope.bmc_time = '';
+      $scope.loading = false;
+      loadTimeData();
+
+      function loadTimeData() {
+        $scope.loading = true;
+
+        var getBMCTimePromise = APIUtils.getBMCTime().then(
+            function(data) {
+              $scope.bmc_time = data.data.Elapsed / 1000;
+            },
+            function(error) {
+              console.log(JSON.stringify(error));
+            });
+
+        var promises = [
+          getBMCTimePromise,
+        ];
+
+        $q.all(promises).finally(function() {
+          $scope.loading = false;
+        });
+      }
     }
   ]);
 
