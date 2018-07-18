@@ -9,21 +9,6 @@
 window.angular && (function(angular) {
   'use strict';
 
-  angular.module('app.configuration').directive('setFocusDnsField', function() {
-    return function(scope, element, attrs) {
-      var elem = window.document.getElementById(element[0].id);
-      // Focus on the newly created DNS server field
-      // Since this directive is also called when initializing DNS server fields
-      // on a page load, need to determine if the call is from a page load or
-      // from the user pressing the "Add new DNS server" button. The easiest way
-      // to do this is to check if the field is empty, if it is we know
-      // this is a new field since all empty fields are removed from the array.
-      if (!scope[attrs.ngModel] && elem) {
-        elem.focus();
-      }
-    };
-  });
-
   angular.module('app.configuration').controller('networkController', [
     '$scope', '$window', 'APIUtils', 'dataService', '$timeout', '$route', '$q',
     function($scope, $window, APIUtils, dataService, $timeout, $route, $q) {
@@ -150,7 +135,6 @@ window.angular && (function(angular) {
         } else {
           $scope.loading = false;
         }
-
       };
 
       function setMACAddress() {
@@ -269,5 +253,4 @@ window.angular && (function(angular) {
       }
     }
   ]);
-
 })(angular);

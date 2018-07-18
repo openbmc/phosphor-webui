@@ -124,7 +124,6 @@ window.angular && (function(angular) {
               setTimeout(function() {
                 myEl.removeClass('flash');
               }, 2000);
-
             };
 
             var loginListener =

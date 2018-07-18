@@ -189,5 +189,4 @@ window.angular && (function(angular) {
           $scope.loadLogs();
         }
       ]);
-
 })(angular);
