@@ -52,7 +52,7 @@ window.angular && (function(angular) {
                 // value for updating the data Service state rather
                 // using it to detect the command line state change.
                 // Tried different methods like creating a separate
-                // function, addding ws under $scope etc.. but auto
+                // function, adding ws under $scope etc.. but auto
                 // refresh is not happening.
                 $scope.loadServerStatus();
               }

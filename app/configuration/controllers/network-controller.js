@@ -234,7 +234,7 @@ window.angular && (function(angular) {
           $scope.hostname = data.hostname;
           $scope.defaultgateway = data.defaultgateway;
           if ($scope.network.interface_ids.length) {
-            // Use the first network interface if the user hasn't choosen one
+            // Use the first network interface if the user hasn't chosen one
             if (!$scope.selectedInterface ||
                 !$scope.network.interfaces[$scope.selectedInterface]) {
               $scope.selectedInterface = $scope.network.interface_ids[0];
