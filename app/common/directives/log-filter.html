@@ -18,12 +18,12 @@
         <p class="filter-label">Filter by date range (MM/DD/YYYY)</p>
         <div class="inline">
             <label for="event-filter-start-date">Start Date</label>
-            <input id="event-filter-start-date" type="date" placeholder="MM/DD/YYYY" ng-model="start_date"/>
+            <input id="event-filter-start-date" type="date" max="{{end_date | date:'yyyy-MM-dd'}}" placeholder="MM/DD/YYYY" ng-model="start_date"/>
         </div>
         <strong>&ndash;</strong>
         <div class="inline">
             <label for="event-filter-end-date">End Date</label>
-            <input id="event-filter-end-date" type="date" placeholder="MM/DD/YYYY" ng-model="end_date"/>
+            <input id="event-filter-end-date" type="date" min="{{start_date | date:'yyyy-MM-dd'}}"placeholder="MM/DD/YYYY" ng-model="end_date"/>
         </div>
     </div>
     <div class="inline event__status-filter">
