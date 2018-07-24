@@ -532,6 +532,21 @@ window.angular && (function(angular) {
                     }
                   });
         },
+        getLastRebootTime: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/state/bmc0/attr/LastRebootTime',
+                   headers: {
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json'
+                   },
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         hostPowerOn: function() {
           var deferred = $q.defer();
           $http({
@@ -1462,5 +1477,4 @@ window.angular && (function(angular) {
       return SERVICE;
     }
   ]);
-
 })(window.angular);
