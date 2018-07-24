@@ -2,19 +2,13 @@
 	<div class="row column">
 		<h1>Reboot BMC</h1>
 	</div>
-
-
-	<!-- TODO: openbmc/openbmc#2956 display correct BMC last reboot time,
-	need REST call.
-
 	<div class="row column">
 		<div class="page-header">
 			<p class="inline h4">Current BMC boot status</p>
 			<div class="float-right bmc-reboot__status-log inline">BMC last reboot at
-				<span class="courier-bold">{{dataService.last_updated |date:'h:mm:ss on MMM dd yyyy'}}</span></div>
+				<span class="courier-bold">{{reboot_time |date:'h:mm:ss on MMM dd yyyy'}}</span></div>
 		</div>
 	</div>
-	-->
 	<div class="row column">
 		<div class="bmc-reboot-option" ng-class="{disabled: dataService.server_unreachable || dataService.loading, transitionAll: confirm}">
 			<p>When you reboot the BMC, your web browser loses contact with the BMC for several minutes. When the BMC is back online, you must log in again. If the Log In button is not available when the BMC is brought back online, close your web browser. Then, reopen the web browser and enter your BMC IP address.</p>
