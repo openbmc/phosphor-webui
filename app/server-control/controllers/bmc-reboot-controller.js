@@ -14,6 +14,13 @@ window.angular && (function(angular) {
     function($scope, $window, APIUtils, dataService) {
       $scope.dataService = dataService;
       $scope.confirm = false;
+      APIUtils.getLastRebootTime().then(
+        function (data) {
+          $scope.reboot_time = data.data;
+        },
+        function (error) {
+          console.log(JSON.stringify(error));
+      });
       $scope.rebootConfirm = function() {
         if ($scope.confirm) {
           return;
