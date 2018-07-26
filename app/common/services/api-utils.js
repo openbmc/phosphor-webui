@@ -1226,6 +1226,22 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        setTimeMode: function(timeMode) {
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/time/sync_method/attr/TimeSyncMethod',
+                   headers: {
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json'
+                   },
+                   withCredentials: true,
+                   data: JSON.stringify({'data': timeMode})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         getHardwares: function(callback) {
           $http({
             method: 'GET',
