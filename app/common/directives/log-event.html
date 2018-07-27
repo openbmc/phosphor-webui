@@ -40,7 +40,7 @@
              </div>
              <div>
                  <div class="event__actions">
-                     <button class="btn-meta-copy" clipboard text="event.additional_data" on-copied="copySuccess(event)" on-error="copyfailed(err)">
+                     <button class="btn-meta-copy" clipboard text="copyText(event)" on-copied="copySuccess(event)" on-error="copyfailed(err)">
                         <img class="event__icon" src="../../assets/images/icon-copy.svg" alt=""/><span ng-if="!event.copied">Copy</span><span ng-if="event.copied">Copied</span>
                      </button>
                      <button

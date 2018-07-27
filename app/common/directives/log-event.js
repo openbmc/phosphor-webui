@@ -51,6 +51,9 @@ window.angular && (function(angular) {
               }
               return data;
             };
+            $scope.copyText = function(event) {
+              return event.description + ' ' + event.additional_data;
+            }
           }
         ]
       };
