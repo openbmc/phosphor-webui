@@ -653,6 +653,21 @@ window.angular && (function(angular) {
                     }
                   });
         },
+        getLastPowerTime: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/state/chassis0/attr/LastStateChangeTime',
+                   headers: {
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json'
+                   },
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         getLogs: function() {
           var deferred = $q.defer();
           $http({

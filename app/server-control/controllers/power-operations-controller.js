@@ -29,6 +29,18 @@ window.angular && (function(angular) {
       var pollStartTime = null;
 
       //@TODO: call api and get proper state
+
+      APIUtils.getLastPowerTime().then(
+          function(data) {
+            if (data.data == 0) {
+              $scope.power_time = 'not available';
+            } else {
+              $scope.power_time = data.data;
+            }
+          },
+          function(error) {
+            console.log(JSON.stringify(error));
+          });
       $scope.toggleState = function() {
         dataService.server_state =
             (dataService.server_state == 'Running') ? 'Off' : 'Running';
@@ -321,5 +333,4 @@ window.angular && (function(angular) {
       };
     }
   ]);
-
 })(angular);
