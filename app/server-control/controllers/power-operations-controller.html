@@ -4,11 +4,7 @@
         <h1>Server power operations</h1>
         <div class="power__current-status page-header">
             <h2 class="inline h4">Current status</h2>
-            <!-- TODO: openbmc/openbmc#2957 display correct last power
-            operation time, need REST call.
-
-            <div class="power__status-log inline float-right">Last power operation at <span class="courier-bold">{{dataService.last_updated |date:'h:mm:ss on MMM dd yyyy'}}</span></div>
-            -->
+            <div class="power__status-log inline float-right">Last power operation at <span class="courier-bold">{{power_time | date:'medium'}}</span></div>
         </div>
     </div>
     <div class="row column">
