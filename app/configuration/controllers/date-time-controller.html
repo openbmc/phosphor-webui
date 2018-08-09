@@ -31,8 +31,10 @@
 						<p class="courier-bold">{{host_time | date:'medium'}}</p>
 					</li>
 					<li class="date-time__metadata-block">
-						<p class="content-label">Time Owner</p>
-						<p class="courier-bold">{{time_owner}}</p>
+					<label class="content-label">Time Owner</label>
+					<select ng-model="time_owner" class="date-time__owner-dropdown">
+						<option class="courier-bold" ng-repeat="owner in time_owners">{{owner}}</option>
+					</select>
 					</li>
 				</ul>
 			</div>

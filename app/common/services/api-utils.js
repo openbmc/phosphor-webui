@@ -1242,6 +1242,22 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        setTimeOwner: function(timeOwner) {
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/time/owner/attr/TimeOwner',
+                   headers: {
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json'
+                   },
+                   withCredentials: true,
+                   data: JSON.stringify({'data': timeOwner})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         getHardwares: function(callback) {
           $http({
             method: 'GET',
