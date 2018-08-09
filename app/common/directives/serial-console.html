@@ -1,0 +1,11 @@
+<div class="serial-lan__wrapper">
+    <div id="terminal" class="serial-lan__terminal"></div>
+    <div class="serial-lan__actions">
+        <button class="inline btn-pop-out" ng-click="openTerminalWindow()" ng-show="showTabBtn === true">Open in new
+            tab
+        </button>
+        <a ng-click="determineExportData()" ng-href="data:text/json;charset=utf-8,{{export_text}}"
+           class="inline btn-export" download="console log {{getExportDate() | date:'short'}}.txt">Export console
+            data</a>
+    </div>
+</div>

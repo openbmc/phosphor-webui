@@ -49,6 +49,7 @@ import firmware_list from './common/directives/firmware-list.js';
 import file from './common/directives/file.js';
 import loader from './common/directives/loader.js';
 import paginate from './common/directives/paginate.js';
+import serial_console from './common/directives/serial-console.js';
 
 import login_index from './login/index.js';
 import login_controller from './login/controllers/login-controller.js';
@@ -59,7 +60,6 @@ import system_overview_controller from './overview/controllers/system-overview-c
 import server_control_index from './server-control/index.js';
 import bmc_reboot_controller from './server-control/controllers/bmc-reboot-controller.js';
 import power_operations_controller from './server-control/controllers/power-operations-controller.js';
-import remote_console_controller from './server-control/controllers/remote-console-controller.js';
 import remote_console_window_controller from './server-control/controllers/remote-console-window-controller.js';
 import server_led_controller from './server-control/controllers/server-led-controller.js';
 
