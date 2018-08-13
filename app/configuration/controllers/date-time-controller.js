@@ -12,7 +12,11 @@ window.angular && (function(angular) {
   angular.module('app.configuration').controller('dateTimeController', [
     '$scope', '$window', 'APIUtils', '$route', '$q',
     function($scope, $window, APIUtils, $route, $q) {
-      $scope.bmc_time = '';
+      // Must have 2 properties to handle the separate date and time inputs.
+      // Ideally, would just use one property and one input, datetime-local,
+      // but datetime-local is not supported on Firefox.
+      $scope.bmc = {time: new Date(), date: new Date()};
+      $scope.host = {time: new Date(), date: new Date()};
       $scope.time_mode = '';
       $scope.time_owner = '';
       $scope.time_owners = ['BMC', 'Host', 'Both', 'Split'];
@@ -27,9 +31,17 @@ window.angular && (function(angular) {
 
         var getTimePromise = APIUtils.getTime().then(
             function(data) {
-              $scope.bmc_time = data.data[time_path + 'bmc'].Elapsed / 1000;
-              $scope.host_time = data.data[time_path + 'host'].Elapsed / 1000;
-
+              // The time is returned as Epoch microseconds convert to
+              // milliseconds.
+              $scope.bmc.date.setTime(
+                  data.data[time_path + 'bmc'].Elapsed / 1000);
+              $scope.bmc.time.setTime($scope.bmc.date);
+              // Don't care about milliseconds and don't want them displayed
+              $scope.bmc.time.setMilliseconds(0);
+              $scope.host.date.setTime(
+                  data.data[time_path + 'host'].Elapsed / 1000);
+              $scope.host.time.setTime($scope.host.date);
+              $scope.host.time.setMilliseconds(0);
               $scope.time_owner =
                   data.data[time_path + 'owner'].TimeOwner.split('.').pop();
               $scope.time_mode = data.data[time_path + 'sync_method']
@@ -55,9 +67,24 @@ window.angular && (function(angular) {
         var promises = [setTimeMode(), setTimeOwner()];
 
         $q.all(promises).finally(function() {
-          $scope.loading = false;
           if (!$scope.set_time_error) {
-            $scope.set_time_success = true;
+            // Have to set the time mode and time owner first to aviod a
+            // insufficient permissions if the time mode or time owner had
+            // changed.
+            promises = [];
+            if ($scope.time_mode == 'Manual' && $scope.time_owner != 'Host') {
+              promises.push(setBMCTime());
+            }
+            if ($scope.time_mode == 'Manual' &&
+                ($scope.time_owner == 'Host' || $scope.time_owner == 'Split')) {
+              promises.push(setHostTime());
+            }
+            $q.all(promises).finally(function() {
+              $scope.loading = false;
+              if (!$scope.set_time_error) {
+                $scope.set_time_success = true;
+              }
+            });
           }
         });
       };
@@ -89,6 +116,43 @@ window.angular && (function(angular) {
                   console.log(JSON.stringify(error));
                 });
       }
+
+      function setBMCTime() {
+        // Add the separate date and time objects and convert to Epoch time in
+        // microseconds.
+        return APIUtils
+            .setBMCTime(
+                addDateTime($scope.bmc.date, $scope.bmc.time).getTime() * 1000)
+            .then(
+                function(data) {},
+                function(error) {
+                  $scope.set_time_error = true;
+                  console.log(JSON.stringify(error));
+                });
+      }
+
+      function setHostTime() {
+        // Add the separate date and time objects and convert to Epoch time
+        // microseconds.
+        return APIUtils
+            .setHostTime(
+                addDateTime($scope.host.date, $scope.host.time).getTime() *
+                1000)
+            .then(
+                function(data) {},
+                function(error) {
+                  $scope.set_time_error = true;
+                  console.log(JSON.stringify(error));
+                });
+      }
+      // Add the separte date and time objects, from
+      // https://stackoverflow.com/questions/46252776/how-to-create-datetime-from-date-and-time-in-angularjs
+      function addDateTime(date, time) {
+        var date_string = date.toISOString().substring(0, 10);
+        var time_string = time.toISOString().substring(10, 24);
+        return new Date(date_string + time_string);
+      }
+
     }
   ]);
 

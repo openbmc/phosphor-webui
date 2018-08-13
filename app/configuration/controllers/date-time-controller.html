@@ -24,11 +24,17 @@
 				<ul class="date-time__metadata-wrapper">
 					<li class="date-time__metadata-block">
 						<p class="content-label">BMC <span ng-if="time_owner != 'Split'">and Host</span> Time</p>
-						<p class="courier-bold">{{bmc_time | date:'medium'}}</p>
+						<div class="inline">
+							<input type="date" ng-model="bmc.date" ng-readonly="time_mode == 'NTP'" min="2018-01-01" max="2099-12-31"/>
+							<input type="time" ng-model="bmc.time" ng-readonly="time_mode == 'NTP'" />
+						</div>
 					</li>
 					<li class="date-time__metadata-block" ng-if="time_owner == 'Split'">
 						<p class="content-label">Host Time</p>
-						<p class="courier-bold">{{host_time | date:'medium'}}</p>
+						<div class="inline">
+							<input type="date" ng-model="host.date" min="2018-01-01" max="2099-12-31"/>
+							<input type="time" ng-model="host.time"/>
+						</div>
 					</li>
 					<li class="date-time__metadata-block">
 					<label class="content-label">Time Owner</label>
