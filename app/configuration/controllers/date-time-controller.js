@@ -12,7 +12,8 @@ window.angular && (function(angular) {
   angular.module('app.configuration').controller('dateTimeController', [
     '$scope', '$window', 'APIUtils', '$route', '$q',
     function($scope, $window, APIUtils, $route, $q) {
-      $scope.bmc_time = '';
+      $scope.bmc = {};
+      $scope.host = {};
       $scope.time_mode = '';
       $scope.time_owner = '';
       $scope.time_owners = ['BMC', 'Host', 'Both', 'Split'];
@@ -27,9 +28,15 @@ window.angular && (function(angular) {
 
         var getTimePromise = APIUtils.getTime().then(
             function(data) {
-              $scope.bmc_time = data.data[time_path + 'bmc'].Elapsed / 1000;
-              $scope.host_time = data.data[time_path + 'host'].Elapsed / 1000;
-
+              // The time is returned as Epoch microseconds convert to
+              // milliseconds.
+              $scope.bmc.date =
+                  new Date(data.data[time_path + 'bmc'].Elapsed / 1000);
+              // Don't care about milliseconds and don't want them displayed
+              $scope.bmc.date.setMilliseconds(0);
+              $scope.host.date =
+                  new Date(data.data[time_path + 'host'].Elapsed / 1000);
+              $scope.host.date.setMilliseconds(0);
               $scope.time_owner =
                   data.data[time_path + 'owner'].TimeOwner.split('.').pop();
               $scope.time_mode = data.data[time_path + 'sync_method']
@@ -55,9 +62,24 @@ window.angular && (function(angular) {
         var promises = [setTimeMode(), setTimeOwner()];
 
         $q.all(promises).finally(function() {
-          $scope.loading = false;
           if (!$scope.set_time_error) {
-            $scope.set_time_success = true;
+            // Have to set the time mode and time owner first to avoid a
+            // insufficient permissions if the time mode or time owner had
+            // changed.
+            promises = [];
+            if ($scope.time_mode == 'Manual' && $scope.time_owner != 'Host') {
+              promises.push(setBMCTime());
+            }
+            if ($scope.time_mode == 'Manual' &&
+                ($scope.time_owner == 'Host' || $scope.time_owner == 'Split')) {
+              promises.push(setHostTime());
+            }
+            $q.all(promises).finally(function() {
+              $scope.loading = false;
+              if (!$scope.set_time_error) {
+                $scope.set_time_success = true;
+              }
+            });
           }
         });
       };
@@ -82,6 +104,30 @@ window.angular && (function(angular) {
         return APIUtils
             .setTimeOwner(
                 'xyz.openbmc_project.Time.Owner.Owners.' + $scope.time_owner)
+            .then(
+                function(data) {},
+                function(error) {
+                  $scope.set_time_error = true;
+                  console.log(JSON.stringify(error));
+                });
+      }
+
+      function setBMCTime() {
+        // Add the separate date and time objects and convert to Epoch time in
+        // microseconds.
+        return APIUtils.setBMCTime($scope.bmc.date.getTime() * 1000)
+            .then(
+                function(data) {},
+                function(error) {
+                  $scope.set_time_error = true;
+                  console.log(JSON.stringify(error));
+                });
+      }
+
+      function setHostTime() {
+        // Add the separate date and time objects and convert to Epoch time
+        // microseconds.
+        return APIUtils.setHostTime($scope.host.date.getTime() * 1000)
             .then(
                 function(data) {},
                 function(error) {
