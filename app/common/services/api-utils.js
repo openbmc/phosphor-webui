@@ -9,8 +9,8 @@
 window.angular && (function(angular) {
   'use strict';
   angular.module('app.common.services').factory('APIUtils', [
-    '$http', 'Constants', '$q', 'dataService',
-    function($http, Constants, $q, DataService) {
+    '$http', 'Constants', '$q', 'dataService', '$interval',
+    function($http, Constants, $q, DataService, $interval) {
       var getScaledValue = function(value, scale) {
         scale = scale + '';
         scale = parseInt(scale, 10);
@@ -83,6 +83,72 @@ window.angular && (function(angular) {
                     console.log(error);
                     deferred.reject(error);
                   });
+          return deferred.promise;
+        },
+        pollHostStatusTillOn: function() {
+          var deferred = $q.defer();
+          var pollHostStatusTimer = undefined;
+          var pollStartTime = new Date();
+          pollHostStatusTimer = $interval(function() {
+            var now = new Date();
+            if ((now.getTime() - pollStartTime.getTime()) >=
+                Constants.TIMEOUT.HOST_ON) {
+              $interval.cancel(pollHostStatusTimer);
+              pollHostStatusTimer = undefined;
+              deferred.reject(
+                  new Error(Constants.MESSAGES.POLL.HOST_ON_TIMEOUT));
+            }
+            SERVICE.getHostState()
+                .then(function(state) {
+                  if (state === Constants.HOST_STATE_TEXT.on_code) {
+                    $interval.cancel(pollHostStatusTimer);
+                    pollHostStatusTimer = undefined;
+                    deferred.resolve(state);
+                  } else if (state === Constants.HOST_STATE_TEXT.error_code) {
+                    $interval.cancel(pollHostStatusTimer);
+                    pollHostStatusTimer = undefined;
+                    deferred.reject(
+                        new Error(Constants.MESSAGES.POLL.HOST_QUIESCED));
+                  }
+                })
+                .catch(function(error) {
+                  $interval.cancel(pollHostStatusTimer);
+                  pollHostStatusTimer = undefined;
+                  deferred.reject(error);
+                });
+          }, Constants.POLL_INTERVALS.POWER_OP);
+
+          return deferred.promise;
+        },
+
+        pollHostStatusTillOff: function() {
+          var deferred = $q.defer();
+          var pollHostStatusTimer = undefined;
+          var pollStartTime = new Date();
+          pollHostStatusTimer = $interval(function() {
+            var now = new Date();
+            if ((now.getTime() - pollStartTime.getTime()) >=
+                Constants.TIMEOUT.HOST_OFF) {
+              $interval.cancel(pollHostStatusTimer);
+              pollHostStatusTimer = undefined;
+              deferred.reject(
+                  new Error(Constants.MESSAGES.POLL.HOST_OFF_TIMEOUT));
+            }
+            SERVICE.getHostState()
+                .then(function(state) {
+                  if (state === Constants.HOST_STATE_TEXT.off_code) {
+                    $interval.cancel(pollHostStatusTimer);
+                    pollHostStatusTimer = undefined;
+                    deferred.resolve(state);
+                  }
+                })
+                .catch(function(error) {
+                  $interval.cancel(pollHostStatusTimer);
+                  pollHostStatusTimer = undefined;
+                  deferred.reject(error);
+                });
+          }, Constants.POLL_INTERVALS.POWER_OP);
+
           return deferred.promise;
         },
         getNetworkInfo: function() {
