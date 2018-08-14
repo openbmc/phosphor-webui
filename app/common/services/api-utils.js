@@ -9,8 +9,8 @@
 window.angular && (function(angular) {
   'use strict';
   angular.module('app.common.services').factory('APIUtils', [
-    '$http', 'Constants', '$q', 'dataService',
-    function($http, Constants, $q, DataService) {
+    '$http', 'Constants', '$q', 'dataService', '$interval',
+    function($http, Constants, $q, DataService, $interval) {
       var getScaledValue = function(value, scale) {
         scale = scale + '';
         scale = parseInt(scale, 10);
@@ -87,6 +87,112 @@ window.angular && (function(angular) {
               .then(function(response) {
                 return response.data;
               });
+        },
+        pollHostStatusTillOn: function() {
+          var deferred = $q.defer();
+          var hostOnTimeout = setTimeout(function() {
+            ws.close();
+            deferred.reject(new Error(Constants.MESSAGES.POLL.HOST_ON_TIMEOUT));
+          }, Constants.TIMEOUT.HOST_ON);
+
+          var ws =
+              new WebSocket('wss://' + DataService.server_id + '/subscribe');
+          var data = JSON.stringify({
+            'paths': ['/xyz/openbmc_project/state/host0'],
+            'interfaces': ['xyz.openbmc_project.State.Host']
+          });
+          ws.onopen = function() {
+            ws.send(data);
+          };
+          ws.onmessage = function(evt) {
+            var content = JSON.parse(evt.data);
+            var hostState = content.properties.CurrentHostState;
+            if (hostState === Constants.HOST_STATE_TEXT.on_code) {
+              clearTimeout(hostOnTimeout);
+              ws.close();
+              deferred.resolve();
+            } else if (hostState === Constants.HOST_STATE_TEXT.error_code) {
+              clearTimeout(hostOnTimeout);
+              ws.close();
+              deferred.reject(new Error(Constants.MESSAGES.POLL.HOST_QUIESCED));
+            }
+          };
+        },
+
+        pollHostStatusTilReboot: function() {
+          var deferred = $q.defer();
+          var onState = Constants.HOST_STATE_TEXT.on_code;
+          var offState = Constants.HOST_STATE_TEXT.on_code;
+          var hostTimeout;
+          var setHostTimeout = function(message, timeout) {
+            hostTimeout = setTimeout(function() {
+              ws.close();
+              deferred.reject(new Error(message));
+            }, timeout);
+          };
+          var ws =
+              new WebSocket('wss://' + DataService.server_id + '/subscribe');
+          var data = JSON.stringify({
+            'paths': ['/xyz/openbmc_project/state/host0'],
+            'interfaces': ['xyz.openbmc_project.State.Host']
+          });
+          ws.onopen = function() {
+            ws.send(data);
+          };
+          setHostTimeout(
+              Constants.MESSAGES.POLL.HOST_OFF_TIMEOUT,
+              Constants.TIMEOUT.HOST_OFF);
+          var pollState = offState;
+          ws.onmessage = function(evt) {
+            var content = JSON.parse(evt.data);
+            var hostState = content.properties.CurrentHostState;
+            if (hostState === pollState) {
+              if (pollState === offState) {
+                clearTimeout(hostTimeout);
+                pollState = onState;
+                setHostTimeout(
+                    Constants.MESSAGES.POLL.HOST_ON_TIMEOUT,
+                    Constants.TIMEOUT.HOST_ON);
+              }
+              if (pollState === onState) {
+                clearTimeout(hostTimeout);
+                ws.close();
+                deferred.resolve();
+              }
+            } else if (hostState === Constants.HOST_STATE_TEXT.error_code) {
+              clearTimeout(hostTimeout);
+              ws.close();
+              deferred.reject(new Error(Constants.MESSAGES.POLL.HOST_QUIESCED));
+            }
+          };
+        },
+
+        pollHostStatusTillOff: function() {
+          var deferred = $q.defer();
+          var hostOffTimeout = setTimeout(function() {
+            ws.close();
+            deferred.reject(
+                new Error(Constants.MESSAGES.POLL.HOST_OFF_TIMEOUT));
+          }, Constants.TIMEOUT.HOST_OFF);
+
+          var ws =
+              new WebSocket('wss://' + DataService.server_id + '/subscribe');
+          var data = JSON.stringify({
+            'paths': ['/xyz/openbmc_project/state/host0'],
+            'interfaces': ['xyz.openbmc_project.State.Host']
+          });
+          ws.onopen = function() {
+            ws.send(data);
+          };
+          ws.onmessage = function(evt) {
+            var content = JSON.parse(evt.data);
+            var hostState = content.properties.CurrentHostState;
+            if (hostState === Constants.HOST_STATE_TEXT.off_code) {
+              clearTimeout(hostOffTimeout);
+              ws.close();
+              deferred.resolve();
+            }
+          };
         },
         getNetworkInfo: function() {
           var deferred = $q.defer();

@@ -11,10 +11,10 @@ window.angular && (function(angular) {
 
   angular.module('app.configuration').controller('firmwareController', [
     '$scope', '$window', 'APIUtils', 'dataService', '$location',
-    '$anchorScroll', 'Constants', '$interval', '$q', '$timeout',
+    '$anchorScroll', 'Constants', '$interval', '$q', '$timeout', '$interpolate',
     function(
         $scope, $window, APIUtils, dataService, $location, $anchorScroll,
-        Constants, $interval, $q, $timeout) {
+        Constants, $interval, $q, $timeout, $interpolate) {
       $scope.dataService = dataService;
 
       // Scroll to target anchor
@@ -125,7 +125,6 @@ window.angular && (function(angular) {
                         });
                       })
                   .then(function(state) {
-                    // Only look at reboot if it's a BMC image
                     if ($scope.activate.reboot &&
                         ($scope.activate_image_type == 'BMC')) {
                       // Despite the new image being active, issue,
@@ -151,9 +150,64 @@ window.angular && (function(angular) {
                             });
                       }, 10000);
                     }
+                    if ($scope.activate.reboot &&
+                        ($scope.activate_image_type == 'Host')) {
+                      // If image type being activated is a host image, the
+                      // current power status of the server determines if the
+                      // server should power on or reboot.
+                      if ($scope.isServerOff()) {
+                        powerOn();
+                      } else {
+                        warmReboot();
+                      }
+                    }
                   });
             });
         $scope.activate_confirm = false;
+      };
+      function powerOn() {
+        dataService.setUnreachableState();
+        APIUtils.hostPowerOn()
+            .then(function(response) {
+              return response;
+            })
+            .then(function(lastStatus) {
+              return APIUtils.pollHostStatusTillOn();
+            })
+            .catch(function(error) {
+              dataService.activateErrorModal({
+                title: Constants.MESSAGES.POWER_OP.POWER_ON_FAILED,
+                description: error.statusText ?
+                    $interpolate(
+                        Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
+                        {status: error.status, description: error.statusText}) :
+                    error
+              });
+            });
+      };
+      function warmReboot() {
+        $scope.uploading = true;
+        dataService.setUnreachableState();
+        APIUtils.hostReboot()
+            .then(function(response) {
+              return response;
+            })
+            .then(function(lastStatus) {
+              return APIUtils.pollHostStatusTilReboot();
+            })
+            .catch(function(error) {
+              dataService.activateErrorModal({
+                title: Constants.MESSAGES.POWER_OP.WARM_REBOOT_FAILED,
+                description: error.statusText ?
+                    $interpolate(
+                        Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
+                        {status: error.status, description: error.statusText}) :
+                    error
+              });
+            });
+      };
+      $scope.isServerOff = function() {
+        return dataService.server_state === Constants.HOST_STATE_TEXT.off;
       };
 
       $scope.upload = function() {
