@@ -120,7 +120,7 @@
 		<div class="modal__content">
 			<div ng-switch on="activate_image_type">
 				<p ng-switch-when="BMC">When you activate the BMC firmware file, {{activate_image_version}}, the BMC must be rebooted before it will operate with the new firmware code. Note that when you reboot the BMC, the BMC will be unavailable for several minutes and you must log in again.</p>
-				<p ng-switch-when="Host">When you activate server firmware file, {{activate_image_version}}, the new firmware will not operate until the next time the server boots.</p>
+				<p ng-switch-when="Host">When you activate the server firmware file, {{activate_image_version}}, the new firmware will not operate until the next time the server boots.</p>
 			</div>
 			<form ng-if="activate_image_type == 'BMC'">
 				<fieldset>
@@ -133,6 +133,22 @@
 					<div class="row column">
 						<label class="control-radio bold" for="activate-with-reboot">Activate firmware file and automatically reboot BMC
 							<input type="radio" name="activate-with-reboot" id="activate-with-reboot" ng-model="activate.reboot" ng-value="true"/>
+							<span class="control__indicator control__indicator-on"></span>
+						</label>
+					</div>
+				</fieldset>
+			</form>
+			<form ng-if="activate_image_type == 'Host'">
+				<fieldset>
+					<div class="row column">
+						<label class="control-radio bold" for="activate-host-without-reboot">Activate firmware file without {{isServerOff() ? "booting" : "rebooting"}} server
+							<input type="radio" name="activate-host-without-reboot" id="activate-host-without-reboot" ng-model="activate.reboot" ng-value="false"/>
+							<span class="control__indicator control__indicator-on"></span>
+						</label>
+					</div>
+					<div class="row column">
+						<label class="control-radio bold" for="activate-host-with-reboot">Activate firmware file and automatically {{isServerOff() ? "boot" : "reboot"}} server
+							<input type="radio" name="activate-host-with-reboot" id="activate-host-with-reboot" ng-model="activate.reboot" ng-value="true"/>
 							<span class="control__indicator control__indicator-on"></span>
 						</label>
 					</div>
