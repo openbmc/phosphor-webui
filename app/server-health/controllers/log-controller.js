@@ -9,10 +9,13 @@
 window.angular && (function(angular) {
   'use strict';
   angular.module('app.serverHealth')
-      .config(function(paginationTemplateProvider) {
-        paginationTemplateProvider.setString(
-            require('../../common/directives/dirPagination.tpl.html'));
-      })
+      .config([
+        'paginationTemplateProvider',
+        function(paginationTemplateProvider) {
+          paginationTemplateProvider.setString(
+              require('../../common/directives/dirPagination.tpl.html'));
+        }
+      ])
       .controller('logController', [
         '$scope', '$window', 'APIUtils', 'dataService', 'Constants',
         '$routeParams', '$filter',
