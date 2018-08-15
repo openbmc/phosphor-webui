@@ -223,8 +223,7 @@ module.exports = [function makeWebpackConfig() {
         // Reference:
         // http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
         // Minify all javascript, switch loaders to minimizing mode
-        // TODO: openbmc/openbmc#2871  Mangling currently breaks the GUI.
-        new UglifyJsPlugin({uglifyOptions: {mangle: false}}),
+        new UglifyJsPlugin(),
 
         // Copy assets from the public folder
         // Reference: https://github.com/kevlened/copy-webpack-plugin
