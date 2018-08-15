@@ -1164,55 +1164,6 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
-        getBMCEthernetInfo: function() {
-          var deferred = $q.defer();
-          $http({
-            method: 'GET',
-            url: DataService.getHost() +
-                '/xyz/openbmc_project/inventory/system/chassis/motherboard/boxelder/bmc/ethernet',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            withCredentials: true
-          })
-              .then(
-                  function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
-                    deferred.resolve(content.data);
-                  },
-                  function(error) {
-                    console.log(error);
-                    deferred.reject(error);
-                  });
-
-          return deferred.promise;
-        },
-        getBMCInfo: function(callback) {
-          var deferred = $q.defer();
-          $http({
-            method: 'GET',
-            url: DataService.getHost() +
-                '/xyz/openbmc_project/inventory/system/chassis/motherboard/boxelder/bmc',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            withCredentials: true
-          })
-              .then(
-                  function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
-                    deferred.resolve(content.data);
-                  },
-                  function(error) {
-                    console.log(error);
-                    deferred.reject(error);
-                  });
-          return deferred.promise;
-        },
         getServerInfo: function() {
           // TODO: openbmc/openbmc#3117 Need a way via REST to get
           // interfaces so we can get the system object(s) by the looking
