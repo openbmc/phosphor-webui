@@ -1,25 +1,32 @@
-# openbmc
-UX Design repo for OpenBMC
-=======
-# OpenBMC
-TODO: Write a project description
+# OpenBMC Web User Interface
+The OpenBMC WebUI is a Web-based user interface for the OpenBMC
+firmware stack. The WebUI uses AngularJS. Features include:
+*	View system overview data such as model information and serial number
+*	View and manage event logs
+*	View inventory data
+* View sensor data
+*	Power On/Off server operations
+*	Reboot BMC
+*	Manage and update BMC and Host firmware
+*	IPv4 network settings
+*	SoL console
 
-## Requirement
+## Requirements
 nodejs
 npm
 
 ## Installation
 `npm install`
 
-## Running
+## Running locally
 `npm run-script server`
 
-This will run it locally in `http://localhost:8080`.
+This will start a server instance and begin listening for connections at
+`http://localhost:8080`. This development server provides live reloading on
+code changes.
+NOTE: Browsing to https://<BMC IP> and accepting the self-signed certificate
+might be required to prevent your browser from blocking traffic to the BMC.
 
-## Example Usage with OpenBMC
-1. Browse to `https://<bmc-ip>` and bypass the secure warning.
-You will see a JSON response with `Login required` message.
-2. In the same session, navigate to `http://localhost:8080`. Enter the BMC
-IP, Username and Password (defaults: `root`/`0penBmc`).
-
-Now you are logged in.
+## Logging in
+Enter the BMC Host or BMC IP address, username, and password.
+The default username and password are `root`/`0penBmc`.
