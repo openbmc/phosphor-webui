@@ -1,0 +1,11 @@
+Ok-To-Test+1: Jenkins <openbmc-ci-admin@ozlabs.org>
+Verified+1: Jenkins <openbmc-ci-admin@ozlabs.org>
+Code-Review+1: Lei YU <mine260309@gmail.com>
+Code-Review+1: Camvan Nguyen <ctnguyen@us.ibm.com>
+Code-Review+1: Adriana Kobylak <anoo@linux.ibm.com>
+Code-Review+2: Ed Tanous <ed.tanous@intel.com>
+Submitted-by: Gunnar Mills <gmills@us.ibm.com>
+Submitted-at: Thu, 16 Aug 2018 21:05:33 +0000
+Reviewed-on: https://gerrit.openbmc-project.xyz/11968
+Project: openbmc/phosphor-webui
+Branch: refs/heads/master
