@@ -27,6 +27,7 @@ window.angular && (function(angular) {
       term.prefs_.set('background-color', '#19273c');
       // Allows keyboard input
       term.installKeyboard();
+      $scope.export_text = '';
 
       // The BMC exposes a websocket at /console0. This can be read
       // or written to access the host serial console.
@@ -67,7 +68,19 @@ window.angular && (function(angular) {
             '#/server-control/remote-console-window', 'Remote Console Window',
             'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=600,height=400');
       };
+
+      $scope.getExportDate = function() {
+        return new Date();
+      };
+      $scope.determineExportData = function() {
+        $scope.export_text = term.getRowsText(0, term.getRowCount());
+      };
+      $scope.openTerminalWindow = function() {
+        dataService.setRemoteWindowActive();
+        $window.open(
+            '#/server-control/remote-console-window', 'Remote Console Window',
+            'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=600,height=550');
+      };
     }
   ]);
-
 })(angular);
