@@ -1,11 +1,5 @@
 <div class="serial-lan__header">
-	<a class="bold" ng-click="close()"><i class="icon icon__return"></i> Return to openBmc</a>
+        <a class="bold" ng-click="close()"><i class="icon icon__return"></i> Return to OpenBmc</a>
 </div>
-<div class="serial-lan__wrapper">
-        <div class="serial-lan__wrapper">
-                <div id="terminal" class="serial-lan__terminal"></div>
-                <div class="serial-lan__actions">
-                        <a ng-click="determineExportData()" ng-href="data:text/json;charset=utf-8,{{export_text}}" class="inline btn-export" download="console log {{getExportDate() | date:'short'}}.txt">Export console data</a>
-                </div>
-        </div>
-</div>
+<serial-console show-tab-btn="false"></serial-console>
+
