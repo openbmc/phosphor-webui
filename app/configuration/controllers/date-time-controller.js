@@ -35,9 +35,15 @@ window.angular && (function(angular) {
                   new Date(data.data[time_path + 'bmc'].Elapsed / 1000);
               // Don't care about milliseconds and don't want them displayed
               $scope.bmc.date.setMilliseconds(0);
+              // https://stackoverflow.com/questions/1091372/getting-the-clients-timezone-in-javascript
+              // GMT-0400 (EDT)
+              $scope.bmc.timezone =
+                  $scope.bmc.date.toString().match(/([A-Z]+[\+-][0-9]+.*)/)[1];
               $scope.host.date =
                   new Date(data.data[time_path + 'host'].Elapsed / 1000);
               $scope.host.date.setMilliseconds(0);
+              $scope.host.timezone =
+                  $scope.host.date.toString().match(/([A-Z]+[\+-][0-9]+.*)/)[1];
               $scope.time_owner =
                   data.data[time_path + 'owner'].TimeOwner.split('.').pop();
               $scope.time_mode = data.data[time_path + 'sync_method']
