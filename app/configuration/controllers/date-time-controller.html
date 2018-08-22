@@ -15,6 +15,13 @@
 						<span class="control__indicator control__indicator-on"></span>
 					</label>
 				</div>
+				<div class="row column date-time__ntp-servers-wrap">
+						<fieldset class="date-time__ntp-servers" ng-repeat="server in ntp.servers track by $index">
+							<label for="ntp-server{{$index+1}}">NTP Server Address {{$index+1}}</label>
+							<input id="ntp-server{{$index+1}}" type="text" ng-readonly="time_mode != 'NTP'" ng-model="server" ng-blur="ntp.servers[$index] = server" set-focus-on-new-input/>
+						</fieldset>
+						<button type="button" class="btn-primary inline" ng-click="addNTPField()">Add new NTP server</button>
+				</div>
 				<div class="row column">
 					<label class="control-radio" for="manual-time">Manually set date and time
 						<input type="radio" id="manual-time" ng-model="time_mode" value="Manual"/>
