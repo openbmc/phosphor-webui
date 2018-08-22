@@ -14,6 +14,7 @@ window.angular && (function(angular) {
     function($scope, $window, APIUtils, $route, $q) {
       $scope.bmc = {};
       $scope.host = {};
+      $scope.ntp = {servers: []};
       $scope.time_mode = '';
       $scope.time_owner = '';
       $scope.time_owners = ['BMC', 'Host', 'Both', 'Split'];
@@ -47,8 +48,18 @@ window.angular && (function(angular) {
               console.log(JSON.stringify(error));
             });
 
+        var getNTPPromise = APIUtils.getNTPServers().then(
+            function(data) {
+              $scope.ntp.servers = data.data;
+            },
+            function(error) {
+              console.log(JSON.stringify(error));
+            });
+
+
         var promises = [
           getTimePromise,
+          getNTPPromise,
         ];
 
         $q.all(promises).finally(function() {
@@ -60,6 +71,10 @@ window.angular && (function(angular) {
         $scope.set_time_success = false;
         $scope.loading = true;
         var promises = [setTimeMode(), setTimeOwner()];
+
+        if ($scope.time_mode == 'NTP') {
+          promises.push(setNTPServers());
+        }
 
         $q.all(promises).finally(function() {
           if (!$scope.set_time_error) {
@@ -86,6 +101,29 @@ window.angular && (function(angular) {
       $scope.refresh = function() {
         $route.reload();
       };
+
+      $scope.addNTPField = function() {
+        $scope.ntp.servers.push('');
+      };
+
+      function setNTPServers() {
+        // Remove any empty strings from the array. Important because we add an
+        // empty string to the end so the user can add a new NTP server, if the
+        // user doesn't fill out the field, we don't want to add.
+        $scope.ntp.servers = $scope.ntp.servers.filter(Boolean);
+        // NTP servers does not allow an empty array, since we remove all empty
+        // strings above, could have an empty array. TODO: openbmc/openbmc#3240
+        if ($scope.ntp.servers.length == 0) {
+          $scope.ntp.servers.push('');
+        }
+        return APIUtils.setNTPServers($scope.ntp.servers)
+            .then(
+                function(data) {},
+                function(error) {
+                  $scope.set_time_error = true;
+                  console.log(JSON.stringify(error));
+                });
+      }
 
       function setTimeMode() {
         return APIUtils

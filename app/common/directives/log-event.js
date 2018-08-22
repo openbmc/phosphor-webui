@@ -53,7 +53,7 @@ window.angular && (function(angular) {
             };
             $scope.copyText = function(event) {
               return event.description + ' ' + event.additional_data;
-            }
+            };
           }
         ]
       };
