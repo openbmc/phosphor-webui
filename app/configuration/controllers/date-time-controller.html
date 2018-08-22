@@ -34,6 +34,7 @@
 						<div class="inline">
 							<input type="date" ng-model="bmc.date" ng-readonly="time_mode == 'NTP'" min="2018-01-01" max="2099-12-31"/>
 							<input type="time" ng-model="bmc.date" ng-readonly="time_mode == 'NTP'" />
+							<p class="courier-bold">{{bmc.timezone}}</p>
 						</div>
 					</li>
 					<li class="date-time__metadata-block" ng-if="time_owner == 'Split'">
@@ -42,6 +43,7 @@
 							<!--- Ideally, would just use one input, datetime-local, but datetime-local is not supported on Firefox.--->
 							<input type="date" ng-model="host.date" min="2018-01-01" max="2099-12-31"/>
 							<input type="time" ng-model="host.date"/>
+							<p class="courier-bold">{{host.timezone}}</p>
 						</div>
 					</li>
 					<li class="date-time__metadata-block">
