@@ -1211,6 +1211,42 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        // Even though NTPServers is a network interface specific path
+        // (e.g. /xyz/openbmc_project/network/eth0/attr/NTPServers) it acts
+        // like a global setting. Just use eth0 for setting and getting the
+        // NTP Servers until it is moved to a non-network interface specific
+        // path like it is in Redfish. TODO: openbmc/phosphor-time-manager#4
+        getNTPServers: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/network/eth0/attr/NTPServers',
+                   headers: {
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json'
+                   },
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        setNTPServers: function(ntpServers) {
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/network/eth0/attr/NTPServers',
+                   headers: {
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json'
+                   },
+                   withCredentials: true,
+                   data: JSON.stringify({'data': ntpServers})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         setTimeMode: function(timeMode) {
           return $http({
                    method: 'PUT',
