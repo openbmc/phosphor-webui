@@ -73,6 +73,7 @@ import sensors_overview_controller from './server-health/controllers/sensors-ove
 import configuration_index from './configuration/index.js';
 import date_time_controller from './configuration/controllers/date-time-controller.js';
 import network_controller from './configuration/controllers/network-controller.js';
+import snmp_controller from './configuration/controllers/snmp-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
 
 import multi_server_index from './multi-server/index.js';
