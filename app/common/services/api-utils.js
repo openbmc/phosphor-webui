@@ -85,6 +85,21 @@ window.angular && (function(angular) {
                   });
           return deferred.promise;
         },
+        getSNMPManagers: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/network/snmp/manager/enumerate',
+                   headers: {
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json'
+                   },
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         getNetworkInfo: function() {
           var deferred = $q.defer();
           $http({

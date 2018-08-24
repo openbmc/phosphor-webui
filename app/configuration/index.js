@@ -30,6 +30,11 @@ window.angular && (function(angular) {
                 'controller': 'networkController',
                 authenticated: true
               })
+              .when('/configuration/snmp', {
+                'template': require('./controllers/snmp-controller.html'),
+                'controller': 'snmpController',
+                authenticated: true
+              })
               .when('/configuration/firmware', {
                 'template': require('./controllers/firmware-controller.html'),
                 'controller': 'firmwareController',
