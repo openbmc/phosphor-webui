@@ -1,0 +1,19 @@
+<loader loading="loading"></loader>
+<div id="configuration-snmp">
+	<div class="row column">
+		<h1>SNMP settings</h1>
+	</div>
+	<form class="snmp__form" role="form" action="">
+		<section class="row column">
+			<div class="page-header">
+				<h2 class="bold h4">SNMP information</h2>
+			</div>
+			<fieldset>
+				<div class="snmp__managers" ng-repeat="manager in managers track by $index">
+					<label>SNMP Manager {{$index+1}}</label>
+					<field>{{manager.Address}}:{{manager.Port}}</field>
+				</div>
+			</fieldset>
+		</section>
+	</form>
+</div>
