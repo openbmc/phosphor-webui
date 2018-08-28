@@ -17,9 +17,8 @@ window.angular && (function(angular) {
       $scope.originalData = {};
       $scope.customSearch = '';
       $scope.searchTerms = [];
-      $scope.loading = false;
-
       $scope.loading = true;
+
       APIUtils.getHardwares(function(data, originalData) {
         $scope.hardwares = data;
         $scope.originalData = JSON.stringify(originalData);
