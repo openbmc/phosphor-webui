@@ -42,11 +42,6 @@ window.angular && (function(angular) {
                 'controller': 'sensorsOverviewController',
                 authenticated: true
               })
-              .when('/server-health/sensors/:type', {
-                'template': require('./controllers/sensors-controller.html'),
-                'controller': 'sensorsController',
-                authenticated: true
-              })
               .when('/server-health', {
                 'template': require('./controllers/log-controller.html'),
                 'controller': 'logController',

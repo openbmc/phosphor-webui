@@ -68,7 +68,6 @@ import server_led_controller from './server-control/controllers/server-led-contr
 import server_health_index from './server-health/index.js';
 import inventory_overview_controller from './server-health/controllers/inventory-overview-controller.js';
 import log_controller from './server-health/controllers/log-controller.js';
-import sensors_controller from './server-health/controllers/sensors-controller.js';
 import sensors_overview_controller from './server-health/controllers/sensors-overview-controller.js';
 
 import configuration_index from './configuration/index.js';
