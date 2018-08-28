@@ -8,7 +8,6 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var CompressionPlugin = require('compression-webpack-plugin');
 var AssetsPlugin = require('assets-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
 var path = require('path');
 var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
