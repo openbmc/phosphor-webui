@@ -36,11 +36,6 @@ window.angular && (function(angular) {
                 'controller': 'inventoryOverviewController',
                 authenticated: true
               })
-              .when('/server-health/inventory', {
-                'template': require('./controllers/inventory-controller.html'),
-                'controller': 'inventoryController',
-                authenticated: true
-              })
               .when('/server-health/sensors-overview', {
                 'template':
                     require('./controllers/sensors-overview-controller.html'),
