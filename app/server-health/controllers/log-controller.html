@@ -33,7 +33,7 @@
         <div id="event__actions-bar" class="row header__actions-bar no-margin">
             <div class="column small-1 large-1 event-log__col-check">
                 <label class="control-check">
-                    <input type="checkbox" name="events__check-all" ng-model="all" ng-checked="(logs|filter:{selected: true}).length == logs.length"/>
+                    <input type="checkbox" name="events__check-all" ng-model="all" ng-checked="((logs|filter:{selected: true}).length == logs.length) && logs.length != 0"/>
                     <span class="control__indicator"></span>
                 </label>
             </div>
