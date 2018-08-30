@@ -142,7 +142,7 @@ window.angular && (function(angular) {
           };
 
           $scope.$watch('all', function() {
-            $scope.logs.forEach(function(item) {
+            $scope.filteredLogs.forEach(function(item) {
               item.selected = $scope.all;
             });
           });
