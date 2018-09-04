@@ -25,13 +25,6 @@ window.angular && (function(angular) {
         var getPowerCapPromise = APIUtils.getPowerCap().then(
             function(data) {
               $scope.power_cap = data.data;
-              // TODO: openbmc/openbmc#3154 Rest server should return a proper
-              // JSON bool. Convert 0/1 to boolean in meantime.
-              if ($scope.power_cap.PowerCapEnable) {
-                $scope.power_cap.PowerCapEnable = true;
-              } else {
-                $scope.power_cap.PowerCapEnable = false;
-              }
             },
             function(error) {
               console.log(JSON.stringify(error));
