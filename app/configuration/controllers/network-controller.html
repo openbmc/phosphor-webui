@@ -41,14 +41,13 @@
 			<fieldset>
 				<div class="row column">
 					<label class="control-radio" for="dhcp-address">Obtain an IP address automatically using DHCP
-						<!-- TODO: openbmc/openbmc#3154 Rest server should return a proper JSON bool instead of "0" or "1"-->
-						<input type="radio" name="ip-address" id="dhcp-address" ng-checked="true" ng-model="interface.DHCPEnabled" ng-value="1">
+						<input type="radio" name="ip-address" id="dhcp-address" ng-checked="true" ng-model="interface.DHCPEnabled" ng-value="true">
 						<span class="control__indicator control__indicator-on"></span>
 					</label>
 				</div>
 				<div class="row column">
 					<label class="control-radio" for="static-ip-address">Assign a static IP address
-						<input type="radio" name="ip-address" id="static-ip-address" ng-model="interface.DHCPEnabled" ng-value="0"/>
+						<input type="radio" name="ip-address" id="static-ip-address" ng-model="interface.DHCPEnabled" ng-value="false"/>
 						<span class="control__indicator control__indicator-on"></span>
 					</label>
 				</div>
