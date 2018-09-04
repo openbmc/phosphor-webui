@@ -324,5 +324,4 @@ window.angular && (function(angular) {
       $scope.loadFirmwares();
     }
   ]);
-
 })(angular);

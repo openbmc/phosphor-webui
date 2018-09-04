@@ -8,5 +8,4 @@ window.angular && (function(angular) {
       scope: {loading: '='}
     };
   });
-
 })(window.angular);

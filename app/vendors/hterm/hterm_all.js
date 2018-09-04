@@ -2027,7 +2027,6 @@ lib.PreferenceManager.prototype.readStorage = function(opt_callback) {
  */
 lib.PreferenceManager.prototype.definePreference = function(
     name, value, opt_onChange) {
-
   var record = this.prefRecords_[name];
   if (record) {
     this.changeDefault(name, value);
@@ -2072,7 +2071,6 @@ lib.PreferenceManager.prototype.definePreferences = function(defaults) {
  */
 lib.PreferenceManager.prototype.defineChildren = function(
     listName, childFactory) {
-
   // Define a preference to hold the ordered list of child ids.
   this.definePreference(
       listName, [], this.onChildListChange_.bind(this, listName));
@@ -2286,7 +2284,6 @@ lib.PreferenceManager.diffChildLists = function(a, b) {
  */
 lib.PreferenceManager.prototype.syncChildList = function(
     listName, opt_callback) {
-
   var pendingChildren = 0;
 
   function onChildStorage() {
@@ -3691,7 +3688,6 @@ lib.TestManager.TestRun = function(testManager, cx) {
 
   // List of pending test cases.
   this.testQueue_ = [];
-
 };
 
 /**
@@ -3766,7 +3762,6 @@ lib.TestManager.TestRun.prototype.selectPattern = function(pattern) {
  */
 lib.TestManager.TestRun.prototype.onUncaughtException_ = function(
     message, file, line) {
-
   if (message.indexOf('Uncaught lib.TestManager.Result.TestComplete') == 0 ||
       message.indexOf('status: passed') != -1) {
     // This is a result.pass() or result.fail() call from a callback.  We're
@@ -7187,7 +7182,6 @@ hterm.Parser.prototype.parseKeyAction = function() {
   }
 
   throw this.error('Expected string or identifier');
-
 };
 
 hterm.Parser.prototype.peekString = function() {

@@ -62,5 +62,4 @@ window.angular && (function(angular) {
       };
     }
   ]);
-
 })(window.angular);

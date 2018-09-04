@@ -18,5 +18,4 @@ window.angular && (function(angular) {
       $window.scrollTo(0, 0);
     }
   ]);
-
 })(angular);

@@ -55,7 +55,6 @@ window.angular && (function(angular) {
       };
 
       $scope.filterBySearchTerms = function(hardware) {
-
         if (!$scope.searchTerms.length) return true;
 
         for (var i = 0, length = $scope.searchTerms.length; i < length; i++) {
@@ -67,5 +66,4 @@ window.angular && (function(angular) {
       };
     }
   ]);
-
 })(angular);

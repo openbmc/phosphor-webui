@@ -15,5 +15,4 @@ window.angular && (function(angular) {
       $scope.dataService = dataService;
     }
   ]);
-
 })(angular);

@@ -75,7 +75,6 @@ window.angular && (function(angular) {
             $scope.set_power_cap_success = true;
           }
         });
-
       };
       $scope.refresh = function() {
         $route.reload();
@@ -100,8 +99,6 @@ window.angular && (function(angular) {
                   console.log(JSON.stringify(error));
                 });
       }
-
     }
   ]);
-
 })(angular);

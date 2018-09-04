@@ -150,7 +150,6 @@ window.angular && (function(angular) {
         } else {
           $scope.loading = false;
         }
-
       };
 
       function setMACAddress() {
@@ -269,5 +268,4 @@ window.angular && (function(angular) {
       }
     }
   ]);
-
 })(angular);
