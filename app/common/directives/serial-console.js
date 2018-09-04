@@ -8,7 +8,7 @@ window.angular && (function(angular) {
       return {
         'restrict': 'E',
         'template': require('./serial-console.html'),
-        'scope': {'path': '='},
+        'scope': {'path': '=', 'showTabBtn': '=?'},
         'controller': [
           '$scope', '$window', 'dataService',
           function($scope, $window, dataService) {
@@ -54,6 +54,12 @@ window.angular && (function(angular) {
               console.log(
                   'websocket closed. code: ' + event.code +
                   ' reason: ' + event.reason);
+            };
+            $scope.openTerminalWindow = function() {
+              $window.open(
+                  '#/server-control/remote-console-window',
+                  'Remote Console Window',
+                  'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=600,height=550');
             };
           }
         ]
