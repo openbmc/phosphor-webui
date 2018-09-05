@@ -30,7 +30,6 @@ window.angular && (function(angular) {
       this.hostname = '';
       this.mac_address = '';
       this.defaultgateway = '';
-      this.remote_window_active = false;
 
       this.displayErrorModal = false;
       this.errorModalDetails = {};
@@ -97,14 +96,6 @@ window.angular && (function(angular) {
       this.setUnreachableState = function() {
         this.server_state = Constants.HOST_STATE_TEXT.unreachable;
         this.server_status = Constants.HOST_STATE.unreachable;
-      };
-
-      this.setRemoteWindowActive = function() {
-        this.remote_window_active = true;
-      };
-
-      this.setRemoteWindowInactive = function() {
-        this.remote_window_active = false;
       };
 
       this.updateServerHealth = function(logs) {
