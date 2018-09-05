@@ -22,7 +22,7 @@ window.angular && (function(angular) {
       $scope.coldboot_confirm = false;
       $scope.orderly_confirm = false;
       $scope.immediately_confirm = false;
-      $scope.loading = false;
+      $scope.loading = true;
 
       var pollChassisStatusTimer = undefined;
       var pollHostStatusTimer = undefined;
@@ -30,17 +30,22 @@ window.angular && (function(angular) {
 
       //@TODO: call api and get proper state
 
-      APIUtils.getLastPowerTime().then(
-          function(data) {
-            if (data.data == 0) {
-              $scope.power_time = 'not available';
-            } else {
-              $scope.power_time = data.data;
-            }
-          },
-          function(error) {
-            console.log(JSON.stringify(error));
+      APIUtils.getLastPowerTime()
+          .then(
+              function(data) {
+                if (data.data == 0) {
+                  $scope.power_time = 'not available';
+                } else {
+                  $scope.power_time = data.data;
+                }
+              },
+              function(error) {
+                console.log(JSON.stringify(error));
+              })
+          .finally(function() {
+            $scope.loading = false;
           });
+
       $scope.toggleState = function() {
         dataService.server_state =
             (dataService.server_state == 'Running') ? 'Off' : 'Running';
