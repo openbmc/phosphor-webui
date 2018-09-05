@@ -22,7 +22,6 @@ window.angular && (function(angular) {
 
       this.loading = false;
       this.server_unreachable = false;
-      this.loading_message = '';
       this.showNavigation = false;
       this.bodyStyle = {};
       this.path = '';
