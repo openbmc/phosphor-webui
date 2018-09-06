@@ -24,6 +24,7 @@ window.angular && (function(angular) {
             $filter) {
           $scope.dataService = dataService;
           $scope.logs = [];
+          $scope.filteredLogs = [];
           $scope.tmz = 'EDT';
           $scope.itemsPerPage = Constants.PAGINATION.LOG_ITEMS_PER_PAGE;
           $scope.loading = false;
