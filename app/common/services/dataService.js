@@ -109,25 +109,18 @@ window.angular && (function(angular) {
       };
 
       this.updateServerHealth = function(logs) {
-        var criticals = logs.filter(function(item) {
-          return item.health_flags.critical == true;
-        });
-
-        if (criticals.length) {
-          this.server_health = Constants.SERVER_HEALTH.critical;
-          return;
-        }
-
-        var warnings = logs.filter(function(item) {
-          return item.health_flags.warning == true;
-        });
-
-        if (warnings.length) {
-          this.server_health = Constants.SERVER_HEALTH.warning;
-          return;
-        }
-
+        // If any severity high logs are present, set server health to critical
+        // Else if any severity medium logs are present set server health to
+        // warning
         this.server_health = Constants.SERVER_HEALTH.good;
+        for (var log of logs) {
+          if (log.priority == 'High') {
+            this.server_health = Constants.SERVER_HEALTH.critical;
+            return;
+          } else if (log.priority == 'Medium') {
+            this.server_health = Constants.SERVER_HEALTH.warning;
+          }
+        }
       };
 
       this.activateErrorModal = function(data) {
