@@ -674,18 +674,11 @@ window.angular && (function(angular) {
                           medium: false,
                           high: false
                         };
-                        var healthFlags = {
-                          critical: false,
-                          warning: false,
-                          good: false
-                        };
                         severityCode =
                             content.data[key].Severity.split('.').pop();
                         priority =
                             Constants.SEVERITY_TO_PRIORITY_MAP[severityCode];
                         severityFlags[priority.toLowerCase()] = true;
-                        health = Constants.SEVERITY_TO_HEALTH_MAP[severityCode];
-                        healthFlags[health.toLowerCase()] = true;
                         relatedItems = [];
                         content.data[key].associations.forEach(function(item) {
                           relatedItems.push(item[2]);
@@ -706,7 +699,6 @@ window.angular && (function(angular) {
                               priority: priority,
                               severity_code: severityCode,
                               severity_flags: severityFlags,
-                              health_flags: healthFlags,
                               additional_data:
                                   content.data[key].AdditionalData.join('\n'),
                               type: content.data[key].Message,
