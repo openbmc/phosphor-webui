@@ -120,7 +120,6 @@ window.angular && (function(angular) {
         APIUtils.getAllSensorStatus(function(data, originalData) {
           $scope.data = data;
           $scope.originalData = originalData;
-          dataService.sensorData = data;
           $scope.export_data = JSON.stringify(originalData);
           $scope.loading = false;
         });
