@@ -6,7 +6,6 @@ window.angular && (function(angular) {
         return {
           restrict: 'A',
           link: function(scope, element, attrs) {
-
             function elementClick(e) {
               e.stopPropagation();
             }

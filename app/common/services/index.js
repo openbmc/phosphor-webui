@@ -12,5 +12,4 @@ window.angular && (function(angular) {
     // Dependencies
     // Basic resources
   ]);
-
 })(window.angular);

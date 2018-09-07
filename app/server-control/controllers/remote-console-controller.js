@@ -69,5 +69,4 @@ window.angular && (function(angular) {
       };
     }
   ]);
-
 })(angular);

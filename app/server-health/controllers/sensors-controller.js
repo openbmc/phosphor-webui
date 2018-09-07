@@ -93,7 +93,6 @@ window.angular && (function(angular) {
              $scope.selectedSeverity.critical));
       };
       $scope.filterBySearchTerms = function(sensor) {
-
         if (!$scope.searchTerms.length) return true;
 
         for (var i = 0, length = $scope.searchTerms.length; i < length; i++) {
@@ -123,8 +122,6 @@ window.angular && (function(angular) {
       } else {
         setSensorData();
       }
-
     }
   ]);
-
 })(angular);
