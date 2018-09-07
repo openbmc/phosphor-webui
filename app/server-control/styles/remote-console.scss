@@ -8,16 +8,6 @@
 .serial-lan__copy {
   padding: 1em 0;
 }
-.serial-lan__terminal {
-  position: relative;
-  width: 101%; //extra 1% to fix redraw issue with terminal window
-  height: 400px;
-  border: 1em solid #19273c;
-  //TODO: Need to move from hterm to xterm as iframe used is adding the extra
-  //scroll bar. Also need to rework on the height setting along with $window
-  //directive.
-  overflow-x: hidden;
-}
 
 .serial-lan__actions {
   float: right;
@@ -39,4 +29,16 @@
   padding: 1.2em;
   line-height: 0;
   a {color: $black;}
+}
+
+.terminal-container {
+  position: relative;
+  height: 25em;
+  width: 100%;
+}
+
+.window-terminal-container {
+  position: relative;
+  height: 25em;
+  max-width: 70em;
 }
