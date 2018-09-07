@@ -20,5 +20,15 @@ window.angular && (function(angular) {
             return state;
           }
         }
-      });
+      })
+      .filter('redfishJSON', function(){
+       return function(data){
+          var resp = JSON.stringify(data, null, 4);
+          return resp;
+
+       }
+
+      }
+
+    );
 })(window.angular);
