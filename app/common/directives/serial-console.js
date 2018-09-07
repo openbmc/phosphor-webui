@@ -1,4 +1,8 @@
-import {hterm, lib} from 'hterm-umdjs';
+import {Terminal} from 'xterm';
+import style from 'xterm/dist/xterm.css';
+import * as attach from 'xterm/lib/addons/attach/attach';
+import * as fit from 'xterm/lib/addons/fit/fit';
+
 
 window.angular && (function(angular) {
   'use strict';
@@ -14,39 +18,25 @@ window.angular && (function(angular) {
           function($scope, $window, dataService) {
             $scope.dataService = dataService;
 
-            // See https://github.com/macton/hterm for available hterm options
+            // See https://github.com/xtermjs/xterm.js/ for available xterm
+            // options
 
-            hterm.defaultStorage = new lib.Storage.Local();
-            var term = new hterm.Terminal('host-console');
-            term.decorate(document.querySelector('#terminal'));
-            // Set cursor color
-            term.prefs_.set('cursor-color', 'rgba(83, 146, 255, .5)');
-            // Set background color
-            term.prefs_.set('background-color', '#19273c');
-            // Allows keyboard input
-            term.installKeyboard();
+            Terminal.applyAddon(attach);  // Apply the `attach` addon
+            Terminal.applyAddon(fit);     // Apply the `fit` addon
 
-            // The BMC exposes a websocket at /console0. This can be read
-            // or written to access the host serial console.
+            var term = new Terminal();
+            term.open(document.getElementById('terminal'));
+            term.fit();
+            var SOL_THEME = {
+              background: '#19273c',
+              cursor: 'rgba(83, 146, 255, .5)',
+              scrollbar: 'rgba(83, 146, 255, .5)'
+            };
+            term.setOption('theme', SOL_THEME);
             var hostname = dataService.getHost().replace('https://', '');
             var host = 'wss://' + hostname + '/console0';
             var ws = new WebSocket(host);
-            ws.onmessage = function(evt) {
-              // websocket -> terminal
-              term.io.print(evt.data);
-            };
-
-            // terminal -> websocket
-            term.onTerminalReady = function() {
-              var io = term.io.push();
-              io.onVTKeystroke = function(str) {
-                ws.send(str);
-              };
-              io.sendString = function(str) {
-                ws.send(str);
-              };
-            };
-
+            term.attach(ws);
             ws.onopen = function() {
               console.log('websocket opened');
             };
