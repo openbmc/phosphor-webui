@@ -70,6 +70,8 @@ import inventory_overview_controller from './server-health/controllers/inventory
 import log_controller from './server-health/controllers/log-controller.js';
 import sensors_overview_controller from './server-health/controllers/sensors-overview-controller.js';
 
+import redfish_index from './redfish/index.js';
+import redfish_controller from './redfish/controllers/redfish-controller.js';
 import configuration_index from './configuration/index.js';
 import date_time_controller from './configuration/controllers/date-time-controller.js';
 import network_controller from './configuration/controllers/network-controller.js';
@@ -99,7 +101,7 @@ window.angular && (function(angular) {
             'app.common.directives', 'app.common.filters',
             // Model resources
             'app.login', 'app.overview', 'app.serverControl',
-            'app.serverHealth', 'app.configuration', 'app.users',
+            'app.serverHealth', 'app.configuration', 'app.users', 'app.redfish',
             'app.multiServer'
           ])
       // Route configuration
