@@ -39,7 +39,6 @@
     "angular-websocket": "^2.0.1",
     "angularUtils": "git+https://github.com/michaelbromley/angularUtils.git#75dd112ff7b71b32f08743c2d0f29434f12dfa5c",
     "bootstrap": "^4.1.3",
-    "hterm-umdjs": "^1.4.1",
     "xterm": "^3.6.0"
   },
   "peerDependencies": {},
