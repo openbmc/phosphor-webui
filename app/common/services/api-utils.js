@@ -38,10 +38,7 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/state/chassis0/attr/CurrentPowerState',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
+            headers: {'Accept': 'application/json'},
             withCredentials: true
           })
               .then(
@@ -67,10 +64,7 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/state/host0/attr/CurrentHostState',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
+            headers: {'Accept': 'application/json'},
             withCredentials: true
           })
               .then(
@@ -90,10 +84,7 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/network/snmp/manager/enumerate',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
+                   headers: {'Accept': 'application/json'},
                    withCredentials: true
                  })
               .then(function(response) {
@@ -106,10 +97,7 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/network/enumerate',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
+            headers: {'Accept': 'application/json'},
             withCredentials: true
           })
               .then(
@@ -325,10 +313,7 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/led/groups/enclosure_identify',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
+            headers: {'Accept': 'application/json'},
             withCredentials: true
           })
               .then(
@@ -525,10 +510,7 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/state/bmc0/attr/LastRebootTime',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
+                   headers: {'Accept': 'application/json'},
                    withCredentials: true
                  })
               .then(function(response) {
@@ -646,10 +628,7 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/state/chassis0/attr/LastStateChangeTime',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
+                   headers: {'Accept': 'application/json'},
                    withCredentials: true
                  })
               .then(function(response) {
@@ -662,10 +641,7 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/logging/enumerate',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
+            headers: {'Accept': 'application/json'},
             withCredentials: true
           })
               .then(
@@ -757,10 +733,7 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/sensors/enumerate',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
+            headers: {'Accept': 'application/json'},
             withCredentials: true
           })
               .then(
@@ -915,10 +888,7 @@ window.angular && (function(angular) {
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/software/' + imageId +
                        '/attr/Activation',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
+                   headers: {'Accept': 'application/json'},
                    withCredentials: true
                  })
               .then(function(response) {
@@ -931,10 +901,7 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/software/enumerate',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
+            headers: {'Accept': 'application/json'},
             withCredentials: true
           })
               .then(
@@ -1106,8 +1073,7 @@ window.angular && (function(angular) {
               'Content-Type': 'application/json'
             },
             withCredentials: true,
-            data:
-                JSON.stringify({'data': Constants.FIRMWARE.ACTIVATE_FIRMWARE})
+            data: JSON.stringify({'data': Constants.FIRMWARE.ACTIVATE_FIRMWARE})
           })
               .then(
                   function(response) {
@@ -1160,10 +1126,7 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/inventory/system',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
+                   headers: {'Accept': 'application/json'},
                    withCredentials: true
                  })
               .then(function(response) {
@@ -1174,10 +1137,7 @@ window.angular && (function(angular) {
           return $http({
                    method: 'GET',
                    url: DataService.getHost() + '/xyz/openbmc_project/time/bmc',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
+                   headers: {'Accept': 'application/json'},
                    withCredentials: true
                  })
               .then(function(response) {
@@ -1189,10 +1149,7 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/time/enumerate',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
+                   headers: {'Accept': 'application/json'},
                    withCredentials: true
                  })
               .then(function(response) {
@@ -1204,10 +1161,7 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/inventory/enumerate',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
+            headers: {'Accept': 'application/json'},
             withCredentials: true
           }).then(function(response) {
             var json = JSON.stringify(response.data);
@@ -1382,10 +1336,7 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/sensors/power/total_power',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
+                   headers: {'Accept': 'application/json'},
                    withCredentials: true
                  })
               .then(
@@ -1411,10 +1362,7 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/control/host0/power_cap',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
+                   headers: {'Accept': 'application/json'},
                    withCredentials: true
                  })
               .then(function(response) {
