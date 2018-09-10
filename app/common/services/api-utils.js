@@ -38,10 +38,6 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/state/chassis0/attr/CurrentPowerState',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true
           })
               .then(
@@ -67,10 +63,6 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/state/host0/attr/CurrentHostState',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true
           })
               .then(
@@ -90,10 +82,6 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/network/snmp/manager/enumerate',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true
                  })
               .then(function(response) {
@@ -106,10 +94,6 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/network/enumerate',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true
           })
               .then(
@@ -218,10 +202,6 @@ window.angular && (function(angular) {
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/network/' + interface_name +
                        '/attr/MACAddress',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true,
                    data: JSON.stringify({'data': mac_address})
                  })
@@ -234,10 +214,6 @@ window.angular && (function(angular) {
                    method: 'PUT',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/network/config/attr/DefaultGateway',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true,
                    data: JSON.stringify({'data': defaultGateway})
                  })
@@ -251,10 +227,6 @@ window.angular && (function(angular) {
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/network/' + interfaceName +
                        '/attr/DHCPEnabled',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true,
                    data: JSON.stringify({'data': dhcpEnabled})
                  })
@@ -268,10 +240,6 @@ window.angular && (function(angular) {
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/network/' + interfaceName +
                        '/attr/Nameservers',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true,
                    data: JSON.stringify({'data': dnsServers})
                  })
@@ -285,10 +253,6 @@ window.angular && (function(angular) {
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/network/' + interfaceName +
                        '/ipv4/' + networkID + '/action/Delete',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true,
                    data: JSON.stringify({'data': []})
                  })
@@ -303,10 +267,6 @@ window.angular && (function(angular) {
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/network/' + interfaceName +
                        '/action/IP',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true,
                    data: JSON.stringify({
                      'data': [
@@ -325,10 +285,6 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/led/groups/enclosure_identify',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true
           })
               .then(
@@ -347,10 +303,6 @@ window.angular && (function(angular) {
           $http({
             method: 'POST',
             url: DataService.getHost() + '/login',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true,
             data: JSON.stringify({'data': [username, password]})
           })
@@ -377,10 +329,6 @@ window.angular && (function(angular) {
           return $http({
                    method: 'POST',
                    url: DataService.getHost() + '/login',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: false,
                    data: JSON.stringify({'data': [username, password]})
                  })
@@ -392,10 +340,6 @@ window.angular && (function(angular) {
           $http({
             method: 'POST',
             url: DataService.getHost() + '/logout',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true,
             data: JSON.stringify({'data': []})
           })
@@ -418,10 +362,6 @@ window.angular && (function(angular) {
             method: 'POST',
             url: DataService.getHost() + '/xyz/openbmc_project/user/' + user +
                 '/action/SetPassword',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true,
             data: JSON.stringify({'data': [newPassword]}),
             responseType: 'arraybuffer'
@@ -443,10 +383,6 @@ window.angular && (function(angular) {
             method: 'PUT',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/state/chassis0/attr/RequestedPowerTransition',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true,
             data: JSON.stringify(
                 {'data': 'xyz.openbmc_project.State.Chassis.Transition.Off'})
@@ -468,10 +404,6 @@ window.angular && (function(angular) {
             method: 'PUT',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/led/groups/enclosure_identify/attr/Asserted',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true,
             data: JSON.stringify({'data': state})
           })
@@ -496,10 +428,6 @@ window.angular && (function(angular) {
             method: 'PUT',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/state/bmc0/attr/RequestedBmcTransition',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true,
             data: JSON.stringify(
                 {'data': 'xyz.openbmc_project.State.BMC.Transition.Reboot'})
@@ -525,10 +453,6 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/state/bmc0/attr/LastRebootTime',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true
                  })
               .then(function(response) {
@@ -541,10 +465,6 @@ window.angular && (function(angular) {
             method: 'PUT',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/state/host0/attr/RequestedHostTransition',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true,
             data: JSON.stringify(
                 {'data': 'xyz.openbmc_project.State.Host.Transition.On'})
@@ -567,10 +487,6 @@ window.angular && (function(angular) {
             method: 'PUT',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/state/host0/attr/RequestedHostTransition',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true,
             data: JSON.stringify(
                 {'data': 'xyz.openbmc_project.State.Host.Transition.Off'})
@@ -593,10 +509,6 @@ window.angular && (function(angular) {
             method: 'PUT',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/state/host0/attr/RequestedHostTransition',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true,
             data: JSON.stringify(
                 {'data': 'xyz.openbmc_project.State.Host.Transition.Reboot'})
@@ -618,10 +530,6 @@ window.angular && (function(angular) {
           $http({
             method: 'POST',
             url: DataService.getHost() + '/xyz/openbmc_project/state/host0',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true,
             data: JSON.stringify({'data': []})
           })
@@ -646,10 +554,6 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/state/chassis0/attr/LastStateChangeTime',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true
                  })
               .then(function(response) {
@@ -662,10 +566,6 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/logging/enumerate',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true
           })
               .then(
@@ -749,10 +649,6 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/sensors/enumerate',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true
           })
               .then(
@@ -907,10 +803,6 @@ window.angular && (function(angular) {
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/software/' + imageId +
                        '/attr/Activation',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true
                  })
               .then(function(response) {
@@ -923,10 +815,6 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/software/enumerate',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true
           })
               .then(
@@ -1041,10 +929,6 @@ window.angular && (function(angular) {
             method: 'PUT',
             url: DataService.getHost() + '/xyz/openbmc_project/software/' +
                 imageId + '/attr/Priority',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true,
             data: JSON.stringify({'data': priority})
           })
@@ -1067,10 +951,6 @@ window.angular && (function(angular) {
             method: 'POST',
             url: DataService.getHost() + '/xyz/openbmc_project/software/' +
                 imageId + '/action/Delete',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true,
             data: JSON.stringify({'data': []})
           })
@@ -1093,10 +973,6 @@ window.angular && (function(angular) {
             method: 'PUT',
             url: DataService.getHost() + '/xyz/openbmc_project/software/' +
                 imageId + '/attr/RequestedActivation',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true,
             data:
                 JSON.stringify({'data': Constants.FIRMWARE.ACTIVATE_FIRMWARE})
@@ -1119,6 +995,7 @@ window.angular && (function(angular) {
                    method: 'POST',
                    timeout: 5 * 60 * 1000,
                    url: DataService.getHost() + '/upload/image',
+                   // Overwrite the default 'application/json' Content-Type
                    headers: {'Content-Type': 'application/octet-stream'},
                    withCredentials: true,
                    data: file
@@ -1132,10 +1009,6 @@ window.angular && (function(angular) {
                    method: 'POST',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/software/action/DownloadViaTFTP',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true,
                    data: JSON.stringify({'data': [filename, host]}),
                    responseType: 'arraybuffer'
@@ -1152,10 +1025,6 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/inventory/system',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true
                  })
               .then(function(response) {
@@ -1166,10 +1035,6 @@ window.angular && (function(angular) {
           return $http({
                    method: 'GET',
                    url: DataService.getHost() + '/xyz/openbmc_project/time/bmc',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true
                  })
               .then(function(response) {
@@ -1181,10 +1046,6 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/time/enumerate',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true
                  })
               .then(function(response) {
@@ -1196,10 +1057,6 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/inventory/enumerate',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
             withCredentials: true
           }).then(function(response) {
             var json = JSON.stringify(response.data);
@@ -1329,10 +1186,6 @@ window.angular && (function(angular) {
               url: DataService.getHost() +
                   '/xyz/openbmc_project/logging/entry/' + item.Id +
                   '/action/Delete',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
               withCredentials: true,
               data: JSON.stringify({'data': []})
             }));
@@ -1356,10 +1209,6 @@ window.angular && (function(angular) {
               url: DataService.getHost() +
                   '/xyz/openbmc_project/logging/entry/' + item.Id +
                   '/attr/Resolved',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
               withCredentials: true,
               data: JSON.stringify({'data': '1'})
             }));
@@ -1374,10 +1223,6 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/sensors/power/total_power',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true
                  })
               .then(
@@ -1403,10 +1248,6 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/control/host0/power_cap',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true
                  })
               .then(function(response) {
@@ -1418,10 +1259,6 @@ window.angular && (function(angular) {
                    method: 'PUT',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/control/host0/power_cap/attr/PowerCapEnable',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true,
                    data: JSON.stringify({'data': powerCapEnable})
                  })
@@ -1434,10 +1271,6 @@ window.angular && (function(angular) {
                    method: 'PUT',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/control/host0/power_cap/attr/PowerCap',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true,
                    data: JSON.stringify({'data': powerCap})
                  })
@@ -1450,10 +1283,6 @@ window.angular && (function(angular) {
                    method: 'PUT',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/network/config/attr/HostName',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true,
                    data: JSON.stringify({'data': hostname})
                  })

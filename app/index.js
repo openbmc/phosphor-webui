@@ -122,6 +122,18 @@ window.angular && (function(angular) {
         '$httpProvider',
         function($httpProvider) {
           $httpProvider.interceptors.push('apiInterceptor');
+          $httpProvider.defaults.headers.common = {
+            'Accept': 'application/json'
+          };
+          $httpProvider.defaults.headers.post = {
+            'Content-Type': 'application/json'
+          };
+          $httpProvider.defaults.headers.put = {
+            'Content-Type': 'application/json'
+          };
+          $httpProvider.defaults.headers.patch = {
+            'Content-Type': 'application/json'
+          };
         }
       ])
       .run([
