@@ -81,7 +81,6 @@ import users_index from './users/index.js';
 import user_accounts_controller from './users/controllers/user-accounts-controller.js';
 
 import phosphor_templates from './templates.js';
-import phosphor_vendors from './vendors.js';
 
 window.angular && (function(angular) {
   'use strict';
@@ -94,7 +93,7 @@ window.angular && (function(angular) {
             'ngRoute', 'angular-clipboard',
             'angularUtils.directives.dirPagination',
             // Basic resources
-            'app.templates', 'app.vendors', 'app.common.services',
+            'app.templates', 'app.common.services',
             'app.common.directives', 'app.common.filters',
             // Model resources
             'app.login', 'app.overview', 'app.serverControl',
