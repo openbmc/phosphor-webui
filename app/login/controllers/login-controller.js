@@ -24,7 +24,7 @@ window.angular && (function(angular) {
       };
       $scope.login = function(host, username, password) {
         $scope.error = false;
-        $scope.description = false;
+        $scope.description = 'Error logging in';
 
         if (!username || username == '' || !password || password == '' ||
             !host || host == '') {
