@@ -13,13 +13,13 @@
         <div class="columns large-6 disabled">
             <form id="login__form" action="">
                 <label >BMC Host or BMC IP Address</label>
-                <input type="text" ng-model="host" required  ng-class="{error: error}" autofocus ng-keydown="tryLogin(host, username, password, $event)" ng-disabled="dataService.loading">
+                <input type="text" ng-model="host" required  ng-class="{'error': error && description != 'Invalid username or password'}" autofocus ng-keydown="tryLogin(host, username, password, $event)" ng-disabled="dataService.loading">
 
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" required ng-model="username" ng-class="{error: error}" ng-keydown="tryLogin(host, username, password, $event)" ng-disabled="dataService.loading">
+                <input type="text" id="username" name="username" required ng-model="username" ng-class="{'error': description == 'Invalid username or password'}" ng-keydown="tryLogin(host, username, password, $event)" ng-disabled="dataService.loading">
 
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" class="" required ng-model="password" ng-keydown="tryLogin(host, username, password, $event)" ng-disabled="dataService.loading">
+                <input type="password" id="password" name="password" required ng-class="{'error': description == 'Invalid username or password'}" ng-model="password" ng-keydown="tryLogin(host, username, password, $event)" ng-disabled="dataService.loading">
 
                 <input id="login__submit" class="btn-primary submit" type="button" value="Log in" role="button" ng-click="login(host, username, password)" ng-class="{error: error}" ng-disabled="dataService.loading">
 
