@@ -10,5 +10,4 @@ module.exports = {
   'nodeModulesFolderPath': './node_modules',
   'bowerFolderPath': __dirname + '/bower_components',
   'dirname': __dirname,
-  'excludePath': '!./app/vendors/**/*'
 };
