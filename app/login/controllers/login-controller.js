@@ -10,8 +10,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.login').controller('LoginController', [
-    '$scope', '$window', 'APIUtils', 'dataService', 'userModel', '$routeParams',
-    function($scope, $window, APIUtils, dataService, userModel, $routeParams) {
+    '$scope', '$window', 'APIUtils', 'dataService', 'userModel',
+    function($scope, $window, APIUtils, dataService, userModel) {
       $scope.dataService = dataService;
       $scope.host = $scope.dataService.host.replace(/^https?\:\/\//ig, '');
 
