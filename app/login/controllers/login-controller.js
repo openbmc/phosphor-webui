@@ -16,6 +16,8 @@ window.angular && (function(angular) {
       $scope.host = $scope.dataService.host.replace(/^https?\:\/\//ig, '');
 
       $scope.tryLogin = function(host, username, password, event) {
+        // keyCode 13 is the 'Enter' button. If the user hits 'Enter' while in
+        // one of the 3 fields, attempt to log in.
         if (event.keyCode === 13) {
           $scope.login(host, username, password);
         }
