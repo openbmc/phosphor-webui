@@ -4,16 +4,39 @@
 		<h1>SNMP settings</h1>
 	</div>
 	<form class="snmp__form" role="form" action="">
-		<section class="row column">
 			<div class="page-header">
 				<h2 class="bold h4">SNMP information</h2>
 			</div>
 			<fieldset>
-				<div class="snmp__managers" ng-repeat="manager in managers track by $index">
-					<label>SNMP Manager {{$index+1}}</label>
-					<field>{{manager.Address}}:{{manager.Port}}</field>
+				<div class="row column snmp__managers-wrap">
+					<div class="snmp__managers" ng-repeat="manager in managers">
+						<div class="inline snmp__manager-field">
+							<label>SNMP Manager Address</label>
+							<field>{{manager.Address}}</field>
+						</div>
+						<div class="inline  snmp__manager-field">
+							<label>Port</label>
+							<field>{{manager.Port}}</field>
+						</div>
+					</div>
+					<div class="snmp__managers" ng-repeat="new_manager in new_managers track by $index">
+						<div class="inline snmp__manager-field">
+							<label>SNMP Manager Address</label>
+							<input id="snmp-new-manager{{$index+1}}-address" type="text" ng-model="new_manager.Address" ng-blur="new_managers[$index].Address = new_manager.Address"/>
+						</div>
+						<div class="inline snmp__manager-field">
+							<label>Port</label>
+							<input id="snmp-new-manager{{$index+1}}-port" type="text" ng-model="new_manager.Port" ng-blur="new_managers[$index].Port = new_manager.Port"/>
+						</div>
+					</div>
+					<button type="button" class="btn-primary inline" ng-click="addNewSNMPManager()">Add SNMP manager</button>
 				</div>
 			</fieldset>
-		</section>
+		<div class="snmp__submit-wrapper">
+			<button type="button" class="btn-primary inline" ng-click="setSNMP()">Save settings</button>
+			<button type="button" class="btn-secondary inline" ng-click="refresh()">Cancel</button>
+		</div>
+		<p class="success-msg" ng-show="success" role="alert">Success! SNMP managers updated!</p>
+		<p class="error error-msg" ng-show="error" role="alert">Error setting SNMP Managers!</p>
 	</form>
 </div>
