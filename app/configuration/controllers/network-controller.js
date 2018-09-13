@@ -39,6 +39,10 @@ window.angular && (function(angular) {
         $scope.interface.Nameservers.push('');
       };
 
+      $scope.removeDNSField = function(index) {
+        $scope.interface.Nameservers.splice(index, 1);
+      };
+
       $scope.setNetworkSettings = function() {
         // Hides the confirm network settings modal
         $scope.confirm_settings = false;
