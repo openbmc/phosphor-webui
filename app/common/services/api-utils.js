@@ -88,6 +88,18 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        addSNMPManager: function(ip, port) {
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/network/snmp/manager/action/Client',
+                   withCredentials: true,
+                   data: JSON.stringify({'data': [ip, +port]})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         getNetworkInfo: function() {
           var deferred = $q.defer();
           $http({
