@@ -47,4 +47,13 @@
   {
     margin-left: 3em;
   }
+  .dns__server-remove {
+    color: $medblue;
+    height: 2.1em;
+    opacity: 1;
+    margin-left: 1em;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
