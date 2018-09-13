@@ -57,6 +57,17 @@ window.angular && (function(angular) {
           return ip.match(
               /\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/);
         },
+        deleteObject: function(path) {
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() + path + '/action/Delete',
+                   withCredentials: true,
+                   data: JSON.stringify({'data': []})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         getHostState: function() {
           var deferred = $q.defer();
           $http({
@@ -193,6 +204,41 @@ window.angular && (function(angular) {
               deferred.resolve();
             }
           };
+        },
+        addSNMPManager: function(address, port) {
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/network/snmp/manager/action/Client',
+                   withCredentials: true,
+                   data: JSON.stringify({'data': [address, +port]})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        setSNMPManagerPort: function(snmpManagerPath, port) {
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() + snmpManagerPath + '/attr/Port',
+                   withCredentials: true,
+                   data: JSON.stringify({'data': +port})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        setSNMPManagerAddress: function(snmpManagerPath, address) {
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() + snmpManagerPath +
+                       '/attr/Address',
+                   withCredentials: true,
+                   data: JSON.stringify({'data': address})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
         },
         getNetworkInfo: function() {
           var deferred = $q.defer();
