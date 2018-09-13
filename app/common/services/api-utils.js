@@ -194,6 +194,41 @@ window.angular && (function(angular) {
             }
           };
         },
+        addSNMPManager: function(address, port) {
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/network/snmp/manager/action/Client',
+                   withCredentials: true,
+                   data: JSON.stringify({'data': [address, +port]})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        setSNMPManagerPort: function(snmpManagerPath, port) {
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() + snmpManagerPath + '/attr/Port',
+                   withCredentials: true,
+                   data: JSON.stringify({'data': +port})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        setSNMPManagerAddress: function(snmpManagerPath, address) {
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() + snmpManagerPath +
+                       '/attr/Address',
+                   withCredentials: true,
+                   data: JSON.stringify({'data': address})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         getNetworkInfo: function() {
           var deferred = $q.defer();
           $http({
