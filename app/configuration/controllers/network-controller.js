@@ -35,6 +35,14 @@ window.angular && (function(angular) {
         $scope.networkDevice = false;
       };
 
+      $scope.addIpv4Field = function() {
+        $scope.interface.ipv4.values.push('');
+      };
+
+      $scope.removeIpv4Address = function(index) {
+        $scope.interface.ipv4.values.splice(index, 1);
+      };
+
       $scope.addDNSField = function() {
         $scope.interface.Nameservers.push('');
       };

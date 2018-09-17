@@ -28,6 +28,9 @@
       min-width: 250px;
     }
   }
+  .net-config__ipv4-wrap {
+    padding-bottom: 1.8em;
+  }
   .control-radio {
     margin-top: 1em;
     margin-left: .7em;
@@ -47,7 +50,7 @@
   {
     margin-left: 3em;
   }
-  .dns__server-remove {
+  .network-config_remove-button {
     color: $medblue;
     height: 2.1em;
     opacity: 1;
