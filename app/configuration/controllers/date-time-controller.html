@@ -16,11 +16,16 @@
 					</label>
 				</div>
 				<div class="row column date-time__ntp-servers-wrap">
-						<fieldset class="date-time__ntp-servers" ng-repeat="server in ntp.servers track by $index">
-							<label for="ntp-server{{$index+1}}">NTP Server Address {{$index+1}}</label>
+					<fieldset class="date-time__ntp-servers" ng-repeat="server in ntp.servers track by $index">
+						<label for="ntp-server{{$index+1}}">NTP Server Address {{$index+1}}</label>
+						<div class="inline">
 							<input id="ntp-server{{$index+1}}" type="text" ng-readonly="time_mode != 'NTP'" ng-model="server" ng-blur="ntp.servers[$index] = server" set-focus-on-new-input/>
-						</fieldset>
-						<button type="button" class="btn-primary inline" ng-click="addNTPField()">Add new NTP server</button>
+						</div>
+						<button class="date-time__dns-remove inline" ng-click="removeNTPField($index)">Remove</button>
+					</fieldset>
+				</div>
+				<div class="row column date-time__ntp-servers-wrap">
+					<button type="button" class="btn-primary block" ng-click="addNTPField()">Add new NTP server</button>
 				</div>
 				<div class="row column">
 					<label class="control-radio" for="manual-time">Manually set date and time

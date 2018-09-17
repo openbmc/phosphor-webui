@@ -133,6 +133,10 @@ window.angular && (function(angular) {
         $scope.ntp.servers.push('');
       };
 
+      $scope.removeNTPField = function(index) {
+        $scope.ntp.servers.splice(index, 1);
+      };
+
       function setNTPServers() {
         // Remove any empty strings from the array. Important because we add an
         // empty string to the end so the user can add a new NTP server, if the

@@ -21,10 +21,8 @@
     }
   }
   .date-time__ntp-servers{
-    padding-bottom: .6em;
     padding-top: .6em;
     padding-left: 0em;
-    width: 300px;
   }
   .date-time__ntp-servers-wrap{
     padding-bottom: 1em;
@@ -53,6 +51,15 @@
     button {
       float: right;
       margin: .5em;
+    }
+  }
+  .date-time__dns-remove {
+    color: $medblue;
+    height: 2.1em;
+    opacity: 1;
+    margin-left: 1em;
+    &:hover {
+      cursor: pointer;
     }
   }
 }
