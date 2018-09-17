@@ -35,6 +35,15 @@ window.angular && (function(angular) {
         $scope.networkDevice = false;
       };
 
+      $scope.addIpv4Field = function() {
+        $scope.interface.ipv4.values.push(
+            {Address: '', PrefixLength: '', Gateway: ''});
+      };
+
+      $scope.removeIpv4Address = function(index) {
+        $scope.interface.ipv4.values.splice(index, 1);
+      };
+
       $scope.addDNSField = function() {
         $scope.interface.Nameservers.push('');
       };
@@ -84,33 +93,58 @@ window.angular && (function(angular) {
                     $scope.interface.ipv4.values[i].Address)) {
               $scope.set_network_error =
                   $scope.interface.ipv4.values[i].Address +
-                  ' invalid IP parameter';
-              $scope.loading = false;
-              return;
-            }
-            if (!APIUtils.validIPV4IP(
-                    $scope.interface.ipv4.values[i].Gateway)) {
-              $scope.set_network_error =
-                  $scope.interface.ipv4.values[i].Address +
-                  ' invalid gateway parameter';
+                  ' invalid IP parameter. Your IPV4 settings were not saved.';
               $scope.loading = false;
               return;
             }
             // The netmask prefix length will be undefined if outside range
-            if (!$scope.interface.ipv4.values[i].PrefixLength) {
+            else if (!$scope.interface.ipv4.values[i].PrefixLength) {
               $scope.set_network_error =
                   $scope.interface.ipv4.values[i].Address +
-                  ' invalid Prefix Length parameter';
+                  ' invalid Prefix Length parameter. Your IPV4 settings were not saved.';
               $scope.loading = false;
               return;
             }
-            if ($scope.interface.ipv4.values[i].Address !=
-                    $scope.old_interface.ipv4.values[i].Address ||
-                $scope.interface.ipv4.values[i].PrefixLength !=
-                    $scope.old_interface.ipv4.values[i].PrefixLength ||
-                $scope.interface.ipv4.values[i].Gateway !=
-                    $scope.old_interface.ipv4.values[i].Gateway) {
-              promises.push(setIPV4(i));
+          }
+          // Combine list of existing IPV4 objects with list of their ids in
+          // order to remove updated or removed IPV4 addresses by id
+          var existingIPV4s = [];
+          for (var i in $scope.old_interface.ipv4.values) {
+            existingIPV4s.push({
+              id: $scope.old_interface.ipv4.ids[i],
+              Address: $scope.old_interface.ipv4.values[i].Address,
+              Gateway: $scope.old_interface.ipv4.values[i].Gateway,
+              PrefixLength: $scope.old_interface.ipv4.values[i].PrefixLength
+            })
+          }
+          // The correct way to edit an IPV4 interface is to remove it and then
+          // add a new one. Find the old IP4 values that do not exist (have
+          // matching address, prefix length, and gateway) in the the new IPV4
+          // list and remove by id. Find the new IPV4 values that do not exist
+          // in the old IPV4 list and add.
+          var toRemove = existingIPV4s.filter(function(existingIPV4) {
+            return !$scope.interface.ipv4.values.some(function(newIPV4) {
+              return existingIPV4.Address == newIPV4.Address &&
+                  existingIPV4.PrefixLength == newIPV4.PrefixLength &&
+                  existingIPV4.Gateway == newIPV4.Gateway;
+            });
+          });
+
+          var toAdd = $scope.interface.ipv4.values.filter(function(newIPV4) {
+            return !existingIPV4s.some(function(existingIPV4) {
+              return newIPV4.Address == existingIPV4.Address &&
+                  newIPV4.PrefixLength == existingIPV4.PrefixLength &&
+                  newIPV4.Gateway == existingIPV4.Gateway;
+            });
+          });
+          if (toRemove.length) {
+            for (var i in toRemove) {
+              promises.push(removeIPV4(toRemove[i].id, toRemove[i]));
+            }
+          }
+          if (toAdd.length) {
+            for (var j in toAdd) {
+              promises.push(addIPV4(toAdd[j]));
             }
           }
         }
@@ -202,33 +236,22 @@ window.angular && (function(angular) {
                 });
       }
 
-      function setIPV4(index) {
-        // The correct way to edit an IPV4 interface is to remove it and then
-        // add a new one
+      function removeIPV4(id, value) {
+        return APIUtils.deleteIPV4($scope.selectedInterface, id)
+            .catch(function(error) {
+              console.log(JSON.stringify(error));
+              $scope.set_network_error = value.Address;
+            })
+      }
+      function addIPV4(value) {
         return APIUtils
-            .deleteIPV4(
-                $scope.selectedInterface, $scope.interface.ipv4.ids[index])
-            .then(
-                function(data) {
-                  return APIUtils
-                      .addIPV4(
-                          $scope.selectedInterface,
-                          $scope.interface.ipv4.values[index].Address,
-                          $scope.interface.ipv4.values[index].PrefixLength,
-                          $scope.interface.ipv4.values[index].Gateway)
-                      .then(
-                          function(data) {},
-                          function(error) {
-                            console.log(JSON.stringify(error));
-                            $scope.set_network_error =
-                                $scope.interface.ipv4.values[index].Address;
-                          });
-                },
-                function(error) {
-                  console.log(JSON.stringify(error));
-                  $scope.set_network_error =
-                      $scope.interface.ipv4.values[index].Address;
-                });
+            .addIPV4(
+                $scope.selectedInterface, value.Address, value.PrefixLength,
+                value.Gateway)
+            .catch(function(error) {
+              console.log(JSON.stringify(error));
+              $scope.set_network_error = value.Address;
+            })
       }
 
       $scope.refresh = function() {
