@@ -16,6 +16,7 @@ window.angular && (function(angular) {
       $scope.loading = true;
       $scope.error = false;
       $scope.success = false;
+      $scope.managers_to_delete = [];
 
       var getSNMPManagers = APIUtils.getSNMPManagers().then(
           function(data) {
@@ -41,6 +42,15 @@ window.angular && (function(angular) {
         $scope.managers.push({address: '', port: ''});
       };
 
+      $scope.removeSNMPManager = function(index) {
+        // If the SNMP Manager has a path it exists on the backend and we
+        // need to make a call to remove it
+        if ($scope.managers[index].path) {
+          $scope.managers_to_delete.push($scope.managers[index].path);
+        }
+        $scope.managers.splice(index, 1);
+      };
+
       $scope.refresh = function() {
         $route.reload();
       };
@@ -50,6 +60,10 @@ window.angular && (function(angular) {
         $scope.success = false;
         $scope.loading = true;
         var promises = [];
+
+        for (var i in $scope.managers_to_delete) {
+          promises.push(deleteManager($scope.managers_to_delete[i]));
+        }
 
         // Interate in reverse so can splice
         // https://stackoverflow.com/questions/9882284/looping-through-array-and-removing-items-without-breaking-for-loop
@@ -68,6 +82,7 @@ window.angular && (function(angular) {
             $scope.error = true;
             return;
           }
+
           // If the manager does not have a 'path', it is a new manager
           // and needs to be created
           if (!$scope.managers[i].path) {
@@ -98,6 +113,10 @@ window.angular && (function(angular) {
 
       function addManager(address, port) {
         return APIUtils.addSNMPManager(address, port);
+      }
+
+      function deleteManager(path) {
+        return APIUtils.deleteObject(path);
       }
 
       function setManagerAddress(path, address) {
