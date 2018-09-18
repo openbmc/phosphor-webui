@@ -26,7 +26,9 @@ window.angular && (function(angular) {
               $scope.managers.push({
                 path: key,
                 port: data.data[key].Port,
-                address: data.data[key].Address
+                update_port: false,
+                address: data.data[key].Address,
+                address_port: false
               })
             }
           },
@@ -89,11 +91,14 @@ window.angular && (function(angular) {
             promises.push(addManager(
                 $scope.managers[i].address, $scope.managers[i].port));
           } else {
-            // TODO: Check if we actually need to update the existing managers
-            promises.push(setManagerAddress(
-                $scope.managers[i].path, $scope.managers[i].address));
-            promises.push(setManagerPort(
-                $scope.managers[i].path, $scope.managers[i].port));
+            if ($scope.managers[i].update_address) {
+              promises.push(setManagerAddress(
+                  $scope.managers[i].path, $scope.managers[i].address));
+            }
+            if ($scope.managers[i].update_port) {
+              promises.push(setManagerPort(
+                  $scope.managers[i].path, $scope.managers[i].port));
+            }
           }
         }
 
