@@ -57,6 +57,17 @@ window.angular && (function(angular) {
           return ip.match(
               /\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/);
         },
+        deleteObject: function(path) {
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() + path + '/action/Delete',
+                   withCredentials: true,
+                   data: JSON.stringify({'data': []})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         getHostState: function() {
           var deferred = $q.defer();
           $http({
