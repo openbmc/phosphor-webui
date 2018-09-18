@@ -12,11 +12,11 @@
           <div class="snmp__managers" ng-repeat="manager in managers track by $index">
             <div class="snmp__manager-field">
               <label>SNMP Manager Server</label>
-              <input class="inline" id="snmp-manager{{$index+1}}-address" type="text" ng-model="manager.address" ng-blur="managers[$index].address = manager.address"/>
+              <input class="inline" id="snmp-manager{{$index+1}}-address" ng-change="manager.update_address = true" type="text" ng-model="manager.address" ng-blur="managers[$index].address = manager.address"/>
             </div>
             <div class="snmp__manager-field">
               <label>Port</label>
-              <input class="inline" id="snmp-manager{{$index+1}}-port" type="text" ng-model="manager.port" ng-blur="managers[$index].port = manager.port"/>
+              <input class="inline" id="snmp-manager{{$index+1}}-port" type="text" ng-change="manager.update_port = true" ng-model="manager.port" ng-blur="managers[$index].port = manager.port"/>
             </div>
           <button class="snmp__manager-remove" ng-click="removeSNMPManager($index)">Remove</button>
           </div>
