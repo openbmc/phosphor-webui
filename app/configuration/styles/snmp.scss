@@ -10,8 +10,11 @@
   }
 
    .snmp__manager-field {
+    display:inline-block;
     padding-right: 4em;
     width: 350px;
+    padding-top: .6em;
+    padding-left: 0em;
   }
 
   .snmp__metadata-wrapper {
@@ -34,6 +37,15 @@
     button {
       float: right;
       margin: .5em;
+    }
+  }
+  .snmp__manager-remove {
+    display:inline-block;
+    color: $medblue;
+    height: 2.1em;
+    opacity: 1;
+    &:hover {
+      cursor: pointer;
     }
   }
 }
