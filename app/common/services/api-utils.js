@@ -1030,71 +1030,44 @@ window.angular && (function(angular) {
           return deferred.promise;
         },
         changePriority: function(imageId, priority) {
-          var deferred = $q.defer();
-          $http({
-            method: 'PUT',
-            url: DataService.getHost() + '/xyz/openbmc_project/software/' +
-                imageId + '/attr/Priority',
-            withCredentials: true,
-            data: JSON.stringify({'data': priority})
-          })
-              .then(
-                  function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
-                    deferred.resolve(content);
-                  },
-                  function(error) {
-                    console.log(error);
-                    deferred.reject(error);
-                  });
-
-          return deferred.promise;
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/software/' + imageId +
+                       '/attr/Priority',
+                   withCredentials: true,
+                   data: JSON.stringify({'data': priority})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
         },
         deleteImage: function(imageId) {
-          var deferred = $q.defer();
-          $http({
-            method: 'POST',
-            url: DataService.getHost() + '/xyz/openbmc_project/software/' +
-                imageId + '/action/Delete',
-            withCredentials: true,
-            data: JSON.stringify({'data': []})
-          })
-              .then(
-                  function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
-                    deferred.resolve(content);
-                  },
-                  function(error) {
-                    console.log(error);
-                    deferred.reject(error);
-                  });
-
-          return deferred.promise;
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/software/' + imageId +
+                       '/action/Delete',
+                   withCredentials: true,
+                   data: JSON.stringify({'data': []})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
         },
         activateImage: function(imageId) {
-          var deferred = $q.defer();
-          $http({
-            method: 'PUT',
-            url: DataService.getHost() + '/xyz/openbmc_project/software/' +
-                imageId + '/attr/RequestedActivation',
-            withCredentials: true,
-            data:
-                JSON.stringify({'data': Constants.FIRMWARE.ACTIVATE_FIRMWARE})
-          })
-              .then(
-                  function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
-                    deferred.resolve(content);
-                  },
-                  function(error) {
-                    console.log(error);
-                    deferred.reject(error);
-                  });
-
-          return deferred.promise;
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/software/' + imageId +
+                       '/attr/RequestedActivation',
+                   withCredentials: true,
+                   data: JSON.stringify(
+                       {'data': Constants.FIRMWARE.ACTIVATE_FIRMWARE})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
         },
         uploadImage: function(file) {
           return $http({
