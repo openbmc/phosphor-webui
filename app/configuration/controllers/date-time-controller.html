@@ -17,7 +17,7 @@
 				</div>
 				<div class="row column date-time__ntp-servers-wrap">
 					<fieldset class="date-time__ntp-servers" ng-repeat="server in ntp.servers track by $index">
-						<label for="ntp-server{{$index+1}}">NTP Server Address {{$index+1}}</label>
+						<label for="ntp-server{{$index+1}}">NTP Server Address {{$index+1}} <span ng-if="$first">(Primary)</span></label>
 						<div class="inline">
 							<input id="ntp-server{{$index+1}}" type="text" ng-readonly="time_mode != 'NTP'" ng-model="server" ng-blur="ntp.servers[$index] = server" set-focus-on-new-input/>
 						</div>
