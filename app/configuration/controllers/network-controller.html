@@ -51,21 +51,24 @@
             <span class="control__indicator control__indicator-on"></span>
           </label>
         </div>
-        <fieldset class="net-config__static-ip-wrap" ng-repeat="ipv4 in interface.ipv4.values">
-          <div class="column small-12 large-4">
-            <label for="net-config__ipv4-address" class="inline">IPV4 address</label>
-            <input id="net-config__ipv4-address" type="text" ng-disabled="interface.DHCPEnabled" ng-model="ipv4.Address"/>
-          </div>
-          <div class="column small-12 large-4">
-            <label for="net-config__subnet" class="inline">Gateway</label>
-            <input id="net-config__subnet" type="text" ng-disabled="interface.DHCPEnabled" value="" ng-model="ipv4.Gateway"/>
-          </div>
-          <!-- This netmask prefix length max only works with IPV4 -->
-          <div class="column small-12 large-4">
-            <label for="net-config__default-gateway" class="inline">Netmask Prefix Length</label>
-            <input id="net-config__default-gateway" type="number" min="1" max="32" step="1" ng-disabled="interface.DHCPEnabled"  ng-model="ipv4.PrefixLength"/>
-          </div>
-        </fieldset>
+        <div class="row column network-config__ipv4-wrap">
+          <fieldset class="net-config__static-ip-wrap" ng-repeat="ipv4 in interface.ipv4.values track by $index">
+            <div class="column small-12 large-3">
+              <label for="net-config__ipv4-address">IPV4 address</label>
+              <input id="net-config__ipv4-address" type="text" ng-disabled="interface.DHCPEnabled" ng-model="ipv4.Address"/>
+            </div>
+            <div class="column small-12 large-3">
+              <label for="net-config__subnet">Gateway</label>
+              <input id="net-config__subnet" type="text" ng-disabled="interface.DHCPEnabled" value="" ng-model="ipv4.Gateway"/>
+            </div>
+            <!-- This netmask prefix length max only works with IPV4 -->
+            <div class="column small-12 large-6">
+              <label for="net-config__default-gateway">Netmask Prefix Length</label>
+              <input id="net-config__default-gateway" class="column small-6" type="number" min="1" max="32" step="1" ng-disabled="interface.DHCPEnabled"  ng-model="ipv4.PrefixLength"/>
+              <button class="network-config_remove-button inline" ng-click="removeIpv4Address($index)">Remove</button>
+            </div>
+          </fieldset>
+        </div>
       </fieldset>
     </section>
     <section class="row column">
@@ -77,11 +80,11 @@
         <fieldset class="net-config__static-ip-wrap" ng-repeat="dns in interface.Nameservers track by $index">
           <div class="column small-12">
             <label for="net-config__prime-dns{{$index+1}}">DNS Server {{$index+1}}</label>
-            <input id="net-config__prime-dns{{$index+1}}" class="network-input column small-6 large-4 inline" type="text" ng-model="dns" ng-blur="interface.Nameservers[$index] = dns" set-focus-on-new-input//>
-            <button class="dns__server-remove inline" ng-click="removeDNSField($index)">Remove</button>
+            <input id="net-config__prime-dns{{$index+1}}" class="network-input column small-6 large-4 inline" type="text" ng-model="dns" ng-blur="interface.Nameservers[$index] = dns" set-focus-on-new-input/>
+            <button class="network-config_remove-button inline" ng-click="removeDNSField($index)">Remove</button>
           </div>
         </fieldset>
-        <div class="column small-12">
+        <div class="row column">
           <button type="button" class="btn-primary inline dns_add" ng-click="addDNSField()">Add new DNS server</button>
         </div>
       </fieldset>
