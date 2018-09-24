@@ -24,6 +24,7 @@ window.angular && (function(angular) {
       $scope.selectedInterface = '';
       $scope.confirm_settings = false;
       $scope.loading = false;
+      $scope.IPV4s_to_delete = [];
 
       loadNetworkInfo();
 
@@ -41,6 +42,15 @@ window.angular && (function(angular) {
 
       $scope.removeDNSField = function(index) {
         $scope.interface.Nameservers.splice(index, 1);
+      };
+
+      $scope.removeIpv4Address = function(index) {
+        // Check if the IPV4 being removed has an id. This indicates that it is
+        // an existing address and needs to be removed in the back end.
+        if ($scope.interface.ipv4.values[index].id) {
+          $scope.IPV4s_to_delete.push($scope.interface.ipv4.values[index]);
+        }
+        $scope.interface.ipv4.values.splice(index, 1);
       };
 
       $scope.setNetworkSettings = function() {
@@ -79,6 +89,9 @@ window.angular && (function(angular) {
 
         // Set IPV4 IP Addresses, Netmask Prefix Lengths, and Gateways
         if (!$scope.interface.DHCPEnabled) {
+          // Delete existing IPV4 addresses that were removed
+          promises.push(removeIPV4s());
+          // Update any changed IPV4 addresses
           for (var i in $scope.interface.ipv4.values) {
             if (!APIUtils.validIPV4IP(
                     $scope.interface.ipv4.values[i].Address)) {
@@ -202,6 +215,18 @@ window.angular && (function(angular) {
                 });
       }
 
+      function removeIPV4s() {
+        return $scope.IPV4s_to_delete.map(function(ipv4) {
+          return APIUtils.deleteIPV4($scope.selectedInterface, ipv4.id)
+              .then(
+                  function(data) {},
+                  function(error) {
+                    console.log(JSON.stringify(error));
+                    $scope.set_network_error = ipv4.Address;
+                  })
+        });
+      }
+
       function setIPV4(index) {
         // The correct way to edit an IPV4 interface is to remove it and then
         // add a new one
@@ -252,6 +277,10 @@ window.angular && (function(angular) {
             // Copy the interface so we know later if changes were made to the
             // page
             $scope.old_interface = JSON.parse(JSON.stringify($scope.interface));
+          }
+          // Add id values to corresponding IPV4 objects
+          for (var i = 0; i < $scope.interface.ipv4.values.length; i++) {
+            $scope.interface.ipv4.values[i].id = $scope.interface.ipv4.ids[i];
           }
         });
       }
