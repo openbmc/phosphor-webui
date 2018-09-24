@@ -44,6 +44,11 @@ window.angular && (function(angular) {
         $scope.interface.Nameservers.splice(index, 1);
       };
 
+      $scope.addIpv4Field = function() {
+        $scope.interface.ipv4.values.push(
+            {Address: '', PrefixLength: '', Gateway: ''});
+      };
+
       $scope.removeIpv4Address = function(index) {
         // Check if the IPV4 being removed has an id. This indicates that it is
         // an existing address and needs to be removed in the back end.
@@ -93,7 +98,7 @@ window.angular && (function(angular) {
           for (var r in $scope.IPV4s_to_delete) {
             promises.push(removeIPV4($scope.IPV4s_to_delete[r]));
           }
-          // Update any changed IPV4 addresses
+          // Update any changed IPV4 addresses and add new
           for (var i in $scope.interface.ipv4.values) {
             if (!APIUtils.validIPV4IP(
                     $scope.interface.ipv4.values[i].Address)) {
@@ -119,13 +124,17 @@ window.angular && (function(angular) {
               $scope.loading = false;
               return;
             }
-            if ($scope.interface.ipv4.values[i].Address !=
-                    $scope.old_interface.ipv4.values[i].Address ||
-                $scope.interface.ipv4.values[i].PrefixLength !=
-                    $scope.old_interface.ipv4.values[i].PrefixLength ||
-                $scope.interface.ipv4.values[i].Gateway !=
-                    $scope.old_interface.ipv4.values[i].Gateway) {
-              promises.push(setIPV4(i));
+            if ($scope.interface.ipv4.values[i].update_address ||
+                $scope.interface.ipv4.values[i].update_gateway ||
+                $scope.interface.ipv4.values[i].update_prefix) {
+              // If IPV4 has an id it means it already exists in the back end,
+              // and in order to update it is required to remove previous IPV4
+              // address and add new one.
+              if ($scope.interface.ipv4.values[i].id) {
+                promises.push(updateIPV4(i));
+              } else {
+                promises.push(addIPV4(i));
+              }
             }
           }
         }
@@ -227,12 +236,29 @@ window.angular && (function(angular) {
                 })
       }
 
-      function setIPV4(index) {
+      function addIPV4(index) {
+        return APIUtils
+            .addIPV4(
+                $scope.selectedInterface,
+                $scope.interface.ipv4.values[index].Address,
+                $scope.interface.ipv4.values[index].PrefixLength,
+                $scope.interface.ipv4.values[index].Gateway)
+            .then(
+                function(data) {},
+                function(error) {
+                  console.log(JSON.stringify(error));
+                  $scope.set_network_error =
+                      $scope.interface.ipv4.values[index].Address;
+                })
+      }
+
+      function updateIPV4(index) {
         // The correct way to edit an IPV4 interface is to remove it and then
         // add a new one
         return APIUtils
             .deleteIPV4(
-                $scope.selectedInterface, $scope.interface.ipv4.ids[index])
+                $scope.selectedInterface,
+                $scope.interface.ipv4.values[index].id)
             .then(
                 function(data) {
                   return APIUtils
@@ -278,9 +304,12 @@ window.angular && (function(angular) {
             // page
             $scope.old_interface = JSON.parse(JSON.stringify($scope.interface));
           }
-          // Add id values to corresponding IPV4 objects
+          // Add id values and update flags to corresponding IPV4 objects
           for (var i = 0; i < $scope.interface.ipv4.values.length; i++) {
             $scope.interface.ipv4.values[i].id = $scope.interface.ipv4.ids[i];
+            $scope.interface.ipv4.values[i].update_address = false;
+            $scope.interface.ipv4.values[i].update_gateway = false;
+            $scope.interface.ipv4.values[i].update_prefix = false;
           }
         });
       }
