@@ -54,20 +54,25 @@
         <div class="row column network-config__ipv4-wrap">
           <fieldset class="net-config__static-ip-wrap" ng-repeat="ipv4 in interface.ipv4.values track by $index">
             <div class="column small-12 large-3">
-              <label for="net-config__ipv4-address">IPV4 address</label>
-              <input id="net-config__ipv4-address" type="text" ng-disabled="interface.DHCPEnabled" ng-model="ipv4.Address"/>
+              <label>IPV4 address</label>
+              <input id="ipv4-address-{{$index+1}}" ng-change="ipv4.update_address = true" type="text" ng-disabled="interface.DHCPEnabled" ng-model="ipv4.Address"/>
             </div>
             <div class="column small-12 large-3">
-              <label for="net-config__subnet">Gateway</label>
-              <input id="net-config__subnet" type="text" ng-disabled="interface.DHCPEnabled" value="" ng-model="ipv4.Gateway"/>
+              <label>Gateway</label>
+              <input id="ipv4-gateway-{{$index+1}}" ng-change="ipv4.update_gateway = true" type="text" ng-disabled="interface.DHCPEnabled" value="" ng-model="ipv4.Gateway"/>
             </div>
             <!-- This netmask prefix length max only works with IPV4 -->
             <div class="column small-12 large-6">
-              <label for="net-config__default-gateway">Netmask Prefix Length</label>
-              <input id="net-config__default-gateway" class="column small-6" type="number" min="1" max="32" step="1" ng-disabled="interface.DHCPEnabled"  ng-model="ipv4.PrefixLength"/>
+              <label>Netmask Prefix Length</label>
+              <input id="ipv4-prefix-{{$index+1}}" class="column small-6" ng-change="ipv4.update_prefix = true" type="number" min="1" max="32" step="1" ng-disabled="interface.DHCPEnabled"  ng-model="ipv4.PrefixLength"/>
               <button class="network-config_remove-button inline" ng-click="removeIpv4Address($index)">Remove</button>
             </div>
           </fieldset>
+          <div class="row column">
+            <div class="column small-12">
+              <button type="button" class="btn-primary inline" ng-click="addIpv4Field()">Add IPV4 address</button>
+            </div>
+          </div>
         </div>
       </fieldset>
     </section>
@@ -85,7 +90,9 @@
           </div>
         </fieldset>
         <div class="row column">
-          <button type="button" class="btn-primary inline dns_add" ng-click="addDNSField()">Add new DNS server</button>
+          <div class="column small-12">
+            <button type="button" class="btn-primary inline dns_add" ng-click="addDNSField()">Add DNS server</button>
+          </div>
         </div>
       </fieldset>
       <div class="network-config__submit-wrapper">
