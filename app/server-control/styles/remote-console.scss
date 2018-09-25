@@ -33,12 +33,14 @@
 
 .terminal-container {
   position: relative;
-  height: 25em;
   width: 100%;
 }
 
 .window-terminal-container {
   position: relative;
-  height: 25em;
   max-width: 70em;
+}
+
+#terminal{
+  height:25em;
 }
