@@ -10,11 +10,13 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.configuration').controller('firmwareController', [
-    '$scope', '$window', 'APIUtils', '$location', '$anchorScroll', 'Constants',
-    '$interval', '$q', '$timeout', '$interpolate',
+    '$scope', '$window', 'APIUtils', 'dataService', '$location',
+    '$anchorScroll', 'Constants', '$interval', '$q', '$timeout', '$interpolate',
     function(
-        $scope, $window, APIUtils, $location, $anchorScroll, Constants,
-        $interval, $q, $timeout, $interpolate) {
+        $scope, $window, APIUtils, dataService, $location, $anchorScroll,
+        Constants, $interval, $q, $timeout, $interpolate) {
+      $scope.dataService = dataService;
+
       // Scroll to target anchor
       $scope.gotoAnchor = function() {
         $location.hash('upload');
