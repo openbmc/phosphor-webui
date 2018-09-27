@@ -13,6 +13,7 @@ window.angular && (function(angular) {
     '$scope', '$window', 'APIUtils', '$route', '$q',
     function($scope, $window, APIUtils, $route, $q) {
       $scope.bmc = {};
+      // Only used when the owner is "Split"
       $scope.host = {};
       $scope.ntp = {servers: []};
       $scope.time_mode = '';
@@ -98,16 +99,22 @@ window.angular && (function(angular) {
                 // Else set BMC only. See:
                 // https://github.com/openbmc/phosphor-time-manager/blob/master/README.md
                 if ($scope.time_owner != 'Host') {
-                  manual_promises.push(setBMCTime());
+                  manual_promises.push(
+                      setBMCTime($scope.bmc.date.getTime() * 1000));
                 }
-
+                // Even though we are setting Host time, we are setting from
+                // the BMC date and time fields labeled "BMC and Host Time"
+                // currently.
                 if ($scope.time_owner == 'Host') {
-                  manual_promises.push(setHostTime());
+                  manual_promises.push(
+                      setHostTime($scope.bmc.date.getTime() * 1000));
                 }
               }
-              // Set the Host if Split even if NTP.
+              // Set the Host if Split even if NTP. In split mode, the host has
+              // its own date and time field. Set from it.
               if ($scope.time_owner == 'Split') {
-                manual_promises.push(setHostTime());
+                manual_promises.push(
+                    setHostTime($scope.host.date.getTime() * 1000));
               }
 
               $q.all(manual_promises)
@@ -165,16 +172,16 @@ window.angular && (function(angular) {
             'xyz.openbmc_project.Time.Owner.Owners.' + $scope.time_owner);
       }
 
-      function setBMCTime() {
+      function setBMCTime(time) {
         // Add the separate date and time objects and convert to Epoch time in
         // microseconds.
-        return APIUtils.setBMCTime($scope.bmc.date.getTime() * 1000);
+        return APIUtils.setBMCTime(time);
       }
 
-      function setHostTime() {
+      function setHostTime(time) {
         // Add the separate date and time objects and convert to Epoch time
         // microseconds.
-        return APIUtils.setHostTime($scope.host.date.getTime() * 1000);
+        return APIUtils.setHostTime(time);
       }
     }
   ]);
