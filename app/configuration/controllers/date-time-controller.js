@@ -101,11 +101,15 @@ window.angular && (function(angular) {
                   manual_promises.push(setBMCTime());
                 }
 
-                if ($scope.time_owner == 'Host' ||
-                    $scope.time_owner == 'Split') {
+                if ($scope.time_owner == 'Host') {
                   manual_promises.push(setHostTime());
                 }
               }
+              // Set the Host if Split even if NTP.
+              if ($scope.time_owner == 'Split') {
+                manual_promises.push(setHostTime());
+              }
+
               $q.all(manual_promises)
                   .then(
                       function() {
