@@ -1270,10 +1270,11 @@ window.angular && (function(angular) {
             var hardwareData = [];
             var keyIndexMap = {};
             var title = '';
+            var depth = '';
             var data = [];
             var searchText = '';
             var componentIndex = -1;
-            var tempParts = [];
+            var parent = '';
 
             function isSubComponent(key) {
               for (var i = 0; i < Constants.HARDWARE.parent_components.length;
@@ -1315,6 +1316,12 @@ window.angular && (function(angular) {
               return transformed;
             }
 
+            function determineParent(key) {
+              var levels = key.split('/');
+              levels.pop();
+              return levels.join('/');
+            }
+
             function getSearchText(data) {
               var searchText = '';
               for (var i = 0; i < data.length; i++) {
@@ -1332,12 +1339,19 @@ window.angular && (function(angular) {
                 title = key.split('/').pop();
 
                 title = titlelize(title);
+                // e.g. /xyz/openbmc_project/inventory/system and
+                /// xyz/openbmc_project/inventory/system/chassis are depths of 5
+                // and 6.
+                depth = key.split('/').length;
+                parent = determineParent(key);
 
                 if (!isSubComponent(key)) {
                   hardwareData.push(Object.assign(
                       {
                         path: key,
                         title: title,
+                        depth: depth,
+                        parent: parent,
                         selected: false,
                         expanded: false,
                         search_text: title.toLowerCase() + ' ' +
@@ -1349,10 +1363,8 @@ window.angular && (function(angular) {
 
                   keyIndexMap[key] = hardwareData.length - 1;
                 } else {
-                  var tempParts = key.split('/');
-                  tempParts.pop();
-                  tempParts = tempParts.join('/');
-                  componentIndex = keyIndexMap[tempParts];
+                  parent = determineParent(key)
+                  componentIndex = keyIndexMap[parent];
                   data = content.data[key];
                   data.title = title;
                   hardwareData[componentIndex].sub_components.push(data);
@@ -1370,11 +1382,36 @@ window.angular && (function(angular) {
                 }
               }
             }
+            // First, order the components by depth and then place the child
+            // components beneath their parent component alphanumerically. Can
+            // be removed with completion of
+            // https://github.com/openbmc/openbmc/issues/3401
+            // TODO: Remove this once implemented in back end
+            hardwareData.sort(function(a, b) {
+              if (a.depth < b.depth) return -1;
+              if (a.depth > b.depth) return 1;
+              return b.title.localeCompare(a.title, 'en', {numeric: true});
+            });
+
+            var orderedComponents = [];
+
+            for (var i = 0; i < hardwareData.length; i++) {
+              if (!keyIndexMap[hardwareData[i].parent]) {
+                orderedComponents.push(hardwareData[i]);
+              } else {
+                for (var j = 0; j < orderedComponents.length; j++) {
+                  if (orderedComponents[j].path === hardwareData[i].parent) {
+                    var child = hardwareData[i];
+                    orderedComponents.splice(j + 1, 0, child);
+                  }
+                }
+              }
+            }
 
             if (callback) {
-              callback(hardwareData, content.data);
+              callback(orderedComponents, content.data);
             } else {
-              return {data: hardwareData, original_data: content.data};
+              return {data: orderedComponents, original_data: content.data};
             }
           });
         },
