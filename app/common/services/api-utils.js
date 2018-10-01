@@ -1270,6 +1270,7 @@ window.angular && (function(angular) {
             var hardwareData = [];
             var keyIndexMap = {};
             var title = '';
+            var hierarchy;
             var data = [];
             var searchText = '';
             var componentIndex = -1;
@@ -1324,6 +1325,13 @@ window.angular && (function(angular) {
               return searchText;
             }
 
+            function getHierarchy(key) {
+              // e.g. /xyz/openbmc_project/inventory/system and
+              // /xyz/openbmc_project/inventory/system/chassis are hierarchy 1
+              // and 2, respectively.
+              return key.split('/').length - 4;
+            }
+
             for (var key in content.data) {
               if (content.data.hasOwnProperty(key) &&
                   key.indexOf(Constants.HARDWARE.component_key_filter) == 0) {
@@ -1332,12 +1340,14 @@ window.angular && (function(angular) {
                 title = key.split('/').pop();
 
                 title = titlelize(title);
+                hierarchy = getHierarchy(key);
 
                 if (!isSubComponent(key)) {
                   hardwareData.push(Object.assign(
                       {
                         path: key,
                         title: title,
+                        hierarchy: hierarchy,
                         selected: false,
                         expanded: false,
                         search_text: title.toLowerCase() + ' ' +
@@ -1370,6 +1380,13 @@ window.angular && (function(angular) {
                 }
               }
             }
+            // Sort the hardware components first by hierarchy. Within each
+            // hierarchy, sort components alphanumerically.
+            hardwareData.sort(function(a, b) {
+              if (a.hierarchy < b.hierarchy) return -1;
+              if (a.hierarchy > b.hierarchy) return 1;
+              return a.title.localeCompare(b.title, 'en', {numeric: true});
+            });
 
             if (callback) {
               callback(hardwareData, content.data);
