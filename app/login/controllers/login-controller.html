@@ -1,30 +1,30 @@
 <div>
-    <div class="row">
-        <div class="columns large-6">
-            <img src="../../assets/images/logo.svg" class="login__logo" alt="OpenBMC logo" role="img"/>
+  <div class="row">
+    <div class="columns large-6">
+      <img src="../../assets/images/logo.svg" class="login__logo" alt="OpenBMC logo" role="img"/>
     </div>
-        <div class="columns large-6">
-        </div>
+    <div class="columns large-6">
     </div>
-    <div class="row">
-        <div class="columns large-6 login__desc">
-            <h1>OpenBMC</h1>
-        </div>
-        <div class="columns large-6 disabled">
-            <form id="login__form" action="">
-                <label >BMC Host or BMC IP Address</label>
-                <input type="text" ng-model="host" required  ng-class="{'error': error && description != 'Invalid username or password'}" autofocus ng-keydown="tryLogin(host, username, password, $event)" ng-disabled="dataService.loading">
-
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required ng-model="username" ng-class="{'error': description == 'Invalid username or password'}" ng-keydown="tryLogin(host, username, password, $event)" ng-disabled="dataService.loading" autocomplete="off">
-
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required ng-class="{'error': description == 'Invalid username or password'}" ng-model="password" ng-keydown="tryLogin(host, username, password, $event)" ng-disabled="dataService.loading" autocomplete="off">
-
-                <input id="login__submit" class="btn-primary submit" type="button" value="Log in" role="button" ng-click="login(host, username, password)" ng-class="{error: error}" ng-disabled="dataService.loading">
-
-                <p class="login__error-msg error-msg" role="alert" ng-if="error">{{description}}</p>
-            </form>
-        </div>
+  </div>
+  <div class="row">
+    <div class="columns large-6 login__desc">
+      <h1>OpenBMC</h1>
     </div>
+    <div class="columns large-6 disabled">
+      <form id="login__form" action="">
+        <label >BMC Host or BMC IP Address</label>
+        <input type="text" ng-model="host" required  ng-class="{'error': error && description != 'Invalid username or password'}" autofocus ng-keydown="tryLogin(host, username, password, $event)" ng-disabled="dataService.loading">
+
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required ng-model="username" ng-class="{'error': description == 'Invalid username or password'}" ng-keydown="tryLogin(host, username, password, $event)" ng-disabled="dataService.loading" autocomplete="off">
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required ng-class="{'error': description == 'Invalid username or password'}" ng-model="password" ng-keydown="tryLogin(host, username, password, $event)" ng-disabled="dataService.loading" autocomplete="off">
+
+        <input id="login__submit" class="btn-primary submit" type="button" value="Log in" role="button" ng-click="login(host, username, password)" ng-class="{error: error}" ng-disabled="dataService.loading">
+
+        <p class="login__error-msg error-msg" role="alert" ng-if="error">{{description}}</p>
+      </form>
+    </div>
+  </div>
 </div>
