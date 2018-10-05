@@ -16,7 +16,7 @@ window.angular && (function(angular) {
       $scope.loading = true;
       $scope.error = false;
       $scope.success = false;
-      $scope.managers_to_delete = [];
+      $scope.managersToDelete = [];
 
       var getSNMPManagers = APIUtils.getSNMPManagers().then(
           function(data) {
@@ -26,9 +26,9 @@ window.angular && (function(angular) {
               $scope.managers.push({
                 path: key,
                 port: data.data[key].Port,
-                update_port: false,
+                updatePort: false,
                 address: data.data[key].Address,
-                update_address: false
+                updateAddress: false
               })
             }
           },
@@ -48,7 +48,7 @@ window.angular && (function(angular) {
         // If the SNMP Manager has a path it exists on the backend and we
         // need to make a call to remove it
         if ($scope.managers[index].path) {
-          $scope.managers_to_delete.push($scope.managers[index].path);
+          $scope.managersToDelete.push($scope.managers[index].path);
         }
         $scope.managers.splice(index, 1);
       };
@@ -87,11 +87,11 @@ window.angular && (function(angular) {
             promises.push(addManager(
                 $scope.managers[i].address, $scope.managers[i].port));
           } else {
-            if ($scope.managers[i].update_address) {
+            if ($scope.managers[i].updateAddress) {
               promises.push(setManagerAddress(
                   $scope.managers[i].path, $scope.managers[i].address));
             }
-            if ($scope.managers[i].update_port) {
+            if ($scope.managers[i].updatePort) {
               promises.push(setManagerPort(
                   $scope.managers[i].path, $scope.managers[i].port));
             }
@@ -99,9 +99,9 @@ window.angular && (function(angular) {
         }
 
         // Add delete promises last since we might be adding to
-        // managers_to_delete above
-        for (var i in $scope.managers_to_delete) {
-          promises.push(deleteManager($scope.managers_to_delete[i]));
+        // managersToDelete above
+        for (var i in $scope.managersToDelete) {
+          promises.push(deleteManager($scope.managersToDelete[i]));
         }
 
         $q.all(promises)
