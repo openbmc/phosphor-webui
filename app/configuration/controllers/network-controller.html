@@ -55,16 +55,16 @@
           <fieldset class="net-config__static-ip-wrap" ng-repeat="ipv4 in interface.ipv4.values track by $index">
             <div class="column small-12 large-3">
               <label>IPV4 address</label>
-              <input id="ipv4-address-{{$index+1}}" ng-change="ipv4.update_address = true" type="text" ng-disabled="interface.DHCPEnabled" ng-model="ipv4.Address"/>
+              <input id="ipv4-address-{{$index+1}}" ng-change="ipv4.updateAddress = true" type="text" ng-disabled="interface.DHCPEnabled" ng-model="ipv4.Address"/>
             </div>
             <div class="column small-12 large-3">
               <label>Gateway</label>
-              <input id="ipv4-gateway-{{$index+1}}" ng-change="ipv4.update_gateway = true" type="text" ng-disabled="interface.DHCPEnabled" value="" ng-model="ipv4.Gateway"/>
+              <input id="ipv4-gateway-{{$index+1}}" ng-change="ipv4.updateGateway = true" type="text" ng-disabled="interface.DHCPEnabled" value="" ng-model="ipv4.Gateway"/>
             </div>
             <!-- This netmask prefix length max only works with IPV4 -->
             <div class="column small-12 large-6">
               <label>Netmask Prefix Length</label>
-              <input id="ipv4-prefix-{{$index+1}}" class="column small-6" ng-change="ipv4.update_prefix = true" type="number" min="1" max="32" step="1" ng-disabled="interface.DHCPEnabled"  ng-model="ipv4.PrefixLength"/>
+              <input id="ipv4-prefix-{{$index+1}}" class="column small-6" ng-change="ipv4.updatePrefix = true" type="number" min="1" max="32" step="1" ng-disabled="interface.DHCPEnabled"  ng-model="ipv4.PrefixLength"/>
               <button class="network-config_remove-button inline" ng-click="removeIpv4Address($index)">Remove</button>
             </div>
           </fieldset>
@@ -96,15 +96,15 @@
         </div>
       </fieldset>
       <div class="network-config__submit-wrapper">
-        <button type="button" class="btn-primary inline" ng-click="confirm_settings=true;">Save settings</button>
+        <button type="button" class="btn-primary inline" ng-click="confirmSettings=true;">Save settings</button>
         <button type="button" class="btn-secondary inline" ng-click="refresh()">Cancel</button>
       </div>
-      <p class="success-msg set_network_success" ng-show="set_network_success" role="alert">Success! Network settings changed!</p>
-      <p class="set_network_error error-msg" ng-show="set_network_error" role="alert">Error setting {{set_network_error}}!</p>
+      <p class="success-msg set_network_success" ng-show="setNetworkSuccess" role="alert">Success! Network settings changed!</p>
+      <p class="set_network_error error-msg" ng-show="setNetworkError" role="alert">Error setting {{setNetworkError}}!</p>
     </section>
   </form>
 </div>
-<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': confirm_settings}">
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': confirmSettings}">
   <div class="modal__tftp-unreachable" role="document">
     <div class="screen-reader-offscreen modal-description">Change network settings</div><!-- accessibility only; used for screen readers -->
     <div class="page-header ">
@@ -116,7 +116,7 @@
         Proceed with caution and make note of any new settings that may affect connectivity.</p>
     </div>
     <div class="modal__button-wrapper">
-      <button class="inline btn-secondary" ng-click="confirm_settings=false;">Cancel</button>
+      <button class="inline btn-secondary" ng-click="confirmSettings=false;">Cancel</button>
       <button class="inline btn-primary" ng-click="setNetworkSettings()">Continue</button>
     </div>
   </div>
