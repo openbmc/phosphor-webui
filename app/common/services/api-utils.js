@@ -465,12 +465,10 @@ window.angular && (function(angular) {
         changePassword: function(user, newPassword) {
           var deferred = $q.defer();
           $http({
-            method: 'POST',
-            url: DataService.getHost() + '/xyz/openbmc_project/user/' + user +
-                '/action/SetPassword',
+            method: 'PATCH',
+            url: DataService.getHost() + '/redfish/v1/AccountService/Accounts/' + user,
             withCredentials: true,
-            data: JSON.stringify({'data': [newPassword]}),
-            responseType: 'arraybuffer'
+            data: JSON.stringify({'Password': newPassword})
           })
               .then(
                   function(response, status, headers) {
