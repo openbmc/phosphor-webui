@@ -16,22 +16,23 @@ window.angular && (function(angular) {
       // Only used when the owner is "Split"
       $scope.host = {};
       $scope.ntp = {servers: []};
-      $scope.time_mode = '';
-      $scope.time_owner = '';
-      $scope.time_owners = ['BMC', 'Host', 'Both', 'Split'];
-      $scope.set_time_error = false;
-      $scope.set_time_success = false;
+      $scope.time = {mode: '', owner: ''};
+      // Possible time owners
+      // https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Time/Owner.interface.yaml#L13
+      $scope.timeOwners = ['BMC', 'Host', 'Both', 'Split'];
+      $scope.error = false;
+      $scope.success = false;
       $scope.loading = true;
-      var time_path = '/xyz/openbmc_project/time/';
+      var timePath = '/xyz/openbmc_project/time/';
 
       var getTimePromise = APIUtils.getTime().then(
           function(data) {
             // The time is returned as Epoch microseconds convert to
             // milliseconds.
-            if (data.data[time_path + 'bmc'] &&
-                data.data[time_path + 'bmc'].hasOwnProperty('Elapsed')) {
+            if (data.data[timePath + 'bmc'] &&
+                data.data[timePath + 'bmc'].hasOwnProperty('Elapsed')) {
               $scope.bmc.date =
-                  new Date(data.data[time_path + 'bmc'].Elapsed / 1000);
+                  new Date(data.data[timePath + 'bmc'].Elapsed / 1000);
               // Don't care about milliseconds and don't want them displayed
               $scope.bmc.date.setMilliseconds(0);
               // https://stackoverflow.com/questions/1091372/getting-the-clients-timezone-in-javascript
@@ -39,23 +40,23 @@ window.angular && (function(angular) {
               $scope.bmc.timezone =
                   $scope.bmc.date.toString().match(/([A-Z]+[\+-][0-9]+.*)/)[1];
             }
-            if (data.data[time_path + 'host'] &&
-                data.data[time_path + 'host'].hasOwnProperty('Elapsed')) {
+            if (data.data[timePath + 'host'] &&
+                data.data[timePath + 'host'].hasOwnProperty('Elapsed')) {
               $scope.host.date =
-                  new Date(data.data[time_path + 'host'].Elapsed / 1000);
+                  new Date(data.data[timePath + 'host'].Elapsed / 1000);
               $scope.host.date.setMilliseconds(0);
               $scope.host.timezone =
                   $scope.host.date.toString().match(/([A-Z]+[\+-][0-9]+.*)/)[1];
             }
-            if (data.data[time_path + 'owner'] &&
-                data.data[time_path + 'owner'].hasOwnProperty('TimeOwner')) {
-              $scope.time_owner =
-                  data.data[time_path + 'owner'].TimeOwner.split('.').pop();
+            if (data.data[timePath + 'owner'] &&
+                data.data[timePath + 'owner'].hasOwnProperty('TimeOwner')) {
+              $scope.time.owner =
+                  data.data[timePath + 'owner'].TimeOwner.split('.').pop();
             }
-            if (data.data[time_path + 'sync_method'] &&
-                data.data[time_path + 'sync_method'].hasOwnProperty(
+            if (data.data[timePath + 'sync_method'] &&
+                data.data[timePath + 'sync_method'].hasOwnProperty(
                     'TimeSyncMethod')) {
-              $scope.time_mode = data.data[time_path + 'sync_method']
+              $scope.time.mode = data.data[timePath + 'sync_method']
                                      .TimeSyncMethod.split('.')
                                      .pop();
             }
@@ -82,8 +83,8 @@ window.angular && (function(angular) {
       });
 
       $scope.setTime = function() {
-        $scope.set_time_error = false;
-        $scope.set_time_success = false;
+        $scope.error = false;
+        $scope.success = false;
         $scope.loading = true;
         var promises = [setTimeMode(), setTimeOwner(), setNTPServers()];
 
@@ -93,26 +94,26 @@ window.angular && (function(angular) {
               // insufficient permissions if the time mode or time owner had
               // changed.
               var manual_promises = [];
-              if ($scope.time_mode == 'Manual') {
+              if ($scope.time.mode == 'Manual') {
                 // If owner is 'Split' set both.
                 // If owner is 'Host' set only it.
                 // Else set BMC only. See:
                 // https://github.com/openbmc/phosphor-time-manager/blob/master/README.md
-                if ($scope.time_owner != 'Host') {
+                if ($scope.time.owner != 'Host') {
                   manual_promises.push(
                       setBMCTime($scope.bmc.date.getTime() * 1000));
                 }
                 // Even though we are setting Host time, we are setting from
                 // the BMC date and time fields labeled "BMC and Host Time"
                 // currently.
-                if ($scope.time_owner == 'Host') {
+                if ($scope.time.owner == 'Host') {
                   manual_promises.push(
                       setHostTime($scope.bmc.date.getTime() * 1000));
                 }
               }
               // Set the Host if Split even if NTP. In split mode, the host has
               // its own date and time field. Set from it.
-              if ($scope.time_owner == 'Split') {
+              if ($scope.time.owner == 'Split') {
                 manual_promises.push(
                     setHostTime($scope.host.date.getTime() * 1000));
               }
@@ -120,11 +121,11 @@ window.angular && (function(angular) {
               $q.all(manual_promises)
                   .then(
                       function() {
-                        $scope.set_time_success = true;
+                        $scope.success = true;
                       },
                       function(errors) {
                         console.log(JSON.stringify(errors));
-                        $scope.set_time_error = true;
+                        $scope.error = true;
                       })
                   .finally(function() {
                     $scope.loading = false;
@@ -132,7 +133,7 @@ window.angular && (function(angular) {
             },
             function(errors) {
               console.log(JSON.stringify(errors));
-              $scope.set_time_error = true;
+              $scope.error = true;
               $scope.loading = false;
             });
       };
@@ -164,12 +165,12 @@ window.angular && (function(angular) {
       function setTimeMode() {
         return APIUtils.setTimeMode(
             'xyz.openbmc_project.Time.Synchronization.Method.' +
-            $scope.time_mode);
+            $scope.time.mode);
       }
 
       function setTimeOwner() {
         return APIUtils.setTimeOwner(
-            'xyz.openbmc_project.Time.Owner.Owners.' + $scope.time_owner);
+            'xyz.openbmc_project.Time.Owner.Owners.' + $scope.time.owner);
       }
 
       function setBMCTime(time) {
