@@ -30,3 +30,8 @@ might be required to prevent your browser from blocking traffic to the BMC.
 ## Logging in
 Enter the BMC Host or BMC IP address, username, and password.
 The default username and password are `root`/`0penBmc`.
+
+**Note** that some OpenBMC implementations use [bmcweb](https://github.com/openbmc/bmcweb)
+for its backend. For security reasons, bmcweb will need to be recompiled and
+loaded onto the target BMC Host before the above redirect command will work. The
+option to turn on within bmcweb is `BMCWEB_INSECURE_DISABLE_XSS_PREVENTION`.
