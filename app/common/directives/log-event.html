@@ -24,7 +24,7 @@
              <p class="inline event__priority event-resolved" ng-hide="event.Resolved == 0">Resolved</p>
              <p class="inline event__priority" ng-class="{'low-priority': event.priority == 'Low', 'medium-priority': event.priority == 'Medium', 'high-priority': event.priority == 'High'}">{{event.priority}}</p>
              <p class="inline event__severity" ng-class="{'low-priority': event.priority == 'Low', 'medium-priority': event.priority == 'Medium', 'high-priority': event.priority == 'High'}">{{event.severity_code}}</p>
-             <p class="inline event__timestamp">{{event.Timestamp| date:'MM/dd/yyyy  HH:mm:ss '+tmz: tmz}}</p></div>
+             <p class="inline event__timestamp">{{(event.Timestamp | date:'medium': tmz) + ' ' + tmz}}</p></div>
              <div>
                  <p class="inline event__description">{{getTitle(event)}}</p>
              </div>
