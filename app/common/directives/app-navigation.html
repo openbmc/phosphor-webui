@@ -110,6 +110,8 @@
   </ul>
   <ul class="nav__second-level btn-users" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'users')}">
     <li ng-class="{'active': (path == '/users' || path == '/users/manage-accounts')}">
-      <a href="#/users/manage-accounts" tabindex="18" ng-click="closeSubnav()">Manage user account</a></li>
+      <a href="#/users/manage-accounts" tabindex="18" ng-click="closeSubnav()">Manage user accounts</a></li>
+    <li ng-class="{'active': (path == '/users' || path == '/users/password-change')}">
+      <a href="#/users/password-change" tabindex="19" ng-click="closeSubnav()">Change user password</a></li>
   </ul>
 </nav>

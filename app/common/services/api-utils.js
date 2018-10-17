@@ -483,6 +483,79 @@ window.angular && (function(angular) {
                   });
           return deferred.promise;
         },
+        doGet: function(uri) {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + uri,
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        getUserAccounts: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + '/redfish/v1/AccountService/Accounts',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        createUser: function(data) {
+          var deferred = $q.defer();
+          $http({
+            method: 'POST',
+            url: DataService.getHost() + '/redfish/v1/AccountService/Accounts/',
+            withCredentials: true,
+            data: data
+          })
+              .then(
+                  function(response, status, headers) {
+                    deferred.resolve(
+                        {data: response.data, status: status, headers: headers});
+                  },
+                  function(error) {
+                    deferred.reject(error.data);
+                  });
+          return deferred.promise;
+        },
+        updateUser: function(user, data) {
+          var deferred = $q.defer();
+          $http({
+            method: 'PATCH',
+            url: DataService.getHost() + '/redfish/v1/AccountService/Accounts/' + user,
+            withCredentials: true,
+            data: data
+          })
+              .then(
+                  function(response, status, headers) {
+                    deferred.resolve(
+                        {data: response.data, status: status, headers: headers});
+                  },
+                  function(error) {
+                    deferred.reject(error.data);
+                  });
+          return deferred.promise;
+        },
+        deleteUser: function(user) {
+          var deferred = $q.defer();
+          $http({
+            method: 'DELETE',
+            url: DataService.getHost() + '/redfish/v1/AccountService/Accounts/' + user,
+            withCredentials: true,
+          })
+              .then(
+                  function(response, status, headers) {
+                    deferred.resolve(
+                        {data: response.data, status: status, headers: headers});
+                  },
+                  function(error) {
+                    deferred.reject(error.data);
+                  });
+          return deferred.promise;
+        },
         chassisPowerOff: function() {
           var deferred = $q.defer();
           $http({
