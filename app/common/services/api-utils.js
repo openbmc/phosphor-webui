@@ -475,19 +475,6 @@ window.angular && (function(angular) {
                     console.log(error);
                   });
         },
-        testPassword: function(username, password) {
-          // Calls /login without the current session to verify the given
-          // password is correct ignore the interceptor logout on a bad password
-          return $http({
-                   method: 'POST',
-                   url: DataService.getHost() + '/login',
-                   withCredentials: false,
-                   data: JSON.stringify({'data': [username, password]})
-                 })
-              .then(function(response) {
-                return response.data;
-              });
-        },
         logout: function(callback) {
           $http({
             method: 'POST',
@@ -508,26 +495,78 @@ window.angular && (function(angular) {
                     console.log(error);
                   });
         },
-        changePassword: function(user, newPassword) {
+        doGet: function(uri) {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + uri,
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        getMembersFullData: function(members) {
           var deferred = $q.defer();
-          $http({
-            method: 'POST',
-            url: DataService.getHost() + '/xyz/openbmc_project/user/' + user +
-                '/action/SetPassword',
-            withCredentials: true,
-            data: JSON.stringify({'data': [newPassword]}),
-            responseType: 'arraybuffer'
-          })
-              .then(
-                  function(response, status, headers) {
-                    deferred.resolve(
-                        {data: response, status: status, headers: headers});
-                  },
-                  function(error) {
-                    console.log(error);
-                    deferred.reject(error);
-                  });
+          var promises = [];
+          var users = [];
+
+          angular.forEach(members, function(member) {
+            promises.push($http({
+                            method: 'GET',
+                            url: DataService.getHost() + member['@odata.id'],
+                            withCredentials: true
+                          }).then(function(res) {
+              return res.data;
+            }));
+          });
+
+          $q.all(promises).then(
+              function(results) {
+                deferred.resolve(results);
+              },
+              function(errors) {
+                deferred.reject(errors);
+              });
+
           return deferred.promise;
+        },
+        getUserAccountCollections: function() {
+          return $http({
+            method: 'GET',
+            url: DataService.getHost() + '/redfish/v1/AccountService/Accounts',
+            withCredentials: true
+          });
+        },
+        createUser: function(user, passwd, role, enabled) {
+          var data = {};
+          data['UserName'] = user;
+          data['Password'] = passwd;
+          data['RoleId'] = role;
+          data['Enabled'] = enabled;
+
+          return $http({
+            method: 'POST',
+            url: DataService.getHost() + '/redfish/v1/AccountService/Accounts',
+            withCredentials: true,
+            data: data
+          });
+        },
+        updateUser: function(user, data) {
+          return $http({
+            method: 'PATCH',
+            url: DataService.getHost() +
+                '/redfish/v1/AccountService/Accounts/' + user,
+            withCredentials: true,
+            data: data
+          });
+        },
+        deleteUser: function(user) {
+          return $http({
+            method: 'DELETE',
+            url: DataService.getHost() +
+                '/redfish/v1/AccountService/Accounts/' + user,
+            withCredentials: true,
+          });
         },
         chassisPowerOff: function() {
           var deferred = $q.defer();
