@@ -23,8 +23,10 @@ window.angular && (function(angular) {
       $scope.orderly_confirm = false;
       $scope.immediately_confirm = false;
       $scope.loading = true;
+	  $scope.control_switch_state = false; ///add
 
       var pollChassisStatusTimer = undefined;
+      var pollHostStatusTimer = undefined;
       var pollStartTime = null;
 
       //@TODO: call api and get proper state
@@ -52,13 +54,14 @@ window.angular && (function(angular) {
 
       $scope.powerOn = function() {
         $scope.loading = true;
-        dataService.setUnreachableState();
+        dataService.setUnreachableState(); ///设置server_state为Unreachable
         APIUtils.hostPowerOn()
             .then(function(response) {
               return response;
             })
             .then(function(lastStatus) {
-              return APIUtils.pollHostStatusTillOn();
+              pollStartTime = new Date();
+              return pollHostStatusTillOn();
             })
             .then(function(hostState) {
               $scope.loading = false;
@@ -111,6 +114,68 @@ window.angular && (function(angular) {
 
         return deferred.promise;
       }
+
+      function pollHostStatusTillOn() {
+        var deferred = $q.defer();
+        pollHostStatusTimer = $interval(function() {
+          var now = new Date();
+          if ((now.getTime() - pollStartTime.getTime()) >=
+              Constants.TIMEOUT.HOST_ON) {
+            $interval.cancel(pollHostStatusTimer);
+            pollHostStatusTimer = undefined;
+            deferred.reject(new Error(Constants.MESSAGES.POLL.HOST_ON_TIMEOUT));
+          }
+          APIUtils.getHostState()
+              .then(function(state) {
+                if (state === Constants.HOST_STATE_TEXT.on_code) {
+                  $interval.cancel(pollHostStatusTimer);
+                  pollHostStatusTimer = undefined;
+                  deferred.resolve(state);
+                } else if (state === Constants.HOST_STATE_TEXT.error_code) {
+                  $interval.cancel(pollHostStatusTimer);
+                  pollHostStatusTimer = undefined;
+                  deferred.reject(
+                      new Error(Constants.MESSAGES.POLL.HOST_QUIESCED));
+                }
+              })
+              .catch(function(error) {
+                $interval.cancel(pollHostStatusTimer);
+                pollHostStatusTimer = undefined;
+                deferred.reject(error);
+              });
+        }, Constants.POLL_INTERVALS.POWER_OP);
+
+        return deferred.promise;
+      }
+
+      function pollHostStatusTillOff() {
+        var deferred = $q.defer();
+        pollHostStatusTimer = $interval(function() {
+          var now = new Date();
+          if ((now.getTime() - pollStartTime.getTime()) >=
+              Constants.TIMEOUT.HOST_OFF) {
+            $interval.cancel(pollHostStatusTimer);
+            pollHostStatusTimer = undefined;
+            deferred.reject(
+                new Error(Constants.MESSAGES.POLL.HOST_OFF_TIMEOUT));
+          }
+          APIUtils.getHostState()
+              .then(function(state) {
+                if (state === Constants.HOST_STATE_TEXT.off_code) {
+                  $interval.cancel(pollHostStatusTimer);
+                  pollHostStatusTimer = undefined;
+                  deferred.resolve(state);
+                }
+              })
+              .catch(function(error) {
+                $interval.cancel(pollHostStatusTimer);
+                pollHostStatusTimer = undefined;
+                deferred.reject(error);
+              });
+        }, Constants.POLL_INTERVALS.POWER_OP);
+
+        return deferred.promise;
+      }
       $scope.warmReboot = function() {
         $scope.loading = true;
         dataService.setUnreachableState();
@@ -119,7 +184,12 @@ window.angular && (function(angular) {
               return response;
             })
             .then(function(lastStatus) {
-              return APIUtils.pollHostStatusTilReboot();
+              pollStartTime = new Date();
+              return pollHostStatusTillOff();
+            })
+            .then(function(hostState) {
+              pollStartTime = new Date();
+              return pollHostStatusTillOn();
             })
             .then(function(hostState) {
               $scope.loading = false;
@@ -169,7 +239,8 @@ window.angular && (function(angular) {
               });
             })
             .then(function(hostState) {
-              return APIUtils.pollHostStatusTillOn();
+              pollStartTime = new Date();
+              return pollHostStatusTillOn();
             })
             .then(function(state) {
               $scope.loading = false;
@@ -202,7 +273,8 @@ window.angular && (function(angular) {
               return response;
             })
             .then(function(lastStatus) {
-              return APIUtils.pollHostStatusTillOff();
+              pollStartTime = new Date();
+              return pollHostStatusTillOff();
             })
             .then(function(hostState) {
               pollStartTime = new Date();
