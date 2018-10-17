@@ -78,7 +78,7 @@ $nav__seclvlWidth: 240px;
       line-height: 1rem;
     }
     &:hover {
-      background: $nav__second-level-color;
+      background: $white;
       fill: $black;
       color: $medblue;
       padding: 1em;
@@ -149,6 +149,9 @@ $nav__seclvlWidth: 240px;
     text-decoration: none;
     position: relative;
     font-weight: 400;
+    &:hover {
+      background: $white;
+    }
   }
 
   li {
@@ -160,14 +163,16 @@ $nav__seclvlWidth: 240px;
       top: 50%;
       right: .6em;
       transform: translateY(-59%);
-      color: #4b5d78;
+      color: $nav__second-level-text-color;
       opacity: 0;
     }
-    &.active {background: $white;}
+    &.active {
+      a {font-weight: 700;}
+    }
     &.active,
     &:focus,
     &:hover {
-      a {color: #4b5d78;}
+      a {color: $nav__second-level-text-color;}
       a:after {
         opacity: 1;
         right: .3em;
