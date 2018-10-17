@@ -475,19 +475,6 @@ window.angular && (function(angular) {
                     console.log(error);
                   });
         },
-        testPassword: function(username, password) {
-          // Calls /login without the current session to verify the given
-          // password is correct ignore the interceptor logout on a bad password
-          return $http({
-                   method: 'POST',
-                   url: DataService.getHost() + '/login',
-                   withCredentials: false,
-                   data: JSON.stringify({'data': [username, password]})
-                 })
-              .then(function(response) {
-                return response.data;
-              });
-        },
         logout: function(callback) {
           $http({
             method: 'POST',
@@ -509,7 +496,7 @@ window.angular && (function(angular) {
                   });
         },
         changePassword: function(user, newPassword) {
-          if (DataService.configJson.redfishSupportEnabled) {
+          if (DataService.configJson.redfishSupportEnabled == true) {
             return $http({
               method: 'PATCH',
               url: DataService.getHost() +
@@ -537,6 +524,246 @@ window.angular && (function(angular) {
                       deferred.reject(error);
                     });
             return deferred.promise;
+          }
+        },
+        getAllUserAccounts: function(members) {
+          var deferred = $q.defer();
+          var promises = [];
+          var users = [];
+
+          if (DataService.configJson.redfishSupportEnabled == true) {
+            $http({
+              method: 'GET',
+              url:
+                  DataService.getHost() + '/redfish/v1/AccountService/Accounts',
+              withCredentials: true
+            })
+                .then(
+                    function(response) {
+                      var members = response.data['Members'];
+                      angular.forEach(members, function(member) {
+                        promises.push(
+                            $http({
+                              method: 'GET',
+                              url: DataService.getHost() + member['@odata.id'],
+                              withCredentials: true
+                            }).then(function(res) {
+                              return res.data;
+                            }));
+                      });
+
+                      $q.all(promises).then(
+                          function(results) {
+                            deferred.resolve(results);
+                          },
+                          function(errors) {
+                            deferred.reject(errors);
+                          });
+                    },
+                    function(error) {
+                      console.log(error);
+                      deferred.reject(error);
+                    });
+          } else {
+            $http({
+              method: 'GET',
+              url:
+                  DataService.getHost() + '/xyz/openbmc_project/user/enumerate',
+              withCredentials: true
+            })
+                .then(
+                    function(response) {
+                      var json = JSON.stringify(response.data);
+                      var content = JSON.parse(json);
+
+                      function convertPrivToRoleId(priv) {
+                        if (priv == 'priv-admin') {
+                          return 'Administrator';
+                        } else if (priv == 'priv-user') {
+                          return 'User';
+                        } else if (priv == 'priv-operator') {
+                          return 'Operator';
+                        } else if (priv == 'priv-callback') {
+                          return 'Callback';
+                        }
+                        return '';
+                      }
+
+                      for (var key in content.data) {
+                        var username = key.split('/').pop();
+                        if (content.data.hasOwnProperty(key) &&
+                            content.data[key].hasOwnProperty('UserPrivilege')) {
+                          var val = content.data[key];
+                          users.push(Object.assign({
+                            Id: username,
+                            UserName: username,
+                            Locked: val['UserLockedForFailedAttempt'],
+                            RoleId: convertPrivToRoleId(val['UserPrivilege']),
+                            Enabled: val['UserEnabled'],
+                            Password: null
+                          }));
+                        }
+                      }
+                      deferred.resolve(users);
+                    },
+                    function(error) {
+                      console.log(error);
+                      deferred.reject(error);
+                    });
+          }
+          return deferred.promise;
+        },
+        createUser: function(user, passwd, role, enabled) {
+          if (DataService.configJson.redfishSupportEnabled == true) {
+            var data = {};
+            data['UserName'] = user;
+            data['Password'] = passwd;
+            data['RoleId'] = role;
+            data['Enabled'] = enabled;
+
+            return $http({
+              method: 'POST',
+              url:
+                  DataService.getHost() + '/redfish/v1/AccountService/Accounts',
+              withCredentials: true,
+              data: data
+            });
+          } else {
+            function convertRoleIdToPriv(roleId) {
+              if (roleId == 'Administrator') {
+                return 'priv-admin';
+              } else if (roleId == 'User') {
+                return 'priv-user';
+              } else if (roleId == 'Operator') {
+                return 'priv-operator';
+              } else if (roleId == 'Callback') {
+                return 'priv-callback';
+              }
+              return '';
+            }
+            function setUserPassword(user, passwd) {
+              return $http({
+                       method: 'POST',
+                       url: DataService.getHost() +
+                           '/xyz/openbmc_project/user/' + user +
+                           '/action/SetPassword',
+                       withCredentials: true,
+                       data: JSON.stringify({'data': [passwd]}),
+                       responseType: 'arraybuffer'
+                     })
+                  .then(function(response) {
+                    return response.data;
+                  });
+            }
+            var priv = convertRoleIdToPriv(role);
+            // TODO(ARP): Create user is not working. Need to debug.
+            return $http({
+                     method: 'POST',
+                     url: DataService.getHost() +
+                         '/xyz/openbmc_project/user/action/CreateUser',
+                     withCredentials: true,
+                     data: JSON.stringify({
+                       'data': [
+                         user, 'web', 'redfish', 'ipmi', 'ssh', priv, enabled
+                       ]
+                     })
+                   })
+                .then(function(response) {
+                  return setUserPassword(user, passwd);
+                });
+          }
+        },
+        updateUser: function(user, newUser, passwd, role, enabled) {
+          if (DataService.configJson.redfishSupportEnabled == true) {
+            return $http({
+              method: 'PATCH',
+              url: DataService.getHost() +
+                  '/redfish/v1/AccountService/Accounts/' + user,
+              withCredentials: true,
+              data: data
+            });
+          } else {
+            var deferred = $q.defer();
+            var promises = [];
+            function convertRoleIdToPriv(roleId) {
+              if (roleId == 'Administrator') {
+                return 'priv-admin';
+              } else if (roleId == 'User') {
+                return 'priv-user';
+              } else if (roleId == 'Operator') {
+                return 'priv-operator';
+              } else if (roleId == 'Callback') {
+                return 'priv-callback';
+              }
+              return '';
+            }
+            function setUserProperty(user, propKey, propVal) {
+              return $http({
+                       method: 'PUT',
+                       url: DataService.getHost() +
+                           '/xyz/openbmc_project/user/' + user + '/attr/' +
+                           propKey,
+                       withCredentials: true,
+                       data: JSON.stringify({'data': propVal})
+                     })
+                  .then(function(response) {
+                    return response.data;
+                  });
+            }
+            function setUserPassword(user, passwd) {
+              return $http({
+                       method: 'POST',
+                       url: DataService.getHost() +
+                           '/xyz/openbmc_project/user/' + user +
+                           '/action/SetPassword',
+                       withCredentials: true,
+                       data: JSON.stringify({'data': [passwd]}),
+                       responseType: 'arraybuffer'
+                     })
+                  .then(function(response) {
+                    return response.data;
+                  });
+            }
+            if ((role !== undefined) && (role != null)) {
+              var priv = convertRoleIdToPriv(role);
+              promises.push(setUserProperty(user, 'UserPrivilege', priv));
+            }
+            if ((enabled !== undefined) && (enabled != null)) {
+              promises.push(setUserProperty(user, 'UserEnabled', enabled));
+            }
+            if ((passwd !== undefined) && (passwd != null)) {
+              promises.push(setUserPassword(user, passwd));
+            }
+            // TODO(ARP): Add RenameUser support here..
+            $q.all(promises).then(
+                function(results) {
+                  deferred.resolve(results);
+                },
+                function(errors) {
+                  deferred.reject(errors);
+                });
+            return deferred.promise;
+          }
+        },
+        deleteUser: function(user) {
+          if (DataService.configJson.redfishSupportEnabled == true) {
+            return $http({
+              method: 'DELETE',
+              url: DataService.getHost() +
+                  '/redfish/v1/AccountService/Accounts/' + user,
+              withCredentials: true,
+            });
+          } else {
+            return $http({
+                     method: 'POST',
+                     url: DataService.getHost() + '/xyz/openbmc_project/user/' +
+                         user + '/action/Delete',
+                     withCredentials: true,
+                     data: JSON.stringify({'data': []})
+                   })
+                .then(function(response) {
+                  return response.data;
+                });
           }
         },
         chassisPowerOff: function() {
@@ -1028,7 +1255,8 @@ window.angular && (function(angular) {
                         var activationStatus = '';
 
                         // If the image is "Functional" use that for the
-                        // activation status, else use the value of "Activation"
+                        // activation status, else use the value of
+                        // "Activation"
                         // github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Software/Activation.interface.yaml
                         if (content.data[key].Activation) {
                           activationStatus =
