@@ -79,7 +79,8 @@ import snmp_controller from './configuration/controllers/snmp-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
 
 import users_index from './users/index.js';
-import user_accounts_controller from './users/controllers/user-accounts-controller.js';
+import manage_accounts_controller from './users/controllers/manage-accounts-controller.js';
+import password_change_controller from './users/controllers/password-change-controller.js';
 
 import phosphor_templates from './templates.js';
 
