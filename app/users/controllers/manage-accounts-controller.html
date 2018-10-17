@@ -1,0 +1,92 @@
+<loader loading="loading"></loader>
+<div id="manage-accounts">
+  <div class="row column">
+    <h1>User account information</h1>
+  </div>
+  <div class="table row column" ng-show="users.length != 0">
+    <div class="table__head">
+      <div class="table__row">
+        <div class="table__cell"> Username </div>
+        <div class="table__cell"> Enabled </div>
+        <div class="table__cell"> Role </div>
+        <div class="table__cell"> Locked </div>
+        <div class="table__cell"> Action </div>
+      </div>
+    </div>
+    <div class="table__body">
+      <div class="table__row" ng-repeat="user in users">
+        <div class="table__cell"> {{user.UserName}} </div>
+        <div class="table__cell"> {{user.Enabled}} </div>
+        <div class="table__cell"> {{user.RoleId}} </div>
+        <div class="table__cell"> {{user.Locked}} </div>
+        <div class="table__cell">
+          <button type="button" class="btn-primary inline" ng-disabled="isUserSelected" ng-click="setSelectedUser(user)">Edit</button>
+          <button type="button" class="btn-primary inline" ng-disabled="isUserSelected" ng-click="deleteUser(user.UserName)">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table row column" ng-show="users.length == 0">
+    <span>No users exist in system</span>
+  </div>
+
+  <form  role="form" class="user-manage__form">
+    <section class="row column" aria-label="user manage form">
+       <div class="column small-12 page-header">
+        <h2 class="inline h4">User account settings</h2>
+       </div>
+        <div class='col-sm-12'>
+          <label class="col-md-1 control-label">UserName</label>
+          <div class="col-md-3">
+            <input type="text" class="form-control" name="UserName" ng-model="selectedUser.UserName" />
+          </div>
+        </div>
+        <div class='col-sm-12 inline'>
+          <label class="col-md-1 control-label">Password</label>
+          <div class="col-md-3 user-manage__input-wrapper inline">
+            <input type="{{showpassword ? 'text' : 'password'}}" class="form-control user-manage__new-password inline" name="Password" ng-model="selectedUser.Password" autocomplete="off"/>
+            <button ng-model="showpassword" ng-click="togglePassword = !togglePassword; showpassword = !showpassword;" class="password-toggle">
+              <span ng-hide="togglePassword">Show</span>
+              <span ng-show="togglePassword">Hide</span>
+            </button>
+          </div>
+        </div>
+        <div class='col-sm-12'>
+          <label class="col-md-1 control-label">Retype Password</label>
+          <div class="col-md-3 user-manage__input-wrapper inline">
+            <input type="{{showpasswordVerify ? 'text' : 'password'}}" class="form-control user-manage__verify-password inline" name="VerifyPassword" ng-model="selectedUser.VerifyPassword" autocomplete="off">
+            <button ng-model="showpasswordVerify" ng-click="toggleVerify = !toggleVerify; showpasswordVerify = !showpasswordVerify;" class="password-toggle">
+              <span ng-hide="toggleVerify">Show</span>
+              <span ng-show="toggleVerify">Hide</span>
+            </button>
+          </div>
+        </div>
+        <div class='col-sm-12'>
+          <label class="col-md-1 control-label">Role</label>
+          <div class="col-md-3 user-manage__input-wrapper inline">
+            <select ng-model="selectedUser.RoleId" class="form-control inline">
+              <option ng-repeat="role in roles" class="inline">{{role}}</option>
+            </select>
+          </div>
+        </div>
+        <div class='col-sm-12'>
+          <label class="col-md-1 control-label">Enabled</label>
+          <div class="col-md-2">
+            <input type="checkbox" class="form-control" name="Enabled" ng-model="selectedUser.Enabled" style="width: 20%"/>
+          </div>
+        </div>
+        <div class="user-manage__submit-wrapper">
+            <button type="button" class="btn-primary inline" ng-if="!isUserSelected" ng-click="createNewUser()">Create User</button>
+            <button type="button" class="btn-primary inline" ng-if="isUserSelected" ng-click="updateUserInfo()">Save</button>
+            <button type="button" class="btn-primary inline" ng-if="isUserSelected" ng-click="cancel()">Cancel</button>
+        </div>
+    </section>
+    <section class="row column">
+      <div class='col-sm-12'>
+        <p ng-class="'user-manage__' + state"  role="alert">
+          {{outMsg}}
+        </p>
+      </div>
+    </section>
+  </form>
+</div>

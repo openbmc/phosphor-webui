@@ -17,14 +17,20 @@ window.angular && (function(angular) {
           $routeProvider
               .when('/users/manage-accounts', {
                 'template':
-                    require('./controllers/user-accounts-controller.html'),
-                'controller': 'userAccountsController',
+                    require('./controllers/manage-accounts-controller.html'),
+                'controller': 'manageAccountsController',
+                authenticated: true
+              })
+              .when('/users/password-change', {
+                'template':
+                    require('./controllers/password-change-controller.html'),
+                'controller': 'passwordChangeController',
                 authenticated: true
               })
               .when('/users', {
                 'template':
-                    require('./controllers/user-accounts-controller.html'),
-                'controller': 'userAccountsController',
+                    require('./controllers/manage-accounts-controller.html'),
+                'controller': 'manageAccountsController',
                 authenticated: true
               });
         }
