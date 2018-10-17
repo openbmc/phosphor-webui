@@ -1,6 +1,17 @@
 $userInputHeight: 40px;
 
 .user-manage__form {
+  .dropdown__button {
+    margin-bottom: 1.2em;
+  }
+  .dropdown__list {
+    margin-top: -17px;
+  }
+  .dropdown__button {
+    width: 200px;
+    margin-top: 0;
+    text-align: left;
+  }
   label {
     min-width: 210px;
     font-weight: 700;
@@ -10,13 +21,16 @@ $userInputHeight: 40px;
     width: 225px;
     height: $userInputHeight;
   }
+  select {
+    width: 225px;
+    height: $userInputHeight;
+  }
   fieldset {
     display: block;
     padding-left: 1.5em;
     margin-bottom: 1em;
     border-bottom: 1px solid $medgrey;
   }
-
   .user-manage__input-wrapper {
     position: relative;
     height: $userInputHeight;
@@ -29,15 +43,22 @@ $userInputHeight: 40px;
     position: absolute;
     right: 5px;
     padding: 3px;
+    margin-right: 20px;
     color: $primebtn__bg;
     font-size: .8em;
     @include vertCenter;
   }
-  .user-manage__submit-wrapper button {
-    float: right;
-    margin-left: .5em;
+  .user-manage__submit-wrapper {
+    width: 100%;
+    margin-top: 3em;
+    padding-top: 1em;
+    border-top: 1px solid $medgrey;
+    button {
+      float: right;
+      margin: .5em;
+    }
   }
-  .change-password__error
+  .user-manage__error
   {
     background: lighten($error-color, 20%);
     padding: 1em;
@@ -47,9 +68,8 @@ $userInputHeight: 40px;
     color: $black;
     font-family: "Courier New", Helvetica, Arial, sans-serif;
     font-weight: 700;
-    width: 325px;
   }
-  .change-password__success
+  .user-manage__success
   {
     color: $primebtn__bg;
     padding: 1em;
