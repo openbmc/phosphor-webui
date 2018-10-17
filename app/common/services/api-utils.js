@@ -483,6 +483,64 @@ window.angular && (function(angular) {
                   });
           return deferred.promise;
         },
+        doGet: function(uri) {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + uri,
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        getUserAccounts: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + '/redfish/v1/AccountService/Accounts',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        createUser: function(user, passwd, role, enabled) {
+          var data = {};
+          data["UserName"] = user;
+          data["Password"] = passwd;
+          data["RoleId"] = role;
+          data["Enabled"] = enabled;
+
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() + '/redfish/v1/AccountService/Accounts',
+                   withCredentials: true,
+                   data: data
+                 })
+              .then(function(response) {
+                return response;
+              });
+        },
+        updateUser: function(user, data) {
+          return $http({
+                   method: 'PATCH',
+                   url: DataService.getHost() + '/redfish/v1/AccountService/Accounts/' + user,
+                   withCredentials: true,
+                   data: data
+                 })
+              .then(function(response) {
+                return response;
+              });
+        },
+        deleteUser: function(user) {
+          return $http({
+                   method: 'DELETE',
+                   url: DataService.getHost() + '/redfish/v1/AccountService/Accounts/' + user,
+                   withCredentials: true,
+                 })
+              .then(function(response) {
+                return response;
+              });
+        },
         chassisPowerOff: function() {
           var deferred = $q.defer();
           $http({

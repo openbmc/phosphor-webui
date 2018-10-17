@@ -2,14 +2,14 @@
  * Controller for user Accounts
  *
  * @module app/users
- * @exports userAccountsController
- * @name userAccountsController
+ * @exports passwordChangeController
+ * @name passwordChangeController
  */
 
 window.angular && (function(angular) {
   'use strict';
 
-  angular.module('app.users').controller('userAccountsController', [
+  angular.module('app.users').controller('passwordChangeController', [
     '$scope', '$window', 'APIUtils', 'dataService',
     function($scope, $window, APIUtils, dataService) {
       $scope.dataService = dataService;
