@@ -54,6 +54,7 @@ window.angular && (function(angular) {
 
       $scope.powerOn = function() {
         $scope.loading = true;
+		$scope.control_switch_state = true;///add
         dataService.setUnreachableState(); ///设置server_state为Unreachable
         APIUtils.hostPowerOn()
             .then(function(response) {
@@ -267,6 +268,7 @@ window.angular && (function(angular) {
 
       $scope.orderlyShutdown = function() {
         $scope.loading = true;
+		$scope.control_switch_state = false;///add
         dataService.setUnreachableState();
         APIUtils.hostPowerOff()
             .then(function(response) {
