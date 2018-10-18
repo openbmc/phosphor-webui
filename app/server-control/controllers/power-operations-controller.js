@@ -23,7 +23,6 @@ window.angular && (function(angular) {
       $scope.orderly_confirm = false;
       $scope.immediately_confirm = false;
       $scope.loading = true;
-	  $scope.control_switch_state = false; ///add
 
       var pollChassisStatusTimer = undefined;
       var pollHostStatusTimer = undefined;
@@ -54,8 +53,7 @@ window.angular && (function(angular) {
 
       $scope.powerOn = function() {
         $scope.loading = true;
-		$scope.control_switch_state = true;///add
-        dataService.setUnreachableState(); ///设置server_state为Unreachable
+        dataService.setUnreachableState();
         APIUtils.hostPowerOn()
             .then(function(response) {
               return response;
@@ -268,7 +266,6 @@ window.angular && (function(angular) {
 
       $scope.orderlyShutdown = function() {
         $scope.loading = true;
-		$scope.control_switch_state = false;///add
         dataService.setUnreachableState();
         APIUtils.hostPowerOff()
             .then(function(response) {
