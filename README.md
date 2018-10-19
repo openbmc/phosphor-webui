@@ -12,8 +12,14 @@ firmware stack. The WebUI uses AngularJS. Features include:
 * SoL console
 
 ## Requirements
-nodejs
-npm
+nodejs (> 4.2.6)
+npm (> 5.6.0)
+
+**Note** The default installation of your Linux distro may not come with the
+required versions above. See the following for more information on updating:
+
+https://docs.npmjs.com/troubleshooting/try-the-latest-stable-version-of-node
+https://docs.npmjs.com/troubleshooting/try-the-latest-stable-version-of-npm
 
 ## Installation
 `npm install`
