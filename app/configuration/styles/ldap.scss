@@ -1,0 +1,68 @@
+//LDAP SCSS
+$userInputHeight: 40px;
+
+.ldap-config__submit-wrapper {
+  width: 100%;
+  margin-top: 3em;
+  padding-top: 1em;
+  border-top: 1px solid $medgrey;
+  button {
+    float: right;
+    margin: .5em;
+  }
+}
+
+.disable-ldap {
+  margin-left: 3em;
+}
+
+.ldap__error {
+  background: lighten($error-color, 20%);
+  padding: 1em;
+  text-align: center;
+  font-size: 1em;
+  border: 1px solid $error-color;
+  color: $black;
+  font-family: "Courier New", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  width: 325px;
+}
+
+.ldap__success {
+  color: $primebtn__bg;
+  padding: 1em;
+  font-size: 1em;
+  font-family: "Courier New", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+}
+
+.ldap-config__form {
+  input {
+    height: $userInputHeight;
+    margin-bottom: 1.2em;
+  }
+  select {
+    height: $userInputHeight;
+  }
+  .password-toggle {
+    position: absolute;
+    right: 5px;
+    padding: 3px;
+    color: $primebtn__bg;
+    font-size: .8em;
+    @include vertCenter;
+  }
+  fieldset {
+    display: block;
+    padding-left: 1.5em;
+    margin-bottom: 1em;
+  }
+  .ldap-config__input-wrapper {
+    height: 2.2em;
+    position: relative;
+    margin-bottom: 1em;
+    input {
+      padding-right: 60px;
+    }
+  }
+}

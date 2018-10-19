@@ -99,6 +99,41 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        getLdapConfiguration: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/user/ldap/enumerate',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                var json = JSON.stringify(response.data);
+                var content = JSON.parse(json);
+                return content.data['/xyz/openbmc_project/user/ldap/config'];
+              });
+        },
+
+        createLdapConfig: function(config) {
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/user/ldap/action/CreateConfig',
+                   withCredentials: true,
+                   data: JSON.stringify({
+                     'data': [
+                       config.secureLdap, config.serverUri, config.bindDn,
+                       config.baseDn, config.bindDnPassword,
+                       'xyz.openbmc_project.User.Ldap.Create.SearchScope.' +
+                           config.searchScope,
+                       Constants.LDAP_TYPE[config.ldapType]
+                     ]
+                   })
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+
         pollHostStatusTillOn: function() {
           var deferred = $q.defer();
           var hostOnTimeout = setTimeout(function() {
