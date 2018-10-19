@@ -81,7 +81,19 @@ window.angular && (function(angular) {
           $scope.userMessage = 'Cannot save with blank fields';
           return;
         }
-        // TODO: additional field validation
+        // Secure LDAP uri --> ldaps://
+        // Unencrypted LDAP uri --> ldap://
+        var secureLdap = $scope.ldapConfig.secureLdap;
+        var serverUri = $scope.ldapConfig.serverUri;
+        if (secureLdap === true && !serverUri.startsWith('ldaps://') ||
+            secureLdap === false && !serverUri.startsWith('ldap://')) {
+          $scope.loading = false;
+          $scope.error = true;
+          $scope.userMessage = (secureLdap ? 'SSL secured ' : 'Unencrypted ') +
+              'LDAP URI must begin with ' +
+              (secureLdap ? 'ldaps://' : 'ldap://');
+          return;
+        }
 
         // If LDAP is currently disabled add the config
         if (!$scope.ldapConfig.ldapCurrentlyEnabled) {
