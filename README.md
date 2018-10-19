@@ -18,6 +18,8 @@ npm
 ## Installation
 `npm install`
 
+**Note** This must be run from within the phosphor-webui git repository.
+
 ## Running locally
 `npm run-script server`
 
