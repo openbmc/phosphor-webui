@@ -137,37 +137,6 @@ header {
   .header__page-refresh,
   .header__server-health,
   .header__info,
-  .header__multi-server {
-    background: $lightgrey;
-    @include round-corners;
-    margin: 0 .3em;
-    height: 100%;
-    border: 1px solid $medgrey;
-    opacity: 1;
-    @include fastTransition-all;
-    &:hover {
-      background: rgba(255, 255, 255, 1);
-    }
-  }
-
-  .header__multi-server {
-    padding: .5em;
-    padding-top: .8em;
-    float: left;
-    margin-top: 10px;
-    margin-right: -10px;
-    .icon-angle::before {
-      margin-left: 0;
-      transform: rotate(90deg);
-      @include fastTransition-all;
-    }
-    &.active {
-      .icon-angle::before {
-        transform: rotate(266deg);
-        @include fastTransition-all;
-      }
-    }
-  }
   .header__functions {
     .header__info {
       padding: .3em;

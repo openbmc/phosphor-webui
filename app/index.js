@@ -78,9 +78,6 @@ import network_controller from './configuration/controllers/network-controller.j
 import snmp_controller from './configuration/controllers/snmp-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
 
-import multi_server_index from './multi-server/index.js';
-import multi_server_controller from './multi-server/controllers/multi-server-controller.js';
-
 import users_index from './users/index.js';
 import user_accounts_controller from './users/controllers/user-accounts-controller.js';
 
@@ -101,8 +98,7 @@ window.angular && (function(angular) {
             'app.common.filters',
             // Model resources
             'app.login', 'app.overview', 'app.serverControl',
-            'app.serverHealth', 'app.configuration', 'app.users', 'app.redfish',
-            'app.multiServer'
+            'app.serverHealth', 'app.configuration', 'app.users', 'app.redfish'
           ])
       // Route configuration
       .config([
