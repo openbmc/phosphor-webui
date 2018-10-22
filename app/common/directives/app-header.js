@@ -134,10 +134,6 @@ window.angular && (function(angular) {
             $scope.$on('$destroy', function() {
               loginListener();
             });
-
-            $scope.multiRecent = function() {
-              $scope.multi_server_recent = !$scope.multi_server_recent;
-            };
           }
         ]
       };
