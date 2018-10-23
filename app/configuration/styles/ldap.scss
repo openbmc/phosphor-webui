@@ -1,0 +1,95 @@
+$userInputHeight: 40px;
+.group_label {
+  flex: 25%;
+}
+.group_field {
+  flex: 25%;
+  padding-left: 1em;
+}
+
+.group_select {
+  padding-top: .8em;
+  text-align: center;
+}
+
+.group_btn {
+  padding-left: .8em;
+  padding-right: .8em;
+  margin-right: 1em;
+}
+
+.config_button {
+  float: right;
+  padding-left: .8em;
+  padding-right: .8em;
+}
+
+.ldap_settings {
+  .modal {
+  left: 0%;
+  }
+  input {
+    height: $userInputHeight;
+  }
+  select {
+    height : $userInputHeight;
+  }
+  .ldap__error {
+    background: lighten($error-color, 20%);
+    padding: 1em;
+    text-align: center;
+    font-size: 1em;
+    border: 1px solid $error-color;
+    color: $black;
+    font-family: "Courier New", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    width: 325px;
+  }
+  .ldap__success {
+    color: $primebtn__bg;
+    padding: 1em;
+    font-size: 1em;
+    font-family: "Courier New", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+  }
+  .ldap__button__wrapper {
+    margin-top:1em;
+    .disabled {
+      pointer-events: none;
+    }
+  }
+}
+
+.group__table {
+  margin-top:1em;
+  margin-bottom: 2.5em;
+  .table__cell {
+    a {
+      display: inline-block;
+      margin-right: 1.7em;
+      text-decoration: none;
+      font-weight: 700;
+    }
+  }
+  .table-header {
+    font-weight: 700;
+    p {
+      margin-bottom: 0em;
+    }
+  }
+}
+.modal__button-wrapper{
+  .disabled {
+    pointer-events: none;
+  }
+}
+.modal-roles {
+  min-width: 500px;
+  width: 40%;
+  height: 50%;
+  min-height: 400px;
+  .modal__content {
+    padding-bottom: 2em;
+  }
+}
+
