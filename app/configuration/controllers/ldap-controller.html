@@ -1,0 +1,94 @@
+<loader loading="loading"></loader>
+<div class="ldap_settings">
+  <div class="row column">
+    <h1>LDAP settings</h1>
+    <div class="column small-12 page-header">
+      <h2 class="inline h4">Configure settings for LDAP and Role Groups</h2>
+    </div>
+  </div>
+  <div class="row column">
+    <p>The list below shows the current list of configured Role Groups. If you would like to delete or modify a role group, select the name from the list and click 'Delete Role Group' or 'Modify Role Group'. To add a new Role Group, select 'Add Role Group'.</p>
+  </div>
+  <div class="row column ldap__button__wrapper">
+    <button id="add_group" class="btn-secondary inline group_btn" ng-class="{'disabled': ldapDisabled}" ng-click="activeModal='add'" role="button">Add Role Group</button>
+    <button id="delete_group" class="btn-secondary inline group_btn" ng-class="{'disabled': selectedIndex === ''}" ng-click="activeModal='delete'" ng-disabled="selectedIndex === ''" role="button">Delete Role Group</button>
+  </div>
+  <div class="row column group__table">
+    <div class="table row column">
+      <div class="table__head">
+        <div class="table__row">
+          <div class="table__cell">
+          </div>
+          <div class="table__cell group_label">
+            Role Group ID
+          </div>
+          <div class="table__cell group_label">
+            Group Name
+          </div>
+          <div class="table__cell group_label">
+            Group Privilege
+          </div>
+        </div>
+      </div>
+      <div class="table__body">
+        <div class="table__row" ng-repeat="group in groups track by $index">
+          <div class="table__cell group_select">
+            <span class="table__cell-label">Select group:</span>
+            <label class="control-check">
+              <input type="radio" name="group_selected" ng-model="$parent.selectedIndex" ng-value="$index"/>
+              <span class="control__indicator"></span>
+            </label>
+          </div>
+          <div class="table__cell group_field">
+            <span class="table__cell-label">Group id:</span>
+            <span>{{group.id}}</span>
+          </div>
+          <div class="table__cell group_field">
+            <span class="table__cell-label">Group name:</span>
+            <span>{{group.groupName}}</span>
+          </div>
+          <div class="table__cell group_field">
+            <span class="table__cell-label">Group privilege:</span>
+            <span>{{group.privilege}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row column">
+    <p class="ldap__error"  ng-show= "error" role="alert">
+      Error : {{userMessage}}
+    </p>
+    <p class="ldap__success"  ng-show= "success" role="alert">
+      Success : {{userMessage}}
+    </p>
+  </div>
+  <div class="modal-overlay" ng-class="{'active': activeModal}"></div>
+  <section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': activeModal}">
+    <div class="modal__activate" role="document">
+      <div class="screen-reader-offscreen modal-description">Role Modal</div>
+      <div class="page-header ">
+        <h1 class="h4">{{activeModal === 'add' ? 'Add ' : activeModal === 'modify' ? 'Modify ' : 'Deleting '}}Role Group</span>
+        </h1>
+      </div>
+      <div class="modal__content">
+        <div ng-show="activeModal === 'add'">
+          <label for="group-name">Group Name</label>
+          <input id="group-name" class="small-6" type="text" ng-model="newGroup.name"/>
+          <label class="content-label">Group Privilege</label>
+          <select ng-model="newGroup.privilege" class="small-6">
+            <option ng-value="">Select an option</option>
+            <option class="courier-bold" ng-repeat="privilege in userPrivileges">{{privilege}}</option>
+          </select>
+        </div>
+        <div ng-show="activeModal === 'delete'">
+          Are you sure you want to delete role group {{groups[selectedIndex].groupName}}?
+        </div>
+      </div>
+      <div class="modal__button-wrapper">
+        <button class="inline btn-secondary" ng-click="activeModal=''; newGroup={}">Cancel</button>
+        <button class="inline btn-primary" ng-click="saveGroupSettings(selectedIndex);">{{activeModal === 'add' ? 'Add group' : activeModal === 'modify' ? 'Save changes' : 'Continue '}}</button>
+      </div>
+    </div>
+  </section>
+</div>
