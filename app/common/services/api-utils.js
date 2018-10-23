@@ -99,6 +99,63 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        getLdapConfiguration: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/user/ldap/enumerate',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                var json = JSON.stringify(response.data);
+                var content = JSON.parse(json);
+                var data = {groups: [], config: {}};
+                data.config =
+                    content.data['/xyz/openbmc_project/user/ldap/config'];
+                for (var key in content.data) {
+                  if (key.match('/xyz/openbmc_project/user/ldap/(\\d+)')) {
+                    var group = {};
+                    group.id = key.split('/').pop();
+                    group.groupName = content.data[key].GroupName;
+                    group.privilege = content.data[key].Privilege;
+                    data.groups.push(group);
+                  }
+                }
+                return data;
+              });
+        },
+        getUserPrivileges: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + '/xyz/openbmc_project/user',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data.data['AllPrivileges'];
+              });
+        },
+        createLdapGroup: function(groupName, groupPrivilege) {
+          return $http({
+            method: 'POST',
+            url: DataService.getHost() +
+                '/xyz/openbmc_project/user/ldap/action/create',
+            withCredentials: true,
+            data: JSON.stringify({'data': [groupName, groupPrivilege]})
+          })
+        },
+        deleteLdapGroups: function(groups) {
+          var promises = [];
+          groups.forEach(function(group) {
+            promises.push($http({
+              method: 'POST',
+              url: DataService.getHost() + '/xyz/openbmc_project/user/ldap/' +
+                  group.id + '/action/Delete',
+              withCredentials: true,
+              data: JSON.stringify({'data': []})
+            }));
+          });
+          return $q.all(promises);
+        },
         pollHostStatusTillOn: function() {
           var deferred = $q.defer();
           var hostOnTimeout = setTimeout(function() {
