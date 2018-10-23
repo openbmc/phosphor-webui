@@ -74,6 +74,7 @@ import date_time_controller from './configuration/controllers/date-time-controll
 import network_controller from './configuration/controllers/network-controller.js';
 import snmp_controller from './configuration/controllers/snmp-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
+import ldap_controller from './configuration/controllers/ldap-controller.js';
 
 import users_index from './users/index.js';
 import user_accounts_controller from './users/controllers/user-accounts-controller.js';
