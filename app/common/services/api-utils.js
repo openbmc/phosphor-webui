@@ -57,6 +57,17 @@ window.angular && (function(angular) {
           return ip.match(
               /\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/);
         },
+        deleteObject: function(path) {
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() + path + '/action/Delete',
+                   withCredentials: true,
+                   data: JSON.stringify({'data': []})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         getHostState: function() {
           var deferred = $q.defer();
           $http({
@@ -83,6 +94,55 @@ window.angular && (function(angular) {
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/network/snmp/manager/enumerate',
                    withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        getLdapConfiguration: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/user/ldap/enumerate',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                var json = JSON.stringify(response.data);
+                var content = JSON.parse(json);
+                var data = {groups: [], config: {}};
+                data.config =
+                    content.data['/xyz/openbmc_project/user/ldap/config'];
+                for (var key in content.data) {
+                  var group = {id: '', groupName: '', privilege: ''};
+                  if (key.match('/xyz/openbmc_project/user/ldap/(\\d+)')) {
+                    group.id = key.split('/').pop();
+                    group.groupName = content.data[key].GroupName;
+                    group.privilege = content.data[key].Privilege;
+                    data.groups.push(group);
+                  }
+                }
+                return data;
+              });
+        },
+        getUserPrivileges: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + '/xyz/openbmc_project/user',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                var json = JSON.stringify(response.data);
+                var content = JSON.parse(json);
+                return content.data['AllPrivileges'];
+              });
+        },
+        createRoleGroup: function(groupName, groupPrivilege) {
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/user/ldap/action/create',
+                   withCredentials: true,
+                   data: JSON.stringify({'data': [groupName, groupPrivilege]})
                  })
               .then(function(response) {
                 return response.data;
