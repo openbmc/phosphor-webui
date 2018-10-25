@@ -1,0 +1,56 @@
+<div class="ldap_config_panel_container modal__content">
+  <form class="ldap-config__form small-12" role="form" action="">
+    <section class="row column ">
+      <fieldset>
+        <label class="control-check" for="ldap-enabled">
+          <input type="checkbox" class = "inline" id="ldap-enabled" name="events__check-all" ng-model="ldapEnabled"/>
+          <span class="control__indicator"></span>
+          <span class="inline enable-ldap">Enable LDAP authentication</span>
+        </label>
+      </fieldset>
+    </section>
+    <section class="row column">
+      <fieldset ng-disabled="!ldapEnabled" class="disabled">
+        <div class="column small-6">
+          <label for="secure-ssl" class="content-label">Secure LDAP</label>
+          <select id="secure-ssl"ng-model="ldapConfig.secureLdap">
+            <option class="courier-bold" ng-value="">Select an option</option>
+            <option class="courier-bold" ng-value="false">No encryption</option>
+            <option class="courier-bold" ng-value="true">SSL</option>
+          </select>
+          <label for="server-uri">Server uri</label>
+          <input id="server-uri" type="text" ng-model="ldapConfig.serverUri"/>
+          <label for="bind-dn">Bind DN</label>
+          <input id="bind-dn" type="text" ng-model="ldapConfig.bindDn"/>
+          <label for="bind-dn-password">Bind DN Password</label>
+          <div class="ldap-config__input-wrapper inline small-12">
+            <input id="bind-dn-password" class="inline" type="{{showpassword ? 'text' : 'password'}}" ng-model="ldapConfig.bindDnPassword" autocomplete="off"/>
+            <button ng-model="showpassword" ng-click="togglePassword = !togglePassword; showpassword = !showpassword;" class="password-toggle" ng-class="{'disabled' : !ldapEnabled}">
+              <span ng-hide="togglePassword">Show</span>
+              <span ng-show="togglePassword">Hide</span>
+            </button>
+          </div>
+        </div>
+        <div class="column small-6">
+          <label for="base-dn">Base DN</label>
+          <input id="base-dn" type="text" ng-model="ldapConfig.baseDn"/>
+          <label for="search-scope" class="content-label">Search Scope</label>
+          <select id="search-scope"ng-model="ldapConfig.searchScope">
+            <option class="courier-bold" ng-value="">Select an option</option>
+            <option class="courier-bold" ng-repeat="scope in searchScopes">{{scope}}</option>
+          </select>
+          <label for="ldap-type" class="content-label">LDAP Type</label>
+          <select id="ldap-type"ng-model="ldapConfig.ldapType">
+            <option class="courier-bold" ng-value="">Select an option</option>
+            <option class="courier-bold" ng-repeat="lType in ldapTypes">{{lType}}</option>
+          </select>
+        </div>
+      </fieldset>
+    </section>
+  </form>
+  <!-- TODO: CA and client certificate information -->
+</div>
+<div class="modal__button-wrapper">
+  <button class="inline btn-secondary" ng-click="activeModal=''; reloadLdapSettings();">Cancel</button>
+  <button class="inline btn-primary" ng-click="activeModal=''; saveLdapSettings();">Save settings</button>
+</div>

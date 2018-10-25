@@ -10,9 +10,10 @@
     <p>Manage role groups by selecting the corresponding checkbox and appropriate action.</p>
   </div>
   <div class="row column ldap__button__wrapper">
-    <button id="add_group" class="btn-secondary inline group_btn" ng-class="{'disabled': ldapDisabled}" ng-click="activeModal='add'" role="button">Add Role Group</button>
-    <button id="modify_group" class="btn-secondary inline group_btn" ng-class="{'disabled': (selectedGroups.length != 1) || ldapDisabled}" ng-click="activeModal='modify'" role="button">Modify Privileges</button>
-    <button id="delete_group" class="btn-secondary inline group_btn" ng-class="{'disabled': (selectedGroups.length < 1) || ldapDisabled}" ng-click="activeModal='delete'" role="button">Remove Role {{selectedGroups.length > 1 ? 'Groups' : 'Group'}}</button>
+    <button id="add_group" class="btn-secondary group_btn" ng-class="{'disabled': !ldapConfig.ldapCurrentlyEnabled}" ng-click="activeModal='add'" role="button">Add Role Group</button>
+    <button id="modify_group" class="btn-secondary group_btn" ng-class="{'disabled': (selectedGroups.length != 1) || !ldapConfig.ldapCurrentlyEnabled}" ng-click="activeModal='modify'" role="button">Modify Privileges</button>
+    <button id="delete_group" class="btn-secondary group_btn" ng-class="{'disabled': (selectedGroups.length < 1) || !ldapConfig.ldapCurrentlyEnabled}" ng-click="activeModal='delete'" role="button">Remove Role {{selectedGroups.length > 1 ? 'Groups' : 'Group'}}</button>
+    <button id="configure_settings" class="btn-secondary configure_btn" ng-click="activeModal='configure'" role="button">Configure LDAP Settings</button>
   </div>
   <div class="row column group__table table">
     <div class="table__head">
@@ -52,13 +53,15 @@
           <span>{{group.privilege}}</span>
         </div>
       </div>
-      <div class="groups_empty" ng-if="groups.length < 1">
+      <div class="groups_empty" ng-show="groups.length < 1">
         <p>No role groups have been created.</p>
+        <a href ng-click="activeModal='configure'">LDAP authentication</a> must be enabled
+        <br>before creating Role Groups.
       </div>
     </div>
   </div>
   <div class="row column">
-    <p class="ldap__error"  ng-show= "error" role="alert">
+    <p class="ldap__error" ng-show= "error" role="alert">
       Error : {{userMessage}}
     </p>
     <p class="ldap__success"  ng-show= "success" role="alert">
@@ -66,13 +69,14 @@
     </p>
   </div>
   <div class="modal-overlay" ng-class="{'active': activeModal}"></div>
-  <section class="modal modal-roles" aria-hidden="true" ng-class="{'active': activeModal}">
+  <section class="modal modal-roles" aria-hidden="true" ng-class="{'active': activeModal, 'modal_configure': activeModal === 'configure'}">
     <div class="modal__activate" role="document">
       <div class="screen-reader-offscreen modal-description">Role Modal</div>
-      <div class="page-header ">
-        <h1 class="h4">{{activeModal === 'add' ? 'Add ' : activeModal === 'modify' ? 'Modify ' : 'Remove '}}Role Group</h1>
-      </div>
       <div ng-show="activeModal === 'add'">
+        <div class="page-header ">
+          <h1 class="h4 inline">Add Role Group</span>
+          </h1>
+        </div>
         <div class="modal__content">
           <form name="add_group">
             <label for="group-name">Group Name</label>
@@ -90,6 +94,11 @@
         </div>
       </div>
       <div ng-show="activeModal === 'delete'">
+        <div class="page-header ">
+          <div class="icon__warning inline"></div>
+          <h1 class="h4 inline">Remove Role Group</span>
+          </h1>
+        </div>
         <div class="modal__content">
           Are you sure you want to remove <span ng-repeat="group in selectedGroups">{{$last && !$first ? ' and ' : $first ? '': ', '}}{{"'" + group.groupName + "'"}}</span>?
         </div>
@@ -99,6 +108,10 @@
         </div>
       </div>
       <div ng-show="activeModal === 'modify'">
+        <div class="page-header ">
+          <h1 class="h4 inline">Modify Role Privileges</span>
+          </h1>
+        </div>
         <div class="modal__content">
           <form name="modify_group">
             <label class="content-label">Group Name</label>
@@ -111,8 +124,15 @@
         </div>
         <div class="modal__button-wrapper">
           <button class="inline btn-secondary" ng-click="activeModal=''; loadLdapInfo();">Cancel</button>
-          <button class="inline btn-primary" ng-click="saveGroupSettings();">Modify group</button>
+          <button class="inline btn-primary" ng-click="saveGroupSettings();">Modify privileges</button>
         </div>
+      </div>
+      <div ng-show="activeModal === 'configure'">
+        <div class="page-header ">
+          <h1 class="h4 inline">Configure LDAP Settings</span>
+          </h1>
+        </div>
+        <ldap-configuration></ldap-configuration>
       </div>
     </div>
   </section>
