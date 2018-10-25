@@ -1,63 +1,75 @@
 <loader loading="loading"></loader>
-<div class="ldap_settings">
+<div class="row column ldap__container">
   <div class="row column">
     <h1>LDAP settings</h1>
     <div class="column small-12 page-header">
-      <h2 class="inline h4">Configure settings for LDAP and Role Groups</h2>
+      <h2 class="inline h4">Configure LDAP settings</h2>
     </div>
   </div>
-  <div class="row column">
-    <p>The list below shows the current list of configured Role Groups. If you would like to delete or modify a role group, select the name from the list and click 'Delete Role Group' or 'Modify Role Group'. To add a new Role Group, select 'Add Role Group'.</p>
-  </div>
-  <div class="row column ldap__button__wrapper">
-    <button id="add_group" class="btn-secondary inline group_btn" ng-class="{'disabled': ldapDisabled}" ng-click="activeModal='add'" role="button">Add Role Group</button>
-    <button id="delete_group" class="btn-secondary inline group_btn" ng-class="{'disabled': selectedIndex === ''}" ng-click="activeModal='delete'" ng-disabled="selectedIndex === ''" role="button">Delete Role Group</button>
-    <!-- Modify button -->
-  </div>
-  <div class="row column group__table">
-    <div class="table row column">
-      <div class="table__head">
-        <div class="table__row">
-          <div class="table__cell">
+  <div class="ldap_settings_container">
+    <div class="ldap_settings">
+      <div class="col-sm-8 no-float ldap_groups">
+        <div class="row column">
+          <p class = "ldap_info">Configure LDAP settings by editing the fields to the right. To manage your current list of configured Role Groups, select the corresponding checkbox and appropriate call-to-action.</p>
+        </div>
+        <div class="row column">
+          <div class="column small-12 page-header">
+            <h2 class="inline h4">Manage Role Groups</h2>
           </div>
-          <div class="table__cell group_label">
-            Role Group ID
+        </div>
+        <div class="row column ldap__button__wrapper">
+          <button id="add_group" class="btn-secondary inline group_btn" ng-class="{'disabled': !ldapConfig.ldapCurrentlyEnabled || ldapDisabled}" ng-click="activeModal='add'" role="button">Add Role Group</button>
+          <button id="delete_group" class="btn-secondary inline group_btn" ng-class="{'disabled': selectedIndex === '' || ldapDisabled}" ng-click="activeModal='delete'" role="button">Delete Role Group</button>
+          <!-- Modify button -->
+        </div>
+        <div class="table row column">
+          <div class="table__head">
+            <div class="table__row">
+              <div class="table__cell">
+              </div>
+              <div class="table__cell group_label">
+                Role Group ID
+              </div>
+              <div class="table__cell group_label">
+                 Group Name
+              </div>
+              <div class="table__cell group_label">
+                Group Privilege
+              </div>
+            </div>
           </div>
-          <div class="table__cell group_label">
-            Group Name
-          </div>
-          <div class="table__cell group_label">
-            Group Privilege
+          <div class="table__body" ng-hide="!ldapConfig.ldapCurrentlyEnabled || ldapDisabled">
+            <div class="table__row" ng-repeat="group in groups track by $index">
+              <div class="table__cell group_select">
+                <span class="table__cell-label">Select group:</span>
+                <label class="control-check">
+                  <input type="radio" name="group_selected" ng-model="$parent.selectedIndex" ng-value="$index"/>
+                  <span class="control__indicator"></span>
+                </label>
+              </div>
+              <div class="table__cell group_field">
+                <span class="table__cell-label">Group id:</span>
+                <span>{{group.id}}</span>
+              </div>
+              <div class="table__cell group_field">
+                <span class="table__cell-label">Group name:</span>
+                <span>{{group.groupName}}</span>
+              </div>
+              <div class="table__cell group_field">
+                <span class="table__cell-label">Group privilege:</span>
+                <span>{{group.privilege}}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="table__body">
-        <div class="table__row" ng-repeat="group in groups track by $index">
-          <div class="table__cell group_select">
-            <span class="table__cell-label">Select group:</span>
-            <label class="control-check">
-              <input type="radio" name="group_selected" ng-model="$parent.selectedIndex" ng-value="$index"/>
-              <span class="control__indicator"></span>
-            </label>
-          </div>
-          <div class="table__cell group_field">
-            <span class="table__cell-label">Group id:</span>
-            <span>{{group.id}}</span>
-          </div>
-          <div class="table__cell group_field">
-            <span class="table__cell-label">Group name:</span>
-            <span>{{group.groupName}}</span>
-          </div>
-          <div class="table__cell group_field">
-            <span class="table__cell-label">Group privilege:</span>
-            <span>{{group.privilege}}</span>
-          </div>
-        </div>
+      <div class="col-sm-4 no-float">
+        <ldap-configuration></ldap-configuration>
       </div>
     </div>
   </div>
   <div class="row column">
-    <p class="ldap__error"  ng-show= "error" role="alert">
+    <p class="ldap__error" ng-show= "error" role="alert">
       Error : {{userMessage}}
     </p>
     <p class="ldap__success"  ng-show= "success" role="alert">
@@ -65,11 +77,12 @@
     </p>
   </div>
   <div class="modal-overlay" ng-class="{'active': activeModal}"></div>
-  <section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': activeModal}">
-    <div class="modal__activate" role="document">
+  <section class="modal modal_roles" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': activeModal}">
+    <div class="modal__activate " role="document">
       <div class="screen-reader-offscreen modal-description">Role Modal</div>
       <div class="page-header ">
-        <h1 class="h4">{{activeModal === 'add' ? 'Add ' : activeModal === 'modify' ? 'Modify ' : 'Deleting '}}Role Group</span>
+        <div class="icon__warning inline" ng-show="activeModal === 'delete'"></div>
+        <h1 class="h4 inline">{{activeModal === 'add' ? 'Add ' : activeModal === 'modify' ? 'Modify ' : 'Deleting '}}Role Group</span>
         </h1>
       </div>
       <div class="modal__content">
