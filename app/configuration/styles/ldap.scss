@@ -1,3 +1,4 @@
+// LDAP css
 $userInputHeight: 40px;
 .group_label {
   flex: 25%;
@@ -34,6 +35,12 @@ $userInputHeight: 40px;
 }
 
 .ldap_settings {
+  .modal_configure{
+    padding:1em 2em;
+    .page-header{
+      margin: 1em;
+    }
+  }
   .modal {
     .modal__content{
       padding-bottom: 2em;
@@ -76,8 +83,13 @@ $userInputHeight: 40px;
   }
   .ldap__button__wrapper {
     margin-top:1em;
+    display:inline-block;
     .disabled {
       pointer-events: none;
+    }
+    .configure_btn {
+      float: right;
+      margin-right: 0;
     }
   }
 }
@@ -103,6 +115,42 @@ $userInputHeight: 40px;
 .modal__button-wrapper{
   .disabled {
     pointer-events: none;
+  }
+}
+.ldap_config_panel_container {
+  .enable-ldap {
+    text-transform: none;
+    font-size: 1.2em;
+    color: #000;
+    font-weight: bold;
+    margin-left: 3em;
+  }
+  .ldap-config__input-wrapper {
+    height: 2.2em;
+    position: relative;
+    margin-bottom: 1em;
+    input {
+      padding-right: 60px;
+    }
+  }
+  .password-toggle {
+    position: absolute;
+    right: 5px;
+    padding: 3px;
+    color: $primebtn__bg;
+    font-size: .8em;
+    .disabled {
+      color: #999999;
+    }
+    @include vertCenter;
+  }
+  .ldap-config__input-wrapper {
+    height: 2.2em;
+    position: relative;
+    margin-bottom: 1em;
+    input {
+      padding-right: 60px;
+    }
   }
 }
 

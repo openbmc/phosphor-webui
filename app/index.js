@@ -48,6 +48,7 @@ import loader from './common/directives/loader.js';
 import paginate from './common/directives/paginate.js';
 import serial_console from './common/directives/serial-console.js';
 import dir_paginate from './common/directives/dirPagination.js';
+import ldap_configuration from './common/directives/ldap-configuration.js';
 
 import login_index from './login/index.js';
 import login_controller from './login/controllers/login-controller.js';
