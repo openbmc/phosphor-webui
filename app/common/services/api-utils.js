@@ -134,6 +134,23 @@ window.angular && (function(angular) {
                 return response.data.data['AllPrivileges'];
               });
         },
+        createLdapConfig: function(config) {
+          return $http({
+            method: 'POST',
+            url: DataService.getHost() +
+                '/xyz/openbmc_project/user/ldap/action/CreateConfig',
+            withCredentials: true,
+            data: JSON.stringify({
+              'data': [
+                config.secureLdap, config.serverUri, config.bindDn,
+                config.baseDn, config.bindDnPassword,
+                'xyz.openbmc_project.User.Ldap.Create.SearchScope.' +
+                    config.searchScope,
+                Constants.LDAP_TYPE[config.ldapType]
+              ]
+            })
+          })
+        },
         createLdapGroup: function(groupName, groupPrivilege) {
           return $http({
             method: 'POST',

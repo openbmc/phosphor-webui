@@ -86,6 +86,19 @@ window.angular && (function(angular) {
             'xyz.openbmc_project.Software.Activation.RequestedActivations.Active',
         FUNCTIONAL_OBJPATH: '/xyz/openbmc_project/software/functional'
       },
+      LDAP_DISPLAY_MAP: {
+        'xyz.openbmc_project.User.Ldap.Config.Type.OpenLdap': 'OpenLDAP',
+        'xyz.openbmc_project.User.Ldap.Config.Type.ActiveDirectory':
+            'Active Directory',
+        'xyz.openbmc_project.User.Ldap.Config.SearchScope.sub': 'sub',
+        'xyz.openbmc_project.User.Ldap.Config.SearchScope.one': 'one',
+        'xyz.openbmc_project.User.Ldap.Config.SearchScope.base': 'base'
+      },
+      LDAP_TYPE: {
+        'OpenLDAP': 'xyz.openbmc_project.User.Ldap.Create.Type.OpenLdap',
+        'Active Directory':
+            'xyz.openbmc_project.User.Ldap.Create.Type.ActiveDirectory'
+      },
       POLL_INTERVALS: {
         ACTIVATION: 5000,
         DOWNLOAD_IMAGE: 5000,

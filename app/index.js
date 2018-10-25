@@ -50,6 +50,7 @@ import input from './common/directives/input.js';
 import loader from './common/directives/loader.js';
 import paginate from './common/directives/paginate.js';
 import serial_console from './common/directives/serial-console.js';
+import ldap_configuration from './common/directives/ldap-configuration.js';
 
 import login_index from './login/index.js';
 import login_controller from './login/controllers/login-controller.js';
