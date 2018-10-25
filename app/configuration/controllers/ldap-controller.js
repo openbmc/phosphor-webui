@@ -10,16 +10,18 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.configuration').controller('ldapController', [
-    '$scope', 'APIUtils', '$q',
-    function($scope, APIUtils, $q) {
+    '$scope', 'APIUtils', '$q', 'Constants',
+    function($scope, APIUtils, $q, Constants) {
       $scope.groups = [];
       $scope.selectedGroups = [];
+      $scope.ldapConfig = {};
       $scope.newGroup = {};
       $scope.activeModal = '';
-      $scope.ldapDisabled = true;
+      $scope.ldapEnabled = false;
       $scope.userPrivileges = [];
       $scope.loading = false;
       $scope.error = false;
+      $scope.success = false;
       $scope.userMessage = '';
 
       $scope.loadLdapInfo = function() {
@@ -29,7 +31,18 @@ window.angular && (function(angular) {
               // If LDAP config exists, LDAP is enabled.
               if (data.config) {
                 $scope.groups = data.groups;
-                $scope.ldapDisabled = false;
+                $scope.ldapEnabled = true;
+                $scope.ldapConfig = {
+                  ldapCurrentlyEnabled: true,
+                  serverUri: data.config.LDAPServerURI,
+                  secureLdap: data.config.LDAPServerURI.startsWith('ldaps://'),
+                  bindDnPassword: '',
+                  baseDn: data.config.LDAPBaseDN,
+                  bindDn: data.config.LDAPBindDN,
+                  searchScope:
+                      Constants.LDAP_DISPLAY_MAP[data.config.LDAPSearchScope],
+                  ldapType: Constants.LDAP_DISPLAY_MAP[data.config.LDAPType]
+                };
               }
             },
             function(error) {
@@ -63,6 +76,7 @@ window.angular && (function(angular) {
       $scope.saveGroupSettings = function() {
         $scope.loading = true;
         $scope.error = false;
+        $scope.success = false;
         $scope.userMessage = '';
         if ($scope.activeModal === 'add') {
           for (var i = 0; i < $scope.groups.length; i++) {
