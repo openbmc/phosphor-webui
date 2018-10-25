@@ -10,8 +10,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.configuration').controller('ldapController', [
-    '$scope', 'APIUtils', '$q',
-    function($scope, APIUtils, $q) {
+    '$scope', 'APIUtils', '$q', 'Constants',
+    function($scope, APIUtils, $q, Constants) {
       $scope.groups = [];
       $scope.ldapConfig = {};
       $scope.newGroup = {};
@@ -23,15 +23,25 @@ window.angular && (function(angular) {
       $scope.success = false;
       $scope.userMessage = '';
 
-      loadLdapInfo();
-
-      function loadLdapInfo() {
+      $scope.loadLdapInfo = function() {
+        $scope.loading = true;
         var getLdapConfiguration = APIUtils.getLdapConfiguration().then(
             function(data) {
               // If LDAP config exists, LDAP is enabled.
               if (data.config) {
                 $scope.groups = data.groups;
                 $scope.ldapDisabled = false;
+                $scope.ldapConfig = {
+                  ldapCurrentlyEnabled: true,
+                  serverUri: data.config.LDAPServerURI,
+                  secureLdap: data.config.SecureLDAP,
+                  bindDnPassword: '',
+                  baseDn: data.config.LDAPBaseDN,
+                  bindDn: data.config.LDAPBindDN,
+                  searchScope:
+                      Constants.LDAP_DISPLAY_MAP[data.config.LDAPSearchScope],
+                  ldapType: Constants.LDAP_DISPLAY_MAP[data.config.LDAPType]
+                };
               }
             },
             function(error) {
@@ -50,7 +60,7 @@ window.angular && (function(angular) {
         $q.all(promises).finally(function() {
           $scope.loading = false;
         });
-      }
+      };
       $scope.saveGroupSettings = function(selectedIndex) {
         $scope.loading = true;
         if ($scope.activeModal === 'add') {
@@ -78,7 +88,7 @@ window.angular && (function(angular) {
               .createRoleGroup($scope.newGroup.name, $scope.newGroup.privilege)
               .then(
                   function(data) {
-                    loadLdapInfo();
+                    $scope.loadLdapInfo();
                   },
                   function(error) {
                     $scope.error = true;
@@ -98,7 +108,7 @@ window.angular && (function(angular) {
                   $scope.groups[selectedIndex].id)
               .then(
                   function(data) {
-                    loadLdapInfo();
+                    $scope.loadLdapInfo();
                   },
                   function(error) {
                     $scope.error = true;
@@ -112,7 +122,8 @@ window.angular && (function(angular) {
               });
         }
         // TODO: Modify Role Groups
-      }
+      };
+      $scope.loadLdapInfo();
     }
   ]);
 })(angular);

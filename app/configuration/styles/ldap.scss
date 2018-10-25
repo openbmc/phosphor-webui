@@ -1,78 +1,132 @@
+// LDAP css
 $userInputHeight: 40px;
-.group_label {
-  flex: 25%;
-}
-.group_field {
-  flex: 25%;
-  padding-left: 1em;
-}
-
-.group_select {
-  padding-top: .8em;
-  text-align: center;
-}
-
-.group_btn {
-  padding-left: .8em;
-  padding-right: .8em;
-  margin-right: 1em;
-}
-
-.config_button {
-  float: right;
-  padding-left: .8em;
-  padding-right: .8em;
-}
-
-.ldap_settings {
-  .modal {
-  left: 0%;
-  }
-  input {
-    height: $userInputHeight;
-  }
+.ldap__container {
   select {
     height : $userInputHeight;
   }
-  .ldap__error {
-    background: lighten($error-color, 20%);
-    padding: 1em;
-    text-align: center;
-    font-size: 1em;
-    border: 1px solid $error-color;
-    color: $black;
-    font-family: "Courier New", Helvetica, Arial, sans-serif;
-    font-weight: 700;
-    width: 325px;
+  input {
+    height : $userInputHeight;
   }
-  .ldap__success {
-    color: $primebtn__bg;
-    padding: 1em;
-    font-size: 1em;
-    font-family: "Courier New", Helvetica, Arial, sans-serif;
-    font-weight: 500;
+  .page-header {
+    margin-bottom: 0;
+  }
+  padding-left: 0em;
+  padding-right: 0em;
+
+  button {
+    padding-left:.75em;
+    padding-right:.75em;
+  }
+}
+.ldap_settings_container {
+  display:table;
+}
+
+.ldap_settings {
+  height: 100%;
+  display: table-row;
+  .ldap_groups {
+    border-right: 1px solid $lightbg__grey;
+    padding-top: 1.5em;
   }
   .ldap__button__wrapper {
-    margin-top:1em;
+    padding-top: 1.5em;
+    padding-bottom: .75em;
+    button {
+      margin-right:1em;
+    }
   }
 }
 
-.group__table {
-  margin-top:1em;
-  margin-bottom: 2.5em;
-  .table__cell {
-    a {
-      display: inline-block;
-      margin-right: 1.7em;
-      text-decoration: none;
-      font-weight: 700;
+.ldap_settings .no-float {
+  display: table-cell;
+  float: none;
+  padding-left: 0em;
+  padding-right: 0em;
+
+  .group_label {
+    flex: 25%;
+  }
+  .group_field {
+    flex: 25%;
+    padding-left: 1em;
+  }
+  .group_select {
+    padding-top: .8em;
+    text-align: center;
+  }
+  .ldap_config_panel_container {
+    padding: 1.5em;
+    .disable-ldap {
+      text-transform: none;
+      font-size: 1.2em;
+      color: #000;
+      font-weight: bold;
+      margin-left: 3em;
+    }
+    .ldap-config__input-wrapper {
+      height: 2.2em;
+      position: relative;
+      margin-bottom: 1em;
+      input {
+        padding-right: 60px;
+      }
+    }
+    .password-toggle {
+      position: absolute;
+      right: 5px;
+      padding: 3px;
+      color: $primebtn__bg;
+      font-size: .8em;
+      @include vertCenter;
+    }
+    .ldap-config_certificate {
+      border-top: 1px solid $lightbg__grey;
+      border-bottom: 1px solid $lightbg__grey;
+      padding: 1em 0em 1em;
+      margin: 1em 0em 1.5em;
+    }
+    .ldap-config__submit-wrapper {
+      button {
+        float: right;
+        margin-left: 1em;
+      }
     }
   }
-  .table-header {
-    font-weight: 700;
-    p {
-      margin-bottom: 0em;
-    }
+}
+
+.ldap__error {
+  background: lighten($error-color, 20%);
+  padding: 1em;
+  text-align: center;
+  font-size: 1em;
+  border: 1px solid $error-color;
+  color: $black;
+  font-family: "Courier New", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  width: 325px;
+}
+.ldap__success {
+  color: $primebtn__bg;
+  padding: 1em;
+  font-size: 1em;
+  font-family: "Courier New", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+}
+.modal_roles {
+  width: 40%;
+  min-width: 500px;
+  min-height: 400px;
+  height: 30%;
+  left: 0%;
+  .icon__warning {
+    margin-bottom: .5em;
+  }
+  .status-light__warn {
+    padding-right:3em;
+  }
+  .modal__content {
+    padding-top: 1em;
   }
 }
 
