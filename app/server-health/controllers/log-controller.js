@@ -25,7 +25,8 @@ window.angular && (function(angular) {
           $scope.dataService = dataService;
           $scope.logs = [];
           $scope.filteredLogs = [];
-          $scope.tmz = 'EDT';
+          $scope.tmz = getUserTimezone();
+          $scope.userTmz = getUserTimezone();
           $scope.itemsPerPage = Constants.PAGINATION.LOG_ITEMS_PER_PAGE;
           $scope.loading = false;
           var expandedSelectedIdOnce = false;
@@ -157,6 +158,10 @@ window.angular && (function(angular) {
               data[item.data.key] = item.data.value;
             });
             $scope.export_data = JSON.stringify(data);
+          }
+
+          function getUserTimezone() {
+            return new Date().toString().match(/\(([A-Za-z\s].*)\)/)[1];
           }
 
           $scope.accept = function() {
