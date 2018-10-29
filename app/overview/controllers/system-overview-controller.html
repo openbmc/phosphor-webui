@@ -132,7 +132,7 @@
               <p class="inline event__id">#{{event.Id}}</p>
               <p class="inline event__priority high-priority">High</p>
               <p class="inline event__severity high-priority">{{event.severity_code}}</p>
-              <p class="inline event__timestamp">{{(event.Timestamp | date:'medium': tmz) + ' ' + tmz}}</p>
+              <p class="inline event__timestamp">{{(event.Timestamp | date:'medium') + ' ' + getUserTimezoneName(event)}}</p>
               <div>
                 <p class="inline event__description">{{getEventLogTitle(event)}}</p>
               </div>

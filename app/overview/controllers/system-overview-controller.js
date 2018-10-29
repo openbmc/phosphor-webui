@@ -159,6 +159,11 @@ window.angular && (function(angular) {
         }
         return title;
       };
+      $scope.getUserTimezoneName = function(event) {
+        return new Date(event.Timestamp)
+            .toString()
+            .match(/\(([A-Za-z\s].*)\)/)[1];
+      };
     }
   ]);
 })(angular);
