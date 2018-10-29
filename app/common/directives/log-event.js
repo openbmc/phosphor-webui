@@ -42,6 +42,12 @@ window.angular && (function(angular) {
               return title;
             };
 
+            $scope.getUserTimezoneName = function(event) {
+              return new Date(event.Timestamp)
+                  .toString()
+                  .match(/\(([A-Za-z\s].*)\)/)[1];
+            };
+
             $scope.getAdditionalData = function(event) {
               var data = event.additional_data;
               // Stick the type into the additional data if it isn't

@@ -25,7 +25,7 @@ window.angular && (function(angular) {
           $scope.dataService = dataService;
           $scope.logs = [];
           $scope.filteredLogs = [];
-          $scope.tmz = 'EDT';
+          $scope.tmz = 'user';
           $scope.itemsPerPage = Constants.PAGINATION.LOG_ITEMS_PER_PAGE;
           $scope.loading = false;
           var expandedSelectedIdOnce = false;
