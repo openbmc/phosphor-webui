@@ -14,7 +14,7 @@ window.angular && (function(angular) {
     function($scope, $window, APIUtils, dataService, Constants, $q) {
       $scope.dataService = dataService;
       $scope.dropdown_selected = false;
-      $scope.tmz = 'EDT';
+      $scope.tmz = getUserTimezone();
       $scope.logs = [];
       $scope.server_info = {};
       $scope.bmc_firmware = '';
@@ -159,6 +159,9 @@ window.angular && (function(angular) {
         }
         return title;
       };
+      function getUserTimezone() {
+        return new Date().toString().match(/\(([A-Za-z\s].*)\)/)[1];
+      }
     }
   ]);
 })(angular);
