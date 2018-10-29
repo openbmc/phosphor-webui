@@ -283,10 +283,12 @@
   }
 
   .event__timestamp {
+    text-align: right;
     @include fontCourierBold;
     font-size: .9em;
     color: $darkgrey;
-    @media (min-width: 1105px ) {
+    max-width: 18em;
+    @media (min-width: 1105px) {
       float: right;
     }
   }
