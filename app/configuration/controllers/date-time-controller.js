@@ -36,9 +36,10 @@ window.angular && (function(angular) {
               // Don't care about milliseconds and don't want them displayed
               $scope.bmc.date.setMilliseconds(0);
               // https://stackoverflow.com/questions/1091372/getting-the-clients-timezone-in-javascript
-              // GMT-0400 (EDT)
+              // EDT (UTC - 04:00)
               $scope.bmc.timezone =
-                  $scope.bmc.date.toString().match(/([A-Z]+[\+-][0-9]+.*)/)[1];
+                  $scope.bmc.date.toString().match(/\(([A-Za-z\s].*)\)/)[1] +
+                  ' ' + createOffset($scope.bmc.date);
             }
             if (data.data[timePath + 'host'] &&
                 data.data[timePath + 'host'].hasOwnProperty('Elapsed')) {
@@ -183,6 +184,17 @@ window.angular && (function(angular) {
         // Add the separate date and time objects and convert to Epoch time
         // microseconds.
         return APIUtils.setHostTime(time);
+      }
+      function createOffset(date) {
+        // https://stackoverflow.com/questions/9149556/how-to-get-utc-offset-in-javascript-analog-of-timezoneinfo-getutcoffset-in-c
+        var sign = (date.getTimezoneOffset() > 0) ? '-' : '+';
+        var offset = Math.abs(date.getTimezoneOffset());
+        var hours = pad(Math.floor(offset / 60));
+        var minutes = pad(offset % 60);
+        return '(UTC' + sign + hours + ':' + minutes + ')';
+      }
+      function pad(value) {
+        return value < 10 ? '0' + value : value;
       }
     }
   ]);
