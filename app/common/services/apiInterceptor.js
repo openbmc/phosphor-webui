@@ -43,21 +43,6 @@ window.angular && (function(angular) {
           }
 
           return response;
-        },
-        'responseError': function(rejection) {
-          if (dataService.ignoreHttpError === false) {
-            // If unauthorized, log out
-            if (rejection.status == 401) {
-              if (dataService.path != '/login') {
-                $rootScope.$emit('timedout-user', {});
-              }
-            } else if (rejection.status == -1) {
-              dataService.server_unreachable = true;
-            }
-
-            dataService.loading = false;
-          }
-          return $q.reject(rejection);
         }
       };
     }

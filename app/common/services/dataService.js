@@ -33,7 +33,6 @@ window.angular && (function(angular) {
       this.displayErrorModal = false;
       this.errorModalDetails = {};
 
-      this.ignoreHttpError = false;
       this.getServerId = function() {
         return this.host.replace(/^https?\:\/\//ig, '');
       };
