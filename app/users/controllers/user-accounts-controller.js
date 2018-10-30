@@ -52,15 +52,16 @@ window.angular && (function(angular) {
                           function(error) {
                             $scope.state = 'error';
                             $scope.errorMsg = 'Error changing password!';
-                          });
+                          })
+                      .finally(function() {
+                        dataService.ignoreHttpError = false;
+                      });
                 },
                 function(error) {
+                  dataService.ignoreHttpError = false;
                   $scope.state = 'error';
                   $scope.errorMsg = 'Old password is not correct!';
                 })
-            .finally(function() {
-              dataService.ignoreHttpError = false;
-            });
       };
     }
   ]);
