@@ -1214,10 +1214,6 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/network/eth0/attr/NTPServers',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true
                  })
               .then(function(response) {
@@ -1229,10 +1225,6 @@ window.angular && (function(angular) {
                    method: 'PUT',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/network/eth0/attr/NTPServers',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true,
                    data: JSON.stringify({'data': ntpServers})
                  })
@@ -1245,10 +1237,6 @@ window.angular && (function(angular) {
                    method: 'PUT',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/time/sync_method/attr/TimeSyncMethod',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true,
                    data: JSON.stringify({'data': timeMode})
                  })
@@ -1261,10 +1249,6 @@ window.angular && (function(angular) {
                    method: 'PUT',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/time/owner/attr/TimeOwner',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true,
                    data: JSON.stringify({'data': timeOwner})
                  })
@@ -1277,10 +1261,6 @@ window.angular && (function(angular) {
                    method: 'PUT',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/time/bmc/attr/Elapsed',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true,
                    data: JSON.stringify({'data': time})
                  })
@@ -1293,10 +1273,6 @@ window.angular && (function(angular) {
                    method: 'PUT',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/time/host/attr/Elapsed',
-                   headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                   },
                    withCredentials: true,
                    data: JSON.stringify({'data': time})
                  })
