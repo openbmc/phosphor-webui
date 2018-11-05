@@ -79,10 +79,12 @@
 
 .firmware__version {
   position: relative;
-  .icon {
+  svg {
     position: absolute;
-    right: 0;
     top: 20%;
+  }
+  .icon {
+    margin-left: 20px;
   }
 }
 
