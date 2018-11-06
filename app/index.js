@@ -5,7 +5,6 @@
  * @module app/index/services/index
  * @exports app/index
  *
- * @author Developer Developer
  */
 
 import 'bootstrap/dist/css/bootstrap.css';
