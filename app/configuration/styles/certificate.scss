@@ -1,0 +1,154 @@
+.certificate__table {
+  border-left: 1px solid $medgrey;
+  border-right: 1px solid $medgrey;
+  margin-top: .5em;
+  .table__row-header {
+    width: 100%;
+    border-bottom: 1px solid $medgrey;
+      background-color: $darkbg__primary;
+      color: white;
+      font-weight: 700;
+  }
+  .table__row-value {
+    width: 100%;
+    border-bottom: 1px solid $medgrey;
+  }
+  .certificate__button {
+    width: 1.2em;
+    padding: 0;
+  }
+  .certificate__type-header {
+    @include mediaQuery(small) {
+      width: 25%;
+      background: transparent;
+    }
+    width: 100%;
+    padding: .8em;
+    padding-left: 1.5em;
+  }
+  .certificate__date-header {
+    padding:.8em;
+    @include mediaQuery(small) {
+      width: 30%;
+      display: block;
+    }
+    display: none;
+  }
+  .certificate__status-header {
+    padding: .8em;
+    @include mediaQuery(small) {
+      width: 5%;
+      display: block;
+    }
+    display: none;
+  }
+  .certificate__type-cell {
+    width: 100%;
+    padding: .8em .8em .8em 1.5em;
+    word-wrap: break-word;
+    background: $lightgrey;
+    @include mediaQuery(small) {
+      width: 25%;
+      background: transparent;
+    }
+  }
+  .certificate__date-cell {
+    padding: .8em ;
+    word-wrap: break-word;
+    @include mediaQuery(small) {
+      width: 30%;
+    }
+    width: 70%;
+  }
+  .certificate__status-cell {
+    padding: .8em;
+    @include mediaQuery(small) {
+      display: block;
+      width: 5%;
+    }
+    display: none;
+  }
+  .certificate__buttons-cell {
+    @include mediaQuery(small) {
+      width: 10%;
+      padding-top: .8em;
+    }
+    width: 100%;
+    text-align: right;
+    padding: 0 1.5em .8em 0;
+  }
+  .certificate__title-inline {
+    @include mediaQuery(small) {
+      display: none;
+    }
+    width: 30%;
+    display: block;
+    padding: .8em .8em .8em 1.5em;
+  }
+  .upload__certificate {
+    border-top: 1px solid $medgrey;
+    width: 100%;
+    background: $lightgrey;
+    padding: .8em;
+  }
+}
+.certificate__upload-chooser {
+  @include mediaQuery(medium) {
+    width: 65%;
+  }
+  background: $lightgrey;
+  padding: .7em;
+  .button {
+    padding: .6em .75em;
+  }
+  .btn-secondary {
+    margin-left: .5em;
+    font-size: 1rem;
+    background-color: $white;
+    min-width: 3em;
+  }
+}
+.icon__exit {
+  float: right;
+  cursor: pointer;
+  width: .75em;
+  height: .75em;
+  margin: .3em 1em .3em .3em;
+  background-image: url(../assets/images/crit-x-black.svg);
+}
+.btn-add-cert {
+  color: $primebtn__bg;
+  padding: .75em 0;
+  &[disabled] {
+    color: $btn__disabled-txt;
+    cursor: initial;
+    &:before {
+      content: url(../assets/images/icon-plus-disabled.svg);
+    }
+  }
+}
+.btn-add-cert:before {
+  content: url(../assets/images/icon-plus.svg);
+  width: 18px;
+  float: left;
+  margin-right: 5px;
+  margin-top: -2px;
+}
+.add__certificate__modal {
+  select {
+    margin-bottom: 0;
+  }
+  .file__upload {
+    margin-bottom: 2em;
+  }
+  .select__new-label {
+    margin-bottom: 1em;
+  }
+  .select__new-button {
+    font-size: 1.2em;
+  }
+  .file__name {
+    background-color: $upload__background;
+    padding: .5em;
+  }
+}

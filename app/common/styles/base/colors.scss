@@ -12,6 +12,7 @@ $field__disabled: #e6e6e6;
 $field__focus: #3C6DEF;
 $btn__disabled-txt: #a6a5a6;
 $btn__disabled-bg: #d8d8d8;
+$btn__disabled-border: #CCCCCC;
 $primebtn__disabled-txt: #999999;
 $primebtn__disabled-bg: #CCCCCC;
 
@@ -61,7 +62,8 @@ $critical-lightbg: #da1416;
 $critical-darkbg: #ff5c49;
 $severity-medium-lightbg: #dc267f;
 $medium-darkbg: #FF509E;
-$warning-lightbg: #ff836f;
+$warning-lightbg: #fff8e4;
+$warning-border: #ffdf99;
 $warning-darkbg: #ffb000;
 $low-lightbg: #c42cd6;
 $normal: #00baa1;
@@ -96,6 +98,9 @@ $links__disabled: rgba(27, 40, 52, 0.70);
 $nav__top-level-color: #1a273b;
 $nav__second-level-color: #e6e9ed;
 $nav__second-level-text-color: #4b5d78;
+
+//Upload
+$upload__background: #f0f2f5;
 
 //Loader
 $loaderColor: #1d3458;
