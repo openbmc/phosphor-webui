@@ -1,0 +1,46 @@
+<div class="table__row-value row column">
+  <div class="certificate__type-cell bold">
+    {{cert.Description}}
+  </div>
+  <div class="certificate__title-inline">
+    Valid from:
+  </div>
+  <div class="certificate__date-cell">
+    {{cert.ValidNotBefore | localeDate}}
+  </div>
+  <div class="certificate__title-inline">
+    Valid until:
+  </div>
+  <div class="certificate__status-cell">
+    <span class="inline" ng-class="{'icon__warning' : cert.isExpiring , 'icon__critical' : cert.isExpired}" ng-if="cert.isExpired || cert.isExpiring"></span>
+  </div>
+  <div class="certificate__date-cell">
+    {{cert.ValidNotAfter | localeDate}}
+  </div>
+  <div class="certificate__buttons-cell">
+    <button type="button" class="certificate__button">
+      <img src="../../assets/images/icon-replace-blue.svg"
+           ng-click="cert.upload = true"
+           alt="upload"/>
+    </button>
+  </div>
+  <div ng-show="cert.upload === true" class="upload__certificate">
+    <span class="small-1 icon__exit" ng-click="cert.upload=false"></span>
+    <div class="certificate__upload-chooser row column">
+      <div class="small-3 align-self-center">
+        <label for='upload_{{cert.Description + cert.Id}}'>
+          <input name="upload_{{cert.Description + cert.Id}}" id="upload_{{cert.Description + cert.Id}}" type="file" file="cert.file" class="hide"/>
+          <span class="button btn-secondary courier-normal">Choose file</span>
+        </label>
+      </div>
+      <div class="small-6 align-self-center">
+        <span ng-if="!cert.file">No file selected</span>
+        <span>{{cert.file.name}}</span>
+        <span class="icon__exit" ng-if="cert.file.name" ng-click="cert.file = '';"></span>
+      </div>
+      <div class="small-2 align-self-center">
+        <button type="button" ng-class="{disabled:!cert.file}" class="button btn-primary" ng-click="replaceCertificate(cert)">Replace</button>
+      </div>
+    </div>
+  </div>
+</div>
