@@ -47,6 +47,7 @@ import log_event from './common/directives/log-event.js';
 import certificate from './common/directives/certificate.js';
 import log_filter from './common/directives/log-filter.js';
 import log_search_control from './common/directives/log-search-control.js';
+import ldap_user_roles from './common/directives/ldap-user-roles.js';
 import toggle_flag from './common/directives/toggle-flag.js';
 import firmware_list from './common/directives/firmware-list.js';
 import file from './common/directives/file.js';
@@ -86,6 +87,7 @@ import date_time_controller from './configuration/controllers/date-time-controll
 import certificate_controller from './configuration/controllers/certificate-controller.js';
 import network_controller from './configuration/controllers/network-controller.js';
 import snmp_controller from './configuration/controllers/snmp-controller.js';
+import ldap_controller from './configuration/controllers/ldap-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
 import vm_controller from './configuration/controllers/virtual-media-controller.js';
 
