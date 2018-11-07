@@ -1,0 +1,2 @@
+
+<svg width="19" height="19" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path d="M10.319 8.745h3.503v1.801H10.32v3.504H8.517v-3.504H5.014V8.745h3.503V5.24h1.802v3.504zM9.5 19a9.5 9.5 0 1 1 0-19 9.5 9.5 0 0 1 0 19zm.055-1.335a8.11 8.11 0 1 0 0-16.22 8.11 8.11 0 0 0 0 16.22z" id="a"/></defs><g fill="none" fill-rule="evenodd"><mask id="b" fill="#fff"><use xlink:href="#a"/></mask><use fill="#2d60e5" fill-rule="nonzero" xlink:href="#a"/><g mask="url(#b)" fill="#999999"><path d="M-3.276-3.931h25v25h-25z"/></g></g></svg>
