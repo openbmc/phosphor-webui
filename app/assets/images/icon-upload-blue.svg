@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="16px" viewBox="0 0 14 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+	<title>UI Icon/download/$brand-01 Copy 2</title>
+	<desc>Created with Sketch.</desc>
+	<defs>
+		<path d="M6,1.96709197 L2.1851679,5.99746937 L1.5,5.34894437 L6.56288188,8.8817842e-16 L11.6225504,5.35187996 L10.9369994,6 L7,1.83562673 L7,13 L6,13 L6,1.96709197 Z M12.0714286,15 L12.0714286,13 L13,13 L13,15 C13,15.5522847 12.5522847,16 12,16 L1,16 C0.44771525,16 6.76353751e-17,15.5522847 0,15 L0,13 L0.928571429,13 L0.928571429,15 L12.0714286,15 Z" id="path-1"></path>
+	</defs>
+	<g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+		<g id="1.-Generate-Certificates" transform="translate(-1328.000000, -330.000000)">
+			<g id="Group-3" transform="translate(156.000000, 308.000000)">
+				<g id="Icon/Upload" transform="translate(1168.000000, 19.000000)">
+					<g id="Colors/Base/Black" transform="translate(4.656250, 3.000000)">
+						<mask id="mask-2" fill="white">
+							<use xlink:href="#path-1"></use>
+						</mask>
+						<use id="Mask" fill="#5A6872" fill-rule="nonzero" xlink:href="#path-1"></use>
+						<g id="Colors/Primary/-Active-Blue40" mask="url(#mask-2)" fill="#3C6DF0">
+							<g transform="translate(-8.000000, -7.000000)" id="Rectangle-6-Copy-2">
+								<rect x="0" y="0" width="30" height="30"></rect>
+							</g>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>
