@@ -1,0 +1,36 @@
+<loader loading="loading"></loader>
+<div id="configuration-snmp">
+  <div class="row column">
+    <h1>SSL Certificates</h1>
+  </div>
+  <div ng-repeat="certificate in certificates|filter:{isExpiring:true}" class="row column">
+  <div class="small-12 alert alert-warning" role="alert">
+      <div class="icon__warning inline"></div> The uploaded {{certificate.Description}} is expiring in {{getDays(certificate.ValidNotAfter) === 0 ? 'less than one day!' : getDays(certificate.ValidNotAfter) + ' days!'}} Consider replacing it with a new certificate.
+    </div>
+  </div>
+  <div ng-repeat="certificate in certificates|filter:{isExpired:true}" class="row column">
+    <div class="small-12 alert alert-danger" role="alert">
+      <div class="icon__critical inline"></div> The uploaded {{certificate.Description}} has expired! Consider replacing it with a new certificate.
+    </div>
+  </div>
+  <div class="row column">
+    <div class="small-12 certificate__table">
+      <div class="table__row header">
+        <div class="type__title">
+          Certificate
+        </div>
+        <div class="table__cells title date">
+          Valid from
+        </div>
+        <div class="table__cells title status">
+        </div>
+        <div class="table__cells title date">
+          Valid until
+        </div>
+      </div>
+      <div ng-repeat="certificate in certificates">
+        <certificate cert="certificate" reload="loadCertificates()")></certificate>
+      </div>
+    </div>
+  </div>
+</div>

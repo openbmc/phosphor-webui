@@ -1,0 +1,135 @@
+
+
+.certificate__table {
+  border-left: 1px solid $medgrey;
+  border-right: 1px solid $medgrey;
+  margin-top: 1em;
+  .table__header {
+    background-color: $darkbg__primary;
+    color: white;
+    font-weight: 700;
+    padding-left: .8em;
+  }
+  .table__row {
+    border-bottom: 1px solid $medgrey;
+    &.header {
+      background-color: $darkbg__primary;
+      color: white;
+      font-weight: 700;
+    }
+  }
+  .cert__button {
+    width:1.2em;
+    padding:0;
+  }
+  .cert__title {
+    @include mediaQuery(small) {
+      display: none;
+    }
+    width: 30%;
+    display: block;
+    padding:.8em;
+  }
+  .type__title {
+    @include mediaQuery(small) {
+      width: 25%;
+      background: transparent;
+    }
+    width: 100%;
+    padding:.8em;
+    padding-left: 1.5em;
+    word-wrap: break-word;
+  }
+
+  .table__cells {
+    @include mediaQuery(small) {
+      width: 19%;
+      background: transparent;
+    }
+    width: 100%;
+    padding:.8em;
+    word-wrap: break-word;
+    &.type{
+      @include mediaQuery(small) {
+        width: 25%;
+        background: transparent;
+      }
+      width:100%;
+      padding-left: 1.5em;
+      background: darken($lightgrey, 5%);
+    }
+    &.buttons{
+      @include mediaQuery(small) {
+        width: 10%;
+        padding-top: .8em;
+      }
+      width:100%;
+      text-align: right;
+      padding-top: 0;
+      padding-left: 0em;
+      padding-right: 1.5em;
+    }
+    &.date{
+      @include mediaQuery(small) {
+        width: 30%;
+      }
+      width:70%;
+    }
+    &.status{
+      @include mediaQuery(small) {
+        display: block;
+        width: 5%;
+      }
+      display: none;
+    }
+    &.title {
+      @include mediaQuery(small) {
+        display: block;
+      }
+      display: none;
+    }
+  }
+  .upload__certificate {
+    border-top: 1px solid $medgrey;
+    width: 100%;
+    background: $lightgrey;
+    padding: .8em;
+  }
+}
+
+.cert__upload-chooser {
+  @include mediaQuery(medium) {
+    width:65%;
+  }
+  background: $lightgrey;
+  padding: .7em;
+  .button {
+    padding: .6em .75em;
+  }
+  .btn-secondary {
+    margin-left: .5em;
+    font-size: 1rem;
+    background-color: white;
+    min-width: 3em;
+    &.disabled {
+      background-color: #DCDEE0;
+    }
+  }
+  .icon__exit {
+    float: right;
+    cursor: pointer;
+    width: .75em;
+    height: .75em;
+    margin: .3em 1em .3em .3em;
+    background-image: url(../assets/images/crit-x-black.svg);
+  }
+}
+
+.exit__upload {
+  float: right;
+  cursor: pointer;
+  width: .75em;
+  height: .75em;
+  margin: .3em 1em .3em .3em;
+  background-image: url(../assets/images/crit-x-black.svg);
+}
