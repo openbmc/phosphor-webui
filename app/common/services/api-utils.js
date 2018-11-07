@@ -604,6 +604,14 @@ window.angular && (function(angular) {
           });
         },
 
+        saveLdapProperties: function(properties) {
+          return $http({
+            method: 'PATCH',
+            url: DataService.getHost() + '/redfish/v1/AccountService',
+            withCredentials: true,
+            data: properties
+          });
+        },
         createUser: function(user, passwd, role, enabled) {
           var data = {};
           data['UserName'] = user;
