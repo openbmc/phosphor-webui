@@ -1286,6 +1286,51 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        getCertificateLocations: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                       '/redfish/v1/CertificateService/CertificateLocations',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        getCertificate: function(location) {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + location,
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        addNewCertificate: function(file, type) {
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() + type.location,
+                   headers: {'Content-Type': 'application/octet-stream'},
+                   withCredentials: true,
+                   data: file
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        replaceCertificate: function(data) {
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() +
+                       '/redfish/v1/CertificateService/Actions/CertificateService.ReplaceCertificate',
+                   withCredentials: true,
+                   data: data
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         getHardwares: function(callback) {
           $http({
             method: 'GET',

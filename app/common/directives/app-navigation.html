@@ -93,15 +93,17 @@
   <ul class="nav__second-level btn-firmware" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'configuration')}">
     <li ng-class="{'active': (path == '/configuration' || path == '/configuration/network')}">
       <a href="#/configuration/network" tabindex="16" ng-click="closeSubnav()">Network settings</a></li>
+    <li ng-class="{'active': (path == '/configuration' || path == '/configuration/certificate')}">
+      <a href="#/configuration/certificate" tabindex="17" ng-click="closeSubnav()">Certificate management</a></li>
     <li ng-class="{'active': (path == '/configuration' || path == '/configuration/snmp')}">
-      <a href="#/configuration/snmp" tabindex="17" ng-click="closeSubnav()">SNMP settings</a></li>
+      <a href="#/configuration/snmp" tabindex="18" ng-click="closeSubnav()">SNMP settings</a></li>
     <li ng-class="{'active': (path == '/configuration' || path == '/configuration/firmware')}">
-      <a href="#/configuration/firmware" tabindex="18" ng-click="closeSubnav()">Firmware</a></li>
+      <a href="#/configuration/firmware" tabindex="19" ng-click="closeSubnav()">Firmware</a></li>
     <li ng-class="{'active': (path == '/configuration' || path == '/configuration/date-time')}">
-      <a href="#/configuration/date-time" tabindex="19" ng-click="closeSubnav()">Date and time settings</a></li>
+      <a href="#/configuration/date-time" tabindex="20" ng-click="closeSubnav()">Date and time settings</a></li>
   </ul>
   <ul class="nav__second-level btn-users" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'users')}">
     <li ng-class="{'active': (path == '/users' || path == '/users/manage-accounts')}">
-      <a href="#/users/manage-accounts" tabindex="20" ng-click="closeSubnav()">Manage user account</a></li>
+      <a href="#/users/manage-accounts" tabindex="21" ng-click="closeSubnav()">Manage user account</a></li>
   </ul>
 </nav>
