@@ -100,6 +100,9 @@
           <a href="#/configuration/date-time" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">Date and time settings</a>
         </li>
+        <li ng-class="{'active': (path == '/configuration' || path == '/configuration/ldap')}">
+          <a href="#/configuration/ldap" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">LDAP settings</a></li>
       </ul>
     </li>
     <li>
