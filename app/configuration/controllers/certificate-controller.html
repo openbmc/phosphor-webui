@@ -1,0 +1,87 @@
+<loader loading="loading"></loader>
+<div id="configuration-cert">
+  <div class="row column">
+    <h1>SSL certificates</h1>
+  </div>
+  <div ng-repeat="certificate in certificates|filter:{isExpiring:true}" class="row column">
+    <div class="small-12 alert alert-warning" role="alert">
+        <div class="icon__warning inline"></div> The uploaded {{certificate.Description}} is expiring in {{getDays(certificate.ValidNotAfter) === 0 ? 'less than one day!' : getDays(certificate.ValidNotAfter) + ' days!'}} Consider replacing it with a new certificate.
+    </div>
+  </div>
+  <div ng-repeat="certificate in certificates|filter:{isExpired:true}" class="row column">
+    <div class="small-12 alert alert-danger" role="alert">
+      <div class="icon__critical inline"></div> The uploaded {{certificate.Description}} has expired! Consider replacing it with a new certificate.
+    </div>
+  </div>
+  <div class="row column">
+    <button type="button" class="btn-add-cert"
+      ng-disabled="availableCertificateTypes.length === 0"
+      ng-click="addCertificateModal=true">Add new certificate</button>
+  </div>
+  <div class="row column">
+    <div class="small-12 certificate__table">
+      <div class="table__row-header">
+        <div class="row column">
+          <div class="certificate__type-header">
+            Certificate
+          </div>
+          <div class="certificate__date-header">
+            Valid from
+          </div>
+          <div class="certificate__status-header">
+          </div>
+          <div class="certificate__date-header">
+            Valid until
+          </div>
+        </div>
+      </div>
+      <div ng-if="certificates.length < 1" class="empty__logs" >There have been no certificates added.</div>
+      <div ng-repeat="certificate in certificates">
+        <certificate cert="certificate" reload="loadCertificates()")></certificate>
+      </div>
+    </div>
+  </div>
+  <section class="modal add__certificate__modal" aria-hidden="true" role="dialog" ng-class="{'active': addCertificateModal}">
+    <div class="page-header ">
+      <h3>Add new certificate</h3>
+    </div>
+    <div class="modal__content">
+      <form name="add__cert__form" id="add__cert__form" ng-class="{'submitted': submitted}">
+        <div class="row column">
+          <div class="small-12">
+          <label for="cert__type">Certificate type</label>
+          <select id="cert__type" name="cert__type" ng-model="newCertificate.selectedType" required>
+            <option class="courier-bold" ng-value="">Select an option</option>
+            <option class="courier-bold" ng-value="type" ng-repeat="type in availableCertificateTypes">{{type.Description}}</option>
+          </select>
+          <div ng-messages="add__cert__form.cert__type.$error" class="form-error" ng-class="{'visible' : add__cert__form.cert__type.$touched || submitted}">
+            <p ng-message="required">Field is required</p>
+          </div>
+          </div>
+        </div>
+        <div class="row column">
+          <div class="small-12">
+            <label class ="select__new-label" for="upload_cert_new">Certificate file</label>
+          </div>
+          <div class="row column file__upload">
+            <label for='upload_cert_new'>
+              <input name="upload_cert_new" id="upload_cert_new" type="file" file="newCertificate.file" class="hide"/>
+              <span class="button btn-secondary select__new-button">Choose file</span>
+            </label>
+          </div>
+          <div class="row column">
+            <div ng-if="newCertificate.file" class="small-7 file__name">
+              <span>{{newCertificate.file.name}}</span>
+              <span class="icon__exit" ng-if="newCertificate.file.name" ng-click="newCertificate.file = '';"></span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal__button-wrapper">
+      <button class="inline btn-secondary" ng-click="addCertificateModal = false; newCertificate={};add__cert__form.$setUntouched();">Cancel</button>
+      <button class="inline btn-primary" ng-class="{'disabled' : add__cert__form.$invalid || !newCertificate.file}" ng-click="submitted = true; uploadCertificate();">Save</button>
+    </div>
+  </section>
+  <div class="modal-overlay" tabindex="-1" ng-class="{'active': addCertificateModal}"></div>
+</div>
