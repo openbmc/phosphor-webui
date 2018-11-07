@@ -20,6 +20,17 @@ window.angular && (function(angular) {
         SUCCESS_STATUS: 'ok',
         SUCCESS_MESSAGE: '200 OK'
       },
+      CERTIFICATE_TYPES: [
+        {
+          'Description': 'HTTPS Certificate',
+          'location':
+              '/redfish/v1/Managers/bmc/NetworkProtocol/HTTPS/Certificates'
+        },
+        {
+          'Description': 'LDAP Certificate',
+          'location': '/redfish/v1/AccountService/LDAP/Certificates'
+        }
+      ],
       CHASSIS_POWER_STATE: {
         on: 'On',
         on_code: 'xyz.openbmc_project.State.Chassis.PowerState.On',
