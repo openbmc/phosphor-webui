@@ -41,6 +41,12 @@ window.angular && (function(angular) {
                 'controller': 'virtualMediaController',
                 authenticated: true
               })
+              .when('/configuration/certificate', {
+                'template':
+                    require('./controllers/certificate-controller.html'),
+                'controller': 'certificateController',
+                authenticated: true
+              })
               .when('/configuration/firmware', {
                 'template': require('./controllers/firmware-controller.html'),
                 'controller': 'firmwareController',

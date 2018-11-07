@@ -16,7 +16,7 @@ button,
     pointer-events: none;
     color: $btn__disabled-txt;
     background-color: $btn__disabled-bg;
-    border-color: $btn__disabled-bg;
+    border-color: $btn__disabled-border;
     border-style: solid;
     border-width: 2px;
     &:hover {
@@ -38,6 +38,7 @@ button,
   &.disabled {
     background: $primebtn__disabled-bg;
     color: $primebtn__disabled-txt;
+    border-color: $btn__disabled-border;
     @include fastTransition-all;
     &:hover {
       cursor: default;
