@@ -78,7 +78,6 @@
 
 
 // Checkbox
-
 .control-check,
 .control-radio {
   position: relative;
@@ -104,6 +103,12 @@
   background: $white;
   border: 1px solid $lightbg__grey;
   font-size: 0;
+}
+
+.control__label {
+  display: inline-block;
+  margin-left: 26px;
+  user-select: none;
 }
 
 /* Hover and focus states */
