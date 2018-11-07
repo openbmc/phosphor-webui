@@ -73,6 +73,7 @@ import redfish_index from './redfish/index.js';
 import redfish_controller from './redfish/controllers/redfish-controller.js';
 import configuration_index from './configuration/index.js';
 import date_time_controller from './configuration/controllers/date-time-controller.js';
+import certificate_controller from './configuration/controllers/certificate-controller.js';
 import network_controller from './configuration/controllers/network-controller.js';
 import snmp_controller from './configuration/controllers/snmp-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
