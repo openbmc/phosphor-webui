@@ -4,7 +4,15 @@
   background-color: $alert__danger;
   border-color: $critical-lightbg;
   border-radius: 0;
-  color: #333;
+  color: $black;
+  text-align: left;
+}
+
+.alert-warning{
+  background-color: $warning-lightbg;
+  border-color: $warning-border;
+  border-radius: 0;
+  color: $black;
   text-align: left;
 }
 
