@@ -92,6 +92,10 @@
           <a href="#/configuration/network" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">Network settings</a>
         </li>
+        <li ng-class="{'active': (path == '/configuration' || path == '/configuration/certificate')}">
+          <a href="#/configuration/certificate" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">Certificate management</a>
+        </li>
         <li ng-class="{'active': (path == '/configuration' || path == '/configuration/snmp')}">
           <a href="#/configuration/snmp" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">SNMP settings</a>
