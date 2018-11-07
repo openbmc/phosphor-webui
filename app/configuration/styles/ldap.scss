@@ -1,0 +1,284 @@
+// LDAP SCSS
+
+#configuration-ldap {
+  max-width: 67.5rem;
+  h1 {
+    margin-bottom: .5em;
+  }
+  .page-header {
+    max-width: 66rem;
+    margin-left: .65em;
+  }
+  input {
+    height: 40px;
+  }
+  select {
+    border-color: $darkgrey;
+    height: 40px;
+    margin: 0;
+  }
+}
+
+.ldap__configuration{
+  width: 100%;
+  .ssl_column {
+    padding: 2px 16px 2px 2px;
+  }
+}
+
+.ldap-groups {
+  max-width: 67.500rem;
+  .page-header {
+    max-width: 66rem;
+    margin-left: .65em;
+  }
+}
+
+.enable__check {
+ margin-right: 2em;
+}
+
+.configure-settings {
+  position: relative;
+  background-color: $lightgrey;
+  padding: 1.5em 1.5em 1.5em 1.5em;
+  margin-top: 1em;
+  margin-bottom: 3em;
+  width: 100%;
+}
+
+.server__info {
+  .ldap__field {
+    padding-left:.5em;
+    padding-bottom:.5em;
+  }
+  .service__type-field {
+    padding-left: .5em;
+  }
+  .configuration__buttons {
+    .button{
+      float: right;
+      margin-left: .5em;
+    }
+    .btn-secondary{
+      background-color: $white;
+    }
+    .btn-secondary:disabled {
+      color: $btn__disabled-txt;
+      border-color: $btn__disabled-border;
+    }
+    display: inline-block;
+  }
+  padding-left: 1.2em;
+  border-left: 1px solid $medgrey;
+}
+.certificate__info {
+  padding-top: .5em;
+  small {
+    font-size: 14px;
+  }
+}
+
+.password-toggle {
+  color: $primebtn__bg;
+  font-size: .8em;
+  float: right;
+  position: relative;
+  z-index: 2;
+  padding: 6px 0 0 0; 
+} 
+
+.password-toggle.disabled {
+    background: transparent;
+    color: $btn__disabled-txt;
+    border: none;
+  }
+
+.ldap__table {
+  border-left: 1px solid $medgrey;
+  border-right: 1px solid $medgrey;
+  .empty__logs {
+    margin-top: 0;
+  }
+  .table__row-header {
+    width: 100%;
+    border-bottom: 1px solid $medgrey;
+    background-color: $darkbg__primary;
+    color: $white;
+    font-weight: 700;
+    padding: 0.3em 0 0 0;
+  }
+  .table__row-header.disabled {
+    opacity: .6;
+  }
+  .table__row-value {
+    width: 100%;
+    border-bottom: 1px solid $medgrey;
+  }
+  .table__cell-ldap {
+    width: 30%;
+    padding: 1.3em 1.5em 0.8em 1.5em;
+  }
+  .table__cell-select {
+    width: 8%;
+    padding: 1.3em 1.5em 0.8em 1.5em;
+    .select-header {
+      padding-top: 1em;
+    }
+  }
+  .table__cell-sort {
+    padding: 0.5em 1em 0 0;
+    margin: 0 -25px 0 -13px;
+  }
+  .table__cell-ldap-group{
+    width: 29%;
+    padding: 1em 0.5em 0.8em 0.75em;
+  }
+  .table__cell-ldap-role {
+    width: 30%;
+    padding: 1em 0.5em 0.8em 0.75em;
+  }
+  .table_cell-ldap {
+    width: 30%;
+  }
+  .table_cell-buttons {
+    width: 32%;
+    text-align: right;
+    padding: .8em .8em .8em .8em;
+  }
+  .trash_button {
+    padding: 0;
+    margin: .5em;
+    width: 1.4em;
+    height: 1.3em;
+  }
+  .edit_button {
+    padding: 0;
+    width: 1.5em;
+    height: 1.2em;
+  }
+}
+
+.btn-add-group, 
+.btn-remove-group {
+  color: $primebtn__bg;
+  padding: .75em 0;
+}
+
+.btn-add-group.disabled,
+.btn-remove-group.disabled {
+  background: $white;
+  color: $btn__disabled-txt;
+  border: none;
+}
+
+.btn-add-group {
+  margin-left: .5em;
+  &:before {
+    content: url(../assets/images/icon-plus.svg);
+    width: 18px;
+    float: left;
+    margin-right: 5px;
+    margin-top: -2px;
+  }
+}
+  .btn-remove-group{
+    margin-left: 1em;
+  &:before {
+    content: url(../assets/images/icon-trashcan-blue.svg);
+    width: 18px;
+    float: left;
+    margin-right: 5px;
+    margin-top: -2px;
+  }
+}
+
+.configure-settings-reset-btn:disabled{
+  color: #999999;
+  border-color: #CCCCCC;
+}
+  
+.btn-remove-group.disabled:before {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
+.btn-add-group.disabled:before {
+  -webkit-filter: grayscale(100%); 
+  filter: grayscale(100%);
+}
+
+.modal__content-ldap {
+  .edit__name{
+    margin-bottom: 1em;
+  }
+  margin-bottom: 1em;
+  padding-bottom: 2em;
+  border-bottom: 1px solid $medgrey;
+  overflow: hidden;
+}
+
+.sort-ascending {
+  display: block;
+  padding: 0;
+  transform: rotate(-90deg);
+  font-size: 1em;
+  color: lighten($darkgrey, 10%);
+  &:hover {
+    color: $darkbg__accent;
+  }
+  &:after {
+    content: '\276F'
+  }
+  &:focus {
+    outline: 0;
+    color: $darkbg__accent;
+  }
+}
+.sort-descending {
+  display: block;
+  padding: 0;
+  transform: rotate(-90deg);
+  font-size: 1em;
+  color: lighten($darkgrey, 10%);
+  &:hover {
+    color: $darkbg__accent;
+  }
+  &:after {
+    content: '\276e'
+  }
+  &:focus {
+    outline: 0;
+    color: $darkbg__accent;
+  }
+}
+
+  .control__radio__label {
+  padding-left: 2em;
+  margin-left: 0.75em;
+  padding-right: 1em;
+  padding-top: 4px;
+  text-transform: none;
+  font-weight: 400;
+  font-size: 16px;
+  color: $black;
+}
+
+.bind__password__error {
+  float: right;
+  color: $darkgrey;
+}
+
+.control-radio 
+.control__indicator-service-type {
+  width: 20px;
+  height: 20px;
+}
+
+.control-radio 
+.control__indicator-service-type:after {
+  top: 3px;
+  left: 3px;
+  width: 10px;
+  height: 10px;
+}
