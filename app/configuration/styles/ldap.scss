@@ -3,9 +3,12 @@ $userInputHeight: 40px;
 .group_label {
   flex: 25%;
 }
+.sort_button_wrapper {
+  padding-top:.3em;
+}
 .group_field {
   flex: 25%;
-  padding-left: 1em;
+  padding-left: 4em;
 }
 
 .group_select {
@@ -19,12 +22,6 @@ $userInputHeight: 40px;
   margin-right: 1em;
 }
 
-.config_button {
-  float: right;
-  padding-left: .8em;
-  padding-right: .8em;
-}
-
 .groups_empty {
   border-style: solid;
   border-width: 1px;
@@ -35,33 +32,33 @@ $userInputHeight: 40px;
 }
 
 .ldap_settings {
-  .modal_configure{
-    padding:1em 2em;
-    .page-header{
+  .modal_configure {
+    padding: 1em 2em;
+    .page-header {
       margin: 1em;
     }
   }
   .modal {
-    .modal__content{
+    .modal__content {
       padding-bottom: 2em;
     }
-    .modify_group_name{
-      display:block;
+    .modify_group_name {
+      display: block;
       padding-top: .5em;
       padding-bottom: 1em;
-      padding-left:.5em;
+      padding-left: .5em;
       font-weight: bold;
     }
-    left:0%;
+    left: 0%;
     bottom: auto;
     min-width: 30em;
-    width:40%;
+    width: 40%;
   }
   input {
     height: $userInputHeight;
   }
   select {
-    height : $userInputHeight;
+    height: $userInputHeight;
   }
   .ldap__error {
     background: lighten($error-color, 20%);
@@ -82,14 +79,48 @@ $userInputHeight: 40px;
     font-weight: 500;
   }
   .ldap__button__wrapper {
-    margin-top:1em;
-    display:inline-block;
+    margin-top: 1em;
+    display: inline-block;
     .disabled {
       pointer-events: none;
     }
     .configure_btn {
       float: right;
       margin-right: 0;
+    }
+  }
+  .sort-ascending {
+    display: block;
+    padding: 0;
+    transform: rotate(-90deg);
+    font-size: 1em;
+    color: lighten($darkgrey, 10%);
+    &:hover {
+      color: $darkbg__accent;
+    }
+    &:after {
+      content: '\276F'
+    }
+    &:focus {
+      outline: 0;
+      color: $darkbg__accent;
+    }
+  }
+  .sort-descending {
+    display: block;
+    padding: 0;
+    transform: rotate(-90deg);
+    font-size: 1em;
+    color: lighten($darkgrey, 10%);
+    &:hover {
+      color: $darkbg__accent;
+    }
+    &:after {
+      content: '\276e'
+    }
+    &:focus {
+      outline: 0;
+      color: $darkbg__accent;
     }
   }
 }
@@ -112,7 +143,7 @@ $userInputHeight: 40px;
     }
   }
 }
-.modal__button-wrapper{
+.modal__button-wrapper {
   .disabled {
     pointer-events: none;
   }
@@ -143,14 +174,6 @@ $userInputHeight: 40px;
       color: #999999;
     }
     @include vertCenter;
-  }
-  .ldap-config__input-wrapper {
-    height: 2.2em;
-    position: relative;
-    margin-bottom: 1em;
-    input {
-      padding-right: 60px;
-    }
   }
 }
 
