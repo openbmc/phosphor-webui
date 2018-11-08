@@ -1,6 +1,6 @@
 <div id="led-switch">
     <div class="row column">
-        <h1>Server LED</h1>
+        <h1>JBOF LED</h1>
         <div class="page-header">
             <h2 class="h4">LED light control</h2>
         </div>
@@ -13,15 +13,15 @@
                        class="toggle-switch toggle-switch__round-flat"
                        type="checkbox"
                        tabindex="0"
-                       ng-click="toggleLED()"
+                       ng-click="toggleLED()"  <!--切换LED状态-->
                        ng-checked="dataService.LED_state == 'on'"
                        ng-disabled="dataService.server_unreachable"
                        >
-                <label for="toggle__switch-round" tabindex="0">Server indicator is <span class="led-switch__status">{{dataService.LED_state}}</span></label>
+                <label for="toggle__switch-round" tabindex="0">JBOF indicator is <span class="led-switch__status">{{dataService.LED_state}}</span></label>
             </div>
             <div class="led-switch__label inline">
-                <p>Server LED light is <span class="led-switch__status">{{dataService.LED_state}}</span></p>
-                <p>Turn the LED light on or off. If the server has an LCD, use this control to display text (on) or not to display text (off) on the LCD.</p>
+                <p>JBOF LED light is <span class="led-switch__status">{{dataService.LED_state}}</span></p>
+                <p>Turn the LED light on or off. If the JBOF has an LCD, use this control to display text (on) or not to display text (off) on the LCD.</p>
             </div>
         </div>
     </div>
