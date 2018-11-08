@@ -14,6 +14,8 @@ window.angular && (function(angular) {
     function($scope, APIUtils, $q, Constants) {
       $scope.groups = [];
       $scope.selectedGroups = [];
+      $scope.sortPropertyName = 'id';
+      $scope.reverse = false;
       $scope.ldapConfig = {};
       $scope.newGroup = {};
       $scope.activeModal = '';
@@ -43,6 +45,8 @@ window.angular && (function(angular) {
                       Constants.LDAP_DISPLAY_MAP[data.config.LDAPSearchScope],
                   ldapType: Constants.LDAP_DISPLAY_MAP[data.config.LDAPType]
                 };
+              } else {
+                $scope.ldapEnabled = false;
               }
             },
             function(error) {
@@ -69,8 +73,26 @@ window.angular && (function(angular) {
         });
       }, true);
 
+
       $scope.getSelectedGroup = function() {
         return $scope.selectedGroups[0];
+      };
+
+      $scope.toggleAll = function() {
+        var toggleStatus = !$scope.all;
+        angular.forEach($scope.groups, function(group) {
+          group.isSelected = toggleStatus;
+        });
+      };
+      $scope.optionToggled = function() {
+        $scope.all = $scope.groups.every(function(group) {
+          return group.isSelected;
+        })
+      };
+
+      $scope.sortBy = function(propertyName, isReverse) {
+        $scope.reverse = isReverse;
+        $scope.sortPropertyName = propertyName;
       };
 
       $scope.saveGroupSettings = function() {
