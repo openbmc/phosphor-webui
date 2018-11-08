@@ -20,15 +20,32 @@
         <div class="table row column">
           <div class="table__head">
             <div class="table__row">
-              <div class="table__cell">
+              <div class="table__cell group_select">
+                <span class="table__cell-label">Select group:</span>
+                <label class="control-check">
+                  <input type="checkbox" name="events__checkAll" ng-click="toggleAll()" ng-model="all"/>
+                  <span class="control__indicator"></span>
+                </label>
+              </div>
+              <div class="table__cell group_id_label">
+                <div class="column small-1 large-1">
+                  <button class="sort-ascending" ng-click="sortGroups('id', true)"></button>
+                  <button class="sort-descending" ng-click="sortGroups('id', false)"></button>
+                </div>
+                Role Group ID
               </div>
               <div class="table__cell group_label">
-                Group ID
+                <div class="column small-1 large-1">
+                  <button class="sort-ascending" ng-click="sortGroups('groupName', true)"></button>
+                  <button class="sort-descending" ng-click="sortGroups('groupName', false)"></button>
+                </div>
+                Group Name
               </div>
               <div class="table__cell group_label">
-                 Group Name
-              </div>
-              <div class="table__cell group_label">
+                <div class="column small-1 large-1">
+                  <button class="sort-ascending" ng-click="sortGroups('privilege', true)"></button>
+                  <button class="sort-descending" ng-click="sortGroups('privilege', false)"></button>
+                </div>
                 Group Privilege
               </div>
             </div>
@@ -38,11 +55,11 @@
               <div class="table__cell group_select">
                 <span class="table__cell-label">Select group:</span>
                 <label class="control-check">
-                  <input type="checkbox" name="events__check" ng-model="group.isSelected"/>
+                  <input type="checkbox" name="events__check" ng-model="group.isSelected" ng-change="optionToggled()"/>
                   <span class="control__indicator"></span>
                 </label>
               </div>
-              <div class="table__cell group_field">
+              <div class="table__cell group_id_field">
                 <span class="table__cell-label">Group id:</span>
                 <span>{{group.id}}</span>
               </div>
