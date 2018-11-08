@@ -1,0 +1,23 @@
+
+<div id="ssd-info">
+    <div class="row column">
+        <h1>SSD information</h1>
+        <div class="page-header">
+            <h2 class="h4">All SSD information present in the system</h2>
+			<a ng-href="data:text/json;charset=utf-8,{{export_data}}" class="inline btn-export float-right" download="{{export_name}}">Export</a>
+        </div>
+    </div>
+
+    <div class="row column" ng-class="{disabled: dataService.server_unreachable || dataService.loading}">
+        <div class="btm-border-grey">
+            <div class="toggle inline">
+                <input id="toggle__switch-round"
+                       class="toggle-switch toggle-switch__round-flat"
+                       type="checkbox"
+                       tabindex="0"
+                       ng-click="showSSDInfo()" >
+                <label for="toggle__switch-round" tabindex="0">SSD information is <span class="ssd-switch__status">{{dataService.SSD_info}}</span></label>
+            </div>
+        </div>
+    </div>
+</div>
