@@ -25,6 +25,44 @@ $userInputHeight: 40px;
     padding-left:.75em;
     padding-right:.75em;
   }
+  .sort-ascending {
+    position: absolute;
+    left: .7em;
+    top: .5em;
+    transform: rotate(-90deg);
+    font-size: 1em;
+    color: lighten($darkgrey, 10%);
+    padding: .3em;
+    display: block;
+    margin: 0 auto;
+    transition: all .2s ease;
+    &:after {
+      content: '\276F'
+    }
+    &:focus {
+      outline: 0;
+      color: $darkbg__accent;
+    }
+  }
+  .sort-descending {
+    position: absolute;
+    left: .7em;
+    top: 1.5em;
+    transform: rotate(90deg);
+    font-size: 1em;
+    color: lighten($darkgrey, 10%);
+    padding: .3em;
+    display: block;
+    margin: 0 auto;
+    transition: all .2s ease;
+    &:after {
+      content: '\276F'
+    }
+    &:focus {
+      outline: 0;
+      color: $darkbg__accent;
+    }
+  }
 }
 .ldap_settings_container {
   display:table;

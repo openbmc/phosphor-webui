@@ -14,6 +14,7 @@ window.angular && (function(angular) {
     function($scope, APIUtils, $q, Constants) {
       $scope.groups = [];
       $scope.selectedGroups = [];
+      $scope.all = false;
       $scope.ldapConfig = {};
       $scope.newGroup = {};
       $scope.activeModal = '';
@@ -67,6 +68,28 @@ window.angular && (function(angular) {
           return group.isSelected === true;
         });
       }, true);
+
+      $scope.toggleAll = function() {
+        var toggleStatus = !$scope.all;
+        angular.forEach($scope.groups, function(group) {
+          group.isSelected = toggleStatus;
+        });
+      };
+      $scope.optionToggled = function() {
+        $scope.all = $scope.groups.every(function(group) {
+          return group.isSelected;
+        })
+      };
+      $scope.sortGroups = function(attribute, isAscending) {
+        var direction = isAscending ? 1 : -1;
+        $scope.groups.sort(function(a, b) {
+          if (a[attribute].toLowerCase() > b[attribute].toLowerCase())
+            return direction;
+          if (a[attribute].toLowerCase() < b[attribute].toLowerCase())
+            return ((direction) * (-1));
+          return 0;
+        });
+      };
 
       $scope.saveGroupSettings = function() {
         $scope.loading = true;
