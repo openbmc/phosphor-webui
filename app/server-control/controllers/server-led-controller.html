@@ -15,8 +15,7 @@
                        tabindex="0"
                        ng-click="toggleLED()"
                        ng-checked="dataService.LED_state == 'on'"
-                       ng-disabled="dataService.server_unreachable"
-                       >
+                       ng-disabled="dataService.server_unreachable">
                 <label for="toggle__switch-round" tabindex="0">JBOF indicator is <span class="led-switch__status">{{dataService.LED_state}}</span></label>
             </div>
             <div class="led-switch__label inline">
