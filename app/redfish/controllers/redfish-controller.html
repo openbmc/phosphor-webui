@@ -20,7 +20,7 @@
   <ul style="list-style: none;">
     <li ng-repeat="(key, value) in value" ng-include="'recurse'"> </li>
   </ul>
-},</br>
+}
 </span>
 
 <span ng-if="isArray(value)">
@@ -31,10 +31,13 @@
       <ul style="list-style: none;">
         <li ng-repeat="(key, value) in val" ng-include="'recurse'"> </li>
       </ul>
-      },</br>
+      }
+      <span ng-if="!$last">,</span>
+      </br>
     </span>
     <span ng-if="!isObject(val) && !isArray(val)">
-    {{val}}
+    {{val | json }}
+    <span ng-if="!$last">,</span>
     </span>
   </div>
 ]
@@ -42,6 +45,8 @@
 
 <span ng-if="!isObject(value) && !isArray(value)">
 <a ng-if="key.indexOf('@odata.id') != -1" ng-href="#{{value}}">"{{value}}"</a>
-<span ng-if="key.indexOf('@odata.id') == -1" ng-href="#{{value}}">{{value | json}}</span>,
+<span ng-if="key.indexOf('@odata.id') == -1" ng-href="#{{value}}">{{value | json}}</span>
 </span>
+<span ng-if="!$last">,</span>
+</br>
 </script>
