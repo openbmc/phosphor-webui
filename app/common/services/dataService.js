@@ -34,6 +34,7 @@ window.angular && (function(angular) {
       this.errorModalDetails = {};
 
       this.ignoreHttpError = false;
+      this.systemName = '';
 
       this.configJson = require('../../../config.json');
 
@@ -133,6 +134,10 @@ window.angular && (function(angular) {
 
       this.deactivateErrorModal = function() {
         this.displayErrorModal = false;
+      };
+
+      this.setSystemName = function(sysName) {
+        this.systemName = sysName;
       };
     }
   ]);
