@@ -23,6 +23,7 @@ $title-minWidth: 210px;
     text-decoration: none;
     border-left: 1px solid $medgrey;
     border-right: 1px solid $medgrey;
+    width: 100%;
     border-bottom: 0;
     vertical-align: middle;
     @include fastTransition-all;

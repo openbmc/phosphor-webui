@@ -1,7 +1,9 @@
 $userInputHeight: 40px;
 
 .user-manage__form {
+  width: 100%;
   label {
+    width: 100%;
     min-width: 210px;
     font-weight: 700;
     margin-right: 4em;

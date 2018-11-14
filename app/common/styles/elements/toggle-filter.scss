@@ -1,9 +1,7 @@
 // toggle buttons for filtering
 .toggle-filter {
   display: inline-block;
-  @media (min-width: 1300px) {
-    margin-top: -25px;
-  }
+
   .content-label {
     margin-bottom: .4em;
   }

@@ -19,8 +19,8 @@
         <button class="clear-input" ng-click="clear()">&#10005;</button>
         <input id="content__search-submit" type="submit" class="btn btn-primary content__search-submit" value="Filter" ng-click="doSearchOnClick()"/>
       </div>
+    </div>  <!-- end search -->
 
-    </div>
     <div class="toggle-filter">
       <p class="content-label">FILTER BY SEVERITY</p>
       <button class="inline first btn-primary" ng-click="toggleSeverityAll()"
@@ -37,7 +37,7 @@
       </button>
     </div>
 
-  </section> <!-- end search -->
+  </section>
 
   <section class="row column" ng-show="filteredSensorData.length == 0">
     <!-- message -->
