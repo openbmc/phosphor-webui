@@ -1,0 +1,55 @@
+<loader loading="loading"></loader>
+<div id="sel-log">
+    <div class="row column" ng-show="selLogs.length != 0">
+        <h1>System Event Logs</h1>
+        <div class="page-header">
+          <h2 class="inline h4">All SEL Entries</h2>
+          <a ng-href="data:text/json;charset=utf-8,{{selLogs}}" class="inline btn-export float-right"  download="seLogs.json" ng-show="selLogs.length">Export </a>
+          <button class="inline clear-input float-right btn-secondary" ng-click="clearSelEntries()" ng-show="selLogs.length">&#10005; Clear SEL</button>
+        </div>
+    </div>
+    <section class="row column" ng-show="selLogs.length != 0">
+      <p class="content-label">Filter SEL Logs</p>
+      <div class="content__search">
+        <label for="content__search-input">Search</label>
+        <input id="content__search-input" type="text" ng-model="customSearch" ng-keydown="doSearchOnEnter($event)"/>
+        <div class="search-submit__wrapper">
+          <button class="clear-input" ng-click="clear()">&#10005;</button>
+          <input id="content__search-submit" type="submit" class="btn btn-primary content__search-submit" value="Filter" ng-click="doSearchOnClick()"/>
+        </div>
+      </div>
+    </section>
+    <section id="sel-log__events" class="table row column" ng-show="selLogs.length != 0">
+      <div class="table row column">
+        <div class="table__head">
+          <div class="table__row">
+            <div class="table__cell sel-log__col-wrapper" ng-click="sort('Id')">ID
+              <span class="glyphicon sort-icon" ng-show="sortKey=='Id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </div>
+            <div class="table__cell sel-log__col-wrapper" ng-click="sort('Created')">Timestamp
+              <span class="glyphicon sort-icon" ng-show="sortKey=='Created'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </div>
+            <div class="table__cell sel-log__col-wrapper">Name</div>
+            <div class="table__cell sel-log__col-wrapper" ng-click="sort('SensorType')">Type
+              <span class="glyphicon sort-icon" ng-show="sortKey=='SensorType'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </div>
+            <div class="table__cell sel-log__col-wrapper" ng-click="sort('Severity')">Severity
+              <span class="glyphicon sort-icon" ng-show="sortKey=='Severity'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </div>
+            <div class="table__cell sel-log__col-wrapper">Description</div>
+          </div>
+        </div>
+        <div class="table__body">
+          <div class="table__row" dir-paginate="log in (selLogs | filter:filterBySearchTerms | orderBy:sortKey:reverse) | itemsPerPage:itemsPerPage">
+            <div class="table__cell sel-log__col-wrapper">{{log.Id}}</div>
+            <div class="table__cell sel-log__col-wrapper">{{log.Created}}</div>
+            <div class="table__cell sel-log__col-wrapper">{{log.Name}}</div>
+            <div class="table__cell sel-log__col-wrapper">{{log.SensorType}}</div>
+            <div class="table__cell sel-log__col-wrapper">{{log.Severity}}</div>
+            <div class="table__cell sel-log__col-wrapper">{{log.Message}}</div>
+          </div>
+        </div>
+      </div>
+      <dir-pagination-controls></dir-pagination-controls>
+    </section>
+</div> <!-- end event log -->
