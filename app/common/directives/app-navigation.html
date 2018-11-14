@@ -72,32 +72,34 @@
       <a href="#/server-health/inventory-overview" tabindex="7">Hardware status</a></li>
     <li ng-class="{'active': (path == '/server-health/sensors-overview' || path == '/server-health/sensors')}">
       <a href="#/server-health/sensors-overview" ng-click="closeSubnav()" tabindex="8">Sensors</a></li>
+    <li ng-class="{'active': (path == '/server-health/sel')}" ng-show="dataService.configJson.redfishSupportEnabled">
+      <a href="#/server-health/sel" ng-click="closeSubnav()" tabindex="9">SEL</a></li>
   </ul>
   <ul class="nav__second-level btn-control" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'server-control')}">
     <li ng-class="{'active': (path == '/server-control' || path == '/server-control/power-operations')}">
-      <a href="#/server-control/power-operations" tabindex="9" ng-click="closeSubnav()">Server power operations</a>
+      <a href="#/server-control/power-operations" tabindex="10" ng-click="closeSubnav()">Server power operations</a>
     </li>
     <li ng-class="{'active': (path == '/server-control/power-usage')}">
-      <a href="#/server-control/power-usage" tabindex="10" ng-click="closeSubnav()">Manage power usage</a></li>
+      <a href="#/server-control/power-usage" tabindex="11" ng-click="closeSubnav()">Manage power usage</a></li>
     <li ng-class="{'active': (path == '/server-control/server-led')}">
-      <a href="#/server-control/server-led" tabindex="11" ng-click="closeSubnav()">Server LED</a></li>
+      <a href="#/server-control/server-led" tabindex="12" ng-click="closeSubnav()">Server LED</a></li>
     <li ng-class="{'active': (path == '/server-control/bmc-reboot')}">
-      <a href="#/server-control/bmc-reboot" tabindex="12" ng-click="closeSubnav()">Reboot BMC</a></li>
+      <a href="#/server-control/bmc-reboot" tabindex="13" ng-click="closeSubnav()">Reboot BMC</a></li>
     <li ng-class="{'active': (path == '/server-control/remote-console')}">
-      <a href="#/server-control/remote-console" tabindex="13" ng-click="closeSubnav()">Serial over LAN console</a></li>
+      <a href="#/server-control/remote-console" tabindex="14" ng-click="closeSubnav()">Serial over LAN console</a></li>
   </ul>
   <ul class="nav__second-level btn-firmware" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'configuration')}">
     <li ng-class="{'active': (path == '/configuration' || path == '/configuration/network')}">
-      <a href="#/configuration/network" tabindex="14" ng-click="closeSubnav()">Network settings</a></li>
+      <a href="#/configuration/network" tabindex="15" ng-click="closeSubnav()">Network settings</a></li>
     <li ng-class="{'active': (path == '/configuration' || path == '/configuration/snmp')}">
-      <a href="#/configuration/snmp" tabindex="15" ng-click="closeSubnav()">SNMP settings</a></li>
+      <a href="#/configuration/snmp" tabindex="16" ng-click="closeSubnav()">SNMP settings</a></li>
     <li ng-class="{'active': (path == '/configuration' || path == '/configuration/firmware')}">
-      <a href="#/configuration/firmware" tabindex="16" ng-click="closeSubnav()">Firmware</a></li>
+      <a href="#/configuration/firmware" tabindex="17" ng-click="closeSubnav()">Firmware</a></li>
     <li ng-class="{'active': (path == '/configuration' || path == '/configuration/date-time')}">
-      <a href="#/configuration/date-time" tabindex="17" ng-click="closeSubnav()">Date and time settings</a></li>
+      <a href="#/configuration/date-time" tabindex="18" ng-click="closeSubnav()">Date and time settings</a></li>
   </ul>
   <ul class="nav__second-level btn-users" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'users')}">
     <li ng-class="{'active': (path == '/users' || path == '/users/manage-accounts')}">
-      <a href="#/users/manage-accounts" tabindex="18" ng-click="closeSubnav()">Manage user accounts</a></li>
+      <a href="#/users/manage-accounts" tabindex="19" ng-click="closeSubnav()">Manage user account</a></li>
   </ul>
 </nav>
