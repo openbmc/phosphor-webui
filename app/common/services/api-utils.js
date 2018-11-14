@@ -57,6 +57,46 @@ window.angular && (function(angular) {
           return ip.match(
               /\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/);
         },
+        getRedfishSysName: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + '/redfish/v1/Systems',
+                   withCredentials: true
+                 })
+              .then(
+                  function(response) {
+                    var sysUrl = response.data['Members'][0]['@odata.id'];
+                    return sysUrl.split('/').pop(-1);
+                  },
+                  function(error) {
+                    console.log(JSON.stringify(error));
+                  });
+        },
+        getSELogs: function() {
+          var uri = '/redfish/v1/Systems/' + DataService.systemName +
+              '/LogServices/EventLog/Entries';
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + uri,
+                   withCredentials: true
+                 })
+              .then(
+                  function(response) {
+                    return response.data['Members'];
+                  },
+                  function(error) {
+                    console.log(JSON.stringify(error));
+                  });
+        },
+        clearSELogs: function(uri) {
+          var uri = '/redfish/v1/Systems/' + DataService.systemName +
+              '/LogServices/EventLog/Actions/LogService.ClearLog';
+          return $http({
+            method: 'POST',
+            url: DataService.getHost() + uri,
+            withCredentials: true
+          });
+        },
         deleteObject: function(path) {
           return $http({
                    method: 'POST',
