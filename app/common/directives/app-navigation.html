@@ -72,6 +72,8 @@
       <a href="#/server-health/inventory-overview" tabindex="7">Hardware status</a></li>
     <li ng-class="{'active': (path == '/server-health/sensors-overview' || path == '/server-health/sensors')}">
       <a href="#/server-health/sensors-overview" ng-click="closeSubnav()" tabindex="8">Sensors</a></li>
+    <li ng-class="{'active': (path == '/server-health/sel' || path == '/server-health/sel')}">
+      <a href="#/server-health/sel" ng-click="closeSubnav()" tabindex="19">SEL</a></li>
   </ul>
   <ul class="nav__second-level btn-control" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'server-control')}">
     <li ng-class="{'active': (path == '/server-control' || path == '/server-control/power-operations')}">
