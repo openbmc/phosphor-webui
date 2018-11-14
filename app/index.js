@@ -8,7 +8,6 @@
  */
 
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
 
 import angular from 'angular';
 import angular_animate from 'angular-animate';
