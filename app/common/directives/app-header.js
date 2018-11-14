@@ -95,10 +95,23 @@ window.angular && (function(angular) {
               });
             };
 
+            $scope.loadSystemName = function() {
+              // Dynamically get ComputerSystems Name/serial
+              // which differs across OEM's
+              APIUtils.getRedfishSysName().then(
+                  function(res) {
+                    dataService.setSystemName(res);
+                  },
+                  function(error) {
+                    console.log(JSON.stringify(error));
+                  });
+            };
+
             function loadData() {
               $scope.loadServerStatus();
               $scope.loadNetworkInfo();
               $scope.loadServerHealth();
+              $scope.loadSystemName();
             }
 
             loadData();
