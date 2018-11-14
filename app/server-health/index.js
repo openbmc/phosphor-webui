@@ -42,6 +42,11 @@ window.angular && (function(angular) {
                 'controller': 'sensorsOverviewController',
                 authenticated: true
               })
+              .when('/server-health/sys-log', {
+                'template': require('./controllers/syslog-controller.html'),
+                'controller': 'sysLogController',
+                authenticated: true
+              })
               .when('/server-health', {
                 'template': require('./controllers/log-controller.html'),
                 'controller': 'logController',
