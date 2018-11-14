@@ -18,6 +18,10 @@
   width: 100%;
 }
 
+.table__body {
+  width: 100%;
+}
+
 .table__row {
   display: flex;
   width: 100%;
@@ -76,6 +80,7 @@
 
 // Table Head
 .table__head {
+   width: 100%;
   .table__row {
     display: none;
     font-weight: 700;

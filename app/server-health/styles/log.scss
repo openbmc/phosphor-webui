@@ -1,6 +1,9 @@
 // Event Log SCSS
 #event-log {
 
+  .row {
+    width: 100%;
+  }
   // Dropwdowns filter
   .dropdown__date.row {
     padding: .5em;
@@ -268,7 +271,7 @@
     font-weight: 400;
     margin-left: 1em;
     @include mediaQuery(small) {
-      margin-left: 4.5em;
+      margin-left: 1.5em;
       margin-right: 1em;
     }
     word-break: break-all;
