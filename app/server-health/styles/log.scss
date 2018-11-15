@@ -357,6 +357,15 @@
       float: right;
       margin-top: -5px;
     }
+    .disabled {
+      opacity: 0.2;
+      pointer-events: none;
+      cursor: default;
+      text-decoration: none;
+    }
+    .disabled:hover {
+      text-decoration: none;
+    }
   }
   .event__icon {
     width: 20px;
