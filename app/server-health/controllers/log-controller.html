@@ -54,13 +54,13 @@
         <p class="inline" ng-hide="selectedEvents.length"><span class="event__select-count">{{filteredLogs.length}}</span> Events are logged</p>
         <!-- when logs are selected, this text changes to show how many logs are checked -->
         <div class="event__actions">
-          <button class="inline btn-delete" ng-show="selectedEvents.length || all" ng-click="confirm= ! confirm">
+          <button class="inline btn-delete" ng-class="{'disabled': (!selectedEvents.length && !all)}" ng-disabled="!selectedEvents.length && !all" ng-click="confirm= ! confirm">
             <img class="event__icon" src="../../assets/images/icon-trashcan-white.svg" alt="">Delete
           </button>
-          <button class="inline btn-resolve" ng-class="{'disabled': ((selectedEvents|unResolvedCount) == 0)}" ng-show="selectedEvents.length || all" ng-click="resolve()" ng-disabled="(selectedEvents|unResolvedCount) == 0">
+          <button class="inline btn-resolve" ng-class="{'disabled': ((selectedEvents|unResolvedCount) == 0)}" ng-click="resolve()" ng-disabled="(selectedEvents|unResolvedCount) == 0">
             <img class="event__icon" src="../../assets/images/icon-check-white.svg" alt="">Mark as resolved
           </button>
-            <a ng-href="data:text/json;charset=utf-8,{{export_data}}" class="inline btn-export"  download="{{export_name}}" ng-show="selectedEvents.length || all">Export</a>
+            <a ng-href="{{export_data}}" class="inline btn-export"  ng-class="{'disabled': (!selectedEvents.length && !all)}" download="{{export_name}}">Export</a>
         </div>
       </div>
     </div>
