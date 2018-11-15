@@ -157,7 +157,13 @@ window.angular && (function(angular) {
             $scope.selectedEvents.forEach(function(item) {
               data[item.data.key] = item.data.value;
             });
-            $scope.export_data = JSON.stringify(data);
+
+            if ($scope.selectedEvents.length || $scope.all) {
+              $scope.export_data =
+                  'data:text/json;charset=utf-8,' + JSON.stringify(data);
+            } else {
+              $scope.export_data = '';
+            }
           }
 
           $scope.selectUserTimezone = function() {
