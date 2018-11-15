@@ -157,6 +157,7 @@ window.angular && (function(angular) {
             $scope.selectedEvents.forEach(function(item) {
               data[item.data.key] = item.data.value;
             });
+
             $scope.export_data = JSON.stringify(data);
           }
 

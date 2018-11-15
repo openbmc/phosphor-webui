@@ -117,3 +117,10 @@ button, .button, .submit {
     top: 0px;
   }
 }
+
+.not-active-link {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  color: black;
+}
