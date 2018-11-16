@@ -11,7 +11,9 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.common.services').service('apiInterceptor', [
-    '$q', '$rootScope', 'dataService',
+    '$q',
+    '$rootScope',
+    'dataService',
     function($q, $rootScope, dataService) {
       return {
         'request': function(config) {
@@ -58,8 +60,8 @@ window.angular && (function(angular) {
             dataService.loading = false;
           }
           return $q.reject(rejection);
-        }
+        },
       };
-    }
+    },
   ]);
 })(window.angular);

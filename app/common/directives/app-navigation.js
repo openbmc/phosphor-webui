@@ -8,7 +8,9 @@ window.angular && (function(angular) {
           'template': require('./app-navigation.html'),
           'scope': {'path': '=', 'showNavigation': '='},
           'controller': [
-            '$scope', '$location', 'dataService',
+            '$scope',
+            '$location',
+            'dataService',
             function($scope, $location, dataService) {
               $scope.dataService = dataService;
               $scope.showSubMenu = false;
@@ -24,7 +26,7 @@ window.angular && (function(angular) {
                 $scope.showSubMenu = false;
               };
               $scope.$watch('path', function() {
-                var urlRoot = $location.path().split('/')[1];
+                const urlRoot = $location.path().split('/')[1];
                 if (urlRoot != '') {
                   $scope.firstLevel = urlRoot;
                 } else {
@@ -33,8 +35,8 @@ window.angular && (function(angular) {
                 $scope.showSubMenu = false;
               });
               $scope.$watch('showNavigation', function() {
-                var paddingTop = 0;
-                var urlRoot = $location.path().split('/')[1];
+                let paddingTop = 0;
+                const urlRoot = $location.path().split('/')[1];
                 if (urlRoot != '') {
                   $scope.firstLevel = urlRoot;
                 } else {
@@ -48,10 +50,10 @@ window.angular && (function(angular) {
                 dataService.bodyStyle = {'padding-top': paddingTop + 'px'};
                 $scope.navStyle = {'top': paddingTop + 'px'};
               });
-            }
+            },
           ],
-          link: function(scope, element, attributes) {
-            var rawNavElement = angular.element(element)[0];
+          'link': function(scope, element, attributes) {
+            const rawNavElement = angular.element(element)[0];
             angular.element(window.document).bind('click', function(event) {
               if (rawNavElement.contains(event.target)) return;
 
@@ -61,7 +63,7 @@ window.angular && (function(angular) {
                 });
               }
             });
-          }
+          },
         };
       });
 })(window.angular);
