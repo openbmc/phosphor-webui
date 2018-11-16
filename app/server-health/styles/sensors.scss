@@ -9,6 +9,9 @@ $title-minWidth: 210px;
 .header__actions-bar {
   padding-left: 1.5em;
   font-weight: 700;
+  .sensor__title {
+    margin-left: 1.5em;
+  }
   .sensor__reading {
     margin-right: .3em;
   }
@@ -139,7 +142,11 @@ $title-minWidth: 210px;
 #sensors, #sensors-overview {
 
   .toggle-filter {
-    margin-right: 0;
+    margin-bottom: 20px;
+  }
+  .column, .columns {
+    padding-left: 0px;
+    padding-right: 0px;
   }
 }
 
