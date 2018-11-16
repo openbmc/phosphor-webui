@@ -24,7 +24,7 @@ window.angular && (function(angular) {
       $scope.export_name = 'sensors.json';
       $scope.loading = false;
       $scope.jsonData = function(data) {
-        var dt = {};
+        const dt = {};
         data.data.forEach(function(item) {
           dt[item.original_data.key] = item.original_data.value;
         });
@@ -37,7 +37,7 @@ window.angular && (function(angular) {
       };
 
       $scope.doSearchOnEnter = function(event) {
-        var search =
+        const search =
             $scope.customSearch.replace(/^\s+/g, '').replace(/\s+$/g, '');
         if (event.keyCode === 13 && search.length >= 2) {
           $scope.searchTerms = $scope.customSearch.split(' ');
@@ -49,7 +49,7 @@ window.angular && (function(angular) {
       };
 
       $scope.doSearchOnClick = function() {
-        var search =
+        const search =
             $scope.customSearch.replace(/^\s+/g, '').replace(/\s+$/g, '');
         if (search.length >= 2) {
           $scope.searchTerms = $scope.customSearch.split(' ');
@@ -98,7 +98,7 @@ window.angular && (function(angular) {
         if ($scope.selectedSeverity.all) return true;
 
         return (
-            (sensor.severity_flags.normal && $scope.selectedSeverity.normal) ||
+          (sensor.severity_flags.normal && $scope.selectedSeverity.normal) ||
             (sensor.severity_flags.warning &&
              $scope.selectedSeverity.warning) ||
             (sensor.severity_flags.critical &&
@@ -107,10 +107,11 @@ window.angular && (function(angular) {
       $scope.filterBySearchTerms = function(sensor) {
         if (!$scope.searchTerms.length) return true;
 
-        for (var i = 0, length = $scope.searchTerms.length; i < length; i++) {
+        for (let i = 0, length = $scope.searchTerms.length; i < length; i++) {
           if (sensor.search_text.indexOf($scope.searchTerms[i].toLowerCase()) ==
-              -1)
+              -1) {
             return false;
+          }
         }
         return true;
       };
@@ -126,6 +127,6 @@ window.angular && (function(angular) {
       };
 
       $scope.loadSensorData();
-    }
+    },
   ]);
 })(angular);

@@ -35,7 +35,7 @@ window.angular && (function(angular) {
             };
 
             $scope.getTitle = function(event) {
-              var title = event.type;
+              let title = event.type;
               if ((event.eventID != 'None') && (event.description != 'None')) {
                 title = event.eventID + ': ' + event.description;
               }
@@ -43,7 +43,7 @@ window.angular && (function(angular) {
             };
 
             $scope.getAdditionalData = function(event) {
-              var data = event.additional_data;
+              let data = event.additional_data;
               // Stick the type into the additional data if it isn't
               // already in the title.
               if ($scope.getTitle(event).search(event.type) == -1) {
@@ -53,10 +53,10 @@ window.angular && (function(angular) {
             };
             $scope.copyText = function(event) {
               return event.description + ' ' + event.additional_data;
-            }
-          }
-        ]
+            };
+          },
+        ],
       };
-    }
+    },
   ]);
 })(window.angular);

@@ -24,10 +24,10 @@ window.angular && (function(angular) {
       $scope.immediately_confirm = false;
       $scope.loading = true;
 
-      var pollChassisStatusTimer = undefined;
-      var pollStartTime = null;
+      let pollChassisStatusTimer = undefined;
+      let pollStartTime = null;
 
-      //@TODO: call api and get proper state
+      // @TODO: call api and get proper state
 
       APIUtils.getLastPowerTime()
           .then(
@@ -70,7 +70,7 @@ window.angular && (function(angular) {
                     $interpolate(
                         Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
                         {status: error.status, description: error.statusText}) :
-                    error
+                    error,
               });
               $scope.loading = false;
             });
@@ -84,9 +84,9 @@ window.angular && (function(angular) {
       };
 
       function pollChassisStatusTillOff() {
-        var deferred = $q.defer();
+        const deferred = $q.defer();
         pollChassisStatusTimer = $interval(function() {
-          var now = new Date();
+          const now = new Date();
           if ((now.getTime() - pollStartTime.getTime()) >=
               Constants.TIMEOUT.CHASSIS_OFF) {
             $interval.cancel(pollChassisStatusTimer);
@@ -131,7 +131,7 @@ window.angular && (function(angular) {
                     $interpolate(
                         Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
                         {status: error.status, description: error.statusText}) :
-                    error
+                    error,
               });
               $scope.loading = false;
             });
@@ -181,7 +181,7 @@ window.angular && (function(angular) {
                     $interpolate(
                         Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
                         {status: error.status, description: error.statusText}) :
-                    error
+                    error,
               });
               $scope.loading = false;
             });
@@ -218,7 +218,7 @@ window.angular && (function(angular) {
                     $interpolate(
                         Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
                         {status: error.status, description: error.statusText}) :
-                    error
+                    error,
               });
               $scope.loading = false;
             });
@@ -253,7 +253,7 @@ window.angular && (function(angular) {
                     $interpolate(
                         Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
                         {status: error.status, description: error.statusText}) :
-                    error
+                    error,
               });
               $scope.loading = false;
             });
@@ -265,6 +265,6 @@ window.angular && (function(angular) {
         $scope.confirm = true;
         $scope.immediately_confirm = true;
       };
-    }
+    },
   ]);
 })(angular);

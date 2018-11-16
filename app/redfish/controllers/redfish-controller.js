@@ -20,7 +20,7 @@ window.angular && (function(angular) {
       $http({
         method: 'GET',
         url: DataService.getHost() + '/redfish/' + $routeParams.path,
-        withCredentials: true
+        withCredentials: true,
       })
           .then(
               function(response) {
@@ -33,7 +33,7 @@ window.angular && (function(angular) {
           .finally(function() {
             $scope.loading = false;
           });
-    }
+    },
 
   ]);
 })(angular);
