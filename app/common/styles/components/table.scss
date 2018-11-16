@@ -109,6 +109,13 @@
   @include indeterminate-bar;
 }
 
+// sensor fixed table header on scroll
+.fixed-table-header{
+  position: sticky;
+  top: 130px;
+  z-index: 1;
+}
+
 //sortable heading
 .sort-heading {
   position: relative;
