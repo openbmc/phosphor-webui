@@ -49,7 +49,7 @@
   </section>
 
   <section id="sensor-categories" class="row column" ng-show="filteredSensorData.length">
-    <div class="row column header-row">
+    <div class="row column header-row" change-class-on-scroll offset="270" scroll-class="fixed-table-header">
       <div class="column large-12 header__actions-bar">
         <p class="inline sensor__title">Sensors ({{filteredSensorData.length}})</p>
         <p class="inline sensor__reading">Low critical</p>
