@@ -12,12 +12,28 @@ window.angular && (function(angular) {
               return data.length;
             }
           })
-      .filter('quiescedToError', function() {
-        return function(state) {
-          if (state.toLowerCase() == 'quiesced') {
-            return 'Error';
+      .filter(
+          'quiescedToError',
+          function() {
+            return function(state) {
+              if (state.toLowerCase() == 'quiesced') {
+                return 'Error';
+              } else {
+                return state;
+              }
+            }
+          })
+      .filter('localeDate', function() {
+        return function(timestamp, utc = false) {
+          var dt = new Date(timestamp);
+          if (isNaN(dt)) {
+            return 'not available';
+          } else if (utc) {
+            return dt.toUTCString();
           } else {
-            return state;
+            var ro = Intl.DateTimeFormat().resolvedOptions();
+            return dt.toLocaleString(
+                ro.lang, {timeZone: ro.timeZone, timeZoneName: 'short'});
           }
         }
       });
