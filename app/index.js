@@ -41,6 +41,7 @@ import log_event from './common/directives/log-event.js';
 import log_filter from './common/directives/log-filter.js';
 import log_search_control from './common/directives/log-search-control.js';
 import toggle_flag from './common/directives/toggle-flag.js';
+import change_class_onscroll from './common/directives/change-class-onscroll.js';
 import firmware_list from './common/directives/firmware-list.js';
 import file from './common/directives/file.js';
 import input from './common/directives/input.js';
