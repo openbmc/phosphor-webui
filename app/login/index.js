@@ -17,8 +17,8 @@ window.angular && (function(angular) {
           $routeProvider.when('/login', {
             'template': require('./controllers/login-controller.html'),
             'controller': 'LoginController',
-            authenticated: false
+            'authenticated': false,
           });
-        }
+        },
       ]);
 })(window.angular);

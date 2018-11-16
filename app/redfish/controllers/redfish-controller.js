@@ -11,7 +11,10 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.redfish').controller('redfishController', [
-    '$scope', '$http', 'dataService', '$routeParams',
+    '$scope',
+    '$http',
+    'dataService',
+    '$routeParams',
     function($scope, $http, DataService, $routeParams) {
       $scope.redfishData = {};
       $scope.isObject = angular.isObject;
@@ -20,7 +23,7 @@ window.angular && (function(angular) {
       $http({
         method: 'GET',
         url: DataService.getHost() + '/redfish/' + $routeParams.path,
-        withCredentials: true
+        withCredentials: true,
       })
           .then(
               function(response) {
@@ -33,7 +36,7 @@ window.angular && (function(angular) {
           .finally(function() {
             $scope.loading = false;
           });
-    }
+    },
 
   ]);
 })(angular);

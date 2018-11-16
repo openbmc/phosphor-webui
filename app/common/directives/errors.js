@@ -9,12 +9,13 @@ window.angular && (function(angular) {
         'template': require('./errors.html'),
         'scope': {'path': '='},
         'controller': [
-          '$scope', 'dataService',
+          '$scope',
+          'dataService',
           function($scope, dataService) {
             $scope.dataService = dataService;
-          }
-        ]
+          },
+        ],
       };
-    }
+    },
   ]);
 })(window.angular);

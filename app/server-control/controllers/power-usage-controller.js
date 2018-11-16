@@ -10,7 +10,11 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.serverControl').controller('powerUsageController', [
-    '$scope', '$window', 'APIUtils', '$route', '$q',
+    '$scope',
+    '$window',
+    'APIUtils',
+    '$route',
+    '$q',
     function($scope, $window, APIUtils, $route, $q) {
       $scope.power_consumption = '';
       $scope.power_cap = {};
@@ -22,7 +26,7 @@ window.angular && (function(angular) {
       function loadPowerData() {
         $scope.loading = true;
 
-        var getPowerCapPromise = APIUtils.getPowerCap().then(
+        const getPowerCapPromise = APIUtils.getPowerCap().then(
             function(data) {
               $scope.power_cap = data.data;
             },
@@ -30,7 +34,7 @@ window.angular && (function(angular) {
               console.log(JSON.stringify(error));
             });
 
-        var getPowerConsumptionPromise = APIUtils.getPowerConsumption().then(
+        const getPowerConsumptionPromise = APIUtils.getPowerConsumption().then(
             function(data) {
               $scope.power_consumption = data;
             },
@@ -38,7 +42,7 @@ window.angular && (function(angular) {
               console.log(JSON.stringify(error));
             });
 
-        var promises = [
+        const promises = [
           getPowerConsumptionPromise,
           getPowerCapPromise,
         ];
@@ -57,7 +61,7 @@ window.angular && (function(angular) {
           return;
         }
         $scope.loading = true;
-        var promises = [
+        const promises = [
           setPowerCapValue(),
           setPowerCapEnable(),
         ];
@@ -92,6 +96,6 @@ window.angular && (function(angular) {
                   console.log(JSON.stringify(error));
                 });
       }
-    }
+    },
   ]);
 })(angular);

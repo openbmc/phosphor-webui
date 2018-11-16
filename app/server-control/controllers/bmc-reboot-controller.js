@@ -10,7 +10,10 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.serverControl').controller('bmcRebootController', [
-    '$scope', '$window', 'APIUtils', 'dataService',
+    '$scope',
+    '$window',
+    'APIUtils',
+    'dataService',
     function($scope, $window, APIUtils, dataService) {
       $scope.dataService = dataService;
       $scope.confirm = false;
@@ -30,11 +33,11 @@ window.angular && (function(angular) {
       $scope.reboot = function() {
         dataService.setUnreachableState();
         APIUtils.bmcReboot(function(response) {
-          //@NOTE: using common event to reload server status, may be a better
+          // @NOTE: using common event to reload server status, may be a better
           // event listener name?
           $scope.$emit('user-logged-in', {});
         });
       };
-    }
+    },
   ]);
 })(angular);

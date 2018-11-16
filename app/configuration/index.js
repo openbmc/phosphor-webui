@@ -18,28 +18,28 @@ window.angular && (function(angular) {
               .when('/configuration/network', {
                 'template': require('./controllers/network-controller.html'),
                 'controller': 'networkController',
-                authenticated: true
+                'authenticated': true,
               })
               .when('/configuration/date-time', {
                 'template': require('./controllers/date-time-controller.html'),
                 'controller': 'dateTimeController',
-                authenticated: true
+                'authenticated': true,
               })
               .when('/configuration', {
                 'template': require('./controllers/network-controller.html'),
                 'controller': 'networkController',
-                authenticated: true
+                'authenticated': true,
               })
               .when('/configuration/snmp', {
                 'template': require('./controllers/snmp-controller.html'),
                 'controller': 'snmpController',
-                authenticated: true
+                'authenticated': true,
               })
               .when('/configuration/firmware', {
                 'template': require('./controllers/firmware-controller.html'),
                 'controller': 'firmwareController',
-                authenticated: true
+                'authenticated': true,
               });
-        }
+        },
       ]);
 })(window.angular);

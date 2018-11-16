@@ -10,8 +10,17 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.configuration').controller('firmwareController', [
-    '$scope', '$window', 'APIUtils', 'dataService', '$location',
-    '$anchorScroll', 'Constants', '$interval', '$q', '$timeout', '$interpolate',
+    '$scope',
+    '$window',
+    'APIUtils',
+    'dataService',
+    '$location',
+    '$anchorScroll',
+    'Constants',
+    '$interval',
+    '$q',
+    '$timeout',
+    '$interpolate',
     function(
         $scope, $window, APIUtils, dataService, $location, $anchorScroll,
         Constants, $interval, $q, $timeout, $interpolate) {
@@ -45,8 +54,8 @@ window.angular && (function(angular) {
       $scope.download_error_msg = '';
       $scope.download_success = false;
 
-      var pollActivationTimer = undefined;
-      var pollDownloadTimer = undefined;
+      let pollActivationTimer = undefined;
+      let pollDownloadTimer = undefined;
 
       $scope.error = {modal_title: '', title: '', desc: '', type: 'warning'};
 
@@ -63,12 +72,12 @@ window.angular && (function(angular) {
       };
 
       function waitForActive(imageId) {
-        var deferred = $q.defer();
-        var startTime = new Date();
+        const deferred = $q.defer();
+        const startTime = new Date();
         pollActivationTimer = $interval(function() {
           APIUtils.getActivation(imageId).then(
               function(state) {
-                //@TODO: display an error message if image "Failed"
+                // @TODO: display an error message if image "Failed"
                 if (((/\.Active$/).test(state.data)) ||
                     ((/\.Failed$/).test(state.data))) {
                   $interval.cancel(pollActivationTimer);
@@ -82,7 +91,7 @@ window.angular && (function(angular) {
                 console.log(error);
                 deferred.reject(error);
               });
-          var now = new Date();
+          const now = new Date();
           if ((now.getTime() - startTime.getTime()) >=
               Constants.TIMEOUT.ACTIVATION) {
             $interval.cancel(pollActivationTimer);
@@ -107,7 +116,7 @@ window.angular && (function(angular) {
                     modal_title: 'Error during activation call',
                     title: 'Error during activation call',
                     desc: JSON.stringify(error.data),
-                    type: 'Error'
+                    type: 'Error',
                   });
                 })
             .then(function(activationState) {
@@ -121,7 +130,7 @@ window.angular && (function(angular) {
                           modal_title: 'Error during image activation',
                           title: 'Error during image activation',
                           desc: JSON.stringify(error.data),
-                          type: 'Error'
+                          type: 'Error',
                         });
                       })
                   .then(function(state) {
@@ -145,7 +154,7 @@ window.angular && (function(angular) {
                                 modal_title: 'Error during BMC reboot',
                                 title: 'Error during BMC reboot',
                                 desc: JSON.stringify(error.data),
-                                type: 'Error'
+                                type: 'Error',
                               });
                             });
                       }, 10000);
@@ -181,7 +190,7 @@ window.angular && (function(angular) {
                     $interpolate(
                         Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
                         {status: error.status, description: error.statusText}) :
-                    error
+                    error,
               });
             });
       };
@@ -202,7 +211,7 @@ window.angular && (function(angular) {
                     $interpolate(
                         Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
                         {status: error.status, description: error.statusText}) :
-                    error
+                    error,
               });
             });
       };
@@ -229,7 +238,7 @@ window.angular && (function(angular) {
                       modal_title: 'Error during image upload',
                       title: 'Error during image upload',
                       desc: error,
-                      type: 'Error'
+                      type: 'Error',
                     });
                   });
         }
@@ -240,10 +249,10 @@ window.angular && (function(angular) {
       // tftp. Polling the number of software objects is a
       // near term solution.
       function waitForDownload() {
-        var deferred = $q.defer();
-        var startTime = new Date();
+        const deferred = $q.defer();
+        const startTime = new Date();
         pollDownloadTimer = $interval(function() {
-          var now = new Date();
+          const now = new Date();
           if ((now.getTime() - startTime.getTime()) >=
               Constants.TIMEOUT.DOWNLOAD_IMAGE) {
             $interval.cancel(pollDownloadTimer);
@@ -307,7 +316,7 @@ window.angular && (function(angular) {
                     modal_title: 'Error during downloading Image',
                     title: 'Error during downloading Image',
                     desc: error,
-                    type: 'Error'
+                    type: 'Error',
                   });
                   $scope.downloading = false;
                 });
@@ -331,7 +340,7 @@ window.angular && (function(angular) {
                   modal_title: response.data.description,
                   title: response.data.description,
                   desc: response.data.exception,
-                  type: 'Error'
+                  type: 'Error',
                 });
               } else {
                 $scope.loadFirmwares();
@@ -353,7 +362,7 @@ window.angular && (function(angular) {
               modal_title: response.data.description,
               title: response.data.description,
               desc: response.data.exception,
-              type: 'Error'
+              type: 'Error',
             });
           } else {
             $scope.loadFirmwares();
@@ -376,6 +385,6 @@ window.angular && (function(angular) {
       };
 
       $scope.loadFirmwares();
-    }
+    },
   ]);
 })(angular);

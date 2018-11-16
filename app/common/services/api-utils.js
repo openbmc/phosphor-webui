@@ -9,12 +9,16 @@
 window.angular && (function(angular) {
   'use strict';
   angular.module('app.common.services').factory('APIUtils', [
-    '$http', 'Constants', '$q', 'dataService', '$interval',
+    '$http',
+    'Constants',
+    '$q',
+    'dataService',
+    '$interval',
     function($http, Constants, $q, DataService, $interval) {
-      var getScaledValue = function(value, scale) {
+      const getScaledValue = function(value, scale) {
         scale = scale + '';
         scale = parseInt(scale, 10);
-        var power = Math.abs(parseInt(scale, 10));
+        const power = Math.abs(parseInt(scale, 10));
 
         if (scale > 0) {
           value = value * Math.pow(10, power);
@@ -23,7 +27,7 @@ window.angular && (function(angular) {
         }
         return value;
       };
-      var SERVICE = {
+      const SERVICE = {
         API_CREDENTIALS: Constants.API_CREDENTIALS,
         API_RESPONSE: Constants.API_RESPONSE,
         CHASSIS_POWER_STATE: Constants.CHASSIS_POWER_STATE,
@@ -33,17 +37,17 @@ window.angular && (function(angular) {
         LED_STATE_TEXT: Constants.LED_STATE_TEXT,
         HOST_SESSION_STORAGE_KEY: Constants.API_CREDENTIALS.host_storage_key,
         getChassisState: function() {
-          var deferred = $q.defer();
+          const deferred = $q.defer();
           $http({
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/state/chassis0/attr/CurrentPowerState',
-            withCredentials: true
+            withCredentials: true,
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
                     deferred.resolve(content.data);
                   },
                   function(error) {
@@ -55,31 +59,32 @@ window.angular && (function(angular) {
         validIPV4IP: function(ip) {
           // Checks for [0-255].[0-255].[0-255].[0-255]
           return ip.match(
-              /\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/);
+              '/\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.)' +
+              '{3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/');
         },
         deleteObject: function(path) {
           return $http({
                    method: 'POST',
                    url: DataService.getHost() + path + '/action/Delete',
                    withCredentials: true,
-                   data: JSON.stringify({'data': []})
+                   data: JSON.stringify({'data': []}),
                  })
               .then(function(response) {
                 return response.data;
               });
         },
         getHostState: function() {
-          var deferred = $q.defer();
+          const deferred = $q.defer();
           $http({
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/state/host0/attr/CurrentHostState',
-            withCredentials: true
+            withCredentials: true,
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
                     deferred.resolve(content.data);
                   },
                   function(error) {
@@ -93,31 +98,31 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/network/snmp/manager/enumerate',
-                   withCredentials: true
+                   withCredentials: true,
                  })
               .then(function(response) {
                 return response.data;
               });
         },
         pollHostStatusTillOn: function() {
-          var deferred = $q.defer();
-          var hostOnTimeout = setTimeout(function() {
+          const deferred = $q.defer();
+          const hostOnTimeout = setTimeout(function() {
             ws.close();
             deferred.reject(new Error(Constants.MESSAGES.POLL.HOST_ON_TIMEOUT));
           }, Constants.TIMEOUT.HOST_ON);
 
-          var ws =
+          const ws =
               new WebSocket('wss://' + DataService.server_id + '/subscribe');
-          var data = JSON.stringify({
+          const data = JSON.stringify({
             'paths': ['/xyz/openbmc_project/state/host0'],
-            'interfaces': ['xyz.openbmc_project.State.Host']
+            'interfaces': ['xyz.openbmc_project.State.Host'],
           });
           ws.onopen = function() {
             ws.send(data);
           };
           ws.onmessage = function(evt) {
-            var content = JSON.parse(evt.data);
-            var hostState = content.properties.CurrentHostState;
+            const content = JSON.parse(evt.data);
+            const hostState = content.properties.CurrentHostState;
             if (hostState === Constants.HOST_STATE_TEXT.on_code) {
               clearTimeout(hostOnTimeout);
               ws.close();
@@ -131,21 +136,21 @@ window.angular && (function(angular) {
         },
 
         pollHostStatusTilReboot: function() {
-          var deferred = $q.defer();
-          var onState = Constants.HOST_STATE_TEXT.on_code;
-          var offState = Constants.HOST_STATE_TEXT.on_code;
-          var hostTimeout;
-          var setHostTimeout = function(message, timeout) {
+          const deferred = $q.defer();
+          const onState = Constants.HOST_STATE_TEXT.on_code;
+          const offState = Constants.HOST_STATE_TEXT.on_code;
+          let hostTimeout;
+          const setHostTimeout = function(message, timeout) {
             hostTimeout = setTimeout(function() {
               ws.close();
               deferred.reject(new Error(message));
             }, timeout);
           };
-          var ws =
+          const ws =
               new WebSocket('wss://' + DataService.server_id + '/subscribe');
-          var data = JSON.stringify({
+          const data = JSON.stringify({
             'paths': ['/xyz/openbmc_project/state/host0'],
-            'interfaces': ['xyz.openbmc_project.State.Host']
+            'interfaces': ['xyz.openbmc_project.State.Host'],
           });
           ws.onopen = function() {
             ws.send(data);
@@ -153,10 +158,10 @@ window.angular && (function(angular) {
           setHostTimeout(
               Constants.MESSAGES.POLL.HOST_OFF_TIMEOUT,
               Constants.TIMEOUT.HOST_OFF);
-          var pollState = offState;
+          let pollState = offState;
           ws.onmessage = function(evt) {
-            var content = JSON.parse(evt.data);
-            var hostState = content.properties.CurrentHostState;
+            const content = JSON.parse(evt.data);
+            const hostState = content.properties.CurrentHostState;
             if (hostState === pollState) {
               if (pollState === offState) {
                 clearTimeout(hostTimeout);
@@ -179,25 +184,25 @@ window.angular && (function(angular) {
         },
 
         pollHostStatusTillOff: function() {
-          var deferred = $q.defer();
-          var hostOffTimeout = setTimeout(function() {
+          const deferred = $q.defer();
+          const hostOffTimeout = setTimeout(function() {
             ws.close();
             deferred.reject(
                 new Error(Constants.MESSAGES.POLL.HOST_OFF_TIMEOUT));
           }, Constants.TIMEOUT.HOST_OFF);
 
-          var ws =
+          const ws =
               new WebSocket('wss://' + DataService.server_id + '/subscribe');
-          var data = JSON.stringify({
+          const data = JSON.stringify({
             'paths': ['/xyz/openbmc_project/state/host0'],
-            'interfaces': ['xyz.openbmc_project.State.Host']
+            'interfaces': ['xyz.openbmc_project.State.Host'],
           });
           ws.onopen = function() {
             ws.send(data);
           };
           ws.onmessage = function(evt) {
-            var content = JSON.parse(evt.data);
-            var hostState = content.properties.CurrentHostState;
+            const content = JSON.parse(evt.data);
+            const hostState = content.properties.CurrentHostState;
             if (hostState === Constants.HOST_STATE_TEXT.off_code) {
               clearTimeout(hostOffTimeout);
               ws.close();
@@ -209,9 +214,10 @@ window.angular && (function(angular) {
           return $http({
                    method: 'POST',
                    url: DataService.getHost() +
-                       '/xyz/openbmc_project/network/snmp/manager/action/Client',
+                       '/xyz/openbmc_project/network/' +
+                       'snmp/manager/action/Client',
                    withCredentials: true,
-                   data: JSON.stringify({'data': [address, +port]})
+                   data: JSON.stringify({'data': [address, +port]}),
                  })
               .then(function(response) {
                 return response.data;
@@ -222,7 +228,7 @@ window.angular && (function(angular) {
                    method: 'PUT',
                    url: DataService.getHost() + snmpManagerPath + '/attr/Port',
                    withCredentials: true,
-                   data: JSON.stringify({'data': +port})
+                   data: JSON.stringify({'data': +port}),
                  })
               .then(function(response) {
                 return response.data;
@@ -234,37 +240,41 @@ window.angular && (function(angular) {
                    url: DataService.getHost() + snmpManagerPath +
                        '/attr/Address',
                    withCredentials: true,
-                   data: JSON.stringify({'data': address})
+                   data: JSON.stringify({'data': address}),
                  })
               .then(function(response) {
                 return response.data;
               });
         },
         getNetworkInfo: function() {
-          var deferred = $q.defer();
+          const deferred = $q.defer();
           $http({
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/network/enumerate',
-            withCredentials: true
+            withCredentials: true,
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
-                    var hostname = '';
-                    var defaultgateway = '';
-                    var macAddress = '';
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
+                    let hostname = '';
+                    let defaultgateway = '';
+                    let macAddress = '';
 
                     function parseNetworkData(content) {
-                      var data = {
+                      const data = {
                         interface_ids: [],
                         interfaces: {},
                         ip_addresses: {ipv4: [], ipv6: []},
                       };
-                      var interfaceId = '', keyParts = [], interfaceHash = '',
-                          interfaceType = '';
-                      for (var key in content.data) {
+                      let interfaceId = '';
+                      let keyParts = [];
+                      let interfaceHash = '';
+
+
+                      let interfaceType = '';
+                      for (const key in content.data) {
                         if (key.match(/network\/eth\d+(_\d+)?$/ig)) {
                           interfaceId = key.split('/').pop();
                           if (data.interface_ids.indexOf(interfaceId) == -1) {
@@ -276,7 +286,7 @@ window.angular && (function(angular) {
                               Nameservers: [],
                               DHCPEnabled: 0,
                               ipv4: {ids: [], values: []},
-                              ipv6: {ids: [], values: []}
+                              ipv6: {ids: [], values: []},
                             };
                             data.interfaces[interfaceId].MACAddress =
                                 content.data[key].MACAddress;
@@ -287,9 +297,9 @@ window.angular && (function(angular) {
                             data.interfaces[interfaceId].DHCPEnabled =
                                 content.data[key].DHCPEnabled;
                           }
-                        } else if (
-                            key.match(
-                                /network\/eth\d+(_\d+)?\/ipv[4|6]\/[a-z0-9]+$/ig)) {
+                        } else if (key.match(
+                                       '/network\/eth\d+(_\d+)?\/ipv[4|6]\/' +
+                                       '[a-z0-9]+$/ig')) {
                           keyParts = key.split('/');
                           interfaceHash = keyParts.pop();
                           interfaceType = keyParts.pop();
@@ -339,7 +349,7 @@ window.angular && (function(angular) {
                       hostname: hostname,
                       defaultgateway: defaultgateway,
                       mac_address: macAddress,
-                      formatted_data: parseNetworkData(content)
+                      formatted_data: parseNetworkData(content),
                     });
                   },
                   function(error) {
@@ -348,14 +358,14 @@ window.angular && (function(angular) {
                   });
           return deferred.promise;
         },
-        setMACAddress: function(interface_name, mac_address) {
+        setMACAddress: function(interfaceName, macAddress) {
           return $http({
                    method: 'PUT',
                    url: DataService.getHost() +
-                       '/xyz/openbmc_project/network/' + interface_name +
+                       '/xyz/openbmc_project/network/' + interfaceName +
                        '/attr/MACAddress',
                    withCredentials: true,
-                   data: JSON.stringify({'data': mac_address})
+                   data: JSON.stringify({'data': macAddress}),
                  })
               .then(function(response) {
                 return response.data;
@@ -364,10 +374,10 @@ window.angular && (function(angular) {
         setDefaultGateway: function(defaultGateway) {
           return $http({
                    method: 'PUT',
-                   url: DataService.getHost() +
-                       '/xyz/openbmc_project/network/config/attr/DefaultGateway',
+                   url: DataService.getHost() + '/xyz/openbmc_project/' +
+                       'network/config/attr/DefaultGateway',
                    withCredentials: true,
-                   data: JSON.stringify({'data': defaultGateway})
+                   data: JSON.stringify({'data': defaultGateway}),
                  })
               .then(function(response) {
                 return response.data;
@@ -380,7 +390,7 @@ window.angular && (function(angular) {
                        '/xyz/openbmc_project/network/' + interfaceName +
                        '/attr/DHCPEnabled',
                    withCredentials: true,
-                   data: JSON.stringify({'data': dhcpEnabled})
+                   data: JSON.stringify({'data': dhcpEnabled}),
                  })
               .then(function(response) {
                 return response.data;
@@ -393,7 +403,7 @@ window.angular && (function(angular) {
                        '/xyz/openbmc_project/network/' + interfaceName +
                        '/attr/Nameservers',
                    withCredentials: true,
-                   data: JSON.stringify({'data': dnsServers})
+                   data: JSON.stringify({'data': dnsServers}),
                  })
               .then(function(response) {
                 return response.data;
@@ -406,7 +416,7 @@ window.angular && (function(angular) {
                        '/xyz/openbmc_project/network/' + interfaceName +
                        '/ipv4/' + networkID + '/action/Delete',
                    withCredentials: true,
-                   data: JSON.stringify({'data': []})
+                   data: JSON.stringify({'data': []}),
                  })
               .then(function(response) {
                 return response.data;
@@ -423,26 +433,28 @@ window.angular && (function(angular) {
                    data: JSON.stringify({
                      'data': [
                        'xyz.openbmc_project.Network.IP.Protocol.IPv4',
-                       ipAddress, +netmaskPrefixLength, gateway
-                     ]
-                   })
+                       ipAddress,
+                       +netmaskPrefixLength,
+                       gateway,
+                     ],
+                   }),
                  })
               .then(function(response) {
                 return response.data;
               });
         },
         getLEDState: function() {
-          var deferred = $q.defer();
+          const deferred = $q.defer();
           $http({
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/led/groups/enclosure_identify',
-            withCredentials: true
+            withCredentials: true,
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
                     deferred.resolve(content.data.Asserted);
                   },
                   function(error) {
@@ -456,7 +468,7 @@ window.angular && (function(angular) {
             method: 'POST',
             url: DataService.getHost() + '/login',
             withCredentials: true,
-            data: JSON.stringify({'data': [username, password]})
+            data: JSON.stringify({'data': [username, password]}),
           })
               .then(
                   function(response) {
@@ -482,7 +494,7 @@ window.angular && (function(angular) {
                    method: 'POST',
                    url: DataService.getHost() + '/login',
                    withCredentials: false,
-                   data: JSON.stringify({'data': [username, password]})
+                   data: JSON.stringify({'data': [username, password]}),
                  })
               .then(function(response) {
                 return response.data;
@@ -493,7 +505,7 @@ window.angular && (function(angular) {
             method: 'POST',
             url: DataService.getHost() + '/logout',
             withCredentials: true,
-            data: JSON.stringify({'data': []})
+            data: JSON.stringify({'data': []}),
           })
               .then(
                   function(response) {
@@ -509,14 +521,14 @@ window.angular && (function(angular) {
                   });
         },
         changePassword: function(user, newPassword) {
-          var deferred = $q.defer();
+          const deferred = $q.defer();
           $http({
             method: 'POST',
             url: DataService.getHost() + '/xyz/openbmc_project/user/' + user +
                 '/action/SetPassword',
             withCredentials: true,
             data: JSON.stringify({'data': [newPassword]}),
-            responseType: 'arraybuffer'
+            responseType: 'arraybuffer',
           })
               .then(
                   function(response, status, headers) {
@@ -530,19 +542,19 @@ window.angular && (function(angular) {
           return deferred.promise;
         },
         chassisPowerOff: function() {
-          var deferred = $q.defer();
+          const deferred = $q.defer();
           $http({
             method: 'PUT',
-            url: DataService.getHost() +
-                '/xyz/openbmc_project/state/chassis0/attr/RequestedPowerTransition',
+            url: DataService.getHost() + '/xyz/openbmc_project/' +
+                'state/chassis0/attr/RequestedPowerTransition',
             withCredentials: true,
             data: JSON.stringify(
-                {'data': 'xyz.openbmc_project.State.Chassis.Transition.Off'})
+                {'data': 'xyz.openbmc_project.State.Chassis.Transition.Off'}),
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
                     deferred.resolve(content.status);
                   },
                   function(error) {
@@ -554,15 +566,15 @@ window.angular && (function(angular) {
         setLEDState: function(state, callback) {
           $http({
             method: 'PUT',
-            url: DataService.getHost() +
-                '/xyz/openbmc_project/led/groups/enclosure_identify/attr/Asserted',
+            url: DataService.getHost() + '/xyz/openbmc_project/' +
+                'led/groups/enclosure_identify/attr/Asserted',
             withCredentials: true,
-            data: JSON.stringify({'data': state})
+            data: JSON.stringify({'data': state}),
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
                     if (callback) {
                       return callback(content.status);
                     }
@@ -582,12 +594,12 @@ window.angular && (function(angular) {
                 '/xyz/openbmc_project/state/bmc0/attr/RequestedBmcTransition',
             withCredentials: true,
             data: JSON.stringify(
-                {'data': 'xyz.openbmc_project.State.BMC.Transition.Reboot'})
+                {'data': 'xyz.openbmc_project.State.BMC.Transition.Reboot'}),
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
                     if (callback) {
                       return callback(content.status);
                     }
@@ -605,26 +617,26 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/state/bmc0/attr/LastRebootTime',
-                   withCredentials: true
+                   withCredentials: true,
                  })
               .then(function(response) {
                 return response.data;
               });
         },
         hostPowerOn: function() {
-          var deferred = $q.defer();
+          const deferred = $q.defer();
           $http({
             method: 'PUT',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/state/host0/attr/RequestedHostTransition',
             withCredentials: true,
             data: JSON.stringify(
-                {'data': 'xyz.openbmc_project.State.Host.Transition.On'})
+                {'data': 'xyz.openbmc_project.State.Host.Transition.On'}),
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
                     deferred.resolve(content.status);
                   },
                   function(error) {
@@ -634,19 +646,19 @@ window.angular && (function(angular) {
           return deferred.promise;
         },
         hostPowerOff: function() {
-          var deferred = $q.defer();
+          const deferred = $q.defer();
           $http({
             method: 'PUT',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/state/host0/attr/RequestedHostTransition',
             withCredentials: true,
             data: JSON.stringify(
-                {'data': 'xyz.openbmc_project.State.Host.Transition.Off'})
+                {'data': 'xyz.openbmc_project.State.Host.Transition.Off'}),
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
                     deferred.resolve(content.status);
                   },
                   function(error) {
@@ -656,19 +668,19 @@ window.angular && (function(angular) {
           return deferred.promise;
         },
         hostReboot: function() {
-          var deferred = $q.defer();
+          const deferred = $q.defer();
           $http({
             method: 'PUT',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/state/host0/attr/RequestedHostTransition',
             withCredentials: true,
             data: JSON.stringify(
-                {'data': 'xyz.openbmc_project.State.Host.Transition.Reboot'})
+                {'data': 'xyz.openbmc_project.State.Host.Transition.Reboot'}),
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
                     deferred.resolve(content.status);
                   },
                   function(error) {
@@ -683,12 +695,12 @@ window.angular && (function(angular) {
             method: 'POST',
             url: DataService.getHost() + '/xyz/openbmc_project/state/host0',
             withCredentials: true,
-            data: JSON.stringify({'data': []})
+            data: JSON.stringify({'data': []}),
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
                     if (callback) {
                       return callback(content);
                     }
@@ -704,42 +716,41 @@ window.angular && (function(angular) {
         getLastPowerTime: function() {
           return $http({
                    method: 'GET',
-                   url: DataService.getHost() +
-                       '/xyz/openbmc_project/state/chassis0/attr/LastStateChangeTime',
-                   withCredentials: true
+                   url: DataService.getHost() + '/xyz/openbmc_project/' +
+                       'state/chassis0/attr/LastStateChangeTime',
+                   withCredentials: true,
                  })
               .then(function(response) {
                 return response.data;
               });
         },
         getLogs: function() {
-          var deferred = $q.defer();
+          const deferred = $q.defer();
           $http({
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/logging/enumerate',
-            withCredentials: true
+            withCredentials: true,
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
-                    var dataClone = JSON.parse(JSON.stringify(content.data));
-                    var data = [];
-                    var severityCode = '';
-                    var priority = '';
-                    var health = '';
-                    var relatedItems = [];
-                    var eventID = 'None';
-                    var description = 'None';
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
+                    const dataClone = JSON.parse(JSON.stringify(content.data));
+                    const data = [];
+                    let severityCode = '';
+                    let priority = '';
+                    let relatedItems = [];
+                    let eventID = 'None';
+                    let description = 'None';
 
-                    for (var key in content.data) {
+                    for (const key in content.data) {
                       if (content.data.hasOwnProperty(key) &&
                           content.data[key].hasOwnProperty('Id')) {
-                        var severityFlags = {
+                        const severityFlags = {
                           low: false,
                           medium: false,
-                          high: false
+                          high: false,
                         };
                         severityCode =
                             content.data[key].Severity.split('.').pop();
@@ -782,7 +793,7 @@ window.angular && (function(angular) {
                               related_items: relatedItems,
                               eventID: eventID,
                               description: description,
-                              data: {key: key, value: content.data[key]}
+                              data: {key: key, value: content.data[key]},
                             },
                             content.data[key]));
                       }
@@ -801,27 +812,28 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/sensors/enumerate',
-            withCredentials: true
+            withCredentials: true,
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
-                    var dataClone = JSON.parse(JSON.stringify(content.data));
-                    var sensorData = [];
-                    var severity = {};
-                    var title = '';
-                    var tempKeyParts = [];
-                    var order = 0;
-                    var customOrder = 0;
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
+                    const dataClone = JSON.parse(JSON.stringify(content.data));
+                    const sensorData = [];
+                    let severity = {};
+                    let title = '';
+                    let tempKeyParts = [];
 
                     function getSensorStatus(reading) {
-                      var severityFlags = {
+                      const severityFlags = {
                         critical: false,
                         warning: false,
-                        normal: false
-                      },
-                          severityText = '', order = 0;
+                        normal: false,
+                      };
+
+
+                      let severityText = '';
+                      let order = 0;
 
                       if (reading.hasOwnProperty('CriticalLow') &&
                           reading.Value < reading.CriticalLow) {
@@ -857,11 +869,11 @@ window.angular && (function(angular) {
                       return {
                         flags: severityFlags,
                         severityText: severityText,
-                        order: order
+                        order: order,
                       };
                     }
 
-                    for (var key in content.data) {
+                    for (const key in content.data) {
                       if (content.data.hasOwnProperty(key) &&
                           content.data[key].hasOwnProperty('Unit')) {
                         severity = getSensorStatus(content.data[key]);
@@ -937,7 +949,7 @@ window.angular && (function(angular) {
                                    content.data[key].WarningHigh + ' ')
                                       .toLowerCase(),
                               original_data:
-                                  {key: key, value: content.data[key]}
+                                  {key: key, value: content.data[key]},
                             },
                             content.data[key]));
                       }
@@ -955,50 +967,50 @@ window.angular && (function(angular) {
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/software/' + imageId +
                        '/attr/Activation',
-                   withCredentials: true
+                   withCredentials: true,
                  })
               .then(function(response) {
                 return response.data;
               });
         },
         getFirmwares: function() {
-          var deferred = $q.defer();
+          const deferred = $q.defer();
           $http({
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/software/enumerate',
-            withCredentials: true
+            withCredentials: true,
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
-                    var data = [];
-                    var isExtended = false;
-                    var bmcActiveVersion = '';
-                    var hostActiveVersion = '';
-                    var imageType = '';
-                    var extendedVersions = [];
-                    var functionalImages = [];
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
+                    const data = [];
+                    let isExtended = false;
+                    let bmcActiveVersion = '';
+                    let hostActiveVersion = '';
+                    let imageType = '';
+                    let extendedVersions = [];
+                    let functionalImages = [];
 
                     function getFormatedExtendedVersions(extendedVersion) {
-                      var versions = [];
+                      const versions = [];
                       extendedVersion = extendedVersion.split(',');
 
                       extendedVersion.forEach(function(item) {
-                        var parts = item.split('-');
-                        var numberIndex = 0;
-                        for (var i = 0; i < parts.length; i++) {
+                        const parts = item.split('-');
+                        let numberIndex = 0;
+                        for (let i = 0; i < parts.length; i++) {
                           if (/[0-9]/.test(parts[i])) {
                             numberIndex = i;
                             break;
                           }
                         }
-                        var titlePart = parts.splice(0, numberIndex);
+                        let titlePart = parts.splice(0, numberIndex);
                         titlePart = titlePart.join('');
                         titlePart = titlePart[0].toUpperCase() +
                             titlePart.substr(1, titlePart.length);
-                        var versionPart = parts.join('-');
+                        const versionPart = parts.join('-');
                         versions.push({title: titlePart, version: versionPart});
                       });
 
@@ -1012,14 +1024,16 @@ window.angular && (function(angular) {
                           content.data[Constants.FIRMWARE.FUNCTIONAL_OBJPATH]
                               .endpoints;
                     }
-                    for (var key in content.data) {
+                    for (const key in content.data) {
                       if (content.data.hasOwnProperty(key) &&
                           content.data[key].hasOwnProperty('Version')) {
-                        var activationStatus = '';
+                        let activationStatus = '';
 
                         // If the image is "Functional" use that for the
                         // activation status, else use the value of "Activation"
-                        // github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Software/Activation.interface.yaml
+                        // github.com/openbmc/phosphor-dbus-interfaces/blob/
+                        // master/xyz/openbmc_project/Software/
+                        // Activation.interface.yaml
                         if (content.data[key].Activation) {
                           activationStatus =
                               content.data[key].Activation.split('.').pop();
@@ -1046,7 +1060,7 @@ window.angular && (function(angular) {
                               isExtended: isExtended,
                               extended:
                                   {show: false, versions: extendedVersions},
-                              data: {key: key, value: content.data[key]}
+                              data: {key: key, value: content.data[key]},
                             },
                             content.data[key]));
 
@@ -1065,7 +1079,7 @@ window.angular && (function(angular) {
                     deferred.resolve({
                       data: data,
                       bmcActiveVersion: bmcActiveVersion,
-                      hostActiveVersion: hostActiveVersion
+                      hostActiveVersion: hostActiveVersion,
                     });
                   },
                   function(error) {
@@ -1076,18 +1090,18 @@ window.angular && (function(angular) {
           return deferred.promise;
         },
         changePriority: function(imageId, priority) {
-          var deferred = $q.defer();
+          const deferred = $q.defer();
           $http({
             method: 'PUT',
             url: DataService.getHost() + '/xyz/openbmc_project/software/' +
                 imageId + '/attr/Priority',
             withCredentials: true,
-            data: JSON.stringify({'data': priority})
+            data: JSON.stringify({'data': priority}),
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
                     deferred.resolve(content);
                   },
                   function(error) {
@@ -1098,18 +1112,18 @@ window.angular && (function(angular) {
           return deferred.promise;
         },
         deleteImage: function(imageId) {
-          var deferred = $q.defer();
+          const deferred = $q.defer();
           $http({
             method: 'POST',
             url: DataService.getHost() + '/xyz/openbmc_project/software/' +
                 imageId + '/action/Delete',
             withCredentials: true,
-            data: JSON.stringify({'data': []})
+            data: JSON.stringify({'data': []}),
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
                     deferred.resolve(content);
                   },
                   function(error) {
@@ -1120,19 +1134,19 @@ window.angular && (function(angular) {
           return deferred.promise;
         },
         activateImage: function(imageId) {
-          var deferred = $q.defer();
+          const deferred = $q.defer();
           $http({
             method: 'PUT',
             url: DataService.getHost() + '/xyz/openbmc_project/software/' +
                 imageId + '/attr/RequestedActivation',
             withCredentials: true,
             data:
-                JSON.stringify({'data': Constants.FIRMWARE.ACTIVATE_FIRMWARE})
+                JSON.stringify({'data': Constants.FIRMWARE.ACTIVATE_FIRMWARE}),
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
                     deferred.resolve(content);
                   },
                   function(error) {
@@ -1150,7 +1164,7 @@ window.angular && (function(angular) {
                    // Overwrite the default 'application/json' Content-Type
                    headers: {'Content-Type': 'application/octet-stream'},
                    withCredentials: true,
-                   data: file
+                   data: file,
                  })
               .then(function(response) {
                 return response.data;
@@ -1163,7 +1177,7 @@ window.angular && (function(angular) {
                        '/xyz/openbmc_project/software/action/DownloadViaTFTP',
                    withCredentials: true,
                    data: JSON.stringify({'data': [filename, host]}),
-                   responseType: 'arraybuffer'
+                   responseType: 'arraybuffer',
                  })
               .then(function(response) {
                 return response.data;
@@ -1177,7 +1191,7 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/inventory/system',
-                   withCredentials: true
+                   withCredentials: true,
                  })
               .then(function(response) {
                 return response.data;
@@ -1187,7 +1201,7 @@ window.angular && (function(angular) {
           return $http({
                    method: 'GET',
                    url: DataService.getHost() + '/xyz/openbmc_project/time/bmc',
-                   withCredentials: true
+                   withCredentials: true,
                  })
               .then(function(response) {
                 return response.data;
@@ -1198,7 +1212,7 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/time/enumerate',
-                   withCredentials: true
+                   withCredentials: true,
                  })
               .then(function(response) {
                 return response.data;
@@ -1214,7 +1228,7 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/network/eth0/attr/NTPServers',
-                   withCredentials: true
+                   withCredentials: true,
                  })
               .then(function(response) {
                 return response.data;
@@ -1226,7 +1240,7 @@ window.angular && (function(angular) {
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/network/eth0/attr/NTPServers',
                    withCredentials: true,
-                   data: JSON.stringify({'data': ntpServers})
+                   data: JSON.stringify({'data': ntpServers}),
                  })
               .then(function(response) {
                 return response.data;
@@ -1235,10 +1249,10 @@ window.angular && (function(angular) {
         setTimeMode: function(timeMode) {
           return $http({
                    method: 'PUT',
-                   url: DataService.getHost() +
-                       '/xyz/openbmc_project/time/sync_method/attr/TimeSyncMethod',
+                   url: DataService.getHost() + '/xyz/openbmc_project/' +
+                       'time/sync_method/attr/TimeSyncMethod',
                    withCredentials: true,
-                   data: JSON.stringify({'data': timeMode})
+                   data: JSON.stringify({'data': timeMode}),
                  })
               .then(function(response) {
                 return response.data;
@@ -1250,7 +1264,7 @@ window.angular && (function(angular) {
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/time/owner/attr/TimeOwner',
                    withCredentials: true,
-                   data: JSON.stringify({'data': timeOwner})
+                   data: JSON.stringify({'data': timeOwner}),
                  })
               .then(function(response) {
                 return response.data;
@@ -1262,7 +1276,7 @@ window.angular && (function(angular) {
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/time/bmc/attr/Elapsed',
                    withCredentials: true,
-                   data: JSON.stringify({'data': time})
+                   data: JSON.stringify({'data': time}),
                  })
               .then(function(response) {
                 return response.data;
@@ -1274,7 +1288,7 @@ window.angular && (function(angular) {
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/time/host/attr/Elapsed',
                    withCredentials: true,
-                   data: JSON.stringify({'data': time})
+                   data: JSON.stringify({'data': time}),
                  })
               .then(function(response) {
                 return response.data;
@@ -1285,25 +1299,26 @@ window.angular && (function(angular) {
             method: 'GET',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/inventory/enumerate',
-            withCredentials: true
+            withCredentials: true,
           }).then(function(response) {
-            var json = JSON.stringify(response.data);
-            var content = JSON.parse(json);
-            var hardwareData = [];
-            var keyIndexMap = {};
-            var title = '';
-            var depth = '';
-            var data = [];
-            var searchText = '';
-            var componentIndex = -1;
-            var parent = '';
+            const json = JSON.stringify(response.data);
+            const content = JSON.parse(json);
+            const hardwareData = [];
+            const keyIndexMap = {};
+            let title = '';
+            let depth = '';
+            let data = [];
+            let searchText = '';
+            let componentIndex = -1;
+            let parent = '';
 
             function isSubComponent(key) {
-              for (var i = 0; i < Constants.HARDWARE.parent_components.length;
+              for (let i = 0; i < Constants.HARDWARE.parent_components.length;
                    i++) {
                 if (key.split(Constants.HARDWARE.parent_components[i]).length ==
-                    2)
+                    2) {
                   return true;
+                }
               }
 
               return false;
@@ -1311,7 +1326,7 @@ window.angular && (function(angular) {
 
             function titlelize(title) {
               title = title.replace(/([A-Z0-9]+)/g, ' $1').replace(/^\s+/, '');
-              for (var i = 0; i < Constants.HARDWARE.uppercase_titles.length;
+              for (let i = 0; i < Constants.HARDWARE.uppercase_titles.length;
                    i++) {
                 if (title.toLowerCase().indexOf(
                         (Constants.HARDWARE.uppercase_titles[i] + ' ')) > -1) {
@@ -1323,15 +1338,20 @@ window.angular && (function(angular) {
             }
 
             function camelcaseToLabel(obj) {
-              var transformed = [], label = '', value = '';
-              for (var key in obj) {
-                label = key.replace(/([A-Z0-9]+)/g, ' $1').replace(/^\s+/, '');
-                if (obj[key] !== '') {
-                  value = obj[key];
-                  if (value == 1 || value == 0) {
-                    value = (value == 1) ? 'Yes' : 'No';
+              const transformed = [];
+              let label = '';
+              let value = '';
+              for (const key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                  label = key.replace(/([A-Z0-9]+)/g, ' $1');
+                  label = label.replace(/^\s+/, '');
+                  if (obj[key] !== '') {
+                    value = obj[key];
+                    if (value == 1 || value == 0) {
+                      value = (value == 1) ? 'Yes' : 'No';
+                    }
+                    transformed.push({key: label, value: value});
                   }
-                  transformed.push({key: label, value: value});
                 }
               }
 
@@ -1339,21 +1359,21 @@ window.angular && (function(angular) {
             }
 
             function determineParent(key) {
-              var levels = key.split('/');
+              const levels = key.split('/');
               levels.pop();
               return levels.join('/');
             }
 
             function getSearchText(data) {
-              var searchText = '';
-              for (var i = 0; i < data.length; i++) {
+              let searchText = '';
+              for (let i = 0; i < data.length; i++) {
                 searchText += ' ' + data[i].key + ' ' + data[i].value;
               }
 
               return searchText;
             }
 
-            for (var key in content.data) {
+            for (const key in content.data) {
               if (content.data.hasOwnProperty(key) &&
                   key.indexOf(Constants.HARDWARE.component_key_filter) == 0) {
                 data = camelcaseToLabel(content.data[key]);
@@ -1379,13 +1399,13 @@ window.angular && (function(angular) {
                         search_text: title.toLowerCase() + ' ' +
                             searchText.toLowerCase(),
                         sub_components: [],
-                        original_data: {key: key, value: content.data[key]}
+                        original_data: {key: key, value: content.data[key]},
                       },
                       {items: data}));
 
                   keyIndexMap[key] = hardwareData.length - 1;
                 } else {
-                  parent = determineParent(key)
+                  parent = determineParent(key);
                   componentIndex = keyIndexMap[parent];
                   data = content.data[key];
                   data.title = title;
@@ -1415,15 +1435,15 @@ window.angular && (function(angular) {
               return b.title.localeCompare(a.title, 'en', {numeric: true});
             });
 
-            var orderedComponents = [];
+            const orderedComponents = [];
 
-            for (var i = 0; i < hardwareData.length; i++) {
+            for (let i = 0; i < hardwareData.length; i++) {
               if (!keyIndexMap[hardwareData[i].parent]) {
                 orderedComponents.push(hardwareData[i]);
               } else {
-                for (var j = 0; j < orderedComponents.length; j++) {
+                for (let j = 0; j < orderedComponents.length; j++) {
                   if (orderedComponents[j].path === hardwareData[i].parent) {
-                    var child = hardwareData[i];
+                    const child = hardwareData[i];
                     orderedComponents.splice(j + 1, 0, child);
                   }
                 }
@@ -1438,8 +1458,8 @@ window.angular && (function(angular) {
           });
         },
         deleteLogs: function(logs) {
-          var defer = $q.defer();
-          var promises = [];
+          const defer = $q.defer();
+          const promises = [];
 
           function finished() {
             defer.resolve();
@@ -1452,7 +1472,7 @@ window.angular && (function(angular) {
                   '/xyz/openbmc_project/logging/entry/' + item.Id +
                   '/action/Delete',
               withCredentials: true,
-              data: JSON.stringify({'data': []})
+              data: JSON.stringify({'data': []}),
             }));
           });
 
@@ -1461,8 +1481,8 @@ window.angular && (function(angular) {
           return defer.promise;
         },
         resolveLogs: function(logs) {
-          var defer = $q.defer();
-          var promises = [];
+          const defer = $q.defer();
+          const promises = [];
 
           function finished() {
             defer.resolve();
@@ -1475,7 +1495,7 @@ window.angular && (function(angular) {
                   '/xyz/openbmc_project/logging/entry/' + item.Id +
                   '/attr/Resolved',
               withCredentials: true,
-              data: JSON.stringify({'data': '1'})
+              data: JSON.stringify({'data': '1'}),
             }));
           });
 
@@ -1488,12 +1508,12 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/sensors/power/total_power',
-                   withCredentials: true
+                   withCredentials: true,
                  })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
+                    const json = JSON.stringify(response.data);
+                    const content = JSON.parse(json);
 
                     return getScaledValue(
                                content.data.Value, content.data.Scale) +
@@ -1502,7 +1522,7 @@ window.angular && (function(angular) {
                   },
                   function(error) {
                     if ('Not Found' == error.statusText) {
-                      return Constants.POWER_CONSUMPTION_TEXT.notavailable;
+                      return Constants.POWER_CONSUMPTION_TEXT.notAvailable;
                     } else {
                       throw error;
                     }
@@ -1513,7 +1533,7 @@ window.angular && (function(angular) {
                    method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/control/host0/power_cap',
-                   withCredentials: true
+                   withCredentials: true,
                  })
               .then(function(response) {
                 return response.data;
@@ -1522,10 +1542,10 @@ window.angular && (function(angular) {
         setPowerCapEnable: function(powerCapEnable) {
           return $http({
                    method: 'PUT',
-                   url: DataService.getHost() +
-                       '/xyz/openbmc_project/control/host0/power_cap/attr/PowerCapEnable',
+                   url: DataService.getHost() + '/xyz/openbmc_project/' +
+                       'control/host0/power_cap/attr/PowerCapEnable',
                    withCredentials: true,
-                   data: JSON.stringify({'data': powerCapEnable})
+                   data: JSON.stringify({'data': powerCapEnable}),
                  })
               .then(function(response) {
                 return response.data;
@@ -1534,10 +1554,10 @@ window.angular && (function(angular) {
         setPowerCap: function(powerCap) {
           return $http({
                    method: 'PUT',
-                   url: DataService.getHost() +
-                       '/xyz/openbmc_project/control/host0/power_cap/attr/PowerCap',
+                   url: DataService.getHost() + '/xyz/openbmc_project/' +
+                       'control/host0/power_cap/attr/PowerCap',
                    withCredentials: true,
-                   data: JSON.stringify({'data': powerCap})
+                   data: JSON.stringify({'data': powerCap}),
                  })
               .then(function(response) {
                 return response.data;
@@ -1546,10 +1566,10 @@ window.angular && (function(angular) {
         setHostname: function(hostname) {
           return $http({
                    method: 'PUT',
-                   url: DataService.getHost() +
-                       '/xyz/openbmc_project/network/config/attr/HostName',
+                   url: DataService.getHost() + '/xyz/openbmc_project/' +
+                       'network/config/attr/HostName',
                    withCredentials: true,
-                   data: JSON.stringify({'data': hostname})
+                   data: JSON.stringify({'data': hostname}),
                  })
               .then(function(response) {
                 return response.data;
@@ -1557,6 +1577,6 @@ window.angular && (function(angular) {
         },
       };
       return SERVICE;
-    }
+    },
   ]);
 })(window.angular);

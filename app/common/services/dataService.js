@@ -12,37 +12,37 @@ window.angular && (function(angular) {
 
   angular.module('app.common.services').service('dataService', [
     'Constants',
-    function(Constants) {
-      this.server_health = Constants.SERVER_HEALTH.unknown;
-      this.server_state = 'Unreachable';
-      this.server_status = -2;
-      this.chassis_state = 'On';
-      this.LED_state = Constants.LED_STATE_TEXT.off;
-      this.last_updated = new Date();
+    {
+      'server_health': Constants.SERVER_HEALTH.unknown,
+      'server_state': 'Unreachable',
+      'server_status': -2,
+      'chassis_state': 'On',
+      'LED_state': Constants.LED_STATE_TEXT.off,
+      'last_updated': new Date(),
 
-      this.loading = false;
-      this.server_unreachable = false;
-      this.showNavigation = false;
-      this.bodyStyle = {};
-      this.path = '';
+      'loading': false,
+      'server_unreachable': false,
+      'showNavigation': false,
+      'bodyStyle': {},
+      'path': '',
 
-      this.hostname = '';
-      this.mac_address = '';
-      this.defaultgateway = '';
+      'hostname': '',
+      'mac_address': '',
+      'defaultgateway': '',
 
-      this.displayErrorModal = false;
-      this.errorModalDetails = {};
+      'displayErrorModal': false,
+      'errorModalDetails': {},
 
-      this.ignoreHttpError = false;
-      this.getServerId = function() {
+      'ignoreHttpError': false,
+      'getServerId': function() {
         return this.host.replace(/^https?\:\/\//ig, '');
-      };
+      },
 
-      this.reloadServerId = function() {
+      'reloadServerId': function() {
         this.server_id = this.getServerId();
-      };
+      },
 
-      this.getHost = function() {
+      'getHost': function() {
         if (sessionStorage.getItem(
                 Constants.API_CREDENTIALS.host_storage_key) !== null) {
           return sessionStorage.getItem(
@@ -52,57 +52,54 @@ window.angular && (function(angular) {
               window.location.hostname +
               (window.location.port ? ':' + window.location.port : '');
         }
-      };
+      },
 
-      this.setHost = function(hostWithPort) {
+      'setHost': function(hostWithPort) {
         hostWithPort = hostWithPort.replace(/^https?\:\/\//ig, '');
-        var hostURL =
+        const hostURL =
             Constants.API_CREDENTIALS.default_protocol + '://' + hostWithPort;
         sessionStorage.setItem(
             Constants.API_CREDENTIALS.host_storage_key, hostURL);
         this.host = hostURL;
         this.reloadServerId();
-      };
+      },
 
-      this.getUser = function() {
+      'getUser': function() {
         return sessionStorage.getItem('LOGIN_ID');
-      };
+      },
 
-      this.host = this.getHost();
-      this.server_id = this.getServerId();
-
-      this.setNetworkInfo = function(data) {
+      'setNetworkInfo': function(data) {
         this.hostname = data.hostname;
         this.defaultgateway = data.defaultgateway;
         this.mac_address = data.mac_address;
-      };
+      },
 
-      this.setPowerOnState = function() {
+      'setPowerOnState': function() {
         this.server_state = Constants.HOST_STATE_TEXT.on;
         this.server_status = Constants.HOST_STATE.on;
-      };
+      },
 
-      this.setPowerOffState = function() {
+      'setPowerOffState': function() {
         this.server_state = Constants.HOST_STATE_TEXT.off;
         this.server_status = Constants.HOST_STATE.off;
-      };
+      },
 
-      this.setErrorState = function() {
+      'setErrorState': function() {
         this.server_state = Constants.HOST_STATE_TEXT.error;
         this.server_status = Constants.HOST_STATE.error;
-      };
+      },
 
-      this.setUnreachableState = function() {
+      'setUnreachableState': function() {
         this.server_state = Constants.HOST_STATE_TEXT.unreachable;
         this.server_status = Constants.HOST_STATE.unreachable;
-      };
+      },
 
-      this.updateServerHealth = function(logs) {
+      'updateServerHealth': function(logs) {
         // If any unresolved severity high logs are present, set server health
         // to critical. Else if any unresolved severity medium logs are present
         // set server health to warning.
         this.server_health = Constants.SERVER_HEALTH.good;
-        for (var log of logs) {
+        for (const log of logs) {
           if (log.priority == 'High' && !log.Resolved) {
             this.server_health = Constants.SERVER_HEALTH.critical;
             return;
@@ -110,9 +107,9 @@ window.angular && (function(angular) {
             this.server_health = Constants.SERVER_HEALTH.warning;
           }
         }
-      };
+      },
 
-      this.activateErrorModal = function(data) {
+      'activateErrorModal': function(data) {
         if (data && data.hasOwnProperty('title')) {
           this.errorModalDetails.title = data.title;
         } else {
@@ -126,11 +123,11 @@ window.angular && (function(angular) {
               Constants.MESSAGES.ERROR_MODAL.DESCRIPTION;
         }
         this.displayErrorModal = true;
-      };
+      },
 
-      this.deactivateErrorModal = function() {
+      'deactivateErrorModal': function() {
         this.displayErrorModal = false;
-      };
-    }
+      },
+    },
   ]);
 })(window.angular);

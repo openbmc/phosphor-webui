@@ -10,7 +10,12 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.overview').controller('systemOverviewController', [
-    '$scope', '$window', 'APIUtils', 'dataService', 'Constants', '$q',
+    '$scope',
+    '$window',
+    'APIUtils',
+    'dataService',
+    'Constants',
+    '$q',
     function($scope, $window, APIUtils, dataService, Constants, $q) {
       $scope.dataService = dataService;
       $scope.dropdown_selected = false;
@@ -31,7 +36,7 @@ window.angular && (function(angular) {
       function loadOverviewData() {
         $scope.loading = true;
 
-        var getLogsPromise = APIUtils.getLogs().then(
+        const getLogsPromise = APIUtils.getLogs().then(
             function(data) {
               $scope.logs = data.data.filter(function(log) {
                 return log.severity_flags.high == true;
@@ -41,7 +46,7 @@ window.angular && (function(angular) {
               console.log(JSON.stringify(error));
             });
 
-        var getFirmwaresPromise = APIUtils.getFirmwares().then(
+        const getFirmwaresPromise = APIUtils.getFirmwares().then(
             function(data) {
               $scope.bmc_firmware = data.bmcActiveVersion;
               $scope.server_firmware = data.hostActiveVersion;
@@ -50,7 +55,7 @@ window.angular && (function(angular) {
               console.log(JSON.stringify(error));
             });
 
-        var getLEDStatePromise = APIUtils.getLEDState().then(
+        const getLEDStatePromise = APIUtils.getLEDState().then(
             function(data) {
               if (data == APIUtils.LED_STATE.on) {
                 dataService.LED_state = APIUtils.LED_STATE_TEXT.on;
@@ -62,7 +67,7 @@ window.angular && (function(angular) {
               console.log(JSON.stringify(error));
             });
 
-        var getBMCTimePromise = APIUtils.getBMCTime().then(
+        const getBMCTimePromise = APIUtils.getBMCTime().then(
             function(data) {
               $scope.bmc_time = data.data.Elapsed / 1000;
             },
@@ -70,7 +75,7 @@ window.angular && (function(angular) {
               console.log(JSON.stringify(error));
             });
 
-        var getServerInfoPromise = APIUtils.getServerInfo().then(
+        const getServerInfoPromise = APIUtils.getServerInfo().then(
             function(data) {
               $scope.server_info = data.data;
             },
@@ -78,7 +83,7 @@ window.angular && (function(angular) {
               console.log(JSON.stringify(error));
             });
 
-        var getPowerConsumptionPromise = APIUtils.getPowerConsumption().then(
+        const getPowerConsumptionPromise = APIUtils.getPowerConsumption().then(
             function(data) {
               $scope.power_consumption = data;
             },
@@ -86,7 +91,7 @@ window.angular && (function(angular) {
               console.log(JSON.stringify(error));
             });
 
-        var getPowerCapPromise = APIUtils.getPowerCap().then(
+        const getPowerCapPromise = APIUtils.getPowerCap().then(
             function(data) {
               if (data.data.PowerCapEnable == false) {
                 $scope.power_cap = Constants.POWER_CAP_TEXT.disabled;
@@ -99,7 +104,7 @@ window.angular && (function(angular) {
               console.log(JSON.stringify(error));
             });
 
-        var getNetworkInfoPromise = APIUtils.getNetworkInfo().then(
+        const getNetworkInfoPromise = APIUtils.getNetworkInfo().then(
             function(data) {
               // TODO: openbmc/openbmc#3150 Support IPV6 when
               // officially supported by the backend
@@ -109,7 +114,7 @@ window.angular && (function(angular) {
               console.log(JSON.stringify(error));
             });
 
-        var promises = [
+        const promises = [
           getLogsPromise,
           getFirmwaresPromise,
           getLEDStatePromise,
@@ -126,7 +131,7 @@ window.angular && (function(angular) {
       }
 
       $scope.toggleLED = function() {
-        var toggleState =
+        const toggleState =
             (dataService.LED_state == APIUtils.LED_STATE_TEXT.on) ?
             APIUtils.LED_STATE.off :
             APIUtils.LED_STATE.on;
@@ -153,7 +158,7 @@ window.angular && (function(angular) {
       };
 
       $scope.getEventLogTitle = function(event) {
-        var title = event.type;
+        let title = event.type;
         if ((event.eventID != 'None') && (event.description != 'None')) {
           title = event.eventID + ': ' + event.description;
         }
@@ -162,6 +167,6 @@ window.angular && (function(angular) {
       function getUserTimezone() {
         return new Date().toString().match(/\(([A-Za-z\s].*)\)/)[1];
       }
-    }
+    },
   ]);
 })(angular);

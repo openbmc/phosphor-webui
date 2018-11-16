@@ -53,8 +53,8 @@ window.angular && (function(angular) {
               callback(false, error);
             }
           });
-        }
+        },
       };
-    }
+    },
   ]);
 })(window.angular);

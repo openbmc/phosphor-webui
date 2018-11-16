@@ -11,7 +11,9 @@ window.angular && (function(angular) {
 
   angular.module('app.serverControl')
       .controller('remoteConsoleWindowController', [
-        '$scope', '$window', 'dataService',
+        '$scope',
+        '$window',
+        'dataService',
         function($scope, $window, dataService) {
           $scope.dataService = dataService;
           dataService.showNavigation = false;
@@ -20,6 +22,6 @@ window.angular && (function(angular) {
           $scope.close = function() {
             $window.close();
           };
-        }
+        },
       ]);
 })(angular);
