@@ -10,7 +10,7 @@ window.angular && (function(angular) {
                 return item.Resolved == 0;
               });
               return data.length;
-            }
+            };
           })
       .filter('quiescedToError', function() {
         return function(state) {
@@ -19,6 +19,6 @@ window.angular && (function(angular) {
           } else {
             return state;
           }
-        }
+        };
       });
 })(window.angular);

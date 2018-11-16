@@ -18,18 +18,20 @@ window.angular && (function(angular) {
       $scope.success = false;
       $scope.managersToDelete = [];
 
-      var getSNMPManagers = APIUtils.getSNMPManagers().then(
+      const getSNMPManagers = APIUtils.getSNMPManagers().then(
           function(data) {
             // Convert to array of objects from an object of objects, easier
             // to manipulate (e.g. add/remove). Convert key to a path property.
-            for (var key in data.data) {
-              $scope.managers.push({
-                path: key,
-                port: data.data[key].Port,
-                updatePort: false,
-                address: data.data[key].Address,
-                updateAddress: false
-              })
+            for (const key in data.data) {
+              if (data.data.hasOwnProperty(key)) {
+                $scope.managers.push({
+                  path: key,
+                  port: data.data[key].Port,
+                  updatePort: false,
+                  address: data.data[key].Address,
+                  updateAddress: false,
+                });
+              }
             }
           },
           function(error) {
@@ -61,11 +63,11 @@ window.angular && (function(angular) {
         $scope.error = false;
         $scope.success = false;
         $scope.loading = true;
-        var promises = [];
+        const promises = [];
 
         // Interate in reverse so can splice
         // https://stackoverflow.com/questions/9882284/looping-through-array-and-removing-items-without-breaking-for-loop
-        var i = $scope.managers.length;
+        let i = $scope.managers.length;
         while (i--) {
           // Remove any SNMP Manager with an empty address and port
           if (!$scope.managers[i].address && !$scope.managers[i].port) {
@@ -100,7 +102,7 @@ window.angular && (function(angular) {
 
         // Add delete promises last since we might be adding to
         // managersToDelete above
-        for (var i in $scope.managersToDelete) {
+        for (let i = 0; i < $scope.managersToDelete.length; i++) {
           promises.push(deleteManager($scope.managersToDelete[i]));
         }
 
@@ -133,6 +135,6 @@ window.angular && (function(angular) {
       function setManagerPort(path, port) {
         return APIUtils.setSNMPManagerPort(path, port);
       }
-    }
+    },
   ]);
 })(angular);

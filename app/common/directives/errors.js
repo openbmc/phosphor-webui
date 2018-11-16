@@ -12,9 +12,9 @@ window.angular && (function(angular) {
           '$scope', 'dataService',
           function($scope, dataService) {
             $scope.dataService = dataService;
-          }
-        ]
+          },
+        ],
       };
-    }
+    },
   ]);
 })(window.angular);
