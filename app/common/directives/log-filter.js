@@ -8,7 +8,10 @@ window.angular && (function(angular) {
         'restrict': 'E',
         'template': require('./log-filter.html'),
         'controller': [
-          '$rootScope', '$scope', 'dataService', '$location',
+          '$rootScope',
+          '$scope',
+          'dataService',
+          '$location',
           function($rootScope, $scope, dataService, $location) {
             $scope.dataService = dataService;
             $scope.toggleSeverityAll = function() {
@@ -46,9 +49,9 @@ window.angular && (function(angular) {
                 $scope.selectedSeverity.all = false;
               }
             };
-          }
-        ]
+          },
+        ],
       };
-    }
+    },
   ]);
 })(window.angular);

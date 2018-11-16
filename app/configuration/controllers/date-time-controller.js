@@ -10,7 +10,11 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.configuration').controller('dateTimeController', [
-    '$scope', '$window', 'APIUtils', '$route', '$q',
+    '$scope',
+    '$window',
+    'APIUtils',
+    '$route',
+    '$q',
     function($scope, $window, APIUtils, $route, $q) {
       $scope.bmc = {};
       // Only used when the owner is "Split"
@@ -23,9 +27,9 @@ window.angular && (function(angular) {
       $scope.error = false;
       $scope.success = false;
       $scope.loading = true;
-      var timePath = '/xyz/openbmc_project/time/';
+      const timePath = '/xyz/openbmc_project/time/';
 
-      var getTimePromise = APIUtils.getTime().then(
+      const getTimePromise = APIUtils.getTime().then(
           function(data) {
             // The time is returned as Epoch microseconds convert to
             // milliseconds.
@@ -66,7 +70,7 @@ window.angular && (function(angular) {
             console.log(JSON.stringify(error));
           });
 
-      var getNTPPromise = APIUtils.getNTPServers().then(
+      const getNTPPromise = APIUtils.getNTPServers().then(
           function(data) {
             $scope.ntp.servers = data.data;
           },
@@ -74,7 +78,7 @@ window.angular && (function(angular) {
             console.log(JSON.stringify(error));
           });
 
-      var promises = [
+      const promises = [
         getTimePromise,
         getNTPPromise,
       ];
@@ -87,39 +91,39 @@ window.angular && (function(angular) {
         $scope.error = false;
         $scope.success = false;
         $scope.loading = true;
-        var promises = [setTimeMode(), setTimeOwner(), setNTPServers()];
+        const promises = [setTimeMode(), setTimeOwner(), setNTPServers()];
 
         $q.all(promises).then(
             function() {
               // Have to set the time mode and time owner first to avoid a
               // insufficient permissions if the time mode or time owner had
               // changed.
-              var manual_promises = [];
+              const manualPromises = [];
               if ($scope.time.mode == 'Manual') {
                 // If owner is 'Split' set both.
                 // If owner is 'Host' set only it.
                 // Else set BMC only. See:
                 // https://github.com/openbmc/phosphor-time-manager/blob/master/README.md
                 if ($scope.time.owner != 'Host') {
-                  manual_promises.push(
+                  manualPromises.push(
                       setBMCTime($scope.bmc.date.getTime() * 1000));
                 }
                 // Even though we are setting Host time, we are setting from
                 // the BMC date and time fields labeled "BMC and Host Time"
                 // currently.
                 if ($scope.time.owner == 'Host') {
-                  manual_promises.push(
+                  manualPromises.push(
                       setHostTime($scope.bmc.date.getTime() * 1000));
                 }
               }
               // Set the Host if Split even if NTP. In split mode, the host has
               // its own date and time field. Set from it.
               if ($scope.time.owner == 'Split') {
-                manual_promises.push(
+                manualPromises.push(
                     setHostTime($scope.host.date.getTime() * 1000));
               }
 
-              $q.all(manual_promises)
+              $q.all(manualPromises)
                   .then(
                       function() {
                         $scope.success = true;
@@ -187,15 +191,15 @@ window.angular && (function(angular) {
       }
       function createOffset(date) {
         // https://stackoverflow.com/questions/9149556/how-to-get-utc-offset-in-javascript-analog-of-timezoneinfo-getutcoffset-in-c
-        var sign = (date.getTimezoneOffset() > 0) ? '-' : '+';
-        var offset = Math.abs(date.getTimezoneOffset());
-        var hours = pad(Math.floor(offset / 60));
-        var minutes = pad(offset % 60);
+        const sign = (date.getTimezoneOffset() > 0) ? '-' : '+';
+        const offset = Math.abs(date.getTimezoneOffset());
+        const hours = pad(Math.floor(offset / 60));
+        const minutes = pad(offset % 60);
         return '(UTC' + sign + hours + ':' + minutes + ')';
       }
       function pad(value) {
         return value < 10 ? '0' + value : value;
       }
-    }
+    },
   ]);
 })(angular);

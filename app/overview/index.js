@@ -19,14 +19,14 @@ window.angular && (function(angular) {
                 'template':
                     require('./controllers/system-overview-controller.html'),
                 'controller': 'systemOverviewController',
-                authenticated: true
+                'authenticated': true,
               })
               .when('/overview', {
                 'template':
                     require('./controllers/system-overview-controller.html'),
                 'controller': 'systemOverviewController',
-                authenticated: true
+                'authenticated': true,
               });
-        }
+        },
       ]);
 })(window.angular);

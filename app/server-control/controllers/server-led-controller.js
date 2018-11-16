@@ -10,7 +10,10 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.serverControl').controller('serverLEDController', [
-    '$scope', '$window', 'APIUtils', 'dataService',
+    '$scope',
+    '$window',
+    'APIUtils',
+    'dataService',
     function($scope, $window, APIUtils, dataService) {
       $scope.dataService = dataService;
 
@@ -27,7 +30,7 @@ window.angular && (function(angular) {
       };
 
       $scope.toggleLED = function() {
-        var toggleState =
+        const toggleState =
             (dataService.LED_state == APIUtils.LED_STATE_TEXT.on) ?
             APIUtils.LED_STATE.off :
             APIUtils.LED_STATE.on;
@@ -37,6 +40,6 @@ window.angular && (function(angular) {
             APIUtils.LED_STATE_TEXT.on;
         APIUtils.setLEDState(toggleState, function(status) {});
       };
-    }
+    },
   ]);
 })(angular);

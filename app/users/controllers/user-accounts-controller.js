@@ -10,7 +10,10 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.users').controller('userAccountsController', [
-    '$scope', '$window', 'APIUtils', 'dataService',
+    '$scope',
+    '$window',
+    'APIUtils',
+    'dataService',
     function($scope, $window, APIUtils, dataService) {
       $scope.dataService = dataService;
       $scope.state = 'none';
@@ -18,7 +21,7 @@ window.angular && (function(angular) {
 
       $scope.changePassword = function(
           oldPassword, newPassword, confirmNewPassword) {
-        var user = $scope.dataService.getUser();
+        const user = $scope.dataService.getUser();
         if (!oldPassword || !newPassword || !confirmNewPassword) {
           $scope.state = 'error';
           $scope.errorMsg = 'Field is required!';
@@ -62,6 +65,6 @@ window.angular && (function(angular) {
               dataService.ignoreHttpError = false;
             });
       };
-    }
+    },
   ]);
 })(angular);

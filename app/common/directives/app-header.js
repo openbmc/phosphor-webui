@@ -9,7 +9,11 @@ window.angular && (function(angular) {
         'template': require('./app-header.html'),
         'scope': {'path': '='},
         'controller': [
-          '$rootScope', '$scope', 'dataService', 'userModel', '$location',
+          '$rootScope',
+          '$scope',
+          'dataService',
+          'userModel',
+          '$location',
           '$route',
           function(
               $rootScope, $scope, dataService, userModel, $location, $route) {
@@ -18,13 +22,13 @@ window.angular && (function(angular) {
             // Create a secure websocket with URL as /subscribe
             // TODO: Need to put in a generic APIUtils to avoid duplicate
             // controller
-            var ws =
+            const ws =
                 new WebSocket('wss://' + dataService.server_id + '/subscribe');
 
             // Specify the required event details as JSON dictionary
-            var data = JSON.stringify({
+            const data = JSON.stringify({
               'paths': ['/xyz/openbmc_project/state/host0'],
-              'interfaces': ['xyz.openbmc_project.State.Host']
+              'interfaces': ['xyz.openbmc_project.State.Host'],
             });
 
             // Send the JSON dictionary data to host
@@ -42,7 +46,7 @@ window.angular && (function(angular) {
             // current host state
             ws.onmessage = function(evt) {
               // Parse the response (JSON dictionary data)
-              var content = JSON.parse(evt.data);
+              const content = JSON.parse(evt.data);
 
               // Fetch the current server power state
               if (content.hasOwnProperty('properties') &&
@@ -118,7 +122,7 @@ window.angular && (function(angular) {
               loadData();
               $route.reload();
               // Add flash class to header timestamp on click of refresh
-              var myEl =
+              const myEl =
                   angular.element(document.querySelector('.header__refresh'));
               myEl.addClass('flash');
               setTimeout(function() {
@@ -126,7 +130,7 @@ window.angular && (function(angular) {
               }, 2000);
             };
 
-            var loginListener =
+            const loginListener =
                 $rootScope.$on('user-logged-in', function(event, arg) {
                   loadData();
                 });
@@ -134,9 +138,9 @@ window.angular && (function(angular) {
             $scope.$on('$destroy', function() {
               loginListener();
             });
-          }
-        ]
+          },
+        ],
       };
-    }
+    },
   ]);
 })(window.angular);

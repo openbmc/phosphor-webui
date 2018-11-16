@@ -10,7 +10,11 @@ window.angular && (function(angular) {
         'scope':
             {'title': '@', 'firmwares': '=', 'filterBy': '=', 'version': '='},
         'controller': [
-          '$rootScope', '$scope', 'dataService', '$location', '$timeout',
+          '$rootScope',
+          '$scope',
+          'dataService',
+          '$location',
+          '$timeout',
           function($rootScope, $scope, dataService, $location, $timeout) {
             $scope.dataService = dataService;
             $scope.activate = function(imageId, imageVersion, imageType) {
@@ -24,9 +28,9 @@ window.angular && (function(angular) {
             $scope.changePriority = function(imageId, imageVersion, from, to) {
               $scope.$parent.changePriority(imageId, imageVersion, from, to);
             };
-          }
-        ]
+          },
+        ],
       };
-    }
+    },
   ]);
 })(window.angular);

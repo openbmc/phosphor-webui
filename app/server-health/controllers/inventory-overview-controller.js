@@ -10,7 +10,10 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.serverHealth').controller('inventoryOverviewController', [
-    '$scope', '$window', 'APIUtils', 'dataService',
+    '$scope',
+    '$window',
+    'APIUtils',
+    'dataService',
     function($scope, $window, APIUtils, dataService) {
       $scope.dataService = dataService;
       $scope.hardwares = [];
@@ -31,7 +34,7 @@ window.angular && (function(angular) {
       };
 
       $scope.doSearchOnEnter = function(event) {
-        var search =
+        const search =
             $scope.customSearch.replace(/^\s+/g, '').replace(/\s+$/g, '');
         if (event.keyCode === 13 && search.length >= 2) {
           $scope.searchTerms = $scope.customSearch.split(' ');
@@ -43,7 +46,7 @@ window.angular && (function(angular) {
       };
 
       $scope.doSearchOnClick = function() {
-        var search =
+        const search =
             $scope.customSearch.replace(/^\s+/g, '').replace(/\s+$/g, '');
         if (search.length >= 2) {
           $scope.searchTerms = $scope.customSearch.split(' ');
@@ -57,13 +60,14 @@ window.angular && (function(angular) {
       $scope.filterBySearchTerms = function(hardware) {
         if (!$scope.searchTerms.length) return true;
 
-        for (var i = 0, length = $scope.searchTerms.length; i < length; i++) {
+        for (let i = 0, length = $scope.searchTerms.length; i < length; i++) {
           if (hardware.search_text.indexOf(
-                  $scope.searchTerms[i].toLowerCase()) == -1)
+                  $scope.searchTerms[i].toLowerCase()) == -1) {
             return false;
+          }
         }
         return true;
       };
-    }
+    },
   ]);
 })(angular);
