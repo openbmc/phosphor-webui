@@ -13,11 +13,4 @@ cd ${DIR}
 set -e
 
 echo "Formatting code under $DIR/"
-
-# Only validate certain areas of the code base for
-# formatting due to some imported code in webui
-
-if [ -f ".clang-format" ]; then
-    clang-format-6.0 -i `git ls-files '*.js'`
-    git --no-pager diff --exit-code
-fi
+eslint --fix $(git -C $DIR ls-files | grep "\.js$")

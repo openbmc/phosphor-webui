@@ -12,7 +12,7 @@ window.angular && (function(angular) {
           function($rootScope, $scope, dataService, $location) {
             $scope.dataService = dataService;
             $scope.doSearchOnEnter = function(event) {
-              var search =
+              const search =
                   $scope.customSearch.replace(/^\s+/g, '').replace(/\s+$/g, '');
               if (event.keyCode === 13 && search.length >= 2) {
                 $scope.clearSearchItem();
@@ -30,7 +30,7 @@ window.angular && (function(angular) {
             };
 
             $scope.doSearchOnClick = function() {
-              var search =
+              const search =
                   $scope.customSearch.replace(/^\s+/g, '').replace(/\s+$/g, '');
               if (search.length >= 2) {
                 $scope.clearSearchItem();
@@ -41,9 +41,9 @@ window.angular && (function(angular) {
                 }
               }
             };
-          }
-        ]
+          },
+        ],
       };
-    }
+    },
   ]);
 })(window.angular);
