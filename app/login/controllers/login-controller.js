@@ -10,8 +10,12 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.login').controller('LoginController', [
-    '$scope', '$window', 'dataService', 'userModel',
-    function($scope, $window, dataService, userModel) {
+    '$scope',
+    '$window',
+    'dataService',
+    'userModel',
+    '$location',
+    function($scope, $window, dataService, userModel, $location) {
       $scope.dataService = dataService;
       $scope.host = $scope.dataService.host.replace(/^https?\:\/\//ig, '');
 
@@ -34,7 +38,12 @@ window.angular && (function(angular) {
           userModel.login(username, password, function(status, description) {
             if (status) {
               $scope.$emit('user-logged-in', {});
-              $window.location.hash = '#/overview/server';
+              var next = $location.search().next;
+              if (next === undefined || next == null) {
+                $window.location.hash = '#/overview/server';
+              } else {
+                $window.location.href = next;
+              }
             } else {
               $scope.error = true;
               if (description) {
@@ -44,6 +53,6 @@ window.angular && (function(angular) {
           });
         }
       };
-    }
+    },
   ]);
 })(angular);
