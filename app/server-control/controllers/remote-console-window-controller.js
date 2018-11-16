@@ -20,6 +20,6 @@ window.angular && (function(angular) {
           $scope.close = function() {
             $window.close();
           };
-        }
+        },
       ]);
 })(angular);
