@@ -8,11 +8,11 @@
       <h2 class="inline h4">All events from the BMC</h2>
       <div class="event-log__timezone inline float-right">
         <button class="dropdown__button" ng-click="timezone = timezone == true ? false : true;" toggle-flag="timezone">
-          <span>{{tmz === 'UTC'? 'UTC Timezone' : 'User Timezone'}}</span>
+          <span>{{tmz == 'UTC' ? 'UTC Timezone' : 'User Timezone'}}</span>
         </button>
         <ul class="dropdown__list inline" ng-show="timezone">
           <li>
-            <button ng-click="selectUserTimezone();">User Timezone</button>
+            <button ng-click="tmz = ''">User Timezone</button>
           </li>
           <li>
             <button ng-click="tmz = 'UTC'">UTC Timezone</button>
