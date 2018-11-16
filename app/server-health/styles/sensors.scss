@@ -139,7 +139,11 @@ $title-minWidth: 210px;
 #sensors, #sensors-overview {
 
   .toggle-filter {
-    margin-right: 0;
+    margin: -24px 0 20px 14px;
+  }
+  .column, .columns {
+    padding-left: 0px;
+    padding-right: 0px;
   }
 }
 
