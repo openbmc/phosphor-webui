@@ -14,7 +14,7 @@ window.angular && (function(angular) {
         function(paginationTemplateProvider) {
           paginationTemplateProvider.setString(
               require('../../common/directives/dirPagination.tpl.html'));
-        }
+        },
       ])
       .controller('logController', [
         '$scope', '$window', 'APIUtils', 'dataService', 'Constants',
@@ -28,10 +28,10 @@ window.angular && (function(angular) {
           $scope.tmz = '';
           $scope.itemsPerPage = Constants.PAGINATION.LOG_ITEMS_PER_PAGE;
           $scope.loading = false;
-          var expandedSelectedIdOnce = false;
+          let expandedSelectedIdOnce = false;
 
-          var sensorType = $routeParams.type;
-          var eventId = $routeParams.id;
+          const sensorType = $routeParams.type;
+          const eventId = $routeParams.id;
 
           // priority buttons
           $scope.selectedSeverity =
@@ -57,7 +57,7 @@ window.angular && (function(angular) {
             $scope.loading = true;
             APIUtils.getLogs().then(function(result) {
               if (eventId && expandedSelectedIdOnce == false) {
-                var log = result.data.filter(function(item) {
+                const log = result.data.filter(function(item) {
                   return item.Id == eventId;
                 });
 
@@ -81,7 +81,7 @@ window.angular && (function(angular) {
             if ($scope.selectedSeverity.all) return true;
 
             return (
-                (log.severity_flags.low && $scope.selectedSeverity.low) ||
+              (log.severity_flags.low && $scope.selectedSeverity.low) ||
                 (log.severity_flags.medium && $scope.selectedSeverity.medium) ||
                 (log.severity_flags.high && $scope.selectedSeverity.high));
           };
@@ -89,12 +89,12 @@ window.angular && (function(angular) {
           $scope.filterByStatus = function(log) {
             if ($scope.selectedStatus.all) return true;
             return (
-                (log.Resolved && $scope.selectedStatus.resolved) ||
+              (log.Resolved && $scope.selectedStatus.resolved) ||
                 (!log.Resolved && !$scope.selectedStatus.resolved));
           };
 
           $scope.filterByDate = function(log) {
-            var endDate;
+            let endDate;
             if ($scope.end_date &&
                 typeof $scope.end_date.getTime === 'function') {
               endDate = new Date($scope.end_date.getTime());
@@ -102,7 +102,7 @@ window.angular && (function(angular) {
             }
 
             if ($scope.start_date && endDate) {
-              var date = new Date($filter('date')(
+              const date = new Date($filter('date')(
                   log.Timestamp, 'MM/dd/yyyy  HH:mm:ss', $scope.tmz));
               return (date >= $scope.start_date && date <= endDate);
             } else {
@@ -113,17 +113,18 @@ window.angular && (function(angular) {
           $scope.filterBySearchTerms = function(log) {
             if (!$scope.searchItems.length) return true;
 
-            for (var i = 0, length = $scope.searchItems.length; i < length;
-                 i++) {
+            for (let i = 0, length = $scope.searchItems.length; i < length;
+              i++) {
               if (log.search_text.indexOf(
-                      $scope.searchItems[i].toLowerCase()) == -1)
+                  $scope.searchItems[i].toLowerCase()) == -1) {
                 return false;
+              }
             }
             return true;
           };
 
           $scope.addSearchItem = function(searchTerms) {
-            var terms = searchTerms.split(' ');
+            const terms = searchTerms.split(' ');
             terms.forEach(function(searchTerm) {
               if ($scope.searchItems.indexOf(searchTerm) == -1) {
                 $scope.searchItems.push(searchTerm);
@@ -136,7 +137,7 @@ window.angular && (function(angular) {
           };
 
           $scope.removeSearchItem = function(searchTerm) {
-            var termIndex = $scope.searchItems.indexOf(searchTerm);
+            const termIndex = $scope.searchItems.indexOf(searchTerm);
 
             if (termIndex > -1) {
               $scope.searchItems.splice(termIndex, 1);
@@ -153,7 +154,7 @@ window.angular && (function(angular) {
             $scope.export_name = ($scope.selectedEvents.length == 1) ?
                 $scope.selectedEvents[0].Id + '.json' :
                 'export.json';
-            var data = {};
+            const data = {};
             $scope.selectedEvents.forEach(function(item) {
               data[item.data.key] = item.data.value;
             });
@@ -172,7 +173,7 @@ window.angular && (function(angular) {
           };
 
           $scope.resolve = function() {
-            var events = $scope.selectedEvents.filter(function(item) {
+            const events = $scope.selectedEvents.filter(function(item) {
               return item.Resolved != 1;
             });
 
@@ -193,6 +194,6 @@ window.angular && (function(angular) {
           }, true);
 
           $scope.loadLogs();
-        }
+        },
       ]);
 })(angular);

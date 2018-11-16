@@ -19,14 +19,14 @@ window.angular && (function(angular) {
                 'template':
                     require('./controllers/user-accounts-controller.html'),
                 'controller': 'userAccountsController',
-                authenticated: true
+                'authenticated': true,
               })
               .when('/users', {
                 'template':
                     require('./controllers/user-accounts-controller.html'),
                 'controller': 'userAccountsController',
-                authenticated: true
+                'authenticated': true,
               });
-        }
+        },
       ]);
 })(window.angular);

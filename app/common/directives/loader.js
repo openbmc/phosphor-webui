@@ -5,7 +5,7 @@ window.angular && (function(angular) {
     return {
       'restrict': 'E',
       'template': require('./loader.html'),
-      scope: {loading: '='}
+      'scope': {loading: '='},
     };
   });
 })(window.angular);

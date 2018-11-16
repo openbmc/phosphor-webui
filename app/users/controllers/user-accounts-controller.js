@@ -18,7 +18,7 @@ window.angular && (function(angular) {
 
       $scope.changePassword = function(
           oldPassword, newPassword, confirmNewPassword) {
-        var user = $scope.dataService.getUser();
+        const user = $scope.dataService.getUser();
         if (!oldPassword || !newPassword || !confirmNewPassword) {
           $scope.state = 'error';
           $scope.errorMsg = 'Field is required!';
@@ -62,6 +62,6 @@ window.angular && (function(angular) {
               dataService.ignoreHttpError = false;
             });
       };
-    }
+    },
   ]);
 })(angular);

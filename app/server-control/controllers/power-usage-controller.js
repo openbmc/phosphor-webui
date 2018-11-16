@@ -22,7 +22,7 @@ window.angular && (function(angular) {
       function loadPowerData() {
         $scope.loading = true;
 
-        var getPowerCapPromise = APIUtils.getPowerCap().then(
+        const getPowerCapPromise = APIUtils.getPowerCap().then(
             function(data) {
               $scope.power_cap = data.data;
             },
@@ -30,7 +30,7 @@ window.angular && (function(angular) {
               console.log(JSON.stringify(error));
             });
 
-        var getPowerConsumptionPromise = APIUtils.getPowerConsumption().then(
+        const getPowerConsumptionPromise = APIUtils.getPowerConsumption().then(
             function(data) {
               $scope.power_consumption = data;
             },
@@ -38,7 +38,7 @@ window.angular && (function(angular) {
               console.log(JSON.stringify(error));
             });
 
-        var promises = [
+        const promises = [
           getPowerConsumptionPromise,
           getPowerCapPromise,
         ];
@@ -57,7 +57,7 @@ window.angular && (function(angular) {
           return;
         }
         $scope.loading = true;
-        var promises = [
+        const promises = [
           setPowerCapValue(),
           setPowerCapEnable(),
         ];
@@ -92,6 +92,6 @@ window.angular && (function(angular) {
                   console.log(JSON.stringify(error));
                 });
       }
-    }
+    },
   ]);
 })(angular);

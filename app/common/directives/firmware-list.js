@@ -24,9 +24,9 @@ window.angular && (function(angular) {
             $scope.changePriority = function(imageId, imageVersion, from, to) {
               $scope.$parent.changePriority(imageId, imageVersion, from, to);
             };
-          }
-        ]
+          },
+        ],
       };
-    }
+    },
   ]);
 })(window.angular);

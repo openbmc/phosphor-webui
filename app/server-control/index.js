@@ -18,42 +18,42 @@ window.angular && (function(angular) {
               .when('/server-control/bmc-reboot', {
                 'template': require('./controllers/bmc-reboot-controller.html'),
                 'controller': 'bmcRebootController',
-                authenticated: true
+                'authenticated': true,
               })
               .when('/server-control/server-led', {
                 'template': require('./controllers/server-led-controller.html'),
                 'controller': 'serverLEDController',
-                authenticated: true
+                'authenticated': true,
               })
               .when('/server-control/power-operations', {
                 'template':
                     require('./controllers/power-operations-controller.html'),
                 'controller': 'powerOperationsController',
-                authenticated: true
+                'authenticated': true,
               })
               .when('/server-control/power-usage', {
                 'template':
                     require('./controllers/power-usage-controller.html'),
                 'controller': 'powerUsageController',
-                authenticated: true
+                'authenticated': true,
               })
               .when('/server-control/remote-console', {
                 'template':
                     require('./controllers/remote-console-controller.html'),
-                authenticated: true
+                'authenticated': true,
               })
               .when('/server-control/remote-console-window', {
                 'template': require(
                     './controllers/remote-console-window-controller.html'),
                 'controller': 'remoteConsoleWindowController',
-                authenticated: true
+                'authenticated': true,
               })
               .when('/server-control', {
                 'template':
                     require('./controllers/power-operations-controller.html'),
                 'controller': 'powerOperationsController',
-                authenticated: true
+                'authenticated': true,
               });
-        }
+        },
       ]);
 })(window.angular);

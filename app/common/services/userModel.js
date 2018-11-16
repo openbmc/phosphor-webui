@@ -22,7 +22,7 @@ window.angular && (function(angular) {
               sessionStorage.setItem('LOGIN_ID', username);
               callback(true);
             } else if (
-                response && response.data && response.data.data &&
+              response && response.data && response.data.data &&
                 response.data.data.description) {
               callback(false, response.data.data.description);
             } else if (response && response.message) {
@@ -53,8 +53,8 @@ window.angular && (function(angular) {
               callback(false, error);
             }
           });
-        }
+        },
       };
-    }
+    },
   ]);
 })(window.angular);

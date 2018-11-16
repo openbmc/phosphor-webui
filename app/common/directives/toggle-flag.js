@@ -23,7 +23,7 @@ window.angular && (function(angular) {
               element.off('click', elementClick);
               $document.off('click', documentClick);
             });
-          }
+          },
         };
       });
 })(window.angular);
