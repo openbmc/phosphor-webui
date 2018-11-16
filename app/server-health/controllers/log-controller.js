@@ -69,7 +69,6 @@ window.angular && (function(angular) {
               dataService.updateServerHealth(result.data);
               $scope.logs = result.data;
               $scope.originalData = result.original;
-              $scope.selectUserTimezone();
               $scope.loading = false;
             });
           };
@@ -102,9 +101,7 @@ window.angular && (function(angular) {
             }
 
             if ($scope.start_date && endDate) {
-              var date = new Date($filter('date')(
-                  log.Timestamp, 'MM/dd/yyyy  HH:mm:ss', $scope.tmz));
-              return (date >= $scope.start_date && date <= endDate);
+              return (log.Timestamp >= $scope.start_date && log.Timestamp <= endDate);
             } else {
               return true;
             }
@@ -159,10 +156,6 @@ window.angular && (function(angular) {
             });
             $scope.export_data = JSON.stringify(data);
           }
-
-          $scope.selectUserTimezone = function() {
-            $scope.tmz = new Date().toString().match(/\(([A-Za-z\s].*)\)/)[1];
-          };
 
           $scope.accept = function() {
             APIUtils.deleteLogs($scope.selectedEvents).then(function() {

@@ -20,5 +20,17 @@ window.angular && (function(angular) {
             return state;
           }
         }
+      })
+      .filter('localeDate', function() {
+        return function(timestamp, utc=false) {
+          var dt = new Date(timestamp);
+          if (isNaN(dt)) {
+            return "not available";
+          } else if (utc) {
+            return dt.toUTCString();
+          } else {
+            return dt.toLocaleString();
+          }
+        }
       });
 })(window.angular);

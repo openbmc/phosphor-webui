@@ -38,7 +38,7 @@ window.angular && (function(angular) {
               // https://stackoverflow.com/questions/1091372/getting-the-clients-timezone-in-javascript
               // EDT (UTC - 04:00)
               $scope.bmc.timezone =
-                  $scope.bmc.date.toString().match(/\(([A-Za-z\s].*)\)/)[1] +
+                  Intl.DateTimeFormat().resolvedOptions().timeZone +
                   ' ' + createOffset($scope.bmc.date);
             }
             if (data.data[timePath + 'host'] &&
