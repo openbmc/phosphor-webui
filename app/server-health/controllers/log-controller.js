@@ -102,9 +102,9 @@ window.angular && (function(angular) {
             }
 
             if ($scope.start_date && endDate) {
-              var date = new Date($filter('date')(
-                  log.Timestamp, 'MM/dd/yyyy  HH:mm:ss', $scope.tmz));
-              return (date >= $scope.start_date && date <= endDate);
+              return (
+                  log.Timestamp >= $scope.start_date &&
+                  log.Timestamp <= endDate);
             } else {
               return true;
             }
