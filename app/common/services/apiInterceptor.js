@@ -58,8 +58,8 @@ window.angular && (function(angular) {
             dataService.loading = false;
           }
           return $q.reject(rejection);
-        }
+        },
       };
-    }
+    },
   ]);
 })(window.angular);

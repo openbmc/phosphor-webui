@@ -10,75 +10,73 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 
-import angular from 'angular';
-import angular_animate from 'angular-animate';
-import angular_clipboard from 'angular-clipboard';
-import angular_cookies from 'angular-cookies';
-import angular_route from 'angular-route';
-import angular_sanitize from 'angular-sanitize';
-import angular_ui_bootstrap from 'angular-ui-bootstrap';
-import angular_ui_router from 'angular-ui-router';
-import angular_utils from 'angularUtils/src/angularUtils.js';
-import angular_utils_pagination from 'angularUtils/src/directives/pagination/dirPagination.js';
+import 'angular';
+import 'angular-animate';
+import 'angular-clipboard';
+import 'angular-cookies';
+import 'angular-route';
+import 'angular-sanitize';
+import 'angular-ui-bootstrap';
+import 'angular-ui-router';
+import 'angularUtils/src/angularUtils.js';
+import 'angularUtils/src/directives/pagination/dirPagination.js';
 
 require('./styles/index.scss');
-var config = require('../config.json');
+// const config = require('../config.json');
 
-// TODO(Ed)  clean this up, add the appropriate imports to phosphor-webui
+import './common/services/index.js';
+import './common/services/constants.js';
+import './common/services/dataService.js';
+import './common/services/api-utils.js';
+import './common/services/userModel.js';
+import './common/services/apiInterceptor.js';
 
-import services_index from './common/services/index.js';
-import constants from './common/services/constants.js';
-import dataService from './common/services/dataService.js';
-import api_utils from './common/services/api-utils.js';
-import userModel from './common/services/userModel.js';
-import apiInterceptor from './common/services/apiInterceptor.js';
+import './common/filters/index.js';
 
-import filters_index from './common/filters/index.js';
+import './common/directives/index.js';
+import './common/directives/errors.js';
+import './common/directives/app-header.js';
+import './common/directives/app-navigation.js';
+import './common/directives/confirm.js';
+import './common/directives/log-event.js';
+import './common/directives/log-filter.js';
+import './common/directives/log-search-control.js';
+import './common/directives/toggle-flag.js';
+import './common/directives/firmware-list.js';
+import './common/directives/file.js';
+import './common/directives/input.js';
+import './common/directives/loader.js';
+import './common/directives/paginate.js';
+import './common/directives/serial-console.js';
 
-import directives_index from './common/directives/index.js';
-import errors from './common/directives/errors.js';
-import app_header from './common/directives/app-header.js';
-import app_navigation from './common/directives/app-navigation.js';
-import confirm from './common/directives/confirm.js';
-import log_event from './common/directives/log-event.js';
-import log_filter from './common/directives/log-filter.js';
-import log_search_control from './common/directives/log-search-control.js';
-import toggle_flag from './common/directives/toggle-flag.js';
-import firmware_list from './common/directives/firmware-list.js';
-import file from './common/directives/file.js';
-import input from './common/directives/input.js';
-import loader from './common/directives/loader.js';
-import paginate from './common/directives/paginate.js';
-import serial_console from './common/directives/serial-console.js';
+import './login/index.js';
+import './login/controllers/login-controller.js';
 
-import login_index from './login/index.js';
-import login_controller from './login/controllers/login-controller.js';
+import './overview/index.js';
+import './overview/controllers/system-overview-controller.js';
 
-import overview_index from './overview/index.js';
-import system_overview_controller from './overview/controllers/system-overview-controller.js';
+import './server-control/index.js';
+import './server-control/controllers/bmc-reboot-controller.js';
+import './server-control/controllers/power-operations-controller.js';
+import './server-control/controllers/power-usage-controller.js';
+import './server-control/controllers/remote-console-window-controller.js';
+import './server-control/controllers/server-led-controller.js';
 
-import server_control_index from './server-control/index.js';
-import bmc_reboot_controller from './server-control/controllers/bmc-reboot-controller.js';
-import power_operations_controller from './server-control/controllers/power-operations-controller.js';
-import power_usage_controller from './server-control/controllers/power-usage-controller.js';
-import remote_console_window_controller from './server-control/controllers/remote-console-window-controller.js';
-import server_led_controller from './server-control/controllers/server-led-controller.js';
+import './server-health/index.js';
+import './server-health/controllers/inventory-overview-controller.js';
+import './server-health/controllers/log-controller.js';
+import './server-health/controllers/sensors-overview-controller.js';
 
-import server_health_index from './server-health/index.js';
-import inventory_overview_controller from './server-health/controllers/inventory-overview-controller.js';
-import log_controller from './server-health/controllers/log-controller.js';
-import sensors_overview_controller from './server-health/controllers/sensors-overview-controller.js';
+import './redfish/index.js';
+import './redfish/controllers/redfish-controller.js';
+import './configuration/index.js';
+import './configuration/controllers/date-time-controller.js';
+import './configuration/controllers/network-controller.js';
+import './configuration/controllers/snmp-controller.js';
+import './configuration/controllers/firmware-controller.js';
 
-import redfish_index from './redfish/index.js';
-import redfish_controller from './redfish/controllers/redfish-controller.js';
-import configuration_index from './configuration/index.js';
-import date_time_controller from './configuration/controllers/date-time-controller.js';
-import network_controller from './configuration/controllers/network-controller.js';
-import snmp_controller from './configuration/controllers/snmp-controller.js';
-import firmware_controller from './configuration/controllers/firmware-controller.js';
-
-import users_index from './users/index.js';
-import user_accounts_controller from './users/controllers/user-accounts-controller.js';
+import './users/index.js';
+import './users/controllers/user-accounts-controller.js';
 
 window.angular && (function(angular) {
   'use strict';
@@ -95,40 +93,41 @@ window.angular && (function(angular) {
             'app.common.filters',
             // Model resources
             'app.login', 'app.overview', 'app.serverControl',
-            'app.serverHealth', 'app.configuration', 'app.users', 'app.redfish'
+            'app.serverHealth', 'app.configuration', 'app.users', 'app.redfish',
           ])
       // Route configuration
       .config([
         '$routeProvider', '$locationProvider',
         function($routeProvider, $locationProvider) {
           $locationProvider.hashPrefix('');
+          // $locationProvider.html5Mode(true);
           $routeProvider.otherwise({'redirectTo': '/login'});
-        }
+        },
       ])
       .config([
         '$compileProvider',
         function($compileProvider) {
           $compileProvider.aHrefSanitizationWhitelist(
               /^\s*(https?|ftp|mailto|tel|file|data|blob):/);
-        }
+        },
       ])
       .config([
         '$httpProvider',
         function($httpProvider) {
           $httpProvider.interceptors.push('apiInterceptor');
           $httpProvider.defaults.headers.common = {
-            'Accept': 'application/json'
+            'Accept': 'application/json',
           };
           $httpProvider.defaults.headers.post = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           };
           $httpProvider.defaults.headers.put = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           };
           $httpProvider.defaults.headers.patch = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           };
-        }
+        },
       ])
       .run([
         '$rootScope', '$location', 'dataService', 'userModel',
@@ -139,7 +138,11 @@ window.angular && (function(angular) {
             if (next.$$route == null || next.$$route == undefined) return;
             if (next.$$route.authenticated) {
               if (!userModel.isLoggedIn()) {
-                $location.path('/login');
+                if (next.$$route.originalPath !== null) {
+                  $location.path('/login?next=' + next.$$route.originalPath);
+                } else {
+                  $location.path('/login');
+                }
               }
             }
 
@@ -155,7 +158,7 @@ window.angular && (function(angular) {
             }
           });
           $rootScope.$on('$locationChangeSuccess', function(event) {
-            var path = $location.path();
+            const path = $location.path();
             dataService.path = path;
             if (['/', '/login', '/logout'].indexOf(path) == -1 &&
                 path.indexOf('/login') == -1) {
@@ -167,8 +170,12 @@ window.angular && (function(angular) {
 
           $rootScope.$on('timedout-user', function() {
             sessionStorage.removeItem('LOGIN_ID');
-            $location.path('/login');
+            if (next.$$route.originalPath !== null) {
+              $location.path('/login?next=' + next.$$route.originalPath);
+            } else {
+              $location.path('/login');
+            }
           });
-        }
+        },
       ]);
 })(window.angular);

@@ -1,28 +1,28 @@
 'use strict';
 
 // Modules
-var webpack = require('webpack');
-var autoprefixer = require('autoprefixer');
-var HtmlWebpackInlineSourcePlugin =
+const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
+const HtmlWebpackInlineSourcePlugin =
     require('html-webpack-inline-source-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var CompressionPlugin = require('compression-webpack-plugin');
-var AssetsPlugin = require('assets-webpack-plugin');
-var path = require('path');
-var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-var FilterChunkWebpackPlugin = require('filter-chunk-webpack-plugin');
-var MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+const AssetsPlugin = require('assets-webpack-plugin');
+const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const FilterChunkWebpackPlugin = require('filter-chunk-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (env, options) => {
-  var isProd = options.mode === 'production';
+  const isProd = options.mode === 'production';
 
   /**
    * Config
    * Reference: http://webpack.github.io/docs/configuration.html
    * This is the object where all configuration gets set
    */
-  var config = {};
+  const config = {};
 
   /**
    * Entry
@@ -52,7 +52,7 @@ module.exports = (env, options) => {
 
     // Filename for non-entry points
     // Only adds hash in build mode
-    chunkFilename: '[name].bundle.js'
+    chunkFilename: '[name].bundle.js',
   };
 
   /**
@@ -73,7 +73,7 @@ module.exports = (env, options) => {
         // Compiles ES6 and ES7 into ES5 code
         test: /\.js$/,
         use: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {test: /\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader']}, {
         // ASSET LOADER
@@ -86,30 +86,30 @@ module.exports = (env, options) => {
         // output
         test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|ico)$/,
         loader: 'file-loader',
-        options: {name: '[path][name].[ext]'}
+        options: {name: '[path][name].[ext]'},
       },
       {
         // HTML LOADER
         // Reference: https://github.com/webpack/raw-loader
         // Allow loading html through js
         test: /\.html$/,
-        loader: 'html-loader'
+        loader: 'html-loader',
       },
       {
         test: /\.scss$/,
         use: [
           {
-            loader: 'style-loader'  // creates style nodes from JS strings
+            loader: 'style-loader', // creates style nodes from JS strings
           },
           {
-            loader: 'css-loader'  // translates CSS into CommonJS
+            loader: 'css-loader', // translates CSS into CommonJS
           },
           {
-            loader: 'sass-loader'  // compiles Sass to CSS
-          }
-        ]
-      }
-    ]
+            loader: 'sass-loader', // compiles Sass to CSS
+          },
+        ],
+      },
+    ],
   };
 
   config.plugins = [
@@ -117,7 +117,7 @@ module.exports = (env, options) => {
       template: './app/index.html',
       inject: 'body',
       favicon: './app/assets/images/favicon.ico',
-      inlineSource: '.(js|css)$',  // embed all javascript and css inline
+      inlineSource: '.(js|css)$', // embed all javascript and css inline
       minify: {removeComments: true, collapseWhitespace: true},
 
     }),
@@ -134,8 +134,8 @@ module.exports = (env, options) => {
         '*glyphicons-halflings-regular*.svg',
         '*glyphicons-halflings-regular*.eot',
         '*glyphicons-halflings-regular*.woff2',
-      ]
-    })
+      ],
+    }),
   ];
 
 

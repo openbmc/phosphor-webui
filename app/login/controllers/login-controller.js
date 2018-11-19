@@ -38,7 +38,7 @@ window.angular && (function(angular) {
           userModel.login(username, password, function(status, description) {
             if (status) {
               $scope.$emit('user-logged-in', {});
-              var next = $location.search().next;
+              const next = $location.search().next;
               if (next === undefined || next == null) {
                 $window.location.hash = '#/overview/server';
               } else {

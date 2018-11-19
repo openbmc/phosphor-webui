@@ -4,7 +4,7 @@ module.exports = function karmaConfig(config) {
     frameworks: [
       // Reference: https://github.com/karma-runner/karma-jasmine
       // Set framework to jasmine
-      'jasmine'
+      'jasmine',
     ],
 
     reporters: [
@@ -14,24 +14,24 @@ module.exports = function karmaConfig(config) {
 
       // Reference: https://github.com/karma-runner/karma-coverage
       // Output code coverage files
-      'coverage'
+      'coverage',
     ],
 
     files: [
       // Grab all files in the app folder that contain .spec.
-      'src/tests.webpack.js'
+      'src/tests.webpack.js',
     ],
 
     preprocessors: {
       // Reference: http://webpack.github.io/docs/testing.html
       // Reference: https://github.com/webpack/karma-webpack
       // Convert files with webpack and load sourcemaps
-      'src/tests.webpack.js': ['webpack', 'sourcemap']
+      'src/tests.webpack.js': ['webpack', 'sourcemap'],
     },
 
     browsers: [
       // Run tests using PhantomJS
-      'PhantomJS'
+      'PhantomJS',
     ],
 
     singleRun: true,
@@ -43,6 +43,6 @@ module.exports = function karmaConfig(config) {
     webpack: require('./webpack.config'),
 
     // Hide webpack build information from output
-    webpackMiddleware: {noInfo: 'errors-only'}
+    webpackMiddleware: {noInfo: 'errors-only'},
   });
 };

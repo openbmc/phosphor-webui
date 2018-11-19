@@ -17,8 +17,8 @@ window.angular && (function(angular) {
           $routeProvider.when('/redfish/:path*/', {
             'template': require('./controllers/redfish-controller.html'),
             'controller': 'redfishController',
-            authenticated: true
+            'authenticated': true,
           });
-        }
+        },
       ]);
 })(window.angular);

@@ -46,9 +46,9 @@ window.angular && (function(angular) {
                 $scope.selectedSeverity.all = false;
               }
             };
-          }
-        ]
+          },
+        ],
       };
-    }
+    },
   ]);
 })(window.angular);

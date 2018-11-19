@@ -18,35 +18,35 @@ window.angular && (function(angular) {
               .when('/server-health/event-log', {
                 'template': require('./controllers/log-controller.html'),
                 'controller': 'logController',
-                authenticated: true
+                'authenticated': true,
               })
               .when('/server-health/event-log/:type', {
                 'template': require('./controllers/log-controller.html'),
                 'controller': 'logController',
-                authenticated: true
+                'authenticated': true,
               })
               .when('/server-health/event-log/:type/:id', {
                 'template': require('./controllers/log-controller.html'),
                 'controller': 'logController',
-                authenticated: true
+                'authenticated': true,
               })
               .when('/server-health/inventory-overview', {
                 'template':
                     require('./controllers/inventory-overview-controller.html'),
                 'controller': 'inventoryOverviewController',
-                authenticated: true
+                'authenticated': true,
               })
               .when('/server-health/sensors-overview', {
                 'template':
                     require('./controllers/sensors-overview-controller.html'),
                 'controller': 'sensorsOverviewController',
-                authenticated: true
+                'authenticated': true,
               })
               .when('/server-health', {
                 'template': require('./controllers/log-controller.html'),
                 'controller': 'logController',
-                authenticated: true
+                'authenticated': true,
               });
-        }
+        },
       ]);
 })(window.angular);

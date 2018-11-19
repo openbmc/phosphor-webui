@@ -64,7 +64,7 @@ window.angular && (function(angular) {
         $scope.setNetworkError = '';
         $scope.setNetworkSuccess = false;
         $scope.loading = true;
-        var promises = [];
+        const promises = [];
 
         // MAC Address are case-insensitive
         if ($scope.interface.MACAddress.toLowerCase() !=
@@ -97,39 +97,44 @@ window.angular && (function(angular) {
           // Delete existing IPV4 addresses that were removed
           promises.push(removeIPV4s());
           // Update any changed IPV4 addresses and add new
-          for (var i in $scope.interface.ipv4.values) {
-            if (!APIUtils.validIPV4IP(
-                    $scope.interface.ipv4.values[i].Address)) {
-              $scope.setNetworkError = $scope.interface.ipv4.values[i].Address +
-                  ' invalid IP parameter';
-              $scope.loading = false;
-              return;
-            }
-            if (!APIUtils.validIPV4IP(
-                    $scope.interface.ipv4.values[i].Gateway)) {
-              $scope.setNetworkError = $scope.interface.ipv4.values[i].Address +
-                  ' invalid gateway parameter';
-              $scope.loading = false;
-              return;
-            }
-            // The netmask prefix length will be undefined if outside range
-            if (!$scope.interface.ipv4.values[i].PrefixLength) {
-              $scope.setNetworkError = $scope.interface.ipv4.values[i].Address +
-                  ' invalid Prefix Length parameter';
-              $scope.loading = false;
-              return;
-            }
-            if ($scope.interface.ipv4.values[i].updateAddress ||
-                $scope.interface.ipv4.values[i].updateGateway ||
-                $scope.interface.ipv4.values[i].updatePrefix) {
-              // If IPV4 has an id it means it already exists in the back end,
-              // and in order to update it is required to remove previous IPV4
-              // address and add new one. See openbmc/openbmc/issues/2163.
-              // TODO: update to use PUT once issue 2163 is resolved.
-              if ($scope.interface.ipv4.values[i].id) {
-                promises.push(updateIPV4(i));
-              } else {
-                promises.push(addIPV4(i));
+          for (const i in $scope.interface.ipv4.values) {
+            if ($scope.interface.ipv4.values.hasProperty(i)) {
+              if (!APIUtils.validIPV4IP(
+                  $scope.interface.ipv4.values[i].Address)) {
+                $scope.setNetworkError =
+                    $scope.interface.ipv4.values[i].Address +
+                    ' invalid IP parameter';
+                $scope.loading = false;
+                return;
+              }
+              if (!APIUtils.validIPV4IP(
+                  $scope.interface.ipv4.values[i].Gateway)) {
+                $scope.setNetworkError =
+                    $scope.interface.ipv4.values[i].Address +
+                    ' invalid gateway parameter';
+                $scope.loading = false;
+                return;
+              }
+              // The netmask prefix length will be undefined if outside range
+              if (!$scope.interface.ipv4.values[i].PrefixLength) {
+                $scope.setNetworkError =
+                    $scope.interface.ipv4.values[i].Address +
+                    ' invalid Prefix Length parameter';
+                $scope.loading = false;
+                return;
+              }
+              if ($scope.interface.ipv4.values[i].updateAddress ||
+                  $scope.interface.ipv4.values[i].updateGateway ||
+                  $scope.interface.ipv4.values[i].updatePrefix) {
+                // If IPV4 has an id it means it already exists in the back end,
+                // and in order to update it is required to remove previous IPV4
+                // address and add new one. See openbmc/openbmc/issues/2163.
+                // TODO: update to use PUT once issue 2163 is resolved.
+                if ($scope.interface.ipv4.values[i].id) {
+                  promises.push(updateIPV4(i));
+                } else {
+                  promises.push(addIPV4(i));
+                }
               }
             }
           }
@@ -230,7 +235,7 @@ window.angular && (function(angular) {
                   function(error) {
                     console.log(JSON.stringify(error));
                     $scope.setNetworkError = ipv4.Address;
-                  })
+                  });
         });
       }
 
@@ -247,7 +252,7 @@ window.angular && (function(angular) {
                   console.log(JSON.stringify(error));
                   $scope.setNetworkError =
                       $scope.interface.ipv4.values[index].Address;
-                })
+                });
       }
 
       function updateIPV4(index) {
@@ -303,7 +308,7 @@ window.angular && (function(angular) {
             $scope.oldInterface = JSON.parse(JSON.stringify($scope.interface));
           }
           // Add id values and update flags to corresponding IPV4 objects
-          for (var i = 0; i < $scope.interface.ipv4.values.length; i++) {
+          for (let i = 0; i < $scope.interface.ipv4.values.length; i++) {
             $scope.interface.ipv4.values[i].id = $scope.interface.ipv4.ids[i];
             $scope.interface.ipv4.values[i].updateAddress = false;
             $scope.interface.ipv4.values[i].updateGateway = false;
@@ -311,6 +316,6 @@ window.angular && (function(angular) {
           }
         });
       }
-    }
+    },
   ]);
 })(angular);
