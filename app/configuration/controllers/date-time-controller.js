@@ -35,19 +35,17 @@ window.angular && (function(angular) {
                   new Date(data.data[timePath + 'bmc'].Elapsed / 1000);
               // Don't care about milliseconds and don't want them displayed
               $scope.bmc.date.setMilliseconds(0);
-              // https://stackoverflow.com/questions/1091372/getting-the-clients-timezone-in-javascript
-              // EDT (UTC - 04:00)
-              $scope.bmc.timezone =
-                  $scope.bmc.date.toString().match(/\(([A-Za-z\s].*)\)/)[1] +
-                  ' ' + createOffset($scope.bmc.date);
+              // Central Standard Time (UTC-06:00))
+              $scope.bmc.timezone = getUserTimezone($scope.bmc.date) + ' ' +
+                  createOffset($scope.bmc.date);
             }
             if (data.data[timePath + 'host'] &&
                 data.data[timePath + 'host'].hasOwnProperty('Elapsed')) {
               $scope.host.date =
                   new Date(data.data[timePath + 'host'].Elapsed / 1000);
               $scope.host.date.setMilliseconds(0);
-              $scope.host.timezone =
-                  $scope.host.date.toString().match(/([A-Z]+[\+-][0-9]+.*)/)[1];
+              $scope.host.timezone = getUserTimezone($scope.host.date) + ' ' +
+                  createOffset($scope.host.date);
             }
             if (data.data[timePath + 'owner'] &&
                 data.data[timePath + 'owner'].hasOwnProperty('TimeOwner')) {
@@ -192,6 +190,18 @@ window.angular && (function(angular) {
         var hours = pad(Math.floor(offset / 60));
         var minutes = pad(offset % 60);
         return '(UTC' + sign + hours + ':' + minutes + ')';
+      }
+      function getUserTimezone(date) {
+        const ro = Intl.DateTimeFormat().resolvedOptions();
+        // A safe, easy way to get the long timezone
+        // (e.g. Central Standard Time) is to subtract the time string
+        // without a timezone from the time string with a timezone.
+        // Hardcoded to 'en-US' so all timezones are displayed in English
+        // (e.g. Moscow Standard Time).
+        return date
+            .toLocaleTimeString(
+                'en-US', {timeZone: ro.timeZone, timeZoneName: 'long'})
+            .replace(date.toLocaleTimeString(), '');
       }
       function pad(value) {
         return value < 10 ? '0' + value : value;
