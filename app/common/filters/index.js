@@ -12,12 +12,31 @@ window.angular && (function(angular) {
               return data.length;
             }
           })
-      .filter('quiescedToError', function() {
-        return function(state) {
-          if (state.toLowerCase() == 'quiesced') {
-            return 'Error';
+      .filter(
+          'quiescedToError',
+          function() {
+            return function(state) {
+              if (state.toLowerCase() == 'quiesced') {
+                return 'Error';
+              } else {
+                return state;
+              }
+            }
+          })
+      .filter('addUserTimezone', function() {
+        return function(timestamp, utc = false) {
+          if (utc) {
+            return timestamp + ' UTC';
           } else {
-            return state;
+            var ro = Intl.DateTimeFormat().resolvedOptions();
+            var date = new Date(timestamp);
+            // A safe, easy way to get the short timezone (e.g. CST) is to
+            // subtract the time string without a timezone from the time string
+            // with a timezone.
+            return timestamp +
+                date.toLocaleTimeString(
+                        ro.lang, {timeZone: ro.timeZone, timeZoneName: 'short'})
+                    .replace(date.toLocaleTimeString(), '');
           }
         }
       });
