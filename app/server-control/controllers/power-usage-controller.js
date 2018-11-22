@@ -46,7 +46,7 @@ window.angular && (function(angular) {
 	  
 	  $scope.loadSensorData();
 	  
-	    /*$scope.showSSDData = function(num) {		  
+	    $scope.showSSDData = function(num) {		  
 			
 			var ssd_addr = ssdData[num].value >>> 27 & 0x1f;
 			var ssd_type = ssdData[num].value >>> 24 & 0x07;
@@ -68,7 +68,7 @@ window.angular && (function(angular) {
 			document.getElementById(tableid).rows[7].cells[1].innerHTML = par_id;
 			document.getElementById(tableid).rows[8].cells[1].innerHTML = inserted;
 			document.getElementById(tableid).rows[9].cells[1].innerHTML = link_st;
-	    };	 */ 
+	    }; 
 
     }
   ]);
