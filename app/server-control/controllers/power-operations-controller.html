@@ -24,7 +24,7 @@
             <p class="inline">Attempts to power on switch</p>
         </div>
 		
-		<div class="row column power-option"  ng-show="control_switch_state"  ng-class="{disabled: dataService.server_unreachable || (confirm && !orderly_confirm) || dataService.loading, transitionAll: confirm && orderly_confirm}">
+		<div class="row column power-option" ng-hide="dataService.server_state == 'Off' || dataService.server_state == 'Unreachable'" ng-class="{disabled: dataService.server_unreachable || (confirm && !orderly_confirm) || dataService.loading, transitionAll: confirm && orderly_confirm}">
             <button id="power__soft-shutdown" class="btn-secondary inline" ng-click="orderlyShutdownConfirm()" role="button" ng-disabled="dataService.server_unreachable"><img aria-hidden="true" src="../../assets/images/icon-power.svg" />Power off</button>
             <p class="inline">Attempts to power off switch</p>
             <confirm title="orderly shutdown" confirm="orderly_confirm" ng-show="orderly_confirm" cancel="orderlyShutdownCancel" callback="orderlyShutdown"></confirm>
