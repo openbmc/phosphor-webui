@@ -68,7 +68,7 @@ window.angular && (function(angular) {
 			document.getElementById(tableid).rows[7].cells[1].innerHTML = par_id;
 			document.getElementById(tableid).rows[8].cells[1].innerHTML = inserted;
 			document.getElementById(tableid).rows[9].cells[1].innerHTML = link_st;
-	    }	  
+	    };	  
 
     }
   ]);
