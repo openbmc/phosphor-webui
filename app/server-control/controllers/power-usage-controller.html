@@ -7,33 +7,33 @@
         </div>
     </div>
         
-	<section id="sensor-categories" class="row column" ng-show="ssdInfo.length">
+	<section id="ssd-categories" class="row column" ng-show="ssdInfo.length">
 		<div class="row column header-row">
 			<div class="column large-12 header__actions-bar">
-				<p class="inline sensor__title">Sensors</p>
-				<p class="inline sensor__reading">ssd address</p>
-				<p class="inline sensor__reading">ssd type</p>
-				<p class="inline sensor__reading">link speed</p>
-				<p class="inline sensor__reading">status</p>
-				<p class="inline sensor__reading">cfg width</p>
-				<p class="inline sensor__reading">link width</p>
-				<p class="inline sensor__reading">par id</p>
-				<p class="inline sensor__reading">inserted</p>
-				<p class="inline sensor__reading">link status</p>
+				<p class="inline ssd__title">SSD</p>
+				<p class="inline ssd__reading">Address</p>
+				<p class="inline ssd__reading">Type</p>
+				<p class="inline ssd__reading">LinkSpeed</p>
+				<p class="inline ssd__reading">Status</p>
+				<p class="inline ssd__reading">CfgWidth</p>
+				<p class="inline ssd__reading">LinkWidth</p>
+				<p class="inline ssd__reading">ParId</p>
+				<p class="inline ssd__reading">Inserted</p>
+				<p class="inline ssd__reading">LinkStatus</p>
 			</div>
 		</div>
-		<div class="sensor__readings-row" ng-repeat="ssd in ssdInfo">
-			<p class="inline sensor__title"><span class="icon"></span>{{ssd.title}}</p>
-			<p class="inline sensor__reading"><span class="sensor__label">ssd address</span>{{ssd.ssd_addr}}</p>
-			<p class="inline sensor__reading"><span class="sensor__label">ssd type</span>{{ssd.ssd_type}}</p>
-			<p class="inline sensor__reading"><span class="sensor__label">link speed</span>{{ssd.link_sp}}</p>
-			<p class="inline sensor__reading"><span class="sensor__label">status</span>{{ssd.status}}</p>
-			<p class="inline sensor__reading"><span class="sensor__label">cfg width</span>{{ssd.cfg_wd}}</p>
-			<p class="inline sensor__reading"><span class="sensor__label">link width</span>{{ssd.link_wd}}</p>
-			<p class="inline sensor__reading"><span class="sensor__label">par id</span>{{ssd.par_id}}</p>
-			<p class="inline sensor__reading"><span class="sensor__label">inserted</span>{{ssd.inserted}}</p>
-			<p class="inline sensor__reading"><span class="sensor__label">link status</span>{{ssd.link_st}}</p>
-		</div>
+	<!--	<div class="ssd__readings-row" ng-repeat="ssd in ssdInfo">
+			<p class="inline ssd__title"><span class="icon"></span>{{ssd.title}}</p>
+			<p class="inline ssd__reading"><span class="ssd__label">Address</span>{{ssd.ssd_addr}}</p>
+			<p class="inline ssd__reading"><span class="ssd__label">Type</span>{{ssd.ssd_type}}</p>
+			<p class="inline ssd__reading"><span class="ssd__label">LinkSpeed</span>{{ssd.link_sp}}</p>
+			<p class="inline ssd__reading"><span class="ssd__label">Status</span>{{ssd.status}}</p>
+			<p class="inline ssd__reading"><span class="ssd__label">CfgWidth</span>{{ssd.cfg_wd}}</p>
+			<p class="inline ssd__reading"><span class="ssd__label">LinkWidth</span>{{ssd.link_wd}}</p>
+			<p class="inline ssd__reading"><span class="ssd__label">ParId</span>{{ssd.par_id}}</p>
+			<p class="inline ssd__reading"><span class="ssd__label">Inserted</span>{{ssd.inserted}}</p>
+			<p class="inline ssd__reading"><span class="ssd__label">LinkStatus</span>{{ssd.link_st}}</p>
+		</div> -->
 	</section>
 	
 </div>

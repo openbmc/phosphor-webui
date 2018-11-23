@@ -1,6 +1,5 @@
 // Power Usage SCSS
 .power-usage__form {
-
   input {
     height: 2.1em;
     margin-bottom: 0em;
@@ -46,4 +45,87 @@
       margin: .5em;
     }
   }
+}
+
+
+//ssd
+.header__actions-bar {
+  padding-left: 1.5em;
+  font-weight: 700;
+  .ssd__reading {
+    margin-right: .3em;
+  }
+  .ssd__heading-current {
+    padding-right: 1em;
+  }
+}
+
+.ssd__title {
+  min-width: 30%;
+  margin-bottom: 0;
+}
+
+.ssd__title {
+    font-weight: 700;
+    background: darken($lightgrey, 5%);
+    min-width: 100%;
+    padding: .3em;
+    @include mediaQuery(medium) {
+      min-width: 30%;
+      background: transparent;
+      padding: .2em .2em .2em 0;
+    }
+    .icon__normal {
+      width: 0;
+    }
+  }
+  
+  .ssd__reading {
+    @include fontCourierBold;
+    display: block;
+    padding: .2em .2em;
+    @include mediaQuery(medium) {
+      display: inline-block;
+      padding: 0;
+    }
+  }
+  
+  .ssd__label {
+  float: left;
+  font-weight: 300;
+  @include mediaQuery(medium) {
+    display: none;
+  }
+}
+
+.ssd__readings-row {
+  position: relative;
+  display: block;
+  margin: 0;
+  background: $white;
+  text-decoration: none;
+  border: 1px solid $medgrey;
+  background: lighten($lightgrey,1%);
+  margin-top: 1em;
+  @include mediaQuery(medium) {
+    padding: .3em 1em .3em 1.5em;
+    margin-top: 0;
+    border-top: 0;
+    background: transparent;
+  }
+  .ssd__title {
+    font-weight: 700;
+    background: darken($lightgrey, 5%);
+    min-width: 100%;
+    padding: .3em;
+    @include mediaQuery(medium) {
+      min-width: 30%;
+      background: transparent;
+      padding: .2em .2em .2em 0;
+    }
+    .icon__normal {
+      width: 0;
+    }
+  }
+  
 }
