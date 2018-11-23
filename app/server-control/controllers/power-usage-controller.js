@@ -6,10 +6,10 @@ window.angular && (function(angular) {
     '$scope', '$window', 'APIUtils', 'dataService',
     function($scope, $window, APIUtils, dataService) {
       $scope.dataService = dataService;
+      $scope.loading = true;
 	  $scope.ssdInfo = [];
 	  
 	  $scope.loadSensorData = function() {
-        $scope.loading = true;
 		var ssdData = [];	
         APIUtils.getAllSensorStatus(function(data, originalData) {
 			for(var j = 0; j < 24; j++) { 
