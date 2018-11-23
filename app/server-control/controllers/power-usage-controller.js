@@ -6,7 +6,7 @@ window.angular && (function(angular) {
     '$scope', '$window', 'APIUtils', 'dataService',
     function($scope, $window, APIUtils, dataService) {
       $scope.dataService = dataService;
-	  var $scope.ssdInfo = [];
+	  $scope.ssdInfo = [];
 	  
 	  $scope.loadSensorData = function() {
         $scope.loading = true;
