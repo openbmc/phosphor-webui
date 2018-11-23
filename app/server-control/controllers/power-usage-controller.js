@@ -42,18 +42,18 @@ window.angular && (function(angular) {
 			
 				ssdInfo.push(Object.assign(
 				{
-					ssd_addr: ssdAddr
-					ssd_type: ssdType
-					link_sp: linkSpeed
-					status: state
-					cfg_wd: cfgWidth
-					link_wd: linkWidth
-					par_id: parId
-					inserted: Inserted
-					link_st: linkStatus
+					ssd_addr: ssdAddr,
+					ssd_type: ssdType,
+					link_sp: linkSpeed,
+					status: state,
+					cfg_wd: cfgWidth,
+					link_wd: linkWidth,
+					par_id: parId,
+					inserted: Inserted,
+					link_st: linkStatus,
 					title: title
 				}, 
-				ssdData[num].title))
+				ssdData[num].title));
 			}
 			
 	    };	  
