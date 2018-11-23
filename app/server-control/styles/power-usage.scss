@@ -69,7 +69,7 @@
     font-weight: 700;
     background: darken($lightgrey, 5%);
     min-width: 100%;
-    padding: .3em;
+    padding: .2em;
     @include mediaQuery(medium) {
       min-width: 30%;
       background: transparent;
@@ -117,7 +117,7 @@
     font-weight: 700;
     background: darken($lightgrey, 5%);
     min-width: 100%;
-    padding: .3em;
+    padding: .2em;
     @include mediaQuery(medium) {
       min-width: 30%;
       background: transparent;
