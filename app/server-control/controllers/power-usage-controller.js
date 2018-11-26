@@ -52,11 +52,12 @@ window.angular && (function(angular) {
 					}
 				}	
 			}
-			console.log(ssdData);	//
+			
 			showSSDData(ssdData);			
             $scope.loading = false;
         });
       };
+	  console.log(ssdInfo);	//
 	  $scope.getSensorData();
     }
   ]);
