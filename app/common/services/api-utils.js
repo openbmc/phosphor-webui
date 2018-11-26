@@ -766,6 +766,12 @@ window.angular && (function(angular) {
                               priority: priority,
                               severity_code: severityCode,
                               severity_flags: severityFlags,
+                              // simple order value to make front-end sorting
+                              // easier to implement with orderBy
+                              severity_order:
+                                  ((severityFlags.high) ?
+                                       3 :
+                                       ((severityFlags.medium) ? 2 : 1)),
                               additional_data:
                                   content.data[key].AdditionalData.join('\n'),
                               type: content.data[key].Message,
