@@ -36,7 +36,7 @@ window.angular && (function(angular) {
 				}, 
 				ssdData[num].title));
 			}
-			
+			console.log(ssdInfo);	//
 	    };	  
 		
 	  $scope.getSensorData = function() {
@@ -52,11 +52,11 @@ window.angular && (function(angular) {
 					}
 				}	
 			}
+			console.log(ssdData);	//
 			showSSDData(ssdData);			
             $scope.loading = false;
         });
       };
-	  	
 	  $scope.getSensorData();
     }
   ]);
