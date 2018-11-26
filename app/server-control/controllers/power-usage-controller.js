@@ -2,14 +2,14 @@
 window.angular && (function(angular) {
   'use strict';
 
-  angular.module('app.serverControl').controller('serverSSDController', [
+  angular.module('app.serverControl').controller('powerUsageController', [
     '$scope', '$window', 'APIUtils', 'dataService',
     function($scope, $window, APIUtils, dataService) {
       $scope.dataService = dataService;
-      $scope.loading = true;
+      $scope.loading = false;
 	  $scope.ssdInfo = [];
 	  	    
-	    /*showSSDData = function(ssdData) {
+	    showSSDData = function(ssdData) {
 			for(var num = 0; num < ssdData.length; num++) {
 				var ssdAddr = ssdData[num].value >>> 27 & 0x1f;
 				var ssdType = ssdData[num].value >>> 24 & 0x07;
@@ -40,7 +40,8 @@ window.angular && (function(angular) {
 	    };	  
 		
 	  $scope.getSensorData = function() {
-		var ssdData = [];	
+		var ssdData = [];
+		$scope.loading = true;		
         APIUtils.getAllSensorStatus(function(data, originalData) {
 			for(var j = 0; j < 24; j++) { 
 				var flag = "Ssd" + j +1;				
@@ -54,7 +55,7 @@ window.angular && (function(angular) {
 			showSSDData(ssdData);			
             $scope.loading = false;
         });
-      }; */
+      };
 	  	
 	 // $scope.getSensorData();
     }
