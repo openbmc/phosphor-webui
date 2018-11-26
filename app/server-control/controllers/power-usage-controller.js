@@ -21,7 +21,7 @@ window.angular && (function(angular) {
 				var Inserted = ssdData[num].value >>> 1 & 0x01;
 				var linkStatus = ssdData[num].value & 0x01;
 			
-				ssdInfo.push(Object.assign(
+				$scope.ssdInfo.push(Object.assign(
 				{
 					ssd_addr: ssdAddr,
 					ssd_type: ssdType,
@@ -36,7 +36,7 @@ window.angular && (function(angular) {
 				}, 
 				ssdData[num].title));
 			}
-			console.log(ssdInfo);	//
+			
 	    };	  
 		
 	  $scope.getSensorData = function() {
@@ -57,7 +57,7 @@ window.angular && (function(angular) {
             $scope.loading = false;
         });
       };
-	  console.log(ssdInfo);	//
+	  
 	  $scope.getSensorData();
     }
   ]);
