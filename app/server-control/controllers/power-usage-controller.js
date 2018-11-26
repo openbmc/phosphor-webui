@@ -8,25 +8,8 @@ window.angular && (function(angular) {
       $scope.dataService = dataService;
       $scope.loading = true;
 	  $scope.ssdInfo = [];
-	  
-	  $scope.loadSensorData = function() {
-		var ssdData = [];	
-        APIUtils.getAllSensorStatus(function(data, originalData) {
-			for(var j = 0; j < 24; j++) { 
-				var flag = "Ssd" + j +1;				
-				for(var i = 0; i < data.length; i++) {
-					if(data[i].search_text.indexof(flag) > -1) { 
-						ssdData[j] = data[i];
-						break;
-					}
-				}	
-			}
-			showSSDData(ssdData);			
-            $scope.loading = false;
-        });
-      };
-	  	  
-	    showSSDData = function(ssdData) {
+	  	    
+	    /*showSSDData = function(ssdData) {
 			for(var num = 0; num < ssdData.length; num++) {
 				var ssdAddr = ssdData[num].value >>> 27 & 0x1f;
 				var ssdType = ssdData[num].value >>> 24 & 0x07;
@@ -56,7 +39,24 @@ window.angular && (function(angular) {
 			
 	    };	  
 		
-	  $scope.loadSensorData();
+	  $scope.getSensorData = function() {
+		var ssdData = [];	
+        APIUtils.getAllSensorStatus(function(data, originalData) {
+			for(var j = 0; j < 24; j++) { 
+				var flag = "Ssd" + j +1;				
+				for(var i = 0; i < data.length; i++) {
+					if(data[i].search_text.indexof(flag) > -1) { 
+						ssdData[j] = data[i];
+						break;
+					}
+				}	
+			}
+			showSSDData(ssdData);			
+            $scope.loading = false;
+        });
+      }; */
+	  	
+	 // $scope.getSensorData();
     }
   ]);
 })(angular);
