@@ -36,7 +36,7 @@ window.angular && (function(angular) {
 				}, 
 				ssdData[num].title));
 			}
-			console.log(ssdInfo);//
+			//console.log($scope.ssdInfo);//
 	    };	  
 		
 	  $scope.getSensorData = function() {
