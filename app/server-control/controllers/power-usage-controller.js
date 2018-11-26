@@ -43,10 +43,10 @@ window.angular && (function(angular) {
 		var ssdData = [];
 		$scope.loading = true;		
         APIUtils.getAllSensorStatus(function(data, originalData) {
-			for(var j = 0; j < 24; j++) { 
-				var flag = "Ssd" + j +1;				
+			for(var j = 0; j < 24; j++) {
+				var flag = "Ssd"+(j + 1);				
 				for(var i = 0; i < data.length; i++) {
-					if(data[i].search_text.indexof(flag) > -1) { 
+					if(data[i].search_text.indexOf(flag) > -1) { 
 						ssdData[j] = data[i];
 						break;
 					}
