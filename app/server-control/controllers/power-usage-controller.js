@@ -9,7 +9,7 @@ window.angular && (function(angular) {
       $scope.loading = false;
 	  $scope.ssdInfo = [];
 	  	    
-	    showSSDData = function(ssdData) {
+	    function showSSDData(ssdData) {
 			for(var num = 0; num < ssdData.length; num++) {
 				var ssdAddr = ssdData[num].value >>> 27 & 0x1f;
 				var ssdType = ssdData[num].value >>> 24 & 0x07;
@@ -57,7 +57,7 @@ window.angular && (function(angular) {
         });
       };
 	  	
-	 // $scope.getSensorData();
+	  $scope.getSensorData();
     }
   ]);
 })(angular);
