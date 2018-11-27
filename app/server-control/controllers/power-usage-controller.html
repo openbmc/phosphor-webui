@@ -6,12 +6,6 @@
             <h2 class="h4">All SSD information present in the system</h2>
         </div>
     </div>
-		
-	<section id="ssd-categories" class="row column" ng-show="data.length==0">
-		<div class="page-header">
-            <h2 class="h4">data</h2>
-        </div>
-	</section>
 	
 	<section id="ssd-categories" class="row column" ng-show="ssdInfo.length">
 		<div class="row column header-row">
@@ -29,7 +23,7 @@
 			</div>
 		</div>
 		<div class="ssd__readings-row" ng-repeat="ssd in ssdInfo">
-			<p class="inline ssd__title"><span class="icon"></span>{{ssd.title}}</p>
+		<!--	<p class="inline ssd__title"><span class="icon"></span>{{ssd.title}}</p> -->
 			<p class="inline ssd__reading"><span class="ssd__label">Address</span>{{ssd.ssd_addr}}</p>
 			<p class="inline ssd__reading"><span class="ssd__label">Type</span>{{ssd.ssd_type}}</p>
 			<p class="inline ssd__reading"><span class="ssd__label">LinkSpeed</span>{{ssd.link_sp}}</p>

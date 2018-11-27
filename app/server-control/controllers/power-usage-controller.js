@@ -23,7 +23,17 @@ window.angular && (function(angular) {
 				var parId = ssdData[num].value >>> 2 & 0x0f;
 				var Inserted = ssdData[num].value >>> 1 & 0x01;
 				var linkStatus = ssdData[num].value & 0x01;
-			
+				console.log(ssdAddr);
+				console.log(ssdType);
+				console.log(linkSpeed);
+				console.log(state);
+				console.log(cfgWidth);
+				console.log(linkWidth);
+				console.log(parId);
+				console.log(Inserted);
+				console.log(linkStatus);
+				console.log(ssdData[num].title);
+				
 				$scope.ssdInfo.push(Object.assign(
 				{
 					ssd_addr: ssdAddr,
@@ -35,9 +45,8 @@ window.angular && (function(angular) {
 					par_id: parId,
 					inserted: Inserted,
 					link_st: linkStatus,
-					title: title
 				}, 
-				ssdData[num].title));
+				{title: ssdData[num].title}));
 			}
 			
 	    };	  
@@ -48,7 +57,7 @@ window.angular && (function(angular) {
         APIUtils.getAllSensorStatus(function(data, originalData) {
 			console.log("11111111111");
 			console.log(data);
-			$scope.data = data;
+			//$scope.data = data;
 			for(var j = 0; j < 24; j++) {
 				var flag = "ssd"+(j + 1);				
 				for(var i = 0; i < data.length; i++) {
