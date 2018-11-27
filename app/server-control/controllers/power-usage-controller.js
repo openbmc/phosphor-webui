@@ -36,25 +36,25 @@ window.angular && (function(angular) {
 				}, 
 				ssdData[num].title));
 			}
-			//console.log($scope.ssdInfo);//
+			
 	    };	  
 		
 	  $scope.getSensorData = function() {
-		var ssdData = [];
+		$scope.ssdData = [];
 		$scope.loading = true;		
         APIUtils.getAllSensorStatus(function(data, originalData) {
-			for(var j = 0; j < 24; j++) {
-				var flag = "Ssd"+(j + 1);				
-				for(var i = 0; i < data.length; i++) {
-					if(data[i].search_text.indexOf(flag) > -1) { 
-						//ssdData = data[i];
-						ssdData.push(data[i]);
-						break;
+			var allData = data;
+			//for(var j = 0; j < 24; j++) {
+				//var flag = "Ssd"+(j + 1);				
+				for(var i = 0; i < allData.length; i++) {
+					if(allData[i].search_text.indexOf('Ssd') != -1) { 
+						//ssdData[j] = data[i];
+						$scope.ssdData.push(allData[i]);
+						//break;
 					}
 				}	
-			}
-			console.log(ssdData);//
-			showSSDData(ssdData);			
+			//}
+			showSSDData($scope.ssdData);			
             $scope.loading = false;
         });
       };
