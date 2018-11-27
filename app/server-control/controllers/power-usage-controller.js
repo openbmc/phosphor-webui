@@ -43,17 +43,17 @@ window.angular && (function(angular) {
 		$scope.ssdData = [];
 		$scope.loading = true;		
         APIUtils.getAllSensorStatus(function(data, originalData) {
-			var allData = data;
-			//for(var j = 0; j < 24; j++) {
-				//var flag = "Ssd"+(j + 1);				
-				for(var i = 0; i < allData.length; i++) {
-					if(allData[i].search_text.indexOf('Ssd') != -1) { 
-						//ssdData[j] = data[i];
-						$scope.ssdData.push(allData[i]);
-						//break;
+			$scope.data = data;
+			for(var j = 0; j < 24; j++) {
+				var flag = 'Ssd'+(j + 1);				
+				for(var i = 0; i < data.length; i++) {
+					if(data[i].title.indexOf(flag) != -1) { 
+						ssdData[j] = data[i];
+						//$scope.ssdData.push(data[i]);
+						break;
 					}
 				}	
-			//}
+			}
 			showSSDData($scope.ssdData);			
             $scope.loading = false;
         });
