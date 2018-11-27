@@ -44,7 +44,7 @@ window.angular && (function(angular) {
 			
 		function showSlotData(slotData) {
 			for(var num = 0; num < slotData.length; num++) {
-				var present slotData[num].value >>> 31 & 0x01;
+				var present = slotData[num].value >>> 31 & 0x01;
 				var slotAddr = slotData[num].value >>> 27 & 0x0f;
 				var cableType = slotData[num].value >>> 24 & 0x07;
 				var linkActive = slotData[num].value >>> 23 & 0x01;
