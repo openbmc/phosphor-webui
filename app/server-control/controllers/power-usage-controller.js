@@ -40,7 +40,7 @@ window.angular && (function(angular) {
 	    };	  
 		
 	  $scope.getSensorData = function() {
-		ssdData = [];
+		var ssdData = [];
 		$scope.loading = true;		
         APIUtils.getAllSensorStatus(function(data, originalData) {
 			console.log("11111111111");
