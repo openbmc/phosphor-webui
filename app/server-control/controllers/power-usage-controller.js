@@ -98,7 +98,7 @@ window.angular && (function(angular) {
 				}	
 			}
 			showSSDData(ssdData);	
-			showSlotData			
+			showSlotData(slotData);			
             $scope.loading = false;
         });
       };
