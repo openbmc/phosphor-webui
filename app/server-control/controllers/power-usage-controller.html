@@ -7,7 +7,7 @@
         </div>
     </div>
 	
-	<section id="ssd-categories" class="row column" ng-show="ssdInfo.length">
+	<!--<section id="ssd-categories" class="row column" ng-show="ssdInfo.length">
 		<div class="row column header-row">
 			<div class="column large-12 header__actions-bar">
 				<p class="inline ssd__title">SSD</p>
@@ -23,7 +23,7 @@
 			</div>
 		</div>
 		<div class="ssd__readings-row" ng-repeat="ssd in ssdInfo">
-		<!--	<p class="inline ssd__title"><span class="icon"></span>{{ssd.title}}</p> -->
+			<p class="inline ssd__title"><span class="icon"></span>{{ssd.title}}</p> 
 			<p class="inline ssd__reading"><span class="ssd__label">Address</span>{{ssd.ssd_addr}}</p>
 			<p class="inline ssd__reading"><span class="ssd__label">Type</span>{{ssd.ssd_type}}</p>
 			<p class="inline ssd__reading"><span class="ssd__label">LinkSpeed</span>{{ssd.link_sp}}</p>
@@ -34,6 +34,68 @@
 			<p class="inline ssd__reading"><span class="ssd__label">Inserted</span>{{ssd.inserted}}</p>
 			<p class="inline ssd__reading"><span class="ssd__label">LinkStatus</span>{{ssd.link_st}}</p>
 		</div>
-	</section>
+	</section> -->
+	
+	<table>
+		<thead>
+			<tr>
+				<th>SSDTitle</th>
+				<th>Address</th>
+				<th>Type</th>
+				<th>LinkSpeed</th>
+				<th>Status</th>
+				<th>CfgWidth</th>
+				<th>LinkWidth</th>
+				<th>ParId</th>
+				<th>Inserted</th>
+				<th>LinkStatus</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="ssd in ssdInfo">
+				<td>{{ssd.title}}</td>
+				<td>{{ssd.ssd_addr}}</td>
+				<td>{{ssd.ssd_type}}</td>
+				<td>{{ssd.link_sp}}</td>
+				<td>{{ssd.status}}</td>
+				<td>{{ssd.cfg_wd}}</td>
+				<td>{{ssd.link_wd}}</td>
+				<td>{{ssd.par_id}}</td>
+				<td>{{ssd.inserted}}</td>
+				<td>{{ssd.link_st}}</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<table>
+		<thead>
+			<tr>
+				<th>SSDTitle</th>
+				<th>Present</th>
+				<th>SlotAddr</th>
+				<th>CableType</th>
+				<th>LinkActive</th>
+				<th>LinkWidth</th>
+				<th>LinkStatus</th>
+				<th>ParId</th>
+				<th>State</th>
+				<th>UspOrDsp</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="slot in slotInfo">
+				<td>{{slot.title}}</td>
+				<td>{{slot.present}}</td>
+				<td>{{slot.slot_addr}}</td>
+				<td>{{slot.cable_type}}</td>
+				<td>{{slot.link_active}}</td>
+				<td>{{slot.link_wd}}</td>
+				<td>{{slot.link_st}}</td>
+				<td>{{slot.par_id}}</td>
+				<td>{{slot.status}}</td>
+				<td>{{slot.usp_or_dsp}}</td>
+			</tr>
+		</tbody>
+	</table>
 	
 </div>
