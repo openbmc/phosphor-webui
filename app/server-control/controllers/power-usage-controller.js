@@ -40,21 +40,26 @@ window.angular && (function(angular) {
 	    };	  
 		
 	  $scope.getSensorData = function() {
-		$scope.ssdData = [];
+		ssdData = [];
 		$scope.loading = true;		
         APIUtils.getAllSensorStatus(function(data, originalData) {
+			console.log("11111111111");
+			console.log(data);
 			$scope.data = data;
 			for(var j = 0; j < 24; j++) {
 				var flag = 'Ssd'+(j + 1);				
 				for(var i = 0; i < data.length; i++) {
-					if(data[i].title.indexOf(flag) != -1) { 
+					console.log("2222222");
+					console.log(data);
+					if(data[i].search_text.indexOf(flag) != -1) { 
+					    console.log("3333333");
 						ssdData[j] = data[i];
-						//$scope.ssdData.push(data[i]);
+						//ssdData.push(data[i]);
 						break;
 					}
 				}	
 			}
-			showSSDData($scope.ssdData);			
+			showSSDData(ssdData);			
             $scope.loading = false;
         });
       };
