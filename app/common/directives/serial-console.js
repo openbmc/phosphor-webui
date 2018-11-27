@@ -14,8 +14,8 @@ window.angular && (function(angular) {
         'template': require('./serial-console.html'),
         'scope': {'path': '=', 'showTabBtn': '=?'},
         'controller': [
-          '$scope', '$window', 'dataService',
-          function($scope, $window, dataService) {
+          '$scope', '$window', 'APIUtils', 'dataService',
+          function($scope, $window, APIUtils, dataService) {
             $scope.dataService = dataService;
 
             // See https://github.com/xtermjs/xterm.js/ for available xterm
@@ -26,6 +26,47 @@ window.angular && (function(angular) {
 
             var term = new Terminal();
             term.open(document.getElementById('terminal'));
+            var getTerminalSize = APIUtils.getConsoleSize().then(
+                function(data) {
+                  if ((data.data.width != 0) || (data.data.height != 0) ||
+                      (data.data.fontSize != 0)) {
+                    var termSize = document.getElementById('terminal');
+                    if (termSize != null) {
+                      if (data.data.width != 0) {
+                        termSize.style.width =
+                            data.data.width.toString() + 'px';
+                      }
+                      if (data.data.height != 0) {
+                        termSize.style.height =
+                            data.data.height.toString() + 'px';
+                      }
+                      if (data.data.fontSize != 0) {
+                        termSize.style.fontSize =
+                            data.data.fontSize.toString() + 'px';
+                      }
+                    }
+                    var termContainer =
+                        document.getElementById('term-container');
+                    if (termContainer != null) {
+                      if (data.data.width != 0) {
+                        termContainer.style.width =
+                            data.data.width.toString() + 'px';
+                      }
+                    }
+                    var winTermContainer =
+                        document.getElementById('winterm-container');
+                    if (winTermContainer != null) {
+                      if (data.data.width != 0) {
+                        winTermContainer.style.width =
+                            data.data.width.toString() + 'px';
+                      }
+                    }
+                  }
+                },
+                function(error) {
+                  console.log(JSON.stringify(error));
+                });
+
             term.fit();
             var SOL_THEME = {
               background: '#19273c',
