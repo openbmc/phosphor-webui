@@ -10,7 +10,10 @@ window.angular && (function(angular) {
 	  $scope.ssdInfo = [];
 	  	    
 	    function showSSDData(ssdData) {
+			console.log("44444444");
+			console.log(ssdData);
 			for(var num = 0; num < ssdData.length; num++) {
+				console.log("555555");
 				var ssdAddr = ssdData[num].value >>> 27 & 0x1f;
 				var ssdType = ssdData[num].value >>> 24 & 0x07;
 				var linkSpeed = ssdData[num].value >>> 20 & 0x0f;
@@ -47,10 +50,11 @@ window.angular && (function(angular) {
 			console.log(data);
 			$scope.data = data;
 			for(var j = 0; j < 24; j++) {
-				var flag = 'Ssd'+(j + 1);				
+				var flag = "ssd"+(j + 1);				
 				for(var i = 0; i < data.length; i++) {
 					console.log("2222222");
 					console.log(data);
+					console.log(flag);
 					if(data[i].search_text.indexOf(flag) != -1) { 
 					    console.log("3333333");
 						ssdData[j] = data[i];
