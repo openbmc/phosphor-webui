@@ -35,7 +35,7 @@ window.angular && (function(angular) {
 					ssdTypeText = "M.2";
 				}
 				
-				switch(slotAddr) {
+				switch(ssdAddr) {
 					case 1: 
 						ssdAddrText = "SSD slot1"; 
 						break;
