@@ -2,9 +2,9 @@
 <div id="ssd-info">
     <div class="row column">
         <h1>SSD information</h1>
-        <div class="page-header">
+    <!--<div class="page-header">
             <h2 class="h4">All SSD information present in the system</h2>
-        </div>
+        </div> -->
     </div>
 	
 	<!--<section id="ssd-categories" class="row column" ng-show="ssdInfo.length">
@@ -36,66 +36,76 @@
 		</div>
 	</section> -->
 	
-	<table>
-		<thead>
-			<tr>
-				<th>SSDTitle</th>
-				<th>Address</th>
-				<th>Type</th>
-				<th>LinkSpeed</th>
-				<th>Status</th>
-				<th>CfgWidth</th>
-				<th>LinkWidth</th>
-				<th>ParId</th>
-				<th>Inserted</th>
-				<th>LinkStatus</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="ssd in ssdInfo">
-				<td>{{ssd.title}}</td>
-				<td>{{ssd.ssd_addr}}</td>
-				<td>{{ssd.ssd_type}}</td>
-				<td>{{ssd.link_sp}}</td>
-				<td>{{ssd.status}}</td>
-				<td>{{ssd.cfg_wd}}</td>
-				<td>{{ssd.link_wd}}</td>
-				<td>{{ssd.par_id}}</td>
-				<td>{{ssd.inserted}}</td>
-				<td>{{ssd.link_st}}</td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="row column header-row">
+		<table align="center" bordercolor="#66CCFF">
+			<caption>SSD information</caption>
+			<thead>
+				<tr align=”center”>
+					<th align=”center” font size="2">SSD NO.</th>
+					<th align=”center” font size="2">Address</th>
+					<th align=”center” font size="2">Type</th>
+					<th align=”center” font size="2">LinkSpeed</th>
+					<th align=”center” font size="2">Status</th>
+					<th align=”center” font size="2">CfgWidth</th>
+					<th align=”center” font size="2">LinkWidth</th>
+					<th align=”center” font size="2">Resered</th>
+					<th align=”center” font size="2">ParId</th>
+					<th align=”center” font size="2">Inserted</th>
+					<th align=”center” font size="2">LinkStatus</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr align=”center” ng-repeat="ssd in ssdInfo">
+					<td align=”center” font size="2">{{ssd.title}}</td>
+					<td align=”center” font size="2">{{ssd.ssd_addr}}</td>
+					<td align=”center” font size="2">{{ssd.ssd_type}}</td>
+					<td align=”center” font size="2">{{ssd.link_sp}}</td>
+					<td align=”center” font size="2">{{ssd.status}}</td>
+					<td align=”center” font size="2">{{ssd.cfg_wd}}</td>
+					<td align=”center” font size="2">{{ssd.link_wd}}</td>
+					<td align=”center” font size="2">{{ssd.resered}}</td>
+					<td align=”center” font size="2">{{ssd.par_id}}</td>
+					<td align=”center” font size="2">{{ssd.inserted}}</td>
+					<td align=”center” font size="2">{{ssd.link_st}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 	
-	<table>
-		<thead>
-			<tr>
-				<th>SSDTitle</th>
-				<th>Present</th>
-				<th>SlotAddr</th>
-				<th>CableType</th>
-				<th>LinkActive</th>
-				<th>LinkWidth</th>
-				<th>LinkStatus</th>
-				<th>ParId</th>
-				<th>State</th>
-				<th>UspOrDsp</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="slot in slotInfo">
-				<td>{{slot.title}}</td>
-				<td>{{slot.present}}</td>
-				<td>{{slot.slot_addr}}</td>
-				<td>{{slot.cable_type}}</td>
-				<td>{{slot.link_active}}</td>
-				<td>{{slot.link_wd}}</td>
-				<td>{{slot.link_st}}</td>
-				<td>{{slot.par_id}}</td>
-				<td>{{slot.status}}</td>
-				<td>{{slot.usp_or_dsp}}</td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="row column header-row">
+		<table  align="center" bordercolor="#66CCFF">
+			<caption>Slot information </caption>
+			<thead>
+				<tr align=”center”>
+					<th align=”center” font size="2">Slot NO.</th>
+					<th align=”center” font size="2">Present</th>
+					<th align=”center” font size="2">SlotAddr</th>
+					<th align=”center” font size="2">CableType</th>
+					<th align=”center” font size="2">LinkActive</th>
+					<th align=”center” font size="2">LinkWidth</th>
+					<th align=”center” font size="2">LinkStatus</th>
+					<th align=”center” font size="2">Invalid</th>
+					<th align=”center” font size="2">ParId</th>
+					<th align=”center” font size="2">State</th>
+					<th align=”center” font size="2">UspOrDsp</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr align=”center” ng-repeat="slot in slotInfo">
+					<td align=”center” font size="2">{{slot.title}}</td>
+					<td align=”center” font size="2">{{slot.present}}</td>
+					<td align=”center” font size="2">{{slot.slot_addr}}</td>
+					<td align=”center” font size="2">{{slot.cable_type}}</td>
+					<td align=”center” font size="2">{{slot.link_active}}</td>
+					<td align=”center” font size="2">{{slot.link_wd}}</td>
+					<td align=”center” font size="2">{{slot.link_st}}</td>
+					<td align=”center” font size="2">{{slot.invalid}}</td>
+					<td align=”center” font size="2">{{slot.par_id}}</td>
+					<td align=”center” font size="2">{{slot.status}}</td>
+					<td align=”center” font size="2">{{slot.usp_or_dsp}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 	
 </div>
