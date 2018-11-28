@@ -239,16 +239,16 @@ window.angular && (function(angular) {
 			var linkActiveText = "", invalidText = "", uspOrDspText = "", parIdText = "", stateText = "";
 			
 			for(var num = 0; num < slotData.length; num++) {
-				var present = slotData[num].value >>> 31 & 0x01;
-				var slotAddr = slotData[num].value >>> 27 & 0x0f;
-				var cableType = slotData[num].value >>> 24 & 0x07;
-				var linkActive = slotData[num].value >>> 23 & 0x01;
-				var linkWidth = slotData[num].value >>> 19 & 0x0f;
-				var linkStatus = slotData[num].value >>> 16 & 0x07;
-				var invalid = slotData[num].value >>> 12 & 0x0f;;
-				var parId = slotData[num].value >>> 8 & 0x0f;
-				var state = slotData[num].value >>> 4 & 0x0f;
-				var uspOrDsp = slotData[num].value & 0x0f;
+				present = slotData[num].value >>> 31 & 0x01;
+				slotAddr = slotData[num].value >>> 27 & 0x0f;
+				cableType = slotData[num].value >>> 24 & 0x07;
+				linkActive = slotData[num].value >>> 23 & 0x01;
+				linkWidth = slotData[num].value >>> 19 & 0x0f;
+				linkStatus = slotData[num].value >>> 16 & 0x07;
+				invalid = slotData[num].value >>> 12 & 0x0f;;
+				parId = slotData[num].value >>> 8 & 0x0f;
+			    state = slotData[num].value >>> 4 & 0x0f;
+				uspOrDsp = slotData[num].value & 0x0f;
 				
 				if(present == 0) {
 					presentText = "cable absent";
@@ -411,11 +411,11 @@ window.angular && (function(angular) {
 					if(data[i].title == ssd) { 
 						ssdData[j] = data[i];
 					    console.log("getSensorData");
-						console.log("ssdData[j]");
+						console.log(ssdData[j]);
 						//break;
 					}else if(data[i].title == slot) {
 						slotData[j] = data[i];
-						console.log("slotData[j]");
+						console.log(slotData[j]);
 					}else{
 						continue;
 					}
