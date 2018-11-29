@@ -131,11 +131,20 @@
 }
 
 table {
+  text-align: center; 
+  font-size: medium;
   border: 3px solid grey;
   border-collapse: collapse;
   padding: 5px;
 }
+caption{
+	font-size: medium;
+    text-align:center;
+	padding-bottom:10px;
+}
 th , td  {
+  text-align: center; 
+  font-size: medium;
   border: 1px solid grey;
   border-collapse: collapse;
   padding: 5px;

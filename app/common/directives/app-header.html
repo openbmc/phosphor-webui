@@ -17,7 +17,7 @@
 			<a class="header__info" ng-click="toggle = !toggle"><span>JBOF Info</span><i class="icon icon-angle" aria-hidden="true"></i></a>
 			<a href="#/server-health/event-log" class="header__server-health">JBOF health
 				<i class="icon icon-angle" aria-hidden="true"></i><span ng-class="{'status-light__error': dataService.server_health == 'Critical', 'status-light__warn': dataService.server_health == 'Warning', 'status-light__good': dataService.server_health == 'Good'}">{{dataService.server_health}}</span></a>
-			 <a href="#/server-control/power-operations" class="header__server-power" role="button">JBOF power
+			 <a href="#/server-control/power-operations" class="header__server-power" role="button">Switch power
 				<i class="icon icon-angle" aria-hidden="true"></i><span ng-class="{'status-light__off': dataService.server_state == 'Off', 'status-light__disabled': dataService.server_state == 'Unreachable', 'status-light__good': dataService.server_state == 'Running', 'status-light__error': dataService.server_state == 'Quiesced'}">{{dataService.server_state | quiescedToError}}</span></a>
 			<p class="header__refresh">Data last refreshed<span>{{dataService.last_updated | date:'medium'}}</span>
 			</p>

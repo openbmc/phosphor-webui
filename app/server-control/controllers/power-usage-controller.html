@@ -1,7 +1,7 @@
 <loader loading="loading"></loader>
 <div id="ssd-info">
     <div class="row column">
-        <h1>SSD information</h1>
+        <h1>SSD and Slot information</h1>
     <!--<div class="page-header">
             <h2 class="h4">All SSD information present in the system</h2>
         </div> -->
@@ -39,19 +39,19 @@
 	<div class="row column header-row">
 		<table align="center" bordercolor="#66CCFF">
 			<caption>SSD information</caption>
-			<thead>
-				<tr align=”center”>
+			<thead align=”center” bgcolor="#00008B">
+				<tr >
 					<th align=”center” font size="2">SSD NO.</th>
 					<th align=”center” font size="2">Address</th>
 					<th align=”center” font size="2">Type</th>
-					<th align=”center” font size="2">LinkSpeed</th>
+					<th align=”center” font size="2">Link Speed</th>
 					<th align=”center” font size="2">Status</th>
-					<th align=”center” font size="2">CfgWidth</th>
-					<th align=”center” font size="2">LinkWidth</th>
-					<th align=”center” font size="2">Resered</th>
-					<th align=”center” font size="2">ParId</th>
+					<th align=”center” font size="2">Link Width</th>
+				<!--<th align=”center” font size="2">CfgWidth</th>
+					<th align=”center” font size="2">Resered</th>-->
+					<th align=”center” font size="2">Par Id</th>
 					<th align=”center” font size="2">Inserted</th>
-					<th align=”center” font size="2">LinkStatus</th>
+					<th align=”center” font size="2">Link Status</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -61,9 +61,9 @@
 					<td align=”center” font size="2">{{ssd.ssd_type}}</td>
 					<td align=”center” font size="2">{{ssd.link_sp}}</td>
 					<td align=”center” font size="2">{{ssd.status}}</td>
-					<td align=”center” font size="2">{{ssd.cfg_wd}}</td>
 					<td align=”center” font size="2">{{ssd.link_wd}}</td>
-					<td align=”center” font size="2">{{ssd.resered}}</td>
+				<!--<td align=”center” font size="2">{{ssd.cfg_wd}}</td>
+					<td align=”center” font size="2">{{ssd.resered}}</td>-->
 					<td align=”center” font size="2">{{ssd.par_id}}</td>
 					<td align=”center” font size="2">{{ssd.inserted}}</td>
 					<td align=”center” font size="2">{{ssd.link_st}}</td>
@@ -75,34 +75,88 @@
 	<div class="row column header-row">
 		<table  align="center" bordercolor="#66CCFF">
 			<caption>Slot information </caption>
-			<thead>
-				<tr align=”center”>
+			<thead align=”center” bgcolor="#00008B">
+				<tr>
 					<th align=”center” font size="2">Slot NO.</th>
-					<th align=”center” font size="2">Present</th>
-					<th align=”center” font size="2">SlotAddr</th>
-					<th align=”center” font size="2">CableType</th>
-					<th align=”center” font size="2">LinkActive</th>
-					<th align=”center” font size="2">LinkWidth</th>
-					<th align=”center” font size="2">LinkStatus</th>
-					<th align=”center” font size="2">Invalid</th>
-					<th align=”center” font size="2">ParId</th>
-					<th align=”center” font size="2">State</th>
-					<th align=”center” font size="2">UspOrDsp</th>
+					<th align=”center” font size="2">Slot Status</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr align=”center” ng-repeat="slot in slotInfo">
 					<td align=”center” font size="2">{{slot.title}}</td>
-					<td align=”center” font size="2">{{slot.present}}</td>
-					<td align=”center” font size="2">{{slot.slot_addr}}</td>
-					<td align=”center” font size="2">{{slot.cable_type}}</td>
-					<td align=”center” font size="2">{{slot.link_active}}</td>
-					<td align=”center” font size="2">{{slot.link_wd}}</td>
-					<td align=”center” font size="2">{{slot.link_st}}</td>
-					<td align=”center” font size="2">{{slot.invalid}}</td>
-					<td align=”center” font size="2">{{slot.par_id}}</td>
-					<td align=”center” font size="2">{{slot.status}}</td>
-					<td align=”center” font size="2">{{slot.usp_or_dsp}}</td>
+					<td align=”center” font size="2">{{slot.slot_status}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div class="row column header-row">
+		<table  align="center" bordercolor="#66CCFF">
+			<caption>S9546 information </caption>
+			<thead align=”center” bgcolor="#00008B">
+				<tr>
+					<th align=”center” font size="2">S9546 Title</th>
+					<th align=”center” font size="2">S9546 Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr align=”center”>
+					<td align=”center” font size="2">{{s9546Info.title}}</td>
+					<td align=”center” font size="2">{{s9546Info.slot_status}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div class="row column header-row">
+		<table  align="center" bordercolor="#66CCFF">
+			<caption>Cabledmod information </caption>
+			<thead align=”center” bgcolor="#00008B">
+				<tr>
+					<th align=”center” font size="2">Cabledmod Title</th>
+					<th align=”center” font size="2">Cabledmod Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr align=”center”>
+					<td align=”center” font size="2">{{cabledmodInfo.title}}</td>
+					<td align=”center” font size="2">{{cabledmodInfo.cabled_mod}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div class="row column header-row">
+		<table  align="center" bordercolor="#66CCFF">
+			<caption>Swconfig information </caption>
+			<thead align=”center” bgcolor="#00008B">
+				<tr>
+					<th align=”center” font size="2">Swconfig Title</th>
+					<th align=”center” font size="2">Swconfig Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr align=”center”>
+					<td align=”center” font size="2">{{swconfigInfo.title}}</td>
+					<td align=”center” font size="2">{{swconfigInfo.EMA_status}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div class="row column header-row">
+		<table  align="center" bordercolor="#66CCFF">
+			<caption>Swstatus information </caption>
+			<thead align=”center” bgcolor="#00008B">
+				<tr>
+					<th align=”center” font size="2">Swstatus Title</th>
+					<th align=”center” font size="2">Swstatus Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr align=”center”>
+					<td align=”center” font size="2">{{swstatusInfo.title}}</td>
+					<td align=”center” font size="2">{{swstatusInfo.MRPC_status}}</td>
 				</tr>
 			</tbody>
 		</table>
