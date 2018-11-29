@@ -16,6 +16,7 @@ window.angular && (function(angular) {
 	  		
 	  $scope.changeStatus = function(flag){
 		  if(flag == 'ssd'){
+			  console.log("ssd");
 			  $scope.ssdFlag = true;
 			  $scope.slotFlag = false;
 			  $scope.s9546Flag = false;
@@ -23,6 +24,7 @@ window.angular && (function(angular) {
 			  $scope.swconfigFlag = false;
 			  $scope.swstatusFlag = false;
 		  }else if(flag == 'slot'){
+			  console.log("slot");
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = true;
 			  $scope.s9546Flag = false;
@@ -30,6 +32,7 @@ window.angular && (function(angular) {
 			  $scope.swconfigFlag = false;
 			  $scope.swstatusFlag = false;
 		  }else if(flag == 's9546'){
+			  console.log('s9546');
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = false;
 			  $scope.s9546Flag = true;
@@ -37,6 +40,7 @@ window.angular && (function(angular) {
 			  $scope.swconfigFlag = false;
 			  $scope.swstatusFlag = false;
 		  }else if(flag == 'cabledmod'){
+			  console.log("cabledmod");
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = false;
 			  $scope.s9546Flag = false;
@@ -44,6 +48,7 @@ window.angular && (function(angular) {
 			  $scope.swconfigFlag = false;
 			  $scope.swstatusFlag = false;
 		  }else if(flag == 'swconfig'){
+			  console.log("swconfig");
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = false;
 			  $scope.s9546Flag = false;
@@ -51,6 +56,7 @@ window.angular && (function(angular) {
 			  $scope.swconfigFlag = true;
 			  $scope.swstatusFlag = false;
 		  }else if(flag == 'swstatus'){
+			  console.log("swstatus");
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = false;
 			  $scope.s9546Flag = false;
@@ -58,6 +64,7 @@ window.angular && (function(angular) {
 			  $scope.swconfigFlag = false;
 			  $scope.swstatusFlag = true;
 		  }else{
+			  console.log("none");
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = false;
 			  $scope.s9546Flag = false;
@@ -68,8 +75,8 @@ window.angular && (function(angular) {
 	  };	  
 	  	    
 	    function showSSDData(ssdData) {
-			console.log("showSSDData");
-			console.log(ssdData);
+			//console.log("showSSDData");
+			//console.log(ssdData);
 			var ssdAddr = 0, ssdType = 0, linkSpeed = 0, state = 0, cfgWidth = 0;
 			var linkWidth = 0, Resered = 0, parId = 0, Inserted = 0, linkStatus = 0;
 			var ssdTypeText = "", ssdAddrText = "", stateText = "", linkSpeedText = "", linkWidthText = "";
@@ -289,8 +296,8 @@ window.angular && (function(angular) {
 	    };	 
 			
 		function showSlotData(slotData) {
-			console.log("showSlotData");
-			console.log(slotData);
+			//console.log("showSlotData");
+			//console.log(slotData);
 			var slotStatus = 0;
 			var slotStatusText = "";
 			
@@ -311,8 +318,8 @@ window.angular && (function(angular) {
 		};
 		
 		function showS9546Data(s9546Data){
-			console.log("showS9546Data");
-			console.log(s9546Data);
+			//console.log("showS9546Data");
+			//console.log(s9546Data);
 			var stateText = "";
 			var state = s9546Data.value & 0x01;
 			if(state == 0){
@@ -328,8 +335,8 @@ window.angular && (function(angular) {
 		};
 		
 		function showCabledmodData(cabledmodData){
-			console.log("showCabledmodData");
-			console.log(cabledmodData);
+			//console.log("showCabledmodData");
+			//console.log(cabledmodData);
 			var cabledmodText = "";
 			var cabledmod = cabledmodData.value & 0x01;
 			if(cabledmod == 0){
@@ -345,8 +352,8 @@ window.angular && (function(angular) {
 		};
 		
 		function showSwconfigData(swconfigData){
-			console.log("showSwconfigData");
-			console.log(swconfigData);
+			//console.log("showSwconfigData");
+			//console.log(swconfigData);
 			var swconfigText = "";
 			var swconfig = swconfigData.value & 0x01;
 			if(swconfig == 0){
@@ -361,8 +368,8 @@ window.angular && (function(angular) {
 		};
 		
 		function showSwstatusData(swstatusData){
-			console.log("showSwstatusData");
-			console.log(swstatusData);
+			//console.log("showSwstatusData");
+			//console.log(swstatusData);
 			var swstatusText = "";
 			var swstatus = swstatusData.value & 0x01;
 			if(swstatus == 1){
