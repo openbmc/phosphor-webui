@@ -402,11 +402,11 @@ window.angular && (function(angular) {
 				for(var i = 0; i < data.length; i++) {
 					if(data[i].title == ssd) { 
 						ssdData[j] = data[i];
-					    console.log("getSensorData");
-						console.log(ssdData[j]);
+					    //console.log("getSensorData");
+						//console.log(ssdData[j]);
 					}else if(data[i].title == slot) {
 						slotData[j] = data[i];
-						console.log(slotData[j]);
+						//console.log(slotData[j]);
 					}else if(data[i].title == s9546){
 						s9546Data = data[i];
 					}else if(data[i].title == cabledmod){
