@@ -13,6 +13,59 @@ window.angular && (function(angular) {
 	  $scope.cabledmodInfo = "";
 	  $scope.swconfigInfo = "";
 	  $scope.swstatusInfo = "";
+	  		
+	  $scope.changeStatus = function(flag){
+		  if(flag == 'ssd'){
+			  $scope.ssdFlag = true;
+			  $scope.slotFlag = false;
+			  $scope.s9546Flag = false;
+			  $scope.cabledmodFlag = false;
+			  $scope.swconfigFlag = false;
+			  $scope.swstatusFlag = false;
+		  }else if(flag == 'slot'){
+			  $scope.ssdFlag = false;
+			  $scope.slotFlag = true;
+			  $scope.s9546Flag = false;
+			  $scope.cabledmodFlag = false;
+			  $scope.swconfigFlag = false;
+			  $scope.swstatusFlag = false;
+		  }else if(flag == 's9546'){
+			  $scope.ssdFlag = false;
+			  $scope.slotFlag = false;
+			  $scope.s9546Flag = true;
+			  $scope.cabledmodFlag = false;
+			  $scope.swconfigFlag = false;
+			  $scope.swstatusFlag = false;
+		  }else if(flag == 'cabledmod'){
+			  $scope.ssdFlag = false;
+			  $scope.slotFlag = false;
+			  $scope.s9546Flag = false;
+			  $scope.cabledmodFlag = true;
+			  $scope.swconfigFlag = false;
+			  $scope.swstatusFlag = false;
+		  }else if(flag == 'swconfig'){
+			  $scope.ssdFlag = false;
+			  $scope.slotFlag = false;
+			  $scope.s9546Flag = false;
+			  $scope.cabledmodFlag = false;
+			  $scope.swconfigFlag = true;
+			  $scope.swstatusFlag = false;
+		  }else if(flag == 'swstatus'){
+			  $scope.ssdFlag = false;
+			  $scope.slotFlag = false;
+			  $scope.s9546Flag = false;
+			  $scope.cabledmodFlag = false;
+			  $scope.swconfigFlag = false;
+			  $scope.swstatusFlag = true;
+		  }else{
+			  $scope.ssdFlag = false;
+			  $scope.slotFlag = false;
+			  $scope.s9546Flag = false;
+			  $scope.cabledmodFlag = false;
+			  $scope.swconfigFlag = false;
+			  $scope.swstatusFlag = false;
+		  }
+	  };	  
 	  	    
 	    function showSSDData(ssdData) {
 			console.log("showSSDData");
@@ -543,6 +596,7 @@ window.angular && (function(angular) {
 		};*/
 	  
 	  $scope.getSensorData();
+	  
     }
   ]);
 })(angular);

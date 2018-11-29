@@ -37,6 +37,23 @@
 	</section> -->
 	
 	<div class="row column header-row">
+		<table  width=”80” heigth=”240” align="center" bordercolor="#FFFFFF">
+			<tr>
+				<th bgcolor="#FF88C2"><div ng-mouseover="changeStatus('ssd')"></div></th>
+				<th bgcolor="#FF8888"><div ng-mouseover="changeStatus('slot')"></div></th>
+			</tr>
+			<tr>
+				<th bgcolor="#66FF66"><div ng-mouseover="changeStatus('s9546')"></div></th>
+				<th bgcolor="#77FFCC"><div ng-mouseover="changeStatus('cabledmod')"></div></th>
+			</tr>
+			<tr>
+				<th bgcolor="#B088FF"><div ng-mouseover="changeStatus('swconfig')"></div></th>
+				<th bgcolor="#FF77FF"><div ng-mouseover="changeStatus('swstatus')"></div></th>
+			</tr>
+		</table>
+	</div>
+	
+	<div class="row column header-row" ng-show="ssdFlag == true">
 		<table align="center" bordercolor="#66CCFF">
 			<caption>SSD information</caption>
 			<thead align=”center” bgcolor="#00008B">
@@ -72,7 +89,7 @@
 		</table>
 	</div>
 	
-	<div class="row column header-row">
+	<div class="row column header-row" ng-show="slotFlag == true">
 		<table  align="center" bordercolor="#66CCFF">
 			<caption>Slot information </caption>
 			<thead align=”center” bgcolor="#00008B">
@@ -90,7 +107,7 @@
 		</table>
 	</div>
 	
-	<div class="row column header-row">
+	<div class="row column header-row" ng-show="s9546Flag == true">
 		<table  align="center" bordercolor="#66CCFF">
 			<caption>S9546 information </caption>
 			<thead align=”center” bgcolor="#00008B">
@@ -102,13 +119,13 @@
 			<tbody>
 				<tr align=”center”>
 					<td align=”center” font size="2">{{s9546Info.title}}</td>
-					<td align=”center” font size="2">{{s9546Info.slot_status}}</td>
+					<td align=”center” font size="2">{{s9546Info.status}}</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 	
-	<div class="row column header-row">
+	<div class="row column header-row" ng-show="cabledmodFlag == true">
 		<table  align="center" bordercolor="#66CCFF">
 			<caption>Cabledmod information </caption>
 			<thead align=”center” bgcolor="#00008B">
@@ -126,7 +143,7 @@
 		</table>
 	</div>
 	
-	<div class="row column header-row">
+	<div class="row column header-row" ng-show="swconfigFlag == true">
 		<table  align="center" bordercolor="#66CCFF">
 			<caption>Swconfig information </caption>
 			<thead align=”center” bgcolor="#00008B">
@@ -144,7 +161,7 @@
 		</table>
 	</div>
 	
-	<div class="row column header-row">
+	<div class="row column header-row" ng-show="swstatusFlag == true">
 		<table  align="center" bordercolor="#66CCFF">
 			<caption>Swstatus information </caption>
 			<thead align=”center” bgcolor="#00008B">
