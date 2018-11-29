@@ -37,7 +37,7 @@
 	</section> -->
 	
 	<div class="row column header-row">
-		<table  width=”800” heigth=”2400” align="center" bordercolor="#FFFFFF">
+	<!--<table  width=”800” heigth=”2400” align="center" bordercolor="#FFFFFF">
 			<tr>
 				<th bgcolor="#FF88C2" ng-mouseover="changeStatus('ssd')"><div ></div></th>
 				<th bgcolor="#FF8888" ng-mouseover="changeStatus('slot')"><div ></div></th>
@@ -50,7 +50,13 @@
 				<th bgcolor="#B088FF"><div ng-mouseover="changeStatus('swconfig')"></div></th>
 				<th bgcolor="#FF77FF"><div ng-mouseover="changeStatus('swstatus')"></div></th>
 			</tr>
-		</table>
+		</table>-->
+		<div ng-mouseover="changeStatus('ssd')">show SSD Information</div>
+		<div ng-mouseover="changeStatus('slot')">show Slot Information</div>
+		<div ng-mouseover="changeStatus('s9546')">show S9546 Information</div>
+		<div ng-mouseover="changeStatus('cabledmod')">show Cabledmod Information</div>
+		<div ng-mouseover="changeStatus('swconfig')">show Swconfig Information</div>
+		<div ng-mouseover="changeStatus('swstatus')">show Swstatus Information</div>
 	</div>
 	
 	<div class="row column header-row" ng-show="ssdFlag == true">
