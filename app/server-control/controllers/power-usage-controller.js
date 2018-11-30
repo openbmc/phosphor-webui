@@ -16,7 +16,6 @@ window.angular && (function(angular) {
 	  		
 	  $scope.changeStatus = function(flag){
 		  if(flag == 'ssd'){
-			  console.log("ssd");
 			  $scope.ssdFlag = true;
 			  $scope.slotFlag = false;
 			  $scope.s9546Flag = false;
@@ -24,7 +23,6 @@ window.angular && (function(angular) {
 			  $scope.swconfigFlag = false;
 			  $scope.swstatusFlag = false;
 		  }else if(flag == 'slot'){
-			  console.log("slot");
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = true;
 			  $scope.s9546Flag = false;
@@ -32,7 +30,6 @@ window.angular && (function(angular) {
 			  $scope.swconfigFlag = false;
 			  $scope.swstatusFlag = false;
 		  }else if(flag == 's9546'){
-			  console.log('s9546');
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = false;
 			  $scope.s9546Flag = true;
@@ -40,7 +37,6 @@ window.angular && (function(angular) {
 			  $scope.swconfigFlag = false;
 			  $scope.swstatusFlag = false;
 		  }else if(flag == 'cabledmod'){
-			  console.log("cabledmod");
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = false;
 			  $scope.s9546Flag = false;
@@ -48,7 +44,6 @@ window.angular && (function(angular) {
 			  $scope.swconfigFlag = false;
 			  $scope.swstatusFlag = false;
 		  }else if(flag == 'swconfig'){
-			  console.log("swconfig");
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = false;
 			  $scope.s9546Flag = false;
@@ -56,7 +51,6 @@ window.angular && (function(angular) {
 			  $scope.swconfigFlag = true;
 			  $scope.swstatusFlag = false;
 		  }else if(flag == 'swstatus'){
-			  console.log("swstatus");
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = false;
 			  $scope.s9546Flag = false;
@@ -64,7 +58,6 @@ window.angular && (function(angular) {
 			  $scope.swconfigFlag = false;
 			  $scope.swstatusFlag = true;
 		  }else{
-			  console.log("none");
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = false;
 			  $scope.s9546Flag = false;
