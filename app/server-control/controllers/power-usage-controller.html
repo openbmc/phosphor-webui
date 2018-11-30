@@ -37,32 +37,26 @@
 	</section> -->
 	
 	<div class="row column header-row">
-	<!--<table  width=”800” heigth=”2400” align="center" bordercolor="#FFFFFF">
-			<tr>
-				<th bgcolor="#FF88C2" ng-mouseover="changeStatus('ssd')"><div ></div></th>
-				<th bgcolor="#FF8888" ng-mouseover="changeStatus('slot')"><div ></div></th>
+		<table align="center" bordercolor="#FFFFFF">
+			<tr height=100>
+				<td width=150 bgcolor="#FF88C2" ng-mouseover="changeStatus('ssd')"></td>
+				<td width=150 bgcolor="#FF8888" ng-mouseover="changeStatus('ssd')"></td>
 			</tr>
-			<tr>
-				<th bgcolor="#66FF66"><div ng-mouseover="changeStatus('s9546')"></div></th>
-				<th bgcolor="#77FFCC"><div ng-mouseover="changeStatus('cabledmod')"></div></th>
+			<tr height=100>
+				<td width=150 bgcolor="#66FF66" ng-mouseover="changeStatus('ssd')"></td>
+				<td width=150 bgcolor="#77FFCC" ng-mouseover="changeStatus('ssd')"></td>
 			</tr>
-			<tr>
-				<th bgcolor="#B088FF"><div ng-mouseover="changeStatus('swconfig')"></div></th>
-				<th bgcolor="#FF77FF"><div ng-mouseover="changeStatus('swstatus')"></div></th>
+			<tr height=100>
+				<td width=150 bgcolor="#B088FF" ng-mouseover="changeStatus('ssd')"></td>
+				<td width=150 bgcolor="#FF77FF" ng-mouseover="changeStatus('ssd')"></td>
 			</tr>
-		</table>-->
-		<div ng-mouseover="changeStatus('ssd')">show SSD Information</div>
-		<div ng-mouseover="changeStatus('slot')">show Slot Information</div>
-		<div ng-mouseover="changeStatus('s9546')">show S9546 Information</div>
-		<div ng-mouseover="changeStatus('cabledmod')">show Cabledmod Information</div>
-		<div ng-mouseover="changeStatus('swconfig')">show Swconfig Information</div>
-		<div ng-mouseover="changeStatus('swstatus')">show Swstatus Information</div>
+		</table>
 	</div>
 	
 	<div class="row column header-row" ng-show="ssdFlag == true">
-		<table align="center" border="2" bordercolor="#FF88C2">
+		<table align="center" border="2" bordercolor="#0000FF">
 			<caption align=”center” font size="medium">SSD information</caption>
-			<thead align=”center” bgcolor="#00008B">
+			<thead align=”center”>
 				<tr >
 					<th align=”center” font size="medium">SSD NO.</th>
 					<th align=”center” font size="medium">Address</th>
@@ -96,9 +90,9 @@
 	</div>
 	
 	<div class="row column header-row" ng-show="slotFlag == true">
-		<table  align="center" border="2" bordercolor="#FF8888">
+		<table  align="center" border="2" bordercolor="#0000FF">
 			<caption align=”center” font size="medium">Slot information </caption>
-			<thead align=”center” bgcolor="#00008B">
+			<thead align=”center”>
 				<tr>
 					<th align=”center” font size="medium">Slot NO.</th>
 					<th align=”center” font size="medium">Slot Status</th>
@@ -114,9 +108,9 @@
 	</div>
 	
 	<div class="row column header-row" ng-show="s9546Flag == true">
-		<table  align="center" border="2" bordercolor="#66FF66">
+		<table  align="center" border="2" bordercolor="#0000FF">
 			<caption align=”center” font size="medium">S9546 information </caption>
-			<thead align=”center” bgcolor="#00008B">
+			<thead align=”center”>
 				<tr>
 					<th align=”center” font size="medium">S9546 Title</th>
 					<th align=”center” font size="medium">S9546 Status</th>
@@ -132,9 +126,9 @@
 	</div>
 	
 	<div class="row column header-row" ng-show="cabledmodFlag == true">
-		<table  align="center" border="2" bordercolor="#77FFCC">
+		<table  align="center" border="2" bordercolor="#0000FF">
 			<caption align=”center” font size="medium">Cabledmod information </caption>
-			<thead align=”center” bgcolor="#00008B">
+			<thead align=”center”>
 				<tr>
 					<th align=”center” font size="medium">Cabledmod Title</th>
 					<th align=”center” font size="medium">Cabledmod Status</th>
@@ -150,9 +144,9 @@
 	</div>
 	
 	<div class="row column header-row" ng-show="swconfigFlag == true">
-		<table  align="center" border="2" bordercolor="#B088FF">
+		<table  align="center" border="2" bordercolor="#0000FF">
 			<caption align=”center” font size="medium">Swconfig information </caption>
-			<thead align=”center” bgcolor="#00008B">
+			<thead align=”center”>
 				<tr>
 					<th align=”center” font size="medium">Swconfig Title</th>
 					<th align=”center” font size="medium">Swconfig Status</th>
@@ -168,9 +162,9 @@
 	</div>
 	
 	<div class="row column header-row" ng-show="swstatusFlag == true">
-		<table  align="center" border="2" bordercolor="#FF77FF">
+		<table  align="center" border="2" bordercolor="#0000FF">
 			<caption align=”center” font size="medium">Swstatus information </caption>
-			<thead align=”center” bgcolor="#00008B">
+			<thead align=”center”>
 				<tr>
 					<th align=”center” font size="medium">Swstatus Title</th>
 					<th align=”center” font size="medium">Swstatus Status</th>

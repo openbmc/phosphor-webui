@@ -130,13 +130,7 @@
   
 }
 
-table {
-  text-align: center; 
-  font-size: medium;
-  border: 3px solid grey;
-  border-collapse: collapse;
-  padding: 5px;
-}
+
 caption{
 	font-size: medium;
     text-align:center;
@@ -149,9 +143,9 @@ th , td  {
   border-collapse: collapse;
   padding: 5px;
 }
-table tr:nth-child(odd)	{
+ tr:nth-child(odd)	{
   background-color: #f1f1f1;
 }
-table tr:nth-child(even) {
+ tr:nth-child(even) {
   background-color: #ffffff;
 }
