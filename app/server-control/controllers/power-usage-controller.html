@@ -1,10 +1,14 @@
+
+<!--
+ * @author USI Seven 
+ * @date   20181130
+ * @brief  ssd inventory operations modify base the file of power usage controller
+-->
+
 <loader loading="loading"></loader>
 <div id="ssd-info">
     <div class="row column">
         <h1>Virtual sensor information</h1>
-    <!--<div class="page-header">
-            <h2 class="h4">All SSD information present in the system</h2>
-        </div> -->
     </div>
 	
 	<!--<section id="ssd-categories" class="row column" ng-show="ssdInfo.length">
@@ -42,11 +46,13 @@
 				<td width=150 bgcolor="#FF88C2" ng-mouseover="changeStatus('ssd')"></td>
 				<td width=150 bgcolor="#FF8888" ng-mouseover="changeStatus('slot')"></td>
 				<td width=150 bgcolor="#B088FF" ng-mouseover="changeStatus('swconfig')"></td>
+				<td width=150 bgcolor="#66FF66" ng-mouseover="changeStatus('s9546')"></td>
 			</tr>
 			<tr height=100>
-				<td width=150 bgcolor="#66FF66" ng-mouseover="changeStatus('s9546')"></td>
 				<td width=150 bgcolor="#77FFCC" ng-mouseover="changeStatus('cabledmod')"></td>
 				<td width=150 bgcolor="#DDFF77" ng-mouseover="changeStatus('swstatus')"></td>
+				<td width=150 bgcolor="#0000FF" ng-mouseover="changeStatus('ps')"></td>
+				<td width=150 bgcolor="#FF6666" ng-mouseover="changeStatus('')"></td>
 			</tr>
 		</table>
 	</div>
@@ -173,6 +179,58 @@
 					<td align=”center” font size="medium">{{swstatusInfo.title}}</td>
 					<td align=”center” font size="medium">{{swstatusInfo.MRPC_status}}</td>
 				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div class="row column header-row" ng-show="psFlag == true">
+		<table  align="center" border="2" bordercolor="#0000FF">
+			<caption align=”center” font size="medium">Power supply information </caption>
+			<thead align=”center”>
+				<tr>
+					<th align=”center” font size="medium">Title</th>
+				</tr>
+				<tr>
+					<th align=”center” font size="medium">V_out</th>
+				</tr>
+				<tr>
+					<th align=”center” font size="medium">I_out/P_out</th>
+				</tr>
+				<tr>
+					<th align=”center” font size="medium">Input</th>
+				</tr>
+				<tr>
+					<th align=”center” font size="medium">Fans</th>
+				</tr>
+				<tr>
+					<th align=”center” font size="medium">Off</th>
+				</tr>
+				<tr>
+					<th align=”center” font size="medium">V_Out_OV</th>
+				</tr>
+				<tr>
+					<th align=”center” font size="medium">I_Out_OC</th>
+				</tr>
+				<tr>
+					<th align=”center” font size="medium">V_In_UV</th>
+				</tr>				
+				<tr>
+					<th align=”center” font size="medium">Temperature</th>
+				</tr>
+			</thead>
+			<tbody>
+				<td align=”center” ng-repeat="ps in psInfo">
+					<tr align=”center” font size="medium">{{ps.title}}</tr>
+					<tr align=”center” font size="medium">{{ps.ps_vout}}</tr>
+					<tr align=”center” font size="medium">{{ps.ps_iout}}</tr>
+					<tr align=”center” font size="medium">{{ps.ps_input}}</tr>
+					<tr align=”center” font size="medium">{{ps.ps_fans}}</tr>
+					<tr align=”center” font size="medium">{{ps.ps_off}}</tr>
+					<tr align=”center” font size="medium">{{ps.ps_vout_ov}}</tr>
+					<tr align=”center” font size="medium">{{ps.ps_iout_oc}}</tr>
+					<tr align=”center” font size="medium">{{ps.ps_vin_uv}}</tr>
+					<tr align=”center” font size="medium">{{ps.ps_temperature}}</tr>
+				</td>
 			</tbody>
 		</table>
 	</div>

@@ -1,4 +1,17 @@
 
+/**
+ * Controller for ssd-inventory-operations
+ *
+ * @module app/serverControl
+ * @exports powerUsageController
+ * @name powerUsageController
+ *
+ *
+ * @author USI Seven 
+ * @date   20181130
+ * @brief  ssd inventory operations modify base the file of power usage controller
+ */
+ 
 window.angular && (function(angular) {
   'use strict';
 
@@ -13,6 +26,7 @@ window.angular && (function(angular) {
 	  $scope.cabledmodInfo = "";
 	  $scope.swconfigInfo = "";
 	  $scope.swstatusInfo = "";
+	  $scope.psInfo = [];
 	  		
 	  $scope.changeStatus = function(flag){
 		  if(flag == 'ssd'){
@@ -22,6 +36,7 @@ window.angular && (function(angular) {
 			  $scope.cabledmodFlag = false;
 			  $scope.swconfigFlag = false;
 			  $scope.swstatusFlag = false;
+			  $scope.psFlag = false;
 		  }else if(flag == 'slot'){
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = true;
@@ -29,6 +44,7 @@ window.angular && (function(angular) {
 			  $scope.cabledmodFlag = false;
 			  $scope.swconfigFlag = false;
 			  $scope.swstatusFlag = false;
+			  $scope.psFlag = false;
 		  }else if(flag == 's9546'){
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = false;
@@ -36,6 +52,7 @@ window.angular && (function(angular) {
 			  $scope.cabledmodFlag = false;
 			  $scope.swconfigFlag = false;
 			  $scope.swstatusFlag = false;
+			  $scope.psFlag = false;
 		  }else if(flag == 'cabledmod'){
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = false;
@@ -43,6 +60,7 @@ window.angular && (function(angular) {
 			  $scope.cabledmodFlag = true;
 			  $scope.swconfigFlag = false;
 			  $scope.swstatusFlag = false;
+			  $scope.psFlag = false;
 		  }else if(flag == 'swconfig'){
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = false;
@@ -50,6 +68,7 @@ window.angular && (function(angular) {
 			  $scope.cabledmodFlag = false;
 			  $scope.swconfigFlag = true;
 			  $scope.swstatusFlag = false;
+			  $scope.psFlag = false;
 		  }else if(flag == 'swstatus'){
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = false;
@@ -57,6 +76,15 @@ window.angular && (function(angular) {
 			  $scope.cabledmodFlag = false;
 			  $scope.swconfigFlag = false;
 			  $scope.swstatusFlag = true;
+			  $scope.psFlag = false;
+		  }else if(flag == 'ps'){
+			  $scope.ssdFlag = false;
+			  $scope.slotFlag = false;
+			  $scope.s9546Flag = false;
+			  $scope.cabledmodFlag = false;
+			  $scope.swconfigFlag = false;
+			  $scope.swstatusFlag = false;
+			  $scope.psFlag = true;
 		  }else{
 			  $scope.ssdFlag = false;
 			  $scope.slotFlag = false;
@@ -64,6 +92,7 @@ window.angular && (function(angular) {
 			  $scope.cabledmodFlag = false;
 			  $scope.swconfigFlag = false;
 			  $scope.swstatusFlag = false;
+			  $scope.psFlag = false;
 		  }
 	  };	  
 	  	    
@@ -376,6 +405,92 @@ window.angular && (function(angular) {
 			}, {title: swstatusData.title});
 		};
 		
+		function showPsData(psData){			
+			var psVout = 0, psIout = 0, psInput = 0, psPowerGood = 0, psFans = 0;
+			var psOff = 0, psVoutOv = 0, psIoutOc = 0, psVinUv = 0, psTemperature = 0;			
+			var psVoutText = "", psIoutText = "", psInputText = "", psPowerGoodText = "", psFansText = "";
+			var psOffText = "", psVoutOvText = "", psIoutOcText = "", psVinUvText = "", psTemperatureText = "";
+			
+			for(var num = 0; num < psData.length; num++){
+				var psVout = psData[num] >>> 15 & 0x01;
+				var psIout = psData[num] >>> 14 & 0x01;
+				var psInput = psData[num] >>> 13 & 0x01;
+				var psPowerGood = psData[num] >>> 11 & 0x01;
+				var psFans = psData[num] >>> 10 & 0x0f;
+				var psOff = psData[num] >>> 6 & 0x01;
+				var psVoutOv = psData[num] >>> 5 & 0x01;
+				var psIoutOc = psData[num] >>> 4 & 0x01;
+				var psVinUv = psData[num] >>> 3 & 0x01;
+				var psTemperature = psData[num] >>> 2 & 0x01;
+				
+				if(psVout == 0){
+					psVoutText = "Output voltage ok";
+				}else{
+					psVoutText = "Output voltage fault or warning";
+				}
+				if(psIout == 0){
+					psIoutText = "Output current or power ok";
+				}else{
+					psIoutText = "Output current or power fault or warning";
+				}
+				if(psInput == 0){
+					psInputText = "Input voltage, current or power ok";
+				}else{
+					psInputText = "Input voltage, current, or power fault or warning";
+				}
+				if(psPowerGood == 0){
+					psPowerGoodText = "POWER_GOOD signal is not negated";
+				}else{
+					psPowerGoodText = "POWER_GOOD signal is negated";
+				}
+				if(psFans == 0){
+					psFansText = "Fan or airflow ok";
+				}else{
+					psFansText = "Fan or airflow fault or warning";
+				}
+				if(psOff == 0){
+					psOffText = "Unit is providing power to output";
+				}else{
+					psOffText = "Unit is not providing power to output";
+				}
+				if(psVoutOv == 0){
+					psVoutOvText = "Output overvoltage ok";
+				}else{
+					psVoutOvText = "Output overvoltage fault";
+				}
+				if(psIoutOc == 0){
+					psIoutOcText = "Output overcurrent ok";
+				}else{
+					psIoutOcText = "Output overcurrent fault";
+				}
+				if(psVinUv == 0){
+					psVinUvText = "Input under voltage ok";
+				}else{
+					psVinUvText = "Input under voltage fault";
+				}
+				if(psTemperature == 0){
+					psTemperatureText = "Temperature ok";
+				}else{
+					psTemperatureText = "Temperature fault or warning";
+				}
+				
+				$scope.psInfo.push(Object.assign(
+				{
+					ps_vout: psVoutText,
+					ps_iout: psIoutText,
+					ps_input: psInputText,
+					ps_power_good: psPowerGoodText,
+					ps_fans: psFansText,
+					ps_off: psOffText,
+					ps_vout_ov: psVoutOvText,
+					ps_iout_oc: psIoutOcText,
+					ps_vin_uv: psVinUvText,
+					ps_temperature: psTemperatureText,
+				}, 
+				{title: psData[num].title}));
+			}
+		};
+		
 	  $scope.getSensorData = function() {
 		var ssdData = [];
 		var slotData = [];
@@ -383,45 +498,48 @@ window.angular && (function(angular) {
 		var cabledmodData = "";
 		var swconfigData = "";
 		var swstatusData = "";
+		var psData = [];
+		
 		$scope.loading = true;		
         APIUtils.getAllSensorStatus(function(data, originalData) {
-			for(var j = 0; j < 24; j++) {
+			for(var j = 0; j < 24; j++){
 				var ssd = "Switch Ssd"+(j + 1);
 				var slot = "Switch Slot"+(j + 1);
-				var s9546 = "Switch S9546";
-				var cabledmod = "Switch Cabledmod";
-				var swconfig = "Switch Swconfig";
-				var swstatus = "Switch Swstatus";
-				for(var i = 0; i < data.length; i++) {
-					if(data[i].title == ssd) { 
+				for(var i = 0; i < data.length; i++){
+					if(data[i].title == ssd){ 
 						ssdData[j] = data[i];
-					    //console.log("getSensorData");
-						//console.log(ssdData[j]);
-					}else if(data[i].title == slot) {
+					}else if(data[i].title == slot){
 						slotData[j] = data[i];
-						//console.log(slotData[j]);
-					}else if(data[i].title == s9546){
-						s9546Data = data[i];
-					}else if(data[i].title == cabledmod){
-						cabledmodData = data[i];
-					}else if(data[i].title == swconfig){
-						swconfigData = data[i];
-					}else if(data[i].title == swstatus){
-						swstatusData = data[i];
 					}else{
 						continue;
 					}
-					//if(data[i].search_text.indexOf(slot) != -1) {
-					//	slotData[j] = data[i];
-					//}
 				}	
 			}
+			for(var i = 0; i < data.length; i++){
+				if(data[i].title == "Switch S9546"){
+					s9546Data = data[i];
+				}else if(data[i].title == "Switch Cabledmod"){
+					cabledmodData = data[i];
+				}else if(data[i].title == "Switch Swconfig"){
+					swconfigData = data[i];
+				}else if(data[i].title == "Switch Swstatus"){
+					swstatusData = data[i];
+				}else if(data[i].title == "Sensors PSA Status"){
+					psData[0] = data[i];
+				}else if(data[i].title == "Sensors PSB Status"){
+					psData[1] = data[i];
+				}else{
+					continue;
+				}
+			}
+			
 			showSSDData(ssdData);	
 			showSlotData(slotData);
 			showS9546Data(s9546Data);
 			showCabledmodData(cabledmodData);
 			showSwconfigData(swconfigData);
 			showSwstatusData(swstatusData);
+			showPsData(psData);
             $scope.loading = false;
         });
       };
