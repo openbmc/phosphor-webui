@@ -189,48 +189,32 @@
 			<thead align=”center”>
 				<tr>
 					<th align=”center” font size="medium">Title</th>
-				</tr>
-				<tr>
 					<th align=”center” font size="medium">V_out</th>
-				</tr>
-				<tr>
 					<th align=”center” font size="medium">I_out/P_out</th>
-				</tr>
-				<tr>
 					<th align=”center” font size="medium">Input</th>
-				</tr>
-				<tr>
 					<th align=”center” font size="medium">Fans</th>
-				</tr>
-				<tr>
 					<th align=”center” font size="medium">Off</th>
-				</tr>
-				<tr>
 					<th align=”center” font size="medium">V_Out_OV</th>
-				</tr>
-				<tr>
 					<th align=”center” font size="medium">I_Out_OC</th>
-				</tr>
-				<tr>
 					<th align=”center” font size="medium">V_In_UV</th>
-				</tr>				
-				<tr>
 					<th align=”center” font size="medium">Temperature</th>
+					<th align=”center” font size="medium">Power supply</th>
 				</tr>
 			</thead>
 			<tbody>
-				<td align=”center” ng-repeat="ps in psInfo">
-					<tr align=”center” font size="medium">{{ps.title}}</tr>
-					<tr align=”center” font size="medium">{{ps.ps_vout}}</tr>
-					<tr align=”center” font size="medium">{{ps.ps_iout}}</tr>
-					<tr align=”center” font size="medium">{{ps.ps_input}}</tr>
-					<tr align=”center” font size="medium">{{ps.ps_fans}}</tr>
-					<tr align=”center” font size="medium">{{ps.ps_off}}</tr>
-					<tr align=”center” font size="medium">{{ps.ps_vout_ov}}</tr>
-					<tr align=”center” font size="medium">{{ps.ps_iout_oc}}</tr>
-					<tr align=”center” font size="medium">{{ps.ps_vin_uv}}</tr>
-					<tr align=”center” font size="medium">{{ps.ps_temperature}}</tr>
-				</td>
+				<tr align=”center” ng-repeat="ps in psInfo">
+					<td align=”center” font size="medium">{{ps.title}}</td>
+					<td align=”center” font size="medium">{{ps.ps_vout}}</td>
+					<td align=”center” font size="medium">{{ps.ps_iout}}</td>
+					<td align=”center” font size="medium">{{ps.ps_input}}</td>
+					<td align=”center” font size="medium">{{ps.ps_fans}}</td>
+					<td align=”center” font size="medium">{{ps.ps_off}}</td>
+					<td align=”center” font size="medium">{{ps.ps_vout_ov}}</td>
+					<td align=”center” font size="medium">{{ps.ps_iout_oc}}</td>
+					<td align=”center” font size="medium">{{ps.ps_vin_uv}}</td>
+					<td align=”center” font size="medium">{{ps.ps_temperature}}</td>
+					<td align=”center” font size="medium">{{ps.ps_sensor}}</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>

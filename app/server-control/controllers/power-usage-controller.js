@@ -409,7 +409,7 @@ window.angular && (function(angular) {
 			var psVout = 0, psIout = 0, psInput = 0, psPowerGood = 0, psFans = 0;
 			var psOff = 0, psVoutOv = 0, psIoutOc = 0, psVinUv = 0, psTemperature = 0;			
 			var psVoutText = "", psIoutText = "", psInputText = "", psPowerGoodText = "", psFansText = "";
-			var psOffText = "", psVoutOvText = "", psIoutOcText = "", psVinUvText = "", psTemperatureText = "";
+			var psOffText = "", psVoutOvText = "", psIoutOcText = "", psVinUvText = "", psTemperatureText = "", psSensorText;
 			
 			for(var num = 0; num < psData.length; num++){
 				var psVout = psData[num] >>> 15 & 0x01;
@@ -422,6 +422,7 @@ window.angular && (function(angular) {
 				var psIoutOc = psData[num] >>> 4 & 0x01;
 				var psVinUv = psData[num] >>> 3 & 0x01;
 				var psTemperature = psData[num] >>> 2 & 0x01;
+				var psSensor = psData[num];
 				
 				if(psVout == 0){
 					psVoutText = "Output voltage ok";
@@ -473,6 +474,9 @@ window.angular && (function(angular) {
 				}else{
 					psTemperatureText = "Temperature fault or warning";
 				}
+				if(psSensor == 0xffff){
+					psSensorText = "Power supply absent";
+				}
 				
 				$scope.psInfo.push(Object.assign(
 				{
@@ -486,6 +490,7 @@ window.angular && (function(angular) {
 					ps_iout_oc: psIoutOcText,
 					ps_vin_uv: psVinUvText,
 					ps_temperature: psTemperatureText,
+					ps_sensor: psSensorText,
 				}, 
 				{title: psData[num].title}));
 			}
