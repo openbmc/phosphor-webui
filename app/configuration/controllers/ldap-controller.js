@@ -56,6 +56,10 @@ window.angular && (function(angular) {
         });
       }, true);
 
+      $scope.getSelectedGroup = function() {
+        return $scope.selectedGroups[0];
+      };
+
       $scope.saveGroupSettings = function() {
         $scope.loading = true;
         $scope.error = false;
@@ -104,8 +108,25 @@ window.angular && (function(angular) {
                 $scope.loading = false;
                 $scope.activeModal = ''
               });
+        } else if ($scope.activeModal === 'modify') {
+          var selectedGroup = $scope.getSelectedGroup();
+          APIUtils
+              .modifyLdapGroupPrivilege(
+                  selectedGroup.id, selectedGroup.privilege)
+              .then(
+                  function(data) {
+                    $scope.loadLdapInfo();
+                  },
+                  function(error) {
+                    $scope.error = true;
+                    $scope.userMessage = 'Error modifying Role Group';
+                    console.log(JSON.stringify(error));
+                  })
+              .finally(function() {
+                $scope.loading = false;
+                $scope.activeModal = ''
+              });
         }
-        // TODO: Modify Role Groups with PUT
       };
       $scope.loadLdapInfo();
     }
