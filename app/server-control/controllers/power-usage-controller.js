@@ -7,7 +7,7 @@
  * @name powerUsageController
  *
  *
- * @author USI Seven 
+ * @author USI Steven 
  * @date   20181130
  * @brief  ssd inventory operations modify base the file of power usage controller
  */
@@ -318,8 +318,6 @@ window.angular && (function(angular) {
 	    };	 
 			
 		function showSlotData(slotData) {
-			//console.log("showSlotData");
-			//console.log(slotData);
 			var slotStatus = 0;
 			var slotStatusText = "";
 			
@@ -340,8 +338,6 @@ window.angular && (function(angular) {
 		};
 		
 		function showS9546Data(s9546Data){
-			//console.log("showS9546Data");
-			//console.log(s9546Data);
 			var stateText = "";
 			var state = s9546Data.value & 0x01;
 			if(state == 0){
@@ -357,8 +353,6 @@ window.angular && (function(angular) {
 		};
 		
 		function showCabledmodData(cabledmodData){
-			//console.log("showCabledmodData");
-			//console.log(cabledmodData);
 			var cabledmodText = "";
 			var cabledmod = cabledmodData.value & 0x01;
 			if(cabledmod == 0){
@@ -374,8 +368,6 @@ window.angular && (function(angular) {
 		};
 		
 		function showSwconfigData(swconfigData){
-			//console.log("showSwconfigData");
-			//console.log(swconfigData);
 			var swconfigText = "";
 			var swconfig = swconfigData.value & 0x01;
 			if(swconfig == 0){
@@ -390,8 +382,6 @@ window.angular && (function(angular) {
 		};
 		
 		function showSwstatusData(swstatusData){
-			//console.log("showSwstatusData");
-			//console.log(swstatusData);
 			var swstatusText = "";
 			var swstatus = swstatusData.value & 0x01;
 			if(swstatus == 1){
@@ -412,17 +402,17 @@ window.angular && (function(angular) {
 			var psOffText = "", psVoutOvText = "", psIoutOcText = "", psVinUvText = "", psTemperatureText = "", psSensorText;
 			
 			for(var num = 0; num < psData.length; num++){
-				var psVout = psData[num] >>> 15 & 0x01;
-				var psIout = psData[num] >>> 14 & 0x01;
-				var psInput = psData[num] >>> 13 & 0x01;
-				var psPowerGood = psData[num] >>> 11 & 0x01;
-				var psFans = psData[num] >>> 10 & 0x0f;
-				var psOff = psData[num] >>> 6 & 0x01;
-				var psVoutOv = psData[num] >>> 5 & 0x01;
-				var psIoutOc = psData[num] >>> 4 & 0x01;
-				var psVinUv = psData[num] >>> 3 & 0x01;
-				var psTemperature = psData[num] >>> 2 & 0x01;
-				var psSensor = psData[num];
+				var psVout = psData[num].value >>> 15 & 0x01;
+				var psIout = psData[num].value >>> 14 & 0x01;
+				var psInput = psData[num].value >>> 13 & 0x01;
+				var psPowerGood = psData[num].value >>> 11 & 0x01;
+				var psFans = psData[num].value >>> 10 & 0x0f;
+				var psOff = psData[num].value >>> 6 & 0x01;
+				var psVoutOv = psData[num].value >>> 5 & 0x01;
+				var psIoutOc = psData[num].value >>> 4 & 0x01;
+				var psVinUv = psData[num].value >>> 3 & 0x01;
+				var psTemperature = psData[num].value >>> 2 & 0x01;
+				var psSensor = psData[num].value;
 				
 				if(psVout == 0){
 					psVoutText = "Output voltage ok";
@@ -470,12 +460,14 @@ window.angular && (function(angular) {
 					psVinUvText = "Input under voltage fault";
 				}
 				if(psTemperature == 0){
-					psTemperatureText = "Temperature ok";
+					psTemperatureText = " ok";
 				}else{
-					psTemperatureText = "Temperature fault or warning";
+					psTemperatureText = "fault or warning";
 				}
 				if(psSensor == 0xffff){
-					psSensorText = "Power supply absent";
+					psSensorText = "absent";
+				}else{
+					psSensorText = "ok";
 				}
 				
 				$scope.psInfo.push(Object.assign(
@@ -549,25 +541,25 @@ window.angular && (function(angular) {
         });
       };
 	  
-	  /*function showSlotData(slotData) {
+	  /*function showCableData(cableData) {
 			console.log("showSlotData");
-			console.log(slotData);
+			console.log(cableData);
 			var present = 0, slotAddr = 0, cableType = 0, linkActive = 0, linkWidth = 0;
 			var linkStatus = 0, invalid = 0, parId = 0, state = 0, uspOrDsp = 0;
 			var presentText = "", slotAddrText = "", cableTypeText = "", linkWidthText = "", linkStatusText = ""; 
 			var linkActiveText = "", invalidText = "", uspOrDspText = "", parIdText = "", stateText = "";
 			
-			for(var num = 0; num < slotData.length; num++) {
-				present = slotData[num].value >>> 31 & 0x01;
-				slotAddr = slotData[num].value >>> 27 & 0x0f;
-				cableType = slotData[num].value >>> 24 & 0x07;
-				linkActive = slotData[num].value >>> 23 & 0x01;
-				linkWidth = slotData[num].value >>> 19 & 0x0f;
-				linkStatus = slotData[num].value >>> 16 & 0x07;
-				invalid = slotData[num].value >>> 12 & 0x0f;;
-				parId = slotData[num].value >>> 8 & 0x0f;
-			    state = slotData[num].value >>> 4 & 0x0f;
-				uspOrDsp = slotData[num].value & 0x0f;
+			for(var num = 0; num < cableData.length; num++) {
+				present = cableData[num].value >>> 31 & 0x01;
+				slotAddr = cableData[num].value >>> 27 & 0x0f;
+				cableType = cableData[num].value >>> 24 & 0x07;
+				linkActive = cableData[num].value >>> 23 & 0x01;
+				linkWidth = cableData[num].value >>> 19 & 0x0f;
+				linkStatus = cableData[num].value >>> 16 & 0x07;
+				invalid = cableData[num].value >>> 12 & 0x0f;;
+				parId = cableData[num].value >>> 8 & 0x0f;
+			    state = cableData[num].value >>> 4 & 0x0f;
+				uspOrDsp = cableData[num].value & 0x0f;
 				
 				if(present == 0) {
 					presentText = "cable is absent";
@@ -700,7 +692,7 @@ window.angular && (function(angular) {
 				}
 				
 				
-				$scope.slotInfo.push(Object.assign(
+				$scope.cableInfo.push(Object.assign(
 				{
 					present: presentText,
 					slot_addr: slotAddrText,
@@ -713,7 +705,7 @@ window.angular && (function(angular) {
 					status: stateText,
 					usp_or_dsp: uspOrDspText,
 				},
-				{title: slotData[num].title}));
+				{title: cableData[num].title}));
 			}
 			
 		};*/
