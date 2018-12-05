@@ -104,16 +104,16 @@ window.angular && (function(angular) {
 			var ssdTypeText = "", ssdAddrText = "", stateText = "", linkSpeedText = "", linkWidthText = "";
 			var cfgWidthText = "", linkStatusText = "", InsertedText = "", parIdText = "", ReseredText = "";
 			for(var num = 0; num < ssdData.length; num++) {
-				ssdAddr = ssdData[num].value >>> 27 & 0x1f;
-				ssdType = ssdData[num].value >>> 24 & 0x07;
-				linkSpeed = ssdData[num].value >>> 20 & 0x0f;
-				state = ssdData[num].value >>> 16 & 0x0f;
-				cfgWidth = ssdData[num].value >>> 12 & 0x0f;
-				linkWidth = ssdData[num].value >>> 8 & 0x0f;
-				Resered = ssdData[num].value >>> 6 & 0x03;
-				parId = ssdData[num].value >>> 2 & 0x0f;
-				Inserted = ssdData[num].value >>> 1 & 0x01;
-				linkStatus = ssdData[num].value & 0x01;				
+				ssdAddr = ssdData[num].Value >>> 27 & 0x1f;
+				ssdType = ssdData[num].Value >>> 24 & 0x07;
+				linkSpeed = ssdData[num].Value >>> 20 & 0x0f;
+				state = ssdData[num].Value >>> 16 & 0x0f;
+				cfgWidth = ssdData[num].Value >>> 12 & 0x0f;
+				linkWidth = ssdData[num].Value >>> 8 & 0x0f;
+				Resered = ssdData[num].Value >>> 6 & 0x03;
+				parId = ssdData[num].Value >>> 2 & 0x0f;
+				Inserted = ssdData[num].Value >>> 1 & 0x01;
+				linkStatus = ssdData[num].Value & 0x01;				
 				
 				if(ssdType == 0){
 					ssdTypeText = "U.2";
@@ -322,7 +322,7 @@ window.angular && (function(angular) {
 			var slotStatusText = "";
 			
 			for(var num = 0; num < slotData.length; num++) {
-				slotStatus = slotData[num].value & 0x01;
+				slotStatus = slotData[num].Value & 0x01;
 				if(slotStatus == 0){
 					slotStatusText = "status ok";
 				}else{
@@ -339,7 +339,7 @@ window.angular && (function(angular) {
 		
 		function showS9546Data(s9546Data){
 			var stateText = "";
-			var state = s9546Data.value & 0x01;
+			var state = s9546Data.Value & 0x01;
 			if(state == 0){
 				stateText = "status ok";
 			}else{
@@ -354,7 +354,7 @@ window.angular && (function(angular) {
 		
 		function showCabledmodData(cabledmodData){
 			var cabledmodText = "";
-			var cabledmod = cabledmodData.value & 0x01;
+			var cabledmod = cabledmodData.Value & 0x01;
 			if(cabledmod == 0){
 				cabledmodText = "auto";
 			}else{
@@ -369,7 +369,7 @@ window.angular && (function(angular) {
 		
 		function showSwconfigData(swconfigData){
 			var swconfigText = "";
-			var swconfig = swconfigData.value & 0x01;
+			var swconfig = swconfigData.Value & 0x01;
 			if(swconfig == 0){
 				swconfigText = "enable EMA";
 			}else{
@@ -383,7 +383,7 @@ window.angular && (function(angular) {
 		
 		function showSwstatusData(swstatusData){
 			var swstatusText = "";
-			var swstatus = swstatusData.value & 0x01;
+			var swstatus = swstatusData.Value & 0x01;
 			if(swstatus == 1){
 				swstatusText = "MRPC status ok";
 			}else{
@@ -402,17 +402,17 @@ window.angular && (function(angular) {
 			var psOffText = "", psVoutOvText = "", psIoutOcText = "", psVinUvText = "", psTemperatureText = "", psSensorText;
 			
 			for(var num = 0; num < psData.length; num++){
-				var psVout = psData[num].value >>> 15 & 0x01;
-				var psIout = psData[num].value >>> 14 & 0x01;
-				var psInput = psData[num].value >>> 13 & 0x01;
-				var psPowerGood = psData[num].value >>> 11 & 0x01;
-				var psFans = psData[num].value >>> 10 & 0x0f;
-				var psOff = psData[num].value >>> 6 & 0x01;
-				var psVoutOv = psData[num].value >>> 5 & 0x01;
-				var psIoutOc = psData[num].value >>> 4 & 0x01;
-				var psVinUv = psData[num].value >>> 3 & 0x01;
-				var psTemperature = psData[num].value >>> 2 & 0x01;
-				var psSensor = psData[num].value;
+				var psVout = psData[num].Value >>> 15 & 0x01;
+				var psIout = psData[num].Value >>> 14 & 0x01;
+				var psInput = psData[num].Value >>> 13 & 0x01;
+				var psPowerGood = psData[num].Value >>> 11 & 0x01;
+				var psFans = psData[num].Value >>> 10 & 0x0f;
+				var psOff = psData[num].Value >>> 6 & 0x01;
+				var psVoutOv = psData[num].Value >>> 5 & 0x01;
+				var psIoutOc = psData[num].Value >>> 4 & 0x01;
+				var psVinUv = psData[num].Value >>> 3 & 0x01;
+				var psTemperature = psData[num].Value >>> 2 & 0x01;
+				var psSensor = psData[num].Value;
 				
 				if(psVout == 0){
 					psVoutText = "Output voltage ok";
