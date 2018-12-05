@@ -1,0 +1,10 @@
+{
+  "customKeyEnable": false,
+  "keyNumber" : 1,
+  "keys": [
+    {
+      "keyCode": 8,
+      "keyHandler": 0
+    }
+  ]
+}
