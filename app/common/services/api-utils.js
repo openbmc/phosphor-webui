@@ -156,6 +156,15 @@ window.angular && (function(angular) {
           });
           return $q.all(promises);
         },
+        modifyLdapGroupPrivilege: function(groupId, groupPrivilege) {
+          return $http({
+            method: 'PUT',
+            url: DataService.getHost() + '/xyz/openbmc_project/user/ldap/' +
+                groupId + '/attr/Privilege',
+            withCredentials: true,
+            data: JSON.stringify({'data': groupPrivilege})
+          })
+        },
         pollHostStatusTillOn: function() {
           var deferred = $q.defer();
           var hostOnTimeout = setTimeout(function() {

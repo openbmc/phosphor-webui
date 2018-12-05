@@ -11,8 +11,8 @@
   </div>
   <div class="row column ldap__button__wrapper">
     <button id="add_group" class="btn-secondary inline group_btn" ng-class="{'disabled': ldapDisabled}" ng-click="activeModal='add'" role="button">Add Role Group</button>
+    <button id="modify_group" class="btn-secondary inline group_btn" ng-class="{'disabled': (selectedGroups.length != 1) || ldapDisabled}" ng-click="activeModal='modify'" role="button">Modify Privileges</button>
     <button id="delete_group" class="btn-secondary inline group_btn" ng-class="{'disabled': (selectedGroups.length < 1) || ldapDisabled}" ng-click="activeModal='delete'" role="button">Remove Role {{selectedGroups.length > 1 ? 'Groups' : 'Group'}}</button>
-    <!-- Modify button -->
   </div>
   <div class="row column group__table table">
     <div class="table__head">
@@ -96,6 +96,22 @@
         <div class="modal__button-wrapper">
           <button class="inline btn-secondary" ng-click="activeModal=''; newGroup={}">Cancel</button>
           <button class="inline btn-primary" ng-click="saveGroupSettings();">Remove group</button>
+        </div>
+      </div>
+      <div ng-show="activeModal === 'modify'">
+        <div class="modal__content">
+          <form name="modify_group">
+            <label class="content-label">Group Name</label>
+            <span class="modify_group_name">{{getSelectedGroup().groupName}}</span>
+            <label class="content-label">Group Privilege</label>
+            <select ng-model="getSelectedGroup().privilege" class="small-6">
+              <option class="courier-bold" ng-repeat="privilege in userPrivileges">{{privilege}}</option>
+            </select>
+          </form>
+        </div>
+        <div class="modal__button-wrapper">
+          <button class="inline btn-secondary" ng-click="activeModal=''; loadLdapInfo();">Cancel</button>
+          <button class="inline btn-primary" ng-click="saveGroupSettings();">Modify group</button>
         </div>
       </div>
     </div>
