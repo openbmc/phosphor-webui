@@ -34,6 +34,9 @@ window.angular && (function(angular) {
       this.errorModalDetails = {};
 
       this.ignoreHttpError = false;
+
+      this.redfishSupportEnabled = false;
+
       this.getServerId = function() {
         return this.host.replace(/^https?\:\/\//ig, '');
       };
@@ -130,6 +133,10 @@ window.angular && (function(angular) {
 
       this.deactivateErrorModal = function() {
         this.displayErrorModal = false;
+      };
+
+      this.setRedfishSupportFlag = function(data) {
+        this.redfishSupportEnabled = data;
       };
     }
   ]);

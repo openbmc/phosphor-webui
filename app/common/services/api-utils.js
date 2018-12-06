@@ -32,6 +32,13 @@ window.angular && (function(angular) {
         LED_STATE: Constants.LED_STATE,
         LED_STATE_TEXT: Constants.LED_STATE_TEXT,
         HOST_SESSION_STORAGE_KEY: Constants.API_CREDENTIALS.host_storage_key,
+        getRedfishRootNode: function() {
+          return $http({
+            method: 'GET',
+            url: DataService.getHost() + '/redfish/v1',
+            withCredentials: true
+          });
+        },
         getChassisState: function() {
           var deferred = $q.defer();
           $http({
@@ -509,25 +516,35 @@ window.angular && (function(angular) {
                   });
         },
         changePassword: function(user, newPassword) {
-          var deferred = $q.defer();
-          $http({
-            method: 'POST',
-            url: DataService.getHost() + '/xyz/openbmc_project/user/' + user +
-                '/action/SetPassword',
-            withCredentials: true,
-            data: JSON.stringify({'data': [newPassword]}),
-            responseType: 'arraybuffer'
-          })
-              .then(
-                  function(response, status, headers) {
-                    deferred.resolve(
-                        {data: response, status: status, headers: headers});
-                  },
-                  function(error) {
-                    console.log(error);
-                    deferred.reject(error);
-                  });
-          return deferred.promise;
+          if (DataService.redfishSupportEnabled) {
+            return $http({
+              method: 'PATCH',
+              url: DataService.getHost() +
+                  '/redfish/v1/AccountService/Accounts/' + user,
+              withCredentials: true,
+              data: JSON.stringify({'Password': newPassword})
+            });
+          } else {
+            var deferred = $q.defer();
+            $http({
+              method: 'POST',
+              url: DataService.getHost() + '/xyz/openbmc_project/user/' + user +
+                  '/action/SetPassword',
+              withCredentials: true,
+              data: JSON.stringify({'data': [newPassword]}),
+              responseType: 'arraybuffer'
+            })
+                .then(
+                    function(response, status, headers) {
+                      deferred.resolve(
+                          {data: response, status: status, headers: headers});
+                    },
+                    function(error) {
+                      console.log(error);
+                      deferred.reject(error);
+                    });
+            return deferred.promise;
+          }
         },
         chassisPowerOff: function() {
           var deferred = $q.defer();

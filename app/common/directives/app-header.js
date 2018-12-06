@@ -95,10 +95,21 @@ window.angular && (function(angular) {
               });
             };
 
+            $scope.updateRedfishSupportFlag = function() {
+              APIUtils.getRedfishRootNode().then(
+                  function(status) {
+                    dataService.setRedfishSupportFlag(true);
+                  },
+                  function(error) {
+                    dataService.setRedfishSupportFlag(false);
+                  });
+            };
+
             function loadData() {
               $scope.loadServerStatus();
               $scope.loadNetworkInfo();
               $scope.loadServerHealth();
+              $scope.updateRedfishSupportFlag();
             }
 
             loadData();
