@@ -1555,6 +1555,16 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        getConsoleSize: function(term) {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + '/xyz/openbmc_project/console',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return {jsondata: response.data, terminal: term};
+              });
+        },
       };
       return SERVICE;
     }

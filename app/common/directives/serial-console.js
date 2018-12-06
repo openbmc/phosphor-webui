@@ -14,8 +14,8 @@ window.angular && (function(angular) {
         'template': require('./serial-console.html'),
         'scope': {'path': '=', 'showTabBtn': '=?'},
         'controller': [
-          '$scope', '$window', 'dataService',
-          function($scope, $window, dataService) {
+          '$scope', '$window', 'APIUtils', 'dataService',
+          function($scope, $window, APIUtils, dataService) {
             $scope.dataService = dataService;
 
             // See https://github.com/xtermjs/xterm.js/ for available xterm
@@ -26,6 +26,28 @@ window.angular && (function(angular) {
 
             var term = new Terminal();
             term.open(document.getElementById('terminal'));
+            var getTerminalSize = APIUtils.getConsoleSize(term).then(
+                function(response) {
+                  var data = response.jsondata;
+                  if ((data.data.width != 0) || (data.data.height != 0)) {
+                    var termContainer =
+                        document.getElementById('term-container');
+                    if (termContainer != null) {
+                      if (data.data.width != 0) {
+                        termContainer.style.width =
+                            data.data.width.toString() + 'px';
+                      }
+                      if (data.data.height != 0) {
+                        termContainer.style.height =
+                            data.data.height.toString() + 'px';
+                      }
+                    }
+                    response.terminal.fit();
+                  }
+                },
+                function(error) {
+                  console.log(JSON.stringify(error));
+                });
             term.fit();
             var SOL_THEME = {
               background: '#19273c',
