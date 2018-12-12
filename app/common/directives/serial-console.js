@@ -2,7 +2,31 @@ import {Terminal} from 'xterm';
 import style from 'xterm/dist/xterm.css';
 import * as attach from 'xterm/lib/addons/attach/attach';
 import * as fit from 'xterm/lib/addons/fit/fit';
+var configJSON = require('../../../config.json');
+var EscapeSequences = require('xterm/lib/common/data/EscapeSequences');
 
+var customBackspace =
+    function(ev, term) {
+  if (ev.altKey) {
+    return true;
+  } else if (!ev.shiftKey) {
+    term.handler(EscapeSequences.C0.BS);  // Backspace
+  } else {
+    term.handler(EscapeSequences.C0.DEL);  // Delete
+  }
+  return false;
+}
+
+var callbackArray = [customBackspace];
+
+function customKeyHandlers(ev) {
+  for (var i = 0; i < configJSON.keyNumber; i++) {
+    if (ev.keyCode == configJSON.keys[i].keyCode) {
+      return callbackArray[configJSON.keys[i].keyHandler](ev, this);
+    }
+  }
+  return true;
+}
 
 window.angular && (function(angular) {
   'use strict';
@@ -27,6 +51,9 @@ window.angular && (function(angular) {
             var term = new Terminal();
             term.open(document.getElementById('terminal'));
             term.fit();
+            if (configJSON.customKeyEnable == true) {
+              term.attachCustomKeyEventHandler(customKeyHandlers);
+            }
             var SOL_THEME = {
               background: '#19273c',
               cursor: 'rgba(83, 146, 255, .5)',
