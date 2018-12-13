@@ -44,6 +44,7 @@ import toggle_flag from './common/directives/toggle-flag.js';
 import firmware_list from './common/directives/firmware-list.js';
 import file from './common/directives/file.js';
 import input from './common/directives/input.js';
+import click_outside from './common/directives/click-outside.js';
 import loader from './common/directives/loader.js';
 import paginate from './common/directives/paginate.js';
 import serial_console from './common/directives/serial-console.js';
