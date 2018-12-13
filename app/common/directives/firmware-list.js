@@ -24,6 +24,11 @@ window.angular && (function(angular) {
             $scope.changePriority = function(imageId, imageVersion, from, to) {
               $scope.$parent.changePriority(imageId, imageVersion, from, to);
             };
+
+            $scope.toggleMoreDropdown = function(event, firmware) {
+              firmware.extended.show = !firmware.extended.show;
+              event.stopPropagation();
+            };
           }
         ]
       };
