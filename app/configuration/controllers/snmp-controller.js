@@ -10,12 +10,10 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.configuration').controller('snmpController', [
-    '$scope', '$window', 'APIUtils', '$route', '$q',
-    function($scope, $window, APIUtils, $route, $q) {
+    '$scope', '$window', 'APIUtils', '$route', '$q', 'toast',
+    function($scope, $window, APIUtils, $route, $q, toast) {
       $scope.managers = [];
       $scope.loading = true;
-      $scope.error = false;
-      $scope.success = false;
       $scope.managersToDelete = [];
 
       var getSNMPManagers = APIUtils.getSNMPManagers().then(
@@ -33,6 +31,7 @@ window.angular && (function(angular) {
             }
           },
           function(error) {
+            toast.error('Unable to load SNMP settings.');
             console.log(JSON.stringify(error));
           });
 
@@ -58,8 +57,6 @@ window.angular && (function(angular) {
       };
 
       $scope.setSNMP = function() {
-        $scope.error = false;
-        $scope.success = false;
         $scope.loading = true;
         var promises = [];
 
@@ -77,7 +74,7 @@ window.angular && (function(angular) {
           if (!$scope.managers[i].address || !$scope.managers[i].port) {
             // TODO: Highlight the field that is empty
             $scope.loading = false;
-            $scope.error = true;
+            toast.error('All fields are required.');
             return;
           }
 
@@ -107,11 +104,11 @@ window.angular && (function(angular) {
         $q.all(promises)
             .then(
                 function() {
-                  $scope.success = true;
+                  toast.success('SNMP Managers set.');
                 },
                 function(errors) {
+                  toast.error('Unable to set SNMP Managers.');
                   console.log(JSON.stringify(errors));
-                  $scope.error = true;
                 })
             .finally(function() {
               $scope.loading = false;
@@ -133,6 +130,17 @@ window.angular && (function(angular) {
       function setManagerPort(path, port) {
         return APIUtils.setSNMPManagerPort(path, port);
       }
+
+      // Remove this
+      $scope.showSuccess = function() {
+        toast.success(
+            'This is an example of what a success message would look like. The timeout is set to 10 seconds. This is an example of a long success message so we can see the text wrapping.');
+      };
+      $scope.showError = function() {
+        toast.error(
+            'This is an example of what an error message would look like.');
+      };
+      // Remove this
     }
   ]);
 })(angular);
