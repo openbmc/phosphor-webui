@@ -10,12 +10,10 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.configuration').controller('snmpController', [
-    '$scope', '$window', 'APIUtils', '$route', '$q',
-    function($scope, $window, APIUtils, $route, $q) {
+    '$scope', '$window', 'APIUtils', '$route', '$q', 'ngToast',
+    function($scope, $window, APIUtils, $route, $q, ngToast) {
       $scope.managers = [];
       $scope.loading = true;
-      $scope.error = false;
-      $scope.success = false;
       $scope.managersToDelete = [];
 
       var getSNMPManagers = APIUtils.getSNMPManagers().then(
@@ -33,6 +31,7 @@ window.angular && (function(angular) {
             }
           },
           function(error) {
+            ngToast.danger('Unable to load SNMP settings.');
             console.log(JSON.stringify(error));
           });
 
@@ -58,8 +57,6 @@ window.angular && (function(angular) {
       };
 
       $scope.setSNMP = function() {
-        $scope.error = false;
-        $scope.success = false;
         $scope.loading = true;
         var promises = [];
 
@@ -77,7 +74,7 @@ window.angular && (function(angular) {
           if (!$scope.managers[i].address || !$scope.managers[i].port) {
             // TODO: Highlight the field that is empty
             $scope.loading = false;
-            $scope.error = true;
+            ngToast.danger('All fields are required.');
             return;
           }
 
@@ -107,11 +104,11 @@ window.angular && (function(angular) {
         $q.all(promises)
             .then(
                 function() {
-                  $scope.success = true;
+                  ngToast.success('SNMP Managers set.');
                 },
                 function(errors) {
+                  ngToast.danger('Unable to set SNMP Managers.');
                   console.log(JSON.stringify(errors));
-                  $scope.error = true;
                 })
             .finally(function() {
               $scope.loading = false;
