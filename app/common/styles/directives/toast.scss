@@ -1,0 +1,79 @@
+/*!
+ * This was taken from ngToast and modified
+ * ngToast v2.0.0 (http://tameraydin.github.io/ngToast)
+ * Copyright 2016 Tamer Aydin (http://tamerayd.in)
+ * Licensed under MIT (http://tameraydin.mit-license.org/)
+ */
+.toastMessage {
+  max-width: 400px;
+  padding: 1em 1.5em 1em 2em;
+}
+
+.ng-toast {
+  .close {
+    margin: .3em;
+  }
+  .title {
+    font-weight: bold;
+  }
+  position: fixed;
+  z-index: 1080;
+  width: 100%;
+  margin-top: 4em;
+  text-align: left;
+  top: 0;
+  bottom: auto;
+  .ng-toast__message {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+  .alert-success {
+    color: #333;
+    border-radius: 0;
+  }
+  .alert-danger {
+    color: #333;
+    border-radius: 0;
+  }
+}
+
+.ng-toast.ng-toast--right .ng-toast__list {
+  left: auto;
+  right: 0;
+  margin-right: 1em;
+}
+
+.ng-toast .ng-toast__list {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+.ng-toast--animate-fade .ng-enter,
+.ng-toast--animate-fade .ng-leave,
+.ng-toast--animate-fade .ng-move {
+  transition-property: opacity;
+  transition-duration: 0.3s;
+  transition-timing-function: ease; }
+
+.ng-toast--animate-fade .ng-enter {
+  opacity: 0; }
+
+.ng-toast--animate-fade .ng-enter.ng-enter-active {
+  opacity: 1; }
+
+.ng-toast--animate-fade .ng-leave {
+  opacity: 1; }
+
+.ng-toast--animate-fade .ng-leave.ng-leave-active {
+  opacity: 0; }
+
+.ng-toast--animate-fade .ng-move {
+  opacity: 0.5; }
+
+.ng-toast--animate-fade .ng-move.ng-move-active {
+  opacity: 1; }
