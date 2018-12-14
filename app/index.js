@@ -17,6 +17,10 @@ import angular_route from 'angular-route';
 import angular_sanitize from 'angular-sanitize';
 import angular_ui_bootstrap from 'angular-ui-bootstrap';
 import angular_ui_router from 'angular-ui-router';
+import ngToast from 'ng-toast';
+import ngToast_animate from 'ng-toast/dist/ngToast-animations.css';
+import ngToast_style from 'ng-toast/dist/ngToast.css';
+
 
 require('./styles/index.scss');
 var config = require('../config.json');
@@ -86,7 +90,7 @@ window.angular && (function(angular) {
           'app',
           [
             // Dependencies
-            'ngRoute', 'angular-clipboard',
+            'ngRoute', 'angular-clipboard', 'ngToast', 'ngAnimate',
             'app.common.directives.dirPagination',
             // Basic resources
             'app.common.services', 'app.common.directives',
@@ -126,6 +130,17 @@ window.angular && (function(angular) {
           $httpProvider.defaults.headers.patch = {
             'Content-Type': 'application/json'
           };
+        }
+      ])
+      .config([
+        'ngToastProvider',
+        function(ngToastProvider) {
+          ngToastProvider.configure({
+            animation: 'fade',
+            timeout: '10000',
+            dismissButton: 'true',
+            maxNumber: '6'
+          });
         }
       ])
       .run([

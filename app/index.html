@@ -12,6 +12,7 @@
 
     <app-header ng-if="dataService.showNavigation" path="dataService.path"></app-header>
     <app-navigation ng-if="dataService.showNavigation" path="dataService.path" show-navigation="dataService.showNavigation"></app-navigation>
+    <toast ng-if="dataService.showNavigation"></toast>
 
     <main ng-view ng-class="{'content__container': dataService.showNavigation, 'login__wrapper': !dataService.showNavigation}">
     </main>

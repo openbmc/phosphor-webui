@@ -38,6 +38,7 @@
     "angular-ui-router": "^1.0.20",
     "angular-websocket": "^2.0.1",
     "bootstrap": "^4.1.3",
+    "ng-toast": "^2.0.0",
     "xterm": "^3.7.0"
   },
   "peerDependencies": {},
