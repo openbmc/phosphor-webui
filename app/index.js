@@ -6,7 +6,7 @@
  * @exports app/index
  *
  */
-
+import 'angular/angular-csp.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import angular from 'angular';
