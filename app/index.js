@@ -87,7 +87,7 @@ window.angular && (function(angular) {
           [
             // Dependencies
             'ngRoute', 'angular-clipboard',
-            'app.common.directives.dirPagination',
+            'app.common.directives.dirPagination', 'ngSanitize',
             // Basic resources
             'app.common.services', 'app.common.directives',
             'app.common.filters',
