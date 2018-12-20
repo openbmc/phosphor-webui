@@ -20,7 +20,6 @@
        <a href="#/server-control/power-operations" class="header__server-power" role="button">Switch power
         <i class="icon icon-angle" aria-hidden="true"></i><span ng-class="{'status-light__off': dataService.server_state == 'Off', 'status-light__disabled': dataService.server_state == 'Unreachable', 'status-light__good': dataService.server_state == 'Running', 'status-light__error': dataService.server_state == 'Quiesced'}">{{dataService.server_state | quiescedToError}}</span></a>
       <p class="header__refresh">Data last refreshed<span>{{dataService.last_updated | localeDate}}</span>
-	<!-- Modified by USISH Steven 20181219 end-->
       </p>
       <button class="header__page-refresh" ng-click="refresh()" aria-label="refresh page data">
         <span>Refresh</span>
