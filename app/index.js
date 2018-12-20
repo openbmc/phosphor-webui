@@ -17,6 +17,8 @@ import angular_route from 'angular-route';
 import angular_sanitize from 'angular-sanitize';
 import angular_ui_bootstrap from 'angular-ui-bootstrap';
 import angular_ui_router from 'angular-ui-router';
+import angular_utils from 'angularUtils/src/angularUtils.js';
+import angular_utils_pagination from 'angularUtils/src/directives/pagination/dirPagination.js';
 
 require('./styles/index.scss');
 var config = require('../config.json');
@@ -48,7 +50,6 @@ import input from './common/directives/input.js';
 import loader from './common/directives/loader.js';
 import paginate from './common/directives/paginate.js';
 import serial_console from './common/directives/serial-console.js';
-import dir_paginate from './common/directives/dirPagination.js';
 
 import login_index from './login/index.js';
 import login_controller from './login/controllers/login-controller.js';
@@ -88,7 +89,7 @@ window.angular && (function(angular) {
           [
             // Dependencies
             'ngRoute', 'angular-clipboard',
-            'app.common.directives.dirPagination',
+            'angularUtils.directives.dirPagination', 'ui.bootstrap.debounce',
             // Basic resources
             'app.common.services', 'app.common.directives',
             'app.common.filters',
