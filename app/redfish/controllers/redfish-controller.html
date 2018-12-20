@@ -1,13 +1,13 @@
 <loader loading="loading"></loader>
-<div id="redfish">
+<div id="redfish", class="redfish">
   <div class="row column">
-    <div style="max-width: 400px;margin:0">
+    <div class="logo">
       <img src="../../assets/images/DMTF_Redfish_logo_2017.svg">
     </div>
   </div>
   <div class="row column">
     {
-    <ul style="list-style: none;">
+    <ul class="key_value">
       <li ng-repeat="(key, value) in redfishData" ng-include="'recurse'"> </li>
     </ul>
     }
@@ -17,7 +17,7 @@
 "<b>{{key}}</b>":
 <span ng-if="isObject(value) && !isArray(value)">
 {
-  <ul style="list-style: none;">
+  <ul class="key_value">
     <li ng-repeat="(key, value) in value" ng-include="'recurse'"> </li>
   </ul>
 }
@@ -25,10 +25,10 @@
 
 <span ng-if="isArray(value)">
 [
-  <div ng-repeat="val in value" style="margin-left: 2em;">
+  <div ng-repeat="val in value" class="value">
     <span ng-if="isObject(val) && !isArray(val)">
       {
-      <ul style="list-style: none;">
+      <ul class="key_value">
         <li ng-repeat="(key, value) in val" ng-include="'recurse'"> </li>
       </ul>
       }
