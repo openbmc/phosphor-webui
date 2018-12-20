@@ -5,12 +5,11 @@ var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var HtmlWebpackInlineSourcePlugin =
     require('html-webpack-inline-source-plugin');
+var CSPWebpackPlugin = require('csp-html-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var CompressionPlugin = require('compression-webpack-plugin');
-var AssetsPlugin = require('assets-webpack-plugin');
 var path = require('path');
-var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 var FilterChunkWebpackPlugin = require('filter-chunk-webpack-plugin');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -75,7 +74,7 @@ module.exports = (env, options) => {
         use: 'babel-loader',
         exclude: /node_modules/
       },
-      {test: /\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader']}, {
+      {
         // ASSET LOADER
         // Reference: https://github.com/webpack/file-loader
         // Copy png, jpg, jpeg, gif, svg, woff, woff2, ttf, eot files to
@@ -96,17 +95,18 @@ module.exports = (env, options) => {
         loader: 'html-loader'
       },
       {
+	test: /\.css$/,
+	use: [
+		MiniCssExtractPlugin.loader,
+		'css-loader'
+	]
+      },
+      {
         test: /\.scss$/,
         use: [
-          {
-            loader: 'style-loader'  // creates style nodes from JS strings
-          },
-          {
-            loader: 'css-loader'  // translates CSS into CommonJS
-          },
-          {
-            loader: 'sass-loader'  // compiles Sass to CSS
-          }
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            'sass-loader'
         ]
       }
     ]
@@ -117,19 +117,19 @@ module.exports = (env, options) => {
       template: './app/index.html',
       inject: 'body',
       favicon: './app/assets/images/favicon.ico',
-      inlineSource: '.(js|css)$',  // embed all javascript and css inline
       minify: {removeComments: true, collapseWhitespace: true},
 
     }),
-    new MiniCssExtractPlugin(), new HtmlWebpackInlineSourcePlugin(),
+    new CSPWebpackPlugin({
+      'base-uri': "'self'",
+      'object-src': "'none'",
+      'script-src': ["'self'"],
+      'style-src': ["'self'"]
+    }),
+    new MiniCssExtractPlugin(),
 
     new FilterChunkWebpackPlugin({
-      // The webpack inline source plugin will embed the css and javascript
-      // into our html, so  we need to strip it out here so it doesn't take
-      // up space
       patterns: [
-        '*.css',
-        '*.js',
         '*glyphicons-halflings-regular*.ttf',
         '*glyphicons-halflings-regular*.svg',
         '*glyphicons-halflings-regular*.eot',
@@ -137,7 +137,6 @@ module.exports = (env, options) => {
       ]
     })
   ];
-
 
   // Add build specific plugins
   if (isProd) {
