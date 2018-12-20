@@ -51,6 +51,7 @@ $title-minWidth: 210px;
 }
 
 .sensor__readings-row {
+  width: 100%;
   position: relative;
   display: block;
   margin: 0;
@@ -137,12 +138,6 @@ $title-minWidth: 210px;
 
 #sensors, #sensors-overview {
 
-  .content__search {
-    max-width: 100%;
-    @media(min-width: 1300px) {
-      max-width: 59%;
-    }
-  }
   .toggle-filter {
     margin-right: 0;
   }

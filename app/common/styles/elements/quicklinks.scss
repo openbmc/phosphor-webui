@@ -1,7 +1,7 @@
 //Quick links block
 .quick-links {
   background-color: $lightgrey;
-  padding: 1em 1.4em;
+  padding: .5em 1em;
   font-size: .9em;
   font-weight: 400;
   margin: 1em 0;
@@ -35,6 +35,11 @@
     transform: translateY(-50%);
   }
   &.no-icon {
+    overflow: auto;
+    .bmc-time {
+      text-align: right;
+      max-width: 17em;
+    }
     &:after {
       display: none;
     }

@@ -4,10 +4,48 @@
 
   fieldset {
     padding-left: 1.8em;
-    padding-bottom: 1.8em;
-    border-bottom: 1px solid $medgrey;
   }
    .snmp__managers {
+    padding-bottom: 1.5em;
+  }
+
+   .snmp__manager-field {
+    display:inline-block;
+    padding-right: 4em;
+    width: 350px;
+    padding-top: .6em;
+    padding-left: 0em;
+  }
+
+  .snmp__metadata-wrapper {
+    margin: 0;
+    padding: 0;
+  }
+
+  .snmp__managers-wrap{
     padding-bottom: 1em;
+    padding-top: 1em;
+    padding-left: 3em;
+    padding-right: 4em;
+  }
+
+  .snmp__submit-wrapper {
+    width: 100%;
+    margin-top: 3em;
+    padding-top: 1em;
+    border-top: 1px solid $medgrey;
+    button {
+      float: right;
+      margin: .5em;
+    }
+  }
+  .snmp__manager-remove {
+    display:inline-block;
+    color: $medblue;
+    height: 2.1em;
+    opacity: 1;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

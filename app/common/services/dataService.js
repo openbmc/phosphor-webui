@@ -98,15 +98,15 @@ window.angular && (function(angular) {
       };
 
       this.updateServerHealth = function(logs) {
-        // If any severity high logs are present, set server health to critical
-        // Else if any severity medium logs are present set server health to
-        // warning
+        // If any unresolved severity high logs are present, set server health
+        // to critical. Else if any unresolved severity medium logs are present
+        // set server health to warning.
         this.server_health = Constants.SERVER_HEALTH.good;
         for (var log of logs) {
-          if (log.priority == 'High') {
+          if (log.priority == 'High' && !log.Resolved) {
             this.server_health = Constants.SERVER_HEALTH.critical;
             return;
-          } else if (log.priority == 'Medium') {
+          } else if (log.priority == 'Medium' && !log.Resolved) {
             this.server_health = Constants.SERVER_HEALTH.warning;
           }
         }

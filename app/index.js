@@ -5,11 +5,9 @@
  * @module app/index/services/index
  * @exports app/index
  *
- * @author Developer Developer
  */
 
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
 
 import angular from 'angular';
 import angular_animate from 'angular-animate';
@@ -19,8 +17,6 @@ import angular_route from 'angular-route';
 import angular_sanitize from 'angular-sanitize';
 import angular_ui_bootstrap from 'angular-ui-bootstrap';
 import angular_ui_router from 'angular-ui-router';
-import angular_utils from 'angularUtils/src/angularUtils.js';
-import angular_utils_pagination from 'angularUtils/src/directives/pagination/dirPagination.js';
 
 require('./styles/index.scss');
 var config = require('../config.json');
@@ -51,6 +47,7 @@ import input from './common/directives/input.js';
 import loader from './common/directives/loader.js';
 import paginate from './common/directives/paginate.js';
 import serial_console from './common/directives/serial-console.js';
+import dir_paginate from './common/directives/dirPagination.js';
 
 import login_index from './login/index.js';
 import login_controller from './login/controllers/login-controller.js';
@@ -78,13 +75,8 @@ import network_controller from './configuration/controllers/network-controller.j
 import snmp_controller from './configuration/controllers/snmp-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
 
-import multi_server_index from './multi-server/index.js';
-import multi_server_controller from './multi-server/controllers/multi-server-controller.js';
-
 import users_index from './users/index.js';
 import user_accounts_controller from './users/controllers/user-accounts-controller.js';
-
-import phosphor_templates from './templates.js';
 
 window.angular && (function(angular) {
   'use strict';
@@ -95,14 +87,13 @@ window.angular && (function(angular) {
           [
             // Dependencies
             'ngRoute', 'angular-clipboard',
-            'angularUtils.directives.dirPagination',
+            'app.common.directives.dirPagination',
             // Basic resources
-            'app.templates', 'app.common.services', 'app.common.directives',
+            'app.common.services', 'app.common.directives',
             'app.common.filters',
             // Model resources
             'app.login', 'app.overview', 'app.serverControl',
-            'app.serverHealth', 'app.configuration', 'app.users', 'app.redfish',
-            'app.multiServer'
+            'app.serverHealth', 'app.configuration', 'app.users', 'app.redfish'
           ])
       // Route configuration
       .config([

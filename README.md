@@ -12,11 +12,19 @@ firmware stack. The WebUI uses AngularJS. Features include:
 * SoL console
 
 ## Requirements
-nodejs
-npm
+nodejs (>= 4.2.6)
+npm (>= 5.6.0)
+
+**Note** The default installation of your Linux distro may not come with the
+required versions above. See the following for more information on updating:
+
+https://docs.npmjs.com/troubleshooting/try-the-latest-stable-version-of-node
+https://docs.npmjs.com/troubleshooting/try-the-latest-stable-version-of-npm
 
 ## Installation
 `npm install`
+
+**Note** This must be run from within the phosphor-webui git repository.
 
 ## Running locally
 `npm run-script server`
@@ -30,3 +38,8 @@ might be required to prevent your browser from blocking traffic to the BMC.
 ## Logging in
 Enter the BMC Host or BMC IP address, username, and password.
 The default username and password are `root`/`0penBmc`.
+
+**Note** that some OpenBMC implementations use [bmcweb](https://github.com/openbmc/bmcweb)
+for its backend. For security reasons, bmcweb will need to be recompiled and
+loaded onto the target BMC Host before the above redirect command will work. The
+option to turn on within bmcweb is `BMCWEB_INSECURE_DISABLE_XSS_PREVENTION`.

@@ -14,7 +14,6 @@ window.angular && (function(angular) {
     function($scope, $window, APIUtils, dataService, Constants, $q) {
       $scope.dataService = dataService;
       $scope.dropdown_selected = false;
-      $scope.tmz = 'EDT';
       $scope.logs = [];
       $scope.server_info = {};
       $scope.bmc_firmware = '';
