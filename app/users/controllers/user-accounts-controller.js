@@ -12,13 +12,29 @@ window.angular && (function(angular) {
   angular.module('app.users').controller('userAccountsController', [
     '$scope', 'APIUtils',
     function($scope, APIUtils) {
-      // TODO: Get the roles using Roles redfish URI.
-      $scope.roles = ['Administrator', 'Operator', 'User', 'Callback'];
       $scope.state = 'none';
       $scope.outMsg = '';
       $scope.loading = true;
 
+      function getUserRoles() {
+        $scope.roles = [];
+        $scope.loading = true;
+
+        APIUtils.getAccountServiceRoles()
+            .then(
+                function(res) {
+                  $scope.roles = res;
+                },
+                function(error) {
+                  console.log(JSON.stringify(error));
+                })
+            .finally(function() {
+              $scope.loading = false;
+            });
+      };
+
       function loadUserInfo() {
+        getUserRoles();
         $scope.users = [];
         $scope.loading = true;
         $scope.isUserSelected = false;
@@ -36,6 +52,7 @@ window.angular && (function(angular) {
               $scope.loading = false;
             });
       };
+
       $scope.cancel = function() {
         $scope.state = 'none';
         $scope.outMsg = '';
@@ -171,6 +188,7 @@ window.angular && (function(angular) {
               $scope.loading = false;
             });
       };
+
       loadUserInfo();
     }
   ]);
