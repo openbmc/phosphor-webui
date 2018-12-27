@@ -526,7 +526,62 @@ window.angular && (function(angular) {
             return deferred.promise;
           }
         },
-        getAllUserAccounts: function(members) {
+        getAccountServiceRoles: function() {
+          var roles = [];
+
+          if (DataService.configJson.redfishSupportEnabled == true) {
+            return $http({
+                     method: 'GET',
+                     url: DataService.getHost() +
+                         '/redfish/v1/AccountService/Roles',
+                     withCredentials: true
+                   })
+                .then(
+                    function(response) {
+                      var members = response.data['Members'];
+                      angular.forEach(members, function(member) {
+                        roles.push(member['@odata.id'].split('/').pop());
+                      });
+                      return roles;
+                    },
+                    function(error) {
+                      console.log(error);
+                    });
+          } else {
+            return $http({
+                     method: 'GET',
+                     url: DataService.getHost() + '/xyz/openbmc_project/user',
+                     withCredentials: true
+                   })
+                .then(
+                    function(response) {
+                      var json = JSON.stringify(response.data);
+                      var content = JSON.parse(json);
+                      var privList = content.data['AllPrivileges'];
+
+                      function convertPrivToRoleId(priv) {
+                        if (priv == 'priv-admin') {
+                          return 'Administrator';
+                        } else if (priv == 'priv-user') {
+                          return 'User';
+                        } else if (priv == 'priv-operator') {
+                          return 'Operator';
+                        } else if (priv == 'priv-callback') {
+                          return 'Callback';
+                        }
+                        return '';
+                      }
+                      for (var i = 0; i < privList.length; i++) {
+                        roles.push(convertPrivToRoleId(privList[i]));
+                      }
+                      return roles;
+                    },
+                    function(error) {
+                      console.log(error);
+                    });
+          }
+        },
+        getAllUserAccounts: function() {
           var deferred = $q.defer();
           var promises = [];
           var users = [];
