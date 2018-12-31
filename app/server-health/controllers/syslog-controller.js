@@ -29,10 +29,17 @@ window.angular && (function(angular) {
           $scope.recordTypeList =
               ['SEL', 'Event', 'Oem'];        // From Redfish specification.
           $scope.selectedRecordType = 'SEL';  // Default Select to SEL.
+          $scope.typeFilter = false;
+          $scope.selectedSeverityList = [];
+          $scope.severityList = ['All', 'Critical', 'Warning', 'Ok'];
+          $scope.filterTypes = [];
+          $scope.selectedType = 'All';
 
           $scope.selectRecordType = function(recordType) {
             $scope.selectedRecordType = recordType;
             $scope.showLogDropdown = false;
+            $scope.filterTypes = [];
+
             APIUtils.getSystemLogs(recordType)
                 .then(
                     function(res) {
@@ -102,7 +109,9 @@ window.angular && (function(angular) {
           };
 
           $scope.filterBySearchTerms = function(log) {
-            if (!$scope.searchTerms.length) return true;
+            if (!$scope.searchTerms.length) {
+              return true;
+            }
 
             for (var i = 0, length = $scope.searchTerms.length; i < length;
                  i++) {
@@ -114,6 +123,32 @@ window.angular && (function(angular) {
                 return false;
             }
             return true;
+          };
+
+          $scope.filterBySeverity = function(log) {
+            if ($scope.selectedSeverityList.length == 0) {
+              return true;
+            }
+
+            return ($scope.selectedSeverityList.indexOf(log.Severity) > -1);
+          };
+
+          $scope.filterByType = function(log) {
+            if ($scope.selectedType == 'All') {
+              return true;
+            }
+
+            return (($scope.selectedType == log.SensorType));
+          };
+
+          $scope.filterByDate = function(log) {
+            var logDate = new Date(log.Created);
+            if ($scope.start_date && $scope.end_date) {
+              return (
+                  logDate >= $scope.start_date && logDate <= $scope.end_date);
+            } else {
+              return true;
+            }
           };
 
           setTimeout($scope.selectRecordType($scope.selectedRecordType), 2000);
