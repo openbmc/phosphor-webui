@@ -27,25 +27,69 @@
 .sort_button_wrapper {
   padding-top:.3em;
 }
-.sys-log__filters {
-  position: relative;
-  padding-bottom: .5em;
-  padding-top: .5em;
 
-  @media (min-width: 1333px) {
-    float: right;
-    display: inline-block;
+#sys-log-filter {
+  .filter-label {
+    color: $darkgrey;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: .75em;
+    margin-bottom: 3px;
+  }
+  .sys-log__severity-filter {
+    float:left;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    button {
+      padding: .6em 2em;
+      min-height: 2.1em;
+      font-size: .9em;
+      font-weight: 700;
+      border-radius: 0;
+      &.first,
+      &.last {
+        border-radius: 3px;
+      }
+      @media (min-width: 583px) {
+        &.last {
+          border-left: 0;
+        }
+      }
+    }
+    .btn-primary {
+      border: 1px solid $primebtn__bg;
+    }
+    .btn-secondary {
+      border: 1px solid $secbtn__border;
+    }
+  }
+  .sys-log__date-filter {
+    margin-right: 1em;
+    color: $darkgrey;
+    float:left;
+    input {
+      width: 170px;
+      height: 2.1rem;
+    }
+    label {
+      height: 0;
+      text-indent: -9999px;
+    }
+  }
+  .sys-log__status-filter {
+    float:left;
+    @include mediaQuery(medium) {
+      width: 25%;
+    }
+    .dropdown__wrapper,
+    .dropdown__button {
+      width: 100%;
+      text-align: left;
+    }
   }
 }
 
-.accord-trigger {
-  position: absolute;
-  right: 1em;
-  top: .3em;
-}
-
-#sys-log__events,
-.sys-log__events {
+#sys-log__logs {
   display: block;
   margin-top: 1.6em;
   position: relative;
@@ -306,4 +350,4 @@
     }
   }
 }
-//end sys-log__events
+//end sys-log__logs

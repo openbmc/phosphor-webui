@@ -1,6 +1,6 @@
 <loader loading="loading"></loader>
 <div id="sys-log">
-    <section id="sys-log__events" class="table row column">
+    <section id="sys-log__logs" class="table row column">
       <div class="row column">
         <h1>System Logs</h1>
         <div class="page-header">
@@ -15,7 +15,7 @@
           </div>
           <a ng-href="data:text/json;charset=utf-8,{{sysLogs}}" class="inline btn-export float-right"  download="systemLogs.json" ng-show="sysLogs.length">Export </a>
           <button class="inline clear-input float-right btn-secondary" ng-click="confirm = !confirm" ng-show="sysLogs.length">&#10005; Clear {{selectedRecordType}} Logs</button>
-          <div class="inline__confirm event__confirm" ng-show="confirm">
+          <div class="inline__confirm sys-log__confirm" ng-show="confirm">
             <div class="inline__confirm-message">
               <p class="h3">Are you sure you want to <strong class="ng-binding">clear {{selectedRecordType}} logs</strong>?
               </p>
@@ -39,7 +39,10 @@
         </div>
       </div>
     </section>
-    <section id="sys-log__events" class="table row column" ng-show="sysLogs.length">
+    <section>
+      <syslog-filter></syslog-filter>
+    </section>
+    <section id="sys-log__logs" class="table row column" ng-show="sysLogs.length">
       <div class="table row column">
         <div class="table__head">
           <div class="table__row">
@@ -82,7 +85,7 @@
           </div>
         </div>
         <div class="table__body">
-          <div class="table__row" dir-paginate="log in (sysLogs | filter:filterBySearchTerms | orderBy:sortKey:reverse) | itemsPerPage:itemsPerPage">
+          <div class="table__row" dir-paginate="log in (sysLogs | filter:filterBySearchTerms | filter:filterBySeverity | filter:filterByDate | filter:filterByType | orderBy:sortKey:reverse) | itemsPerPage:itemsPerPage">
             <div class="table__cell sys-log__col-wrapper sys-log__col-id">{{log.Id}}</div>
             <div class="table__cell sys-log__col-wrapper">{{log.Created | localeDate}}</div>
             <div class="table__cell sys-log__col-wrapper">{{log.Name}}</div>
@@ -94,7 +97,7 @@
       </div>
       <dir-pagination-controls></dir-pagination-controls>
     </section>
-    <section id="sys-log__events" class="table row column" ng-show="!sysLogs.length">
+    <section id="sys-log__logs" class="table row column" ng-show="!sysLogs.length">
       <p>There are no {{selectedRecordType}} logs to display at this time.</p>
     </section>
-</div> <!-- end event log -->
+</div> <!-- end log -->
