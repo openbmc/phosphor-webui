@@ -31,6 +31,9 @@
         </div>
       </div>
     </section>
+    <section ng-show="selLogs.length">
+      <sel-filter></sel-filter>
+    </section>
     <section id="sel-log__events" class="table row column" ng-show="selLogs.length">
       <div class="table row column">
         <div class="table__head">
@@ -74,7 +77,7 @@
           </div>
         </div>
         <div class="table__body">
-          <div class="table__row" dir-paginate="log in (selLogs | filter:filterBySearchTerms | orderBy:sortKey:reverse) | itemsPerPage:itemsPerPage">
+          <div class="table__row" dir-paginate="log in (selLogs | filter:filterBySearchTerms | filter:filterBySeverity | filter:filterByDate | filter:filterByType | orderBy:sortKey:reverse) | itemsPerPage:itemsPerPage">
             <div class="table__cell sel-log__col-wrapper sel-log__col-id">{{log.Id}}</div>
             <div class="table__cell sel-log__col-wrapper">{{log.Created | localeDate}}</div>
             <div class="table__cell sel-log__col-wrapper">{{log.Name}}</div>
