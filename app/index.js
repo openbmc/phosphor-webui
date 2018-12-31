@@ -68,6 +68,7 @@ import inventory_overview_controller from './server-health/controllers/inventory
 import log_controller from './server-health/controllers/log-controller.js';
 import sensors_overview_controller from './server-health/controllers/sensors-overview-controller.js';
 import sel_controller from './server-health/controllers/sel-controller.js';
+import sel_filter from './common/directives/sel-filter.js';
 
 import redfish_index from './redfish/index.js';
 import redfish_controller from './redfish/controllers/redfish-controller.js';

@@ -25,12 +25,27 @@ window.angular && (function(angular) {
           $scope.customSearch = '';
           $scope.searchTerms = [];
           $scope.sortKey = 'Id';
+          $scope.typeFilter = false;
+
+          $scope.selectedSeverityList = [];
+          $scope.severityList = [];
+          $scope.filterTypes = [];
+          $scope.selectedType = 'All';
 
           function loadSELogs() {
             APIUtils.getSELogs()
                 .then(
                     function(res) {
                       $scope.selLogs = res;
+                      $scope.filterTypes.push('All');
+                      $scope.selLogs.forEach(function(log) {
+                        if ($scope.severityList.indexOf(log.Severity) < 0) {
+                          $scope.severityList.push(log.Severity);
+                        }
+                        if ($scope.filterTypes.indexOf(log.SensorType) < 0) {
+                          $scope.filterTypes.push(log.SensorType);
+                        }
+                      });
                     },
                     function(error) {
                       console.log(JSON.stringify(error));
@@ -102,6 +117,28 @@ window.angular && (function(angular) {
                 return false;
             }
             return true;
+          };
+
+          $scope.filterBySeverity = function(log) {
+            if ($scope.selectedSeverityList.length == 0) return true;
+
+            return ($scope.selectedSeverityList.indexOf(log.Severity) > -1);
+          };
+
+          $scope.filterByType = function(log) {
+            if ($scope.selectedType == 'All') return true;
+
+            return (($scope.selectedType == log.SensorType));
+          };
+
+          $scope.filterByDate = function(log) {
+            var logDate = new Date(log.Created);
+            if ($scope.start_date && $scope.end_date) {
+              return (
+                  logDate >= $scope.start_date && logDate <= $scope.end_date);
+            } else {
+              return true;
+            }
           };
 
           setTimeout(loadSELogs, 2000);
