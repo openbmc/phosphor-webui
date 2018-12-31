@@ -26,11 +26,25 @@ window.angular && (function(angular) {
           $scope.searchTerms = [];
           $scope.sortKey = 'Id';
 
+          $scope.selectedSeverityList = [];
+          $scope.severityList = [];
+          $scope.filterTypes = [];
+          $scope.selectedType = 'All';
+
           function loadSELogs() {
             APIUtils.getSELogs()
                 .then(
                     function(res) {
                       $scope.selLogs = res;
+                      $scope.filterTypes.push('All');
+                      $scope.selLogs.forEach(function(log) {
+                        if ($scope.severityList.indexOf(log.Severity) < 0) {
+                          $scope.severityList.push(log.Severity);
+                        }
+                        if ($scope.filterTypes.indexOf(log.SensorType) < 0) {
+                          $scope.filterTypes.push(log.SensorType);
+                        }
+                      });
                     },
                     function(error) {
                       console.log(JSON.stringify(error));
@@ -98,6 +112,34 @@ window.angular && (function(angular) {
                 return false;
             }
             return true;
+          };
+
+          $scope.filterBySeverity = function(log) {
+            if ($scope.selectedSeverityList.length == 0) return true;
+
+            return ($scope.selectedSeverityList.indexOf(log.Severity) > -1);
+          };
+
+          $scope.filterByType = function(log) {
+            if ($scope.selectedType == 'All') return true;
+
+            return (($scope.selectedType == log.SensorType));
+          };
+
+          $scope.filterByDate = function(log) {
+            var endDate;
+            if ($scope.end_date &&
+                typeof $scope.end_date.getTime === 'function') {
+              endDate = new Date($scope.end_date.getTime());
+              endDate.setTime(endDate.getTime() + 86399000);
+            }
+
+            if ($scope.start_date && endDate) {
+              return (
+                  log.Created >= $scope.start_date && log.Created <= endDate);
+            } else {
+              return true;
+            }
           };
 
           setTimeout(loadSELogs, 2000);
