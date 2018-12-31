@@ -39,6 +39,9 @@
         </div>
       </div>
     </section>
+    <section>
+      <syslog-filter></syslog-filter>
+    </section>
     <section id="sys-log__events" class="table row column" ng-show="sysLogs.length">
       <div class="table row column">
         <div class="table__head">
@@ -82,7 +85,7 @@
           </div>
         </div>
         <div class="table__body">
-          <div class="table__row" dir-paginate="log in (sysLogs | filter:filterBySearchTerms | orderBy:sortKey:reverse) | itemsPerPage:itemsPerPage">
+          <div class="table__row" dir-paginate="log in (sysLogs | filter:filterBySearchTerms | filter:filterBySeverity | filter:filterByDate | filter:filterByType | orderBy:sortKey:reverse) | itemsPerPage:itemsPerPage">
             <div class="table__cell sys-log__col-wrapper sys-log__col-id">{{log.Id}}</div>
             <div class="table__cell sys-log__col-wrapper">{{log.Created | localeDate}}</div>
             <div class="table__cell sys-log__col-wrapper">{{log.Name}}</div>
