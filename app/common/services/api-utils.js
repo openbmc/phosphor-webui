@@ -897,7 +897,7 @@ window.angular && (function(angular) {
           $http({
             method: 'PUT',
             url: DataService.getHost() +
-                '/xyz/openbmc_project/state/bmc0/attr/RequestedBmcTransition',
+                '/xyz/openbmc_project/state/bmc0/attr/RequestedBMCTransition',
             withCredentials: true,
             data: JSON.stringify(
                 {'data': 'xyz.openbmc_project.State.BMC.Transition.Reboot'})
