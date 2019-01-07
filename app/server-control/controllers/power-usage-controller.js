@@ -10,12 +10,10 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.serverControl').controller('powerUsageController', [
-    '$scope', '$window', 'APIUtils', '$route', '$q',
-    function($scope, $window, APIUtils, $route, $q) {
+    '$scope', '$window', 'APIUtils', '$route', '$q', 'ngToast',
+    function($scope, $window, APIUtils, $route, $q, ngToast) {
       $scope.power_consumption = '';
       $scope.power_cap = {};
-      $scope.set_power_cap_error = false;
-      $scope.set_power_cap_success = false;
       $scope.loading = false;
       loadPowerData();
 
@@ -49,11 +47,9 @@ window.angular && (function(angular) {
       }
 
       $scope.setPowerCap = function() {
-        $scope.set_power_cap_error = false;
-        $scope.set_power_cap_success = false;
         // The power cap value will be undefined if outside range
         if (!$scope.power_cap.PowerCap) {
-          $scope.set_power_cap_error = true;
+          ngToast.danger('Power cap value between 100 and 10,000 is required');
           return;
         }
         $scope.loading = true;
@@ -62,12 +58,17 @@ window.angular && (function(angular) {
           setPowerCapEnable(),
         ];
 
-        $q.all(promises).finally(function() {
-          $scope.loading = false;
-          if (!$scope.set_power_cap_error) {
-            $scope.set_power_cap_success = true;
-          }
-        });
+        $q.all(promises)
+            .then(
+                function() {
+                  ngToast.success('Power cap settings saved');
+                },
+                function(errors) {
+                  ngToast.danger('Power cap settings could not be saved');
+                })
+            .finally(function() {
+              $scope.loading = false;
+            });
       };
       $scope.refresh = function() {
         $route.reload();
@@ -78,8 +79,8 @@ window.angular && (function(angular) {
             .then(
                 function(data) {},
                 function(error) {
-                  $scope.set_power_cap_error = true;
                   console.log(JSON.stringify(error));
+                  return $q.reject();
                 });
       }
 
@@ -88,8 +89,8 @@ window.angular && (function(angular) {
             .then(
                 function(data) {},
                 function(error) {
-                  $scope.set_power_cap_error = true;
                   console.log(JSON.stringify(error));
+                  return $q.reject();
                 });
       }
     }
