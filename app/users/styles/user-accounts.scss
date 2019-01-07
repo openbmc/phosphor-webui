@@ -1,5 +1,26 @@
 $userInputHeight: 40px;
 
+.user-list__tbl {
+  .btn-edit,
+  .btn-delete {
+    padding: .5em 1em;
+    min-height: 2em;
+    color: $primebtn__text;
+    background: $primebtn__bg;
+    &:hover {
+      background: rgba(60,109,240,.8);
+      @include fastTransition-all;
+    }
+    &:disabled {
+      background: $btn__disabled-bg;
+      color: $btn__disabled-txt;
+      @include fastTransition-all;
+      &:hover {
+        cursor: default;
+      }
+    }
+  }
+}
 .user-manage__form {
   width: 100%;
   .dropdown__button {

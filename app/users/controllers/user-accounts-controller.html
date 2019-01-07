@@ -3,7 +3,7 @@
   <div class="row column">
     <h1>User account information</h1>
   </div>
-  <div class="table row column" ng-show="users.length != 0">
+  <div class="table row column user-list__tbl" ng-show="users.length != 0">
     <div class="table__head">
       <div class="table__row">
         <div class="table__cell"> Username </div>
@@ -20,8 +20,8 @@
         <div class="table__cell"> {{user.RoleId}} </div>
         <div class="table__cell"> {{user.Locked}} </div>
         <div class="table__cell">
-          <button type="button" class="btn-primary inline" ng-disabled="isUserSelected" ng-click="setSelectedUser(user)">Edit</button>
-          <button type="button" class="btn-primary inline" ng-disabled="isUserSelected" ng-click="deleteUser(user.UserName)">Delete</button>
+          <button type="button" class="btn-edit inline" ng-disabled="isUserSelected" ng-click="setSelectedUser(user)">Edit</button>
+          <button type="button" class="btn-delete inline" ng-disabled="isUserSelected" ng-click="deleteUser(user.UserName)">Delete</button>
         </div>
       </div>
     </div>

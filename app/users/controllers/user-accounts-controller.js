@@ -22,6 +22,9 @@ window.angular && (function(angular) {
         $scope.loading = true;
         $scope.isUserSelected = false;
         $scope.selectedUser = null;
+        $scope.togglePassword = false;
+        $scope.toggleVerify = false;
+
         $q.all([
             APIUtils.getAllUserAccounts().then(
                 function(res) {
@@ -89,14 +92,7 @@ window.angular && (function(angular) {
                 },
                 function(error) {
                   $scope.state = 'error';
-                  if ((error.data.error['@Message.ExtendedInfo'] !=
-                       undefined) &&
-                      (error.data.error['@Message.ExtendedInfo'].length != 0)) {
-                    $scope.outMsg =
-                        error.data.error['@Message.ExtendedInfo'][0].Message;
-                  } else {
-                    $scope.outMsg = 'Failed to create new user.';
-                  }
+                  $scope.outMsg = 'Failed to create new user';
                 })
             .finally(function() {
               loadUserInfo();
@@ -136,14 +132,7 @@ window.angular && (function(angular) {
                 },
                 function(error) {
                   $scope.state = 'error';
-                  if ((error.data.error['@Message.ExtendedInfo'] !=
-                       undefined) &&
-                      (error.data.error['@Message.ExtendedInfo'].length != 0)) {
-                    $scope.outMsg =
-                        error.data.error['@Message.ExtendedInfo'][0].Message;
-                  } else {
-                    $scope.outMsg = 'Updating user failed.';
-                  }
+                  $scope.outMsg = 'Updating user failed';
                 })
             .finally(function() {
               loadUserInfo();
@@ -163,14 +152,7 @@ window.angular && (function(angular) {
                 },
                 function(error) {
                   $scope.state = 'error';
-                  if ((error.data.error['@Message.ExtendedInfo'] !=
-                       undefined) &&
-                      (error.data.error['@Message.ExtendedInfo'].length != 0)) {
-                    $scope.outMsg =
-                        error.data.error['@Message.ExtendedInfo'][0].Message;
-                  } else {
-                    $scope.outMsg = 'Deleting user failed.';
-                  }
+                  $scope.outMsg = 'Deleting user failed';
                 })
             .finally(function() {
               loadUserInfo();
