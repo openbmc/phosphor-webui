@@ -11,10 +11,10 @@ window.angular && (function(angular) {
 
   angular.module('app.serverControl').controller('powerOperationsController', [
     '$scope', 'APIUtils', 'dataService', 'Constants', '$timeout', '$interval',
-    '$interpolate', '$q',
+    '$interpolate', '$q', 'ngToast',
     function(
         $scope, APIUtils, dataService, Constants, $timeout, $interval,
-        $interpolate, $q) {
+        $interpolate, $q, ngToast) {
       $scope.dataService = dataService;
       $scope.confirm = false;
       $scope.power_confirm = false;
@@ -64,14 +64,7 @@ window.angular && (function(angular) {
               $scope.loading = false;
             })
             .catch(function(error) {
-              dataService.activateErrorModal({
-                title: Constants.MESSAGES.POWER_OP.POWER_ON_FAILED,
-                description: error.statusText ?
-                    $interpolate(
-                        Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
-                        {status: error.status, description: error.statusText}) :
-                    error
-              });
+              ngToast.danger(Constants.MESSAGES.POWER_OP.POWER_ON_FAILED);
               $scope.loading = false;
             });
       };
@@ -125,14 +118,7 @@ window.angular && (function(angular) {
               $scope.loading = false;
             })
             .catch(function(error) {
-              dataService.activateErrorModal({
-                title: Constants.MESSAGES.POWER_OP.WARM_REBOOT_FAILED,
-                description: error.statusText ?
-                    $interpolate(
-                        Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
-                        {status: error.status, description: error.statusText}) :
-                    error
-              });
+              ngToast.danger(Constants.MESSAGES.POWER_OP.WARM_REBOOT_FAILED);
               $scope.loading = false;
             });
       };
@@ -175,14 +161,7 @@ window.angular && (function(angular) {
               $scope.loading = false;
             })
             .catch(function(error) {
-              dataService.activateErrorModal({
-                title: Constants.MESSAGES.POWER_OP.COLD_REBOOT_FAILED,
-                description: error.statusText ?
-                    $interpolate(
-                        Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
-                        {status: error.status, description: error.statusText}) :
-                    error
-              });
+              ngToast.danger(Constants.MESSAGES.POWER_OP.COLD_REBOOT_FAILED);
               $scope.loading = false;
             });
       };
@@ -212,14 +191,8 @@ window.angular && (function(angular) {
               $scope.loading = false;
             })
             .catch(function(error) {
-              dataService.activateErrorModal({
-                title: Constants.MESSAGES.POWER_OP.ORDERLY_SHUTDOWN_FAILED,
-                description: error.statusText ?
-                    $interpolate(
-                        Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
-                        {status: error.status, description: error.statusText}) :
-                    error
-              });
+              ngToast.danger(
+                  Constants.MESSAGES.POWER_OP.ORDERLY_SHUTDOWN_FAILED);
               $scope.loading = false;
             });
       };
@@ -247,14 +220,8 @@ window.angular && (function(angular) {
               $scope.loading = false;
             })
             .catch(function(error) {
-              dataService.activateErrorModal({
-                title: Constants.MESSAGES.POWER_OP.IMMEDIATE_SHUTDOWN_FAILED,
-                description: error.statusText ?
-                    $interpolate(
-                        Constants.MESSAGES.ERROR_MESSAGE_DESC_TEMPLATE)(
-                        {status: error.status, description: error.statusText}) :
-                    error
-              });
+              ngToast.danger(
+                  Constants.MESSAGES.POWER_OP.IMMEDIATE_SHUTDOWN_FAILED);
               $scope.loading = false;
             });
       };
