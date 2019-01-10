@@ -10,8 +10,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.configuration').controller('dateTimeController', [
-    '$scope', '$window', 'APIUtils', '$route', '$q',
-    function($scope, $window, APIUtils, $route, $q) {
+    '$scope', '$window', 'APIUtils', '$route', '$q', 'ngToast',
+    function($scope, $window, APIUtils, $route, $q, ngToast) {
       $scope.bmc = {};
       // Only used when the owner is "Split"
       $scope.host = {};
@@ -20,8 +20,6 @@ window.angular && (function(angular) {
       // Possible time owners
       // https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Time/Owner.interface.yaml#L13
       $scope.timeOwners = ['BMC', 'Host', 'Both', 'Split'];
-      $scope.error = false;
-      $scope.success = false;
       $scope.loading = true;
       var timePath = '/xyz/openbmc_project/time/';
 
@@ -85,8 +83,6 @@ window.angular && (function(angular) {
       });
 
       $scope.setTime = function() {
-        $scope.error = false;
-        $scope.success = false;
         $scope.loading = true;
         var promises = [setTimeMode(), setTimeOwner(), setNTPServers()];
 
@@ -123,11 +119,12 @@ window.angular && (function(angular) {
               $q.all(manual_promises)
                   .then(
                       function() {
-                        $scope.success = true;
+                        ngToast.success('Date and time settings saved');
                       },
                       function(errors) {
                         console.log(JSON.stringify(errors));
-                        $scope.error = true;
+                        ngToast.danger(
+                            'Date and time settings could not be saved');
                       })
                   .finally(function() {
                     $scope.loading = false;
@@ -135,7 +132,7 @@ window.angular && (function(angular) {
             },
             function(errors) {
               console.log(JSON.stringify(errors));
-              $scope.error = true;
+              ngToast.danger('Date and time settings could not be saved');
               $scope.loading = false;
             });
       };
