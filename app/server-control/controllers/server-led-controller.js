@@ -10,8 +10,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.serverControl').controller('serverLEDController', [
-    '$scope', '$window', 'APIUtils', 'dataService',
-    function($scope, $window, APIUtils, dataService) {
+    '$scope', '$window', '$route', 'APIUtils', 'dataService', 'ngToast',
+    function($scope, $window, $route, APIUtils, dataService, ngToast) {
       $scope.dataService = dataService;
 
       APIUtils.getLEDState().then(function(state) {
@@ -35,7 +35,16 @@ window.angular && (function(angular) {
             (dataService.LED_state == APIUtils.LED_STATE_TEXT.on) ?
             APIUtils.LED_STATE_TEXT.off :
             APIUtils.LED_STATE_TEXT.on;
-        APIUtils.setLEDState(toggleState, function(status) {});
+        APIUtils.setLEDState(toggleState)
+            .then(
+                function(response) {},
+                function(errors) {
+                  ngToast.danger(
+                      'Failed to turn LED light ' +
+                      (toggleState ? 'on' : 'off'));
+                  console.log(JSON.stringify(errors));
+                  $route.reload();
+                })
       };
     }
   ]);
