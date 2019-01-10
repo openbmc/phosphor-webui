@@ -869,29 +869,14 @@ window.angular && (function(angular) {
                   });
           return deferred.promise;
         },
-        setLEDState: function(state, callback) {
-          $http({
+        setLEDState: function(state) {
+          return $http({
             method: 'PUT',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/led/groups/enclosure_identify/attr/Asserted',
             withCredentials: true,
             data: JSON.stringify({'data': state})
           })
-              .then(
-                  function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
-                    if (callback) {
-                      return callback(content.status);
-                    }
-                  },
-                  function(error) {
-                    if (callback) {
-                      callback(error);
-                    } else {
-                      console.log(error);
-                    }
-                  });
         },
         bmcReboot: function(callback) {
           $http({
