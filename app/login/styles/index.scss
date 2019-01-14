@@ -10,13 +10,11 @@
   padding-top: 1em;
   color: $black;
   .row {
-    max-width: 1040px;
+    max-width: 1080px;
   }
   @include mediaQuery(small) {
-    left: 50%;
     top: 50%;
     transform: translateY(-50%);
-    margin-left: -50%;
   }
   @include mediaQuery(medium) {
     left: 0;
@@ -25,9 +23,9 @@
   .login__logo {
     max-width: 200px;
     display: block;
-    margin-bottom: 2em;
+    margin: 0 auto 2em;
     @include mediaQuery(small) {
-      margin-bottom: 4em;
+      margin: 0 auto;
     }
   }
   @include fastTransition-all;
@@ -41,10 +39,14 @@
   overflow: hidden;
   @include mediaQuery(small) {
     max-width: 50%;
+    margin: 0 auto;
   }
   @include mediaQuery(medium) {
-    padding: 0 0 0 5em;
+    padding: 0 3em;
     max-width: 100%;
+  }
+  @include mediaQuery(large) {
+    padding: 0 0 0 6em;
   }
   @include fastTransition-all;
 
@@ -56,17 +58,11 @@
 }
 
 .login__desc {
-  text-align: left;
+  text-align: center;
   h1 {
     font-size: 2em;
-    margin-bottom: 0;
+    margin: 0.5em 0 2em;
     font-weight: bold;
-    @include mediaQuery(small) {
-      max-width: 50%;
-    }
-    @include mediaQuery(medium) {
-      max-width: 100%;
-    }
   }
 }
 
