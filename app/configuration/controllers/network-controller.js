@@ -11,7 +11,9 @@ window.angular && (function(angular) {
 
   angular.module('app.configuration').controller('networkController', [
     '$scope', '$window', 'APIUtils', 'dataService', '$timeout', '$route', '$q',
-    function($scope, $window, APIUtils, dataService, $timeout, $route, $q) {
+    'ngToast',
+    function(
+        $scope, $window, APIUtils, dataService, $timeout, $route, $q, ngToast) {
       $scope.dataService = dataService;
       $scope.network = {};
       $scope.oldInterface = {};
@@ -19,8 +21,6 @@ window.angular && (function(angular) {
       $scope.networkDevice = false;
       $scope.hostname = '';
       $scope.defaultGateway = '';
-      $scope.setNetworkError = '';
-      $scope.setNetworkSuccess = false;
       $scope.selectedInterface = '';
       $scope.confirmSettings = false;
       $scope.loading = false;
@@ -61,8 +61,6 @@ window.angular && (function(angular) {
       $scope.setNetworkSettings = function() {
         // Hides the confirm network settings modal
         $scope.confirmSettings = false;
-        $scope.setNetworkError = '';
-        $scope.setNetworkSuccess = false;
         $scope.loading = true;
         var promises = [];
 
@@ -100,22 +98,25 @@ window.angular && (function(angular) {
           for (var i in $scope.interface.ipv4.values) {
             if (!APIUtils.validIPV4IP(
                     $scope.interface.ipv4.values[i].Address)) {
-              $scope.setNetworkError = $scope.interface.ipv4.values[i].Address +
-                  ' invalid IP parameter';
+              ngToast.danger(
+                  $scope.interface.ipv4.values[i].Address +
+                  ' invalid IP parameter');
               $scope.loading = false;
               return;
             }
             if (!APIUtils.validIPV4IP(
                     $scope.interface.ipv4.values[i].Gateway)) {
-              $scope.setNetworkError = $scope.interface.ipv4.values[i].Address +
-                  ' invalid gateway parameter';
+              ngToast.danger(
+                  $scope.interface.ipv4.values[i].Address +
+                  ' invalid gateway parameter');
               $scope.loading = false;
               return;
             }
             // The netmask prefix length will be undefined if outside range
             if (!$scope.interface.ipv4.values[i].PrefixLength) {
-              $scope.setNetworkError = $scope.interface.ipv4.values[i].Address +
-                  ' invalid Prefix Length parameter';
+              ngToast.danger(
+                  $scope.interface.ipv4.values[i].Address +
+                  ' invalid Prefix Length parameter');
               $scope.loading = false;
               return;
             }
@@ -136,26 +137,28 @@ window.angular && (function(angular) {
         }
 
         if (promises.length) {
-          $q.all(promises).finally(function() {
-            $scope.loading = false;
-            if (!$scope.setNetworkError) {
-              $scope.setNetworkSuccess = true;
-              // Since an IPV4 interface (e.g. IP address, gateway, or netmask)
-              // edit is a delete then an add and the GUI can't calculate the
-              // interface id (e.g. 5c083707) beforehand and it is not returned
-              // by the REST call, openbmc#3227, reload the page after an edit,
-              // which makes a 2nd REST call.
-              // Do this for all network changes due to the possibility of a set
-              // network failing even though it returned success, openbmc#1641,
-              // and to update dataService and oldInterface to know which
-              // data has changed if the user continues to edit network
-              // settings.
-              // TODO: The reload is not ideal. Revisit this.
-              $timeout(function() {
-                loadNetworkInfo();
-              }, 4000);
-            }
-          });
+          $q.all(promises).then(
+              function(response) {
+                // Since an IPV4 interface (e.g. IP address, gateway, or
+                // netmask) edit is a delete then an add and the GUI can't
+                // calculate the interface id (e.g. 5c083707) beforehand and it
+                // is not returned by the REST call, openbmc#3227, reload the
+                // page after an edit, which makes a 2nd REST call. Do this for
+                // all network changes due to the possibility of a set network
+                // failing even though it returned success, openbmc#1641, and to
+                // update dataService and oldInterface to know which data has
+                // changed if the user continues to edit network settings.
+                // TODO: The reload is not ideal. Revisit this.
+                $timeout(function() {
+                  loadNetworkInfo();
+                  $scope.loading = false;
+                  ngToast.success('Network settings saved');
+                }, 4000);
+              },
+              function(error) {
+                $scope.loading = false;
+                ngToast.danger('Network settings could not be saved');
+              })
         } else {
           $scope.loading = false;
         }
@@ -169,7 +172,7 @@ window.angular && (function(angular) {
                 function(data) {},
                 function(error) {
                   console.log(JSON.stringify(error));
-                  $scope.setNetworkError = 'MAC Address';
+                  return $q.reject();
                 });
       }
 
@@ -179,7 +182,7 @@ window.angular && (function(angular) {
                 function(data) {},
                 function(error) {
                   console.log(JSON.stringify(error));
-                  $scope.setNetworkError = 'Default Gateway';
+                  return $q.reject();
                 });
       }
 
@@ -189,7 +192,7 @@ window.angular && (function(angular) {
                 function(data) {},
                 function(error) {
                   console.log(JSON.stringify(error));
-                  $scope.setNetworkError = 'Hostname';
+                  return $q.reject();
                 });
       }
 
@@ -201,7 +204,7 @@ window.angular && (function(angular) {
                 function(data) {},
                 function(error) {
                   console.log(JSON.stringify(error));
-                  $scope.setNetworkError = 'DHCP';
+                  return $q.reject();
                 });
       }
 
@@ -218,7 +221,7 @@ window.angular && (function(angular) {
                 function(data) {},
                 function(error) {
                   console.log(JSON.stringify(error));
-                  $scope.setNetworkError = 'DNS Servers';
+                  return $q.reject();
                 });
       }
 
@@ -229,7 +232,7 @@ window.angular && (function(angular) {
                   function(data) {},
                   function(error) {
                     console.log(JSON.stringify(error));
-                    $scope.setNetworkError = ipv4.Address;
+                    return $q.reject();
                   })
         });
       }
@@ -245,8 +248,7 @@ window.angular && (function(angular) {
                 function(data) {},
                 function(error) {
                   console.log(JSON.stringify(error));
-                  $scope.setNetworkError =
-                      $scope.interface.ipv4.values[index].Address;
+                  return $q.reject();
                 })
       }
 
@@ -269,14 +271,12 @@ window.angular && (function(angular) {
                           function(data) {},
                           function(error) {
                             console.log(JSON.stringify(error));
-                            $scope.setNetworkError =
-                                $scope.interface.ipv4.values[index].Address;
+                            return $q.reject();
                           });
                 },
                 function(error) {
                   console.log(JSON.stringify(error));
-                  $scope.setNetworkError =
-                      $scope.interface.ipv4.values[index].Address;
+                  return $q.reject();
                 });
       }
 
