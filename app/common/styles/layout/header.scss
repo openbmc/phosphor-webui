@@ -97,7 +97,7 @@ header {
   .header__functions {
     position: absolute;
     top: 0;
-    right: -680px;
+    right: -480px;
     bottom: 0;
     z-index: 100;
     margin: .3em 0;
@@ -119,7 +119,7 @@ header {
       float: left;
       text-decoration: none;
       color: $darkgrey;
-      padding: 1.250em 1.688em;
+      padding: 1.250em;
       height: 100%;
       font-size: 0.875em;
       font-weight: 400;
@@ -171,7 +171,7 @@ header {
   .header__functions {
     .header__info {
       padding: .3em;
-      min-width: 60px;
+      min-width: 40px;
       text-align: center;
       display: inline-block;
       span {
@@ -181,7 +181,7 @@ header {
         color: $darkgrey;
       }
       .icon-angle {
-        margin-bottom: .9em;
+        margin: 1.2em 0 0 0;
       }
       .icon-angle::before {
         font-size: 2em;
@@ -210,7 +210,7 @@ header {
     }
   }
   .header__page-refresh {
-    padding-top: 0;
+    padding: 0 .5rem 0.6rem;
     position: relative;
     span {
       font-size: 0.875em;
