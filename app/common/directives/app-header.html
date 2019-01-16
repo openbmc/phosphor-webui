@@ -8,10 +8,10 @@
     <div class="logo__wrapper"><img src="../../assets/images/logo.svg" class="header__logo" alt="company logo"/></div>
     <div class="inline header__server-name">
       <p class="header__hostname">{{dataService.hostname}}</p>
-      <p class="header__server-ip courier-bold">BMC host/IP address {{dataService.server_id}}</p>
+      <p class="header__server-ip courier-bold">{{dataService.server_id}}</p>
     </div>
     <div class="header__functions" ng-class="{'active' : toggle}">
-      <a class="header__info" ng-click="toggle = !toggle"><span>Server Info</span><i class="icon icon-angle" aria-hidden="true"></i></a>
+      <button class="header__info" ng-click="toggle = !toggle"><i class="icon icon-angle" aria-hidden="true"></i></button>
       <a href="#/server-health/event-log" class="header__server-health">Server health
         <i class="icon icon-angle" aria-hidden="true"></i><span ng-class="{'status-light__error': dataService.server_health == 'Critical', 'status-light__warn': dataService.server_health == 'Warning', 'status-light__good': dataService.server_health == 'Good'}">{{dataService.server_health}}</span></a>
        <a href="#/server-control/power-operations" class="header__server-power" role="button">Server power
@@ -22,6 +22,7 @@
         <span>Refresh</span>
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52.18 51.91">
           <path class="cls-1" d="M38,20.77H52v-14H48.3v6.07A26,26,0,1,0,48.7,38H44.32a22.14,22.14,0,1,1,1.8-20.92H38v3.67Z" transform="translate(0.16 0.14)"/>
+        </svg>
       </button>
     </div>
   </div>
