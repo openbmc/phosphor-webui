@@ -15,12 +15,14 @@ import angular_clipboard from 'angular-clipboard';
 import angular_cookies from 'angular-cookies';
 import angular_route from 'angular-route';
 import angular_sanitize from 'angular-sanitize';
+import angular_translate from 'angular-translate';
+import angular_translate_storage_cookie from 'angular-translate-storage-cookie';
+import angular_translate_storage_local from 'angular-translate-storage-local';
 import angular_ui_bootstrap from 'angular-ui-bootstrap';
 import angular_ui_router from 'angular-ui-router';
 import ngToast from 'ng-toast';
 import ngToast_animate from 'ng-toast/dist/ngToast-animations.css';
 import ngToast_style from 'ng-toast/dist/ngToast.css';
-
 
 require('./styles/index.scss');
 var config = require('../config.json');
@@ -83,6 +85,10 @@ import firmware_controller from './configuration/controllers/firmware-controller
 import users_index from './users/index.js';
 import user_accounts_controller from './users/controllers/user-accounts-controller.js';
 
+// add other language files when ready
+import en from './i18n/en.json';
+import de from './i18n/de.json';
+
 window.angular && (function(angular) {
   'use strict';
 
@@ -92,7 +98,8 @@ window.angular && (function(angular) {
           [
             // Dependencies
             'ngRoute', 'angular-clipboard', 'ngToast', 'ngAnimate',
-            'app.common.directives.dirPagination', 'ngSanitize',
+            'app.common.directives.dirPagination', 'ngSanitize', 'ngCookies',
+            'pascalprecht.translate',
             // Basic resources
             'app.common.services', 'app.common.directives',
             'app.common.filters',
@@ -142,6 +149,18 @@ window.angular && (function(angular) {
             dismissButton: true,
             maxNumber: 6
           });
+        }
+      ])
+      // i18n configuration
+      .config([
+        '$translateProvider',
+        function($translateProvider) {
+          $translateProvider.translations('en', en);
+          $translateProvider.translations('de', de);
+          //@TODO: add other language files when ready
+          $translateProvider.preferredLanguage('en');
+          $translateProvider.useSanitizeValueStrategy('sanitize');
+          $translateProvider.useLocalStorage();
         }
       ])
       .run([

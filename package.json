@@ -37,8 +37,12 @@
     "angular-ui-bootstrap": "^2.5.0",
     "angular-ui-router": "^1.0.20",
     "angular-websocket": "^2.0.1",
+    "angular-translate": "^2.18.1",
+    "angular-translate-storage-cookie": "^2.18.1",
+    "angular-translate-storage-local": "^2.18.1",
     "bootstrap": "^4.2.1",
     "ng-toast": "^2.0.0",
+    "json-loader": "^0.5.7",
     "xterm": "^3.10.1"
   },
   "peerDependencies": {},
