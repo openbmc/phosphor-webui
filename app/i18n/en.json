@@ -1,0 +1,17 @@
+{
+    "common": {
+        "directives": {
+            "app-header": {
+                "openbmc": "OpenBMC",
+                "logout": "Log Out",
+                "company-logo": "company logo",
+                "server-info": "Server Info",
+                "server-health": "Server health",
+                "server-power": "Server power",
+                "data-last-refreshed": "Data last refreshed",
+                "refresh": "Refresh",
+                "refresh-page-data": "refresh page data"
+            }
+        }
+    }
+}
