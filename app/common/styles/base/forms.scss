@@ -21,13 +21,13 @@ textarea {
   border-radius: 0px;
   border: 1px solid $input-border;
   height: 3.1em;
-  margin: 0 0 1em 0;
+  margin: 0;
   background: $white;
   box-shadow: 0 0 0;
   transition: none !important;
   &:focus {
     border-color: $medgrey;
-    box-shadow: 0 -5px $field__focus inset;
+    box-shadow: 0 -3px $field__focus inset;
   }
   &:disabled,
   .disabled {
@@ -43,6 +43,33 @@ textarea {
   }
 }
 
+//input validation
+.ng-invalid.ng-touched {
+  box-shadow: 0 -3px $error-color inset;
+  &:focus {
+    border-color: $medgrey;
+    box-shadow: 0 -3px $error-color inset;
+  }
+}
+.submitted .ng-invalid {
+  box-shadow: 0 -3px $error-color inset;
+  &:focus {
+    border-color: $medgrey;
+    box-shadow: 0 -3px $error-color inset;
+  }
+}
+
+.form-error {
+  margin-bottom: .7em;
+  font-size: 0.8rem;
+  color: #c60f13;
+  height:1rem;
+  display: block;
+  visibility: hidden;
+  .visible {
+    visibility: visible;
+  }
+}
 //Foundation overwrite
 [type=color], [type=date], [type=datetime-local], [type=datetime], [type=email], [type=month], [type=number], [type=password], [type=search], [type=tel], [type=text], [type=time], [type=url], [type=week], textarea {
   border-color: $input-border;
