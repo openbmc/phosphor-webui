@@ -13,6 +13,7 @@ import angular from 'angular';
 import angular_animate from 'angular-animate';
 import angular_clipboard from 'angular-clipboard';
 import angular_cookies from 'angular-cookies';
+import angular_messages from 'angular-messages';
 import angular_route from 'angular-route';
 import angular_sanitize from 'angular-sanitize';
 import angular_ui_bootstrap from 'angular-ui-bootstrap';
@@ -92,7 +93,7 @@ window.angular && (function(angular) {
           [
             // Dependencies
             'ngRoute', 'angular-clipboard', 'ngToast', 'ngAnimate',
-            'app.common.directives.dirPagination', 'ngSanitize',
+            'ngMessages', 'app.common.directives.dirPagination', 'ngSanitize',
             // Basic resources
             'app.common.services', 'app.common.directives',
             'app.common.filters',
