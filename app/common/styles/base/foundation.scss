@@ -705,31 +705,6 @@ select[multiple] {
   height: auto;
   background-image: none; }
 
-.is-invalid-input:not(:focus) {
-  border-color: #c60f13;
-  background-color: #f8e6e7; }
-.is-invalid-input:not(:focus)::-webkit-input-placeholder {
-  color: #c60f13; }
-.is-invalid-input:not(:focus)::-moz-placeholder {
-  color: #c60f13; }
-.is-invalid-input:not(:focus):-ms-input-placeholder {
-  color: #c60f13; }
-.is-invalid-input:not(:focus)::placeholder {
-  color: #c60f13; }
-
-.is-invalid-label {
-  color: #c60f13; }
-
-.form-error {
-  display: none;
-  margin-top: -0.5rem;
-  margin-bottom: 1rem;
-  font-size: 0.75rem;
-  font-weight: bold;
-  color: #c60f13; }
-.form-error.is-visible {
-  display: block; }
-
 .hide {
   display: none !important; }
 
