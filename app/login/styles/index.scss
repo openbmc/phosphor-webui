@@ -105,8 +105,3 @@
   }
 }
 
-.login__error-msg {
-  @include mediaQuery(medium) {
-    max-width: 100%;
-  }
-}

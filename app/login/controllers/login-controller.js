@@ -17,6 +17,8 @@ window.angular && (function(angular) {
     '$location',
     function($scope, $window, dataService, userModel, $location) {
       $scope.dataService = dataService;
+      $scope.serverUnreachable = false;
+      $scope.invalidCredentials = false;
       $scope.host = $scope.dataService.host.replace(/^https?\:\/\//ig, '');
 
       $scope.tryLogin = function(host, username, password, event) {
@@ -27,9 +29,8 @@ window.angular && (function(angular) {
         }
       };
       $scope.login = function(host, username, password) {
-        $scope.error = false;
-        $scope.description = 'Error logging in';
-
+        $scope.serverUnreachable = false;
+        $scope.invalidCredentials = false;
         if (!username || username == '' || !password || password == '' ||
             !host || host == '') {
           return false;
@@ -45,9 +46,10 @@ window.angular && (function(angular) {
                 $window.location.href = next;
               }
             } else {
-              $scope.error = true;
-              if (description) {
-                $scope.description = description;
+              if (description === 'Invalid username or password') {
+                $scope.invalidCredentials = true;
+              } else {
+                $scope.serverUnreachable = true;
               }
             }
           });
