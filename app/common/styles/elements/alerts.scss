@@ -1,67 +1,11 @@
 //Fixed alerts
 
-.alert__error,
-.alert__warning,
-.alert__message {
-  color: $darkbg__primary;
-  padding: 1em;
-  margin: .5em 0;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  .close {
-    color: $lightbg__primary;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.5em;
-    padding: 1em;
-    box-sizing: border-box;
-    line-height: 0;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    background: transparent;
-    border: 0;
-    margin: 0;
-    &:hover {
-      color: $lightbg__accent;
-    }
-  }
-}
-
-.alert__error {
-  background: $alert__error;
-
-}
-
-.alert__warning {
-  background: $alert__warning;
-
-}
-.alert__message {
-  background: $alert__message;
-}
-
-// Power confirmation buttons
-.power__confirm-buttons {
-  .btn-primary {
-    background: transparent;
-    border: 2px solid $white;
-    padding: 1em 2.2em;
-    margin: 0 10px;
-    border-radius: 4px;
-    &:focus,
-    &:hover {
-      background: $primebtn__bg;
-      border: 2px solid $primebtn__bg;
-    }
-  }
-  @include mediaQuery(large) {
-    float: right;
-  }
+.alert-danger{
+  background-color: $alert__danger;
+  border-color: $critical-lightbg;
+  border-radius: 0;
+  color: #333;
+  text-align: left;
 }
 
 
