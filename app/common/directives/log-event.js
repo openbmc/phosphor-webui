@@ -22,11 +22,16 @@ window.angular && (function(angular) {
               console.error('Error!', err);
             };
             $scope.resolveEvent = function(event) {
-              APIUtils.resolveLogs([{Id: event.Id}]).then(function() {
-                event.Resolved = 1;
-              });
+              APIUtils.resolveLogs([{Id: event.Id}])
+                  .then(
+                      function(data) {
+                        event.Resolved = 1;
+                      },
+                      function(error) {
+                        // TODO: Show error to user
+                        console.log(JSON.stringify(error));
+                      });
             };
-
             $scope.accept = function() {
               $scope.event.selected = true;
               $timeout(function() {

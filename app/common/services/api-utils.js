@@ -1707,12 +1707,7 @@ window.angular && (function(angular) {
           return defer.promise;
         },
         resolveLogs: function(logs) {
-          var defer = $q.defer();
           var promises = [];
-
-          function finished() {
-            defer.resolve();
-          }
 
           logs.forEach(function(item) {
             promises.push($http({
@@ -1721,13 +1716,10 @@ window.angular && (function(angular) {
                   '/xyz/openbmc_project/logging/entry/' + item.Id +
                   '/attr/Resolved',
               withCredentials: true,
-              data: JSON.stringify({'data': '1'})
+              data: JSON.stringify({'data': true})
             }));
           });
-
-          $q.all(promises).then(finished);
-
-          return defer.promise;
+          return $q.all(promises);
         },
         getPowerConsumption: function() {
           return $http({

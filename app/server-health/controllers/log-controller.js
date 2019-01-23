@@ -173,11 +173,16 @@ window.angular && (function(angular) {
 
             if (!events.length) return;
 
-            APIUtils.resolveLogs(events).then(function() {
-              events.forEach(function(item) {
-                item.Resolved = 1;
-              });
-            });
+            APIUtils.resolveLogs(events).then(
+                function(data) {
+                  events.forEach(function(item) {
+                    item.Resolved = 1;
+                  });
+                },
+                function(error) {
+                  // TODO: Show error to user
+                  console.log(JSON.stringify(error));
+                });
           };
 
           $scope.$watch('logs', function() {
