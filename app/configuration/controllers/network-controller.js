@@ -13,49 +13,44 @@ window.angular && (function(angular) {
     '$scope', '$window', 'APIUtils', 'dataService', '$timeout', '$route', '$q',
     function($scope, $window, APIUtils, dataService, $timeout, $route, $q) {
       $scope.dataService = dataService;
-      $scope.network = {};
-      $scope.oldInterface = {};
-      $scope.interface = {};
-      $scope.networkDevice = false;
-      $scope.hostname = '';
-      $scope.defaultGateway = '';
       $scope.setNetworkError = '';
       $scope.setNetworkSuccess = false;
-      $scope.selectedInterface = '';
       $scope.confirmSettings = false;
       $scope.loading = false;
       $scope.ipv4sToDelete = [];
+      $scope.netIntfFullData = [];
+      $scope.selectedIntfIdx = 0;
+      $scope.selectedIntf = {};
+      $scope.showIntfDropdown = false;
 
       loadNetworkInfo();
 
-      $scope.selectInterface = function(interfaceId) {
-        $scope.interface = $scope.network.interfaces[interfaceId];
-        // Copy the interface so we know later if changes were made to the page
-        $scope.oldInterface = JSON.parse(JSON.stringify($scope.interface));
-        $scope.selectedInterface = interfaceId;
-        $scope.networkDevice = false;
+      $scope.selectInterface = function(index) {
+        $scope.selectedIntfIdx = index;
+        $scope.selectedIntf = angular.copy($scope.netIntfFullData[index]);
+        $scope.showIntfDropdown = false;
       };
 
       $scope.addDNSField = function() {
-        $scope.interface.Nameservers.push('');
+        $scope.selectedIntf.NameServers.push('');
       };
 
       $scope.removeDNSField = function(index) {
-        $scope.interface.Nameservers.splice(index, 1);
+        $scope.selectedIntf.NameServers.splice(index, 1);
       };
 
-      $scope.addIpv4Field = function() {
-        $scope.interface.ipv4.values.push(
+      $scope.addIPv4Field = function() {
+        $scope.selectedIntf.IPv4Addresses.push(
             {Address: '', PrefixLength: '', Gateway: ''});
       };
 
-      $scope.removeIpv4Address = function(index) {
+      $scope.removeIPv4Address = function(index) {
         // Check if the IPV4 being removed has an id. This indicates that it is
         // an existing address and needs to be removed in the back end.
-        if ($scope.interface.ipv4.values[index].id) {
-          $scope.ipv4sToDelete.push($scope.interface.ipv4.values[index]);
+        if ($scope.selectedIntf.IPv4Addresses[index].id) {
+          $scope.ipv4sToDelete.push($scope.selectedIntf.IPv4Addresses[index]);
         }
-        $scope.interface.ipv4.values.splice(index, 1);
+        $scope.selectedIntf.IPv4Addresses.splice(index, 1);
       };
 
       $scope.setNetworkSettings = function() {
@@ -64,73 +59,91 @@ window.angular && (function(angular) {
         $scope.setNetworkError = '';
         $scope.setNetworkSuccess = false;
         $scope.loading = true;
+        var intfIdx = $scope.selectedIntfIdx;
         var promises = [];
 
         // MAC Address are case-insensitive
-        if ($scope.interface.MACAddress.toLowerCase() !=
-            dataService.mac_address.toLowerCase()) {
+        if ($scope.selectedIntf.MACAddress.toLowerCase() !=
+            $scope.netIntfFullData[intfIdx].MACAddress.toLowerCase()) {
           promises.push(setMACAddress());
         }
-        if ($scope.defaultGateway != dataService.defaultgateway) {
+        if ($scope.selectedIntf.DefaultGateway !=
+            $scope.netIntfFullData[intfIdx].DefaultGateway) {
           promises.push(setDefaultGateway());
         }
-        if ($scope.hostname != dataService.hostname) {
+        if ($scope.selectedIntf.HostName !=
+            $scope.netIntfFullData[intfIdx].HostName) {
           promises.push(setHostname());
         }
-        if ($scope.interface.DHCPEnabled != $scope.oldInterface.DHCPEnabled) {
+        if ($scope.selectedIntf.DHCPv4.DHCPEnabled !=
+            $scope.netIntfFullData[intfIdx].DHCPv4.DHCPEnabled) {
           promises.push(setDHCPEnabled());
         }
 
         // Remove any empty strings from the array. Important because we add an
         // empty string to the end so the user can add a new DNS server, if the
         // user doesn't fill out the field, we don't want to add.
-        $scope.interface.Nameservers =
-            $scope.interface.Nameservers.filter(Boolean);
+        $scope.selectedIntf.NameServers =
+            $scope.selectedIntf.NameServers.filter(Boolean);
         // toString() is a cheap way to compare 2 string arrays
-        if ($scope.interface.Nameservers.toString() !=
-            $scope.oldInterface.Nameservers.toString()) {
+        if ($scope.selectedIntf.NameServers.toString() !=
+            $scope.netIntfFullData[intfIdx].NameServers.toString()) {
           promises.push(setNameservers());
         }
 
         // Set IPV4 IP Addresses, Netmask Prefix Lengths, and Gateways
-        if (!$scope.interface.DHCPEnabled) {
+        console.log($scope.selectedIntf.DHCPv4.DHCPEnabled);
+        if (!$scope.selectedIntf.DHCPv4.DHCPEnabled) {
           // Delete existing IPV4 addresses that were removed
           promises.push(removeIPV4s());
           // Update any changed IPV4 addresses and add new
-          for (var i in $scope.interface.ipv4.values) {
+          for (var i in $scope.selectedIntf.IPv4Addresses) {
+            /*
+               if(($scope.selectedIntf.IPv4Addresses[i].Address ==
+               $scope.netIntfFullData[intfIdx].IPv4Addresses[i].Address)
+               &&
+                           ($scope.selectedIntf.IPv4Addresses[i].Gateway ==
+               $scope.netIntfFullData[intfIdx].IPv4Addresses[i].Gateway)
+               &&
+                           ($scope.selectedIntf.IPv4Addresses[i].PrefixLength ==
+               $scope.netIntfFullData[intfIdx].IPv4Addresses[i].PrefixLength))
+                        {
+                          console.log("No change in IPv4 Settings");
+                          continue;
+                        }
+            */
             if (!APIUtils.validIPV4IP(
-                    $scope.interface.ipv4.values[i].Address)) {
-              $scope.setNetworkError = $scope.interface.ipv4.values[i].Address +
+                    $scope.selectedIntf.IPv4Addresses[i].Address)) {
+              $scope.setNetworkError =
+                  $scope.selectedIntf.IPv4Addresses[i].Address +
                   ' invalid IP parameter';
               $scope.loading = false;
               return;
             }
             if (!APIUtils.validIPV4IP(
-                    $scope.interface.ipv4.values[i].Gateway)) {
-              $scope.setNetworkError = $scope.interface.ipv4.values[i].Address +
+                    $scope.selectedIntf.IPv4Addresses[i].Gateway)) {
+              $scope.setNetworkError =
+                  $scope.selectedIntf.IPv4Addresses[i].Address +
                   ' invalid gateway parameter';
               $scope.loading = false;
               return;
             }
             // The netmask prefix length will be undefined if outside range
-            if (!$scope.interface.ipv4.values[i].PrefixLength) {
-              $scope.setNetworkError = $scope.interface.ipv4.values[i].Address +
+            if (!$scope.selectedIntf.IPv4Addresses[i].PrefixLength) {
+              $scope.setNetworkError =
+                  $scope.selectedIntf.IPv4Addresses[i].Address +
                   ' invalid Prefix Length parameter';
               $scope.loading = false;
               return;
             }
-            if ($scope.interface.ipv4.values[i].updateAddress ||
-                $scope.interface.ipv4.values[i].updateGateway ||
-                $scope.interface.ipv4.values[i].updatePrefix) {
-              // If IPV4 has an id it means it already exists in the back end,
-              // and in order to update it is required to remove previous IPV4
-              // address and add new one. See openbmc/openbmc/issues/2163.
-              // TODO: update to use PUT once issue 2163 is resolved.
-              if ($scope.interface.ipv4.values[i].id) {
-                promises.push(updateIPV4(i));
-              } else {
-                promises.push(addIPV4(i));
-              }
+            // If IPV4 has an id it means it already exists in the back end,
+            // and in order to update it is required to remove previous IPV4
+            // address and add new one. See openbmc/openbmc/issues/2163.
+            // TODO: update to use PUT once issue 2163 is resolved.
+            if ($scope.selectedIntf.IPv4Addresses[i].ipAddrId) {
+              promises.push(updateIPV4(i));
+            } else {
+              promises.push(addIPV4(i));
             }
           }
         }
@@ -164,7 +177,7 @@ window.angular && (function(angular) {
       function setMACAddress() {
         return APIUtils
             .setMACAddress(
-                $scope.selectedInterface, $scope.interface.MACAddress)
+                $scope.selectedIntf.Id, $scope.selectedIntf.MACAddress)
             .then(
                 function(data) {},
                 function(error) {
@@ -174,7 +187,7 @@ window.angular && (function(angular) {
       }
 
       function setDefaultGateway() {
-        return APIUtils.setDefaultGateway($scope.defaultGateway)
+        return APIUtils.setDefaultGateway($scope.selectedIntf.DefaultGateway)
             .then(
                 function(data) {},
                 function(error) {
@@ -184,19 +197,19 @@ window.angular && (function(angular) {
       }
 
       function setHostname() {
-        return APIUtils.setHostname($scope.hostname)
+        return APIUtils.setHostname($scope.selectedIntf.HostName)
             .then(
                 function(data) {},
                 function(error) {
                   console.log(JSON.stringify(error));
-                  $scope.setNetworkError = 'Hostname';
+                  $scope.setNetworkError = 'HostName';
                 });
       }
 
       function setDHCPEnabled() {
         return APIUtils
             .setDHCPEnabled(
-                $scope.selectedInterface, $scope.interface.DHCPEnabled)
+                $scope.selectedIntf.Id, $scope.selectedIntf.DHCPv4.DHCPEnabled)
             .then(
                 function(data) {},
                 function(error) {
@@ -208,12 +221,12 @@ window.angular && (function(angular) {
       function setNameservers() {
         // Nameservers does not allow an empty array, since we remove all empty
         // strings above, could have an empty array. TODO: openbmc/openbmc#3240
-        if ($scope.interface.Nameservers.length == 0) {
-          $scope.interface.Nameservers.push('');
+        if ($scope.selectedIntf.NameServers.length == 0) {
+          $scope.selectedIntf.NameServers.push('');
         }
         return APIUtils
             .setNameservers(
-                $scope.selectedInterface, $scope.interface.Nameservers)
+                $scope.selectedIntf.Id, $scope.selectedIntf.NameServers)
             .then(
                 function(data) {},
                 function(error) {
@@ -224,7 +237,7 @@ window.angular && (function(angular) {
 
       function removeIPV4s() {
         return $scope.ipv4sToDelete.map(function(ipv4) {
-          return APIUtils.deleteIPV4($scope.selectedInterface, ipv4.id)
+          return APIUtils.deleteIPV4($scope.selectedIntf.Id, ipv4.ipAddrId)
               .then(
                   function(data) {},
                   function(error) {
@@ -237,16 +250,16 @@ window.angular && (function(angular) {
       function addIPV4(index) {
         return APIUtils
             .addIPV4(
-                $scope.selectedInterface,
-                $scope.interface.ipv4.values[index].Address,
-                $scope.interface.ipv4.values[index].PrefixLength,
-                $scope.interface.ipv4.values[index].Gateway)
+                $scope.selectedIntf.Id,
+                $scope.selectedIntf.IPv4Addresses[index].Address,
+                $scope.selectedIntf.IPv4Addresses[index].PrefixLength,
+                $scope.selectedIntf.IPv4Addresses[index].Gateway)
             .then(
                 function(data) {},
                 function(error) {
                   console.log(JSON.stringify(error));
                   $scope.setNetworkError =
-                      $scope.interface.ipv4.values[index].Address;
+                      $scope.selectedIntf.IPv4Addresses[index].Address;
                 })
       }
 
@@ -255,28 +268,29 @@ window.angular && (function(angular) {
         // add a new one
         return APIUtils
             .deleteIPV4(
-                $scope.selectedInterface,
-                $scope.interface.ipv4.values[index].id)
+                $scope.selectedIntf.Id,
+                $scope.selectedIntf.IPv4Addresses[index].ipAddrId)
             .then(
                 function(data) {
                   return APIUtils
                       .addIPV4(
-                          $scope.selectedInterface,
-                          $scope.interface.ipv4.values[index].Address,
-                          $scope.interface.ipv4.values[index].PrefixLength,
-                          $scope.interface.ipv4.values[index].Gateway)
+                          $scope.selectedIntf.Id,
+                          $scope.selectedIntf.IPv4Addresses[index].Address,
+                          $scope.selectedIntf.IPv4Addresses[index].PrefixLength,
+                          $scope.selectedIntf.IPv4Addresses[index].Gateway)
                       .then(
                           function(data) {},
                           function(error) {
                             console.log(JSON.stringify(error));
                             $scope.setNetworkError =
-                                $scope.interface.ipv4.values[index].Address;
+                                $scope.selectedIntf.IPv4Addresses[index]
+                                    .Address;
                           });
                 },
                 function(error) {
                   console.log(JSON.stringify(error));
                   $scope.setNetworkError =
-                      $scope.interface.ipv4.values[index].Address;
+                      $scope.selectedIntf.IPv4Addresses[index].Address;
                 });
       }
 
@@ -285,32 +299,19 @@ window.angular && (function(angular) {
       };
 
       function loadNetworkInfo() {
-        APIUtils.getNetworkInfo().then(function(data) {
-          dataService.setNetworkInfo(data);
-          $scope.network = data.formatted_data;
-          $scope.hostname = data.hostname;
-          $scope.defaultGateway = data.defaultgateway;
-          if ($scope.network.interface_ids.length) {
-            // Use the first network interface if the user hasn't chosen one
-            if (!$scope.selectedInterface ||
-                !$scope.network.interfaces[$scope.selectedInterface]) {
-              $scope.selectedInterface = $scope.network.interface_ids[0];
-            }
-            $scope.interface =
-                $scope.network.interfaces[$scope.selectedInterface];
-            // Copy the interface so we know later if changes were made to the
-            // page
-            $scope.oldInterface = JSON.parse(JSON.stringify($scope.interface));
-          }
-          // Add id values and update flags to corresponding IPV4 objects
-          for (var i = 0; i < $scope.interface.ipv4.values.length; i++) {
-            $scope.interface.ipv4.values[i].id = $scope.interface.ipv4.ids[i];
-            $scope.interface.ipv4.values[i].updateAddress = false;
-            $scope.interface.ipv4.values[i].updateGateway = false;
-            $scope.interface.ipv4.values[i].updatePrefix = false;
-          }
-        });
-      }
+        APIUtils.getBMCNetworkInfo()
+            .then(
+                function(res) {
+                  $scope.netIntfFullData = res;
+                  $scope.selectInterface(0);
+                },
+                function(error) {
+                  console.log(JSON.stringify(error));
+                })
+            .finally(function() {
+              $scope.loading = false;
+            });
+      };
     }
   ]);
 })(angular);

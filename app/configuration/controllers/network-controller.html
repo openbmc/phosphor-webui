@@ -11,66 +11,66 @@
       <fieldset>
         <div class="column small-12 large-3">
           <label for="net-config__mac">Hostname</label>
-          <input id="net-config__mac" type="text" ng-model="hostname"/>
+          <input id="net-config__mac" type="text" ng-model="selectedIntf.HostName"/>
         </div>
         <div class="column small-12 large-3">
           <label for="netinterface-select">Network interface</label>
           <div id="netinterface-select" class="dropdown__wrapper">
-            <button type="button" class="dropdown__button" ng-click="networkDevice = !networkDevice">{{selectedInterface}}</button>
-            <ul class="dropdown__list inline" ng-show="networkDevice">
-              <li ng-repeat="interface_id in network.interface_ids">
-                <button type="button" ng-click="selectInterface(interface_id);">{{interface_id}}</button>
+            <button type="button" class="dropdown__button" ng-click="showIntfDropdown = !showIntfDropdown">{{selectedIntf.Id}}</button>
+            <ul class="dropdown__list inline" ng-show="showIntfDropdown">
+              <li ng-repeat="netIntf in netIntfFullData track by $index">
+                <button type="button" ng-click="selectInterface($index);">{{netIntf.Id}}</button>
               </li>
             </ul>
           </div>
         </div>
         <div class="column small-12 large-3">
           <label for="net-config__host">MAC address</label>
-          <input id="net-config__host" type="text" ng-model="interface.MACAddress"/>
+          <input id="net-config__host" type="text" ng-model="selectedIntf.MACAddress"/>
         </div>
         <div class="column small-12 large-3">
           <label for="net-config__domain">Default Gateway</label>
-          <input id="net-config__domain" type="text" ng-model="defaultGateway"/>
+          <input id="net-config__domain" type="text" ng-model="selectedIntf.DefaultGateway"/>
         </div>
       </fieldset>
     </section>
     <section class="row column">
       <div class="column small-12 page-header">
-        <h2 class="inline h4">IPV4 settings</h2>
+        <h2 class="inline h4">IPv4 settings</h2>
       </div>
       <fieldset>
         <div class="row column">
           <label class="control-radio" for="dhcp-address">Obtain an IP address automatically using DHCP
-            <input type="radio" name="ip-address" id="dhcp-address" ng-checked="true" ng-model="interface.DHCPEnabled" ng-value="true">
+            <input type="radio" name="ip-address" id="dhcp-address" ng-checked="true" ng-model="selectedIntf.DHCPv4.DHCPEnabled" ng-value="true">
             <span class="control__indicator control__indicator-on"></span>
           </label>
         </div>
         <div class="row column">
           <label class="control-radio" for="static-ip-address">Assign a static IP address
-            <input type="radio" name="ip-address" id="static-ip-address" ng-model="interface.DHCPEnabled" ng-value="false"/>
+            <input type="radio" name="ip-address" id="static-ip-address" ng-model="selectedIntf.DHCPv4.DHCPEnabled" ng-value="false"/>
             <span class="control__indicator control__indicator-on"></span>
           </label>
         </div>
         <div class="row column network-config__ipv4-wrap">
-          <fieldset class="net-config__static-ip-wrap" ng-repeat="ipv4 in interface.ipv4.values track by $index">
+          <fieldset class="net-config__static-ip-wrap" ng-repeat="ipv4 in selectedIntf.IPv4Addresses track by $index">
             <div class="column small-12 large-3">
               <label>IPV4 address</label>
-              <input id="ipv4-address-{{$index+1}}" ng-change="ipv4.updateAddress = true" type="text" ng-disabled="interface.DHCPEnabled" ng-model="ipv4.Address"/>
+              <input id="ipv4-address-{{$index+1}}" type="text" ng-disabled="selectedIntf.DHCPv4.DHCPEnabled" ng-model="ipv4.Address"/>
             </div>
             <div class="column small-12 large-3">
               <label>Gateway</label>
-              <input id="ipv4-gateway-{{$index+1}}" ng-change="ipv4.updateGateway = true" type="text" ng-disabled="interface.DHCPEnabled" value="" ng-model="ipv4.Gateway"/>
+              <input id="ipv4-gateway-{{$index+1}}" type="text" value="" ng-disabled="selectedIntf.DHCPv4.DHCPEnabled" ng-model="ipv4.Gateway"/>
             </div>
             <!-- This netmask prefix length max only works with IPV4 -->
             <div class="column small-12 large-6">
               <label>Netmask Prefix Length</label>
-              <input id="ipv4-prefix-{{$index+1}}" class="column small-6" ng-change="ipv4.updatePrefix = true" type="number" min="1" max="32" step="1" ng-disabled="interface.DHCPEnabled"  ng-model="ipv4.PrefixLength"/>
-              <button class="network-config_remove-button inline" ng-click="removeIpv4Address($index)">Remove</button>
+              <input id="ipv4-prefix-{{$index+1}}" class="column small-6" type="number" min="1" max="32" step="1" ng-disabled="selectedIntf.DHCPv4.DHCPEnabled"  ng-model="ipv4.PrefixLength"/>
+              <button class="network-config_remove-button inline" ng-disabled="ipv4.AddressOrigin == 'DHCP'" ng-click="removeIpv4Address($index)">Remove</button>
             </div>
           </fieldset>
           <div class="row column">
             <div class="column small-12">
-              <button type="button" class="btn-primary inline" ng-click="addIpv4Field()">Add IPV4 address</button>
+              <button type="button" class="btn-primary inline" ng-click="addIPv4Field()">Add IPv4 address</button>
             </div>
           </div>
         </div>
@@ -82,10 +82,10 @@
       </div>
       <fieldset>
         <!-- Call Nameservers "DNS Servers" on the GUI -->
-        <fieldset class="net-config__static-ip-wrap" ng-repeat="dns in interface.Nameservers track by $index">
+        <fieldset class="net-config__static-ip-wrap" ng-repeat="dns in selectedIntf.NameServers track by $index">
           <div class="column small-12">
             <label for="net-config__prime-dns{{$index+1}}">DNS Server {{$index+1}}</label>
-            <input id="net-config__prime-dns{{$index+1}}" class="network-input column small-6 large-4 inline" type="text" ng-model="dns" ng-blur="interface.Nameservers[$index] = dns" set-focus-on-new-input/>
+            <input id="net-config__prime-dns{{$index+1}}" class="network-input column small-6 large-4 inline" type="text" ng-model="dns" ng-blur="selectedIntf.NameServers[$index] = dns" set-focus-on-new-input/>
             <button class="network-config_remove-button inline" ng-click="removeDNSField($index)">Remove</button>
           </div>
         </fieldset>

@@ -90,8 +90,8 @@ window.angular && (function(angular) {
               if (!userModel.isLoggedIn()) {
                 return;
               }
-              APIUtils.getNetworkInfo().then(function(data) {
-                dataService.setNetworkInfo(data);
+              APIUtils.getNetworkConfig().then(function(data) {
+                dataService.setNetworkConfig(data);
               });
             };
 

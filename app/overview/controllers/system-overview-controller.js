@@ -21,9 +21,11 @@ window.angular && (function(angular) {
       $scope.server_firmware = '';
       $scope.power_consumption = '';
       $scope.power_cap = '';
-      $scope.bmc_ip_addresses = [];
+      $scope.bmcIPv4Addresses = [];
+      $scope.bmcIPv6Addresses = [];
       $scope.loading = false;
       $scope.edit_hostname = false;
+      $scope.macAddress = '';
 
       loadOverviewData();
 
@@ -98,11 +100,17 @@ window.angular && (function(angular) {
               console.log(JSON.stringify(error));
             });
 
-        var getNetworkInfoPromise = APIUtils.getNetworkInfo().then(
+        var getNetworkInfoPromise = APIUtils.getBMCNetworkInfo().then(
             function(data) {
-              // TODO: openbmc/openbmc#3150 Support IPV6 when
-              // officially supported by the backend
-              $scope.bmc_ip_addresses = data.formatted_data.ip_addresses.ipv4;
+              data.forEach(function(intfData) {
+                $scope.macAddress = intfData.MACAddress;
+                intfData['IPv4Addresses'].forEach(function(ipData) {
+                  $scope.bmcIPv4Addresses.push(ipData.Address);
+                });
+                intfData['IPv6Addresses'].forEach(function(ipData) {
+                  $scope.bmcIPv6Addresses.push(ipData.Address);
+                });
+              });
             },
             function(error) {
               console.log(JSON.stringify(error));
@@ -141,8 +149,8 @@ window.angular && (function(angular) {
         $scope.loading = true;
         APIUtils.setHostname(hostname).then(
             function(data) {
-              APIUtils.getNetworkInfo().then(function(data) {
-                dataService.setNetworkInfo(data);
+              APIUtils.getNetworkConfig().then(function(data) {
+                dataService.setNetworkConfig(data);
               });
             },
             function(error) {

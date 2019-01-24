@@ -27,7 +27,6 @@ window.angular && (function(angular) {
       this.path = '';
 
       this.hostname = '';
-      this.mac_address = '';
       this.defaultgateway = '';
 
       this.displayErrorModal = false;
@@ -75,10 +74,10 @@ window.angular && (function(angular) {
       this.host = this.getHost();
       this.server_id = this.getServerId();
 
-      this.setNetworkInfo = function(data) {
-        this.hostname = data.hostname;
-        this.defaultgateway = data.defaultgateway;
-        this.mac_address = data.mac_address;
+      this.setNetworkConfig = function(data) {
+        console.log(data);
+        this.hostname = data.HostName;
+        this.defaultgateway = data.DefaultGateway;
       };
 
       this.setPowerOnState = function() {

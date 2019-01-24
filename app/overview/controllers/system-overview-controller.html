@@ -45,7 +45,7 @@
             </li>
             <li class="overview__metadata-block">
               <p class="content-label">IP addresses</p>
-              <p class="courier-bold" ng-repeat="ip_address in bmc_ip_addresses">{{ip_address}}</p>
+              <p class="courier-bold" ng-repeat="ip_address in bmcIPv4Addresses">{{ip_address}}</p>
             </li>
             <li class="overview__metadata-block">
               <p class="content-label">Firmware Version</p>
@@ -53,7 +53,7 @@
             </li>
             <li class="overview__metadata-block">
               <p class="content-label">Mac address</p>
-              <p class="courier-bold">{{dataService.mac_address}}</p>
+              <p class="courier-bold">{{macAddress}}</p>
             </li>
           </ul>
         </div>

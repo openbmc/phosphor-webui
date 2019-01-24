@@ -280,113 +280,152 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
-        getNetworkInfo: function() {
+        getBMCNetworkInfo: function() {
           var deferred = $q.defer();
-          $http({
-            method: 'GET',
-            url: DataService.getHost() +
-                '/xyz/openbmc_project/network/enumerate',
-            withCredentials: true
-          })
-              .then(
-                  function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
-                    var hostname = '';
-                    var defaultgateway = '';
-                    var macAddress = '';
+          var promises = [];
 
-                    function parseNetworkData(content) {
-                      var data = {
-                        interface_ids: [],
-                        interfaces: {},
-                        ip_addresses: {ipv4: [], ipv6: []},
-                      };
-                      var interfaceId = '', keyParts = [], interfaceHash = '',
-                          interfaceType = '';
-                      for (var key in content.data) {
-                        if (key.match(/network\/eth\d+(_\d+)?$/ig)) {
-                          interfaceId = key.split('/').pop();
-                          if (data.interface_ids.indexOf(interfaceId) == -1) {
-                            data.interface_ids.push(interfaceId);
-                            data.interfaces[interfaceId] = {
-                              interfaceIname: '',
-                              DomainName: '',
-                              MACAddress: '',
-                              Nameservers: [],
-                              DHCPEnabled: 0,
-                              ipv4: {ids: [], values: []},
-                              ipv6: {ids: [], values: []}
+          if (DataService.configJson.redfishSupportEnabled == true) {
+            $http({
+              method: 'GET',
+              url: DataService.getHost() +
+                  '/redfish/v1/Managers/bmc/EthernetInterfaces',
+              withCredentials: true
+            })
+                .then(
+                    function(response) {
+                      var members = response.data['Members'];
+                      angular.forEach(members, function(member) {
+                        promises.push(
+                            $http({
+                              method: 'GET',
+                              url: DataService.getHost() + member['@odata.id'],
+                              withCredentials: true
+                            }).then(function(res) {
+                              return res.data;
+                            }));
+                      });
+
+                      $q.all(promises).then(
+                          function(results) {
+                            deferred.resolve(results);
+                          },
+                          function(errors) {
+                            deferred.reject(errors);
+                          });
+                    },
+                    function(error) {
+                      console.log(error);
+                      deferred.reject(error);
+                    });
+          } else {
+            $http({
+              method: 'GET',
+              url: DataService.getHost() +
+                  '/xyz/openbmc_project/network/enumerate',
+              withCredentials: true
+            })
+                .then(
+                    function(response) {
+                      var json = JSON.stringify(response.data);
+                      var content = JSON.parse(json);
+                      var hostname = '';
+                      var defaultgateway = '';
+                      var netIntfFullData = [];
+
+                      function parseNetworkData(content) {
+                        var data = {};
+                        for (var key in content.data) {
+                          if (key.match(/network\/eth\d+(_\d+)?$/ig)) {
+                            intfName = key.split('/').pop();
+                            data[intfName] = {
+                              DHCPv4: {},
+                              IPv4Addresses: [],
+                              IPv6Addresses: []
                             };
-                            data.interfaces[interfaceId].MACAddress =
+                            data[intfName].Id = intfName;
+                            data[intfName].Name =
+                                content.data[key].InterfaceName;
+                            data[intfName].MACAddress =
                                 content.data[key].MACAddress;
-                            data.interfaces[interfaceId].DomainName =
-                                content.data[key].DomainName.join(' ');
-                            data.interfaces[interfaceId].Nameservers =
+                            data[intfName].SpeedMbps = content.data[key].Speed;
+                            data[intfName].NameServers =
                                 content.data[key].Nameservers;
-                            data.interfaces[interfaceId].DHCPEnabled =
+                            data[intfName].DHCPv4.DHCPEnabled =
                                 content.data[key].DHCPEnabled;
-                          }
-                        } else if (
-                            key.match(
-                                /network\/eth\d+(_\d+)?\/ipv[4|6]\/[a-z0-9]+$/ig)) {
-                          keyParts = key.split('/');
-                          interfaceHash = keyParts.pop();
-                          interfaceType = keyParts.pop();
-                          interfaceId = keyParts.pop();
+                          } else if (
+                              key.match(
+                                  /network\/eth\d+(_\d+)?\/ipv[4|6]\/[a-z0-9]+$/ig)) {
+                            var keyParts = key.split('/');
+                            var intfHash = keyParts.pop();
+                            var intfType = keyParts.pop();
+                            var intfName = keyParts.pop();
+                            var ipData = {};
+                            ipData.Address = content.data[key].Address;
+                            ipData.Gateway = content.data[key].Gateway;
+                            ipData.PrefixLength =
+                                content.data[key].PrefixLength;
+                            ipData.AddressOrigin =
+                                content.data[key].Origin.split('.').pop();
+                            ipData.ipAddrId = intfHash;
 
-                          if (data.interfaces[interfaceId][interfaceType]
-                                  .ids.indexOf(interfaceHash) == -1) {
-                            data.interfaces[interfaceId][interfaceType]
-                                .ids.push(interfaceHash);
-                            data.interfaces[interfaceId][interfaceType]
-                                .values.push(content.data[key]);
-                            data.ip_addresses[interfaceType].push(
-                                content.data[key]['Address']);
+                            if (content.data[key].Type ==
+                                'xyz.openbmc_project.Network.IP.Protocol.IPv4') {
+                              data[intfName]['IPv4Addresses'].push(ipData);
+                            } else if (
+                                content.data[key].Type ==
+                                'xyz.openbmc_project.Network.IP.Protocol.IPv6') {
+                              data[intfName]['IPv6Addresses'].push(ipData);
+                            }
                           }
                         }
+                        return data;
                       }
-                      return data;
-                    }
 
-                    if (content.data.hasOwnProperty(
-                            '/xyz/openbmc_project/network/config')) {
-                      if (content.data['/xyz/openbmc_project/network/config']
-                              .hasOwnProperty('HostName')) {
-                        hostname =
-                            content.data['/xyz/openbmc_project/network/config']
-                                .HostName;
+                      if (content.data.hasOwnProperty(
+                              '/xyz/openbmc_project/network/config')) {
+                        if (content.data['/xyz/openbmc_project/network/config']
+                                .hasOwnProperty('HostName')) {
+                          hostname =
+                              content
+                                  .data['/xyz/openbmc_project/network/config']
+                                  .HostName;
+                        }
+                        if (content.data['/xyz/openbmc_project/network/config']
+                                .hasOwnProperty('DefaultGateway')) {
+                          defaultgateway =
+                              content
+                                  .data['/xyz/openbmc_project/network/config']
+                                  .DefaultGateway;
+                        }
                       }
-                      if (content.data['/xyz/openbmc_project/network/config']
-                              .hasOwnProperty('DefaultGateway')) {
-                        defaultgateway =
-                            content.data['/xyz/openbmc_project/network/config']
-                                .DefaultGateway;
+                      var parsedData = parseNetworkData(content);
+                      for (var key in parsedData) {
+                        parsedData[key].HostName = hostname;
+                        parsedData[key].DefaultGateway = defaultgateway;
+                        netIntfFullData.push(parsedData[key]);
                       }
-                    }
-
-                    if (content.data.hasOwnProperty(
-                            '/xyz/openbmc_project/network/eth0') &&
-                        content.data['/xyz/openbmc_project/network/eth0']
-                            .hasOwnProperty('MACAddress')) {
-                      macAddress =
-                          content.data['/xyz/openbmc_project/network/eth0']
-                              .MACAddress;
-                    }
-
-                    deferred.resolve({
-                      data: content.data,
-                      hostname: hostname,
-                      defaultgateway: defaultgateway,
-                      mac_address: macAddress,
-                      formatted_data: parseNetworkData(content)
+                      console.log(netIntfFullData);
+                      deferred.resolve(netIntfFullData);
+                    },
+                    function(error) {
+                      console.log(error);
+                      deferred.reject(error);
                     });
-                  },
-                  function(error) {
-                    console.log(error);
-                    deferred.reject(error);
-                  });
+          }
           return deferred.promise;
+        },
+        getNetworkConfig: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/network/config',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                var json = JSON.stringify(response.data);
+                var content = JSON.parse(json);
+                return content.data;
+              });
         },
         setMACAddress: function(interface_name, mac_address) {
           return $http({
