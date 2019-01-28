@@ -1,51 +1,107 @@
-// SNMP SCSS
-
-.snmp__form {
-
-  fieldset {
-    padding-left: 1.8em;
+#configuration-snmp {
+  .row {
+    padding-left: 0;
   }
-   .snmp__managers {
-    padding-bottom: 1.5em;
+  .snmp_description {
+    padding:1em 0 1em 0;
   }
-
-   .snmp__manager-field {
-    display:inline-block;
-    padding-right: 4em;
-    width: 350px;
-    padding-top: .6em;
-    padding-left: 0em;
+  .help__text {
+    font-size: 0.8rem;
+    color: $disabled-row-txt;
+    padding-top: .3em;
+    display: none;
   }
-
-  .snmp__metadata-wrapper {
-    margin: 0;
+  .form-error{
+    display: none;
+  }
+  .manager_group {
+    border-bottom: 1px solid $lightbg__grey;
+    &.ng-invalid {
+      input {
+        color: black;
+        border-style: solid;
+        pointer-events: auto;
+      }
+      .help__text {
+        display: block;
+      }
+      .form-error {
+        display: block;
+      }
+    }
+    &.empty {
+      color: $disabled-row-txt;
+      padding: 1em 0 1em 0;
+    }
+  }
+  .snmp__port {
+    padding: .3em 0 .3em 1em;
+    &.label {
+      padding: .3em 0 .3em 0em;
+    }
+  }
+  .snmp__address {
+    padding: .3em 1em .3em 0;
+  }
+  .snmp__fields {
+    input {
+      border-style: none;
+      pointer-events: none;
+      color: $disabled-row-txt;
+      height: 2.4em;
+    }
+    &:focus-within {
+      input {
+        color: $black;
+        border-style: solid;
+        pointer-events: auto;
+      }
+      .form-error {
+        display: block;
+      }
+      .help__text {
+        display: block;
+      }
+    }
+  }
+  .snmp__buttons {
+    text-align: right;
+    padding-right: .5em;
+    &.trash{
+      text-align: left;
+    }
+    button{
+      margin:.3em;
+      img{
+        width: 100%;
+        height:100%;
+      }
+    }
+  }
+  .trash_button {
     padding: 0;
+    width: 1.3em;
+    height: 1.3em;
   }
-
-  .snmp__managers-wrap{
-    padding-bottom: 1em;
-    padding-top: 1em;
-    padding-left: 3em;
-    padding-right: 4em;
+  .edit_button {
+    padding: 0;
+    width: 1.3em;
+    height: 1.2em;
   }
-
+  .btn-add {
+    &:focus {
+      outline:0;
+    }
+    margin-top: 1em;
+    color: $primebtn__bg;
+    padding: 2em 0 3em 0;
+  }
   .snmp__submit-wrapper {
     width: 100%;
-    margin-top: 3em;
-    padding-top: 1em;
     border-top: 1px solid $medgrey;
     button {
       float: right;
       margin: .5em;
-    }
-  }
-  .snmp__manager-remove {
-    display:inline-block;
-    color: $medblue;
-    height: 2.1em;
-    opacity: 1;
-    &:hover {
-      cursor: pointer;
     }
   }
 }
