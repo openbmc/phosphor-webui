@@ -57,27 +57,18 @@ window.angular && (function(angular) {
       };
 
       $scope.setSNMP = function() {
+        if ($scope.snmp__form.$invalid) {
+          ngToast.danger(
+              'Settings cannot be saved until the error(s) on this page have been addressed.');
+          return;
+        }
         $scope.loading = true;
         var promises = [];
 
-        // Interate in reverse so can splice
+        // Iterate in reverse so can splice
         // https://stackoverflow.com/questions/9882284/looping-through-array-and-removing-items-without-breaking-for-loop
         var i = $scope.managers.length;
         while (i--) {
-          // Remove any SNMP Manager with an empty address and port
-          if (!$scope.managers[i].address && !$scope.managers[i].port) {
-            $scope.removeSNMPManager(i);
-            continue;
-          }
-
-          // Throw an error if only 1 of the fields is filled out
-          if (!$scope.managers[i].address || !$scope.managers[i].port) {
-            // TODO: Highlight the field that is empty
-            $scope.loading = false;
-            ngToast.danger('All fields are required.');
-            return;
-          }
-
           // If the manager does not have a 'path', it is a new manager
           // and needs to be created
           if (!$scope.managers[i].path) {
@@ -104,7 +95,7 @@ window.angular && (function(angular) {
         $q.all(promises)
             .then(
                 function() {
-                  ngToast.success('SNMP Managers set.');
+                  ngToast.success('SNMP settings have been saved.');
                 },
                 function(errors) {
                   ngToast.danger('Unable to set SNMP Managers.');
