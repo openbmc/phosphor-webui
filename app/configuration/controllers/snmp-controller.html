@@ -1,30 +1,45 @@
 <loader loading="loading"></loader>
 <div id="configuration-snmp">
-  <div class="row column">
-    <h1>SNMP settings</h1>
+  <h1>SNMP settings</h1>
+  <div class="page-header">
+    <h2 class="bold h4">Set the Simple Network Management Protocol (SNMP)</h2>
   </div>
-  <form class="snmp__form" role="form" action="">
-      <div class="page-header">
-        <h2 class="bold h4">Set the Simple Network Management Protocol (SNMP)</h2>
-      </div>
-      <fieldset>
-        <div class="row column snmp__managers-wrap">
-          <div class="snmp__managers" ng-repeat="manager in managers track by $index">
-            <div class="snmp__manager-field">
-              <label>SNMP Manager Server</label>
-              <input class="inline" id="snmp-manager{{$index+1}}-address" ng-change="manager.updateAddress = true" type="text" ng-model="manager.address" ng-blur="managers[$index].address = manager.address"/>
+  <div class="row column" ng-if="managers.length <1">
+    <p>No managers have been added yet.</p>
+  </div>
+  <form class="snmp__form" role="form" name="snmp__form" ng-class="{'submitted':submitted}" action="">
+    <div class="row column" ng-repeat="manager in managers track by $index">
+      <div class="small-12 large-8">
+        <div class="row column">
+          <div class="small-8 large-5">
+            <label for="snmp-manager{{$index+1}}-address">Manager host name or IP address</label>
+            <input id="snmp-manager{{$index+1}}-address" name="snmp-manager{{$index+1}}-address" ng-change="manager.updateAddress = true" type="text" ng-model="manager.address" ng-blur="managers[$index].address = manager.address" required/>
+            <div ng-messages="snmp__form['snmp-manager'+($index+1)+'-address'].$error" class="form-error" ng-class="{'visible' : snmp__form['snmp-manager'+($index+1)+'-address'].$touched || submitted}">
+              <p ng-message="required">Field is required</p>
             </div>
-            <div class="snmp__manager-field">
-              <label>Port</label>
-              <input class="inline" id="snmp-manager{{$index+1}}-port" type="text" ng-change="manager.updatePort = true" ng-model="manager.port" ng-blur="managers[$index].port = manager.port"/>
-            </div>
-          <button class="snmp__manager-remove" ng-click="removeSNMPManager($index)">Remove</button>
           </div>
-          <button type="button" class="btn-primary inline" ng-click="addNewSNMPManager()">Add SNMP manager</button>
+          <div class="small-8 large-offset-1 large-5">
+            <label for="snmp-manager{{$index+1}}-port">Port</label>
+            <input id="snmp-manager{{$index+1}}-port" name="snmp-manager{{$index+1}}-port" type="number" step="1" min="0" max="65535" ng-change="manager.updatePort = true" ng-model="manager.port" ng-blur="managers[$index].port = manager.port" required/>
+            <div ng-messages="snmp__form['snmp-manager'+($index+1)+'-port'].$error" class="form-error" ng-class="{'visible' : snmp__form['snmp-manager'+($index+1)+'-port'].$touched || submitted}">
+              <p ng-message="required">Field is required</p>
+              <p ng-message="min">Value must be a number between 0 and 65,535</p>
+              <p ng-message="max">Value must be a number between 0 and 65,535</p>
+              <p ng-message="number">Value must be a number between 0 and 65,535</p>
+              <p ng-message="step">Value must be a number between 0 and 65,535</p>
+            </div>
+          </div>
         </div>
-      </fieldset>
+      </div>
+      <div class="small-12 large-3 align-self-center">
+        <button type="button" class="snmp__manager-remove" ng-click="removeSNMPManager($index)">Remove</button>
+      </div>
+    </div>
+    <div class="row column">
+      <button class="btn-add" type="button" ng-click="addNewSNMPManager()"><img class="add__icon" src="../../assets/images/icon-plus.svg" alt=""/>Add manager</button>
+    </div>
     <div class="snmp__submit-wrapper">
-      <button type="button" class="btn-primary inline" ng-click="setSNMP()">Save settings</button>
+      <button type="button" class="btn-primary inline" ng-click="setSNMP(); submitted=true">Save settings</button>
       <button type="button" class="btn-secondary inline" ng-click="refresh()">Cancel</button>
     </div>
   </form>
