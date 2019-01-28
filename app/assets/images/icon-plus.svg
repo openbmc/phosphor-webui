@@ -1,13 +1,21 @@
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#FFFFFF;}
-	.st1{fill:#2d60e5;}
-</style>
-<g id="Layer_2">
-	<rect x="3.7" y="4" class="st0" width="8.4" height="8.1"/>
-</g>
-<g id="Layer_1">
-	<path class="st1" d="M8,0C3.6,0,0,3.6,0,8s3.6,8,8,8s8-3.6,8-8S12.4,0,8,0z M12,9H9v3H7V9H4V7h3V4h2v3h3V9z"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="19px" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+  <path d="M10.3189655,8.7447318 L13.822318,8.7447318 L13.822318,10.5464559 L10.3189655,10.5464559 L10.3189655,14.0498084 L8.51724138,14.0498084 L8.51724138,10.5464559 L5.01388889,10.5464559 L5.01388889,8.7447318 L8.51724138,8.7447318 L8.51724138,5.24137931 L10.3189655,5.24137931 L10.3189655,8.7447318 Z M9.5,19 C4.25329488,19 0,14.7467051 0,9.5 C0,4.25329488 4.25329488,0 9.5,0 C14.7467051,0 19,4.25329488 19,9.5 C19,14.7467051 14.7467051,19 9.5,19 Z M9.55533929,17.6650264 C14.0341958,17.6650264 17.6650264,14.0341958 17.6650264,9.55533929 C17.6650264,5.07648277 14.0341958,1.44565217 9.55533929,1.44565217 C5.07648277,1.44565217 1.44565217,5.07648277 1.44565217,9.55533929 C1.44565217,14.0341958 5.07648277,17.6650264 9.55533929,17.6650264 Z" id="path-1"></path>
+</defs>
+<g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+  <g id="Icon/Add" transform="translate(-6.000000, -6.000000)">
+    <g id="Icon" transform="translate(6.000000, 6.000000)">
+      <mask id="mask-2" fill="white">
+        <use xlink:href="#path-1"></use>
+      </mask>
+      <use id="Mask" fill="#2d60e5" fill-rule="nonzero" xlink:href="#path-1"></use>
+      <g id="Colors/Base/Blue50" mask="url(#mask-2)" fill="#3c6df0">
+        <g transform="translate(-3.275862, -3.931034)" id="Rectangle-6-Copy">
+          <rect x="0" y="0" width="25" height="25"></rect>
+        </g>
+      </g>
+    </g>
+  </g>
 </g>
 </svg>
