@@ -37,35 +37,15 @@ $title-minWidth: 210px;
   }
 }
 
-.sensor__title {
-  min-width: 28%;
-  margin-bottom: 0;
-}
-
-.sensor__reading {
-  width: 100%;
-  text-align: right;
-  margin-bottom: 0;
-  display: none;
-  @include mediaQuery(medium) {
-    display: inline-block;
-    width: auto;
-    min-width: calc(70% * (1 / 5) - 18px);
-  }
-}
-
-.sensor__readings-row {
-  width: 100%;
-  position: relative;
-  display: block;
+.sensor__table {
+  width: auto;
+  min-width: 60%;
   margin: 0;
   background: $white;
   text-decoration: none;
   border: 1px solid $medgrey;
   background: lighten($lightgrey,1%);
-  margin-top: 1em;
   @include mediaQuery(medium) {
-    padding: .3em 1em .3em 1.5em;
     margin-top: 0;
     border-top: 0;
     background: transparent;
@@ -73,81 +53,81 @@ $title-minWidth: 210px;
   .sensor__title {
     font-weight: 700;
     background: darken($lightgrey, 5%);
-    min-width: 100%;
-    padding: .8em;
+    min-width: 25%;
+    overflow: visible;
     @include mediaQuery(medium) {
-      min-width: 30%;
+      min-width: 25%;
       background: transparent;
-      padding: .5em .5em .5em 0;
-    }
-    .icon__normal {
-      width: 0;
     }
   }
-  .content-label {
-    font-size: 1em;
-    margin-left: .8em;
-    color: $darkgrey;
-  }
-  .sensor__reading {
-    @include fontCourierBold;
+  .sensor__reading,
+  .sensor__status {
     display: block;
-    padding: .3em .8em;
+    min-width: 15%;
+    overflow: visible;
     @include mediaQuery(medium) {
       display: inline-block;
-      padding: 0;
     }
   }
-  .sensor__current {
-    background: darken($thresh-normal, 3%);
-    margin: 0;
+  .sensor__threshold {
+    display: block;
+    overflow: visible;
     @include mediaQuery(medium) {
-      background: $thresh-normal;
-      padding: .7em .3em;
-      margin-left: 10px;
-      min-width: 109px;
-    }
-    @include mediaQuery(large) {
-      background: $thresh-normal;
-      padding: .7em;
-      margin-left: .3em;
-      margin-right: .3em;
-      min-width: 150px;
-    }
-    .sensor__label {
-      font-weight: 700;
-      @include mediaQuery(medium) {
-        font-weight:300;
-      }
+      display: inline-block;
     }
   }
-  .sensor__critical {
+  .sensor__Critical {
     background: $thresh-critical;
     color: $white;
     .content-label {
       color: $white;
     }
   }
-  .sensor__warn {
+  .sensor__Warning {
     background: $thresh-warning;
     color: $black;
     .content-label {
       color: $black;
     }
   }
-
+  .sensor__OK {
+    background: $thresh-normal;
+    color: $black;
+    .content-label {
+      color: $black;
+    }
+  }
 }
 
 // Sensors
-
 #sensors, #sensors-overview {
-
   .toggle-filter {
     margin-bottom: 20px;
   }
   .column, .columns {
     padding-left: 0px;
     padding-right: 0px;
+  }
+  .dropdown__button {
+    margin-bottom: 1.2em;
+  }
+  .dropdown__list {
+    margin-top: -17px;
+  }
+  .dropdown__button {
+    width: 25em;
+    margin-top: 0;
+    text-align: left;
+    border: 0.1em solid;
+  }
+  .dropdown__wrapper {
+    width: 25em;
+    margin-top: 0.4em;
+    text-align: left;
+  }
+  .select__filter {
+    margin-bottom: 20px;
+    margin-left: 15px;
   }
 }
 
