@@ -9,27 +9,27 @@
 window.angular && (function(angular) {
   'use strict';
   angular.module('app.overview').controller('sensorsOverviewController', [
-    '$scope', '$log', '$window', 'APIUtils', 'dataService', 'Constants',
-    function($scope, $log, $window, APIUtils, dataService, Constants) {
+    '$scope', '$q', '$window', 'APIUtils', 'dataService', 'Constants',
+    function($scope, $q, $window, APIUtils, dataService, Constants) {
       $scope.dataService = dataService;
 
-      $scope.dropdown_selected = false;
-
-      $scope.$log = $log;
+      $scope.loading = false;
+      $scope.componentList = [];
+      $scope.sensorsInfo = {};
+      $scope.selectedComponent = {};
+      $scope.showThresholds = true;  // TODO: add button to toggle this..
+      $scope.totalSensors = 0;
+      $scope.showCompDropdown = false;
       $scope.customSearch = '';
       $scope.searchTerms = [];
       $scope.messages = Constants.MESSAGES.SENSOR;
+      $scope.filteredVoltSensors = [];
+      $scope.filteredTempSensors = [];
+      $scope.filteredFanSensors = [];
+
       $scope.selectedSeverity =
-          {all: true, normal: false, warning: false, critical: false};
+          {all: true, ok: false, warning: false, critical: false};
       $scope.export_name = 'sensors.json';
-      $scope.loading = false;
-      $scope.jsonData = function(data) {
-        var dt = {};
-        data.data.forEach(function(item) {
-          dt[item.original_data.key] = item.original_data.value;
-        });
-        return JSON.stringify(dt);
-      };
 
       $scope.clear = function() {
         $scope.customSearch = '';
@@ -64,7 +64,7 @@ window.angular && (function(angular) {
         $scope.selectedSeverity.all = !$scope.selectedSeverity.all;
 
         if ($scope.selectedSeverity.all) {
-          $scope.selectedSeverity.normal = false;
+          $scope.selectedSeverity.ok = false;
           $scope.selectedSeverity.warning = false;
           $scope.selectedSeverity.critical = false;
         }
@@ -73,9 +73,9 @@ window.angular && (function(angular) {
       $scope.toggleSeverity = function(severity) {
         $scope.selectedSeverity[severity] = !$scope.selectedSeverity[severity];
 
-        if (['normal', 'warning', 'critical'].indexOf(severity) > -1) {
+        if (['ok', 'warning', 'critical'].indexOf(severity) > -1) {
           if ($scope.selectedSeverity[severity] == false &&
-              (!$scope.selectedSeverity.normal &&
+              (!$scope.selectedSeverity.ok &&
                !$scope.selectedSeverity.warning &&
                !$scope.selectedSeverity.critical)) {
             $scope.selectedSeverity.all = true;
@@ -83,10 +83,10 @@ window.angular && (function(angular) {
           }
         }
 
-        if ($scope.selectedSeverity.normal && $scope.selectedSeverity.warning &&
+        if ($scope.selectedSeverity.ok && $scope.selectedSeverity.warning &&
             $scope.selectedSeverity.critical) {
           $scope.selectedSeverity.all = true;
-          $scope.selectedSeverity.normal = false;
+          $scope.selectedSeverity.ok = false;
           $scope.selectedSeverity.warning = false;
           $scope.selectedSeverity.critical = false;
         } else {
@@ -98,34 +98,106 @@ window.angular && (function(angular) {
         if ($scope.selectedSeverity.all) return true;
 
         return (
-            (sensor.severity_flags.normal && $scope.selectedSeverity.normal) ||
-            (sensor.severity_flags.warning &&
+            ((sensor.Status.Health == 'OK') && $scope.selectedSeverity.ok) ||
+            ((sensor.Status.Health == 'Warning') &&
              $scope.selectedSeverity.warning) ||
-            (sensor.severity_flags.critical &&
+            ((sensor.Status.Health == 'Critical') &&
              $scope.selectedSeverity.critical));
       };
       $scope.filterBySearchTerms = function(sensor) {
         if (!$scope.searchTerms.length) return true;
 
         for (var i = 0, length = $scope.searchTerms.length; i < length; i++) {
-          if (sensor.search_text.indexOf($scope.searchTerms[i].toLowerCase()) ==
-              -1)
+          // TODO: Form it while getting data
+          var search_text = sensor.Name.toLowerCase();
+          if (search_text.indexOf($scope.searchTerms[i].toLowerCase()) == -1)
             return false;
         }
         return true;
       };
 
-      $scope.loadSensorData = function() {
+      $scope.selectComponent = function(index) {
         $scope.loading = true;
-        APIUtils.getAllSensorStatus(function(data, originalData) {
-          $scope.data = data;
-          $scope.originalData = originalData;
-          $scope.export_data = JSON.stringify(originalData);
+        $scope.totalSensors = 0;
+        $scope.showCompDropdown = false;
+        $scope.selectedComponent = $scope.componentList[index];
+        $q.all([
+            APIUtils
+                .getSensorsInfo($scope.selectedComponent.Thermal['@odata.id'])
+                .then(
+                    function(res) {
+                      $scope.sensorsInfo = res;
+                      if (res.hasOwnProperty('Temperatures')) {
+                        $scope.totalSensors += res.Temperatures.length;
+                      } else {
+                        $scope.sensorsInfo['Temperatures'] = [];
+                      }
+                      if (res.hasOwnProperty('Fans')) {
+                        $scope.totalSensors += res.Fans.length;
+                      } else {
+                        $scope.sensorsInfo['Fans'] = [];
+                      }
+                    },
+                    function(error) {
+                      console.log(JSON.stringify(error));
+                    }),
+            APIUtils.getSensorsInfo($scope.selectedComponent.Power['@odata.id'])
+                .then(
+                    function(res) {
+                      if (res.hasOwnProperty('Voltages')) {
+                        $scope.sensorsInfo['Voltages'] = res.Voltages;
+                        $scope.totalSensors += res.Voltages.length;
+                      } else {
+                        $scope.sensorsInfo['Voltages'] = [];
+                      }
+                    },
+                    function(error) {
+                      console.log(JSON.stringify(error));
+                    })
+          ]).finally(function() {
           $scope.loading = false;
         });
       };
 
-      $scope.loadSensorData();
+      $scope.loadSensorData = function() {
+        $scope.loading = true;
+        APIUtils.getAllChassisCollection()
+            .then(
+                function(res) {
+                  $scope.componentList = res;
+                  $scope.selectComponent(0);
+                },
+                function(error) {
+                  console.log(JSON.stringify(error));
+                })
+            .finally(function() {
+              $scope.loading = false;
+            });
+      };
+
+      if (dataService.configJson.redfishSupportEnabled == true) {
+        $scope.loadSensorData();
+      } else {
+        // Non-REDFISH: This will be removed in future.
+        // Hardcoded: REST API gets full sensors in single
+        // request(dbus). Component is hardcoded and full data
+        // is fetched at the begenning.
+        $scope.selectedComponent = {'Name': 'Chassis'};
+        $scope.componentList.push($scope.selectedComponent);
+
+        $scope.loading = true;
+        APIUtils.getAllSensorsInfo()
+            .then(
+                function(res) {
+                  $scope.sensorsInfo = res;
+                },
+                function(error) {
+                  console.log(JSON.stringify(error));
+                })
+            .finally(function() {
+              $scope.loading = false;
+            });
+      }
     }
   ]);
 })(angular);

@@ -1068,154 +1068,150 @@ window.angular && (function(angular) {
 
           return deferred.promise;
         },
-        getAllSensorStatus: function(callback) {
+        getSensorsInfo: function(url) {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + url,
+                   withCredentials: true
+                 })
+              .then(
+                  function(response) {
+                    return response.data;
+                  },
+                  function(error) {
+                    console.log(JSON.stringify(error));
+                  });
+        },
+        getAllChassisCollection: function() {
+          var deferred = $q.defer();
+          var promises = [];
           $http({
             method: 'GET',
-            url: DataService.getHost() +
-                '/xyz/openbmc_project/sensors/enumerate',
+            url: DataService.getHost() + '/redfish/v1/Chassis',
             withCredentials: true
           })
               .then(
                   function(response) {
+                    var members = response.data['Members'];
+                    angular.forEach(
+                        members,
+                        function(member) {
+                          promises.push($http({
+                                          method: 'GET',
+                                          url: DataService.getHost() +
+                                              member['@odata.id'],
+                                          withCredentials: true
+                                        }).then(function(res) {
+                            return res.data;
+                          }));
+                        }),
+                        $q.all(promises).then(
+                            function(results) {
+                              deferred.resolve(results);
+                            },
+                            function(errors) {
+                              deferred.reject(errors);
+                            });
+                  },
+                  function(error) {
+                    console.log(JSON.stringify(error));
+                  });
+          return deferred.promise;
+        },
+        getAllSensorsInfo: function(callback) {
+          return $http({
+                   method: 'GET',
+                   timeout: 2 * 60 * 1000,
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/sensors/enumerate',
+                   withCredentials: true
+                 })
+              .then(
+                  function(response) {
                     var json = JSON.stringify(response.data);
                     var content = JSON.parse(json);
-                    var dataClone = JSON.parse(JSON.stringify(content.data));
-                    var sensorData = [];
-                    var severity = {};
-                    var title = '';
-                    var tempKeyParts = [];
-                    var order = 0;
-                    var customOrder = 0;
+                    var sensorsInfo = {
+                      'Voltages': [],
+                      'Temperatures': [],
+                      'Fans': []
+                    };
 
-                    function getSensorStatus(reading) {
-                      var severityFlags = {
-                        critical: false,
-                        warning: false,
-                        normal: false
-                      },
-                          severityText = '', order = 0;
+                    function formatSensorData(name, type, inData) {
+                      var sensor = {'Status': []};
+                      sensor.Name = name.split('_')
+                                        .map(function(item) {
+                                          return item.toLowerCase()
+                                                     .charAt(0)
+                                                     .toUpperCase() +
+                                              item.slice(1);
+                                        })
+                                        .reduce(function(prev, el) {
+                                          return prev + ' ' + el;
+                                        });
 
-                      if (reading.hasOwnProperty('CriticalLow') &&
-                          reading.Value < reading.CriticalLow) {
-                        severityFlags.critical = true;
-                        severityText = 'critical';
-                        order = 2;
-                      } else if (
-                          reading.hasOwnProperty('CriticalHigh') &&
-                          reading.Value > reading.CriticalHigh) {
-                        severityFlags.critical = true;
-                        severityText = 'critical';
-                        order = 2;
-                      } else if (
-                          reading.hasOwnProperty('CriticalLow') &&
-                          reading.hasOwnProperty('WarningLow') &&
-                          reading.Value >= reading.CriticalLow &&
-                          reading.Value <= reading.WarningLow) {
-                        severityFlags.warning = true;
-                        severityText = 'warning';
-                        order = 1;
-                      } else if (
-                          reading.hasOwnProperty('WarningHigh') &&
-                          reading.hasOwnProperty('CriticalHigh') &&
-                          reading.Value >= reading.WarningHigh &&
-                          reading.Value <= reading.CriticalHigh) {
-                        severityFlags.warning = true;
-                        severityText = 'warning';
-                        order = 1;
-                      } else {
-                        severityFlags.normal = true;
-                        severityText = 'normal';
+                      if (type == 'temperature') {
+                        sensor['ReadingCelsius'] = inData.Value;
+                      } else if (type == 'voltage') {
+                        sensor['ReadingVolts'] = inData.Value;
+                      } else if (type == 'fan_tach') {
+                        sensor['Reading'] = inData.Value;
+                        sensor['ReadingUnits'] = 'RPM';
+                      } else if (type == 'fan_pwm') {
+                        sensor['Reading'] = inData.Value;
+                        sensor['ReadingUnits'] = 'percent';
                       }
-                      return {
-                        flags: severityFlags,
-                        severityText: severityText,
-                        order: order
-                      };
+
+                      if (inData.hasOwnProperty('CriticalLow')) {
+                        sensor['LowerThresholdCritical'] =
+                            inData['CriticalLow'];
+                      } else {
+                        sensor['LowerThresholdCritical'] = 'NA';
+                      }
+                      if (inData.hasOwnProperty('WarningLow')) {
+                        sensor['LowerThresholdNonCritical'] =
+                            inData['WarningLow'];
+                      } else {
+                        sensor['LowerThresholdNoniCritical'] = 'NA';
+                      }
+                      if (inData.hasOwnProperty('WarningHigh')) {
+                        sensor['UpperThresholdNonCritical'] =
+                            inData['WarningHigh'];
+                      } else {
+                        sensor['UpperThresholdNonCritical'] = 'NA';
+                      }
+                      if (inData.hasOwnProperty('CriticalHigh')) {
+                        sensor['UpperThresholdCritical'] =
+                            inData['CriticalHigh'];
+                      } else {
+                        sensor['UpperThresholdCritical'] = 'NA';
+                      }
+
+                      // TODO: Caliculate Health state..
+                      sensor.Status['Health'] = 'OK';
+                      return sensor;
                     }
 
                     for (var key in content.data) {
                       if (content.data.hasOwnProperty(key) &&
-                          content.data[key].hasOwnProperty('Unit')) {
-                        severity = getSensorStatus(content.data[key]);
-
-                        if (!content.data[key].hasOwnProperty('CriticalLow')) {
-                          content.data[key].CriticalLow = '--';
-                          content.data[key].CriticalHigh = '--';
+                          content.data[key].hasOwnProperty('Value')) {
+                        var keyParts = key.split('/');
+                        var name = keyParts.pop();
+                        var type = keyParts.pop();
+                        var val = content.data[key];
+                        if (type == 'temperature') {
+                          sensorsInfo.Temperatures.push(
+                              formatSensorData(name, type, val));
+                        } else if (type == 'voltage') {
+                          sensorsInfo.Voltages.push(
+                              formatSensorData(name, type, val));
+                        } else if (
+                            (type == 'fan_pwm') || (type == 'fan_tach')) {
+                          sensorsInfo.Fans.push(
+                              formatSensorData(name, type, val));
                         }
-
-                        if (!content.data[key].hasOwnProperty('WarningLow')) {
-                          content.data[key].WarningLow = '--';
-                          content.data[key].WarningHigh = '--';
-                        }
-
-                        tempKeyParts = key.split('/');
-                        title = tempKeyParts.pop();
-                        title = tempKeyParts.pop() + '_' + title;
-                        title = title.split('_')
-                                    .map(function(item) {
-                                      return item.toLowerCase()
-                                                 .charAt(0)
-                                                 .toUpperCase() +
-                                          item.slice(1);
-                                    })
-                                    .reduce(function(prev, el) {
-                                      return prev + ' ' + el;
-                                    });
-
-                        content.data[key].Value = getScaledValue(
-                            content.data[key].Value, content.data[key].Scale);
-                        content.data[key].CriticalLow = getScaledValue(
-                            content.data[key].CriticalLow,
-                            content.data[key].Scale);
-                        content.data[key].CriticalHigh = getScaledValue(
-                            content.data[key].CriticalHigh,
-                            content.data[key].Scale);
-                        content.data[key].WarningLow = getScaledValue(
-                            content.data[key].WarningLow,
-                            content.data[key].Scale);
-                        content.data[key].WarningHigh = getScaledValue(
-                            content.data[key].WarningHigh,
-                            content.data[key].Scale);
-                        if (Constants.SENSOR_SORT_ORDER.indexOf(
-                                content.data[key].Unit) > -1) {
-                          customOrder = Constants.SENSOR_SORT_ORDER.indexOf(
-                              content.data[key].Unit);
-                        } else {
-                          customOrder = Constants.SENSOR_SORT_ORDER_DEFAULT;
-                        }
-
-                        sensorData.push(Object.assign(
-                            {
-                              path: key,
-                              selected: false,
-                              confirm: false,
-                              copied: false,
-                              title: title,
-                              unit:
-                                  Constants
-                                      .SENSOR_UNIT_MAP[content.data[key].Unit],
-                              severity_flags: severity.flags,
-                              status: severity.severityText,
-                              order: severity.order,
-                              custom_order: customOrder,
-                              search_text:
-                                  (title + ' ' + content.data[key].Value + ' ' +
-                                   Constants.SENSOR_UNIT_MAP[content.data[key]
-                                                                 .Unit] +
-                                   ' ' + severity.severityText + ' ' +
-                                   content.data[key].CriticalLow + ' ' +
-                                   content.data[key].CriticalHigh + ' ' +
-                                   content.data[key].WarningLow + ' ' +
-                                   content.data[key].WarningHigh + ' ')
-                                      .toLowerCase(),
-                              original_data:
-                                  {key: key, value: content.data[key]}
-                            },
-                            content.data[key]));
                       }
                     }
-
-                    callback(sensorData, dataClone);
+                    return sensorsInfo;
                   },
                   function(error) {
                     console.log(error);
