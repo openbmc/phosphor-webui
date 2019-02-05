@@ -31,6 +31,7 @@ var config = require('../config.json');
 import services_index from './common/services/index.js';
 import constants from './common/services/constants.js';
 import dataService from './common/services/dataService.js';
+import toastService from './common/services/toastService.js';
 import api_utils from './common/services/api-utils.js';
 import userModel from './common/services/userModel.js';
 import apiInterceptor from './common/services/apiInterceptor.js';

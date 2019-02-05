@@ -11,10 +11,10 @@ window.angular && (function(angular) {
 
   angular.module('app.serverControl').controller('powerOperationsController', [
     '$scope', 'APIUtils', 'dataService', 'Constants', '$timeout', '$interval',
-    '$interpolate', '$q', 'ngToast',
+    '$interpolate', '$q', 'toastService',
     function(
         $scope, APIUtils, dataService, Constants, $timeout, $interval,
-        $interpolate, $q, ngToast) {
+        $interpolate, $q, toastService) {
       $scope.dataService = dataService;
       $scope.confirm = false;
       $scope.power_confirm = false;
@@ -64,7 +64,7 @@ window.angular && (function(angular) {
               $scope.loading = false;
             })
             .catch(function(error) {
-              ngToast.danger(Constants.MESSAGES.POWER_OP.POWER_ON_FAILED);
+              toastService.error(Constants.MESSAGES.POWER_OP.POWER_ON_FAILED);
               $scope.loading = false;
             });
       };
@@ -118,7 +118,8 @@ window.angular && (function(angular) {
               $scope.loading = false;
             })
             .catch(function(error) {
-              ngToast.danger(Constants.MESSAGES.POWER_OP.WARM_REBOOT_FAILED);
+              toastService.error(
+                  Constants.MESSAGES.POWER_OP.WARM_REBOOT_FAILED);
               $scope.loading = false;
             });
       };
@@ -161,7 +162,8 @@ window.angular && (function(angular) {
               $scope.loading = false;
             })
             .catch(function(error) {
-              ngToast.danger(Constants.MESSAGES.POWER_OP.COLD_REBOOT_FAILED);
+              toastService.error(
+                  Constants.MESSAGES.POWER_OP.COLD_REBOOT_FAILED);
               $scope.loading = false;
             });
       };
@@ -191,7 +193,7 @@ window.angular && (function(angular) {
               $scope.loading = false;
             })
             .catch(function(error) {
-              ngToast.danger(
+              toastService.error(
                   Constants.MESSAGES.POWER_OP.ORDERLY_SHUTDOWN_FAILED);
               $scope.loading = false;
             });
@@ -220,7 +222,7 @@ window.angular && (function(angular) {
               $scope.loading = false;
             })
             .catch(function(error) {
-              ngToast.danger(
+              toastService.error(
                   Constants.MESSAGES.POWER_OP.IMMEDIATE_SHUTDOWN_FAILED);
               $scope.loading = false;
             });

@@ -10,8 +10,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.configuration').controller('dateTimeController', [
-    '$scope', '$window', 'APIUtils', '$route', '$q', 'ngToast',
-    function($scope, $window, APIUtils, $route, $q, ngToast) {
+    '$scope', '$window', 'APIUtils', '$route', '$q', 'toastService',
+    function($scope, $window, APIUtils, $route, $q, toastService) {
       $scope.bmc = {};
       // Only used when the owner is "Split"
       $scope.host = {};
@@ -119,11 +119,11 @@ window.angular && (function(angular) {
               $q.all(manual_promises)
                   .then(
                       function() {
-                        ngToast.success('Date and time settings saved');
+                        toastService.success('Date and time settings saved');
                       },
                       function(errors) {
                         console.log(JSON.stringify(errors));
-                        ngToast.danger(
+                        toastService.error(
                             'Date and time settings could not be saved');
                       })
                   .finally(function() {
@@ -132,7 +132,7 @@ window.angular && (function(angular) {
             },
             function(errors) {
               console.log(JSON.stringify(errors));
-              ngToast.danger('Date and time settings could not be saved');
+              toastService.error('Date and time settings could not be saved');
               $scope.loading = false;
             });
       };

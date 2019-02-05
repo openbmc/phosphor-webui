@@ -15,14 +15,4 @@
     border-radius: 0;
     text-align: left;
   }
-  .alert-success::before {
-    content: "Success!";
-    display: block;
-    font-weight: bold;
-  }
-  .alert-danger::before {
-    content: "Error";
-    display: block;
-    font-weight: bold;
-  }
 }

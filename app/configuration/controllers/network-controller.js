@@ -11,9 +11,10 @@ window.angular && (function(angular) {
 
   angular.module('app.configuration').controller('networkController', [
     '$scope', '$window', 'APIUtils', 'dataService', '$timeout', '$route', '$q',
-    'ngToast',
+    'toastService',
     function(
-        $scope, $window, APIUtils, dataService, $timeout, $route, $q, ngToast) {
+        $scope, $window, APIUtils, dataService, $timeout, $route, $q,
+        toastService) {
       $scope.dataService = dataService;
       $scope.network = {};
       $scope.oldInterface = {};
@@ -98,7 +99,7 @@ window.angular && (function(angular) {
           for (var i in $scope.interface.ipv4.values) {
             if (!APIUtils.validIPV4IP(
                     $scope.interface.ipv4.values[i].Address)) {
-              ngToast.danger(
+              toastService.error(
                   $scope.interface.ipv4.values[i].Address +
                   ' invalid IP parameter');
               $scope.loading = false;
@@ -106,7 +107,7 @@ window.angular && (function(angular) {
             }
             if (!APIUtils.validIPV4IP(
                     $scope.interface.ipv4.values[i].Gateway)) {
-              ngToast.danger(
+              toastService.error(
                   $scope.interface.ipv4.values[i].Address +
                   ' invalid gateway parameter');
               $scope.loading = false;
@@ -114,7 +115,7 @@ window.angular && (function(angular) {
             }
             // The netmask prefix length will be undefined if outside range
             if (!$scope.interface.ipv4.values[i].PrefixLength) {
-              ngToast.danger(
+              toastService.error(
                   $scope.interface.ipv4.values[i].Address +
                   ' invalid Prefix Length parameter');
               $scope.loading = false;
@@ -152,12 +153,12 @@ window.angular && (function(angular) {
                 $timeout(function() {
                   loadNetworkInfo();
                   $scope.loading = false;
-                  ngToast.success('Network settings saved');
+                  toastService.success('Network settings saved');
                 }, 4000);
               },
               function(error) {
                 $scope.loading = false;
-                ngToast.danger('Network settings could not be saved');
+                toastService.error('Network settings could not be saved');
               })
         } else {
           $scope.loading = false;
