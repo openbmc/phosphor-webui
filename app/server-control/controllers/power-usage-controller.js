@@ -10,8 +10,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.serverControl').controller('powerUsageController', [
-    '$scope', '$window', 'APIUtils', '$route', '$q', 'ngToast',
-    function($scope, $window, APIUtils, $route, $q, ngToast) {
+    '$scope', '$window', 'APIUtils', '$route', '$q', 'toastService',
+    function($scope, $window, APIUtils, $route, $q, toastService) {
       $scope.power_consumption = '';
       $scope.power_cap = {};
       $scope.loading = false;
@@ -49,7 +49,8 @@ window.angular && (function(angular) {
       $scope.setPowerCap = function() {
         // The power cap value will be undefined if outside range
         if (!$scope.power_cap.PowerCap) {
-          ngToast.danger('Power cap value between 100 and 10,000 is required');
+          toastService.error(
+              'Power cap value between 100 and 10,000 is required');
           return;
         }
         $scope.loading = true;
@@ -61,10 +62,10 @@ window.angular && (function(angular) {
         $q.all(promises)
             .then(
                 function() {
-                  ngToast.success('Power cap settings saved');
+                  toastService.success('Power cap settings saved');
                 },
                 function(errors) {
-                  ngToast.danger('Power cap settings could not be saved');
+                  toastService.error('Power cap settings could not be saved');
                 })
             .finally(function() {
               $scope.loading = false;

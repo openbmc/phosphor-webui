@@ -12,10 +12,10 @@ window.angular && (function(angular) {
   angular.module('app.configuration').controller('firmwareController', [
     '$scope', '$window', 'APIUtils', 'dataService', '$location',
     '$anchorScroll', 'Constants', '$interval', '$q', '$timeout', '$interpolate',
-    'ngToast',
+    'toastService',
     function(
         $scope, $window, APIUtils, dataService, $location, $anchorScroll,
-        Constants, $interval, $q, $timeout, $interpolate, ngToast) {
+        Constants, $interval, $q, $timeout, $interpolate, toastService) {
       $scope.dataService = dataService;
 
       // Scroll to target anchor
@@ -96,7 +96,7 @@ window.angular && (function(angular) {
                 },
                 function(error) {
                   console.log(JSON.stringify(error));
-                  ngToast.danger('Unable to activate image');
+                  toastService.error('Unable to activate image');
                 })
             .then(function(activationState) {
               waitForActive($scope.activate_image_id)
@@ -106,7 +106,7 @@ window.angular && (function(angular) {
                       },
                       function(error) {
                         console.log(JSON.stringify(error));
-                        ngToast.danger('Unable to activate image');
+                        toastService.error('Unable to activate image');
                       })
                   .then(function(state) {
                     if ($scope.activate.reboot &&
@@ -126,7 +126,7 @@ window.angular && (function(angular) {
                             function(response) {},
                             function(error) {
                               console.log(JSON.stringify(error));
-                              ngToast.danger('Unable to reboot BMC');
+                              toastService.error('Unable to reboot BMC');
                             });
                       }, 10000);
                     }
@@ -156,7 +156,7 @@ window.angular && (function(angular) {
             })
             .catch(function(error) {
               console.log(JSON.stringify(error));
-              ngToast.danger(Constants.MESSAGES.POWER_OP.POWER_ON_FAILED);
+              toastService.error(Constants.MESSAGES.POWER_OP.POWER_ON_FAILED);
             });
       };
       function warmReboot() {
@@ -171,7 +171,8 @@ window.angular && (function(angular) {
             })
             .catch(function(error) {
               console.log(JSON.stringify(error));
-              ngToast.danger(Constants.MESSAGES.POWER_OP.WARM_REBOOT_FAILED);
+              toastService.error(
+                  Constants.MESSAGES.POWER_OP.WARM_REBOOT_FAILED);
             });
       };
       $scope.isServerOff = function() {
@@ -185,7 +186,7 @@ window.angular && (function(angular) {
               .then(
                   function(response) {
                     $scope.uploading = false;
-                    ngToast.success(
+                    toastService.success(
                         'Image file "' + $scope.file.name +
                         '" has been uploaded');
                     $scope.file = '';
@@ -194,7 +195,7 @@ window.angular && (function(angular) {
                   function(error) {
                     $scope.uploading = false;
                     console.log(error);
-                    ngToast.danger('Unable to upload image file');
+                    toastService.error('Unable to upload image file');
                   });
         }
       };
@@ -236,7 +237,8 @@ window.angular && (function(angular) {
 
       $scope.download = function() {
         if (!$scope.download_host || !$scope.download_filename) {
-          ngToast.danger('TFTP server IP address and file name are required!');
+          toastService.error(
+              'TFTP server IP address and file name are required!');
           return false;
         }
 
@@ -260,12 +262,12 @@ window.angular && (function(angular) {
                   $scope.download_host = '';
                   $scope.download_filename = '';
                   $scope.downloading = false;
-                  ngToast.success('Download complete');
+                  toastService.success('Download complete');
                   $scope.loadFirmwares();
                 },
                 function(error) {
                   console.log(error);
-                  ngToast.danger(
+                  toastService.error(
                       'Image file from TFTP server "' + $scope.download_host +
                       '" could not be downloaded');
                   $scope.downloading = false;
@@ -286,7 +288,7 @@ window.angular && (function(angular) {
             .then(function(response) {
               $scope.loading = false;
               if (response.status == 'error') {
-                ngToast.danger('Unable to update boot priority');
+                toastService.error('Unable to update boot priority');
               } else {
                 $scope.loadFirmwares();
               }
@@ -303,7 +305,7 @@ window.angular && (function(angular) {
         APIUtils.deleteImage($scope.delete_image_id).then(function(response) {
           $scope.loading = false;
           if (response.status == 'error') {
-            ngToast.danger('Unable to delete image');
+            toastService.error('Unable to delete image');
           } else {
             $scope.loadFirmwares();
           }
