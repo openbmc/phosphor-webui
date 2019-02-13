@@ -795,7 +795,7 @@ select[multiple] {
   margin-right: auto;
   margin-left: auto; }
 .row::before, .row::after {
-  display: table;
+  display: inline-block;
   content: ' '; }
 .row::after {
   clear: both; }
