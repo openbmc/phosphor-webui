@@ -2,7 +2,28 @@ import {Terminal} from 'xterm';
 import style from 'xterm/dist/xterm.css';
 import * as attach from 'xterm/lib/addons/attach/attach';
 import * as fit from 'xterm/lib/addons/fit/fit';
+var configJSON = require('../../../config.json');
 
+function measureChar(term) {
+  var span = document.createElement('span');
+  var fontFamily = 'courier-new';
+  var fontSize = 15;
+  var rect;
+
+  span.textContent = 'W';
+  try {
+    fontFamily = term.getOption('fontFamily');
+    fontSize = term.getOption('fontSize');
+  } catch (err) {
+    console.log('get option failure');
+  }
+  span.style.fontFamily = fontFamily;
+  span.style.fontSize = fontSize + 'px';
+  document.body.appendChild(span);
+  rect = span.getBoundingClientRect();
+  document.body.removeChild(span);
+  return rect;
+}
 
 window.angular && (function(angular) {
   'use strict';
@@ -24,8 +45,30 @@ window.angular && (function(angular) {
             Terminal.applyAddon(attach);  // Apply the `attach` addon
             Terminal.applyAddon(fit);     // Apply the `fit` addon
 
+            var border = 10;
             var term = new Terminal();
-            term.open(document.getElementById('terminal'));
+            var terminal = document.getElementById('terminal');
+            var customConsole;
+            var charSize;
+            var termContainer;
+
+            term.open(terminal);
+            customConsole = configJSON.customConsoleDisplaySize;
+
+            if (customConsole != null) {
+              charSize = measureChar(term);
+              termContainer = document.getElementById('term-container');
+              if (termContainer != null) {
+                if (customConsole.width) {
+                  termContainer.style.width =
+                      (charSize.width * customConsole.width + border) + 'px';
+                }
+                if (customConsole.height) {
+                  terminal.style.height =
+                      (charSize.height * customConsole.height + border) + 'px';
+                }
+              }
+            }
             term.fit();
             var SOL_THEME = {
               background: '#19273c',
