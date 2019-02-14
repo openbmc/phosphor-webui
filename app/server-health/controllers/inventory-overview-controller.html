@@ -1,57 +1,54 @@
 <loader loading="loading"></loader>
-<div class="inventory-overview">
-  <div class="row column no-padding">
+<div class="inventory__container">
+  <div class="row column">
     <h1>Hardware status</h1>
+  </div>
+  <div class="row column">
     <div class="page-header">
       <h2 class="inline h4">All hardware in the system</h2>
       <a ng-href="data:text/json;charset=utf-8,{{originalData}}" class="inline btn-export float-right"  download="export_inventory.json" ng-show="hardwares.length">Export</a>
-
     </div>
   </div>
-  <section class="row column">
-    <!-- search -->
+  <div class="row column">
     <p class="content-label" aria-label="hardware filter">Filter hardware components</p>
     <div class="content__search">
-      <label for="content__search-input">Search</label> <input id="content__search-input" type="text"
-        ng-model="customSearch" ng-keydown="doSearchOnEnter($event)"/>
+      <label for="content__search-input">Search</label>
+      <input id="content__search-input" type="text" ng-model="customSearch" ng-keydown="doSearchOnEnter($event)"/>
       <div class="search-submit__wrapper">
         <button class="clear-input" ng-click="clear()">&#10005;</button>
         <input id="content__search-submit" type="submit" class="btn btn-primary content__search-submit" value="Filter" ng-click="doSearchOnClick()"/>
       </div>
-
     </div>
-
-  </section>
-  <!-- end search -->
-  <section id="inventory-categories" class="row column">
-    <div class="row column header-row">
-      <div class="column large-12 header__actions-bar">
-        <div class="inline inventory__heading inventory__device-col">Hardware</div>
-        <div class="inline inventory__heading inventory__function-col">&nbsp;</div>
-        <div class="inline inventory__heading inventory__assoc-event"><!--Associated events--></div>
+  </div>
+  <div class="row column inventory__table">
+    <div class="small-12 hardware__header">
+      Hardware
+    </div>
+    <div class="small-12 harware__details" ng-repeat="inventory in hardwares|filter:filterBySearchTerms">
+      <div class="hardware__title row column" ng-class="{'expanded': inventory.expanded}" ng-click="inventory.expanded = ! inventory.expanded">
+        {{inventory.title}}
+        <button class="accord-trigger float-right" ng-class="{'active': inventory.expanded}"></button>
       </div>
-    </div>
-    <div ng-repeat="inventory in hardwares|filter:filterBySearchTerms" class="inventory__group"  ng-class="{'active': inventory.expanded}" ng-click="inventory.expanded = ! inventory.expanded">
-      <p class="inline inventory__device-col">{{inventory.title}}</p>
-      <p class="inline inventory__function-col"></p>
-      <p class="inline inventory__assoc-event"><!--<a href="#/server-health/event-log">View 3 events</a>--></p>
-      <button class="accord-trigger float-right" ng-class="{'active': inventory.expanded}"></button>
-      <div class="row inventory__metadata" ng-class="{'active': inventory.expanded}" ng-click="$event.stopPropagation()">
-        <div class="column large-9 no-padding">
-          <div  ng-repeat="item in inventory.items" class="inline inventory__metadata-block">
-            <p class="content-label">{{item.key}}</p>
-            <p class="courier-bold">{{item.value}}</p>
+      <div class="hardware__items" ng-hide="! inventory.expanded" ng-class="{'expanded': inventory.expanded}">
+        <div class="row column">
+          <div class="items small-12 show-scroll" ng-class="{'large-9': inventory.sub_components.length}">
+            <div class="row column">
+              <div ng-repeat="item in inventory.items" class="small-4">
+                <p class="content-label">{{item.key}}</p>
+                <p class="courier-bold">{{item.value}}</p>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="column large-3 no-padding" ng-show="inventory.sub_components.length">
-          <div class="inventory__metadata-scroll show-scroll"> <!-- If content overflows; add 'show-scroll' class via JS to force visible scrollbar in webkit browsers-->
-            <div class="content-label">Subcomponents</div>
-            <div ng-repeat="sub_component in inventory.sub_components" class="inline inventory__metadata-block" ng-if="sub_component.Present">
-              <p class="courier-bold">{{sub_component.title}}<span class="icon icon__warning" ng-if="!sub_component.Functional"></span></p>
+          <div class="subcomponents show-scroll small-12 large-3" ng-show="inventory.sub_components.length">
+            <div class="row column">
+              <div class="small-12"><p class="content-label">Subcomponents</p></div>
+              <div ng-repeat="sub_component in inventory.sub_components" class="large-6 small-3" ng-if="sub_component.Present">
+                <p class="courier-bold"><span class="icon icon__warning" ng-if="!sub_component.Functional"></span>{{sub_component.title}}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </div>
