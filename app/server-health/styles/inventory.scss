@@ -1,160 +1,63 @@
-@mixin col-label {
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: .8em;
-}
-
-$title-minWidth: 210px;
-
-.inventory__heading {
-  font-weight: 700;
-  padding: 1em 0;
-}
-
-// Inventory Overview
-.inventory-overview {
-  .inventory__group {
-    position: relative;
-    display: block;
-    margin: 0;
-    font-weight: 700;
-    background: $white;
-    padding: 1em 1em 0 1.5em;
-    text-decoration: none;
-    border-left: 1px solid $medgrey;
-    border-right: 1px solid $medgrey;
-    width: 100%;
-    border-bottom: 0;
-    vertical-align: middle;
-    @include fastTransition-all;
-    &:hover {
-      background: $lightblue;
-      color: $black;
-      cursor: pointer;
+.inventory__container {
+  .content__search {
+    margin-right: 0;
+  }
+  .inventory__table {
+    .hardware__header {
+      padding:1em 1.5em 1em 1.5em;
+      background: $darkblue;
+      font-weight: 700;
+      color: $white;
     }
-    &.active {
-      background: darken($lightgrey, 3%);
-      &:last-child {
+    .ng-hide {
+      height: 0;
+    }
+    .harware__details {
+       background: $lightblue;
+       border-left: 1px solid $medgrey;
+       border-right: 1px solid $medgrey;
+      .hardware__title {
+        position: relative;
+        display: block;
+        font-weight: 700;
+        text-transform: capitalize;
+        padding: 1em 1.5em 1em 1.5em;
         border-bottom: 1px solid $medgrey;
+        background-color: $white;
+        &:hover {
+          background: $lightblue;
+          cursor: pointer;
+        }
+        &.expanded {
+          background: $lightblue;
+        }
       }
-    }
-    .inv-active {
-      color: darken($active, 20%);
-    }
-    &.inv-disabled {
-      background: $medgrey;
-      .inventory__device-col,
-      .inventory__function-col {
-        color: lighten($darkgrey, 20%);
-      }
-      .accord-trigger {
-        display: none;
-      }
-      &:hover,
-      .accord-trigger:hover {
-        cursor: default;
-      }
-    }
-  }
-
-  // Header row
-  .header__actions-bar {
-    padding: 0 1em 0 1.5em;
-    .inventory__assoc-event {
-      padding-right: 1em;
-      &:hover {
-        cursor: pointer;
+      .hardware__items {
+        background: $lightgrey;
+        display: block;
+        overflow: hidden;
+        @include fastTransition-all;
+        &.expanded {
+          height: 100%;
+        }
+        .items {
+          max-height: 320px;
+          padding: 1em 1.5em 1em 1.5em;
+          overflow:auto;
+          overflow-wrap: break-word;
+        }
+        .subcomponents {
+          max-height: 320px;
+          padding: 1em 1.5em 1em 1.5em;
+          overflow: auto;
+          border-top:1px solid $medgrey;
+          @include mediaQuery(medium) {
+            border-top:0;
+            border-left:1px solid $medgrey;
+          }
+        }
       }
     }
   }
 }
-// Inventory items
-.inventory-overview {
-  .inventory__device-col {
-    margin-right: 6px;
-    width: 50%;
-    text-transform: capitalize;
-    @include mediaQuery(medium){
-      width: auto;
-    }
-  }
-
-  .inventory__function-col {
-      @include col-label;
-      color: $severity-medium-lightbg;
-      display: none;
-  }
-  .inventory__device-col,
-  .inventory__function-col {
-    @media (min-width: 1025px){
-      display: inline-block;
-      @include calcColumn-4(5px);
-    }
-  }
-
-  .inventory__metadata {
-    height: 0;
-    max-height: 0;
-    margin: 0 -1em 0 -1.5em;
-    border-top: 1px solid $medgrey;
-    position: relative;
-    overflow: hidden;
-    @include fastTransition-all;
-    &.active {
-      height: 100%;
-      max-height: 1000px;
-      border-bottom: 1px solid $medgrey;
-      background: $lightgrey;
-      padding-bottom: 1em;
-      @include fastTransition-all;
-    }
-    &:hover {
-      cursor: default;
-    }
-  }
-
-  .inventory__metadata-block {
-    min-width: 100%;
-    padding: .5em 1em .5em 1.5em;
-    @include mediaQuery(small) {
-      @include calcColumn-3;
-    }
-    .content-label {
-      color: $darkgrey;
-    }
-  }
-
-  .inventory__metadata-scroll {
-      position: relative;
-      height: 100%;
-      max-height: 200px;
-      overflow-y: scroll;
-      bottom: 0;
-      right:0;
-      width: 100%;
-      padding-top: 1em;
-      padding-left: 1.5em;
-      border-top: 1px solid $medgrey;
-    .inventory__metadata-block {
-      @include calcSplitColumn;
-      margin-bottom: .5em;
-      padding: 0;
-    }
-    @include mediaQuery(medium) {
-      position: absolute;
-      border-left: 1px solid $medgrey;
-      border-top: 0;
-      max-height: 500px;
-      padding: .5em 1em;
-      width: 30%;
-    }
-    .icon__warning {
-      margin-top: -5px;
-      margin-left: .3em;
-    }
-  }
-}
-
-//end inventory details
-
 
