@@ -3,7 +3,7 @@
     <div class="row column">
         <h1>Server power operations</h1>
         <div class="power__current-status page-header">
-            <h2 class="inline h4">Current status</h2>
+            <h2 class="inline">Current status</h2>
             <div class="power__status-log inline float-right">Last power operation at <span class="courier-bold">{{power_time | localeDate}}</span></div>
         </div>
     </div>
@@ -15,7 +15,7 @@
     </div>
     <div class="row column">
         <div class="row column">
-            <h3 class="h4 subhead">Select a power operation</h3>
+            <h3 class="subhead">Select a power operation</h3>
         </div>
         <span class="inactive-message" ng-show="dataService.server_state == 'Unreachable'">There are no power operations to display while a power operation is in progress. When complete, any new power operations will be displayed here.</span>
         <!-- Power on displays only when server is shutdown -->

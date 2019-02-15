@@ -2,7 +2,7 @@
 <div class="row column">
   <h1>Firmware</h1>
   <div class="column small-12 page-header">
-    <h2 class="inline h4">Manage BMC and server firmware</h2>
+    <h2 class="inline">Manage BMC and server firmware</h2>
   </div>
 </div>
 <div class="row column">
@@ -13,12 +13,12 @@
 <firmware-list title="Server images" version="hostActiveVersion" firmwares="firmwares" filter-by="filters.host"></firmware-list>
 <div class="row column" id="upload">
   <div class="column small-12 page-header">
-    <h2 class="inline h3 bold">Specify image file location</h2>
+    <h2 class="inline bold">Specify image file location</h2>
   </div>
   <form id="firmware__upload-form" role="form" class="firmware__upload-form">
     <p>Specify an image file located on your workstation or a TFTP server. An image file may contain firmware images for the server, BMC, or other hardware devices. Each image that you upload will be unpacked from the image file and added to the appropriate list above.</p>
     <div class=" column firmware__upload-station">
-      <h3 class="h4 bold">Upload image file from workstation</h3>
+      <h3>Upload image file from workstation</h3>
       <p>Select the image file saved on the workstation storage medium to upload to the server BMC.</p>
       <label for="file-upload" class="inline firmware__upload-chooser">
         <input id="file-upload" type="file" file="file" class="hide" onchange="angular.element(this).scope().fileNameChanged()"/>
@@ -29,7 +29,7 @@
       <div class="inline uploading" ng-show="uploading">Upload in progress...</div>
     </div>
     <div class=" column firmware__upload-tftp">
-      <h3 class="h4 bold">Download image file from TFTP server</h3>
+      <h3>Download image file from TFTP server</h3>
       <p>Specify both the TFTP server IP address and the image file name stored on it to download to the server BMC.</p>
       <fieldset>
         <div class="row">
@@ -58,7 +58,7 @@
     <div class="screen-reader-offscreen modal-description">Update image priority</div><!-- accessibility only; used for screen readers -->
     <div class="page-header ">
       <span class="icon icon__warning inline"><span class="accessible-text" role="alert">Warning</span></span>
-      <h1 class="modal-title h4 inline">Change image priority</h1>
+      <h3 class="modal-title inline">Change image priority</h3>
     </div>
     <div class="modal__content">
       <p>Change firmware {{priority_image_version}} priority?</p>
@@ -75,7 +75,7 @@
     <div class="screen-reader-offscreen modal-description">Delete firmware image</div><!-- accessibility only; used for screen readers -->
     <div class="page-header ">
       <span class="icon icon__warning inline"><span class="accessible-text" role="alert">Warning</span></span>
-      <h1 class="modal-title h4 inline">Delete image</h1>
+      <h3 class="modal-title inline">Delete image</h3>
     </div>
     <div class="modal__content">
       <p>Delete firmware {{delete_image_version}}?</p>
@@ -91,13 +91,13 @@
   <div class="modal__activate" role="document">
     <div class="screen-reader-offscreen modal-description">Activate modal</div><!-- accessibility only; used for screen readers -->
     <div class="page-header ">
-      <h1 class="modal-title h4"><span class="icon icon__info"><svg xmlns="http://www.w3.org/2000/svg"
+      <h3 class="modal-title"><span class="icon icon__info"><svg xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 32 32"><path
           d="M18 14h-6v2h1v6h-2v2h8v-2h-2z"/><circle cx="16" cy="10" r="2"/><path
           d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z"/></svg></span>
         <!-- We call "Host" firmware "server" firmware -->
         Confirm {{activate_image_type == 'Host' ? 'server' : activate_image_type}} firmware file activation
-      </h1>
+      </h3>
     </div>
     <div class="modal__content">
       <div ng-switch on="activate_image_type">

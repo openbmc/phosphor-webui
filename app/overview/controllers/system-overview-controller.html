@@ -9,7 +9,7 @@
       <!-- Server Metadata -->
       <div class="row overview__server-metadata">
         <div class="column large-4">
-          <h3 class="bold h4">Server information</h3>
+          <h3>Server information</h3>
         </div>
         <div class="column large-8">
           <ul class="overview__metadata-wrapper">
@@ -35,7 +35,7 @@
       <!-- BMC Metadata -->
       <div class="row overview__server-metadata">
         <div class="column large-4">
-          <h3 class="bold h4">BMC information</h3>
+          <h3>BMC information</h3>
         </div>
         <div class="column large-8">
           <ul class="overview__metadata-wrapper">
@@ -61,7 +61,7 @@
       <!-- Power metadata -->
       <div class="row overview__server-metadata">
         <div class="column large-4">
-          <h3 class="bold h4">Power information</h3>
+          <h3>Power information</h3>
         </div>
         <div class="column large-8">
           <ul class="overview__metadata-wrapper">
@@ -113,7 +113,7 @@
   <section class="row">
     <div class="column large-12 overview__event-log event-log__events" ng-show="logs.length">
       <div class="page-header">
-        <h3 class="bold h4 inline">High priority events ({{logs.length}})</h3>
+        <h3>High priority events ({{logs.length}})</h3>
         <a href="#/server-health/event-log/" class="inline float-right">View all event logs</a>
       </div>
 
@@ -140,7 +140,7 @@
 
     <div class="row column overview__event-log event-log__events" ng-show="!logs.length">
       <div class="page-header">
-        <h3 class="bold h4">High priority events (0)</h3>
+        <h3>High priority events (0)</h3>
       </div>
       <p>There are no high priority events to display at this time.</p>
     </div>
@@ -151,12 +151,12 @@
   <div class="modal__upload" role="document">
     <div class="screen-reader-offscreen modal-description">Edit hostname</div><!-- accessibility only; used for screen readers -->
     <div class="page-header ">
-      <h1 class="modal-title h4"><span class="icon icon__info"><svg xmlns="http://www.w3.org/2000/svg"
+      <h3 class="modal-title"><span class="icon icon__info"><svg xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 32 32"><path
           d="M18 14h-6v2h1v6h-2v2h8v-2h-2z"/><circle cx="16" cy="10" r="2"/><path
           d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z"/></svg></span>
         Edit hostname
-      </h1>
+      </h3>
     </div>
     <div class="modal__content">
       <p>The hostname is displayed in the header and can contain any characters up to a total of 64</p>
