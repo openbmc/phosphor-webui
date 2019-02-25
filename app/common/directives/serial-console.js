@@ -2,7 +2,18 @@ import {Terminal} from 'xterm';
 import style from 'xterm/dist/xterm.css';
 import * as attach from 'xterm/lib/addons/attach/attach';
 import * as fit from 'xterm/lib/addons/fit/fit';
+var configJSON = require('../../../config.json');
+var EscapeSequences = require('xterm/lib/common/data/EscapeSequences');
+if (configJSON.keyType == 'VT100+') {
+  var vt100PlusKey = require('./vt100plus');
+}
 
+var customKeyHandlers = function(ev) {
+  if (configJSON.keyType == 'VT100+') {
+    return vt100PlusKey.customVT100PlusKey(ev, this);
+  }
+  return true;
+};
 
 window.angular && (function(angular) {
   'use strict';
@@ -27,6 +38,9 @@ window.angular && (function(angular) {
             var term = new Terminal();
             term.open(document.getElementById('terminal'));
             term.fit();
+            if (configJSON.customKeyEnable == true) {
+              term.attachCustomKeyEventHandler(customKeyHandlers);
+            }
             var SOL_THEME = {
               background: '#19273c',
               cursor: 'rgba(83, 146, 255, .5)',
