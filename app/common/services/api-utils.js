@@ -1605,6 +1605,13 @@ window.angular && (function(angular) {
                 data = camelcaseToLabel(content.data[key]);
                 searchText = getSearchText(data);
                 title = key.split('/').pop();
+                // All and only associations have the property "endpoints".
+                // We don't want to show associations on the hardware page.
+                // Example: An association from the BMC inventory item to the
+                // BMC firmware images.
+                if (content.data[key].hasOwnProperty('endpoints')) {
+                  continue;
+                }
 
                 title = titlelize(title);
                 // e.g. /xyz/openbmc_project/inventory/system and
