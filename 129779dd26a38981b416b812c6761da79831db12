@@ -1,0 +1,9 @@
+Ok-To-Test+1: Jenkins <openbmc-ci-admin@ozlabs.org>
+Verified+1: Jenkins <openbmc-ci-admin@ozlabs.org>
+Code-Review+1: Derick Montague <derick.montague@ibm.com>
+Code-Review+2: Gunnar Mills <gmills@us.ibm.com>
+Submitted-by: Gunnar Mills <gmills@us.ibm.com>
+Submitted-at: Fri, 01 Mar 2019 22:13:44 +0000
+Reviewed-on: https://gerrit.openbmc-project.xyz/18412
+Project: openbmc/phosphor-webui
+Branch: refs/heads/master
