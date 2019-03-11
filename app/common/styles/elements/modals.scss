@@ -19,16 +19,18 @@
 }
 
 .modal {
-  width:50%;
+  width:auto;
+  height: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
   max-width: 850px;
-  margin: .5em auto;
+  min-width: 450px;
   padding: .8em 1.5em;
   border: thin #000 solid;
   background-color:#fff;
   z-index:101;
   position:fixed;
-  top:-100%;
-  left:25%;
   overflow: hidden;
   @include fastTransition-all;
   @include mediaQuery(medium) {
@@ -37,7 +39,6 @@
 }
 
 .modal.active{
-  top: 25%;
   @include fastTransition-all;
   display: block;
 }
