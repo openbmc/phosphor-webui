@@ -13,9 +13,6 @@ $title-minWidth: 210px;
   .sensor__title {
     margin-left: 1.5em;
   }
-  .sensor__reading {
-    margin-right: .2em;
-  }
   .sensor__heading-current {
     padding-right: 1em;
   }
@@ -26,14 +23,6 @@ $title-minWidth: 210px;
   @include mediaQuery(medium) {
     margin-left: 10px;
     margin-right: 10px;
-  }
-}
-
-.sensor__label {
-  float: left;
-  font-weight: 300;
-  @include mediaQuery(medium) {
-    display: none;
   }
 }
 
@@ -50,32 +39,74 @@ $title-minWidth: 210px;
     border-top: 0;
     background: transparent;
   }
-  .sensor__title {
+
+  .sensor__name {
+    padding:1em 1em;
+    border-bottom: 1px solid $medgrey;
+    width: 100%;
     font-weight: 700;
     background: darken($lightgrey, 5%);
-    min-width: 25%;
-    overflow: visible;
-    @include mediaQuery(medium) {
-      min-width: 25%;
+    &.header {
       background: transparent;
     }
+    @include mediaQuery(medium) {
+      background: transparent;
+      width: 20%;
+    }
   }
-  .sensor__reading,
+  .sensor__table__head {
+    width: 100%;
+    .table__row {
+      font-weight: 700;
+      border-bottom: 1px solid $medgrey;
+      background-color: $darkbg__primary;
+      color: $white;
+    }
+  }
   .sensor__status {
-    display: block;
-    min-width: 15%;
-    overflow: visible;
+    padding:.5em 1em;
+    width: 100%;
+    &.header {
+      padding:1em 1em;
+      padding-left: 0;
+      display: none;
+      @include mediaQuery(medium) {
+        width: 10%;
+        display: block;
+      }
+    }
     @include mediaQuery(medium) {
-      display: inline-block;
+      width: 10%;
+      border-bottom: 1px solid $medgrey;
+      padding:1em 1em;
     }
   }
-  .sensor__threshold {
-    display: block;
-    overflow: visible;
-    @include mediaQuery(medium) {
-      display: inline-block;
+  .sensor__value {
+    padding:.5em 1em;
+    width: 100%;
+    background: lighten($lightgrey,1%);
+      @include mediaQuery(medium) {
+        text-align: right;
+        width: 14%;
+        padding:1em 1em;
+        background: transparent;
+        border-bottom: 1px solid $medgrey;
+      }
+    &.header {
+      display: none;
+      @include mediaQuery(medium) {
+        display: block;
+      }
     }
   }
+  .sensor__label {
+    float: left;
+    width: 50%;
+    @include mediaQuery(medium) {
+      display: none;
+    }
+  }
+
   .sensor__Critical {
     background: $thresh-critical;
     color: $white;
