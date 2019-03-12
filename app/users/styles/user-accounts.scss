@@ -19,6 +19,11 @@ $userInputHeight: 40px;
     }
   }
 }
+.acnt-prop-header {
+  width: 100%;
+  border-bottom: 2px solid #b8c1c1;
+  margin: 0px 0px 15px;
+}
 .user-manage__form {
   width: 100%;
   .dropdown__button {
@@ -51,6 +56,28 @@ $userInputHeight: 40px;
     input {
       padding-right: 60px;
     }
+  }
+  .acnt-prop-text {
+    display: inline-block;
+    height: 30px;
+    width: 60px;
+    margin-right: 10px;
+  }
+  .acnt-prop-label {
+    display: inline-block;
+    height: 30px;
+    width: 300px;
+    margin-right: 10px;
+    text-transform: none;
+    font-size: 15px;
+    margin-bottom: 15px;
+  }
+  .save-button {
+    float:right;
+    margin: 10px 0 5px;
+  }
+  .save-div {
+    border-top: 1px solid #b8c1c1;
   }
   .password-toggle {
     position: absolute;
