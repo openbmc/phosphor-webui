@@ -57,48 +57,54 @@
     <span ng-if="selectedSeverity.warning">{{messages.WARNING_NO_SENSOR_DATA}}</span>
     <span ng-if="selectedSeverity.ok">{{messages.NORMAL_NO_SENSOR_DATA}}</span>
   </section>
+
+
+
   <section id="sensor-categories" class="table row column" ng-hide="(filteredVoltSensors.length + filteredTempSensors.length + filteredFanSensors.length) == 0">
       <div class="table row column sensor__table" ng-hide="loading">
         <div class="table__head fixed-table-header">
           <div class="table__row">
-            <div class="table__cell sensor__title">Name</div>
-            <div class="table__cell sensor__status">Status</div>
-            <div class="table__cell sensor__threshold" ng-show="showThresholds">LC</div>
-            <div class="table__cell sensor__threshold" ng-show="showThresholds">LW</div>
-            <div class="table__cell sensor__reading">Reading</div>
-            <div class="table__cell sensor__threshold" ng-show="showThresholds">HW</div>
-            <div class="table__cell sensor__threshold" ng-show="showThresholds">HC</div>
+            <div class="sensor__name header">Sensors</div>
+            <div class="sensor__status header">Status</div>
+            <div class="sensor__value header" ng-show="showThresholds">Low Critical</div>
+            <div class="sensor__value header" ng-show="showThresholds">Low Warning</div>
+            <div class="sensor__value header">Reading</div>
+            <div class="sensor__value header" ng-show="showThresholds">High Warning</div>
+            <div class="sensor__value header" ng-show="showThresholds">High Critical</div>
           </div>
         </div>
         <div class="table__body">
           <div class="table__row" ng-repeat="sensor in (filteredVoltSensors = (sensorsInfo.Voltages | filter:filterBySearchTerms | filter:filterBySeverity))">
-            <div class="table__cell sensor__title">{{sensor.Name}}</div>
-            <div class="table__cell sensor__status sensor__{{sensor.Status.Health}}">{{sensor.Status.Health}}</div>
-            <div class="table__cell sensor__threshold" ng-show="showThresholds">{{sensor.LowerThresholdCritical | number:2}} Volts</div>
-            <div class="table__cell sensor__threshold" ng-show="showThresholds">{{sensor.LowerThresholdNonCritical | number:2}} Volts</div>
-            <div class="table__cell sensor__reading">{{sensor.ReadingVolts | number:2}} Volts</div>
-            <div class="table__cell sensor__threshold" ng-show="showThresholds">{{sensor.UpperThresholdNonCritical | number:2}} Volts</div>
-            <div class="table__cell sensor__threshold" ng-show="showThresholds">{{sensor.UpperThresholdCritical | number:2}} Volts</div>
+            <div class="sensor__name">{{sensor.Name}}</div>
+            <div class="sensor__status sensor__{{sensor.Status.Health}}"><span class="sensor__label">Status</span>{{sensor.Status.Health}}</div>
+            <div class="sensor__value" ng-show="showThresholds"><span class="sensor__label">Low Critical</span>{{sensor.LowerThresholdCritical | number:2}} Volts</div>
+            <div class="sensor__value" ng-show="showThresholds"><span class="sensor__label">Low Warning</span>{{sensor.LowerThresholdNonCritical | number:2}} Volts</div>
+            <div class="sensor__value"><span class="sensor__label">Reading</span>{{sensor.ReadingVolts | number:2}} Volts</div>
+            <div class="sensor__value" ng-show="showThresholds"><span class="sensor__label">High Warning</span>{{sensor.UpperThresholdNonCritical | number:2}} Volts</div>
+            <div class="sensor__value" ng-show="showThresholds"><span class="sensor__label">High Critical</span>{{sensor.UpperThresholdCritical | number:2}} Volts</div>
           </div>
           <div class="table__row" ng-repeat="sensor in (filteredTempSensors = (sensorsInfo.Temperatures | filter:filterBySearchTerms | filter:filterBySeverity))">
-            <div class="table__cell sensor__title">{{sensor.Name}}</div>
-            <div class="table__cell sensor__status sensor__{{sensor.Status.Health}}">{{sensor.Status.Health}}</div>
-            <div class="table__cell sensor__threshold" ng-show="showThresholds">{{sensor.LowerThresholdCritical | number:2}} &deg;C</div>
-            <div class="table__cell sensor__threshold" ng-show="showThresholds">{{sensor.LowerThresholdNonCritical | number:2}} &deg;C</div>
-            <div class="table__cell sensor__reading">{{sensor.ReadingCelsius | number:2}} &deg;C</div>
-            <div class="table__cell sensor__threshold" ng-show="showThresholds">{{sensor.UpperThresholdNonCritical | number:2}} &deg;C</div>
-            <div class="table__cell sensor__threshold" ng-show="showThresholds">{{sensor.UpperThresholdCritical | number:2}} &deg;C</div>
+            <div class="sensor__name">{{sensor.Name}}</div>
+            <div class="sensor__status sensor__{{sensor.Status.Health}}"><span class="sensor__label">Status</span>{{sensor.Status.Health}}</div>
+            <div class="sensor__value" ng-show="showThresholds"><span class="sensor__label">Low Critical</span>{{sensor.LowerThresholdCritical | number:2}} &deg;C</div>
+            <div class="sensor__value" ng-show="showThresholds"><span class="sensor__label">Low Warning</span>{{sensor.LowerThresholdNonCritical | number:2}} &deg;C</div>
+            <div class="sensor__value"><span class="sensor__label">Reading</span>{{sensor.ReadingCelsius | number:2}} &deg;C</div>
+            <div class="sensor__value" ng-show="showThresholds"><span class="sensor__label">High Warning</span>{{sensor.UpperThresholdNonCritical | number:2}} &deg;C</div>
+            <div class="sensor__value" ng-show="showThresholds"><span class="sensor__label">High Critical</span>{{sensor.UpperThresholdCritical | number:2}} &deg;C</div>
           </div>
           <div class="table__row" ng-repeat="sensor in (filteredFanSensors = (sensorsInfo.Fans | filter:filterBySearchTerms | filter:filterBySeverity))">
-            <div class="table__cell sensor__title">{{sensor.Name}}</div>
-            <div class="table__cell sensor__status sensor__{{sensor.Status.Health}}">{{sensor.Status.Health}}</div>
-            <div class="table__cell sensor__threshold" ng-show="showThresholds">{{sensor.LowerThresholdCritical | number:2}} {{sensor.ReadingUnits}}</div>
-            <div class="table__cell sensor__threshold" ng-show="showThresholds">{{sensor.LowerThresholdNonCritical | number:2}} {{sensor.ReadingUnits}}</div>
-            <div class="table__cell sensor__reading">{{sensor.Reading | number:2}} {{sensor.ReadingUnits}}</div>
-            <div class="table__cell sensor__threshold" ng-show="showThresholds">NA</div>
-            <div class="table__cell sensor__threshold" ng-show="showThresholds">NA</div>
+            <div class="sensor__name"><span class="sensor__label">Low critical</span>{{sensor.Name}}</div>
+            <div class="sensor__status sensor__{{sensor.Status.Health}}"><span class="sensor__label">Status</span>{{sensor.Status.Health}}</div>
+            <div class="sensor__value" ng-show="showThresholds"><span class="sensor__label">Low critical</span>{{sensor.LowerThresholdCritical | number:2}} {{sensor.ReadingUnits}}</div>
+            <div class="sensor__value" ng-show="showThresholds"><span class="sensor__label">Low Warning</span>{{sensor.LowerThresholdNonCritical | number:2}} {{sensor.ReadingUnits}}</div>
+            <div class="sensor__value"><span class="sensor__label">Reading</span>{{sensor.Reading | number:2}} {{sensor.ReadingUnits}}</div>
+            <div class="sensor__value" ng-show="showThresholds"><span class="sensor__label">High Warning</span>NA</div>
+            <div class="sensor__value" ng-show="showThresholds"><span class="sensor__label">High Critical</span>NA</div>
           </div>
         </div>
       </div>
   </section>
+
+
+
 </div>
