@@ -637,6 +637,41 @@ window.angular && (function(angular) {
           }
           return deferred.promise;
         },
+
+        getAllUserAccountProperties: function(callback) {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + '/redfish/v1/AccountService',
+                   withCredentials: true
+                 })
+              .then(
+                  function(response) {
+                    return response.data;
+                  },
+                  function(error) {
+                    console.log(error);
+                  });
+        },
+
+        saveUserAccountProperties: function(lockoutduration, lockoutthreshold) {
+          var data = {};
+          if (lockoutduration != undefined) {
+            data['AccountLockoutDuration'] = lockoutduration;
+          }
+          if (lockoutthreshold != undefined) {
+            data['AccountLockoutThreshold'] = lockoutthreshold;
+          }
+
+          return $http({
+            method: 'PATCH',
+            url: DataService.getHost() + '/redfish/v1/AccountService',
+            withCredentials: true,
+            data: data
+          });
+        },
+
+
+
         createUser: function(user, passwd, role, enabled) {
           if (DataService.configJson.redfishSupportEnabled == true) {
             var data = {};

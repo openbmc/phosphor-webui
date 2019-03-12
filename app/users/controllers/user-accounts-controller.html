@@ -1,5 +1,34 @@
 <loader loading="loading"></loader>
 <div id="user-accounts">
+
+  <div class="row column acnt-prop-header">
+    <h1>User account properties</h1>
+  </div>
+
+  <div class="col-sm-12">
+    <form class="row column user-manage__form">
+      <div class="col-sm-12">
+        <label class="acnt-prop-label"> User Lockout Time (sec) </label>
+	<input type="number" class="acnt-prop-text" id="lockoutTime" min="30" max="600" ng-model="properties.AccountLockoutDuration"/>
+      </div>
+      <div class="col-sm-12">
+         <label class="acnt-prop-label"> Failed Login Attempts </label>
+	 <input type="number" class="acnt-prop-text" id="lockoutThreshold" min="3" max="10" ng-model="properties.AccountLockoutThreshold"/>
+      </div>
+      <div class= "col-sm-12">
+        <label class="acnt-prop-label"> Max Password Length </label>
+        <span class="acnt-prop-text">{{properties.MaxPasswordLength}}</span>
+      </div>
+      <div class="col-sm-12">
+        <label class="acnt-prop-label"> Min Password Length </label>
+        <span class="acnt-prop-text">{{properties.MinPasswordLength}}</span>
+      </div>
+      <div class="col-sm-12 save-div" >
+          <button type="button" class="btn-primary inline save-button" ng-click="saveAllValues()"> Save Settings </button>
+      </div>
+    </form>
+  </div>
+
   <div class="row column">
     <h1>User account information</h1>
   </div>

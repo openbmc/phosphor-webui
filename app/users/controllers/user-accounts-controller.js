@@ -17,6 +17,8 @@ window.angular && (function(angular) {
       $scope.state = 'none';
       $scope.outMsg = '';
       $scope.loading = true;
+      $scope.properties = {};
+      $scope.origProp = {};
 
       function loadUserInfo() {
         $scope.loading = true;
@@ -33,6 +35,16 @@ window.angular && (function(angular) {
                 function(error) {
                   console.log(JSON.stringify(error));
                 }),
+
+            APIUtils.getAllUserAccountProperties().then(
+                function(res) {
+                  $scope.properties = res;
+                  $scope.origProp = angular.copy($scope.properties);
+                },
+                function(error) {
+                  console.log(JSON.stringify(error));
+                }),
+
             APIUtils.getAccountServiceRoles().then(
                 function(res) {
                   $scope.roles = res;
@@ -50,6 +62,50 @@ window.angular && (function(angular) {
         $scope.outMsg = '';
         loadUserInfo();
       };
+
+      $scope.saveAllValues = function() {
+        $scope.state = 'none';
+        $scope.outMsg = '';
+        $scope.loading = true;
+        var data = {};
+        if ($scope.properties.AccountLockoutDuration !=
+            $scope.origProp.AccountLockoutDuration) {
+          data['AccountLockoutDuration'] =
+              $scope.properties.AccountLockoutDuration;
+        }
+        if ($scope.properties.AccountLockoutThreshold !=
+            $scope.origProp.AccountLockoutThreshold) {
+          data['AccountLockoutThreshold'] =
+              $scope.properties.AccountLockoutThreshold;
+        }
+
+        if ($scope.properties.AccountLockoutDuration ==
+                $scope.origProp.AccountLockoutDuration &&
+            $scope.properties.AccountLockoutThreshold ==
+                $scope.origProp.AccountLockoutThreshold) {
+          // No change in properties, just return;
+          $scope.loading = false;
+          return;
+        }
+
+        APIUtils
+            .saveUserAccountProperties(
+                data['AccountLockoutDuration'], data['AccountLockoutThreshold'])
+            .then(
+                function(response) {
+                  $scope.state = 'success';
+                  $scope.outMsg =
+                      'User account properties has been updated successfully';
+                },
+                function(error) {
+                  $scope.outMsg = 'Account Properties Updation failed.';
+                })
+            .finally(function() {
+              loadUserInfo();
+              $scope.loading = false;
+            });
+      };
+
       $scope.setSelectedUser = function(user) {
         $scope.state = 'none';
         $scope.outMsg = '';
