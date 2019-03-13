@@ -29,7 +29,7 @@
     <div id="event__actions-bar" class="row header__actions-bar no-margin">
       <div class="column small-1 large-1 event-log__col-check">
         <label class="control-check">
-          <input type="checkbox" name="events__check-all" ng-model="all" ng-checked="((filteredLogs|filter:{selected: true}).length == filteredLogs.length) && filteredLogs.length != 0"/>
+          <input type="checkbox" name="events__check-all" ng-disabled="filteredLogs.length === 0" ng-model="all" ng-checked="((filteredLogs|filter:{selected: true}).length == filteredLogs.length) && filteredLogs.length != 0"/>
           <span class="control__indicator"></span>
         </label>
       </div>
@@ -59,6 +59,7 @@
         </div>
       </div>
     </div>
+    <div class="empty__logs" ng-if="filteredLogs.length === 0">{{filteredLogs.length === logs.length ? 'No events have been logged yet.' : 'There are no events that match the selected criteria.'}}</div>
     <log-event
       dir-paginate="event in (filteredLogs = (logs|filter:filterBySeverity|filter:filterByStatus|filter:filterByDate|filter:filterBySearchTerms | orderBy:'-Id'))| itemsPerPage: itemsPerPage"
       event="event"

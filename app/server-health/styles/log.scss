@@ -96,6 +96,12 @@
     display: inline-block;
   }
 }
+.empty__logs{
+  border: 1px solid $lightbg__grey;
+  margin-top: .5em;
+  text-align: center;
+  padding: 2em;
+}
 
 .accord-trigger {
   position: absolute;
