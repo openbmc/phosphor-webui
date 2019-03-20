@@ -147,6 +147,16 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        getVmDevices: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + '/vm/0',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         pollHostStatusTillOn: function() {
           var deferred = $q.defer();
           var hostOnTimeout = setTimeout(function() {
