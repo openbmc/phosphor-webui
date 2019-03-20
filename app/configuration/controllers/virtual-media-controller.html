@@ -1,0 +1,39 @@
+<loader loading="loading"></loader>
+<div id="virtual__media__container">
+  <h1>Virtual media</h1>
+  <div class="column small-12 page-header">
+    <p>Specify image file location to start session.</p>
+  </div>
+  <div class="row column" ng-if="devices.length < 1">
+    There are no Virtual Media devices available.
+  </div>
+  <div ng-repeat="device in devices track by $index" class="row column">
+    <div class="row column">
+      <label for="file-upload">{{device.deviceName}}</label>
+    </div>
+    <div class="column small-7">
+      <div class="vm__upload-chooser row column" ng-class="{errorBorder:device.hasError, activeBorder:device.isActive}">
+        <div class="small-3 ">
+          <label for="file-upload">
+            <input id="file-upload" type="file" file="device.file" class="hide"/>
+            <span class="button btn-secondary courier-normal" ng-class="{disabled:device.isActive}">Choose file</span>
+          </label>
+        </div>
+        <div class="small-9 align-self-center">
+          <span ng-if="!device.file">No file selected</span>
+          <span ng-if="device.file.name !== undefined">{{device.file.name}}</span>
+          <span class="icon__exit" ng-if="device.file && !device.isActive" ng-click="resetFile($index);"></span>
+        </div>
+      </div>
+      <div class="column small-12 active_text" ng-if="device.isActive">
+        <span>Active Session</span>
+      </div>
+      <div class="column small-12 active_text" ng-if="device.hasError">
+        <span>Error in connecting to the selected file</span>
+      </div>
+    </div>
+    <div class="column small-4 start__button">
+      <input type="button" ng-value="device.isActive ? 'Stop' : 'Start'" ng-class="{disabled:!device.file}" class="button btn-primary" ng-click="device.isActive? stopVM($index) : startVM($index)"/>
+    </div>
+  </div>
+</div>

@@ -35,6 +35,7 @@ import toastService from './common/services/toastService.js';
 import api_utils from './common/services/api-utils.js';
 import userModel from './common/services/userModel.js';
 import apiInterceptor from './common/services/apiInterceptor.js';
+import nbdServerService from './common/services/nbdServerService.js';
 
 import filters_index from './common/filters/index.js';
 
@@ -82,6 +83,7 @@ import date_time_controller from './configuration/controllers/date-time-controll
 import network_controller from './configuration/controllers/network-controller.js';
 import snmp_controller from './configuration/controllers/snmp-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
+import vm_controller from './configuration/controllers/virtual-media-controller.js';
 
 import users_index from './users/index.js';
 import user_accounts_controller from './users/controllers/user-accounts-controller.js';
