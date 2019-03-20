@@ -1,0 +1,54 @@
+#virtual__media__container {
+  .column {
+    padding-left: 0;
+  }
+}
+.vm__upload-chooser {
+  width: 100%;
+  background: $lightgrey;
+  padding: .7em;
+
+  .button {
+    margin-left: .5em;
+    padding: .6em .75em;
+    font-size: 1rem;
+    background-color: white;
+    min-width: 3em;
+    .disabled {
+      pointer-events: none;
+    }
+  }
+  .icon__exit {
+    float: right;
+    cursor: pointer;
+    width: .75em;
+    height: .75em;
+    margin: .3em 1em .3em .3em;
+    background-image: url(../assets/images/crit-x-black.svg);
+  }
+}
+.errorBorder {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-color: $error-color;
+}
+.activeBorder {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-color: $status-ok;
+}
+.active_text {
+  color: $status-ok;
+  font-size: 0.8rem;
+}
+
+.start__button {
+  .button {
+    margin-top: .3em;
+    padding: .6em .8em;
+  }
+  .disabled {
+    pointer-events: none;
+  }
+}
+
