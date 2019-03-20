@@ -11,7 +11,12 @@ button, .button, .submit {
     cursor: pointer;
   }
   &.disabled {
+    pointer-events: none;
     color: $btn__disabled-txt;
+    background-color: $btn__disabled-bg;
+    border-color: $btn__disabled-border;
+    border-style:solid;
+    border-width: 2px;
     &:hover {
       cursor: default;
       background: transparent;
@@ -61,9 +66,12 @@ button, .button, .submit {
     @include fastTransition-all;
   }
   &.disabled {
-    border: 2px solid $lightgrey;
-    background: $btn__disabled-bg;
-    @include fastTransition-all;
+    pointer-events: none;
+    color: $btn__disabled-txt;
+    background-color: $btn__disabled-bg;
+    border-color: $btn__disabled-border;
+    border-style:solid;
+    border-width: 2px;
     &:hover {
       background: $btn__disabled-bg;
     }
