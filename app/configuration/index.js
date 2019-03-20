@@ -35,6 +35,12 @@ window.angular && (function(angular) {
                 'controller': 'snmpController',
                 authenticated: true
               })
+              .when('/configuration/virtual-media', {
+                'template':
+                    require('./controllers/virtual-media-controller.html'),
+                'controller': 'virtualMediaController',
+                authenticated: true
+              })
               .when('/configuration/firmware', {
                 'template': require('./controllers/firmware-controller.html'),
                 'controller': 'firmwareController',
