@@ -46,7 +46,7 @@ window.angular && (function(angular) {
                 $window.location.href = next;
               }
             } else {
-              if (description === 'Invalid username or password') {
+              if (description === 'Unauthorized') {
                 $scope.invalidCredentials = true;
               } else {
                 $scope.serverUnreachable = true;
