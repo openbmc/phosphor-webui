@@ -25,8 +25,8 @@ window.angular && (function(angular) {
                 response && response.data && response.data.data &&
                 response.data.data.description) {
               callback(false, response.data.data.description);
-            } else if (response && response.message) {
-              callback(false, response.message);
+            } else if (response && response.statusText) {
+              callback(false, response.statusText);
             } else if (error) {
               callback(false, 'Server unreachable');
             } else {
