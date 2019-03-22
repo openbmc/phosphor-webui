@@ -51,9 +51,10 @@ $userInputHeight: 40px;
   }
   .acnt-prop__input-wrapper,
   .user-manage__input-wrapper {
-    position: relative;
-    height: $userInputHeight;
     margin-bottom: 5px;
+    select {
+      margin-bottom: 0;
+    }
   }
   .acnt-prop__span-wrapper {
     position: relative;
@@ -63,11 +64,11 @@ $userInputHeight: 40px;
   .password-toggle {
     position: absolute;
     right: 5px;
+    top:.8em;
     padding: 3px;
     margin-right: 20px;
     color: $primebtn__bg;
     font-size: .8em;
-    @include vertCenter;
   }
   .acnt-prop__submit-wrapper,
   .user-manage__submit-wrapper {
