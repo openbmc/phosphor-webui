@@ -30,43 +30,57 @@
     <span>No users exist in system</span>
   </div>
 
-  <form  role="form" class="user-manage__form">
-    <section class="row column" aria-label="user manage form">
+  <form role="form" name="user__form" class="user-manage__form">
+    <section class="row column" aria-label="user manage form" ng-class="{'submitted':submitted}">
        <div class="column small-12 page-header">
         <h2 class="inline">User account settings</h2>
        </div>
         <div class='col-sm-12'>
           <label class="col-md-1 control-label" for="user-manage__username">UserName</label>
           <div class="col-md-3">
-            <input type="text" name="UserName" id="user-manage__username" ng-model="selectedUser.UserName" />
+            <input type="text" name="UserName" id="user-manage__username" ng-model="selectedUser.UserName" has-error="doesUserExist()" required />
+            <div ng-messages="user__form.UserName.$error" class="form-error" ng-class="{'visible' : user__form.UserName.$touched || submitted}">
+              <p ng-message="required">Field is required</p>
+              <p ng-message="hasError">Username exists</p>
+            </div>
           </div>
         </div>
         <div class='col-sm-12 inline'>
           <label class="col-md-1 control-label" for="user-manage__passwd">Password</label>
           <div class="col-md-3 user-manage__input-wrapper inline">
-            <input type="{{showpassword ? 'text' : 'password'}}" class="user-manage__new-password inline" name="Password" id="user-manage__passwd" ng-model="selectedUser.Password" autocomplete="off"/>
+            <input type="{{showpassword ? 'text' : 'password'}}" class="user-manage__new-password inline" name="Password" id="user-manage__passwd" ng-model="selectedUser.Password" required autocomplete="off"/>
             <button ng-model="showpassword" ng-click="togglePassword = !togglePassword; showpassword = !showpassword;" class="password-toggle">
               <span ng-hide="togglePassword">Show</span>
               <span ng-show="togglePassword">Hide</span>
             </button>
+            <div ng-messages="user__form.Password.$error" class="form-error" ng-class="{'visible' : user__form.Password.$touched || submitted}">
+              <p ng-message="required">Field is required</p>
+            </div>
           </div>
         </div>
         <div class='col-sm-12'>
           <label class="col-md-1 control-label" for="user-manage__verifypasswd">Retype Password</label>
           <div class="col-md-3 user-manage__input-wrapper inline">
-            <input type="{{showpasswordVerify ? 'text' : 'password'}}" class="user-manage__verify-password inline" name="VerifyPassword" id="user-manage__verifypasswd" ng-model="selectedUser.VerifyPassword" autocomplete="off">
+            <input type="{{showpasswordVerify ? 'text' : 'password'}}" class="user-manage__verify-password inline" name="VerifyPassword" id="user-manage__verifypasswd" ng-model="selectedUser.VerifyPassword" has-error="selectedUser.VerifyPassword != selectedUser.Password" required autocomplete="off">
             <button ng-model="showpasswordVerify" ng-click="toggleVerify = !toggleVerify; showpasswordVerify = !showpasswordVerify;" class="password-toggle">
               <span ng-hide="toggleVerify">Show</span>
               <span ng-show="toggleVerify">Hide</span>
             </button>
+            <div ng-messages="user__form.VerifyPassword.$error" class="form-error" ng-class="{'visible' : user__form.VerifyPassword.$touched || submitted}">
+              <p ng-message="required">Field is required</p>
+              <p ng-message="hasError">Passwords do not match</p>
+            </div>
           </div>
         </div>
         <div class='col-sm-12'>
-          <label class="col-md-1 control-label" for="user-manage__role">Role</label>
+          <label class="col-md-1 control-label" for="role">Role</label>
           <div class="col-md-3 user-manage__input-wrapper inline">
-            <select ng-model="selectedUser.RoleId" id="user-manage__role" class="inline">
+            <select ng-model="selectedUser.RoleId" id="role" name="role" class="inline" required>
               <option ng-repeat="role in roles" class="inline">{{role}}</option>
             </select>
+            <div ng-messages="user__form.role.$error" class="form-error" ng-class="{'visible' : user__form.role.$touched || submitted}">
+              <p ng-message="required">Field is required</p>
+            </div>
           </div>
         </div>
         <div class='col-sm-12'>
@@ -79,17 +93,10 @@
           </div>
         </div>
         <div class="user-manage__submit-wrapper">
-            <button type="button" class="btn-primary inline" ng-if="!isUserSelected" ng-click="createNewUser()">Create User</button>
+            <button type="button" ng-click="submitted=true; user__form.$valid && createNewUser();" ng-show="!isUserSelected" class="btn-primary inline">Create user</button>
             <button type="button" class="btn-primary inline" ng-if="isUserSelected" ng-click="updateUserInfo()">Save</button>
             <button type="button" class="btn-primary inline" ng-if="isUserSelected" ng-click="cancel()">Cancel</button>
         </div>
-    </section>
-    <section class="row column">
-      <div class='col-sm-12'>
-        <p ng-class="'user-manage__' + state"  role="alert">
-          {{outMsg}}
-        </p>
-      </div>
     </section>
   </form>
 </div>

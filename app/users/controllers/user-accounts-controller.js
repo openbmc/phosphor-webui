@@ -10,18 +10,16 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.users').controller('userAccountsController', [
-    '$scope', '$q', 'APIUtils',
-    function($scope, $q, APIUtils) {
+    '$scope', '$q', 'APIUtils', 'toastService',
+    function($scope, $q, APIUtils, toastService) {
       $scope.users = [];
       $scope.roles = [];
-      $scope.state = 'none';
-      $scope.outMsg = '';
       $scope.loading = true;
 
       function loadUserInfo() {
         $scope.loading = true;
         $scope.isUserSelected = false;
-        $scope.selectedUser = null;
+        $scope.selectedUser = {};
         $scope.togglePassword = false;
         $scope.toggleVerify = false;
 
@@ -46,14 +44,9 @@ window.angular && (function(angular) {
       };
 
       $scope.cancel = function() {
-        $scope.state = 'none';
-        $scope.outMsg = '';
         loadUserInfo();
       };
       $scope.setSelectedUser = function(user) {
-        $scope.state = 'none';
-        $scope.outMsg = '';
-
         $scope.isUserSelected = true;
         $scope.selectedUser = angular.copy(user);
         $scope.selectedUser.VerifyPassword = null;
@@ -61,18 +54,21 @@ window.angular && (function(angular) {
         $scope.selectedUser.CurrentUserName = $scope.selectedUser.UserName;
       };
       $scope.createNewUser = function() {
-        $scope.state = 'none';
-        $scope.outMsg = '';
-
+        if ($scope.users.length >= 15) {
+          toastService.error(
+              'Cannot create user. The maximum number of users that can be added is 15');
+        }
         if (!$scope.selectedUser.UserName || !$scope.selectedUser.Password) {
-          $scope.state = 'error';
-          $scope.outMsg = 'Username or Password can\'t be empty';
+          toastService.error('Username or password cannot be empty');
           return;
         }
         if ($scope.selectedUser.Password !==
             $scope.selectedUser.VerifyPassword) {
-          $scope.state = 'error';
-          $scope.outMsg = 'Passwords do not match';
+          toastService.error('Passwords do not match');
+          return;
+        }
+        if ($scope.doesUserExist()) {
+          toastService.error('Username already exists');
           return;
         }
         var user = $scope.selectedUser.UserName;
@@ -87,12 +83,10 @@ window.angular && (function(angular) {
         APIUtils.createUser(user, passwd, role, enabled)
             .then(
                 function(response) {
-                  $scope.state = 'success';
-                  $scope.outMsg = 'User has been created successfully';
+                  toastService.success('User has been created successfully');
                 },
                 function(error) {
-                  $scope.state = 'error';
-                  $scope.outMsg = 'Failed to create new user';
+                  toastService.error('Failed to create new user');
                 })
             .finally(function() {
               loadUserInfo();
@@ -100,12 +94,13 @@ window.angular && (function(angular) {
             });
       };
       $scope.updateUserInfo = function() {
-        $scope.state = 'none';
-        $scope.outMsg = '';
         if ($scope.selectedUser.Password !==
             $scope.selectedUser.VerifyPassword) {
-          $scope.state = 'error';
-          $scope.outMsg = 'Passwords do not match';
+          toastService.error('Passwords do not match');
+          return;
+        }
+        if ($scope.doesUserExist()) {
+          toastService.error('Username already exists');
           return;
         }
         var data = {};
@@ -127,12 +122,10 @@ window.angular && (function(angular) {
                 data['Password'], data['RoleId'], data['Enabled'])
             .then(
                 function(response) {
-                  $scope.state = 'success';
-                  $scope.outMsg = 'User has been updated successfully';
+                  toastService.success('User has been updated successfully');
                 },
                 function(error) {
-                  $scope.state = 'error';
-                  $scope.outMsg = 'Updating user failed';
+                  toastService.error('Updating user failed');
                 })
             .finally(function() {
               loadUserInfo();
@@ -140,19 +133,14 @@ window.angular && (function(angular) {
             });
       };
       $scope.deleteUser = function(userName) {
-        $scope.state = 'none';
-        $scope.outMsg = '';
-
         $scope.loading = true;
         APIUtils.deleteUser(userName)
             .then(
                 function(response) {
-                  $scope.state = 'success';
-                  $scope.outMsg = 'User has been deleted successfully';
+                  toastService.success('User has been deleted successfully');
                 },
                 function(error) {
-                  $scope.state = 'error';
-                  $scope.outMsg = 'Deleting user failed';
+                  toastService.error('Deleting user failed');
                 })
             .finally(function() {
               loadUserInfo();
@@ -160,6 +148,16 @@ window.angular && (function(angular) {
             });
       };
 
+      $scope.doesUserExist = function() {
+        for (var i in $scope.users) {
+          // If a user exists with the same user name and a different Id then
+          // the username already exists and isn't valid
+          if (($scope.users[i].UserName === $scope.selectedUser.UserName) &&
+              ($scope.users[i].Id !== $scope.selectedUser.Id)) {
+            return true;
+          }
+        }
+      };
       loadUserInfo();
     }
   ]);

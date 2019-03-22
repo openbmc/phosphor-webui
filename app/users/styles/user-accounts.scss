@@ -48,6 +48,9 @@ $userInputHeight: 40px;
     position: relative;
     height: $userInputHeight;
     margin-bottom: 1em;
+    select {
+      margin-bottom: 0;
+    }
     input {
       padding-right: 60px;
     }
