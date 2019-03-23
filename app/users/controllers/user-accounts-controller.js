@@ -10,12 +10,10 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.users').controller('userAccountsController', [
-    '$scope', '$q', 'APIUtils',
-    function($scope, $q, APIUtils) {
+    '$scope', '$q', 'APIUtils', 'ngToast',
+    function($scope, $q, APIUtils, ngToast) {
       $scope.users = [];
       $scope.roles = [];
-      $scope.state = 'none';
-      $scope.outMsg = '';
       $scope.loading = true;
       $scope.properties = {};
       $scope.origProp = {};
@@ -58,14 +56,10 @@ window.angular && (function(angular) {
       };
 
       $scope.cancel = function() {
-        $scope.state = 'none';
-        $scope.outMsg = '';
         loadUserInfo();
       };
 
       $scope.saveAllValues = function() {
-        $scope.state = 'none';
-        $scope.outMsg = '';
         $scope.loading = true;
         var data = {};
         if ($scope.properties.AccountLockoutDuration !=
@@ -93,12 +87,11 @@ window.angular && (function(angular) {
                 data['AccountLockoutDuration'], data['AccountLockoutThreshold'])
             .then(
                 function(response) {
-                  $scope.state = 'success';
-                  $scope.outMsg =
-                      'User account properties has been updated successfully';
+                  ngToast.success(
+                      'User account properties has been updated successfully');
                 },
                 function(error) {
-                  $scope.outMsg = 'Account Properties Updation failed.';
+                  ngToast.danger('Account Properties Updation failed');
                 })
             .finally(function() {
               loadUserInfo();
@@ -107,9 +100,6 @@ window.angular && (function(angular) {
       };
 
       $scope.setSelectedUser = function(user) {
-        $scope.state = 'none';
-        $scope.outMsg = '';
-
         $scope.isUserSelected = true;
         $scope.selectedUser = angular.copy(user);
         $scope.selectedUser.VerifyPassword = null;
@@ -117,18 +107,13 @@ window.angular && (function(angular) {
         $scope.selectedUser.CurrentUserName = $scope.selectedUser.UserName;
       };
       $scope.createNewUser = function() {
-        $scope.state = 'none';
-        $scope.outMsg = '';
-
         if (!$scope.selectedUser.UserName || !$scope.selectedUser.Password) {
-          $scope.state = 'error';
-          $scope.outMsg = 'Username or Password can\'t be empty';
+          ngToast.danger('Username or Password can\'t be empty');
           return;
         }
         if ($scope.selectedUser.Password !==
             $scope.selectedUser.VerifyPassword) {
-          $scope.state = 'error';
-          $scope.outMsg = 'Passwords do not match';
+          ngToast.danger('Passwords do not match');
           return;
         }
         var user = $scope.selectedUser.UserName;
@@ -143,12 +128,10 @@ window.angular && (function(angular) {
         APIUtils.createUser(user, passwd, role, enabled)
             .then(
                 function(response) {
-                  $scope.state = 'success';
-                  $scope.outMsg = 'User has been created successfully';
+                  ngToast.success('User has been created successfully');
                 },
                 function(error) {
-                  $scope.state = 'error';
-                  $scope.outMsg = 'Failed to create new user';
+                  ngToast.danger('Failed to create new user');
                 })
             .finally(function() {
               loadUserInfo();
@@ -156,12 +139,9 @@ window.angular && (function(angular) {
             });
       };
       $scope.updateUserInfo = function() {
-        $scope.state = 'none';
-        $scope.outMsg = '';
         if ($scope.selectedUser.Password !==
             $scope.selectedUser.VerifyPassword) {
-          $scope.state = 'error';
-          $scope.outMsg = 'Passwords do not match';
+          ngToast.danger('Passwords do not match');
           return;
         }
         var data = {};
@@ -183,12 +163,10 @@ window.angular && (function(angular) {
                 data['Password'], data['RoleId'], data['Enabled'])
             .then(
                 function(response) {
-                  $scope.state = 'success';
-                  $scope.outMsg = 'User has been updated successfully';
+                  ngToast.success('User has been updated successfully');
                 },
                 function(error) {
-                  $scope.state = 'error';
-                  $scope.outMsg = 'Updating user failed';
+                  ngToast.danger('Updating user failed');
                 })
             .finally(function() {
               loadUserInfo();
@@ -196,19 +174,14 @@ window.angular && (function(angular) {
             });
       };
       $scope.deleteUser = function(userName) {
-        $scope.state = 'none';
-        $scope.outMsg = '';
-
         $scope.loading = true;
         APIUtils.deleteUser(userName)
             .then(
                 function(response) {
-                  $scope.state = 'success';
-                  $scope.outMsg = 'User has been deleted successfully';
+                  ngToast.success('User has been deleted successfully');
                 },
                 function(error) {
-                  $scope.state = 'error';
-                  $scope.outMsg = 'Deleting user failed';
+                  ngToast.danger('Deleting user failed');
                 })
             .finally(function() {
               loadUserInfo();

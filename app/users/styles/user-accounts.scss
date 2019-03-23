@@ -80,23 +80,4 @@ $userInputHeight: 40px;
       margin: .5em;
     }
   }
-  .user-manage__error
-  {
-    background: lighten($error-color, 20%);
-    padding: 1em;
-    text-align: center;
-    font-size: 1em;
-    border: 1px solid $error-color;
-    color: $black;
-    font-family: "Courier New", Helvetica, Arial, sans-serif;
-    font-weight: 700;
-  }
-  .user-manage__success
-  {
-    color: $primebtn__bg;
-    padding: 1em;
-    font-size: 1em;
-    font-family: "Courier New", Helvetica, Arial, sans-serif;
-    font-weight: 500;
-  }
 }
