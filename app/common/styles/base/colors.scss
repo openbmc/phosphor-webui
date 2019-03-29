@@ -28,10 +28,10 @@ $input-border: #a7a7a7;
 // Light Background
 $lightbg__grey: #b8c1c1;
 $lightbg__accent: #d8e2fc;
-$lightbg__primary: #3c6df0;
+$lightbg__primary: #2d60e5;
 
 // Primary Button colors
-$primebtn__bg: #3c6df0;
+$primebtn__bg: #2d60e5;
 $primebtn__text: $white;
 
 // Secondary Button colors
@@ -55,7 +55,7 @@ $alert__message: rgb(203, 221, 235);
 $alert__danger: #fad3D3;
 
 // Severity
-$critical-lightbg: #e62325;
+$critical-lightbg: #da1416;
 $critical-darkbg: #ff5c49;
 $severity-medium-lightbg: #dc267f;
 $medium-darkbg: #FF509E;
@@ -85,7 +85,7 @@ $active: #c6b6f5;
 $inactive: $severity-medium-lightbg;
 
 // Links
-$links: #3c6df0;
+$links: #2d60e5;
 $links__hover: $lightbg__primary;
 $links__visited: #8ea7ea;
 $links__disabled: rgba(27, 40, 52, 0.70);
