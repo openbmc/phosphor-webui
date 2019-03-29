@@ -15,21 +15,6 @@ window.angular && (function(angular) {
         '$routeProvider',
         function($routeProvider) {
           $routeProvider
-              .when('/server-health/event-log', {
-                'template': require('./controllers/log-controller.html'),
-                'controller': 'logController',
-                authenticated: true
-              })
-              .when('/server-health/event-log/:type', {
-                'template': require('./controllers/log-controller.html'),
-                'controller': 'logController',
-                authenticated: true
-              })
-              .when('/server-health/event-log/:type/:id', {
-                'template': require('./controllers/log-controller.html'),
-                'controller': 'logController',
-                authenticated: true
-              })
               .when('/server-health/inventory-overview', {
                 'template':
                     require('./controllers/inventory-overview-controller.html'),
@@ -47,11 +32,6 @@ window.angular && (function(angular) {
                 'controller': 'sysLogController',
                 authenticated: true
               })
-              .when('/server-health', {
-                'template': require('./controllers/log-controller.html'),
-                'controller': 'logController',
-                authenticated: true
-              });
         }
       ]);
 })(window.angular);
