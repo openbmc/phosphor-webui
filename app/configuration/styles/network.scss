@@ -14,12 +14,19 @@
     height: 2.1em;
     margin-bottom: 1.2em;
   }
-  label {
-    min-width: 300px;
+
+  .net-config__fieldset {
+    margin-bottom: 1.2rem;
+
+    legend {
+      padding-bottom: 0.5rem;
+    }
+
+    .net-config__fieldset-content {
+      padding-left: 1.8em;
+    }
   }
-  fieldset {
-    padding-left: 1.8em;
-  }
+
   .net-config__static-ip-wrap {
     width: 100%;
     padding-left: 0;
@@ -39,6 +46,13 @@
     margin-top: 3em;
     padding-top: 1em;
     border-top: 1px solid $medgrey;
+
+    &::after {
+      content: " ";
+      display: block;
+      clear: both;
+    }
+
     button {
       float: right;
       margin: .5em;

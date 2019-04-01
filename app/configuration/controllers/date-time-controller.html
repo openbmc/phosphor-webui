@@ -50,10 +50,10 @@
             </div>
           </li>
           <li class="date-time__metadata-block">
-          <label class="content-label">Time Owner</label>
-          <select ng-model="time.owner" class="date-time__owner-dropdown">
-            <option class="courier-bold" ng-repeat="owner in timeOwners">{{owner}}</option>
-          </select>
+            <label for="date-time-owner" class="content-label">Time Owner</label>
+            <select id="date-time-owner" ng-model="time.owner" class="date-time__owner-dropdown">
+              <option class="courier-bold" ng-repeat="owner in timeOwners">{{owner}}</option>
+            </select>
           </li>
         </ul>
       </div>

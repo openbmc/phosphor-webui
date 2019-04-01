@@ -13,13 +13,13 @@
     <div class="small-8">
       <div class="row column manager_group">
         <div class="small-5 snmp__address">
-          <h3>Host name or IP Address</h3>
+          <h3 id="host-name-ip-label">Host name or IP Address</h3>
         </div>
         <div class="small-5 snmp__port label">
-          <h3>Port</h3>
+          <h3 id="port-label">Port</h3>
         </div>
       </div>
-      <div class="row column manager_group empty" ng-if="managers.length <1">
+      <div class="row column manager_group empty" ng-if="managers.length < 1">
         No managers have been added yet.
       </div>
       <form id="snmp__form" name="snmp__form" novalidate>
@@ -28,40 +28,45 @@
             <div class="row column">
               <div class="small-10">
                 <div class="row column">
-                  <div class="small-offset-6 small-6 help__text snmp__port">
+                  <div id="snmp-manager{{$index+1}}-port-description" class="small-offset-6 small-6 help__text snmp__port">
                     Value must be between 0-65,535
                   </div>
                 </div>
-                <div class="row column" ng-class="{'submitted':submitted}">
-                  <div class="small-6 snmp__address">
-                    <input id="snmp-manager{{$index+1}}-address"
-                           name="snmp-manager{{$index+1}}-address"
-                           type="text"
-                           ng-change="manager.updateAddress=true"
-                           ng-model="manager.address"
-                           required />
-                    <div ng-messages="manager_group['snmp-manager'+($index+1)+'-address'].$error" class="form-error" ng-class="{'visible': manager_group['snmp-manager'+($index+1)+'-address'].$touched || submitted}">
-                      <p ng-message="required" role="alert">Field is required</p>
-                    </div>
-                  </div>
-                  <div class="small-6 snmp__port">
-                    <input id="snmp-manager{{$index+1}}-port"
-                           name="snmp-manager{{$index+1}}-port"
-                           type="number"
-                           min="0"
-                           max="65535"
-                           step="1"
-                           ng-change="manager.updatePort=true"
-                           ng-model="manager.port"
-                           required/>
-                    <div ng-messages="manager_group['snmp-manager'+($index+1)+'-port'].$error" class="form-error" ng-class="{'visible': manager_group['snmp-manager'+($index+1)+'-port'].$touched || submitted}">
-                      <div ng-message-exp="['min', 'max', 'number', 'step']">
-                        Invalid format
+                <fieldset>
+                  <div class="row column" ng-class="{'submitted':submitted}">
+                    <div class="small-6 snmp__address">
+                      <input id="snmp-manager{{$index+1}}-address"
+                            name="snmp-manager{{$index+1}}-address"
+                            type="text"
+                            ng-change="manager.updateAddress=true"
+                            ng-model="manager.address"
+                            required
+                            aria-labeledby="host-name-ip-label"/>
+                      <div ng-messages="manager_group['snmp-manager'+($index+1)+'-address'].$error" class="form-error" ng-class="{'visible': manager_group['snmp-manager'+($index+1)+'-address'].$touched || submitted}">
+                        <p ng-message="required" role="alert">Field is required</p>
                       </div>
-                      <p ng-message="required" role="alert">Field is required</p>
+                    </div>
+                    <div class="small-6 snmp__port">
+                      <input id="snmp-manager{{$index+1}}-port"
+                            name="snmp-manager{{$index+1}}-port"
+                            type="number"
+                            min="0"
+                            max="65535"
+                            step="1"
+                            ng-change="manager.updatePort=true"
+                            ng-model="manager.port"
+                            required
+                            aria-labeledby="port-label"
+                            aria-describedby="snmp-manager{{$index+1}}-port-description"/>
+                      <div ng-messages="manager_group['snmp-manager'+($index+1)+'-port'].$error" class="form-error" ng-class="{'visible': manager_group['snmp-manager'+($index+1)+'-port'].$touched || submitted}">
+                        <div ng-message-exp="['min', 'max', 'number', 'step']">
+                          Invalid format
+                        </div>
+                        <p ng-message="required" role="alert">Field is required</p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </fieldset>
               </div>
               <div class="small-2 align-self-center snmp__buttons">
                 <button class="edit_button" type="button">
