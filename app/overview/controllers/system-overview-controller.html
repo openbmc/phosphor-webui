@@ -9,25 +9,33 @@
       <!-- Server Metadata -->
       <div class="row overview__server-metadata">
         <div class="column large-4">
-          <h3>Server information</h3>
+          <h2 class="h3">Server information</h2>
         </div>
         <div class="column large-8">
           <ul class="overview__metadata-wrapper">
             <li class="overview__metadata-block">
-              <p class="content-label">Model</p>
-              <p class="courier-bold">{{server_info.Model}}</p>
+              <dl>
+                <dt class="content-label">Model</dt>
+                <dd class="courier-bold">{{server_info.Model}}</dd>
+              </dl>
             </li>
             <li class="overview__metadata-block">
-              <p class="content-label">Manufacturer</p>
-              <p class="courier-bold">{{server_info.Manufacturer}}</p>
+              <dl>
+                  <dt class="content-label">Manufacturer</dt>
+                  <dd class="courier-bold">{{server_info.Manufacturer}}</dd>
+              </dl>
             </li>
             <li class="overview__metadata-block">
-              <p class="content-label">Firmware version</p>
-              <p class="courier-bold">{{server_firmware}}</p>
+              <dl>
+                <dt class="content-label">Firmware version</dt>
+                <dd class="courier-bold">{{server_firmware}}</dd>
+              </dl>
             </li>
             <li class="overview__metadata-block">
-              <p class="content-label">Serial number</p>
-              <p class="courier-bold">{{server_info.SerialNumber}}</p>
+              <dl>
+                <dt class="content-label">Serial number</dt>
+                <dd class="courier-bold">{{server_info.SerialNumber}}</dd>
+              </dl>
             </li>
           </ul>
         </div>
@@ -35,25 +43,33 @@
       <!-- BMC Metadata -->
       <div class="row overview__server-metadata">
         <div class="column large-4">
-          <h3>BMC information</h3>
+          <h2 class="h3">BMC information</h2>
         </div>
         <div class="column large-8">
           <ul class="overview__metadata-wrapper">
             <li class="overview__metadata-block">
-              <p class="content-label">Hostname</p>
-              <p class="courier-bold overview__hostname">{{dataService.hostname}}</p>
+              <dl>
+                <dt class="content-label">Hostname</dt>
+                <dd class="courier-bold overview__hostname">{{dataService.hostname}}</dd>
+              </dl>
             </li>
             <li class="overview__metadata-block">
-              <p class="content-label">IP addresses</p>
-              <p class="courier-bold" ng-repeat="ip_address in bmc_ip_addresses">{{ip_address}}</p>
+              <dl>
+                <dt class="content-label">IP addresses</dt>
+                <dd class="courier-bold" ng-repeat="ip_address in bmc_ip_addresses">{{ip_address}}</dd>
+              </dl>
             </li>
             <li class="overview__metadata-block">
-              <p class="content-label">Firmware Version</p>
-              <p class="courier-bold">{{bmc_firmware}}</p>
+              <dl>
+                <dt class="content-label">Firmware Version</dt>
+                <dd class="courier-bold">{{bmc_firmware}}</dd>
+              </dl>
             </li>
             <li class="overview__metadata-block">
-              <p class="content-label">Mac address</p>
-              <p class="courier-bold">{{dataService.mac_address}}</p>
+              <dl>
+                <dt class="content-label">Mac address</dt>
+                <dd class="courier-bold">{{dataService.mac_address}}</dd>
+              </dl>
             </li>
           </ul>
         </div>
@@ -61,17 +77,21 @@
       <!-- Power metadata -->
       <div class="row overview__server-metadata">
         <div class="column large-4">
-          <h3>Power information</h3>
+          <h2 class="h3">Power information</h2>
         </div>
         <div class="column large-8">
           <ul class="overview__metadata-wrapper">
             <li class="overview__metadata-block">
-              <p class="content-label">Power Consumption</p>
-              <p class="courier-bold">{{power_consumption}}</p>
+              <dl>
+                <dt class="content-label">Power Consumption</dt>
+                <dd class="courier-bold">{{power_consumption}}</dd>
+              </dl>
             </li>
             <li class="overview__metadata-block">
-              <p class="content-label">Power Cap</p>
-              <p class="courier-bold">{{power_cap}}</p>
+              <dl>
+                <dt class="content-label">Power Cap</dt>
+                <dd class="courier-bold">{{power_cap}}</dd>
+              </dl>
             </li>
           </ul>
         </div>
@@ -83,10 +103,10 @@
         <a href="#/server-health/event-log/high" class="quick-links__item quick-links__events event-log__events" ng-show="logs.length">
           <p class="inline quick-links__event-copy">View {{logs.length}} high priority events</p><!-- link to event log filtered to the high priority events -->
         </a>
-        <div class="quick-links__item no-icon">
-          <p class="inline quick-links__label">BMC time</p>
-          <p class="inline courier-bold float-right bmc-time">{{ bmc_time | localeDate }}</p>
-        </div>
+        <dl class="quick-links__item no-icon">
+          <dt class="inline quick-links__label">BMC time</dt>
+          <dd class="inline courier-bold float-right bmc-time">{{ bmc_time | localeDate }}</dd>
+        </dl>
         <div class="quick-links__item no-icon">
           <p class="inline quick-links__label">Turn <span ng-if="dataService.LED_state == 'off'">on</span><span ng-if="dataService.LED_state == 'on'">off</span> server LED</p>
           <div class="toggle inline float-right">
@@ -107,13 +127,13 @@
         <a href="#/configuration/network" class="quick-links__item">
           <p class="inline quick-links__label">Edit network settings</p>
         </a>
-      </div>
+      </d>
     </div>
   </section>
   <section class="row">
     <div class="column large-12 overview__event-log event-log__events" ng-show="logs.length">
       <div class="page-header">
-        <h3>High priority events ({{logs.length}})</h3>
+        <h2 class="h3">High priority events ({{logs.length}})</h2>
         <a href="#/server-health/event-log/" class="inline float-right">View all event logs</a>
       </div>
 
@@ -140,7 +160,7 @@
 
     <div class="row column overview__event-log event-log__events" ng-show="!logs.length">
       <div class="page-header">
-        <h3>High priority events (0)</h3>
+        <h2 class="h3">High priority events (0)</h2>
       </div>
       <p>There are no high priority events to display at this time.</p>
     </div>
@@ -151,12 +171,12 @@
   <div class="modal__upload" role="document">
     <div class="screen-reader-offscreen modal-description">Edit hostname</div><!-- accessibility only; used for screen readers -->
     <div class="page-header ">
-      <h3 class="modal-title"><span class="icon icon__info"><svg xmlns="http://www.w3.org/2000/svg"
+      <h2 class="modal-title"><span class="icon icon__info"><svg xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 32 32"><path
           d="M18 14h-6v2h1v6h-2v2h8v-2h-2z"/><circle cx="16" cy="10" r="2"/><path
           d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z"/></svg></span>
         Edit hostname
-      </h3>
+      </h2>
     </div>
     <div class="modal__content">
       <p>The hostname is displayed in the header and can contain any characters up to a total of 64</p>

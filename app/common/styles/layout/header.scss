@@ -8,7 +8,7 @@ $logoMaxWidth: 125px;
   border-radius: 6px 6px;
 }
 
-#header__wrapper {
+.header {
   position: fixed;
   top: 0;
   left: 0;
@@ -19,6 +19,7 @@ $logoMaxWidth: 125px;
 .header__title {
   margin-left: 1em;
   display: none;
+  float: left;
   @include mediaQuery(x-small) {
     display: inline-block;
     position: absolute;
@@ -27,7 +28,7 @@ $logoMaxWidth: 125px;
   }
 }
 
-header {
+.header__info-section {
   position: relative;
   background: $black;
   color: $white;
@@ -36,7 +37,6 @@ header {
 
 .header__logout {
   float: right;
-  display: inline-block;
   color: $white;
   font-size: .9em;
   text-decoration: none;
@@ -47,7 +47,7 @@ header {
   }
 }
 
-.header__functions-wrapper {
+.header__functions-section {
   color: $white;
   padding: 0 1.1em;
   box-sizing: border-box;
@@ -235,4 +235,4 @@ header {
   }
 }
 
-// end header__functions-wrapper
+// end header__functions-section
