@@ -27,7 +27,7 @@
     <div class="small-12 harware__details" ng-repeat="inventory in hardwares|filter:filterBySearchTerms">
       <div class="hardware__title row column" ng-class="{'expanded': inventory.expanded}" ng-click="inventory.expanded = ! inventory.expanded">
         <h4>{{inventory.title}}</h4>
-        <button class="accord-trigger float-right" ng-class="{'active': inventory.expanded}"></button>
+        <button class="accord-trigger float-right" ng-class="{'active': inventory.expanded}" aria-expanded="{{inventory.expanded ? 'true' : 'false'}}" aria-expanded="{{inventory.expanded ? 'true' : 'false'}}" aria-label="{{inventory.expanded ? 'collapse' : 'expand'}}"></button>
       </div>
       <div class="hardware__items" ng-hide="!inventory.expanded" ng-class="{'expanded': inventory.expanded}">
         <div class="row column">

@@ -1,10 +1,10 @@
-<div id="header__wrapper">
+<header id="header" class="header">
   <!-- HEADER -->
-  <header id="header">
-    <span class="header__title float-left">OpenBMC</span>
+  <div class="header__info-section">
+    <span class="header__title">OpenBMC</span>
     <a href="" class="header__logout" ng-click="logout()">Log out</a>
-  </header>
-  <div class="header__functions-wrapper" role="heading">
+  </div>
+  <div class="header__functions-section">
     <div class="logo__wrapper"><img src="../../assets/images/logo.svg" class="header__logo" alt="company logo"/></div>
     <div class="inline header__server-name">
       <p class="header__hostname">{{dataService.hostname}}</p>
@@ -26,4 +26,4 @@
       </button>
     </div>
   </div>
-</div>
+</header>

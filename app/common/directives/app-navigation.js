@@ -43,7 +43,7 @@ window.angular && (function(angular) {
 
                 if ($scope.showNavigation) {
                   paddingTop =
-                      document.getElementById('header__wrapper').offsetHeight;
+                      document.getElementById('header').offsetHeight;
                 }
                 dataService.bodyStyle = {'padding-top': paddingTop + 'px'};
                 $scope.navStyle = {'top': paddingTop + 'px'};

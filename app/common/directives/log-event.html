@@ -31,7 +31,7 @@
       </div>
       <div class="column small-1 large-1">
         <button class="accord-trigger" ng-class="{'active': event.meta}"
-          ng-click="event.meta = ! event.meta"></button>
+          ng-click="event.meta = ! event.meta" aria-label="{{event.meta ? 'collapse' : 'expand'}}"></button>
       </div>
     </div>
     <div class="row event__metadata-row" ng-class="{'active': event.meta}">
