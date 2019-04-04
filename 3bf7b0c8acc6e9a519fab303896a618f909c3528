@@ -1,0 +1,11 @@
+Ok-To-Test+1: Gunnar Mills <gmills@us.ibm.com>
+Verified+1: Jenkins <openbmc-ci-admin@ozlabs.org>
+Code-Review+1: Rebecca Shaw <beccabroek@gmail.com>
+Code-Review+1: Kuiying Wang <kuiying.wang@intel.com>
+Code-Review+1: Ed Tanous <ed.tanous@intel.com>
+Code-Review+2: Gunnar Mills <gmills@us.ibm.com>
+Submitted-by: Gunnar Mills <gmills@us.ibm.com>
+Submitted-at: Thu, 04 Apr 2019 14:15:49 +0000
+Reviewed-on: https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-webui/+/20059
+Project: openbmc/phosphor-webui
+Branch: refs/heads/master
