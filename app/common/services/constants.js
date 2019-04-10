@@ -38,6 +38,10 @@ window.angular && (function(angular) {
       HOST_STATE: {on: 1, off: -1, error: 0, unreachable: -2},
       LED_STATE: {on: true, off: false},
       LED_STATE_TEXT: {on: 'on', off: 'off'},
+      FORCE_TO_BIOS_STATE_TEXT: {
+        on: 'BiosSetup',
+        off: 'None'
+      },
       SEVERITY_TO_PRIORITY_MAP: {
         Emergency: 'High',
         Alert: 'High',
