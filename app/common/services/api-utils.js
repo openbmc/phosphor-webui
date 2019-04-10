@@ -31,6 +31,7 @@ window.angular && (function(angular) {
         HOST_STATE: Constants.HOST_STATE,
         LED_STATE: Constants.LED_STATE,
         LED_STATE_TEXT: Constants.LED_STATE_TEXT,
+        FORCE_TO_BIOS_STATE_TEXT: Constants.FORCE_TO_BIOS_STATE_TEXT,
         HOST_SESSION_STORAGE_KEY: Constants.API_CREDENTIALS.host_storage_key,
         getChassisState: function() {
           var deferred = $q.defer();
@@ -499,6 +500,32 @@ window.angular && (function(angular) {
                   });
           return deferred.promise;
         },
+        getForceToBIOSState: function() {
+          var deferred = $q.defer();
+
+          if (DataService.configJson.redfishSupportEnabled == true) {
+            $http({
+              method: 'GET',
+              url: DataService.getHost() + '/redfish/v1/Systems/system',
+              withCredentials: true
+            })
+                .then(
+                    function(response) {
+                      var json = JSON.stringify(response.data);
+                      var content = JSON.parse(json);
+                      deferred.resolve(content.Boot.BootSourceOverrideTarget);
+                    },
+                    function(error) {
+                      console.log(error);
+                      deferred.reject(error);
+                    });
+          } else {
+            var err = 'Redfish is not enabled!';
+            console.log(err);
+            deferred.reject(err);
+          }
+          return deferred.promise;
+        },
         login: function(username, password, callback) {
           $http({
             method: 'POST',
@@ -734,6 +761,24 @@ window.angular && (function(angular) {
                       console.log(error);
                     }
                   });
+        },
+        setForceToBIOSState: function(state) {
+          if (DataService.configJson.redfishSupportEnabled == true) {
+            var data =
+                JSON.stringify({'Boot': {'BootSourceOverrideTarget': state}});
+            return $http({
+              method: 'PATCH',
+              url: DataService.getHost() + '/redfish/v1/Systems/system',
+              withCredentials: true,
+              data: data
+            });
+          } else {
+            var deferred = $q.defer();
+            var err = 'Redfish is not enabled!';
+            console.log(err);
+            deferred.reject(err);
+            return deferred.promise;
+          }
         },
         getLastRebootTime: function() {
           return $http({
