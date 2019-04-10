@@ -312,9 +312,6 @@ window.angular && (function(angular) {
         });
         $scope.confirm_delete = false;
       };
-      $scope.fileNameChanged = function() {
-        $scope.file_empty = false;
-      };
 
       $scope.filters = {bmc: {imageType: 'BMC'}, host: {imageType: 'Host'}};
 

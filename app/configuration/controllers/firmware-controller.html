@@ -21,7 +21,7 @@
       <h3>Upload image file from workstation</h3>
       <p>Select the image file saved on the workstation storage medium to upload to the server BMC.</p>
       <label for="file-upload" class="inline firmware__upload-chooser">
-        <input id="file-upload" type="file" file="file" class="hide" onchange="angular.element(this).scope().fileNameChanged()"/>
+        <input id="file-upload" type="file" file="file" class="hide"/>
         <span class="button btn-secondary inline">Choose a file</span>
         <span class="inline firmware__upload-file-name"><span ng-if="!file">No file chosen</span><span ng-if="file.name !== undefined">{{file.name}}</span></span>
       </label>
