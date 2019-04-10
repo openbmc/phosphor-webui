@@ -10,6 +10,18 @@
     <div class="row column">
         <div id="power-indicator-bar" class="power__indicator-bar" ng-class="{'power__state-on': dataService.server_state == 'Running', 'power__state-off': dataService.server_state == 'Off', 'power__state-indet': dataService.server_state == 'Standby', 'power__state-error': dataService.server_state == 'Quiesced'}">
             <p class="inline">{{dataService.hostname}} - {{dataService.server_id}}</p>
+              <div class="toggle float-right">
+                <input id="toggle__switch-round"
+                    class="toggle-switch toggle-switch__round-flat"
+                    type="checkbox"
+                    tabindex="0"
+                    ng-click="toggleForceToBIOS()"
+                    ng-checked="dataService.ForceToBIOS_state == 'BiosSetup'"
+                    ng-disabled="dataService.server_unreachable">
+                <label for="toggle__switch-round" tabindex="0"> </label>
+                <h3 class="inline">Boot to BIOS</h3>
+              </div>
+
             <h3 class="power__state inline no-margin h3"><span>{{dataService.server_state | quiescedToError}}</span></h3>
         </div>
     </div>

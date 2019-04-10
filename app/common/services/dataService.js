@@ -18,6 +18,7 @@ window.angular && (function(angular) {
       this.server_status = -2;
       this.chassis_state = 'On';
       this.LED_state = Constants.LED_STATE_TEXT.off;
+      this.ForceToBIOS_state = Constants.FORCE_TO_BIOS_STATE_TEXT.off;
       this.last_updated = new Date();
 
       this.loading = false;
