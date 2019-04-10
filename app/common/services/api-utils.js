@@ -31,6 +31,7 @@ window.angular && (function(angular) {
         HOST_STATE: Constants.HOST_STATE,
         LED_STATE: Constants.LED_STATE,
         LED_STATE_TEXT: Constants.LED_STATE_TEXT,
+        FORCE_TO_BIOS_STATE_TEXT: Constants.FORCE_TO_BIOS_STATE_TEXT,
         HOST_SESSION_STORAGE_KEY: Constants.API_CREDENTIALS.host_storage_key,
         getChassisState: function() {
           var deferred = $q.defer();
@@ -499,6 +500,22 @@ window.angular && (function(angular) {
                   });
           return deferred.promise;
         },
+        getForceToBIOSState: function() {
+          $http({
+            method: 'GET',
+            url: DataService.getHost() + '/redfish/v1/Systems/system',
+            withCredentials: true
+          })
+              .then(
+                  function(response) {
+                    var json = JSON.stringify(response.data);
+                    var content = JSON.parse(json);
+                    return content.Boot.BootSourceOverrideTarget;
+                  },
+                  function(error) {
+                    console.log(error);
+                  });
+        },
         login: function(username, password, callback) {
           $http({
             method: 'POST',
@@ -734,6 +751,16 @@ window.angular && (function(angular) {
                       console.log(error);
                     }
                   });
+        },
+        setForceToBIOSState: function(state) {
+          var data =
+              JSON.stringify({'Boot': {'BootSourceOverrideTarget': state}});
+          return $http({
+            method: 'PATCH',
+            url: DataService.getHost() + '/redfish/v1/Systems/system',
+            withCredentials: true,
+            data: data
+          });
         },
         getLastRebootTime: function() {
           return $http({
