@@ -26,6 +26,19 @@ window.angular && (function(angular) {
 
       var pollChassisStatusTimer = undefined;
       var pollStartTime = null;
+      APIUtils.getForceToBIOSState().then(
+          function(data) {
+            if (data == APIUtils.FORCE_TO_BIOS_STATE_TEXT.on) {
+              dataService.ForceToBIOS_state =
+                  APIUtils.FORCE_TO_BIOS_STATE_TEXT.on;
+            } else {
+              dataService.ForceToBIOS_state =
+                  APIUtils.FORCE_TO_BIOS_STATE_TEXT.off;
+            }
+          },
+          function(error) {
+            console.log(JSON.stringify(error));
+          });
 
       //@TODO: call api and get proper state
 
@@ -48,6 +61,26 @@ window.angular && (function(angular) {
       $scope.toggleState = function() {
         dataService.server_state =
             (dataService.server_state == 'Running') ? 'Off' : 'Running';
+      };
+
+      $scope.toggleForceToBIOS = function() {
+        var toggleState = (dataService.ForceToBIOS_state ==
+                           APIUtils.FORCE_TO_BIOS_STATE_TEXT.on) ?
+            APIUtils.FORCE_TO_BIOS_STATE_TEXT.off :
+            APIUtils.FORCE_TO_BIOS_STATE_TEXT.on;
+        dataService.ForceToBIOS_state = (dataService.ForceToBIOS_state ==
+                                         APIUtils.FORCE_TO_BIOS_STATE_TEXT.on) ?
+            APIUtils.FORCE_TO_BIOS_STATE_TEXT.off :
+            APIUtils.FORCE_TO_BIOS_STATE_TEXT.on;
+        APIUtils.setForceToBIOSState(toggleState)
+            .then(
+                function(response) {},
+                function(errors) {
+                  toastService.error('Failed to set Boot to BIOS ');
+                  console.log(JSON.stringify(errors));
+                  // Reload to get correct current state
+                  $route.reload();
+                })
       };
 
       $scope.powerOn = function() {
