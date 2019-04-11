@@ -40,6 +40,7 @@ window.angular && (function(angular) {
               .when('/server-control/remote-console', {
                 'template':
                     require('./controllers/remote-console-controller.html'),
+                'controller': 'remoteConsoleController',
                 authenticated: true
               })
               .when('/server-control/remote-console-window', {

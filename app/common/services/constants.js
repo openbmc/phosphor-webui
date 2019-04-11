@@ -38,6 +38,8 @@ window.angular && (function(angular) {
       HOST_STATE: {on: 1, off: -1, error: 0, unreachable: -2},
       LED_STATE: {on: true, off: false},
       LED_STATE_TEXT: {on: 'on', off: 'off'},
+      SOL_STATE: {on: true, off: false},
+      SOL_STATE_TEXT: {on: 'on', off: 'off'},
       SEVERITY_TO_PRIORITY_MAP: {
         Emergency: 'High',
         Alert: 'High',

@@ -3,7 +3,7 @@
  *
  * @module app/serverControl
  * @exports remoteConsoleWindowController
- * @name remoteConsoleController
+ * @name remoteConsoleWindowController
  */
 
 window.angular && (function(angular) {
