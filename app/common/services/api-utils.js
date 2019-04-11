@@ -9,8 +9,8 @@
 window.angular && (function(angular) {
   'use strict';
   angular.module('app.common.services').factory('APIUtils', [
-    '$http', 'Constants', '$q', 'dataService', '$interval',
-    function($http, Constants, $q, DataService, $interval) {
+    '$http', 'Constants', '$q', 'dataService', '$interval', 'toastService',
+    function($http, Constants, $q, DataService, $interval, toastService) {
       var getScaledValue = function(value, scale) {
         scale = scale + '';
         scale = parseInt(scale, 10);
@@ -31,6 +31,8 @@ window.angular && (function(angular) {
         HOST_STATE: Constants.HOST_STATE,
         LED_STATE: Constants.LED_STATE,
         LED_STATE_TEXT: Constants.LED_STATE_TEXT,
+        SOL_STATE: Constants.SOL_STATE,
+        SOL_STATE_TEXT: Constants.SOL_STATE_TEXT,
         HOST_SESSION_STORAGE_KEY: Constants.API_CREDENTIALS.host_storage_key,
         getChassisState: function() {
           var deferred = $q.defer();
@@ -846,6 +848,36 @@ window.angular && (function(angular) {
               .then(function(response) {
                 return response.data;
               });
+        },
+        setSOLState: function(state) {
+          var data =
+              JSON.stringify({'SerialConsole': {'ServiceEnabled': state}});
+          return $http({
+            method: 'PATCH',
+            url: DataService.getHost() + '/redfish/v1/Managers/bmc',
+            withCredentials: true,
+            data: data
+          });
+        },
+        getSOLState: function() {
+          var deferred = $q.defer();
+
+          $http({
+            method: 'GET',
+            url: DataService.getHost() + '/redfish/v1/Managers/bmc',
+            withCredentials: true
+          })
+              .then(
+                  function(response) {
+                    var json = JSON.stringify(response.data);
+                    var content = JSON.parse(json);
+                    deferred.resolve(content.SerialConsole.ServiceEnabled);
+                  },
+                  function(error) {
+                    console.log(error);
+                    deferred.reject(error);
+                  });
+          return deferred.promise;
         },
         getLogs: function() {
           var deferred = $q.defer();
