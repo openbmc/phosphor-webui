@@ -5,6 +5,21 @@
   <section class="row column">
     <div class="page-header">
       <h2>Access the Serial over LAN console</h2>
+      <div class="sol-switch__label inline float-right">
+        <p class="inline quick-links__label h2">
+          <span>Enable</span>
+        </p>
+      </div>
+      <div class="toggle float-right float-bottom">
+        <input id="toggle__switch-round"
+          class="toggle-switch toggle-switch__round-flat"
+          type="checkbox"
+          tabindex="0"
+          ng-click="toggleSOL()"
+          ng-checked="SOL_state == 'on'"
+          ng-disabled="dataService.server_unreachable">
+        <label for="toggle__switch-round" tabindex="0">SOL</label>
+      </div>
     </div>
   </section>
   <section class="row column">
