@@ -1176,18 +1176,24 @@ window.angular && (function(angular) {
               });
         },
         getServerInfo: function() {
-          // TODO: openbmc/openbmc#3117 Need a way via REST to get
-          // interfaces so we can get the system object(s) by the looking
-          // for the system interface.
-          return $http({
-                   method: 'GET',
-                   url: DataService.getHost() +
-                       '/xyz/openbmc_project/inventory/system',
-                   withCredentials: true
-                 })
-              .then(function(response) {
-                return response.data;
-              });
+          var deferred = $q.defer();
+
+          $http({
+            method: 'GET',
+            url: DataService.getHost() + '/redfish/v1/Systems/system',
+            withCredentials: true,
+          })
+              .then(
+                  function(response) {
+                    var json = JSON.stringify(response.data);
+                    var content = JSON.parse(json);
+                    deferred.resolve(content);
+                  },
+                  function(error) {
+                    console.log(error);
+                    deferred.reject(error);
+                  });
+          return deferred.promise;
         },
         getBMCTime: function() {
           return $http({
