@@ -43,7 +43,6 @@ window.angular && (function(angular) {
         var getFirmwaresPromise = APIUtils.getFirmwares().then(
             function(data) {
               $scope.bmc_firmware = data.bmcActiveVersion;
-              $scope.server_firmware = data.hostActiveVersion;
             },
             function(error) {
               console.log(JSON.stringify(error));
@@ -71,7 +70,7 @@ window.angular && (function(angular) {
 
         var getServerInfoPromise = APIUtils.getServerInfo().then(
             function(data) {
-              $scope.server_info = data.data;
+              $scope.server_info = data;
             },
             function(error) {
               console.log(JSON.stringify(error));
