@@ -1,0 +1,116 @@
+<loader loading="loading"></loader>
+<div id="configuration-ldap">
+  <div class="row column">
+    <h1>LDAP role group settings</h1>
+  </div>
+  <div class="row column">
+    <p>Configure LDAP settings and manage role groups.</p>
+  </div>
+  <div class="row column configure-settings">
+    <div class="row column">
+      <div class="align-self-center enable__check">
+        <label class="control-check">
+          <input type="checkbox" ng-change="ldapProperties.ServiceEnabledUpdated = true" ng-model="ldapProperties.ServiceEnabled"
+                 ng-checked="ldapProperties.serviceEnabled"/>
+          <span class="control__indicator"></span>
+        </label>
+      </div>
+      <div>
+        <b>Enable LDAP authentication</b> <br>
+        LDAP authentication must be enabled to modify role groups.
+      </div>
+    </div>
+    <div class="row column configuration__details" ng-if="ldapProperties.ServiceEnabled || wasOriginallyEnabled">
+      <div class="small-3">
+        <div class="row column">
+          <div class="align-self-center enable__check">
+            <label class="control-check">
+              <input type="checkbox" ng-model="ldapProperties.useSSL"
+                     ng-checked="ldapProperties.useSSL"/>
+              <span class="control__indicator"></span>
+            </label>
+          </div>
+          <div>
+            Secure LDAP using SSL
+          </div>
+        </div>
+        <div ng-if="ldapProperties.useSSL">
+          <!--<div class="certificate__info">-->
+            <!--&lt;!&ndash;TODO: get CA certificate information once merged&ndash;&gt;-->
+            <!--<label>CA certificate file</label>-->
+            <!--<span>what goes gere</span>-->
+          <!--</div>-->
+          <div class="certificate__info">
+            <label>Client certificate file</label>
+            <span>{{clientCertificateExpires ? (clientCertificateExpires | localeDate) : 'none'}}</span>
+          </div>
+        </div>
+        <div class="row column">
+          <!--TODO: link to certificate page-->
+          <a href="#/configuration/certificate">Go to SSL certificates</a>
+        </div>
+      </div>
+      <div class="small-9 server__info">
+        <form id="ldap__configuration" name="ldap__configuration" ng-class="{'submitted': submitted}" novalidate>
+          <div class="row column">
+            <div class="small-4 ldap__field">
+              <label for="ldap__uri">Server uri</label>
+              <input id="ldap__uri" name="ldap__uri" type="text" ng-change="ldapProperties.ServiceAddressesUpdated = true" ng-model="ldapProperties.ServiceAddresses[0]" required/>
+              <div ng-messages="ldap__configuration.ldap__uri.$error" class="form-error" ng-class="{'visible' : ldap__configuration.ldap__uri.$touched || submitted}">
+                <p ng-message="required">Field is required</p>
+              </div>
+            </div>
+            <div class="small-4 ldap__field">
+              <label for="ldap__bind__dn">Bind DN</label>
+              <input id="ldap__bind__dn" name="ldap__bind__dn" type="text" ng-change="ldapProperties.UsernameUpdated = true" ng-model="ldapProperties.Username" required/>
+              <div ng-messages="ldap__configuration.ldap__bind__dn.$error" class="form-error" ng-class="{'visible' : ldap__configuration.ldap__bind__dn.$touched || submitted}">
+                <p ng-message="required">Field is required</p>
+              </div>
+            </div>
+            <div class="small-4 ldap__field">
+              <label for="ldap__bind_pw">Bind password</label>
+              <input id="ldap__bind_pw" type="{{showpassword ? 'text' : 'password'}}" name="ldap__bind_pw" ng-change="ldapProperties.PasswordUpdated = true" autocomplete="off" ng-model="ldapProperties.Password" required/>
+                <button ng-model="showpassword" ng-click="togglePassword = !togglePassword; showpassword = !showpassword;" class="password-toggle">
+                <span ng-hide="togglePassword">Show</span>
+                <span ng-show="togglePassword">Hide</span>
+              </button>
+              <div ng-messages="ldap__configuration.ldap__bind_pw.$error" class="form-error" ng-class="{'visible' : ldap__configuration.ldap__bind_pw.$touched || submitted}">
+                <p ng-message="required">Field is required</p>
+              </div>
+            </div>
+          </div>
+          <div class="row column">
+            <div class="small-4 ldap__field">
+              <label for="ldap__base__dn">Base DN</label>
+              <input id="ldap__base__dn" name="ldap__base__dn" type="text" ng-change="ldapProperties.BaseDistinguishedNamesUpdated = true" ng-model="ldapProperties.BaseDistinguishedNames[0]" required/>
+              <div ng-messages="ldap__configuration.ldap__base__dn.$error" class="form-error" ng-class="{'visible' : ldap__configuration.ldap__base__dn.$touched || submitted}">
+                <p ng-message="required">Field is required</p>
+              </div>
+            </div>
+            <div class="small-4 ldap__field">
+              <label for="ldap__user_attribute">User id attribute (optional)</label>
+              <input id="ldap__user_attribute" name="ldap__user_attribute" type="text" ng-change="ldapProperties.UsernameAttributeUpdated = true" ng-model="ldapProperties.UsernameAttribute"/>
+            </div>
+            <div class="small-4 ldap__field">
+              <label for="ldap__group_attribute">Group id attribute (optional)</label>
+              <input id="ldap__group_attribute" name="ldap__group_attribute" type="text" ng-change="ldapProperties.GroupsAttributeUpdated = true" ng-model="ldapProperties.GroupsAttribute"/>
+            </div>
+          </div>
+          <!--TODO: add backup URI when implemented in backend-->
+          <!--<div class="row column">-->
+            <!--<div class="small-4 ldap__field">-->
+              <!--<label for="ldap__uri__backup">Back-up server uri (optional)</label>-->
+              <!--<input id="ldap__uri__backup" name="ldap__uri__backup" type="text" ng-change="ldapProperties.ServiceAddressesUpdated = true" ng-model="ldapProperties.ServiceAddresses[1]"/>-->
+            <!--</div>-->
+          <!--</div>-->
+          <div class="row column configuration__buttons">
+            <button type="button" class="button btn-primary" ng-click="$parent.submitted=true; ldap__configuration.$valid && saveLdapSettings(); ldap__configuration.$setUntouched()">Save</button>
+            <button type="button" class="btn-secondary button" ng-click="loadLdap()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+

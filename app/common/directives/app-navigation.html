@@ -101,9 +101,11 @@
       <a href="#/configuration/firmware" tabindex="19" ng-click="closeSubnav()">Firmware</a></li>
     <li ng-class="{'active': (path == '/configuration' || path == '/configuration/date-time')}">
       <a href="#/configuration/date-time" tabindex="20" ng-click="closeSubnav()">Date and time settings</a></li>
+    <li ng-class="{'active': (path == '/configuration' || path == '/configuration/ldap')}">
+      <a href="#/configuration/ldap" tabindex="21" ng-click="closeSubnav()">LDAP settings</a></li>
   </ul>
   <ul class="nav__second-level btn-users" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'users')}">
     <li ng-class="{'active': (path == '/users' || path == '/users/manage-accounts')}">
-      <a href="#/users/manage-accounts" tabindex="21" ng-click="closeSubnav()">Manage user account</a></li>
+      <a href="#/users/manage-accounts" tabindex="22" ng-click="closeSubnav()">Manage user account</a></li>
   </ul>
 </nav>

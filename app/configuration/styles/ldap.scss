@@ -1,0 +1,64 @@
+// LDAP SCSS
+
+#configuration-ldap {
+  h1 {
+    margin-bottom: .5em;
+  }
+  input {
+    height: 40px;
+  }
+  select {
+    border-color: $darkgrey;
+    height: 40px;
+    margin: 0;
+  }
+}
+
+.enable__check {
+ margin-right: 2em;
+}
+
+.configure-settings {
+  background-color: $lightgrey;
+  padding:1.5em;
+  margin-top: 1em;
+}
+.configuration__details {
+  padding:1.5em;
+}
+.server__info {
+  .ldap__field {
+    padding-left:.5em;
+    padding-right:.5em;
+    padding-bottom:.5em;
+  }
+  .configuration__buttons{
+    .button{
+      float: right;
+      margin: .5em;
+    }
+    .btn-secondary{
+      background-color: $white;
+    }
+    display: inline-block;
+    float: right;
+  }
+  padding-left: 1.2em;
+  border-left: 1px solid $medgrey;
+}
+.certificate__info {
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+.password-toggle {
+  margin-right: .7em;
+  padding: 0;
+  color: $primebtn__bg;
+  font-size: .8em;
+  float: right;
+  margin-left: -25px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+}
