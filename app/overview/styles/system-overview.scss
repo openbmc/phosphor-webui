@@ -46,8 +46,12 @@ input.modal__edit-server-name {
   margin-bottom: 0;
 }
 
-.modal__char-count {
-  text-align: right;
+.modal__char-count,
+.modal__error {
   font-size: .8em;
   color: $darkgrey;
+}
+
+.modal__error {
+  color: $error-color;
 }
