@@ -159,16 +159,19 @@
       </h3>
     </div>
     <div class="modal__content">
-      <p>The hostname is displayed in the header and can contain any characters up to a total of 64</p>
-      <form>
+      <label>Hostname</label>
+      <p>Hostname must be less than 64 characters and must not contain spaces.</p>
+      <form name="edit_hostname_text">
         <label for="editServerName" class="hide"></label>
-        <input id="editServerName" class="modal__edit-server-name" maxlength="64" type="text" ng-model="char_count" ng-trim="false">
-        <p class="modal__char-count">{{64 - char_count.length}}/64</p>
+        <input id="editServerName" class="modal__edit-server-name" maxlength="64" type="text" ng-model="newHostname" ng-trim="false" name="hostname" ng-pattern="/^\S{0,64}$/" required/>
+        <span class="modal__hostname-spaces-error" ng-show="edit_hostname_text.hostname.$error.pattern">Invalid format. Please remove spaces.</span>
+        <span class="modal__char-count" ng-hide="edit_hostname_text.hostname.$error.pattern">{{0 + newHostname.length}}/64</span>
+        
       </form>
     </div>
     <div class="modal__button-wrapper">
-      <button class="inline btn-secondary" ng-click="edit_hostname= false;">Cancel</button>
-      <button class="inline btn-primary" ng-click="saveHostname(char_count);">Save</button>
+      <button class="inline btn-secondary" ng-click="edit_hostname= false; newHostname = dataService.hostname">Cancel</button>
+      <button class="inline btn-primary" ng-click="saveHostname(newHostname);" ng-disabled="edit_hostname_text.$invalid" ng-class="{'disabled' : edit_hostname_text.$invalid}">Save</button>
     </div>
   </div>
 </section>
