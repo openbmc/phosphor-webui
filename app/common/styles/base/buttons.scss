@@ -11,7 +11,6 @@ button, .button, .submit {
     cursor: pointer;
   }
   &.disabled {
-    opacity: 0.2;
     color: $btn__disabled-txt;
     &:hover {
       cursor: default;
@@ -30,8 +29,8 @@ button, .button, .submit {
     @include fastTransition-all;
   }
   &.disabled {
-    background: $btn__disabled-bg;
-    color: $btn__disabled-txt;
+    background: $primebtn__disabled-bg;
+    color: $primebtn__disabled-txt;
     @include fastTransition-all;
     &:hover {
       cursor: default;
