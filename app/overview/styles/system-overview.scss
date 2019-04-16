@@ -47,7 +47,13 @@ input.modal__edit-server-name {
 }
 
 .modal__char-count {
-  text-align: right;
+  text-align: left;
   font-size: .8em;
   color: $darkgrey;
+}
+
+.modal__hostname-spaces-error {
+  text-align: left;
+  font-size: .8em;
+  color: $alert__error;
 }
