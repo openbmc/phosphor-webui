@@ -24,6 +24,7 @@ window.angular && (function(angular) {
       $scope.bmc_ip_addresses = [];
       $scope.loading = false;
       $scope.edit_hostname = false;
+      $scope.newHostname = '';
 
       loadOverviewData();
 
@@ -103,6 +104,7 @@ window.angular && (function(angular) {
               // TODO: openbmc/openbmc#3150 Support IPV6 when
               // officially supported by the backend
               $scope.bmc_ip_addresses = data.formatted_data.ip_addresses.ipv4;
+              $scope.newHostname = data.hostname;
             },
             function(error) {
               console.log(JSON.stringify(error));
