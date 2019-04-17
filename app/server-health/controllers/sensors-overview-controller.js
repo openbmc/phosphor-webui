@@ -9,27 +9,27 @@
 window.angular && (function(angular) {
   'use strict';
   angular.module('app.overview').controller('sensorsOverviewController', [
-    '$scope', '$q', '$window', 'APIUtils', 'dataService', 'Constants',
-    function($scope, $q, $window, APIUtils, dataService, Constants) {
+    '$scope', '$log', '$window', 'APIUtils', 'dataService', 'Constants',
+    function($scope, $log, $window, APIUtils, dataService, Constants) {
       $scope.dataService = dataService;
 
-      $scope.loading = false;
-      $scope.componentList = [];
-      $scope.sensorsInfo = {};
-      $scope.fullSensorsInfo = [];
-      $scope.selectedComponent = {};
-      $scope.showThresholds = true;  // TODO: add button to toggle this..
-      $scope.showCompDropdown = false;
+      $scope.dropdown_selected = false;
+
+      $scope.$log = $log;
       $scope.customSearch = '';
       $scope.searchTerms = [];
       $scope.messages = Constants.MESSAGES.SENSOR;
-      $scope.filteredVoltSensors = [];
-      $scope.filteredTempSensors = [];
-      $scope.filteredFanSensors = [];
-
       $scope.selectedSeverity =
-          {all: true, ok: false, warning: false, critical: false};
+          {all: true, normal: false, warning: false, critical: false};
       $scope.export_name = 'sensors.json';
+      $scope.loading = false;
+      $scope.jsonData = function(data) {
+        var dt = {};
+        data.data.forEach(function(item) {
+          dt[item.original_data.key] = item.original_data.value;
+        });
+        return JSON.stringify(dt);
+      };
 
       $scope.clear = function() {
         $scope.customSearch = '';
@@ -64,7 +64,7 @@ window.angular && (function(angular) {
         $scope.selectedSeverity.all = !$scope.selectedSeverity.all;
 
         if ($scope.selectedSeverity.all) {
-          $scope.selectedSeverity.ok = false;
+          $scope.selectedSeverity.normal = false;
           $scope.selectedSeverity.warning = false;
           $scope.selectedSeverity.critical = false;
         }
@@ -73,9 +73,9 @@ window.angular && (function(angular) {
       $scope.toggleSeverity = function(severity) {
         $scope.selectedSeverity[severity] = !$scope.selectedSeverity[severity];
 
-        if (['ok', 'warning', 'critical'].indexOf(severity) > -1) {
+        if (['normal', 'warning', 'critical'].indexOf(severity) > -1) {
           if ($scope.selectedSeverity[severity] == false &&
-              (!$scope.selectedSeverity.ok &&
+              (!$scope.selectedSeverity.normal &&
                !$scope.selectedSeverity.warning &&
                !$scope.selectedSeverity.critical)) {
             $scope.selectedSeverity.all = true;
@@ -83,10 +83,10 @@ window.angular && (function(angular) {
           }
         }
 
-        if ($scope.selectedSeverity.ok && $scope.selectedSeverity.warning &&
+        if ($scope.selectedSeverity.normal && $scope.selectedSeverity.warning &&
             $scope.selectedSeverity.critical) {
           $scope.selectedSeverity.all = true;
-          $scope.selectedSeverity.ok = false;
+          $scope.selectedSeverity.normal = false;
           $scope.selectedSeverity.warning = false;
           $scope.selectedSeverity.critical = false;
         } else {
@@ -98,87 +98,31 @@ window.angular && (function(angular) {
         if ($scope.selectedSeverity.all) return true;
 
         return (
-            ((sensor.Status.Health == 'OK') && $scope.selectedSeverity.ok) ||
-            ((sensor.Status.Health == 'Warning') &&
+            (sensor.severity_flags.normal && $scope.selectedSeverity.normal) ||
+            (sensor.severity_flags.warning &&
              $scope.selectedSeverity.warning) ||
-            ((sensor.Status.Health == 'Critical') &&
+            (sensor.severity_flags.critical &&
              $scope.selectedSeverity.critical));
       };
       $scope.filterBySearchTerms = function(sensor) {
         if (!$scope.searchTerms.length) return true;
 
         for (var i = 0, length = $scope.searchTerms.length; i < length; i++) {
-          // TODO: Form it while getting data
-          var search_text = sensor.Name.toLowerCase();
-          if (search_text.indexOf($scope.searchTerms[i].toLowerCase()) == -1)
+          if (sensor.search_text.indexOf($scope.searchTerms[i].toLowerCase()) ==
+              -1)
             return false;
         }
         return true;
       };
 
-      $scope.selectComponent = function(index) {
-        $scope.loading = true;
-        $scope.showCompDropdown = false;
-        if (index == -1) {
-          // Flattened sensor data to display all sensors.
-          $scope.selectedComponent = {'Name': 'All'};
-          $scope.sensorsInfo = {'Temperatures': [], 'Fans': [], 'Voltages': []};
-          // Looping through all chassis collections to flattened sensors data
-          angular.forEach($scope.fullSensorsInfo, function(record) {
-            $scope.sensorsInfo.Temperatures = [].concat(
-                $scope.sensorsInfo.Temperatures, record.sensors.Temperatures);
-            $scope.sensorsInfo.Fans =
-                [].concat($scope.sensorsInfo.Fans, record.sensors.Fans);
-            $scope.sensorsInfo.Voltages =
-                [].concat($scope.sensorsInfo.Voltages, record.sensors.Voltages);
-          });
-        } else {
-          $scope.selectedComponent = $scope.fullSensorsInfo[index];
-          $scope.sensorsInfo = $scope.selectedComponent['sensors'];
-        }
-        $scope.loading = false;
-      };
-
-      function getComponentSensors(component) {
-        var data = component;
-        data['sensors'] = {'Temperatures': [], 'Fans': [], 'Voltages': []};
-        APIUtils.getSensorsInfo(component.Thermal['@odata.id'])
-            .then(function(res) {
-              if (res.hasOwnProperty('Temperatures')) {
-                data.sensors['Temperatures'] = res.Temperatures;
-              }
-              if (res.hasOwnProperty('Fans')) {
-                data.sensors['Fans'] = res.Fans;
-              }
-              return;
-            });
-        APIUtils.getSensorsInfo(component.Power['@odata.id'])
-            .then(function(res) {
-              if (res.hasOwnProperty('Voltages')) {
-                data.sensors['Voltages'] = res.Voltages;
-              }
-              return;
-            });
-        return data;
-      };
-
       $scope.loadSensorData = function() {
         $scope.loading = true;
-        APIUtils.getAllChassisCollection()
-            .then(
-                function(chassisList) {
-                  angular.forEach(chassisList, function(chassis) {
-                    var resData = getComponentSensors(chassis);
-                    $scope.fullSensorsInfo.push(resData);
-                  });
-                },
-                function(error) {
-                  console.log(JSON.stringify(error));
-                })
-            .finally(function() {
-              $scope.selectComponent(0);
-              $scope.loading = false;
-            });
+        APIUtils.getAllSensorStatus(function(data, originalData) {
+          $scope.data = data;
+          $scope.originalData = originalData;
+          $scope.export_data = JSON.stringify(originalData);
+          $scope.loading = false;
+        });
       };
 
       $scope.loadSensorData();
