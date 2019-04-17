@@ -22,6 +22,7 @@
   background-color: $lightgrey;
   padding:1.5em;
   margin-top: 1em;
+  margin-bottom: 3em;
 }
 .configuration__details {
   padding:1.5em;
@@ -61,4 +62,131 @@
   margin-top: -25px;
   position: relative;
   z-index: 2;
+}
+
+.ldap__table {
+  border-left: 1px solid $medgrey;
+  border-right: 1px solid $medgrey;
+  .table__row-header {
+    width: 100%;
+    border-bottom: 1px solid $medgrey;
+    background-color: $darkbg__primary;
+    color: white;
+    font-weight: 700;
+  }
+  .table__row-value {
+    width: 100%;
+    border-bottom: 1px solid $medgrey;
+  }
+  .table__row-value {
+    width: 100%;
+    border-bottom: 1px solid $medgrey;
+  }
+  .table__cell-ldap {
+    width: 30%;
+    padding: .8em;
+  }
+  .table__cell-select {
+    width: 8%;
+    padding: .8em;
+    padding-left: 1em;
+  }
+  .table__cell-sort {
+    width: 3%;
+    padding: .3em 0em;
+  }
+  .table_cell-ldap {
+    width: 30%;
+    padding: .8em;
+  }
+  .table_cell-buttons {
+    width: 32%;
+    text-align: right;
+    padding: .4em .8em .8em .8em;
+    padding-right: 1.5em;
+  }
+  .trash_button {
+    padding: 0;
+    margin: .5em;
+    width: 1.4em;
+    height: 1.3em;
+  }
+  .edit_button {
+    padding: 0;
+    width: 1.5em;
+    height: 1.2em;
+  }
+}
+
+.btn-add-group, .button-remove-group {
+  color: $primebtn__bg;
+  padding: .75em 0;
+}
+.btn-add-group {
+  margin-left: .5em;
+  color: $primebtn__bg;
+  padding: .75em 0;
+  &:before {
+    content: url(../assets/images/icon-plus.svg);
+    width: 18px;
+    float: left;
+    margin-right: 5px;
+    margin-top: -2px;
+  }
+}
+  .btn-remove-group{
+    color: $primebtn__bg;
+    padding: .75em 0;
+    margin-left: 1em;
+  &:before {
+    content: url(../assets/images/icon-trashcan-blue.svg);
+    width: 18px;
+    float: left;
+    margin-right: 5px;
+    margin-top: -2px;
+  }
+}
+
+.modal__content-ldap {
+  .edit__name{
+    margin-bottom: 1em;
+  }
+  margin-bottom: 1em;
+  padding-bottom: 2em;
+  border-bottom: 1px solid $medgrey;
+}
+
+.sort-ascending {
+  display: block;
+  padding: 0;
+  transform: rotate(-90deg);
+  font-size: 1em;
+  color: lighten($darkgrey, 10%);
+  &:hover {
+    color: $darkbg__accent;
+  }
+  &:after {
+    content: '\276F'
+  }
+  &:focus {
+    outline: 0;
+    color: $darkbg__accent;
+  }
+}
+.sort-descending {
+  display: block;
+  padding: 0;
+  transform: rotate(-90deg);
+  font-size: 1em;
+  color: lighten($darkgrey, 10%);
+  &:hover {
+    color: $darkbg__accent;
+  }
+  &:after {
+    content: '\276e'
+  }
+  &:focus {
+    outline: 0;
+    color: $darkbg__accent;
+  }
 }
