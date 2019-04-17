@@ -19,6 +19,7 @@ window.angular && (function(angular) {
       $scope.originalProperties = {};
       $scope.submitted = false;
       $scope.clientCertificateExpires = '';
+      $scope.roleGroups = [];
 
       $scope.loadLdap = function() {
         $scope.loading = true;
@@ -41,6 +42,9 @@ window.angular && (function(angular) {
               };
               $scope.wasOriginallyEnabled = data.LDAP.ServiceEnabled;
               $scope.addUpdateChecks();
+              if (data.RemoteRoleMapping) {
+                $scope.roleGroups = data.ActiveDirectory.RemoteRoleMapping;
+              }
             },
             function(error) {
               console.log(JSON.stringify(error));
