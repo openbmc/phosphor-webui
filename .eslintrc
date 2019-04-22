@@ -1,0 +1,13 @@
+{
+  "env": {
+    "browser": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2015
+  },
+  "extends": ["plugin:angular/johnpapa", "plugin/prettier"],
+  "plugins": ["angular", "prettier"],
+  "rules": {
+    "prettier/prettier": "error"
+  }
+}
