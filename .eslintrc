@@ -1,0 +1,10 @@
+{
+  "env": {
+    "browser": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2015
+  },
+  "extends": ["google", "plugin:prettier/recommended"],
+  "plugins": ["prettier"]
+}
