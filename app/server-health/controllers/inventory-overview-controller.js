@@ -31,8 +31,8 @@ window.angular && (function(angular) {
       };
 
       $scope.doSearchOnEnter = function(event) {
-        var search =
-            $scope.customSearch.replace(/^\s+/g, '').replace(/\s+$/g, '');
+        const search =
+          $scope.customSearch.replace(/^\s+/g, '').replace(/\s+$/g, '');
         if (event.keyCode === 13 && search.length >= 2) {
           $scope.searchTerms = $scope.customSearch.split(' ');
         } else {
@@ -43,8 +43,8 @@ window.angular && (function(angular) {
       };
 
       $scope.doSearchOnClick = function() {
-        var search =
-            $scope.customSearch.replace(/^\s+/g, '').replace(/\s+$/g, '');
+        const search =
+          $scope.customSearch.replace(/^\s+/g, '').replace(/\s+$/g, '');
         if (search.length >= 2) {
           $scope.searchTerms = $scope.customSearch.split(' ');
         } else {
@@ -57,13 +57,14 @@ window.angular && (function(angular) {
       $scope.filterBySearchTerms = function(hardware) {
         if (!$scope.searchTerms.length) return true;
 
-        for (var i = 0, length = $scope.searchTerms.length; i < length; i++) {
+        for (let i = 0, length = $scope.searchTerms.length; i < length; i++) {
           if (hardware.search_text.indexOf(
-                  $scope.searchTerms[i].toLowerCase()) == -1)
+              $scope.searchTerms[i].toLowerCase()) == -1) {
             return false;
+          }
         }
         return true;
       };
-    }
+    },
   ]);
 })(angular);
