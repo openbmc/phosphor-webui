@@ -710,30 +710,15 @@ window.angular && (function(angular) {
             data: JSON.stringify({'data': state})
           })
         },
-        bmcReboot: function(callback) {
-          $http({
+        bmcReboot: function() {
+          return $http({
             method: 'PUT',
             url: DataService.getHost() +
                 '/xyz/openbmc_project/state/bmc0/attr/RequestedBMCTransition',
             withCredentials: true,
             data: JSON.stringify(
                 {'data': 'xyz.openbmc_project.State.BMC.Transition.Reboot'})
-          })
-              .then(
-                  function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
-                    if (callback) {
-                      return callback(content.status);
-                    }
-                  },
-                  function(error) {
-                    if (callback) {
-                      callback(error);
-                    } else {
-                      console.log(error);
-                    }
-                  });
+          });
         },
         getLastRebootTime: function() {
           return $http({
