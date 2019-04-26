@@ -710,7 +710,8 @@ window.angular && (function(angular) {
             data: JSON.stringify({'data': state})
           })
         },
-        bmcReboot: function(callback) {
+        bmcReboot: function() {
+          var deferred = $q.defer();
           $http({
             method: 'PUT',
             url: DataService.getHost() +
@@ -723,17 +724,13 @@ window.angular && (function(angular) {
                   function(response) {
                     var json = JSON.stringify(response.data);
                     var content = JSON.parse(json);
-                    if (callback) {
-                      return callback(content.status);
-                    }
+                    deferred.resolve(content);
                   },
                   function(error) {
-                    if (callback) {
-                      callback(error);
-                    } else {
-                      console.log(error);
-                    }
+                    console.log(error);
+                    deferred.reject(error);
                   });
+          return deferred.promise;
         },
         getLastRebootTime: function() {
           return $http({
