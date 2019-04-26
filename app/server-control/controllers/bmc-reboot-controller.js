@@ -10,8 +10,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.serverControl').controller('bmcRebootController', [
-    '$scope', '$window', 'APIUtils', 'dataService',
-    function($scope, $window, APIUtils, dataService) {
+    '$scope', '$window', 'APIUtils', 'dataService', 'toastService',
+    function($scope, $window, APIUtils, dataService, toastService) {
       $scope.dataService = dataService;
       $scope.confirm = false;
       APIUtils.getLastRebootTime().then(
@@ -28,12 +28,14 @@ window.angular && (function(angular) {
         $scope.confirm = true;
       };
       $scope.reboot = function() {
-        dataService.setUnreachableState();
-        APIUtils.bmcReboot(function(response) {
-          //@NOTE: using common event to reload server status, may be a better
-          // event listener name?
-          $scope.$emit('user-logged-in', {});
-        });
+        APIUtils.bmcReboot().then(
+            function(response) {
+              toastService.success('BMC is rebooting.')
+            },
+            function(error) {
+              console.log(JSON.stringify(error));
+              toastService.error('Unable to reboot BMC.');
+            });
       };
     }
   ]);
