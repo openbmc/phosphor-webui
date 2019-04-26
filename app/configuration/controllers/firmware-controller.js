@@ -122,12 +122,7 @@ window.angular && (function(angular) {
                       // TODO: remove this timeout after sufficient time has
                       // passed.
                       $timeout(function() {
-                        APIUtils.bmcReboot(
-                            function(response) {},
-                            function(error) {
-                              console.log(JSON.stringify(error));
-                              toastService.error('Unable to reboot BMC');
-                            });
+                        APIUtils.bmcReboot(function(response) {});
                       }, 10000);
                     }
                     if ($scope.activate.reboot &&
