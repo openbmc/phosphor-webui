@@ -92,12 +92,15 @@ input[type="submit"], .submit {
 //Custom select
 select{
   border-radius: 0px;
-  height:auto;
+  height: auto;
+  padding-right: 0.5rem; //override inherited Foundation style
   @include fastTransition-all;
   @include bgImage__arrowDown-primary;
   &:focus {
     border-color: $lightbg__accent;
-    @include bgImage__arrowDown-accent;
     box-shadow: 0 0 0;
+  }
+  &[disabled] {
+    @include bgImage__arrowDown-disabled;
   }
 }
