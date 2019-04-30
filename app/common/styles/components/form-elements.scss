@@ -1,26 +1,17 @@
 // Drop downs
 .dropdown__button {
   position: relative;
-  padding: .5em .8em;
+  padding-top: .5em;
+  padding-bottom: .5em;
+  padding-left: .5em;
+  padding-right: 1.5em;
   margin-top: 0;
   border: 1px solid $input-border;
   min-width: 70px;
-  padding-right: 25px;
   font-weight: 400;
-  &.active,
-  &:hover {
-    background: $dropdown__focus-bg;
-  }
-  &:after {
-    content: '\25B8';
-    display: inline-block;
-    margin-left: 5px;
-    font-size: .8em;
-    transform: translateY(-50%) rotate(90deg);
-    color: $lightbg__primary;
-    position: absolute;
-    right: .8em;
-    top: 50%;
+  @include bgImage__arrowDown-primary;
+  &[disabled] {
+    @include bgImage__arrowDown-disabled;
   }
 }
 
