@@ -52,15 +52,19 @@
 
 //Custom SVG arrow
 @mixin bgImage__arrowDown-primary {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: #19273c'></polygon></svg>");
+  background-image: url(../assets/images/icon-caret--down.svg);
+  background-size: 0.8em;
+  background-repeat: no-repeat;
+  background-position-y: center;
+  background-position-x: calc(100% - .5em);
 }
 
-@mixin bgImage__arrowDown-accent {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: #2d60e5'></polygon></svg>");
-}
-
-@mixin bgImage__arrowDown-grey {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: #b8c1c1'></polygon></svg>");
+@mixin bgImage__arrowDown-disabled {
+  background-image: url(../assets/images/icon-caret--down-disabled.svg);
+  background-size: 0.8em;
+  background-repeat: no-repeat;
+  background-position-y: center;
+  background-position-x: calc(100% - .5em);
 }
 
 @mixin calcColumn-5 {
