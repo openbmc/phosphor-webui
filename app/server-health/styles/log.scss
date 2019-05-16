@@ -255,9 +255,6 @@
     text-transform: uppercase;
     font-weight: 700;
     min-width: 103px;
-    @include mediaQuery(medium) {
-      margin: 0 1em 0 1.5em;
-    }
     &.high-priority {
       color: darken($highPriorityColor, 5%);
     }
@@ -270,17 +267,6 @@
     &.event-resolved {
       color: $resolvedColor;
     }
-  }
-
-  //Event description
-  .event__description {
-    font-weight: 400;
-    margin-left: 1em;
-    @include mediaQuery(small) {
-      margin-left: 1.5em;
-      margin-right: 1em;
-    }
-    word-break: break-all;
   }
 
   //Event ID
@@ -382,6 +368,14 @@
     display: inline-block;
   }
 }
+
+/*p*/.event__description {
+  margin-bottom: 0;
+  line-height: 1.7;
+  font-weight: 400;
+  word-break: break-word;
+}
+
 //end event-log__events
 
 
