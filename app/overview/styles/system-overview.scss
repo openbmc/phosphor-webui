@@ -25,7 +25,10 @@
 }
 .overview__event-log {
   padding-top: 2em;
-  .event__description {color: $black; text-decoration: none;}
+  .event__description {
+    color: $black;
+    text-decoration: none;
+  }
   .control-check {display: none;}
   .accord-trigger {
     transform: rotate(0deg) translateY(-50%);
@@ -34,11 +37,7 @@
     right: 0;
   }
   .event-log__event-info {
-    width: 90%;
     padding-left: 1.4em;
-  }
-  .event-log__single-event .event__description {
-    margin-left: 2.3em;
   }
 }
 
