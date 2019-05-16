@@ -1,12 +1,10 @@
-button, .button, .submit {
+button, .button, .submit, .btn, [type='button'] {
   font-size: 1em;
   @include fontFamilyBold;
   text-transform: none;
-  border-radius: 3px;
-  padding: .5rem 2rem .5rem;
-  height: auto;
-  border: 0;
-  overflow: hidden;
+  border-radius: 0;
+  padding: .5em 1em;
+  line-height: 1;
   &:hover {
     cursor: pointer;
   }
@@ -23,13 +21,15 @@ button, .button, .submit {
 .btn-primary {
   color: $primebtn__text;
   background: $primebtn__bg;
-  min-height: 40px;
+  border: 2px solid $primebtn__bg;
   &:hover {
     background: lighten($primebtn__bg, 8%);
+    border-color: lighten($primebtn__bg, 8%);
     @include fastTransition-all;
   }
   &.disabled {
     background: $primebtn__disabled-bg;
+    border-color: $primebtn__disabled-bg;
     color: $primebtn__disabled-txt;
     @include fastTransition-all;
     &:hover {
@@ -44,8 +44,8 @@ button, .button, .submit {
     display: inline-block;
   }
   img{
-    width: 18px;
-    height: 18px;
+    width: 1.5em;
+    height: 1.5em;
     display: inline-block;
   }
 }
@@ -53,11 +53,11 @@ button, .button, .submit {
   color: $secbtn__text;
   background: transparent;
   border: 2px solid $secbtn__border;
-  min-height: 40px;
   &:hover {
     color: $secbtn__text;
     cursor: pointer;
     background: $secbtn__bg;
+    border-color: $secbtn__text;
     @include fastTransition-all;
   }
   &.disabled {
@@ -78,11 +78,10 @@ button, .button, .submit {
     vertical-align: middle;
   }
   img{
-    width: 18px;
-    height: 18px;
+    width: 1.5em;
+    height: 1.5em;
     display: inline-block;
     margin-right: .5em;
-    margin-top: -3px;
   }
 }
 

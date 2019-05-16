@@ -105,26 +105,18 @@
   label {
     font-weight: 700;
   }
-  input {
-    height: 2.4em;
-  }
-  .button {
-    min-width: 210px;
-    width: auto;
-    margin-top: 1em;
-  }
 }
 .firmware__upload-file-name {
   text-transform: none;
 }
 .firmware__upload-chooser {
+    display: inline-block;
     width: 100%;
     background: $lightgrey;
     padding-left: 1em;
     padding-right: 1em;
     margin-bottom: 1em;
   .button {
-    vertical-align: middle;
     margin: 1em .5em 1em 0;
     min-width: 3em;
   }
@@ -132,7 +124,7 @@
     @include indeterminate-bar;
   }
   @include mediaQuery(medium) {
-    width: 70%;
+     width: 70%;
   }
 }
 .firmware__upload-station {
@@ -145,6 +137,10 @@
   padding-top: 2em;
   padding-left: 1em;
   padding-bottom: 50px;
+  padding-right: 0;
+  .button {
+    margin-top: 15px;
+  }
 }
 
 
