@@ -17,14 +17,16 @@ input[type='search'],
 input[type='tel'],
 input[type='url'],
 input[type='text'],
+input[type='date'],
+input[type='time'],
 textarea {
   border-radius: 0px;
   border: 1px solid $input-border;
-  height: 3.1em;
   margin: 0;
   background: $white;
   box-shadow: 0 0 0;
   transition: none !important;
+  max-height: 2.1em;
   &:focus {
     border-color: $medgrey;
     box-shadow: 0 -3px $field__focus inset;
@@ -94,13 +96,20 @@ select{
   border-radius: 0px;
   height: auto;
   padding-right: 0.5rem; //override inherited Foundation style
+  border-color: $input-border;
   @include fastTransition-all;
   @include bgImage__arrowDown-primary;
   &:focus {
-    border-color: $lightbg__accent;
     box-shadow: 0 0 0;
   }
   &[disabled] {
     @include bgImage__arrowDown-disabled;
+  }
+}
+
+#login__form {
+  input {
+    height: 3em;
+    max-height: none;
   }
 }

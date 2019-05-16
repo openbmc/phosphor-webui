@@ -43,11 +43,11 @@
 
 //Transitions mixin
 @mixin fastTransition-all {
-  transition: all .5s ease;
+  transition: all $duration--fast-02 ease;
 }
 
 @mixin slowTransition-all {
-  transition: all 1.5s ease;
+  transition: all $duration--slow-02 ease;
 }
 
 //Custom SVG arrow
