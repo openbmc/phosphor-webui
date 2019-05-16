@@ -17,15 +17,10 @@
   button {
     margin: 3px -3px;
     padding: .6em 2em;
-    min-height: 2.1em;
     font-size: .9em;
     font-weight: 700;
     border-radius: 0;
     display: inline-block;
-    &.first,
-    &.last {
-      border-radius: 3px;
-    }
   }
   .btn-primary {
     border: 2px solid $primebtn__bg;

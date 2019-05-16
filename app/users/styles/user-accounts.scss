@@ -1,5 +1,3 @@
-$userInputHeight: 40px;
-
 .user-list__tbl {
   .btn-edit,
   .btn-delete {
@@ -35,13 +33,10 @@ $userInputHeight: 40px;
     font-weight: 700;
     margin-right: 4em;
   }
+  select,
   input {
     width: 225px;
-    height: $userInputHeight;
-  }
-  select {
     width: 225px;
-    height: $userInputHeight;
   }
   fieldset {
     display: block;
@@ -64,7 +59,7 @@ $userInputHeight: 40px;
   .password-toggle {
     position: absolute;
     right: 5px;
-    top:.8em;
+    top: .6em;
     padding: 3px;
     margin-right: 20px;
     color: $primebtn__bg;
