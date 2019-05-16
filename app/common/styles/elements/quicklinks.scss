@@ -39,6 +39,13 @@
     .bmc-time {
       text-align: right;
       max-width: 17em;
+      float: right;
+      @include mediaQuery(medium) {
+        display: block;
+        text-align: left;
+        float: none;
+        margin-top: 0.25em;
+      }
     }
     &:after {
       display: none;

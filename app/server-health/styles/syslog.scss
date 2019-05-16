@@ -215,13 +215,8 @@
   //Event description
   .event__description {
     font-weight: 400;
-    margin-left: 1em;
     flex:35%;
-    @include mediaQuery(small) {
-      margin-left: 4.5em;
-      margin-right: 1em;
-    }
-    word-break: break-all;
+    word-break: break-word;
   }
 
   //Event ID
