@@ -17,11 +17,11 @@ window.angular && (function(angular) {
         $interpolate, $q, toastService) {
       $scope.dataService = dataService;
       $scope.confirm = false;
-      $scope.power_confirm = false;
-      $scope.warmboot_confirm = false;
-      $scope.coldboot_confirm = false;
-      $scope.orderly_confirm = false;
-      $scope.immediately_confirm = false;
+      $scope.powerConfirm = false;
+      $scope.confirmWarmReboot = false;
+      $scope.confirmColdReboot = false;
+      $scope.confirmOrderlyShutdown = false;
+      $scope.confirmImmediateShutdown = false;
       $scope.loading = true;
 
       var pollChassisStatusTimer = undefined;
@@ -33,9 +33,9 @@ window.angular && (function(angular) {
           .then(
               function(data) {
                 if (data.data == 0) {
-                  $scope.power_time = 'not available';
+                  $scope.powerTime = 'not available';
                 } else {
-                  $scope.power_time = data.data;
+                  $scope.powerTime = data.data;
                 }
               },
               function(error) {
@@ -73,7 +73,7 @@ window.angular && (function(angular) {
           return;
         }
         $scope.confirm = true;
-        $scope.power_confirm = true;
+        $scope.powerConfirm = true;
       };
 
       function pollChassisStatusTillOff() {
@@ -136,7 +136,7 @@ window.angular && (function(angular) {
           return;
         }
         $scope.confirm = true;
-        $scope.warmboot_confirm = true;
+        $scope.confirmWarmReboot = true;
       };
 
       $scope.coldReboot = function() {
@@ -172,7 +172,7 @@ window.angular && (function(angular) {
           return;
         }
         $scope.confirm = true;
-        $scope.coldboot_confirm = true;
+        $scope.confirmColdReboot = true;
       };
 
       $scope.orderlyShutdown = function() {
@@ -203,7 +203,7 @@ window.angular && (function(angular) {
           return;
         }
         $scope.confirm = true;
-        $scope.orderly_confirm = true;
+        $scope.confirmOrderlyShutdown = true;
       };
 
       $scope.immediateShutdown = function() {
@@ -232,7 +232,7 @@ window.angular && (function(angular) {
           return;
         }
         $scope.confirm = true;
-        $scope.immediately_confirm = true;
+        $scope.confirmImmediateShutdown = true;
       };
     }
   ]);
