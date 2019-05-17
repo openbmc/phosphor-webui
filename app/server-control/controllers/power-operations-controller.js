@@ -11,10 +11,10 @@ window.angular && (function(angular) {
 
   angular.module('app.serverControl').controller('powerOperationsController', [
     '$scope', 'APIUtils', 'dataService', 'Constants', '$timeout', '$interval',
-    '$interpolate', '$q', 'toastService',
+    '$q', 'toastService',
     function(
         $scope, APIUtils, dataService, Constants, $timeout, $interval,
-        $interpolate, $q, toastService) {
+        $q, toastService) {
       $scope.dataService = dataService;
       // Is a || of the other 4 "confirm" variables to ensure only
       // one confirm is shown at a time.
