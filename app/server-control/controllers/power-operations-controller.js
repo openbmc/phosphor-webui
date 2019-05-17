@@ -115,14 +115,7 @@ window.angular && (function(angular) {
               $scope.loading = false;
             });
       };
-      $scope.testState = function() {
-        $timeout(function() {
-          dataService.setPowerOffState();
-          $timeout(function() {
-            dataService.setPowerOnState();
-          }, 2000);
-        }, 1000);
-      };
+
       $scope.warmRebootConfirm = function() {
         if ($scope.confirm) {
           return;
