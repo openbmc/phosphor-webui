@@ -26,8 +26,6 @@ window.angular && (function(angular) {
       var pollChassisStatusTimer = undefined;
       var pollStartTime = null;
 
-      //@TODO: call api and get proper state
-
       APIUtils.getLastPowerTime()
           .then(
               function(data) {
