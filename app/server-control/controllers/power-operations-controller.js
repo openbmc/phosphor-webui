@@ -17,7 +17,6 @@ window.angular && (function(angular) {
         $interpolate, $q, toastService) {
       $scope.dataService = dataService;
       $scope.confirm = false;
-      $scope.powerConfirm = false;
       $scope.confirmWarmReboot = false;
       $scope.confirmColdReboot = false;
       $scope.confirmOrderlyShutdown = false;
@@ -67,13 +66,6 @@ window.angular && (function(angular) {
               toastService.error(Constants.MESSAGES.POWER_OP.POWER_ON_FAILED);
               $scope.loading = false;
             });
-      };
-      $scope.powerOnConfirm = function() {
-        if ($scope.confirm) {
-          return;
-        }
-        $scope.confirm = true;
-        $scope.powerConfirm = true;
       };
 
       function pollChassisStatusTillOff() {
