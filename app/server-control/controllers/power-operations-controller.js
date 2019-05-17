@@ -16,6 +16,8 @@ window.angular && (function(angular) {
         $scope, APIUtils, dataService, Constants, $timeout, $interval,
         $interpolate, $q, toastService) {
       $scope.dataService = dataService;
+      // Is a || of the other 4 "confirm" variables to ensure only
+      // one confirm is shown at a time.
       $scope.confirm = false;
       $scope.confirmWarmReboot = false;
       $scope.confirmColdReboot = false;
@@ -116,6 +118,7 @@ window.angular && (function(angular) {
 
       $scope.warmRebootConfirm = function() {
         if ($scope.confirm) {
+          // If another "confirm" is already shown return
           return;
         }
         $scope.confirm = true;
