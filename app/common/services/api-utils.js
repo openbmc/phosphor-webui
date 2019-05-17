@@ -798,29 +798,6 @@ window.angular && (function(angular) {
 
           return deferred.promise;
         },
-        hostShutdown: function(callback) {
-          $http({
-            method: 'POST',
-            url: DataService.getHost() + '/xyz/openbmc_project/state/host0',
-            withCredentials: true,
-            data: JSON.stringify({'data': []})
-          })
-              .then(
-                  function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
-                    if (callback) {
-                      return callback(content);
-                    }
-                  },
-                  function(error) {
-                    if (callback) {
-                      callback(error);
-                    } else {
-                      console.log(error);
-                    }
-                  });
-        },
         getLastPowerTime: function() {
           return $http({
                    method: 'GET',
