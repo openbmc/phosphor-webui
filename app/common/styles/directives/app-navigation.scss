@@ -38,7 +38,6 @@ $nav__seclvlWidth: 240px;
   left: 0;
   top: 0;
   bottom: 0;
-  z-index: 99;
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -122,61 +121,64 @@ $nav__seclvlWidth: 240px;
       }
     }
   }
-}
 
-// Second Level Navigation
-.nav__second-level {
-  position: fixed;
-  background: $nav__second-level-color;
-  top: 0;
-  bottom: 0;
-  left: -245px;
-  width: $nav__seclvlWidth;
-  z-index: 97;
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
-  @include fastTransition-all;
-  &.opened {
-    left: $nav__toplvlWidth;
-    box-shadow: 7px 0 28px -10px $darkgrey;
-    @include fastTransition-all;
-  }
-  a {
-    padding: 1.2em 1em 1.2em 1em;
+  // Second Level Navigation
+  .nav__second-level {
+    position: fixed;
+    background: $nav__second-level-color;
+    top: 0;
+    bottom: 0;
+    left: -245px;
+    width: $nav__seclvlWidth;
+    z-index: -1;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
     display: block;
-    color: $black;
-    text-decoration: none;
-    position: relative;
-    font-weight: 400;
-    &:hover {
-      background: $white;
+    @include fastTransition-all;
+    &.opened {
+      left: $nav__toplvlWidth;
+      box-shadow: 7px 0 28px -10px $darkgrey;
+      @include fastTransition-all;
     }
-  }
+    a {
+      padding: 1.2em 1em 1.2em 1em;
+      display: block;
+      color: $black;
+      text-decoration: none;
+      position: relative;
+      font-weight: 400;
+      text-align: left;
+      border-bottom: 1px solid transparent;
+      &:hover {
+        background: $white;
+      }
+    }
 
-  li {
-    a:after{
-      content: '\203A';
-      position: absolute;
-      font-size: 2em;
-      font-weight: 700;
-      top: 50%;
-      right: .6em;
-      transform: translateY(-59%);
-      color: $nav__second-level-text-color;
-      opacity: 0;
-    }
-    &.active {
-      a {font-weight: 700;}
-    }
-    &.active,
-    &:focus,
-    &:hover {
-      a {color: $nav__second-level-text-color;}
-      a:after {
-        opacity: 1;
-        right: .3em;
-        @include fastTransition-all;
+    li {
+      a:after{
+        content: '\203A';
+        position: absolute;
+        font-size: 2em;
+        font-weight: 700;
+        top: 50%;
+        right: .6em;
+        transform: translateY(-59%);
+        color: $nav__second-level-text-color;
+        opacity: 0;
+      }
+      &.active {
+        a {font-weight: 700;}
+      }
+      &.active,
+      &:focus,
+      &:hover {
+        a {color: $nav__second-level-text-color;}
+        a:after {
+          opacity: 1;
+          right: .3em;
+          @include fastTransition-all;
+        }
       }
     }
   }
