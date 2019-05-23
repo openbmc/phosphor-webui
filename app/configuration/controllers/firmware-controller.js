@@ -11,11 +11,10 @@ window.angular && (function(angular) {
 
   angular.module('app.configuration').controller('firmwareController', [
     '$scope', '$window', 'APIUtils', 'dataService', '$location',
-    '$anchorScroll', 'Constants', '$interval', '$q', '$timeout', '$interpolate',
-    'toastService',
+    '$anchorScroll', 'Constants', '$interval', '$q', '$timeout', 'toastService',
     function(
         $scope, $window, APIUtils, dataService, $location, $anchorScroll,
-        Constants, $interval, $q, $timeout, $interpolate, toastService) {
+        Constants, $interval, $q, $timeout, toastService) {
       $scope.dataService = dataService;
 
       // Scroll to target anchor
