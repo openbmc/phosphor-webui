@@ -15,7 +15,6 @@ window.angular && (function(angular) {
     function(Constants) {
       this.server_health = Constants.SERVER_HEALTH.unknown;
       this.server_state = 'Unreachable';
-      this.chassis_state = 'On';
       this.LED_state = Constants.LED_STATE_TEXT.off;
       this.last_updated = new Date();
 
