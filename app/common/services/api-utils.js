@@ -28,7 +28,6 @@ window.angular && (function(angular) {
         API_RESPONSE: Constants.API_RESPONSE,
         CHASSIS_POWER_STATE: Constants.CHASSIS_POWER_STATE,
         HOST_STATE_TEXT: Constants.HOST_STATE,
-        HOST_STATE: Constants.HOST_STATE,
         LED_STATE: Constants.LED_STATE,
         LED_STATE_TEXT: Constants.LED_STATE_TEXT,
         HOST_SESSION_STORAGE_KEY: Constants.API_CREDENTIALS.host_storage_key,
