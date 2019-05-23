@@ -122,11 +122,6 @@ window.angular && (function(angular) {
           WARNING_NO_SENSOR_DATA: 'There are no sensors in Warning state.',
           NORMAL_NO_SENSOR_DATA: 'There are no sensors in Normal state.'
         },
-        ERROR_MODAL: {
-          TITLE: 'Unexpected error',
-          DESCRIPTION:
-              'Oops! An unexpected error occurred. Record specific details of the issue, then contact your company support services.'
-        },
         ERROR_MESSAGE_DESC_TEMPLATE: '{{status}} - {{description}}',
       },
       POWER_CAP_TEXT: {unit: 'W', disabled: 'Not Enabled'},

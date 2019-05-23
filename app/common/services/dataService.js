@@ -111,26 +111,6 @@ window.angular && (function(angular) {
         }
       };
 
-      this.activateErrorModal = function(data) {
-        if (data && data.hasOwnProperty('title')) {
-          this.errorModalDetails.title = data.title;
-        } else {
-          this.errorModalDetails.title = Constants.MESSAGES.ERROR_MODAL.TITLE;
-        }
-
-        if (data && data.hasOwnProperty('description')) {
-          this.errorModalDetails.description = data.description;
-        } else {
-          this.errorModalDetails.description =
-              Constants.MESSAGES.ERROR_MODAL.DESCRIPTION;
-        }
-        this.displayErrorModal = true;
-      };
-
-      this.deactivateErrorModal = function() {
-        this.displayErrorModal = false;
-      };
-
       this.setSystemName = function(sysName) {
         this.systemName = sysName;
       };
