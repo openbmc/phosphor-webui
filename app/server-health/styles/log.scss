@@ -382,6 +382,20 @@
     display: inline-block;
   }
 }
+
+.remote-logging-server {
+  float: right;
+  .modal__trigger {
+    padding: 0;
+    color: $primebtn__bg;
+    .icon {
+      margin: 0;
+      width: 20px;
+      height: 20px;
+      vertical-align: text-bottom;
+    }
+  }
+}
 //end event-log__events
 
 

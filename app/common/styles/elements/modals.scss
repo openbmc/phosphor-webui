@@ -18,7 +18,7 @@
   @include fastTransition-all;
 }
 
-.modal {
+.modal:not(.uib-modal) {
   width: auto;
   height: auto;
   left: 50%;
@@ -78,4 +78,18 @@
       margin-right: 0;
     }
   }
+}
+
+.uib-modal.fade.in {
+  opacity: 1;
+}
+.uib-modal.in .modal-dialog {
+  transform: translate(0, 10vh);
+  margin-top: 50px;
+}
+.modal-backdrop.in {
+  opacity: 0.5;
+}
+.uib-modal__content {
+  padding: 1em;
 }

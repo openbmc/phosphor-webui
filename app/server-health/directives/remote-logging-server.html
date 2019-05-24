@@ -1,0 +1,24 @@
+<p class="content-label">Remote Logging Server</p>
+<div ng-if="!remoteLoggingServer">
+  <button ng-click="initModal(0)" class="modal__trigger">
+    <span class="icon  icon__plus"></span>
+    Add server
+  </button>
+</div>
+<div ng-if="remoteLoggingServer">
+  <p>
+    <span class="icon"
+      ng-class="{
+        'icon__good' : true,
+        'icon__critical' : remoteLoggingServer.status
+      }">
+    </span>
+    {{remoteLoggingServer.hostname}}
+  </p>
+  <button ng-click="initModal(1)" class="modal__trigger">
+    <span class="icon icon__edit"></span>
+  </button>
+  <button ng-click="initModal(2)" class="modal__trigger">
+    <span class="icon icon__delete"></span>
+  </button>
+</div>
