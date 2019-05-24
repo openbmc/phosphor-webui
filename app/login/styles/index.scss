@@ -1,6 +1,6 @@
 #login {
   @include mediaQuery(medium) {
-    background: linear-gradient(to right, #FFFFFF 49.999%, #e6e9ed 50%);
+    background: linear-gradient(to right, #ffffff 49.999%, #e6e9ed 50%);
     @include fastTransition-all;
   }
 }
@@ -28,7 +28,17 @@
       margin: 0 auto;
     }
   }
-  @include fastTransition-all;
+
+  // Must be applied to the <main> element in the app
+  // Required to create an elegant page transition
+  @include page-transition;
+  &.ng-leave-active {
+    @include page-leave;
+  }
+
+  &.ng-enter {
+    @include page-enter;
+  }
 }
 
 #login__form {
@@ -98,4 +108,3 @@
     color: $error-color;
   }
 }
-
