@@ -8,6 +8,16 @@ label, legend {
   .error {
     font-size: .9em;
   }
+  + p {
+    color: $darkgrey;
+    line-height: 1.2;
+  }
+}
+
+.label__helper-text {
+  color: $darkgrey;
+  line-height: 1.2;
+  font-size: 0.9em;
 }
 
 input[type='email'],
@@ -103,4 +113,9 @@ select{
   &[disabled] {
     @include bgImage__arrowDown-disabled;
   }
+}
+
+.form__validation-message {
+  color: $error-color;
+  font-size: 0.9em;
 }

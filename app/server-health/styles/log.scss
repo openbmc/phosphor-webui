@@ -376,6 +376,33 @@
   word-break: break-word;
 }
 
+.remote-logging-server {
+  float: right;
+  .modal__trigger {
+    padding: 0;
+    color: $primebtn__bg;
+    .icon {
+      margin: 0;
+      width: 20px;
+      height: 20px;
+      vertical-align: text-bottom;
+    }
+  }
+}
+
+.remote-logging-server__details {
+  margin-right: 0.4em;
+}
+
+.remote-logging-server__modal {
+  input {
+    margin-bottom: 24px;
+    + .form__validation-message {
+      position: absolute;
+      margin-top: -24px;
+    }
+  }
+}
 //end event-log__events
 
 
