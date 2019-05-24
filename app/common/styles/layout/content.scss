@@ -7,20 +7,31 @@ $nav__seclvlWidth: 240px;
   width: 100%;
   position: relative;
   border-bottom: 1px solid $lightbg__grey;
-  margin: .5em 0 2.2em;
+  margin: 0.5em 0 2.2em;
   padding-left: 0;
 }
 
+// Main element class
 .content__container {
   margin-left: $nav__toplvlWidth;
-  padding: 1em .1em;
-  transition: left 1s ease;
-  @include mediaQuery(x-small){
+  padding: 1em 0.1em;
+
+  @include mediaQuery(x-small) {
     padding: 1rem 2rem;
   }
+
   section.row,
-  .column.row.row, .row.row.columns{
+  .column.row.row,
+  .row.row.columns {
     margin-left: 0;
+  }
+
+  // Must be applied to the <main> element in the app
+  // Required to create an elegant page transition
+  @include page-transition;
+  &.ng-leave-active,
+  &.ng-enter {
+    @include page-transition-visibility;
   }
 }
 
@@ -30,16 +41,17 @@ $nav__seclvlWidth: 240px;
   margin-top: 2em;
 }
 
-.content-label, label {
+.content-label,
+label {
   color: $darkgrey;
   text-transform: uppercase;
   font-weight: 700;
-  font-size: .75em;
+  font-size: 0.75em;
   margin-bottom: 0;
 }
 
 .subhead {
   width: 100%;
   border-bottom: 1px solid $medgrey;
-  padding-bottom: .5em;
+  padding-bottom: 0.5em;
 }
