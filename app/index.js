@@ -22,7 +22,6 @@ import ngToast from 'ng-toast';
 import ngToast_animate from 'ng-toast/dist/ngToast-animations.css';
 import ngToast_style from 'ng-toast/dist/ngToast.css';
 
-
 require('./styles/index.scss');
 var config = require('../config.json');
 
@@ -77,6 +76,7 @@ import log_controller from './server-health/controllers/log-controller.js';
 import sensors_overview_controller from './server-health/controllers/sensors-overview-controller.js';
 import syslog_controller from './server-health/controllers/syslog-controller.js';
 import syslog_filter from './common/directives/syslog-filter.js';
+import remote_logging_server from './server-health/directives/remote-logging-server.js';
 
 import redfish_index from './redfish/index.js';
 import redfish_controller from './redfish/controllers/redfish-controller.js';
@@ -100,6 +100,7 @@ window.angular && (function(angular) {
             // Dependencies
             'ngRoute', 'angular-clipboard', 'ngToast', 'ngAnimate',
             'ngMessages', 'app.common.directives.dirPagination', 'ngSanitize',
+            'ui.bootstrap',
             // Basic resources
             'app.common.services', 'app.common.directives',
             'app.common.filters',
