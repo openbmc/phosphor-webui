@@ -1552,6 +1552,61 @@ window.angular && (function(angular) {
           });
           return $q.all(promises);
         },
+        setRemoteLoggingServer: (data) => {
+          const ip = data.hostname;
+          const port = data.port;
+          const setIPRequest = $http({
+            method: 'PUT',
+            url: DataService.getHost() +
+                '/xyz/openbmc_project/logging/config/remote/attr/Address',
+            withCredentials: true,
+            data: {'data': ip}
+          });
+          const setPortRequest = $http({
+            method: 'PUT',
+            url: DataService.getHost() +
+                '/xyz/openbmc_project/logging/config/remote/attr/Port',
+            withCredentials: true,
+            data: {'data': port}
+          });
+          const promises = [setIPRequest, setPortRequest];
+          return $q.all(promises);
+        },
+        getRemoteLoggingServer: () => {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/logging/config/remote',
+                   withCredentials: true
+                 })
+              .then((response) => {
+                const remoteServer = response.data.data;
+                const hostname = remoteServer.Address;
+                const port = remoteServer.Port;
+                if (remoteServer === undefined || hostname === '') {
+                  return undefined;
+                } else {
+                  return {
+                    hostname, port
+                  }
+                }
+              });
+        },
+        disableRemoteLoggingServer: () => {
+          return SERVICE.setRemoteLoggingServer({hostname: '', port: 0});
+        },
+        updateRemoteLoggingServer: (data) => {
+          // Recommended to disable existing configuration
+          // before updating config to new server
+          return SERVICE.disableRemoteLoggingServer()
+              .then(() => {
+                return SERVICE.setRemoteLoggingServer(data);
+              })
+              .catch(() => {
+                // try updating server even if initial disable attempt fails
+                return SERVICE.setRemoteLoggingServer(data);
+              });
+        },
         getPowerConsumption: function() {
           return $http({
                    method: 'GET',
