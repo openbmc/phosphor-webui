@@ -10,6 +10,14 @@ label, legend {
   }
 }
 
+label + p,
+.label__helper-text {
+  color: $darkgrey;
+  line-height: 1.2;
+  font-size: 0.9em;
+  margin-bottom: 0.4em;
+}
+
 input[type='email'],
 input[type='number'],
 input[type='password'],
@@ -112,4 +120,8 @@ select{
     height: 3em;
     max-height: none;
   }
+}
+.form__validation-message {
+  color: $error-color;
+  font-size: 0.9em;
 }
