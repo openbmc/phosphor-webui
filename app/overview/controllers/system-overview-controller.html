@@ -204,7 +204,7 @@
 
       <form name="edit_hostname_text">
         <label for="editServerName">Hostname</label>
-        <p>Hostname must be less than 64 characters and must not contain spaces.</p>
+        <p class="label__helper-text">Hostname must be less than 64 characters and must not contain spaces.</p>
         <input id="editServerName" class="modal__edit-server-name" type="text" ng-model="newHostname" ng-trim="false"
           name="hostname" ng-pattern="/^\S{0,64}$/" required autofocus />
         <span class="modal__error" ng-show="edit_hostname_text.hostname.$error.pattern">Invalid format.

@@ -126,3 +126,18 @@
   @extend .icon__up-arrow;
   transform: rotate(180deg);
 }
+
+.icon__edit {
+  @include status-icon;
+  background-image: url(../assets/images/icon-edit-blue.svg);
+}
+
+.icon__delete {
+  @include status-icon;
+  background-image: url(../assets/images/icon-trashcan-blue.svg);
+}
+
+.icon__close {
+  @include status-icon;
+  background-image: url(../assets/images/crit-x-black.svg);
+}
