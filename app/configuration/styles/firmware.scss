@@ -15,6 +15,7 @@
     }
     .icon {
       color: $medblue;
+      fill: $medblue;
       &.disabled {
         color: $medgrey;
         &:hover {
@@ -27,7 +28,6 @@
     }
     .icon.icon-as-spacer {
       text-indent: 0;
-      color: $btn__disabled-txt;
       &:hover {
         cursor: default;
       }
@@ -116,7 +116,7 @@
     padding-left: 1em;
     padding-right: 1em;
     margin-bottom: 1em;
-  .button {
+  .btn {
     margin: 1em .5em 1em 0;
     min-width: 3em;
   }
@@ -138,7 +138,7 @@
   padding-left: 1em;
   padding-bottom: 50px;
   padding-right: 0;
-  .button {
+  .btn {
     margin-top: 15px;
   }
 }

@@ -36,23 +36,15 @@
     margin-bottom: 3px;
   }
   .event__severity-filter {
-    float:left;
     margin-right: 2em;
     margin-bottom: 1em;
-    button {
-      margin: 0px -3px;
-      padding: .6em 2em;
-      font-size: .9em;
-      font-weight: 700;
-      border-radius: 0;
-      @media (min-width: 583px) {
-        &.last {
-          border-left: 0;
-        }
+    font-size: 0.9em;
+    .btn {
+      width: 100px;
+      float: left;
+      &:not(:first-of-type) {
+        border-left-width: 1px;
       }
-    }
-    .btn-primary {
-      border: 2px solid $primebtn__bg;
     }
   }
   .event__date-filter {
@@ -110,16 +102,17 @@
   position: relative;
   overflow: hidden;
   .header__actions-bar {
-    .btn-export,
-    .btn-delete,
-    .btn-resolve {
-      color: $white;
-    }
     .event-log__col-check {
       text-align: left;
       max-width: 30px;
       .control-check {
         margin-left: -6px;
+      }
+    }
+    .btn:not([disabled]):not(.disabled) {
+      color: $white;
+      svg {
+        fill: $white;
       }
     }
   }
@@ -151,45 +144,6 @@
       font-weight: 700;
       margin-right: .3em;
     }
-  }
-
-  //Export log
-  .btn-export, .btn-meta-copy,
-  .btn-delete,
-  .btn-resolve {
-    color: black;
-    font-size: .9em;
-    font-weight: 700;
-    position: relative;
-    padding: 0 0 1em 2em;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-  .btn-resolve.disabled:hover,
-  .btn-delete.disabled:hover{
-    cursor: default;
-    text-decoration: none;
-  }
-  .btn-export {
-    margin-top: 7px;
-    padding-bottom: 0;
-  }
-  .btn-export:before {
-    content: '\21E5';
-    position: absolute;
-    font-size: 1.7em;
-    vertical-align: middle;
-    transform: rotate(90deg);
-    display: inline-block;
-    left: 2px;
-    top: -5px;
-  }
-  .btn-meta-copy,
-  .btn-delete,
-  .btn-resolve {
-    margin-left: 5px;
-    padding: .5em .5em;
   }
 
   // Single event log card
@@ -286,7 +240,6 @@
   .event__metadata-row {
     max-height: 0;
     overflow: hidden;
-    -webkit-transition: 0.5s linear max-height;
     transition: 0.5s linear max-height;
     &.active {
       max-height: 1000px;
@@ -315,7 +268,6 @@
     &::-webkit-scrollbar-thumb {
       border-radius: 4px;
       background-color: rgba(0, 0, 0, .5);
-      -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
     }
   }
 
@@ -343,23 +295,13 @@
       float: right;
       margin-top: -5px;
     }
-    .disabled {
-      opacity: 0.2;
-      pointer-events: none;
-      cursor: default;
-      text-decoration: none;
-    }
-    .disabled:hover {
-      text-decoration: none;
-    }
   }
-  .event__icon {
-    width: 20px;
-    height: 20px;
-    font-weight: normal;
-    margin-right: .5em;
-    margin-top: -3px;
-    display: inline-block;
+
+  .btn:not([disabled]):not(.disabled) {
+    color: $black;
+    svg {
+      fill: $black;
+    }
   }
 }
 
@@ -374,12 +316,8 @@
   float: right;
   .modal__trigger {
     padding: 0;
-    color: $primebtn__bg;
     .icon {
       margin: 0;
-      width: 20px;
-      height: 20px;
-      vertical-align: text-bottom;
     }
   }
 }
@@ -397,8 +335,14 @@
       margin-top: -30px;
     }
   }
+  .btn--close {
+    padding: 0;
+    svg {
+      height: 1.6em;
+    }
+  }
+  .modal-header {
+    display: block;
+  }
 }
 //end event-log__events
-
-
-

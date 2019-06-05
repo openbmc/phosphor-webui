@@ -1,5 +1,7 @@
 <div role="dialog" class="uib-modal__content  remote-logging-server__modal">
-  <button type="button" class="icon  icon__close  float-right" ng-click="$close()"></button>
+  <button type="button" class="btn  btn--close  float-right" ng-click="$close()">
+    <icon file="icon-close.svg"></icon>
+  </button>
   <div class="modal-header">
     <h2 class="modal-title" id="dialog_label">{{activeModalProps.title}}</h2>
   </div>
@@ -29,10 +31,10 @@
       {{remoteServer.hostname}}?</p>
     </div>
     <div class="modal-footer">
-      <button class="button btn-secondary" ng-click="$close()" type="button">
+      <button class="btn btn-secondary" ng-click="$close()" type="button">
         Cancel
       </button>
-      <button class="button btn-primary" type="submit"
+      <button class="btn btn-primary" type="submit"
         ng-click="$close(activeModal)" ng-disabled="form.$invalid"
         ng-class="{'disabled': form.$invalid}">
         {{activeModalProps.actionLabel}}

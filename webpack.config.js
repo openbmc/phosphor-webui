@@ -81,11 +81,20 @@ module.exports = (env, options) => {
         // output
         // Rename the file using the asset hash
         // Pass along the updated reference to your code
-        // You can add here any file extension you want to get copied to your
-        // output
+        // You can add here any file extension you want to get copied
+        // to your output
+        // Excludes .svg files in icons directory
         test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|ico)$/,
+        exclude: /icons\/.*\.svg$/,
         loader: 'file-loader',
         options: {name: '[path][name].[ext]'}
+      },
+      {
+        // INLINE SVG LOADER
+        // Inlines .svg assets in icons directory
+        // needed specifically for icon-provider.js directive
+        test: /icons\/.*\.svg$/,
+        loader: 'svg-inline-loader'
       },
       {
         // HTML LOADER
@@ -94,7 +103,11 @@ module.exports = (env, options) => {
         test: /\.html$/,
         loader: 'html-loader'
       },
-      {test: /\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader']}, {
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
         test: /\.scss$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       }

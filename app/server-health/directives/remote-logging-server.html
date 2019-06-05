@@ -1,7 +1,7 @@
 <p class="content-label">Remote Logging Server</p>
 <div ng-if="!loadError && !remoteServer">
-  <button ng-click="initModal(0)" class="modal__trigger">
-    <span class="icon  icon__plus"></span>
+  <button ng-click="initModal(0)" class="btn  btn-tertiary  modal__trigger">
+    <icon file="icon-plus.svg"></icon>
     Add server
   </button>
 </div>
@@ -9,11 +9,11 @@
   <p class="inline remote-logging-server__details">
     {{remoteServer.hostname}}
   </p>
-  <button ng-click="initModal(1)" class="modal__trigger">
-    <span class="icon icon__edit"></span>
+  <button ng-click="initModal(1)" class="btn  btn-tertiary  modal__trigger">
+    <icon file="icon-edit.svg"></icon>
   </button>
-  <button ng-click="initModal(2)" class="modal__trigger">
-    <span class="icon icon__delete"></span>
+  <button ng-click="initModal(2)" class="btn  btn-tertiary  modal__trigger">
+    <icon file="icon-trashcan.svg"></icon>
   </button>
 </div>
 <div class="text-right" ng-if="loadError">

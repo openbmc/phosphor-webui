@@ -1,7 +1,7 @@
 <section id="sys-log-filter" class="row column" aria-label="system log filtering">
     <div class="inline sys-log__severity-filter">
         <p class="filter-label">Filter by severity</p>
-        <button ng-repeat="severity in severityList" class="inline " ng-click="toggleSeverity(severity)"
+        <button ng-repeat="severity in severityList" class="btn" ng-click="toggleSeverity(severity)"
                 ng-class="((selectedSeverityList.indexOf(severity) > -1) || ((severity == 'All') && (selectedSeverityList.length == 0))) ? 'btn-primary' : 'btn-secondary'">{{severity}}
         </button>
     </div>

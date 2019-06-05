@@ -2,7 +2,7 @@
 <div class="overview">
   <div class="row column">
     <h1 class="inline">{{dataService.hostname}}</h1>
-    <button class="link" ng-click="edit_hostname = !edit_hostname">Edit</button>
+    <button class="btn  btn-tertiary" ng-click="edit_hostname = !edit_hostname">Edit</button>
   </div>
   <section class="row">
     <div class="column large-8">
@@ -122,7 +122,7 @@
         </div>
         <a href="#/server-control/remote-console" class="no-icon quick-links__item">
           <p class="inline quick-links__label">Serial over LAN console</p>
-          <span class="btn-pop-out inline float-right"></span>
+          <icon file="icon-launch.svg" class="float-right"></icon>
         </a>
         <a href="#/configuration/network" class="quick-links__item">
           <p class="inline quick-links__label">Edit network settings</p>
@@ -169,7 +169,7 @@
               </div>
             </div>
             <div class="column small-2 large-1">
-              <button class="accord-trigger" aria-hidden="true"></button>
+              <span class="accord-trigger" aria-hidden="true"></span>
             </div>
           </div>
         </div>
@@ -191,17 +191,11 @@
     <!-- accessibility only; used for screen readers -->
     <div class="screen-reader-offscreen modal-description">Edit hostname</div>
     <div class="page-header ">
-      <h2 class="modal-title"><span class="icon icon__info"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-            <path d="M18 14h-6v2h1v6h-2v2h8v-2h-2z" />
-            <circle cx="16" cy="10" r="2" />
-            <path
-              d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z" />
-          </svg></span>
-        Edit hostname
+      <h2 class="modal-title">
+        <icon class="icon__info" file="icon-information.svg"></icon>Edit hostname
       </h2>
     </div>
     <div class="modal__content">
-
       <form name="edit_hostname_text">
         <label for="editServerName">Hostname</label>
         <p class="label__helper-text">Hostname must be less than 64 characters and must not contain spaces.</p>
@@ -214,9 +208,9 @@
       </form>
     </div>
     <div class="modal__button-wrapper">
-      <button class="inline btn-secondary"
+      <button class="btn  btn-secondary"
         ng-click="edit_hostname= false; newHostname = dataService.hostname">Cancel</button>
-      <button class="inline btn-primary" ng-click="saveHostname(newHostname);" ng-disabled="edit_hostname_text.$invalid"
+      <button class="btn  btn-primary" ng-click="saveHostname(newHostname);" ng-disabled="edit_hostname_text.$invalid"
         ng-class="{'disabled' : edit_hostname_text.$invalid}">Save</button>
     </div>
   </div>
