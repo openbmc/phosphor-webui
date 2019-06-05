@@ -88,14 +88,10 @@
     overflow: hidden;
     min-height: 1px;
     min-width: 100%;
-    .btn-secondary {
+    .btn {
       margin-bottom: .5em;
       margin-right: 1em;
-      display: block;
       min-width: 240px;
-      @include mediaQuery(medium) {
-        display: inline-block;
-      }
     }
     @include mediaQuery(x-small){
       padding: 1.8em 0 1em 0;
