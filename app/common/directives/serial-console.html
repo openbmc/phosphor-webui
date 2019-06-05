@@ -1,6 +1,9 @@
 <div class="serial-lan__wrapper">
   <div id="terminal"></div>
-  <div class="serial-lan__actions">
-    <button class="inline btn-pop-out" ng-click="openTerminalWindow()" ng-show="showTabBtn === true">Open in new tab</button>
+  <div class="serial-lan__actions float-right">
+    <button class="btn  btn-tertiary" ng-click="openTerminalWindow()" ng-show="showTabBtn === true">
+      <i class="icon"  ng-include="'/app/assets/images/icon-launch.svg'"></i>
+      Open in new tab
+    </button>
   </div>
 </div>

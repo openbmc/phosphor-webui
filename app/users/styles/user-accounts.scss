@@ -10,8 +10,6 @@
       @include fastTransition-all;
     }
     &:disabled {
-      background: $btn__disabled-bg;
-      color: $btn__disabled-txt;
       @include fastTransition-all;
       cursor: default;
     }

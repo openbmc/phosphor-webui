@@ -9,26 +9,10 @@
   padding: 1em 0;
 }
 
-.serial-lan__actions {
-  float: right;
-  .btn-pop-out,
-  .btn-export {
-    text-decoration: none;
-    font-size: .9em;
-    &:hover {
-      text-decoration: underline;
-    }
-    &:visited {
-      color: $black;
-    }
-  }
-}
-
 .serial-lan__header {
   background: $white;
-  padding: 1.2em;
+  padding-bottom: 1.2em;
   line-height: 0;
-  a {color: $black;}
 }
 
 .terminal-container {

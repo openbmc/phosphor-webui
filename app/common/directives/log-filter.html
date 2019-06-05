@@ -1,16 +1,16 @@
 <section id="event-filter" class="row column" aria-label="event log filtering">
     <div class="inline event__severity-filter">
         <p class="filter-label">Filter by severity</p>
-        <button class="inline first" ng-click="toggleSeverityAll()"
+        <button class="btn" ng-click="toggleSeverityAll()"
                 ng-class="selectedSeverity.all ? 'btn-primary' : 'btn-secondary'">All
         </button>
-        <button class="inline " ng-click="toggleSeverity('high')"
+        <button class="btn" ng-click="toggleSeverity('high')"
                 ng-class="selectedSeverity.high ? 'btn-primary' : 'btn-secondary'">High
         </button>
-        <button class="inline" ng-click="toggleSeverity('medium')"
+        <button class="btn" ng-click="toggleSeverity('medium')"
                 ng-class="selectedSeverity.medium ? 'btn-primary' : 'btn-secondary'">Medium
         </button>
-        <button class="inline last" ng-click="toggleSeverity('low')"
+        <button class="btn" ng-click="toggleSeverity('low')"
                 ng-class="selectedSeverity.low ? 'btn-primary' : 'btn-secondary'">Low
         </button>
     </div>
