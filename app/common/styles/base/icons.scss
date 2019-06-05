@@ -1,13 +1,7 @@
 .icon {
   display: inline-block;
-  width: 20px;
-  height: 20px;
-  position: relative;
-  speak: none;
-  font-style: normal;
-  &.icon-as-spacer {
-    text-indent: -9999px;
-  }
+  width: 1.5em;
+  height: auto;
 }
 
 .icon__more {
@@ -33,6 +27,7 @@
 }
 
 .icon__bar-arrow {
+  font-style: normal;
   &:before {
     content: '\21E5';
     position: absolute;
@@ -46,6 +41,7 @@
 }
 
 .icon-angle {
+  font-style: normal;
   &:before {
     content: '\276F';
     display: inline-block;
@@ -88,21 +84,6 @@
   background-image: url(../assets/images/icon-off.svg);
 }
 
-.icon__return {
-  @include status-icon;
-  background-image: url(../assets/images/icon-return.svg);
-}
-
-.icon__standby {
-  @include status-icon;
-  background-image: url(../assets/images/icon-standby.svg);
-}
-
-.icon__plus {
-  @include status-icon;
-  background-image: url(../assets/images/icon-plus.svg);
-}
-
 .icon__info{
   margin-top: -4px;
   margin-right: .5em;
@@ -122,6 +103,7 @@
     background: url(../assets/images/icon-arrow-gray.svg) center center no-repeat;
   }
 }
+
 .icon__down-arrow {
   @extend .icon__up-arrow;
   transform: rotate(180deg);

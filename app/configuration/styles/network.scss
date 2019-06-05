@@ -11,12 +11,10 @@
     text-align: left;
   }
   input {
-    margin-bottom: 1.2em;
+    margin-bottom: 2em;
   }
 
   .net-config__fieldset {
-    margin-bottom: 1.2rem;
-
     legend {
       padding-bottom: 0.5rem;
     }
@@ -41,10 +39,13 @@
     font-weight: 700;
   }
   .network-config__submit-wrapper {
-    width: 100%;
-    margin-top: 3em;
     padding-top: 1em;
     border-top: 1px solid $medgrey;
+    margin-top: 2em;
+
+    .btn:not(:last-child) {
+      margin-right: 1em;
+    }
 
     &::after {
       content: " ";
@@ -52,20 +53,8 @@
       clear: both;
     }
 
-    button {
-      float: right;
-      margin: .5em;
-    }
   }
   .network-config__ipv4-wrap {
     padding-bottom: 1.8em;
-  }
-  .network-config_remove-button {
-    color: $medblue;
-    margin-left: 1em;
-    opacity: 1;
-    &:hover {
-      cursor: pointer;
-    }
   }
 }
