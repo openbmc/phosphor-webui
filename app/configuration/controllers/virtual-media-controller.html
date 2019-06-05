@@ -13,7 +13,7 @@
           <!-- Button -->
           <label class="vm__upload-choose-label">
             <input id="file-upload" type="file" file="device.file" class="hide" ng-disabled="device.isActive"/>
-            <span class="vm__upload-choose-button button btn-secondary" ng-class="{disabled:device.isActive}">Choose file</span>
+            <span class="vm__upload-choose-button btn btn-secondary" ng-class="{disabled:device.isActive}">Choose file</span>
           </label>
           <div class="vm__upload-name">
             <span ng-if="!device.file">No file selected</span>
@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="vm__upload-start">
-        <input type="button" ng-value="device.isActive ? 'Stop' : 'Start'" ng-class="{disabled:!device.file}" class="button btn-primary" ng-click="device.isActive? stopVM($index) : startVM($index)"/>
+        <input type="button" ng-value="device.isActive ? 'Stop' : 'Start'" ng-class="{disabled:!device.file}" class="btn btn-primary" ng-click="device.isActive? stopVM($index) : startVM($index)"/>
       </div>
     </div>
   </div>

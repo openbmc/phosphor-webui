@@ -19,11 +19,11 @@
             <div class="inline">
               <input id="ntp-server{{$index+1}}" type="text" ng-readonly="time.mode != 'NTP'" ng-model="server" ng-blur="ntp.servers[$index] = server" set-focus-on-new-input/>
             </div>
-            <button class="date-time__dns-remove inline" ng-click="removeNTPField($index)">Remove</button>
+            <button class="btn  date-time__dns-remove btn-tertiary" ng-click="removeNTPField($index)">Remove</button>
           </fieldset>
         </div>
         <div class="row column date-time__ntp-servers-wrap">
-          <button type="button" class="btn-primary block" ng-click="addNTPField()">Add new NTP server</button>
+          <button type="button" class="btn btn-primary" ng-click="addNTPField()">Add new NTP server</button>
         </div>
         <div class="row column">
           <label class="control-radio" for="manual-time">Manually set date and time
@@ -59,8 +59,8 @@
       </div>
     </fieldset>
     <div class="time__submit-wrapper">
-      <button type="button" class="btn-primary inline" ng-click="setTime()">Save settings</button>
-      <button type="button" class="btn-secondary inline" ng-click="refresh()">Cancel</button>
+      <button type="button" class="btn  btn-primary" ng-click="setTime()">Save settings</button>
+      <button type="button" class="btn  btn-secondary" ng-click="refresh()">Cancel</button>
     </div>
   </form>
 </div>
