@@ -72,12 +72,12 @@
               <input id="ipv4-prefix-{{$index+1}}" class="column small-6" ng-change="ipv4.updatePrefix = true"
                 type="number" min="1" max="32" step="1" ng-disabled="interface.DHCPEnabled"
                 ng-model="ipv4.PrefixLength" />
-              <button class="network-config_remove-button inline" ng-click="removeIpv4Address($index)">Remove</button>
+              <button class="btn  btn-tertiary network-config_remove-button" ng-click="removeIpv4Address($index)">Remove</button>
             </div>
           </fieldset>
           <div class="row column">
             <div class="column small-12">
-              <button type="button" class="btn-primary inline" ng-click="addIpv4Field()">Add IPV4 address</button>
+              <button type="button" class="btn  btn-primary" ng-click="addIpv4Field()">Add IPV4 address</button>
             </div>
           </div>
         </div>
@@ -94,19 +94,23 @@
             <label for="net-config__prime-dns{{$index+1}}">DNS Server {{$index+1}}</label>
             <input id="net-config__prime-dns{{$index+1}}" class="network-input column small-6 large-4 inline"
               type="text" ng-model="dns" ng-blur="interface.Nameservers[$index] = dns" set-focus-on-new-input />
-            <button class="network-config_remove-button inline" ng-click="removeDNSField($index)">Remove</button>
+            <button class="btn  btn-tertiary  network-config_remove-button" ng-click="removeDNSField($index)">Remove</button>
           </div>
         </div>
         <div class="row column">
           <div class="column small-12">
-            <button type="button" class="btn-primary inline dns_add" ng-click="addDNSField()">Add DNS server</button>
+            <button type="button" class="btn  btn-primary dns_add" ng-click="addDNSField()">Add DNS server</button>
           </div>
         </div>
       </div>
     </fieldset>
-    <div class="network-config__submit-wrapper">
-      <button type="button" class="btn-primary inline" ng-click="confirmSettings=true;">Save settings</button>
-      <button type="button" class="btn-secondary inline" ng-click="refresh()">Cancel</button>
+    <div class="row column">
+      <div class="network-config__submit-wrapper column">
+        <div class="float-right">
+          <button type="button" class="btn  btn-secondary" ng-click="refresh()">Cancel</button>
+          <button type="button" class="btn  btn-primary" ng-click="confirmSettings=true;">Save settings</button>
+        </div>
+      </div>
     </div>
   </form>
 </div>
@@ -125,8 +129,8 @@
         Proceed with caution and make note of any new settings that may affect connectivity.</p>
     </div>
     <div class="modal__button-wrapper">
-      <button class="inline btn-secondary" ng-click="confirmSettings=false;">Cancel</button>
-      <button class="inline btn-primary" ng-click="setNetworkSettings()">Continue</button>
+      <button class="btn btn-secondary" ng-click="confirmSettings=false;">Cancel</button>
+      <button class="btn btn-primary" ng-click="setNetworkSettings()">Continue</button>
     </div>
   </div>
 </section>

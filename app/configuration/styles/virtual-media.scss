@@ -26,9 +26,6 @@
   font-size: 1rem;
   background-color: $white;
   min-width: 3em;
-  &.disabled {
-    background-color: $btn__disabled-bg;
-  }
 }
 
 .vm__upload-content {
