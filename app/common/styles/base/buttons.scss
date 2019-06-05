@@ -1,127 +1,150 @@
-button, .button, .submit, .btn, [type='button'] {
-  font-size: 1em;
+$btn-primary__bg: $color--blue-40;
+$btn-primary__bg--hover: $color--blue-30;
+$btn-primary__bg--disabled: $color--grey-40;
+$btn-primary__txt: $color--grey-0;
+$btn-primary__txt--disabled: $color--grey-60;
+
+$btn-secondary__bg: $color--grey-0;
+$btn-secondary__txt: $color--blue-40;
+$btn-secondary__txt--hover: $color--blue-30;
+$btn-secondary__txt--disabled: $color--grey-60;
+
+$btn-tertiary__bg: transparent;
+$btn-tertiary__txt: $color--blue-40;
+$btn-tertiary__txt--hover: $color--blue-30;
+$btn-tertiary__txt--disabled: $color--grey-60;
+
+/***
+Include .btn class in addition to the button type.
+These styles provide structural and base properties
+shared across all buttons. The additional button
+type (.btn-primary, .btn-secondary) will provide color
+properties
+***/
+button,
+.btn,
+[type='button'] {
   @include fontFamilyBold;
+  @include fastTransition-all;
+  border-style: solid;
+  border-width: 2px;
+  border-color: transparent;
+  font-size: 1em;
   text-transform: none;
   border-radius: 0;
   padding: .5em 1em;
   line-height: 1;
-  &:hover {
-    cursor: pointer;
-  }
+  display: inline-block;
+  cursor: pointer;
+  &[disabled],
   &.disabled {
-    pointer-events: none;
-    color: $btn__disabled-txt;
-    background-color: $btn__disabled-bg;
-    border-color: $btn__disabled-bg;
-    border-style: solid;
-    border-width: 2px;
-    &:hover {
-      cursor: default;
-      background: transparent;
-      text-decoration: none;
-    }
+    opacity: 1;
+    cursor: default;
   }
-}
-
-.btn-primary {
-  color: $primebtn__text;
-  background: $primebtn__bg;
-  border: 2px solid $primebtn__bg;
-  &:hover {
-    background: lighten($primebtn__bg, 8%);
-    border-color: lighten($primebtn__bg, 8%);
-    @include fastTransition-all;
+  &.full-width {
+    width: 100%;
   }
-  &.disabled {
-    background: $primebtn__disabled-bg;
-    border-color: $primebtn__disabled-bg;
-    color: $primebtn__disabled-txt;
-    @include fastTransition-all;
-    &:hover {
-      cursor: default;
-    }
-  }
+  .icon,
   i {
     //button symbol
     font-style: normal;
+    font-weight: normal;
     text-transform: none;
-    font-size: 1.5em;
-    transform: rotate(80deg);
     display: inline-block;
+    margin-right: 0.3em;
+    vertical-align: bottom;
   }
   img {
     width: 1.5em;
     height: 1.5em;
     display: inline-block;
+    margin-right: 0.5em;
   }
-}
-.btn-secondary {
-  color: $secbtn__text;
-  background: transparent;
-  border: 2px solid $secbtn__border;
-  &:hover {
-    color: $secbtn__text;
-    cursor: pointer;
-    background: $secbtn__bg;
-    border-color: $secbtn__text;
-    @include fastTransition-all;
-  }
-  &.disabled {
-    pointer-events: none;
-    color: $btn__disabled-txt;
-    background-color: $btn__disabled-bg;
-    border-color: $btn__disabled-bg;
-    border-style: solid;
-    border-width: 2px;
-    &:hover {
-      background: $btn__disabled-bg;
-    }
-  }
-  i {
-    // button symbol
-    font-style: normal;
-    font-weight: 400;
-    text-transform: none;
-    font-size: 1.5em;
-    transform: rotate(80deg) translate(-2px);
-    display: inline-block;
-    vertical-align: middle;
-  }
-  img {
-    width: 1.5em;
-    height: 1.5em;
-    display: inline-block;
-    margin-right: .5em;
+  svg {
+    height: 1.2em;
+    width: auto;
   }
 }
 
-.btn-pop-out {
-  position: relative;
-  padding: 0 0 1em 2em;
-  color: $black;
+/***
+Use for the primary use-case/s that is non-destructive.
+e.g. directing to a new page, a call to action
+***/
+.btn-primary {
+  background-color: $btn-primary__bg;
+  border-color: $btn-primary__bg;
+  color: $btn-primary__txt;
   &:hover {
-    text-decoration: underline;
+    background-color: $btn-primary__bg--hover;
+    border-color: $btn-primary__bg--hover;
   }
-  &:before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0px;
-    width: 25px;
-    height: 20px;
-    display: inline-block;
-    border: 1px solid $black;
-    border-top: 4px solid $black;
+  &[disabled],
+  &.disabled {
+    background: $btn-primary__bg--disabled;
+    border-color: $btn-primary__bg--disabled;
+    color: $btn-primary__txt--disabled;
+      .icon {
+        fill: $btn-primary__txt--disabled;
+      }
   }
-  &:after {
-    content: "\2794";
-    position: absolute;
-    transform: rotate(-45deg);
-    font-size: 0.9em;
-    font-weight: 700;
-    vertical-align: middle;
-    display: inline-block;
-    left: 11px;
-    top: 0px;
+  .icon {
+    fill: $btn-primary__txt;
+  }
+}
+
+/***
+Secondary buttons are actions that fall secondary or
+of less priority to primary buttons.
+These usually come coupled with a primary.
+***/
+.btn-secondary {
+  background-color: $btn-secondary__bg;
+  border-color: $btn-secondary__txt;
+  color: $btn-secondary__txt;
+  &:hover {
+    background-color: $btn-secondary__bg;
+    border-color: $btn-secondary__txt--hover;
+    color: $btn-secondary__txt--hover;
+    .icon {
+      fill: $btn-secondary__txt--hover;
+    }
+  }
+  &[disabled],
+  &.disabled {
+    background-color: $btn-secondary__bg;
+    border-color: $btn-secondary__txt--disabled;
+    color: $btn-secondary__txt--disabled;
+    .icon {
+      fill: $btn-secondary__txt--disabled;
+    }
+  }
+  .icon {
+    fill: $btn-secondary__txt;
+  }
+}
+
+/***
+Tertiary text buttons are used to identify less pressing or
+optional actions given on a page.
+***/
+.btn-tertiary {
+  background-color: $btn-tertiary__bg;
+  border-color: $btn-tertiary__bg;
+  color: $btn-tertiary__txt;
+  &:hover {
+    color: $btn-tertiary__txt--hover;
+    .icon {
+      fill: $btn-tertiary__txt--hover;
+    }
+  }
+  &[disabled],
+  &.disabled {
+    color: $btn-tertiary__txt--disabled;
+    .icon {
+      fill: $btn-tertiary__txt--disabled;
+    }
+  }
+  .icon {
+    fill: $btn-tertiary__txt;
   }
 }

@@ -29,10 +29,10 @@
       {{remoteServer.hostname}}?</p>
     </div>
     <div class="modal-footer">
-      <button class="button btn-secondary" ng-click="$close()" type="button">
+      <button class="btn btn-secondary" ng-click="$close()" type="button">
         Cancel
       </button>
-      <button class="button btn-primary" type="submit"
+      <button class="btn btn-primary" type="submit"
         ng-click="$close(activeModal)" ng-disabled="form.$invalid"
         ng-class="{'disabled': form.$invalid}">
         {{activeModalProps.actionLabel}}
