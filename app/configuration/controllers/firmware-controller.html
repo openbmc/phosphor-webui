@@ -22,13 +22,13 @@
       <p>Select the image file saved on the workstation storage medium to upload to the server BMC.</p>
       <label for="file-upload" class="inline firmware__upload-chooser">
         <input id="file-upload" type="file" file="file" class="hide"/>
-        <span class="button btn-secondary inline">Choose a file</span>
+        <span class="btn btn-secondary">Choose a file</span>
         <span class="inline firmware__upload-file-name"><span ng-if="!file">No file chosen</span><span ng-if="file.name !== undefined">{{file.name}}</span></span>
       </label>
-      <input type="button" value="Upload firmware" class="inline button btn-primary float-right" ng-click="upload()"/>
+      <input type="button" value="Upload firmware" class="btn btn-primary float-right" ng-click="upload()"/>
       <div class="inline uploading" ng-show="uploading">Upload in progress...</div>
     </div>
-    <div class=" column firmware__upload-tftp">
+    <div class="column firmware__upload-tftp">
       <h3>Download image file from TFTP server</h3>
       <p>Specify both the TFTP server IP address and the image file name stored on it to download to the server BMC.</p>
       <fieldset>
@@ -42,7 +42,7 @@
             <input name="tftp-file-name" id="tftp-file-name" type="text"  ng-model="download_filename"/>
           </div>
           <div class="column small-12 large-4">
-            <input type="button" value="Download firmware" class="inline button btn-primary float-right" ng-click="download()"/>
+            <input type="button" value="Download firmware" class="btn btn-primary float-right" ng-click="download()"/>
           </div>
         </div>
         <div class="inline uploading" ng-show="downloading">Downloading in progress...</div>
@@ -64,8 +64,8 @@
       <p>Change firmware {{priority_image_version}} priority?</p>
     </div>
     <div class="modal__button-wrapper">
-      <button class="inline btn-secondary" ng-click="confirm_priority=false;">Cancel</button>
-      <button class="inline btn-primary" ng-click="confirmChangePriority()">Continue</button>
+      <button class="btn btn-secondary" ng-click="confirm_priority=false;">Cancel</button>
+      <button class="btn btn-primary" ng-click="confirmChangePriority()">Continue</button>
     </div>
   </div>
 </section>
@@ -81,8 +81,8 @@
       <p>Delete firmware {{delete_image_version}}?</p>
     </div>
     <div class="modal__button-wrapper">
-      <button class="inline btn-secondary" ng-click="confirm_delete=false;">Cancel</button>
-      <button class="inline btn-primary" ng-click="confirmDeleteImage()">Continue</button>
+      <button class="btn  btn-secondary" ng-click="confirm_delete=false;">Cancel</button>
+      <button class="btn  btn-primary" ng-click="confirmDeleteImage()">Continue</button>
     </div>
   </div>
 </section>
@@ -91,10 +91,8 @@
   <div class="modal__activate" role="document">
     <div class="screen-reader-offscreen modal-description">Activate modal</div><!-- accessibility only; used for screen readers -->
     <div class="page-header ">
-      <h3 class="modal-title"><span class="icon icon__info"><svg xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 32 32"><path
-          d="M18 14h-6v2h1v6h-2v2h8v-2h-2z"/><circle cx="16" cy="10" r="2"/><path
-          d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z"/></svg></span>
+      <h3 class="modal-title">
+        <i class="icon icon__info" ng-include="'/app/assets/images/icon-information.svg'"></i>
         <!-- We call "Host" firmware "server" firmware -->
         Confirm {{activate_image_type == 'Host' ? 'server' : activate_image_type}} firmware file activation
       </h3>
@@ -138,8 +136,8 @@
       </form>
     </div>
     <div class="modal__button-wrapper">
-      <button class="inline btn-secondary" ng-click="activate_confirm=false;">Cancel</button>
-      <button class="inline btn-primary" ng-click="activateConfirmed()">Continue</button>
+      <button class="btn  btn-secondary" ng-click="activate_confirm=false;">Cancel</button>
+      <button class="btn  btn-primary" ng-click="activateConfirmed()">Continue</button>
     </div>
   </div>
 </section>

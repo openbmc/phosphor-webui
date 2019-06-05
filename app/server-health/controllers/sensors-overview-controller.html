@@ -6,7 +6,7 @@
   <section class="row column">
     <div class="page-header">
       <h2 class="inline">All sensors present in the system</h2>
-      <a ng-href="data:text/json;charset=utf-8,{{export_data}}" class="inline btn-export float-right" download="{{export_name}}">Export</a>
+      <a ng-href="data:text/json;charset=utf-8,{{export_data}}" class="btn btn-tertiary float-right" download="{{export_name}}"><i class="icon" ng-include="'/app/assets/images/icon-export.svg'"></i>Export</a>
     </div>
   </section>
   <section class="row column">
@@ -23,16 +23,16 @@
 
     <div class="toggle-filter">
       <p class="content-label">FILTER BY SEVERITY</p>
-      <button class="inline first btn-primary" ng-click="toggleSeverityAll()"
+      <button class="btn" ng-click="toggleSeverityAll()"
           ng-class="selectedSeverity.all ? 'btn-primary' : 'btn-secondary'">All
       </button>
-      <button class="inline " ng-click="toggleSeverity('critical')"
+      <button class="btn" ng-click="toggleSeverity('critical')"
           ng-class="selectedSeverity.critical ? 'btn-primary' : 'btn-secondary'">Critical
       </button>
-      <button class="inline" ng-click="toggleSeverity('warning')"
+      <button class="btn" ng-click="toggleSeverity('warning')"
           ng-class="selectedSeverity.warning ? 'btn-primary' : 'btn-secondary'">Warning
       </button>
-      <button class="inline" ng-click="toggleSeverity('normal')"
+      <button class="btn" ng-click="toggleSeverity('normal')"
           ng-class="selectedSeverity.normal ? 'btn-primary' : 'btn-secondary'">Normal
       </button>
     </div>

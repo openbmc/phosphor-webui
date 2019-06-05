@@ -89,12 +89,7 @@
     height: 1.2em;
   }
   .btn-add {
-    &:focus {
-      outline-offset: 3px;
-    }
     margin: 2em 0;
-    color: $primebtn__bg;
-    padding: 1em 0;
   }
   .snmp__submit-wrapper {
     width: 100%;

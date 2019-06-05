@@ -1,22 +1,3 @@
-.user-list__tbl {
-  .btn-edit,
-  .btn-delete {
-    padding: .5em 1em;
-    min-height: 2em;
-    color: $primebtn__text;
-    background: $primebtn__bg;
-    &:hover {
-      background: rgba($primebtn__bg, .8);
-      @include fastTransition-all;
-    }
-    &:disabled {
-      background: $btn__disabled-bg;
-      color: $btn__disabled-txt;
-      @include fastTransition-all;
-      cursor: default;
-    }
-  }
-}
 .acnt-prop-header {
   width: 100%;
   border-bottom: 2px solid #b8c1c1;
@@ -76,8 +57,7 @@
       margin: .5em;
     }
   }
-  .user-manage__error
-  {
+  .user-manage__error {
     background: lighten($error-color, 20%);
     padding: 1em;
     text-align: center;
@@ -87,8 +67,7 @@
     font-family: "Courier New", Helvetica, Arial, sans-serif;
     font-weight: 700;
   }
-  .user-manage__success
-  {
+  .user-manage__success {
     color: $primebtn__bg;
     padding: 1em;
     font-size: 1em;
