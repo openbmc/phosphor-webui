@@ -69,28 +69,29 @@
                 </fieldset>
               </div>
               <div class="small-2 align-self-center snmp__buttons">
-                <button class="edit_button" type="button">
-                  <img src="../../assets/images/icon-edit-blue.svg" alt="Edit">
+                <button class="btn edit_button" type="button">
+                  <icon file="icon-edit.svg" aria-label="Edit"></icon>
                 </button>
               </div>
             </div>
           </div>
           <div class="small-1 align-self-center snmp__buttons trash">
-            <button class="trash_button" type="button" ng-click="removeSNMPManager($index)">
-              <img src="../../assets/images/icon-trashcan-blue.svg" alt="Remove">
+            <button class="btn trash_button" type="button" ng-click="removeSNMPManager($index)">
+              <icon file="icon-trashcan.svg" aria-label="Remove"></icon>
             </button>
           </div>
         </div>
         <div class="row column">
-          <button class="btn-add" type="button" ng-click="submitted=false; addNewSNMPManager();"><img class="add__icon" src="../../assets/images/icon-plus.svg" alt=""/> Add manager</button>
+          <button class="btn  btn-tertiary  btn-add" type="button" ng-click="submitted=false; addNewSNMPManager();">
+            <icon file="icon-plus.svg"></icon>Add manager</button>
         </div>
       </form>
     </div>
   </div>
   <div class="row column">
     <div class="snmp__submit-wrapper">
-      <button type="button" ng-click="submitted=true;  snmp__form.$valid && setSNMP();" class="btn-primary inline">Save settings</button>
-      <button type="button" class="btn-secondary inline" ng-click="refresh()">Cancel</button>
+      <button type="button" ng-click="submitted=true;  snmp__form.$valid && setSNMP();" class="btn  btn-primary">Save settings</button>
+      <button type="button" class="btn  btn-secondary" ng-click="refresh()">Cancel</button>
     </div>
   </div>
 </div>

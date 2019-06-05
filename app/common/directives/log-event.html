@@ -41,20 +41,20 @@
         </div>
         <div>
           <div class="event__actions">
-            <button class="btn-meta-copy" clipboard text="copyText(event)" on-copied="copySuccess(event)" on-error="copyfailed(err)">
-              <img class="event__icon" src="../../assets/images/icon-copy.svg" alt=""/><span ng-if="!event.copied">Copy</span><span ng-if="event.copied">Copied</span>
+            <button class="btn  btn-tertiary" clipboard text="copyText(event)" on-copied="copySuccess(event)" on-error="copyfailed(err)">
+              <icon file="icon-copy.svg"></icon>
+              <span ng-if="!event.copied">Copy</span>
+              <span ng-if="event.copied">Copied</span>
             </button>
             <button
-              class="btn-delete"
+              class="btn  btn-tertiary"
               ng-class="{'disabled': multiSelected}"
               ng-click="event.confirm= ! event.confirm"
               ng-disabled="multiSelected">
-                <img
-                  class="event__icon"
-                  src="../../assets/images/icon-trashcan.svg"
-                  alt=""/>Delete
+                <icon file="icon-trashcan.svg"></icon>Delete
             </button>
-            <button class="btn-resolve" ng-class="{'disabled': (event.Resolved == 1 || multiSelected)}" ng-click="resolveEvent(event)" ng-disabled="event.Resolved == 1 || multiSelected"><img class="event__icon" src="../../assets/images/icon-check.svg" alt=""/>Mark as resolved</button>
+            <button class="btn  btn-tertiary" ng-class="{'disabled': (event.Resolved == 1 || multiSelected)}" ng-click="resolveEvent(event)" ng-disabled="event.Resolved == 1 || multiSelected">
+              <icon file="icon-check.svg"></icon>Mark as resolved
           </div>
           <div class="event__related" ng-show="event.related_items.length">
             <p class="inline event__related-label">Related items:</p>

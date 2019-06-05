@@ -26,9 +26,6 @@
   font-size: 1rem;
   background-color: $white;
   min-width: 3em;
-  &.disabled {
-    background-color: $btn__disabled-bg;
-  }
 }
 
 .vm__upload-content {
@@ -40,8 +37,7 @@
     cursor: pointer;
     width: 0.75em;
     height: 0.75em;
-    margin: 0.3em 1em 0.3em 0.3em;
-    background-image: url(../assets/images/crit-x-black.svg);
+    margin: 0 1em 0.3em 0.3em;
   }
 }
 
