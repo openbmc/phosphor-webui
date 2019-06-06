@@ -7,16 +7,16 @@ $lightgrey: #f5f7fa;
 $lightblue: #f1f2f6;
 $medblue: #3f71ec;
 $darkblue: #1e3359;
-$purple: #5A3EC8;
+$purple: #5a3ec8;
 $field__disabled: #e6e6e6;
-$field__focus: #3C6DEF;
+$field__focus: #3c6def;
 $btn__disabled-txt: #a6a5a6;
 $btn__disabled-bg: #d8d8d8;
 $primebtn__disabled-txt: #999999;
-$primebtn__disabled-bg: #CCCCCC;
+$primebtn__disabled-bg: #cccccc;
 
 // Dark background
-$darkbg__grey: #E3ECEC;
+$darkbg__grey: #e3ecec;
 $darkbg__accent: #79a6f6;
 $darkbg__primary: #19273c;
 
@@ -54,13 +54,13 @@ $status-warn: #ffb000;
 $alert__error: rgb(230, 35, 37);
 $alert__warning: rgb(255, 127, 0);
 $alert__message: rgb(203, 221, 235);
-$alert__danger: #fad3D3;
+$alert__danger: #fad3d3;
 
 // Severity
 $critical-lightbg: #da1416;
 $critical-darkbg: #ff5c49;
 $severity-medium-lightbg: #dc267f;
-$medium-darkbg: #FF509E;
+$medium-darkbg: #ff509e;
 $warning-lightbg: #ff836f;
 $warning-darkbg: #ffb000;
 $low-lightbg: #c42cd6;
@@ -76,7 +76,6 @@ $highPriority-bg: #edc9cb;
 $resolvedColor: #999999;
 $resolved-bg: #d6d6d6;
 
-
 // Threshold graphs
 $thresh-critical: $error-color;
 $thresh-warning: #ffb001;
@@ -90,7 +89,7 @@ $inactive: $severity-medium-lightbg;
 $links: #2d60e5;
 $links__hover: $lightbg__primary;
 $links__visited: #8ea7ea;
-$links__disabled: rgba(27, 40, 52, 0.70);
+$links__disabled: rgba(27, 40, 52, 0.7);
 
 // Navigation
 $nav__top-level-color: #1a273b;

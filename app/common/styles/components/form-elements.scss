@@ -1,9 +1,9 @@
 // Drop downs
 .dropdown__button {
   position: relative;
-  padding-top: .5em;
-  padding-bottom: .5em;
-  padding-left: .5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-left: 0.5em;
   padding-right: 1.5em;
   margin-top: 0;
   border: 1px solid $input-border;
@@ -52,11 +52,11 @@
   > .active {
     position: relative;
     &:before {
-      content: '\2713';
+      content: "\2713";
       position: absolute;
       display: inline-block;
       top: 50%;
-      left: .6em;
+      left: 0.6em;
       color: $lightbg__primary;
       transform: translateY(-50%);
     }
@@ -74,8 +74,6 @@
     color: $darkgrey;
   }
 }
-
-
 
 // Checkbox
 
@@ -116,7 +114,6 @@
 /* Checked state */
 .control-check input:checked ~ .control__indicator {
   background: $primebtn__bg;
-
 }
 
 /* Hover state whilst checked */
@@ -127,7 +124,7 @@
 /* Disabled state */
 .control-check input:disabled ~ .control__indicator {
   pointer-events: none;
-  opacity: .6;
+  opacity: 0.6;
   background: #ccc;
   border: 1px solid $white;
 }
@@ -138,10 +135,10 @@
 
 /* Check mark */
 .control__indicator:after,
-.control-check input:not(:checked){
+.control-check input:not(:checked) {
   position: absolute;
   display: none;
-  content: '';
+  content: "";
 }
 
 /* Show check mark */
@@ -182,7 +179,7 @@
   background: $white;
   border: 2px solid $darkgrey;
 }
-.control-radio input{
+.control-radio input {
   position: absolute;
   z-index: -1;
   opacity: 0;
@@ -205,14 +202,14 @@
 }
 
 /* Disabled state */
-.control-radio input:disabled ~ .control__indicator{
+.control-radio input:disabled ~ .control__indicator {
   pointer-events: none;
-  opacity: .6;
+  opacity: 0.6;
   background: #ccc;
   border: 1px solid $medgrey;
 }
 
-.control-radio:hover > input:disabled ~ .control__indicator{
+.control-radio:hover > input:disabled ~ .control__indicator {
   outline: 0;
 }
 
@@ -224,7 +221,7 @@
 .control__indicator:after {
   position: absolute;
   display: none;
-  content: '';
+  content: "";
 }
 
 /* Show mark */
@@ -233,7 +230,7 @@
 }
 
 /* Disabled tick colour */
-.control-radio input:disabled ~ .control__indicator:after{
+.control-radio input:disabled ~ .control__indicator:after {
   border-color: $white;
   color: $white;
 }

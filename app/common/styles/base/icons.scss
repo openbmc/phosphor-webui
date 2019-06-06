@@ -34,7 +34,7 @@
 
 .icon__bar-arrow {
   &:before {
-    content: '\21E5';
+    content: "\21E5";
     position: absolute;
     font-size: 1.7em;
     vertical-align: middle;
@@ -47,7 +47,7 @@
 
 .icon-angle {
   &:before {
-    content: '\276F';
+    content: "\276F";
     display: inline-block;
     font-size: 1em;
     margin-left: 1em;
@@ -60,7 +60,7 @@
   vertical-align: middle;
   width: 16px;
   height: 16px;
-  margin-right: .4em;
+  margin-right: 0.4em;
 }
 
 .icon__warning {
@@ -103,9 +103,9 @@
   background-image: url(../assets/images/icon-plus.svg);
 }
 
-.icon__info{
+.icon__info {
   margin-top: -4px;
-  margin-right: .5em;
+  margin-right: 0.5em;
   width: 25px;
   height: 25px;
   fill: $medblue;
@@ -113,13 +113,14 @@
 }
 
 .icon__up-arrow {
-  margin-right: .4em;
+  margin-right: 0.4em;
   margin-bottom: -15px;
   background: url(../assets/images/icon-arrow-blue.svg) center center no-repeat;
   height: 40px;
   width: 30px;
   &.icon-as-spacer {
-    background: url(../assets/images/icon-arrow-gray.svg) center center no-repeat;
+    background: url(../assets/images/icon-arrow-gray.svg) center center
+      no-repeat;
   }
 }
 .icon__down-arrow {

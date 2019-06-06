@@ -1,9 +1,13 @@
-button, .button, .submit, .btn, [type='button'] {
+button,
+.button,
+.submit,
+.btn,
+[type="button"] {
   font-size: 1em;
   @include fontFamilyBold;
   text-transform: none;
   border-radius: 0;
-  padding: .5em 1em;
+  padding: 0.5em 1em;
   line-height: 1;
   &:hover {
     cursor: pointer;
@@ -91,7 +95,7 @@ button, .button, .submit, .btn, [type='button'] {
     width: 1.5em;
     height: 1.5em;
     display: inline-block;
-    margin-right: .5em;
+    margin-right: 0.5em;
   }
 }
 

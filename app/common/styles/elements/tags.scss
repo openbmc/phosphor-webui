@@ -1,8 +1,8 @@
 // Tags
 
 .tag {
-  font-size: .9em;
-  padding: .4em .8em .2em;
+  font-size: 0.9em;
+  padding: 0.4em 0.8em 0.2em;
   position: relative;
   display: inline-block;
   font-weight: 700;
@@ -10,14 +10,15 @@
   border-radius: 3px;
   line-height: 1.5;
   overflow: hidden;
-  margin: .4em .3em;
+  margin: 0.4em 0.3em;
   min-width: 185px;
   text-align: left;
   &:hover {
     cursor: pointer;
   }
-  &:before { // close icon
-    content: '+';
+  &:before {
+    // close icon
+    content: "+";
     font-size: 2em;
     font-weight: 400;
     transform: rotate(45deg);
@@ -30,8 +31,9 @@
     height: 20px;
     width: 20px;
   }
-  &:after { // white separator
-    content: '';
+  &:after {
+    // white separator
+    content: "";
     height: 100%;
     position: absolute;
     top: 0;
@@ -55,7 +57,7 @@
 .event__high {
   background: lighten($error-color, 30%);
 }
-.event__medium{
+.event__medium {
   background: lighten($alert__warning, 30%);
 }
 .event__low {
@@ -65,7 +67,7 @@
 // Priority tags
 .priority-tag {
   color: $white;
-  font-size: .8em;
+  font-size: 0.8em;
   text-transform: uppercase;
   padding: 2px 2em;
   font-weight: 700;
@@ -75,11 +77,9 @@
 
   &.high-priority {
     background: $error-color;
-
   }
   &.med-priority {
     background: $alert__warning;
-
   }
   &.low-priority {
     background: $lightbg__primary;
@@ -96,42 +96,42 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: rgba( $normal, .4);
+  background: rgba($normal, 0.4);
   position: relative;
   border-width: 2px;
   border-style: solid;
   border-color: $normal;
   &.high-priority {
     color: $critical-lightbg;
-    background-color: rgba( $critical-lightbg, .4 );
+    background-color: rgba($critical-lightbg, 0.4);
     background-image: url(../assets/images/crit-x.svg);
     border-color: $critical-lightbg;
     &:before {
-      content: '';
+      content: "";
       position: absolute;
       top: -11px;
       left: -3px;
       font-weight: 600;
       font-size: 1.5em;
       -webkit-font-smoothing: antialiased;
-      text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
     }
   }
   &.medium-priority {
-    background: rgba($severity-medium-lightbg, .5);
+    background: rgba($severity-medium-lightbg, 0.5);
     border-color: rgba($severity-medium-lightbg, 1);
   }
   &.warn-priority {
     border-color: $warning-lightbg;
     background-image: url(../assets/images/warn-slash.svg);
-    background-color: rgba($thresh-warning, .3);
+    background-color: rgba($thresh-warning, 0.3);
   }
   &.normal-priority {
-    background: rgba( $normal, .4);
+    background: rgba($normal, 0.4);
   }
   &.disabled {
-    background: rgba( $darkgrey, .2);
-    border-color: rgba( $darkgrey, .2);
+    background: rgba($darkgrey, 0.2);
+    border-color: rgba($darkgrey, 0.2);
   }
   &.event-resolved {
     background: $purple;

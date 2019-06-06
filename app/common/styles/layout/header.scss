@@ -38,7 +38,7 @@ $logoMaxWidth: 125px;
 .header__logout {
   float: right;
   color: $white;
-  font-size: .9em;
+  font-size: 0.9em;
   text-decoration: none;
   padding: 1em;
   font-weight: 400;
@@ -61,7 +61,7 @@ $logoMaxWidth: 125px;
     font-size: 1.5em;
     font-weight: 500;
     color: $darkgrey;
-    padding: .4em 0 0 1em;
+    padding: 0.4em 0 0 1em;
     height: 100%;
     background: transparent;
     max-width: 600px;
@@ -78,7 +78,7 @@ $logoMaxWidth: 125px;
     }
   }
   .logo__wrapper {
-    padding-top: .5em;
+    padding-top: 0.5em;
     //position: absolute;
     //top: 50%;
     //transform: translateY(-50%);
@@ -100,7 +100,7 @@ $logoMaxWidth: 125px;
     right: -480px;
     bottom: 0;
     z-index: 100;
-    margin: .3em 0;
+    margin: 0.3em 0;
     background: $white;
     @include fastTransition-all;
     &.active {
@@ -114,12 +114,13 @@ $logoMaxWidth: 125px;
       color: $black;
       font-size: 1em;
     }
-    a, p {
+    a,
+    p {
       display: block;
       float: left;
       text-decoration: none;
       color: $darkgrey;
-      padding: 1.250em;
+      padding: 1.25em;
       height: 100%;
       font-size: 0.875em;
       font-weight: 400;
@@ -128,7 +129,7 @@ $logoMaxWidth: 125px;
         display: block;
         font-size: 1rem;
         font-weight: bold;
-        margin-top: .3em;
+        margin-top: 0.3em;
       }
     }
   }
@@ -140,7 +141,7 @@ $logoMaxWidth: 125px;
   .header__multi-server {
     background: $lightgrey;
     @include round-corners;
-    margin: 0 .3em;
+    margin: 0 0.3em;
     height: 100%;
     border: 1px solid $medgrey;
     opacity: 1;
@@ -151,8 +152,8 @@ $logoMaxWidth: 125px;
   }
 
   .header__multi-server {
-    padding: .5em;
-    padding-top: .8em;
+    padding: 0.5em;
+    padding-top: 0.8em;
     float: left;
     margin-top: 10px;
     margin-right: -10px;
@@ -170,12 +171,12 @@ $logoMaxWidth: 125px;
   }
   .header__functions {
     .header__info {
-      padding: .3em;
+      padding: 0.3em;
       min-width: 40px;
       text-align: center;
       float: left;
       span {
-        padding: .7em 0 .3em;
+        padding: 0.7em 0 0.3em;
         font-size: 1em;
         font-weight: 400;
         color: $darkgrey;

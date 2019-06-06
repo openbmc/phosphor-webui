@@ -14,16 +14,19 @@
   padding: 0 10px;
 }
 
-.pagination li { background-color: transparent; list-style-type: none; }
+.pagination li {
+  background-color: transparent;
+  list-style-type: none;
+}
 
 .pagination a {
   font-weight: 300;
   padding-top: 1px;
-  text-decoration:none;
+  text-decoration: none;
   border: 1px solid $medgrey;
   border-left-width: 0;
-  min-width:44px;
-  min-height:44px;
+  min-width: 44px;
+  min-height: 44px;
   color: $darkbg__primary;
 }
 
@@ -33,9 +36,9 @@
 }
 
 .pagination li:not([class*="current"]) a:focus,
-.pagination li:not([class*="current"]) a:active {;
+.pagination li:not([class*="current"]) a:active {
   //box-shadow: 0px 0px 10px 1px rgba(0,0,0,.25);
-  border-left-width:1px;
+  border-left-width: 1px;
 }
 
 .pagination li:first-of-type a {
@@ -66,16 +69,16 @@
 }
 
 .pagination li:first-child a::before,
-
-
 .pagination li:nth-of-type(2) a::before,
-
-
 .pagination li:first-child a::before,
-.pagination li:nth-of-type(2) a::before { -webkit-transform: rotate(180deg); transform: rotate(180deg); }
+.pagination li:nth-of-type(2) a::before {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
 
-.pagination li.current a, .pagination li.active a {
-  padding-top:.25em;
+.pagination li.current a,
+.pagination li.active a {
+  padding-top: 0.25em;
   color: $white;
   background-color: $lightbg__primary;
   cursor: default;
@@ -83,7 +86,7 @@
   font-weight: 700;
 }
 
-@media only screen and ( max-width: 64.063em ) {
+@media only screen and (max-width: 64.063em) {
   .pagination li:first-child,
   .pagination li:last-child {
     /* screen readers only */
@@ -92,11 +95,12 @@
     left: -9999px;
   }
 
-  .pagination li:nth-of-type(2) a { border-left-width: 1px; }
-
+  .pagination li:nth-of-type(2) a {
+    border-left-width: 1px;
+  }
 }
 
-@media only screen and ( max-width: 40.063em ) {
+@media only screen and (max-width: 40.063em) {
   .pagination li {
     /* screen readers only */
     position: absolute;
@@ -108,19 +112,21 @@
   .pagination li:first-of-type,
   .pagination li:last-of-type,
   .pagination li:nth-of-type(2),
-  .pagination li:nth-last-of-type(2){
+  .pagination li:nth-last-of-type(2) {
     position: initial;
     top: initial;
     left: initial;
   }
 
-  .pagination li:nth-of-type(2) a { border-left-width: 0; }
-
+  .pagination li:nth-of-type(2) a {
+    border-left-width: 0;
+  }
 }
 
-@media only screen and ( max-width: 30.063em ) {
-
-  h1 { font-size: 1.35em !important; }
+@media only screen and (max-width: 30.063em) {
+  h1 {
+    font-size: 1.35em !important;
+  }
 
   .pagination li:first-child,
   .pagination li:last-child {
@@ -130,13 +136,17 @@
     left: -9999px;
   }
 
-  .pagination li:nth-of-type(2) a { border-left-width: 1px; }
-
+  .pagination li:nth-of-type(2) a {
+    border-left-width: 1px;
+  }
 }
 
-@media only screen and ( max-width: 15.063em ) {  /* For watches? */
+@media only screen and (max-width: 15.063em) {
+  /* For watches? */
 
-  .pagination li { width: 50%;}
+  .pagination li {
+    width: 50%;
+  }
 
   .pagination li.current {
     -webkit-box-ordinal-group: 3;
@@ -144,7 +154,5 @@
     order: 2;
     width: 100%;
     border-left-width: 1px;
-
   }
-
 }
