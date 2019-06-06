@@ -14,7 +14,7 @@
   .btn-pop-out,
   .btn-export {
     text-decoration: none;
-    font-size: .9em;
+    font-size: 0.9em;
     &:hover {
       text-decoration: underline;
     }
@@ -28,7 +28,9 @@
   background: $white;
   padding: 1.2em;
   line-height: 0;
-  a {color: $black;}
+  a {
+    color: $black;
+  }
 }
 
 .terminal-container {
@@ -41,6 +43,6 @@
   max-width: 70em;
 }
 
-#terminal{
-  height:25em;
+#terminal {
+  height: 25em;
 }

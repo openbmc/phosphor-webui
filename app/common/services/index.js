@@ -5,11 +5,12 @@
  * @exports app/common/services/index
  */
 
-window.angular && (function(angular) {
-  'use strict';
+window.angular &&
+  (function(angular) {
+    'use strict';
 
-  angular.module('app.common.services', [
-    // Dependencies
-    // Basic resources
-  ]);
-})(window.angular);
+    angular.module('app.common.services', [
+      // Dependencies
+      // Basic resources
+    ]);
+  })(window.angular);

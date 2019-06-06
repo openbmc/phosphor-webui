@@ -6,10 +6,10 @@ $nav__seclvlWidth: 240px;
   color: $white;
   fill: $white;
   max-height: 40px;
-  stroke-width: .5;
+  stroke-width: 0.5;
   display: block;
   width: 40px;
-  margin: 0 auto .5em auto;
+  margin: 0 auto 0.5em auto;
   .st0 {
     fill: none;
     stroke: $white;
@@ -50,7 +50,9 @@ $nav__seclvlWidth: 240px;
   .nav-icon {
     @include navIcons;
   }
-  .button, button, a {
+  .button,
+  button,
+  a {
     background: transparent;
     height: auto;
     border: 0;
@@ -72,7 +74,7 @@ $nav__seclvlWidth: 240px;
     span {
       margin: 1em 0 0 0;
       display: block;
-      font-size: .9em;
+      font-size: 0.9em;
       font-weight: 400;
       line-height: 1rem;
     }
@@ -156,27 +158,31 @@ $nav__seclvlWidth: 240px;
     }
 
     li {
-      a:after{
-        content: '\203A';
+      a:after {
+        content: "\203A";
         position: absolute;
         font-size: 2em;
         font-weight: 700;
         top: 50%;
-        right: .6em;
+        right: 0.6em;
         transform: translateY(-59%);
         color: $nav__second-level-text-color;
         opacity: 0;
       }
       &.active {
-        a {font-weight: 700;}
+        a {
+          font-weight: 700;
+        }
       }
       &.active,
       &:focus,
       &:hover {
-        a {color: $nav__second-level-text-color;}
+        a {
+          color: $nav__second-level-text-color;
+        }
         a:after {
           opacity: 1;
-          right: .3em;
+          right: 0.3em;
           @include fastTransition-all;
         }
       }

@@ -1,11 +1,11 @@
 //Export button
 .btn-export {
   color: $black;
-  font-size: .9em;
+  font-size: 0.9em;
   font-weight: 700;
   position: relative;
   padding: 0 0 0 2em;
-  margin-right: .6em;
+  margin-right: 0.6em;
   text-decoration: none;
   margin-top: 0;
   &:hover {
@@ -13,7 +13,7 @@
   }
 }
 .btn-export:before {
-  content: '\21E5';
+  content: "\21E5";
   position: absolute;
   font-size: 1.7em;
   vertical-align: middle;

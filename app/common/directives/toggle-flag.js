@@ -1,7 +1,9 @@
-window.angular && (function(angular) {
-  'use strict';
+window.angular &&
+  (function(angular) {
+    'use strict';
 
-  angular.module('app.common.directives')
+    angular
+      .module('app.common.directives')
       .directive('toggleFlag', function($document) {
         return {
           restrict: 'A',
@@ -26,4 +28,4 @@ window.angular && (function(angular) {
           }
         };
       });
-})(window.angular);
+  })(window.angular);
