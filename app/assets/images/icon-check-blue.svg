@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.1 (78136) - https://sketchapp.com -->
+    <title>Check</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M8,16 C3.581722,16 0,12.418278 0,8 C0,3.581722 3.581722,0 8,0 C12.418278,0 16,3.581722 16,8 C16,12.418278 12.418278,16 8,16 Z M8,14.5 C11.5898509,14.5 14.5,11.5898509 14.5,8 C14.5,4.41014913 11.5898509,1.5 8,1.5 C4.41014913,1.5 1.5,4.41014913 1.5,8 C1.5,11.5898509 4.41014913,14.5 8,14.5 Z M10.7982312,5 L12,6.20176884 L6.93777638,11.2639925 L4,8.32621608 L5.20176884,7.12444724 L6.93777638,8.86045478 L10.7982312,5 Z" id="path-1"></path>
+    </defs>
+    <g id="3.7-Boot-options" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2.-Subsequent-boots-Copy" transform="translate(-718.000000, -164.000000)">
+            <g id="Icon/Enable" transform="translate(718.000000, 164.000000)">
+                <g id="Color">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Mask"></g>
+                    <g id="Colors/Primary/-Active-Blue40" mask="url(#mask-2)" fill="#2D60E5">
+                        <g transform="translate(-4.275862, -4.931034)" id="Rectangle-6-Copy-2">
+                            <rect x="0" y="0" width="25" height="25"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
