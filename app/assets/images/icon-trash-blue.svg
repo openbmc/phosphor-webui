@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="16px" viewBox="0 0 14 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.1 (78136) - https://sketchapp.com -->
+    <title>Trash Icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M5.66666667,5.71428571 L6.83333333,5.71428571 L6.83333333,12.5714286 L5.66666667,12.5714286 L5.66666667,5.71428571 Z M9.16666667,5.71428571 L10.3333333,5.71428571 L10.3333333,12.5714286 L9.16666667,12.5714286 L9.16666667,5.71428571 Z M1,2.28571429 L1,3.42857143 L2.16666667,3.42857143 L2.16666667,14.8571429 C2.16666667,15.4883254 2.68900113,16 3.33333333,16 L12.6666667,16 C13.3109989,16 13.8333333,15.4883254 13.8333333,14.8571429 L13.8333333,3.42857143 L15,3.42857143 L15,2.28571429 L1,2.28571429 Z M3.33333333,14.8571429 L3.33333333,3.42857143 L12.6666667,3.42857143 L12.6666667,14.8571429 L3.33333333,14.8571429 Z M5.66666667,0 L10.3333333,0 L10.3333333,1.14285714 L5.66666667,1.14285714 L5.66666667,0 Z" id="path-1"></path>
+    </defs>
+    <g id="6.1-Generate-Certificates" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="4.-View-CSR-Copied" transform="translate(-807.000000, -793.000000)">
+            <g id="Stacked-Group" transform="translate(806.000000, 781.000000)">
+                <g id="Icon/Delete" transform="translate(0.000000, 12.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="icon-color" fill="#000000" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <g id="Colors/Primary/-Active-Blue40" mask="url(#mask-2)" fill="#2D60E5" fill-rule="evenodd">
+                        <rect id="Rectangle-6-Copy-2" x="0" y="0" width="16" height="16"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
