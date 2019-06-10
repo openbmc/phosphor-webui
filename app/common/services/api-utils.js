@@ -1039,6 +1039,11 @@ window.angular && (function(angular) {
                       }
                     }
 
+                    sensorData.sort(function(a, b) {
+                      return a.title.localeCompare(
+                          b.title, 'en', {numeric: true});
+                    });
+
                     callback(sensorData, dataClone);
                   },
                   function(error) {
