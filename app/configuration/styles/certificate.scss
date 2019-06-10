@@ -108,6 +108,14 @@
   background: $background-02;
 }
 
+
+.certificate__close-modal {
+  float: right;
+  position: relative;
+  bottom: 1rem;
+  left: 2rem;
+}
+
 .add__certificate__modal {
   select {
     margin-bottom: 0;
@@ -125,4 +133,107 @@
     background-color: $background-02;
     padding: 0.5em;
   }
+}
+
+.add-certificate__section {
+  padding-left: 0;
+}
+
+// Combinator needed to match specificity
+// of default modal settings
+.modal.add-csr__modal {
+  width: 100%;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.add-csr__section:first-of-type {
+  padding-left: 0;
+}
+
+.add-csr__section:last-of-type {
+  margin-top: 2rem;
+  padding-right: 0;
+
+  @media (min-width: 640px) {
+    margin-top: 0;
+  }
+}
+
+.add-csr__section-title {
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.add-csr__section--border {
+  @media (min-width: 640px) {
+    padding-left: 2rem;
+    border-left: 1px solid $base-02--04;
+  }
+}
+
+.add-csr__label {
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.add-csr__text-helper {
+  color: $base-02--02;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+  margin-bottom: .5em;
+}
+
+input.add-csr__input,
+select.add-csr__select {
+  width: 100%;
+  margin-bottom: 0;
+  max-height: none;
+  height: auto;
+}
+
+.select.add-csr__select  {
+  line-height: 1.15;
+}
+
+input.add-csr__input-no-validation {
+  margin-bottom: 1.7rem;
+}
+
+.add-csr__additional-alt-names {
+  display: flex;
+}
+
+.add-csr__alt-name-add-btn {
+  padding: 0;
+  @media (min-width: 640px) {
+    margin: 1.9rem 0;
+  }
+}
+
+.add-csr__alt-name-delete-btn {
+  width: 20px;
+  height: 30px;
+  padding: 0;
+
+  icon {
+    margin-right: 0;
+  }
+}
+
+.add-csr-code__header {
+  margin-top: 1em;
+}
+
+.add-csr__container-csr-code {
+  white-space: pre-wrap;
+}
+
+.add-csr__text-download {
+  color: $base-02--08;
+}
+
+select.add-csr__multiselect {
+  height: 14rem;
 }
