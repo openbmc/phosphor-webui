@@ -12,7 +12,7 @@
 }
 
 .modal-overlay.active{
-  z-index: 100;
+  z-index: 10000;
   opacity: .5;
   display: block;
   @include fastTransition-all;
@@ -24,12 +24,12 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%,-50%);
-  max-width: 850px;
+  max-width: 960px;
   min-width: 450px;
   padding: .8em 1.5em;
   border: thin #000 solid;
   background-color :#fff;
-  z-index: 101;
+  z-index: 10001;
   position: fixed;
   overflow: hidden;
   @include fastTransition-all;
