@@ -20,6 +20,8 @@
 
 .modal:not(.uib-modal) {
   width: auto;
+  min-width: 450px;
+  max-width: 960px;
   height: auto;
   left: 50%;
   top: 50%;
