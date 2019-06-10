@@ -12,7 +12,7 @@
 }
 
 .modal-overlay.active{
-  z-index: 100;
+  z-index: 10000;
   opacity: .5;
   display: block;
   @include fastTransition-all;
@@ -20,6 +20,8 @@
 
 .modal:not(.uib-modal) {
   width: auto;
+  min-width: 450px;
+  max-width: 960px;
   height: auto;
   left: 50%;
   top: 50%;
@@ -29,7 +31,7 @@
   padding: .8em 1.5em;
   border: thin $primary-dark solid;
   background-color :$background-01;
-  z-index: 101;
+  z-index: 10001;
   position: fixed;
   overflow: hidden;
   @include fastTransition-all;
