@@ -1400,6 +1400,18 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        createCSRCertificate: function(data) {
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() +
+                       '/redfish/v1/CertificateService/Actions/CertificateService.GenerateCSR',
+                   withCredentials: true,
+                   data: data
+                 })
+              .then(function(response) {
+                return response.data['CSRString'];
+              });
+        },
         replaceCertificate: function(data) {
           return $http({
                    method: 'POST',
