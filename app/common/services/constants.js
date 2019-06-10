@@ -24,11 +24,11 @@ window.angular && (function(angular) {
         {
           'Description': 'HTTPS Certificate',
           'location':
-              '/redfish/v1/Managers/bmc/NetworkProtocol/HTTPS/Certificates'
+              '/redfish/v1/Managers/bmc/NetworkProtocol/HTTPS/Certificates/'
         },
         {
           'Description': 'LDAP Certificate',
-          'location': '/redfish/v1/AccountService/LDAP/Certificates'
+          'location': '/redfish/v1/AccountService/LDAP/Certificates/'
         }
       ],
       CHASSIS_POWER_STATE: {
@@ -107,6 +107,26 @@ window.angular && (function(angular) {
         CHASSIS_OFF: 1000 * 60 * 5,     // 5 mins
         HOST_ON: 1000 * 60 * 5,         // 5 mins
         HOST_OFF: 1000 * 60 * 5,        // 5 mins
+      },
+      CERTIFICATE: {
+        KEY_BIT_LENGTH: [512, 1024, 2048, 4096, 8192, 16384],
+        KEY_USAGE: ["ClientAuthentication",
+                    "CodeSigning",
+                    "CRLSigning",
+                    "DataEncipherment",
+                    "DecipherOnly",
+                    "DigitalSignature",
+                    "EmailProtection",
+                    "EncipherOnly",
+                    "KeyAgreement",
+                    "KeyCertSign",
+                    "KeyEncipherment",
+                    "NonRepudiation",
+                    "OCSPSigning",
+                    "ServerAuthentication",
+                    "TimeStamping"],
+        KEY_PAIR_ALGORITHM: ["EC", "RSA"],
+        KEY_CURVE_ID: ["prime256v1", "secp521r1", "secp384r1"]
       },
       MESSAGES: {
         POLL: {

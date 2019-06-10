@@ -126,6 +126,7 @@
       content: url(../assets/images/icon-plus-disabled.svg);
     }
   }
+  margin-right: 2rem;
 }
 .btn-add-cert:before {
   content: url(../assets/images/icon-plus.svg);
@@ -151,4 +152,159 @@
     background-color: $upload__background;
     padding: .5em;
   }
+  .close-modal {
+    float: right;
+    position: relative;
+    bottom: 1rem;
+    left: 2rem;
+  }
+}
+
+.add-csr__modal {
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: auto;
+
+  .add-csr__container {
+    position: relative;
+    right: .8rem;
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .add-csr__header--general {
+    padding-bottom: 1rem;
+  }
+
+  .add-csr__content--general {
+    position: relative;
+    right: 1rem;
+  }
+
+  .add-csr__container--optional {
+    padding-top: 3rem;
+  }
+
+  .add-csr__header--private-key {
+    position: relative;
+    bottom: 2.5rem;
+    left: 2rem;
+  }
+
+  .add-csr__container--private-key {
+    border-left: 1px solid $lightbg__grey;
+  }
+
+  .add-csr__content--private-key {
+    position: relative;
+    bottom: 1.5rem;
+    padding-left: 1rem;
+    left: 1rem;
+  }
+
+  .add-csr--label {
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  .add-csr--helperText {
+    color: $darkgrey;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.2;
+    margin-bottom: .5em;
+  }
+
+
+  .add-csr__input-select {
+    margin-bottom: 0rem;
+    width: 100%;
+  }
+
+  .add-csr--commonNameAlignment {
+    padding-bottom: 1.57rem;
+  }
+
+  .add-csr__input-optional-select {
+    margin-bottom: 1.55rem;
+    width: 100%;
+    height: 2.5rem;
+  }
+
+  .add-csr__keyUsage-multiselect {
+    height: 13.3rem;
+
+  }
+
+  .add-csr__btn--add-name{
+    color: $primebtn__bg;
+    white-space: nowrap;
+    font-size: .90em;
+    padding-left: 0;
+    position: relative;
+    top: 1.5rem;
+  }
+
+  .add-csr__alternativeNames {
+    display: -webkit-inline-box;
+    width: 100%;
+  }
+
+  .add-csr__deleteName {
+    width: 1rem;
+    position: relative;
+    right: .5rem;
+    top: .5rem;
+  }
+
+  .add-csr__delete {
+    position: relative;
+    right: .5rem
+  }
+
+  .add-csr__btn--add-name:before {
+    content: url(../assets/images/icon-plus.svg);
+    width: 18px;
+    float: left;
+    margin-right: 5px;
+    margin-top: -2px;
+  }
+
+
+  .add-csr__label-info {
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  .add-csr--csr-code {
+    white-space: pre-wrap;
+  }
+
+  .add-csr__copySuccess {
+    position: relative;
+    top: .1rem;
+  }
+
+  .add-csr__copySuccess:before {
+    content: url(../assets/images/icon-check.svg);
+    width: 18px;
+    float: left;
+    margin-right: 5px;
+    margin-top: -2px;
+  }
+
+
+  .add-csr__downloadText {
+    color: white;
+  }
+
+
+  .close-modal {
+    float: right;
+    position: relative;
+    bottom: 1rem;
+    left: 2rem;
+  }
+
 }
