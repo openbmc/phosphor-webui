@@ -64,6 +64,11 @@ button,
     height: 1.2em;
     width: auto;
   }
+
+  // Override for specific icons
+  .icon-add {
+    margin-right: 0;
+  }
 }
 
 /***

@@ -92,6 +92,14 @@
   background: $lightgrey;
 }
 
+
+.certificate__close-modal {
+  float: right;
+  position: relative;
+  bottom: 1rem;
+  left: 2rem;
+}
+
 .add__certificate__modal {
   select {
     margin-bottom: 0;
@@ -109,4 +117,115 @@
     background-color: $upload__background;
     padding: .5em;
   }
+}
+
+.add-csr__modal {
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.add-csr__container {
+  position: relative;
+  right: .8rem;
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.add-csr__header--general {
+  padding-bottom: 1rem;
+}
+
+.add-csr__content--general {
+  position: relative;
+  right: 1rem;
+}
+
+.add-csr__container--optional {
+  padding-top: 3rem;
+}
+
+.add-csr__header-private-key {
+  position: relative;
+  bottom: 2.5rem;
+  left: 2rem;
+}
+
+.add-csr__container-private-key {
+  border-left: 1px solid $lightbg__grey;
+}
+
+.add-csr__content-private-key {
+  position: relative;
+  bottom: 1.5rem;
+  padding-left: 1rem;
+  left: 1rem;
+}
+
+.add-csr__label {
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.add-csr__text-helper {
+  color: $darkgrey;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+  margin-bottom: .5em;
+}
+
+input.add-csr__input,
+select.add-csr__select {
+  width: 100%;
+  margin-bottom: 0;
+  max-height: none;
+  height: auto;
+}
+
+.select.add-csr__select  {
+  line-height: 1.15;
+}
+
+input.add-csr__input-no-validation {
+  margin-bottom: 1.7rem;
+}
+
+.add-csr__btn-add-name {
+  color: $primebtn__bg;
+  white-space: nowrap;
+  font-size: .90em;
+  padding-left: 0;
+  position: relative;
+  top: 1.5rem;
+  right: 1rem;
+}
+
+.add-csr__container-alternate-names {
+  display: -webkit-inline-box;
+  width: 100%;
+}
+
+.add-csr__btn-delete-alternate-names {
+  position: relative;
+  right: .5rem
+}
+
+.add-csr__container--delete-alternate-names-image {
+  width: 1rem;
+  position: relative;
+  left: .6rem;
+}
+
+.add-csr__container-csr-code {
+  white-space: pre-wrap;
+}
+
+.add-csr__text-download {
+  color: white;
+}
+
+select.add-csr__multiselect {
+  height: 13.3rem;
 }
