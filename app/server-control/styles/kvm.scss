@@ -1,11 +1,7 @@
-
-.noNVC_shown {
-  display: inline;
-}
-.noVNC_hidden {
-  display: none;
-}
-
-#noVNC_left_dummy_elem {
-  flex: 1;
+#noVNC_container {
+  // Theoretically this is the max Y resolution we can support
+  // This is a little bit of a hack, because we don't really know the viewport
+  // size until KVM is actually connected, and novnc relies on the upper
+  // container to bound its size.
+  height: 1200px;
 }

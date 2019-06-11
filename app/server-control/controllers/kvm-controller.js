@@ -12,8 +12,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.serverControl').controller('kvmController', [
-    '$scope', '$location', '$log',
-    function($scope, $location, $log) {
+    '$scope', '$location', '$log', 'dataService',
+    function($scope, $location, $log, dataService) {
       var rfb;
 
       $scope.$on('$destroy', function() {
@@ -22,11 +22,6 @@ window.angular && (function(angular) {
         }
       });
 
-      function sendCtrlAltDel() {
-        rfb.sendCtrlAltDel();
-        return false;
-      };
-
       function connected(e) {
         $log.debug('RFB Connected');
       }
@@ -34,22 +29,28 @@ window.angular && (function(angular) {
         $log.debug('RFB disconnected');
       }
 
-      var host = $location.host();
-      var port = $location.port();
       var target =
           angular.element(document.querySelector('#noVNC_container'))[0];
 
       try {
-        rfb = new RFB(target, 'wss://' + host + ':' + port + '/kvm/0', {});
+        rfb = new RFB(target, 'wss://' + dataService.server_id + '/kvm/0', {});
 
         rfb.addEventListener('connect', connected);
         rfb.addEventListener('disconnect', disconnected);
       } catch (exc) {
         $log.error(exc);
-        updateState(
-            null, 'fatal', null, 'Unable to create RFB client -- ' + exc);
-        return;  // don't continue trying to connect
       };
+      rfb.clipViewport = true;
+      rfb.scaleViewport = true;
+      rfb.background = "";
+
+      // Yes, we're poking at an internal novnc interface here, but RFB
+      // hardcodes this to flex, which causes us to center on the div top to
+      // bottom in comparison to our container.  At least we check that it's
+      // there before we poke at it?
+      if (rfb._screen !== undefined){
+        rfb._screen.style.display = "";
+      }
     }
   ]);
 })(angular);
