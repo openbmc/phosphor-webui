@@ -19,7 +19,8 @@
     "Iftekharul Islam <iffy.ryan@ibm.com>",
     "Michael Davis <michael.s.davis@ibm.com>",
     "Ed Tanous <ed.tanous@intel.com>",
-    "Gunnar Mills <gmills@us.ibm.com>"
+    "Gunnar Mills <gmills@us.ibm.com>",
+    "Derick Montague <derick.montague@ibm.com>"
   ],
   "files": [
     "dist"
@@ -68,6 +69,7 @@
     "mini-css-extract-plugin": "^0.4.5",
     "node-sass": "^4.12.0",
     "null-loader": "^0.1.1",
+    "prettier": "^1.17.1",
     "raw-loader": "^0.5.1",
     "rimraf": "^2.6.3",
     "sass-loader": "^7.1.0",
