@@ -2,7 +2,7 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.common.directives')
-      .directive('toggleFlag', function($document) {
+      .directive('toggleFlag', ['$document', function($document) {
         return {
           restrict: 'A',
           link: function(scope, element, attrs) {
@@ -25,5 +25,5 @@ window.angular && (function(angular) {
             });
           }
         };
-      });
+      }]);
 })(window.angular);
