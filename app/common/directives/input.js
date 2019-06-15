@@ -1,7 +1,9 @@
-window.angular && (function(angular) {
-  'use strict';
+window.angular &&
+  (function(angular) {
+    'use strict';
 
-  angular.module('app.common.directives')
+    angular
+      .module('app.common.directives')
       .directive('setFocusOnNewInput', function() {
         return function(scope, element, attrs) {
           var elem = window.document.getElementById(element[0].id);
@@ -16,4 +18,4 @@ window.angular && (function(angular) {
           }
         };
       });
-})(window.angular);
+  })(window.angular);

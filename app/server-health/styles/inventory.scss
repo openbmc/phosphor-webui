@@ -1,9 +1,9 @@
 .inventory__container {
   h3,
-  h4{
+  h4 {
     margin-bottom: 0;
   }
-  h4{
+  h4 {
     font-size: 1rem;
     font-weight: bold;
   }
@@ -13,7 +13,7 @@
   }
   .inventory__table {
     .hardware__header {
-      padding:1.2em 1.5em 1.2em 1.5em;
+      padding: 1.2em 1.5em 1.2em 1.5em;
       background: $darkblue;
       font-weight: 700;
       color: $white;
@@ -22,7 +22,7 @@
       height: 0;
     }
     .harware__details {
-       background: $lightblue;
+      background: $lightblue;
       .hardware__title {
         border-left: 1px solid $medgrey;
         border-right: 1px solid $medgrey;
@@ -54,21 +54,20 @@
         .items {
           max-height: 320px;
           padding: 1em 1.5em 1em 1.5em;
-          overflow:auto;
+          overflow: auto;
           overflow-wrap: break-word;
         }
         .subcomponents {
           max-height: 320px;
           padding: 1em 1.5em 1em 1.5em;
           overflow: auto;
-          border-top:1px solid $medgrey;
+          border-top: 1px solid $medgrey;
           @include mediaQuery(medium) {
-            border-top:0;
-            border-left:1px solid $medgrey;
+            border-top: 0;
+            border-left: 1px solid $medgrey;
           }
         }
       }
     }
   }
 }
-
