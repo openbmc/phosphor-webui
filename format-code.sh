@@ -12,12 +12,12 @@ cd ${DIR}
 
 set -e
 
-echo "Formatting code under $DIR/"
+echo "Testing code under $DIR/"
 
 # Only validate certain areas of the code base for
 # formatting due to some imported code in webui
 
-if [ -f ".clang-format" ]; then
-    clang-format-8 -i `git ls-files '*.js'`
-    git --no-pager diff --exit-code
+if [ -f ".eslintrc" ]; then
+    npm install prettier@1.17.1 eslint@5.16.0 babel-eslint@10.0.1 eslint-config-prettier@4.3.0 eslint-plugin-prettier@3.1.0 eslint-config-google@0.13.0
+    npm run ci-check
 fi
