@@ -12,12 +12,11 @@ cd ${DIR}
 
 set -e
 
-echo "Formatting code under $DIR/"
+echo "Testing code under $DIR/"
 
 # Only validate certain areas of the code base for
 # formatting due to some imported code in webui
 
-if [ -f ".clang-format" ]; then
-    clang-format-8 -i `git ls-files '*.js'`
-    git --no-pager diff --exit-code
+if [ -f ".eslintrc" ]; then
+    npm run ci-check
 fi
