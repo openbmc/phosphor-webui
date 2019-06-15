@@ -23,7 +23,7 @@ import ngToast_animate from 'ng-toast/dist/ngToast-animations.css';
 import ngToast_style from 'ng-toast/dist/ngToast.css';
 
 require('./styles/index.scss');
-var config = require('../config.json');
+const config = require('../config.json');
 
 // TODO(Ed)  clean this up, add the appropriate imports to phosphor-webui
 
@@ -53,7 +53,7 @@ import click_outside from './common/directives/click-outside.js';
 import loader from './common/directives/loader.js';
 import paginate from './common/directives/paginate.js';
 import serial_console from './common/directives/serial-console.js';
-import dir_paginate from './common/directives/dirPagination.js';
+import dir_paginate from './common/directives/thirdParty/dirPagination.js';
 import form_input_error from './common/directives/form-input-error.js';
 import icon_provider from './common/directives/icon-provider.js';
 
@@ -91,56 +91,68 @@ import vm_controller from './configuration/controllers/virtual-media-controller.
 import users_index from './users/index.js';
 import user_accounts_controller from './users/controllers/user-accounts-controller.js';
 
-window.angular && (function(angular) {
-  'use strict';
+window.angular &&
+  (function(angular) {
+    'use strict';
 
-  angular
-      .module(
-          'app',
-          [
-            // Dependencies
-            'ngRoute', 'angular-clipboard', 'ngToast', 'ngAnimate',
-            'ngMessages', 'app.common.directives.dirPagination', 'ngSanitize',
-            'ui.bootstrap',
-            // Basic resources
-            'app.common.services', 'app.common.directives',
-            'app.common.filters',
-            // Model resources
-            'app.login', 'app.overview', 'app.serverControl',
-            'app.serverHealth', 'app.configuration', 'app.users', 'app.redfish'
-          ])
+    angular
+      .module('app', [
+        // Dependencies
+        'ngRoute',
+        'angular-clipboard',
+        'ngToast',
+        'ngAnimate',
+        'ngMessages',
+        'app.common.directives.dirPagination',
+        'ngSanitize',
+        'ui.bootstrap',
+        // Basic resources
+        'app.common.services',
+        'app.common.directives',
+        'app.common.filters',
+        // Model resources
+        'app.login',
+        'app.overview',
+        'app.serverControl',
+        'app.serverHealth',
+        'app.configuration',
+        'app.users',
+        'app.redfish',
+      ])
       // Route configuration
       .config([
-        '$routeProvider', '$locationProvider',
+        '$routeProvider',
+        '$locationProvider',
         function($routeProvider, $locationProvider) {
           $locationProvider.hashPrefix('');
-          $routeProvider.otherwise({'redirectTo': '/login'});
-        }
+          $routeProvider.otherwise({redirectTo: '/login'});
+        },
       ])
       .config([
         '$compileProvider',
         function($compileProvider) {
           $compileProvider.aHrefSanitizationWhitelist(
-              /^\s*(https?|ftp|mailto|tel|file|data|blob):/);
-        }
+            /^\s*(https?|ftp|mailto|tel|file|data|blob):/
+          );
+        },
       ])
       .config([
         '$httpProvider',
         function($httpProvider) {
           $httpProvider.interceptors.push('apiInterceptor');
           $httpProvider.defaults.headers.common = {
-            'Accept': 'application/json'
+            Accept: 'application/json',
           };
           $httpProvider.defaults.headers.post = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           };
           $httpProvider.defaults.headers.put = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           };
           $httpProvider.defaults.headers.patch = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           };
-        }
+        },
       ])
       .config([
         'ngToastProvider',
@@ -149,12 +161,15 @@ window.angular && (function(angular) {
             animation: 'fade',
             timeout: 10000,
             dismissButton: true,
-            maxNumber: 6
+            maxNumber: 6,
           });
-        }
+        },
       ])
       .run([
-        '$rootScope', '$location', 'dataService', 'userModel',
+        '$rootScope',
+        '$location',
+        'dataService',
+        'userModel',
         function($rootScope, $location, dataService, userModel) {
           $rootScope.dataService = dataService;
           dataService.path = $location.path();
@@ -166,8 +181,10 @@ window.angular && (function(angular) {
               }
             }
 
-            if (next.$$route.originalPath == '/' ||
-                next.$$route.originalPath == '/login') {
+            if (
+              next.$$route.originalPath == '/' ||
+              next.$$route.originalPath == '/login'
+            ) {
               if (userModel.isLoggedIn()) {
                 if (current && current.$$route) {
                   $location.path(current.$$route.originalPath);
@@ -178,10 +195,12 @@ window.angular && (function(angular) {
             }
           });
           $rootScope.$on('$locationChangeSuccess', function(event) {
-            var path = $location.path();
+            const path = $location.path();
             dataService.path = path;
-            if (['/', '/login', '/logout'].indexOf(path) == -1 &&
-                path.indexOf('/login') == -1) {
+            if (
+              ['/', '/login', '/logout'].indexOf(path) == -1 &&
+              path.indexOf('/login') == -1
+            ) {
               dataService.showNavigation = true;
             } else {
               dataService.showNavigation = false;
@@ -192,6 +211,6 @@ window.angular && (function(angular) {
             sessionStorage.removeItem('LOGIN_ID');
             $location.path('/login');
           });
-        }
+        },
       ]);
-})(window.angular);
+  })(window.angular);

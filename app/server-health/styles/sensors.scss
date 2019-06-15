@@ -1,7 +1,7 @@
 @mixin state-label {
   text-transform: uppercase;
   font-weight: 700;
-  font-size: .8em;
+  font-size: 0.8em;
 }
 
 $title-minWidth: 210px;
@@ -14,7 +14,7 @@ $title-minWidth: 210px;
     margin-left: 1.5em;
   }
   .sensor__reading {
-    margin-right: .2em;
+    margin-right: 0.2em;
   }
   .sensor__heading-current {
     padding-right: 1em;
@@ -62,10 +62,10 @@ $title-minWidth: 210px;
   background: $white;
   text-decoration: none;
   border: 1px solid $medgrey;
-  background: lighten($lightgrey,1%);
+  background: lighten($lightgrey, 1%);
   margin-top: 1em;
   @include mediaQuery(medium) {
-    padding: .3em 1em .3em 1.5em;
+    padding: 0.3em 1em 0.3em 1.5em;
     margin-top: 0;
     border-top: 0;
     background: transparent;
@@ -74,11 +74,11 @@ $title-minWidth: 210px;
     font-weight: 700;
     background: darken($lightgrey, 5%);
     min-width: 100%;
-    padding: .8em;
+    padding: 0.8em;
     @include mediaQuery(medium) {
       min-width: 30%;
       background: transparent;
-      padding: .5em .5em .5em 0;
+      padding: 0.5em 0.5em 0.5em 0;
     }
     .icon__normal {
       width: 0;
@@ -86,13 +86,13 @@ $title-minWidth: 210px;
   }
   .content-label {
     font-size: 1em;
-    margin-left: .8em;
+    margin-left: 0.8em;
     color: $darkgrey;
   }
   .sensor__reading {
     @include fontCourierBold;
     display: block;
-    padding: .3em .8em;
+    padding: 0.3em 0.8em;
     @include mediaQuery(medium) {
       display: inline-block;
       padding: 0;
@@ -103,21 +103,21 @@ $title-minWidth: 210px;
     margin: 0;
     @include mediaQuery(medium) {
       background: $thresh-normal;
-      padding: .7em .3em;
+      padding: 0.7em 0.3em;
       margin-left: 10px;
       min-width: 109px;
     }
     @include mediaQuery(large) {
       background: $thresh-normal;
-      padding: .7em;
-      margin-left: .3em;
-      margin-right: .3em;
+      padding: 0.7em;
+      margin-left: 0.3em;
+      margin-right: 0.3em;
       min-width: 150px;
     }
     .sensor__label {
       font-weight: 700;
       @include mediaQuery(medium) {
-        font-weight:300;
+        font-weight: 300;
       }
     }
   }
@@ -135,18 +135,18 @@ $title-minWidth: 210px;
       color: $black;
     }
   }
-
 }
 
 // Sensors
 
-#sensors, #sensors-overview {
-
+#sensors,
+#sensors-overview {
   .toggle-filter {
     margin-bottom: 20px;
     font-size: 0.9em;
   }
-  .column, .columns {
+  .column,
+  .columns {
     padding-left: 0px;
     padding-right: 0px;
   }
