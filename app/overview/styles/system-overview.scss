@@ -15,7 +15,7 @@
   list-style-type: none;
   min-width: 47%;
   margin-bottom: 1em;
-  margin-right: .7em;
+  margin-right: 0.7em;
   display: inline-block;
   white-space: normal;
   word-break: break-all;
@@ -29,7 +29,9 @@
     color: $black;
     text-decoration: none;
   }
-  .control-check {display: none;}
+  .control-check {
+    display: none;
+  }
   .accord-trigger {
     transform: rotate(0deg) translateY(-50%);
     position: absolute;
@@ -47,7 +49,7 @@ input.modal__edit-server-name {
 
 .modal__char-count,
 .modal__error {
-  font-size: .8em;
+  font-size: 0.8em;
   color: $darkgrey;
 }
 

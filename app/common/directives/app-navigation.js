@@ -1,14 +1,18 @@
-window.angular && (function(angular) {
-  'use strict';
+window.angular &&
+  (function(angular) {
+    'use strict';
 
-  angular.module('app.common.directives')
+    angular
+      .module('app.common.directives')
       .directive('appNavigation', function() {
         return {
-          'restrict': 'E',
-          'template': require('./app-navigation.html'),
-          'scope': {'path': '=', 'showNavigation': '='},
-          'controller': [
-            '$scope', '$location', 'dataService',
+          restrict: 'E',
+          template: require('./app-navigation.html'),
+          scope: {path: '=', showNavigation: '='},
+          controller: [
+            '$scope',
+            '$location',
+            'dataService',
             function($scope, $location, dataService) {
               $scope.dataService = dataService;
               $scope.showSubMenu = false;
@@ -24,7 +28,7 @@ window.angular && (function(angular) {
                 $scope.showSubMenu = false;
               };
               $scope.$watch('path', function() {
-                var urlRoot = $location.path().split('/')[1];
+                const urlRoot = $location.path().split('/')[1];
                 if (urlRoot != '') {
                   $scope.firstLevel = urlRoot;
                 } else {
@@ -33,8 +37,8 @@ window.angular && (function(angular) {
                 $scope.showSubMenu = false;
               });
               $scope.$watch('showNavigation', function() {
-                var paddingTop = 0;
-                var urlRoot = $location.path().split('/')[1];
+                let paddingTop = 0;
+                const urlRoot = $location.path().split('/')[1];
                 if (urlRoot != '') {
                   $scope.firstLevel = urlRoot;
                 } else {
@@ -45,12 +49,12 @@ window.angular && (function(angular) {
                   paddingTop = document.getElementById('header').offsetHeight;
                 }
                 dataService.bodyStyle = {'padding-top': paddingTop + 'px'};
-                $scope.navStyle = {'top': paddingTop + 'px'};
+                $scope.navStyle = {top: paddingTop + 'px'};
               });
-            }
+            },
           ],
           link: function(scope, element, attributes) {
-            var rawNavElement = angular.element(element)[0];
+            const rawNavElement = angular.element(element)[0];
             angular.element(window.document).bind('click', function(event) {
               if (rawNavElement.contains(event.target)) return;
 
@@ -60,7 +64,7 @@ window.angular && (function(angular) {
                 });
               }
             });
-          }
+          },
         };
       });
-})(window.angular);
+  })(window.angular);

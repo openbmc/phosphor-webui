@@ -1,7 +1,6 @@
 // Power Operations SCSS
 
 #power-operations {
-
   // Power Current status wrapper
   .power__current-status {
     border-bottom: 1px solid $medgrey;
@@ -11,9 +10,9 @@
   // Power state indicator on/off
   .power__state {
     font-weight: 700;
-    margin-top: -.3em;
+    margin-top: -0.3em;
     span:before {
-      content: '';
+      content: "";
       position: absolute;
       @extend .icon__off;
       margin-left: -25px;
@@ -24,16 +23,20 @@
   .power__indicator-bar {
     font-weight: bold;
     width: 100%;
-    padding: 1em 2em .7em;
+    padding: 1em 2em 0.7em;
     margin-bottom: 3em;
     background-size: 200% 100%;
-    background-image: linear-gradient(to right, darken($lightgrey,3%) 50%, $status-ok-light 50%);
+    background-image: linear-gradient(
+      to right,
+      darken($lightgrey, 3%) 50%,
+      $status-ok-light 50%
+    );
     background-position: 0;
     transition: background-position 2s ease;
     overflow: hidden;
-    display:flex;
+    display: flex;
     justify-content: space-between;
-    align-items:center;
+    align-items: center;
     p {
       padding: 0;
       margin: 0;
@@ -43,8 +46,8 @@
       background-position: -100%;
       .power__state {
         span:before {
-          content: '';
-         @extend .icon__good;
+          content: "";
+          @extend .icon__good;
         }
       }
     }
@@ -53,7 +56,7 @@
       color: $black;
       .power__state {
         span:before {
-          content: '';
+          content: "";
           @extend .icon__off;
         }
       }
@@ -64,7 +67,7 @@
       .power__state {
         span:before {
           color: $status-warn;
-          content: '';
+          content: "";
           @extend .icon__warning;
         }
       }
@@ -74,7 +77,7 @@
       color: $black;
       .power__state {
         span:before {
-          content: '';
+          content: "";
           @extend .icon__critical;
         }
       }
@@ -89,13 +92,12 @@
     min-height: 1px;
     min-width: 100%;
     .btn {
-      margin-bottom: .5em;
+      margin-bottom: 0.5em;
       margin-right: 1em;
       min-width: 240px;
     }
-    @include mediaQuery(x-small){
+    @include mediaQuery(x-small) {
       padding: 1.8em 0 1em 0;
     }
   }
-
 } //end power-operations
