@@ -1,4 +1,3 @@
-
 // Accordion
 
 .header__actions-bar {
@@ -15,19 +14,21 @@
       margin-right: -40px;
     }
   }
-  p {margin-bottom: 0;}
+  p {
+    margin-bottom: 0;
+  }
 }
 
 .accord-trigger {
   transform: rotate(90deg);
   font-size: 1.5em;
   color: $text-02;
-  padding: .3em;
+  padding: 0.3em;
   display: block;
   margin: 0 auto;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
   &:after {
-    content: '\276F'
+    content: "\276F";
   }
   &.active {
     transform: rotate(-90deg);
