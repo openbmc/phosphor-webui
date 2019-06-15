@@ -1,11 +1,10 @@
-
 // Table Header
 .table-header {
   width: 100%;
   color: $primary-dark;
   line-height: 30px;
-  padding: .8em 0 0;
-  margin-bottom: .8em;
+  padding: 0.8em 0 0;
+  margin-bottom: 0.8em;
   border-bottom: 1px solid $border-color-01;
   font-size: 1.25em;
   @include mediaQuery(medium) {
@@ -40,11 +39,11 @@
   top: 0;
   left: 0;
   width: 100%;
-  height:100%;
+  height: 100%;
   background: $background-04;
-  z-index:200;
+  z-index: 200;
   color: $primary-light;
-  padding: .8em 1em;
+  padding: 0.8em 1em;
   text-align: center;
   font-size: 1.5em;
   font-weight: bold;
@@ -53,7 +52,7 @@
 .table__cell {
   flex: 0 0 100%;
   line-height: 2.8em;
-  padding: .5em 1em;
+  padding: 0.5em 1em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -80,7 +79,7 @@
 
 // Table Head
 .table__head {
-   width: 100%;
+  width: 100%;
   .table__row {
     display: none;
     font-weight: 700;
@@ -110,7 +109,7 @@
 }
 
 // sensor fixed table header on scroll
-.fixed-table-header{
+.fixed-table-header {
   position: sticky;
   top: 130px;
   z-index: 1;
@@ -121,14 +120,14 @@
   position: relative;
   color: $text-03;
   &::after {
-    content: '\025be';
+    content: "\025be";
     position: absolute;
     right: -20px;
     top: -1px;
     font-size: 1.3em;
   }
   &::before {
-    content: '\025be';
+    content: "\025be";
     position: absolute;
     right: -20px;
     top: -10px;

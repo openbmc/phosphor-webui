@@ -1,26 +1,26 @@
 'use strict';
 
-var EscapeSequences = require('xterm/lib/common/data/EscapeSequences');
+const EscapeSequences = require('xterm/lib/common/data/EscapeSequences');
 
-var BACKSPACE = 8;
-var PAGE_UP = 33;
-var PAGE_DOWN = 34;
-var END = 35;
-var HOME = 36;
-var INSERT = 45;
-var DEL = 46;
-var F1 = 112;
-var F2 = 113;
-var F3 = 114;
-var F4 = 115;
-var F5 = 116;
-var F6 = 117;
-var F7 = 118;
-var F8 = 119;
-var F9 = 120;
-var F10 = 121;
-var F11 = 122;
-var F12 = 123;
+const BACKSPACE = 8;
+const PAGE_UP = 33;
+const PAGE_DOWN = 34;
+const END = 35;
+const HOME = 36;
+const INSERT = 45;
+const DEL = 46;
+const F1 = 112;
+const F2 = 113;
+const F3 = 114;
+const F4 = 115;
+const F5 = 116;
+const F6 = 117;
+const F7 = 118;
+const F8 = 119;
+const F9 = 120;
+const F10 = 121;
+const F11 = 122;
+const F12 = 123;
 
 /*
 VT100+ Character and Key Extensions
@@ -49,9 +49,12 @@ F12 key           | <ESC>@
 */
 
 function customVT100PlusKey(ev, term) {
-  var modifiers = (ev.shiftKey ? 1 : 0) | (ev.altKey ? 2 : 0) |
-      (ev.ctrlKey ? 4 : 0) | (ev.metaKey ? 8 : 0);
-  if (((modifiers) && (ev.keyCode != BACKSPACE)) || (ev.type != 'keydown')) {
+  const modifiers =
+    (ev.shiftKey ? 1 : 0) |
+    (ev.altKey ? 2 : 0) |
+    (ev.ctrlKey ? 4 : 0) |
+    (ev.metaKey ? 8 : 0);
+  if ((modifiers && ev.keyCode != BACKSPACE) || ev.type != 'keydown') {
     return true;
   }
   switch (ev.keyCode) {
@@ -59,9 +62,9 @@ function customVT100PlusKey(ev, term) {
       if (ev.altKey) {
         return true;
       } else if (!ev.shiftKey) {
-        term.handler(EscapeSequences.C0.BS);  // Backspace
+        term.handler(EscapeSequences.C0.BS); // Backspace
       } else {
-        term.handler(EscapeSequences.C0.DEL);  // Delete
+        term.handler(EscapeSequences.C0.DEL); // Delete
       }
       break;
     case PAGE_UP:
