@@ -5,6 +5,7 @@ target/
 .temp/
 *.swp
 .idea
+.vscode/
 app/styles/index.css
 yarn.lock
 coverage/
