@@ -5,20 +5,21 @@
  * @exports app/login/index
  */
 
-window.angular && (function(angular) {
-  'use strict';
+window.angular &&
+  (function(angular) {
+    'use strict';
 
-  angular
+    angular
       .module('app.login', ['ngRoute', 'app.common.services'])
       // Route configuration
       .config([
         '$routeProvider',
         function($routeProvider) {
           $routeProvider.when('/login', {
-            'template': require('./controllers/login-controller.html'),
-            'controller': 'LoginController',
+            template: require('./controllers/login-controller.html'),
+            controller: 'LoginController',
             authenticated: false
           });
         }
       ]);
-})(window.angular);
+  })(window.angular);

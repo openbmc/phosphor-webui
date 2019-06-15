@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   height: 100%;
   @include fontFamily;
   font-size: 16px;
@@ -7,11 +8,12 @@ html, body {
 }
 
 p {
-  margin-bottom: .8em;
-  transition: margin .05s;
+  margin-bottom: 0.8em;
+  transition: margin 0.05s;
 }
 
-a, button.link {
+a,
+button.link {
   color: $links;
   text-decoration: none;
   font-weight: 700;
@@ -28,6 +30,6 @@ a, button.link {
 }
 
 button.link {
-  padding-left: .3em;
-  padding-right: .3em;
+  padding-left: 0.3em;
+  padding-right: 0.3em;
 }
