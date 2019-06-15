@@ -1,34 +1,34 @@
 // Base colors
-$color--blue-100: #1B2834;
-$color--blue-50: #1D3458;
-$color--blue-40: #2D60E5;
-$color--blue-30: #7295F1;
-$color--blue-20: #CCD7F4;
+$color--blue-100: #1b2834;
+$color--blue-50: #1d3458;
+$color--blue-40: #2d60e5;
+$color--blue-30: #7295f1;
+$color--blue-20: #ccd7f4;
 
 $color--grey-100: #333333;
 $color--grey-80: #666666;
 $color--grey-60: #999999;
-$color--grey-40: #CCCCCC;
-$color--grey-30: #DCDEE0;
-$color--grey-20: #F0F2F5;
-$color--grey-10: #FAFBFC;
-$color--grey-0: #FFFFFF;
+$color--grey-40: #cccccc;
+$color--grey-30: #dcdee0;
+$color--grey-20: #f0f2f5;
+$color--grey-10: #fafbfc;
+$color--grey-0: #ffffff;
 
 // Status colors
 $color--teal-70: #098292;
-$color--teal-50: #00B6CB;
-$color--teal-20: #CCF0F5;
+$color--teal-50: #00b6cb;
+$color--teal-20: #ccf0f5;
 
-$color--green-50: #0A7D06;
-$color--green-20: #C6E8C5;
+$color--green-50: #0a7d06;
+$color--green-20: #c6e8c5;
 
-$color--yellow-70: #EFC100;
-$color--yellow-50: #FEDF39;
-$color--yellow-40: #FFDF99;
-$color--yellow-20: #FFF8E4;
+$color--yellow-70: #efc100;
+$color--yellow-50: #fedf39;
+$color--yellow-40: #ffdf99;
+$color--yellow-20: #fff8e4;
 
-$color--red-50: #DA1416;
-$color--red-20: #FAD3D3;
+$color--red-50: #da1416;
+$color--red-20: #fad3d3;
 
 // Global
 $white: $color--grey-0;
@@ -39,12 +39,12 @@ $lightgrey: #f5f7fa;
 $lightblue: #f1f2f6;
 $medblue: #3f71ec;
 $darkblue: #1e3359;
-$purple: #5A3EC8;
+$purple: #5a3ec8;
 $field__disabled: #e6e6e6;
-$field__focus: #3C6DEF;
+$field__focus: #3c6def;
 
 // Dark background
-$darkbg__grey: #E3ECEC;
+$darkbg__grey: #e3ecec;
 $darkbg__accent: #79a6f6;
 $darkbg__primary: #19273c;
 
@@ -82,13 +82,13 @@ $status-warn: #ffb000;
 $alert__error: rgb(230, 35, 37);
 $alert__warning: rgb(255, 127, 0);
 $alert__message: rgb(203, 221, 235);
-$alert__danger: #fad3D3;
+$alert__danger: #fad3d3;
 
 // Severity
 $critical-lightbg: #da1416;
 $critical-darkbg: #ff5c49;
 $severity-medium-lightbg: #dc267f;
-$medium-darkbg: #FF509E;
+$medium-darkbg: #ff509e;
 $warning-lightbg: #ff836f;
 $warning-darkbg: #ffb000;
 $low-lightbg: #c42cd6;
@@ -104,7 +104,6 @@ $highPriority-bg: #edc9cb;
 $resolvedColor: $color--grey-60;
 $resolved-bg: #d6d6d6;
 
-
 // Threshold graphs
 $thresh-critical: $error-color;
 $thresh-warning: #ffb001;
@@ -118,7 +117,7 @@ $inactive: $severity-medium-lightbg;
 $links: $color--blue-40;
 $links__hover: $lightbg__primary;
 $links__visited: #8ea7ea;
-$links__disabled: rgba(27, 40, 52, 0.70);
+$links__disabled: rgba(27, 40, 52, 0.7);
 
 // Navigation
 $nav__top-level-color: #1a273b;
