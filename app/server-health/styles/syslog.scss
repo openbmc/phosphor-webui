@@ -1,9 +1,8 @@
 // System Logs SCSS
 #sys-log {
-
   // Dropwdowns filter
   .dropdown__date.row {
-    padding: .5em;
+    padding: 0.5em;
   }
 
   //Timezone select
@@ -12,7 +11,7 @@
     position: relative;
     text-transform: uppercase;
     color: $lightbg__primary;
-    font-size: .9em;
+    font-size: 0.9em;
     font-weight: 700;
     border: 0;
   }
@@ -25,7 +24,7 @@
 }
 
 .sort_button_wrapper {
-  padding-top:.3em;
+  padding-top: 0.3em;
 }
 
 #sys-log-filter {
@@ -33,16 +32,16 @@
     color: $darkgrey;
     text-transform: uppercase;
     font-weight: 700;
-    font-size: .75em;
+    font-size: 0.75em;
     margin-bottom: 3px;
   }
   .sys-log__severity-filter {
-    float:left;
+    float: left;
     margin-right: 2em;
     margin-bottom: 1em;
     .btn {
       width: 100px;
-      font-size: .9em;
+      font-size: 0.9em;
       &:not(:first-of-type) {
         border-left-width: 1px;
       }
@@ -51,7 +50,7 @@
   .sys-log__date-filter {
     margin-right: 1em;
     color: $darkgrey;
-    float:left;
+    float: left;
     input {
       width: 170px;
     }
@@ -61,7 +60,7 @@
     }
   }
   .sys-log__status-filter {
-    float:left;
+    float: left;
     @include mediaQuery(medium) {
       width: 25%;
     }
@@ -87,16 +86,16 @@
     height: auto;
     margin-left: 0;
     left: 0;
-    padding: 1em 2em 1em 2em
+    padding: 1em 2em 1em 2em;
   }
   .inline__confirm-message {
     margin-top: 5px;
     margin-bottom: -10px;
   }
   .inline__confirm-buttons .btn-primary {
-    padding: .5em 2em;
+    padding: 0.5em 2em;
     min-height: 25px;
-    margin-top: .5em;
+    margin-top: 0.5em;
     @include mediaQuery(medium) {
       margin-top: 0;
     }
@@ -109,7 +108,7 @@
     span {
       display: inline-block;
       font-weight: 700;
-      margin-right: .3em;
+      margin-right: 0.3em;
     }
   }
   .sys-log__col-id {
@@ -140,11 +139,12 @@
     text-align: left;
   }
   //Export log
-  .btn-export, .btn-meta-copy,
+  .btn-export,
+  .btn-meta-copy,
   .btn-delete,
   .btn-resolve {
     color: black;
-    font-size: .9em;
+    font-size: 0.9em;
     font-weight: 700;
     position: relative;
     padding: 0 0 1em 2em;
@@ -153,7 +153,7 @@
     }
   }
   .btn-resolve.disabled:hover,
-  .btn-delete.disabled:hover{
+  .btn-delete.disabled:hover {
     cursor: default;
     text-decoration: none;
   }
@@ -162,7 +162,7 @@
     padding-bottom: 0;
   }
   .btn-export:before {
-    content: '\21E5';
+    content: "\21E5";
     position: absolute;
     font-size: 1.7em;
     vertical-align: middle;
@@ -175,14 +175,14 @@
   .btn-delete,
   .btn-resolve {
     margin-left: 5px;
-    padding: .5em .5em;
+    padding: 0.5em 0.5em;
   }
 
   // Single event log card
   .sys-log__single-event {
     border: 1px solid $medgrey;
-    padding: 1em 1em 1em .7em;
-    margin: .5em 0 .5em 0;
+    padding: 1em 1em 1em 0.7em;
+    margin: 0.5em 0 0.5em 0;
     position: relative;
     overflow: hidden;
     @include fastTransition-all;
@@ -200,14 +200,14 @@
   //Event description
   .event__description {
     font-weight: 400;
-    flex:35%;
+    flex: 35%;
     word-break: break-word;
   }
 
   //Event ID
   .event__id {
     @include fontCourierBold;
-    font-size: .9em;
+    font-size: 0.9em;
     color: $darkgrey;
     margin-right: 1em;
   }
@@ -215,7 +215,7 @@
   .event__timestamp {
     text-align: right;
     @include fontCourierBold;
-    font-size: .9em;
+    font-size: 0.9em;
     color: $darkgrey;
     max-width: 18em;
     @media (min-width: 1105px) {
@@ -227,7 +227,7 @@
   .event__metadata-row {
     max-height: 0;
     overflow: hidden;
-    transition: max-height .5s linear;
+    transition: max-height 0.5s linear;
     &.active {
       max-height: 1000px;
       @include mediaQuery(small) {
@@ -244,7 +244,7 @@
     height: 200px;
     overflow-y: scroll;
     border: 1px solid $medgrey;
-    padding: .5em .5em 0;
+    padding: 0.5em 0.5em 0;
     background: $white;
     display: block;
     margin-bottom: 1.5em;
@@ -254,8 +254,8 @@
     }
     &::-webkit-scrollbar-thumb {
       border-radius: 4px;
-      background-color: rgba(0, 0, 0, .5);
-      -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+      background-color: rgba(0, 0, 0, 0.5);
+      -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
     }
   }
 
@@ -266,19 +266,19 @@
   .event__related-label {
     font-weight: 700;
     margin-right: 1.2em;
-    padding-top: .3em;
+    padding-top: 0.3em;
     float: left;
   }
   .event__related-item {
     margin-right: 1em;
-    padding-top: .3em;
+    padding-top: 0.3em;
     display: inline-block;
     float: left;
     clear: both;
   }
   .event__actions {
     margin-left: -1em;
-    margin-top: .5em;
+    margin-top: 0.5em;
     @include mediaQuery(medium) {
       float: right;
       margin-top: -5px;
@@ -288,7 +288,7 @@
     width: 20px;
     height: 20px;
     font-weight: normal;
-    margin-right: .5em;
+    margin-right: 0.5em;
     margin-top: -3px;
     display: inline-block;
   }
@@ -302,7 +302,7 @@
       color: $darkbg__accent;
     }
     &:after {
-      content: '\276F'
+      content: "\276F";
     }
     &:focus {
       outline: 0;
@@ -319,7 +319,7 @@
       color: $darkbg__accent;
     }
     &:after {
-      content: '\276e'
+      content: "\276e";
     }
     &:focus {
       outline: 0;

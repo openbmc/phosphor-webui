@@ -6,64 +6,71 @@
  * @name virtualMediaController
  */
 
-window.angular && (function(angular) {
-  'use strict';
+window.angular &&
+  (function(angular) {
+    'use strict';
 
-  angular.module('app.configuration').controller('virtualMediaController', [
-    '$scope', 'APIUtils', 'toastService', 'dataService', 'nbdServerService',
-    function($scope, APIUtils, toastService, dataService, nbdServerService) {
-      $scope.devices = [];
+    angular.module('app.configuration').controller('virtualMediaController', [
+      '$scope',
+      'APIUtils',
+      'toastService',
+      'dataService',
+      'nbdServerService',
+      function($scope, APIUtils, toastService, dataService, nbdServerService) {
+        $scope.devices = [];
 
-      // Only one Virtual Media WebSocket device is currently available.
-      // Path is /vm/0/0.
-      // TODO: Support more than 1 VM device, when backend support is added.
-      var vmDevice = {};
-      // Hardcode to 0 since /vm/0/0. Last 0 is the device ID.
-      // To support more than 1 device ID, replace with a call to get the
-      // device IDs and names.
-      vmDevice.id = 0;
-      vmDevice.deviceName = 'Virtual media device';
-      findExistingConnection(vmDevice);
-      $scope.devices.push(vmDevice);
+        // Only one Virtual Media WebSocket device is currently available.
+        // Path is /vm/0/0.
+        // TODO: Support more than 1 VM device, when backend support is added.
+        var vmDevice = {};
+        // Hardcode to 0 since /vm/0/0. Last 0 is the device ID.
+        // To support more than 1 device ID, replace with a call to get the
+        // device IDs and names.
+        vmDevice.id = 0;
+        vmDevice.deviceName = 'Virtual media device';
+        findExistingConnection(vmDevice);
+        $scope.devices.push(vmDevice);
 
-      $scope.startVM = function(index) {
-        $scope.devices[index].isActive = true;
-        var file = $scope.devices[index].file;
-        var id = $scope.devices[index].id;
-        var host = dataService.getHost().replace('https://', '');
-        var server = new NBDServer('wss://' + host + '/vm/0/' + id, file, id);
-        $scope.devices[index].nbdServer = server;
-        nbdServerService.addConnection(id, server, file);
-        server.start();
-      };
-      $scope.stopVM = function(index) {
-        $scope.devices[index].isActive = false;
-        var server = $scope.devices[index].nbdServer;
-        server.stop();
-      };
+        $scope.startVM = function(index) {
+          $scope.devices[index].isActive = true;
+          var file = $scope.devices[index].file;
+          var id = $scope.devices[index].id;
+          var host = dataService.getHost().replace('https://', '');
+          var server = new NBDServer('wss://' + host + '/vm/0/' + id, file, id);
+          $scope.devices[index].nbdServer = server;
+          nbdServerService.addConnection(id, server, file);
+          server.start();
+        };
+        $scope.stopVM = function(index) {
+          $scope.devices[index].isActive = false;
+          var server = $scope.devices[index].nbdServer;
+          server.stop();
+        };
 
-      $scope.resetFile = function(index) {
-        document.getElementById('file-upload').value = '';
-        $scope.devices[index].file = '';
-      };
+        $scope.resetFile = function(index) {
+          document.getElementById('file-upload').value = '';
+          $scope.devices[index].file = '';
+        };
 
-      function findExistingConnection(vmDevice) {
-        // Checks with existing connections kept in nbdServerService for an open
-        // Websocket connection.
-        var existingConnectionsMap = nbdServerService.getExistingConnections();
-        if (existingConnectionsMap.hasOwnProperty(vmDevice.id)) {
-          // Open ws will have a ready state of 1
-          if (existingConnectionsMap[vmDevice.id].server.ws.readyState === 1) {
-            vmDevice.isActive = true;
-            vmDevice.file = existingConnectionsMap[vmDevice.id].file;
-            vmDevice.nbdServer = existingConnectionsMap[vmDevice.id].server;
+        function findExistingConnection(vmDevice) {
+          // Checks with existing connections kept in nbdServerService for an open
+          // Websocket connection.
+          var existingConnectionsMap = nbdServerService.getExistingConnections();
+          if (existingConnectionsMap.hasOwnProperty(vmDevice.id)) {
+            // Open ws will have a ready state of 1
+            if (
+              existingConnectionsMap[vmDevice.id].server.ws.readyState === 1
+            ) {
+              vmDevice.isActive = true;
+              vmDevice.file = existingConnectionsMap[vmDevice.id].file;
+              vmDevice.nbdServer = existingConnectionsMap[vmDevice.id].server;
+            }
           }
+          return vmDevice;
         }
-        return vmDevice;
       }
-    }
-  ]);
-})(angular);
+    ]);
+  })(angular);
 
 /* handshake flags */
 const NBD_FLAG_FIXED_NEWSTYLE = 0x1;
@@ -126,15 +133,15 @@ function NBDServer(endpoint, file, id) {
 
   this._on_ws_close = function(ev) {
     console.log(
-        'vm/0/' + id + ' closed with code: ' + ev.code +
-        ' reason: ' + ev.reason);
+      'vm/0/' + id + ' closed with code: ' + ev.code + ' reason: ' + ev.reason
+    );
   };
 
   /* websocket event handlers */
   this._on_ws_open = function(ev) {
     console.log('vm/0/' + id + ' opened');
     this.client = {
-      flags: 0,
+      flags: 0
     };
     this._negotiate();
   };
@@ -162,7 +169,8 @@ function NBDServer(endpoint, file, id) {
       var consumed = handler(this.msgbuf);
       if (consumed < 0) {
         console.log(
-            'handler[state=' + this.state + '] returned error ' + consumed);
+          'handler[state=' + this.state + '] returned error ' + consumed
+        );
         this.stop();
         break;
       }
@@ -191,7 +199,7 @@ function NBDServer(endpoint, file, id) {
 
     /* newstyle negotiation: IHAVEOPT */
     data.setUint32(8, 0x49484156);
-    data.setUint32(12, 0x454F5054);
+    data.setUint32(12, 0x454f5054);
 
     /* flags: fixed newstyle negotiation, no padding */
     data.setUint16(16, NBD_FLAG_FIXED_NEWSTYLE | NBD_FLAG_NO_ZEROES);
@@ -217,7 +225,7 @@ function NBDServer(endpoint, file, id) {
     if (buf.byteLength < 16) return 0;
 
     var data = new DataView(buf, 0, 16);
-    if (data.getUint32(0) != 0x49484156 || data.getUint32(4) != 0x454F5054) {
+    if (data.getUint32(0) != 0x49484156 || data.getUint32(4) != 0x454f5054) {
       console.log('invalid option magic');
       return -1;
     }
@@ -225,20 +233,21 @@ function NBDServer(endpoint, file, id) {
     var opt = data.getUint32(8);
     var len = data.getUint32(12);
 
-
     if (buf.byteLength < 16 + len) {
       return 0;
     }
 
+    let resp;
+    let view;
     switch (opt) {
       case NBD_OPT_EXPORT_NAME:
         var n = 10;
         if (!(this.client.flags & NBD_FLAG_NO_ZEROES)) n += 124;
-        var resp = new ArrayBuffer(n);
-        var view = new DataView(resp, 0, 10);
+        resp = new ArrayBuffer(n);
+        view = new DataView(resp, 0, 10);
         /* export size. */
         var size = this.file.size;
-        view.setUint32(0, Math.floor(size / (2 ** 32)));
+        view.setUint32(0, Math.floor(size / 2 ** 32));
         view.setUint32(4, size & 0xffffffff);
         /* transmission flags: read-only */
         view.setUint16(8, NBD_FLAG_HAS_FLAGS | NBD_FLAG_READ_ONLY);
@@ -250,8 +259,8 @@ function NBDServer(endpoint, file, id) {
       default:
         console.log('handle_option: Unsupported option: ' + opt);
         /* reject other options */
-        var resp = new ArrayBuffer(20);
-        var view = new DataView(resp, 0, 20);
+        resp = new ArrayBuffer(20);
+        view = new DataView(resp, 0, 20);
         view.setUint32(0, 0x0003e889);
         view.setUint32(4, 0x045565a9);
         view.setUint32(8, opt);
@@ -295,7 +304,7 @@ function NBDServer(endpoint, file, id) {
       handle_lsB: view.getUint32(12),
       offset_msB: view.getUint32(16),
       offset_lsB: view.getUint32(20),
-      length: view.getUint32(24),
+      length: view.getUint32(24)
     };
 
     /* we don't support writes, so nothing needs the data at present */
@@ -348,7 +357,7 @@ function NBDServer(endpoint, file, id) {
   this._handle_cmd_read = function(req) {
     var offset;
 
-    offset = (req.offset_msB * 2 ** 32) + req.offset_lsB;
+    offset = req.offset_msB * 2 ** 32 + req.offset_lsB;
 
     if (offset > Number.MAX_SAFE_INTEGER) return ENOSPC;
 
@@ -359,20 +368,19 @@ function NBDServer(endpoint, file, id) {
     var blob = this.file.slice(offset, offset + req.length);
     var reader = new FileReader();
 
-    reader.onload = (function(ev) {
-                      var reader = ev.target;
-                      if (reader.readyState != FileReader.DONE) return;
-                      var resp =
-                          this._create_cmd_response(req, 0, reader.result);
-                      this.ws.send(resp);
-                    }).bind(this);
+    reader.onload = function(ev) {
+      var reader = ev.target;
+      if (reader.readyState != FileReader.DONE) return;
+      var resp = this._create_cmd_response(req, 0, reader.result);
+      this.ws.send(resp);
+    }.bind(this);
 
-    reader.onerror = (function(ev) {
-                       var reader = ev.target;
-                       console.log('error reading file: ' + reader.error);
-                       var resp = this._create_cmd_response(req, EIO);
-                       this.ws.send(resp);
-                     }).bind(this);
+    reader.onerror = function(ev) {
+      var reader = ev.target;
+      console.log('error reading file: ' + reader.error);
+      var resp = this._create_cmd_response(req, EIO);
+      this.ws.send(resp);
+    }.bind(this);
     reader.readAsArrayBuffer(blob);
 
     return 0;
@@ -386,6 +394,6 @@ function NBDServer(endpoint, file, id) {
   this.recv_handlers = Object.freeze({
     [NBD_STATE_WAIT_CFLAGS]: this._handle_cflags.bind(this),
     [NBD_STATE_WAIT_OPTION]: this._handle_option.bind(this),
-    [NBD_STATE_TRANSMISSION]: this._handle_cmd.bind(this),
+    [NBD_STATE_TRANSMISSION]: this._handle_cmd.bind(this)
   });
 }

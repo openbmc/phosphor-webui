@@ -1,4 +1,3 @@
-
 // inline confirmation message
 .inline__confirm {
   position: absolute;
@@ -52,7 +51,7 @@
 
 // Power confirmation message icon
 .inline__confirm-message i::before {
-  content: '\26A0';
+  content: "\26A0";
   color: $status-warn;
   display: inline-block;
   font-size: 2em;
