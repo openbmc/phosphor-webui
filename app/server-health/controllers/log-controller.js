@@ -6,22 +6,36 @@
  * @name logController
  */
 
-window.angular && (function(angular) {
-  'use strict';
-  angular.module('app.serverHealth')
+window.angular &&
+  (function(angular) {
+    'use strict';
+    angular
+      .module('app.serverHealth')
       .config([
         'paginationTemplateProvider',
         function(paginationTemplateProvider) {
           paginationTemplateProvider.setString(
-              require('../../common/directives/dirPagination.tpl.html'));
+            require('../../common/directives/dirPagination.tpl.html')
+          );
         }
       ])
       .controller('logController', [
-        '$scope', '$window', 'APIUtils', 'dataService', 'Constants',
-        '$routeParams', '$filter',
+        '$scope',
+        '$window',
+        'APIUtils',
+        'dataService',
+        'Constants',
+        '$routeParams',
+        '$filter',
         function(
-            $scope, $window, APIUtils, dataService, Constants, $routeParams,
-            $filter) {
+          $scope,
+          $window,
+          APIUtils,
+          dataService,
+          Constants,
+          $routeParams,
+          $filter
+        ) {
           $scope.dataService = dataService;
           $scope.logs = [];
           $scope.filteredLogs = [];
@@ -34,15 +48,19 @@ window.angular && (function(angular) {
           var eventId = $routeParams.id;
 
           // priority buttons
-          $scope.selectedSeverity =
-              {all: true, low: false, medium: false, high: false};
+          $scope.selectedSeverity = {
+            all: true,
+            low: false,
+            medium: false,
+            high: false
+          };
 
           if (sensorType == 'high') {
             $scope.selectedSeverity.all = false;
             $scope.selectedSeverity.high = true;
           }
 
-          $scope.selectedStatus = {all: true, resolved: false};
+          $scope.selectedStatus = { all: true, resolved: false };
 
           $scope.customSearch = '';
           $scope.searchItems = [];
@@ -80,30 +98,34 @@ window.angular && (function(angular) {
             if ($scope.selectedSeverity.all) return true;
 
             return (
-                (log.severity_flags.low && $scope.selectedSeverity.low) ||
-                (log.severity_flags.medium && $scope.selectedSeverity.medium) ||
-                (log.severity_flags.high && $scope.selectedSeverity.high));
+              (log.severity_flags.low && $scope.selectedSeverity.low) ||
+              (log.severity_flags.medium && $scope.selectedSeverity.medium) ||
+              (log.severity_flags.high && $scope.selectedSeverity.high)
+            );
           };
 
           $scope.filterByStatus = function(log) {
             if ($scope.selectedStatus.all) return true;
             return (
-                (log.Resolved && $scope.selectedStatus.resolved) ||
-                (!log.Resolved && !$scope.selectedStatus.resolved));
+              (log.Resolved && $scope.selectedStatus.resolved) ||
+              (!log.Resolved && !$scope.selectedStatus.resolved)
+            );
           };
 
           $scope.filterByDate = function(log) {
             var endDate;
-            if ($scope.end_date &&
-                typeof $scope.end_date.getTime === 'function') {
+            if (
+              $scope.end_date &&
+              typeof $scope.end_date.getTime === 'function'
+            ) {
               endDate = new Date($scope.end_date.getTime());
               endDate.setTime(endDate.getTime() + 86399000);
             }
 
             if ($scope.start_date && endDate) {
               return (
-                  log.Timestamp >= $scope.start_date &&
-                  log.Timestamp <= endDate);
+                log.Timestamp >= $scope.start_date && log.Timestamp <= endDate
+              );
             } else {
               return true;
             }
@@ -112,10 +134,15 @@ window.angular && (function(angular) {
           $scope.filterBySearchTerms = function(log) {
             if (!$scope.searchItems.length) return true;
 
-            for (var i = 0, length = $scope.searchItems.length; i < length;
-                 i++) {
-              if (log.search_text.indexOf(
-                      $scope.searchItems[i].toLowerCase()) == -1)
+            for (
+              var i = 0, length = $scope.searchItems.length;
+              i < length;
+              i++
+            ) {
+              if (
+                log.search_text.indexOf($scope.searchItems[i].toLowerCase()) ==
+                -1
+              )
                 return false;
             }
             return true;
@@ -149,9 +176,10 @@ window.angular && (function(angular) {
           });
 
           function updateExportData() {
-            $scope.export_name = ($scope.selectedEvents.length == 1) ?
-                $scope.selectedEvents[0].Id + '.json' :
-                'export.json';
+            $scope.export_name =
+              $scope.selectedEvents.length == 1
+                ? $scope.selectedEvents[0].Id + '.json'
+                : 'export.json';
             var data = {};
             $scope.selectedEvents.forEach(function(item) {
               data[item.data.key] = item.data.value;
@@ -174,25 +202,30 @@ window.angular && (function(angular) {
             if (!events.length) return;
 
             APIUtils.resolveLogs(events).then(
-                function(data) {
-                  events.forEach(function(item) {
-                    item.Resolved = 1;
-                  });
-                },
-                function(error) {
-                  // TODO: Show error to user
-                  console.log(JSON.stringify(error));
+              function(data) {
+                events.forEach(function(item) {
+                  item.Resolved = 1;
                 });
+              },
+              function(error) {
+                // TODO: Show error to user
+                console.log(JSON.stringify(error));
+              }
+            );
           };
 
-          $scope.$watch('logs', function() {
-            $scope.selectedEvents = $scope.logs.filter(function(item) {
-              return item.selected;
-            });
-            updateExportData();
-          }, true);
+          $scope.$watch(
+            'logs',
+            function() {
+              $scope.selectedEvents = $scope.logs.filter(function(item) {
+                return item.selected;
+              });
+              updateExportData();
+            },
+            true
+          );
 
           $scope.loadLogs();
         }
       ]);
-})(angular);
+  })(angular);

@@ -1,14 +1,18 @@
-window.angular && (function(angular) {
-  'use strict';
+window.angular &&
+  (function(angular) {
+    'use strict';
 
-  angular.module('app.common.directives')
+    angular
+      .module('app.common.directives')
       .directive('appNavigation', function() {
         return {
-          'restrict': 'E',
-          'template': require('./app-navigation.html'),
-          'scope': {'path': '=', 'showNavigation': '='},
-          'controller': [
-            '$scope', '$location', 'dataService',
+          restrict: 'E',
+          template: require('./app-navigation.html'),
+          scope: { path: '=', showNavigation: '=' },
+          controller: [
+            '$scope',
+            '$location',
+            'dataService',
             function($scope, $location, dataService) {
               $scope.dataService = dataService;
               $scope.showSubMenu = false;
@@ -44,8 +48,8 @@ window.angular && (function(angular) {
                 if ($scope.showNavigation) {
                   paddingTop = document.getElementById('header').offsetHeight;
                 }
-                dataService.bodyStyle = {'padding-top': paddingTop + 'px'};
-                $scope.navStyle = {'top': paddingTop + 'px'};
+                dataService.bodyStyle = { 'padding-top': paddingTop + 'px' };
+                $scope.navStyle = { top: paddingTop + 'px' };
               });
             }
           ],
@@ -63,4 +67,4 @@ window.angular && (function(angular) {
           }
         };
       });
-})(window.angular);
+  })(window.angular);

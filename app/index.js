@@ -91,37 +91,49 @@ import vm_controller from './configuration/controllers/virtual-media-controller.
 import users_index from './users/index.js';
 import user_accounts_controller from './users/controllers/user-accounts-controller.js';
 
-window.angular && (function(angular) {
-  'use strict';
+window.angular &&
+  (function(angular) {
+    'use strict';
 
-  angular
-      .module(
-          'app',
-          [
-            // Dependencies
-            'ngRoute', 'angular-clipboard', 'ngToast', 'ngAnimate',
-            'ngMessages', 'app.common.directives.dirPagination', 'ngSanitize',
-            'ui.bootstrap',
-            // Basic resources
-            'app.common.services', 'app.common.directives',
-            'app.common.filters',
-            // Model resources
-            'app.login', 'app.overview', 'app.serverControl',
-            'app.serverHealth', 'app.configuration', 'app.users', 'app.redfish'
-          ])
+    angular
+      .module('app', [
+        // Dependencies
+        'ngRoute',
+        'angular-clipboard',
+        'ngToast',
+        'ngAnimate',
+        'ngMessages',
+        'app.common.directives.dirPagination',
+        'ngSanitize',
+        'ui.bootstrap',
+        // Basic resources
+        'app.common.services',
+        'app.common.directives',
+        'app.common.filters',
+        // Model resources
+        'app.login',
+        'app.overview',
+        'app.serverControl',
+        'app.serverHealth',
+        'app.configuration',
+        'app.users',
+        'app.redfish'
+      ])
       // Route configuration
       .config([
-        '$routeProvider', '$locationProvider',
+        '$routeProvider',
+        '$locationProvider',
         function($routeProvider, $locationProvider) {
           $locationProvider.hashPrefix('');
-          $routeProvider.otherwise({'redirectTo': '/login'});
+          $routeProvider.otherwise({ redirectTo: '/login' });
         }
       ])
       .config([
         '$compileProvider',
         function($compileProvider) {
           $compileProvider.aHrefSanitizationWhitelist(
-              /^\s*(https?|ftp|mailto|tel|file|data|blob):/);
+            /^\s*(https?|ftp|mailto|tel|file|data|blob):/
+          );
         }
       ])
       .config([
@@ -129,7 +141,7 @@ window.angular && (function(angular) {
         function($httpProvider) {
           $httpProvider.interceptors.push('apiInterceptor');
           $httpProvider.defaults.headers.common = {
-            'Accept': 'application/json'
+            Accept: 'application/json'
           };
           $httpProvider.defaults.headers.post = {
             'Content-Type': 'application/json'
@@ -154,7 +166,10 @@ window.angular && (function(angular) {
         }
       ])
       .run([
-        '$rootScope', '$location', 'dataService', 'userModel',
+        '$rootScope',
+        '$location',
+        'dataService',
+        'userModel',
         function($rootScope, $location, dataService, userModel) {
           $rootScope.dataService = dataService;
           dataService.path = $location.path();
@@ -166,8 +181,10 @@ window.angular && (function(angular) {
               }
             }
 
-            if (next.$$route.originalPath == '/' ||
-                next.$$route.originalPath == '/login') {
+            if (
+              next.$$route.originalPath == '/' ||
+              next.$$route.originalPath == '/login'
+            ) {
               if (userModel.isLoggedIn()) {
                 if (current && current.$$route) {
                   $location.path(current.$$route.originalPath);
@@ -180,8 +197,10 @@ window.angular && (function(angular) {
           $rootScope.$on('$locationChangeSuccess', function(event) {
             var path = $location.path();
             dataService.path = path;
-            if (['/', '/login', '/logout'].indexOf(path) == -1 &&
-                path.indexOf('/login') == -1) {
+            if (
+              ['/', '/login', '/logout'].indexOf(path) == -1 &&
+              path.indexOf('/login') == -1
+            ) {
               dataService.showNavigation = true;
             } else {
               dataService.showNavigation = false;
@@ -194,4 +213,4 @@ window.angular && (function(angular) {
           });
         }
       ]);
-})(window.angular);
+  })(window.angular);

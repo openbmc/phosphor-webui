@@ -23,7 +23,7 @@ properties
 ***/
 button,
 .btn,
-[type='button'] {
+[type="button"] {
   @include fontFamilyBold;
   @include fastTransition-all;
   border-style: solid;
@@ -32,7 +32,7 @@ button,
   font-size: 1em;
   text-transform: none;
   border-radius: 0;
-  padding: .5em 1em;
+  padding: 0.5em 1em;
   line-height: 1;
   display: inline-block;
   cursor: pointer;
@@ -83,9 +83,9 @@ e.g. directing to a new page, a call to action
     background: $btn-primary__bg--disabled;
     border-color: $btn-primary__bg--disabled;
     color: $btn-primary__txt--disabled;
-      .icon {
-        fill: $btn-primary__txt--disabled;
-      }
+    .icon {
+      fill: $btn-primary__txt--disabled;
+    }
   }
   .icon {
     fill: $btn-primary__txt;
