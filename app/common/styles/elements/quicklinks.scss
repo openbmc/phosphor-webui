@@ -1,8 +1,8 @@
 //Quick links block
 .quick-links {
   background-color: $lightgrey;
-  padding: .5em 1em;
-  font-size: .9em;
+  padding: 0.5em 1em;
+  font-size: 0.9em;
   font-weight: 400;
   margin: 1em 0;
   @include mediaQuery(medium) {
@@ -26,7 +26,7 @@
   border-bottom: 1px solid $medgrey;
   position: relative;
   &:after {
-    content: '\203A';
+    content: "\203A";
     position: absolute;
     top: 50%;
     right: 0;
@@ -55,9 +55,9 @@
     border-bottom: 0;
   }
   .float-right {
-    display:inline-block;
+    display: inline-block;
     float: right;
-    @media(min-width: 1024px) and (max-width: 1140px) {
+    @media (min-width: 1024px) and (max-width: 1140px) {
       display: block;
       float: none;
     }
@@ -72,7 +72,7 @@
   color: $alert__error;
   margin-bottom: 0;
   font-weight: 700;
-  font-size: .9em;
+  font-size: 0.9em;
   a {
     color: $alert__error;
   }

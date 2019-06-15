@@ -49,9 +49,12 @@ F12 key           | <ESC>@
 */
 
 function customVT100PlusKey(ev, term) {
-  var modifiers = (ev.shiftKey ? 1 : 0) | (ev.altKey ? 2 : 0) |
-      (ev.ctrlKey ? 4 : 0) | (ev.metaKey ? 8 : 0);
-  if (((modifiers) && (ev.keyCode != BACKSPACE)) || (ev.type != 'keydown')) {
+  var modifiers =
+    (ev.shiftKey ? 1 : 0) |
+    (ev.altKey ? 2 : 0) |
+    (ev.ctrlKey ? 4 : 0) |
+    (ev.metaKey ? 8 : 0);
+  if ((modifiers && ev.keyCode != BACKSPACE) || ev.type != 'keydown') {
     return true;
   }
   switch (ev.keyCode) {
@@ -59,9 +62,9 @@ function customVT100PlusKey(ev, term) {
       if (ev.altKey) {
         return true;
       } else if (!ev.shiftKey) {
-        term.handler(EscapeSequences.C0.BS);  // Backspace
+        term.handler(EscapeSequences.C0.BS); // Backspace
       } else {
-        term.handler(EscapeSequences.C0.DEL);  // Delete
+        term.handler(EscapeSequences.C0.DEL); // Delete
       }
       break;
     case PAGE_UP:
