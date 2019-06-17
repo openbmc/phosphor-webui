@@ -1,15 +1,15 @@
 /**
  * Controller for user Accounts
  *
- * @module app/users
- * @exports userAccountsController
- * @name userAccountsController
+ * @module app/access-control
+ * @exports userController
+ * @name userController
  */
 
 window.angular && (function(angular) {
   'use strict';
 
-  angular.module('app.users').controller('userAccountsController', [
+  angular.module('app.accessControl').controller('userController', [
     '$scope', '$q', 'APIUtils', 'toastService',
     function($scope, $q, APIUtils, toastService) {
       $scope.users = [];
