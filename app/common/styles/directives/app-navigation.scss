@@ -50,6 +50,11 @@ $nav__seclvlWidth: 240px;
   .nav-icon {
     @include navIcons;
   }
+
+  .nav-icon__accessControl {
+    position: relative;
+    left: .5rem;
+  }
   .button, button, a {
     background: transparent;
     height: auto;
