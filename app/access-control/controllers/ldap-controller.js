@@ -1,7 +1,7 @@
 /**
  * Controller for LDAP
  *
- * @module app/configuration
+ * @module app/access-control
  * @exports ldapController
  * @name ldapController
  */
@@ -9,7 +9,7 @@
 window.angular && (function(angular) {
   'use strict';
 
-  angular.module('app.configuration').controller('ldapController', [
+  angular.module('app.accessControl').controller('ldapController', [
     '$scope', 'APIUtils', '$q', 'toastService',
     function($scope, APIUtils, $q, toastService) {
       $scope.loading = false;
