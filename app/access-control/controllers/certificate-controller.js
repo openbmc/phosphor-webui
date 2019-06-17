@@ -1,7 +1,7 @@
 /**
  * Controller for Certificate Management
  *
- * @module app/configuration
+ * @module app/access-control
  * @exports certificateController
  * @name certificateController
  */
@@ -9,7 +9,7 @@
 window.angular && (function(angular) {
   'use strict';
 
-  angular.module('app.configuration').controller('certificateController', [
+  angular.module('app.accessControl').controller('certificateController', [
     '$scope', 'APIUtils', '$q', 'Constants', 'toastService',
     function($scope, APIUtils, $q, Constants, toastService) {
       $scope.loading = false;
