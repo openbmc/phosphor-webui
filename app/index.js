@@ -85,15 +85,17 @@ import redfish_index from './redfish/index.js';
 import redfish_controller from './redfish/controllers/redfish-controller.js';
 import configuration_index from './configuration/index.js';
 import date_time_controller from './configuration/controllers/date-time-controller.js';
-import certificate_controller from './configuration/controllers/certificate-controller.js';
 import network_controller from './configuration/controllers/network-controller.js';
 import snmp_controller from './configuration/controllers/snmp-controller.js';
-import ldap_controller from './configuration/controllers/ldap-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
 import vm_controller from './configuration/controllers/virtual-media-controller.js';
 
-import users_index from './users/index.js';
-import user_accounts_controller from './users/controllers/user-accounts-controller.js';
+import access_control from './access-control/index.js';
+import user_controller from './access-control/controllers/user-controller.js';
+import certificate_controller from './access-control/controllers/certificate-controller.js';
+import ldap_controller from './access-control/controllers/ldap-controller.js';
+
+
 
 window.angular && (function(angular) {
   'use strict';
@@ -111,7 +113,8 @@ window.angular && (function(angular) {
             'app.common.filters',
             // Model resources
             'app.login', 'app.overview', 'app.serverControl',
-            'app.serverHealth', 'app.configuration', 'app.users', 'app.redfish'
+            'app.serverHealth', 'app.configuration', 'app.accessControl',
+            'app.redfish'
           ])
       // Route configuration
       .config([
