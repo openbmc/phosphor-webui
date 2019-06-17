@@ -59,6 +59,11 @@ $nav__seclvlWidth: 240px;
       height: auto;
     }
   }
+
+  .nav-icon__access-control {
+    position: relative;
+    left: .5rem;
+  }
   .button, button, a {
     background: transparent;
     border: 0;
