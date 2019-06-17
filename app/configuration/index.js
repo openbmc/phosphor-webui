@@ -35,17 +35,6 @@ window.angular && (function(angular) {
                 'controller': 'snmpController',
                 authenticated: true
               })
-              .when('/configuration/certificate', {
-                'template':
-                    require('./controllers/certificate-controller.html'),
-                'controller': 'certificateController',
-                authenticated: true
-              })
-              .when('/configuration/ldap', {
-                'template': require('./controllers/ldap-controller.html'),
-                'controller': 'ldapController',
-                authenticated: true
-              })
               .when('/configuration/firmware', {
                 'template': require('./controllers/firmware-controller.html'),
                 'controller': 'firmwareController',
