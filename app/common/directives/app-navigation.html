@@ -28,7 +28,7 @@
           <a href="#/server-health/sensors-overview" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">Sensors</a>
         </li>
-        <li ng-class="{'active': (path == '/server-health/sys-log')}" ng-show="dataService.configJson.redfishSupportEnabled">
+        <li ng-class="{'active': (path == '/server-health/sys-log')}" ng-show="!dataService.configJson.redfishEventLogDisabled">
           <a href="#/server-health/sys-log" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">System logs</a>
         </li>
