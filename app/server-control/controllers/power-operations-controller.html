@@ -1,58 +1,174 @@
 <loader loading="dataService.loading || loading"></loader>
-<div id="power-operations">
-    <div class="row column">
-        <h1>Server power operations</h1>
-        <div class="power__current-status page-header">
-            <h2 class="inline">Current status</h2>
-            <div class="power__status-log inline float-right">Last power operation at <span class="courier-bold">{{powerTime | localeDate}}</span></div>
-        </div>
+<div id="power-operations" class="power-operations">
+  <div class="row column">
+    <h1>Server power operations</h1>
+    <div class="power__current-status page-header">
+      <h2 class="inline">Current status</h2>
+      <div class="power__status-log inline float-right">
+        Last power operation at
+        <span class="courier-bold">{{ powerTime | localeDate }}</span>
+      </div>
     </div>
-    <div class="row column">
-        <div id="power-indicator-bar" class="power__indicator-bar" ng-class="{'power__state-on': dataService.server_state == 'Running', 'power__state-off': dataService.server_state == 'Off', 'power__state-indet': dataService.server_state == 'Standby', 'power__state-error': dataService.server_state == 'Quiesced'}">
-            <p class="inline">{{dataService.hostname}} - {{dataService.server_id}}</p>
-            <h3 class="power__state inline no-margin h3"><span>{{dataService.server_state | quiescedToError}}</span></h3>
-        </div>
+  </div>
+  <!-- Power Indicator Bar -->
+  <div class="row column">
+    <div id="power-indicator-bar" class="power__indicator-bar"
+      ng-class="{'power__state-on': dataService.server_state == 'Running', 'power__state-off': dataService.server_state == 'Off', 'power__state-indet': dataService.server_state == 'Standby', 'power__state-error': dataService.server_state == 'Quiesced'}">
+      <p class="inline">
+        {{ dataService.hostname }} - {{ dataService.server_id }}
+      </p>
+      <h3 class="power__state inline no-margin h3">
+        <span>{{ dataService.server_state | quiescedToError }}</span>
+      </h3>
     </div>
-    <div class="row column">
-        <div class="row column">
-            <h3 class="subhead">Select a power operation</h3>
+  </div>
+  <div class="row column">
+    <!-- Boot Settings Column -->
+    <div class="large-4 columns boot-options-wrapper">
+      <form id="host-boot-settings" name="hostBootSettings" class="host-boot-settings" novalidate>
+        <h2 class="subhead boot-options">Host OS boot settings</h2>
+        <div class="boot-settings-form">
+          <div class="boot-options">
+            <label for="boot-mode">
+              Boot setting override</label>
+            <select id="boot-mode" name="boot-mode" id="boot-mode" ng-disabled="dataService.server_unreachable || bootOverrideError"
+              ng-model="boot.BootSourceOverrideTarget">
+              <option class="courier-bold" value="{{bootSource}}" ng-repeat="bootSource in bootSources">
+                {{ bootSource }}
+              </option>
+            </select>
+          <div class="boot-options one-time-boot-setting">
+            <div class="align-self-center">
+              <label class="control-check" id="one-time-label"> <span class="inline boot-checkbox">Enable one time boot</span>
+                <input type="checkbox" name="one-time"
+                  ng-disabled="dataService.server_unreachable || bootOverrideError || boot.BootSourceOverrideTarget =='None' " ng-model="boot.oneTimeBootEnabled"
+                  ng-change="oneTimeBootEnabled" />
+                <span class="control__indicator"> </span>
+              </label>
+            </div>
+          </div>
         </div>
-        <div ng-if="operationPending">
-            <span class="inactive-message">There are no power operations to display while a power operation is in progress. When complete, any new power operations will be displayed here.</span>
-        </div>
-        <div ng-if="!operationPending">
-            <!-- Power on displays only when server is shutdown -->
-            <div class="row column power-option" ng-hide="dataService.server_state == 'Running' || dataService.server_state == 'Quiesced' || dataService.server_state == 'Unreachable'" ng-class="{disabled: dataService.server_unreachable || confirm || dataService.loading, transitionAll: confirm}">
-                <button id="power__power-on" class="btn  btn-secondary" ng-click="powerOn()" role="button" ng-disabled="dataService.server_unreachable">
-                    <icon file="icon-power.svg"></icon>Power on
+          <!-- TPM Required -->
+          <div class="boot-options one-time-boot-setting">
+            <div class="boot-options">
+              <h3 class="content-label">
+                TPM required policy</h3>
+              <p> Enable to ensure the system only boots when the TPM is functional. </p>
+              <!-- Toggle component -->
+              <div class="toggle-container">
+                  <div class="toggle">
+                    <input
+                      id="toggle__switch-round"
+                      class="toggle-switch toggle-switch__round-flat"
+                      name="toggle"
+                      type="checkbox"
+                      tabindex="0"
+                      ng-model="TPMToggle.TPMEnable"
+                      ng-disabled="dataService.server_unreachable"
+                    />
+                    <label for="toggle__switch-round" tabindex="0"
+                      >TPM required policy is {{ TPMToggle.TPMEnable ? "On" : "Off" }}</label
+                    >
+                  </div>
+                  <span>
+                    {{ TPMToggle.TPMEnable ? "On" : "Off" }}
+                  </span>
+                </div>
+            </div>
+          </div>
+          <!-- form actions -->
+          <div class="boot-form-actions">
+            <button type="submit" class="btn btn-primary" ng-click="saveBootSettings();toggleTPMPolicy()" ng-disabled="dataService.server_unreachable">
+              Save
+            </button>
+            <button type="button" class="btn btn-secondary" ng-click="loadBootSettings()" ng-disabled="dataService.server_unreachable">
+              Cancel
+            </button>
+          </div>
+      </form>
+    </div>
+  </div>
+  <!-- Power Operations Column -->
+  <div class="large-8 columns operations-wrapper">
+    <h2 class="subhead boot-operations">Operations</h2>
+    <!-- Pending one time boot alert -->
+    <div class="alert-warning"
+      ng-if="boot.oneTimeBootEnabled" ng-hide="dataService.server_state == 'Unreachable'">
+      <div class="pending-icon">
+        <icon file="icon-pending.svg"></icon>
+      </div>
+      <p class="alert-pending">
+        Pending one time boot. Next boot will be performed with the
+        specified one time boot settings. Subsequent boots will be performed
+        with the default settings.
+      </p>
+    </div>
+    <!-- Pending reboot warning -->
+    <p ng-show="operationPending">
+      There are no power operations to display while power operation is in
+      progress. When complete, any new power operations will be displayed
+      here.
+    </p>
+    <div ng-show="!operationPending">
+    <!-- Power on displays only when server is off -->
+    <div class="row column" ng-show="dataService.server_state == 'Off'"
+      ng-class="{disabled: dataService.server_unreachable}">
+      <button id="power__power-on" class="btn btn-primary inline" ng-click="powerOn()" role="button"
+        ng-disabled="dataService.server_unreachable">
+        Power on
+      </button>
+    </div>
+    <!-- Reboot/shutdown column -->
+    <div
+      ng-show="dataService.server_state !== 'Off'">
+      <div class="reboot__operations">
+        <form id="reboot-form" name="rebootForm" class="reboot-form">
+          <fieldset>
+            <legend class="boot-operations content-label">Reboot</legend>
+              <label class="control-radio">Orderly - Attemps to stop all software
+                <input type="radio" name="radioReboot"
+                  ng-model="defaultRebootSetting" value="warm-reboot" />
+                <span class="control__indicator control__indicator-on"></span>
+              </label>
+              <label class="control-radio">Immediate - Does not attempt to stop all software
+                <input type="radio" name="radioReboot"
+                   ng-model="defaultRebootSetting" value="cold-reboot" />
+                <span class="control__indicator control__indicator-on"></span>
+              </label>
+            </fieldset>
+              <div>
+                <button class="btn-primary" ng-click="rebootConfirmModal()" role="button"
+                  ng-disabled="dataService.server_unreachable">
+                  Reboot
                 </button>
-                <p class="inline">Attempts to power on the server</p>
+              </div>
+        </form>
+      </div>
+      <!-- Shutdown Field Row -->
+      <div class="shutdown__operations">
+        <form id="shutdown-form" name="shutdownForm" class="shutdown-form">
+          <fieldset>
+            <legend class="boot-operations content-label">Shutdown</legend>
+            <label class="control-radio">Orderly - Attemps to stop all software
+              <input type="radio" name="radioShutdown" ng-model="defaultShutdownSetting"
+                value='warm-shutdown' />
+              <span class="control__indicator control__indicator-on"></span>
+            </label>
+            <label class="control-radio">Immediate - Does not attempt to stop all software
+              <input type="radio" name="radioShutdown" ng-model="defaultShutdownSetting"
+                value='cold-shutdown' />
+              <span class="control__indicator control__indicator-on"></span>
+            </label>
+           </fieldset>
+            <div>
+              <button class="btn-primary" ng-click="shutdownConfirmModal()" role="button"
+                ng-disabled="dataService.server_unreachable">
+                Shutdown
+              </button>
             </div>
-            <!-- Power reboot/shutdown options : when server is off all of these are hidden. When one option is selected, the others are disabled. -->
-            <div class="column power-option" ng-hide="dataService.server_state == 'Off' || dataService.server_state == 'Unreachable'" ng-class="{disabled: dataService.server_unreachable || (confirm && !confirmWarmReboot) || dataService.loading, transitionAll: confirm && confirmWarmReboot}">
-                <button id="power__warm-boot" class="btn btn-secondary" ng-click="warmRebootConfirm()" role="button" ng-disabled="dataService.server_unreachable">
-                    <icon file="icon-restart.svg"></icon>Warm reboot</button>
-                <p class="inline">Attempts to perform an orderly shutdown before restarting the server</p>
-                <confirm title="warm reboot" confirm="confirmWarmReboot" ng-show="confirmWarmReboot" callback="warmReboot"></confirm>
-            </div>
-            <div class="column power-option" ng-hide="dataService.server_state == 'Off' || dataService.server_state == 'Unreachable'" ng-class="{disabled: dataService.server_unreachable || (confirm && !confirmColdReboot) || dataService.loading, transitionAll: confirm && confirmColdReboot}">
-                <button id="power__cold-boot" class="btn  btn-secondary" ng-click="coldRebootConfirm()" role="button" ng-disabled="dataService.server_unreachable">
-                    <icon file="icon-restart.svg"></icon>Cold reboot</button>
-                <p class="inline">Shuts down the server immediately, then restarts it</p>
-                <confirm title="cold reboot" confirm="confirmColdReboot" ng-show="confirmColdReboot" cancel="coldbootCancel" callback="coldReboot"></confirm>
-            </div>
-            <div class="column power-option" ng-hide="dataService.server_state == 'Off' || dataService.server_state == 'Unreachable'" ng-class="{disabled: dataService.server_unreachable || (confirm && !confirmOrderlyShutdown) || dataService.loading, transitionAll: confirm && confirmOrderlyShutdown}">
-                <button id="power__soft-shutdown" class="btn  btn-secondary" ng-click="orderlyShutdownConfirm()" role="button" ng-disabled="dataService.server_unreachable">
-                    <icon file="icon-power.svg"></icon>Orderly shutdown</button>
-                <p class="inline">Attempts to stop all software on the server before removing power</p>
-                <confirm title="orderly shutdown" confirm="confirmOrderlyShutdown" ng-show="confirmOrderlyShutdown" cancel="orderlyShutdownCancel" callback="orderlyShutdown"></confirm>
-            </div>
-            <div class="column power-option" ng-hide="dataService.server_state == 'Off' || dataService.server_state == 'Unreachable'" ng-class="{disabled: dataService.server_unreachable || (confirm && !confirmImmediateShutdown) || dataService.loading, transitionAll: confirm && confirmImmediateShutdown}">
-                <button id="power__hard-shutdown" class="btn btn-secondary" ng-click="immediateShutdownConfirm()" role="button" ng-disabled="dataService.server_unreachable">
-                    <icon file="icon-power.svg"></icon>Immediate shutdown</button>
-                <p class="inline">Removes power from the server without waiting for software to stop</p>
-                <confirm title="immediate shutdown" confirm="confirmImmediateShutdown" ng-show="confirmImmediateShutdown" cancel="immediatelyShutdownCancel" callback="immediateShutdown"></confirm>
-            </div>
-        </div>
+        </form>
+      </div>
     </div>
+  </div>
+  </div>
 </div>
