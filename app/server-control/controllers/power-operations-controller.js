@@ -11,18 +11,20 @@ window.angular && (function(angular) {
 
   angular.module('app.serverControl').controller('powerOperationsController', [
     '$scope', 'APIUtils', 'dataService', 'Constants', '$interval', '$q',
-    'toastService',
+    'toastService', '$uibModal',
     function(
-        $scope, APIUtils, dataService, Constants, $interval, $q, toastService) {
+        $scope, APIUtils, dataService, Constants, $interval, $q, toastService,
+        $uibModal) {
       $scope.dataService = dataService;
-      // Is a || of the other 4 "confirm" variables to ensure only
-      // one confirm is shown at a time.
-      $scope.confirm = false;
-      $scope.confirmWarmReboot = false;
-      $scope.confirmColdReboot = false;
-      $scope.confirmOrderlyShutdown = false;
-      $scope.confirmImmediateShutdown = false;
       $scope.loading = true;
+      $scope.oneTimeBootEnabled = false;
+      $scope.bootOverrideError = false;
+      $scope.bootSources = [];
+      $scope.boot = {};
+      $scope.defaultRebootSetting = 'warm-reboot';
+      $scope.defaultShutdownSetting = 'warm-shutdown';
+
+      $scope.activeModal;
 
       // When a power operation is in progress, set to true,
       // when a power operation completes (success/fail) set to false.
@@ -58,54 +60,16 @@ window.angular && (function(angular) {
             return deferred.promise;
           };
 
-      APIUtils.getLastPowerTime()
-          .then(
-              function(data) {
-                if (data.data == 0) {
-                  $scope.powerTime = 'not available';
-                } else {
-                  $scope.powerTime = data.data;
-                }
-              },
-              function(error) {
-                console.log(JSON.stringify(error));
-              })
-          .finally(function() {
-            $scope.loading = false;
-          });
+      const modalTemplate = require('./power-operations-modal.html');
 
-      $scope.toggleState = function() {
-        dataService.server_state =
-            (dataService.server_state == 'Running') ? 'Off' : 'Running';
-      };
-
-      /**
-       * Initiate Power on
-       */
-      $scope.powerOn = () => {
-        $scope.operationPending = true;
-        dataService.setUnreachableState();
-        APIUtils.hostPowerOn()
-            .then(() => {
-              // Check for on state
-              return checkHostStatus(
-                  Constants.HOST_STATE_TEXT.on, Constants.TIMEOUT.HOST_ON,
-                  Constants.MESSAGES.POLL.HOST_ON_TIMEOUT);
-            })
-            .catch((error) => {
-              console.log(error);
-              toastService.error(Constants.MESSAGES.POWER_OP.POWER_ON_FAILED);
-            })
-            .finally(() => {
-              $scope.operationPending = false;
-            })
-      };
+      const powerOperations =
+          {WARM_REBOOT: 0, COLD_REBOOT: 1, WARM_SHUTDOWN: 2, COLD_SHUTDOWN: 3};
 
       /**
        * Initiate Orderly reboot
        * Attempts to stop all software
        */
-      $scope.warmReboot = () => {
+      const warmReboot = () => {
         $scope.operationPending = true;
         dataService.setUnreachableState();
         APIUtils.hostReboot()
@@ -121,30 +85,21 @@ window.angular && (function(angular) {
                   Constants.HOST_STATE_TEXT.on, Constants.TIMEOUT.HOST_ON,
                   Constants.MESSAGES.POLL.HOST_ON_TIMEOUT);
             })
-            .catch((error) => {
+            .catch(error => {
               console.log(error);
               toastService.error(
                   Constants.MESSAGES.POWER_OP.WARM_REBOOT_FAILED);
             })
             .finally(() => {
               $scope.operationPending = false;
-            })
-      };
-
-      $scope.warmRebootConfirm = function() {
-        if ($scope.confirm) {
-          // If another "confirm" is already shown return
-          return;
-        }
-        $scope.confirm = true;
-        $scope.confirmWarmReboot = true;
+            });
       };
 
       /**
        * Initiate Immediate reboot
        * Does not attempt to stop all software
        */
-      $scope.coldReboot = () => {
+      const coldReboot = () => {
         $scope.operationPending = true;
         dataService.setUnreachableState();
         APIUtils.chassisPowerOff()
@@ -164,29 +119,21 @@ window.angular && (function(angular) {
                   Constants.HOST_STATE_TEXT.on, Constants.TIMEOUT.HOST_ON,
                   Constants.MESSAGES.POLL.HOST_ON_TIMEOUT);
             })
-            .catch((error) => {
+            .catch(error => {
               console.log(error);
               toastService.error(
                   Constants.MESSAGES.POWER_OP.COLD_REBOOT_FAILED);
             })
             .finally(() => {
               $scope.operationPending = false;
-            })
-      };
-
-      $scope.coldRebootConfirm = function() {
-        if ($scope.confirm) {
-          return;
-        }
-        $scope.confirm = true;
-        $scope.confirmColdReboot = true;
+            });
       };
 
       /**
        * Initiate Orderly shutdown
        * Attempts to stop all software
        */
-      $scope.orderlyShutdown = () => {
+      const orderlyShutdown = () => {
         $scope.operationPending = true;
         dataService.setUnreachableState();
         APIUtils.hostPowerOff()
@@ -196,29 +143,21 @@ window.angular && (function(angular) {
                   Constants.HOST_STATE_TEXT.off, Constants.TIMEOUT.HOST_OFF,
                   Constants.MESSAGES.POLL.HOST_OFF_TIMEOUT);
             })
-            .catch((error) => {
+            .catch(error => {
               console.log(error);
               toastService.error(
                   Constants.MESSAGES.POWER_OP.ORDERLY_SHUTDOWN_FAILED);
             })
             .finally(() => {
               $scope.operationPending = false;
-            })
-      };
-
-      $scope.orderlyShutdownConfirm = function() {
-        if ($scope.confirm) {
-          return;
-        }
-        $scope.confirm = true;
-        $scope.confirmOrderlyShutdown = true;
+            });
       };
 
       /**
        * Initiate Immediate shutdown
        * Does not attempt to stop all software
        */
-      $scope.immediateShutdown = () => {
+      const immediateShutdown = () => {
         $scope.operationPending = true;
         dataService.setUnreachableState();
         APIUtils.chassisPowerOff()
@@ -232,22 +171,225 @@ window.angular && (function(angular) {
             .then(() => {
               dataService.setPowerOffState();
             })
-            .catch((error) => {
+            .catch(error => {
               console.log(error);
               toastService.error(
                   Constants.MESSAGES.POWER_OP.IMMEDIATE_SHUTDOWN_FAILED);
             })
             .finally(() => {
               $scope.operationPending = false;
-            })
+            });
       };
 
-      $scope.immediateShutdownConfirm = function() {
-        if ($scope.confirm) {
-          return;
+      /**
+       * Initiate Power on
+       */
+      $scope.powerOn = () => {
+        $scope.operationPending = true;
+        dataService.setUnreachableState();
+        APIUtils.hostPowerOn()
+            .then(() => {
+              // Check for on state
+              return checkHostStatus(
+                  Constants.HOST_STATE_TEXT.on, Constants.TIMEOUT.HOST_ON,
+                  Constants.MESSAGES.POLL.HOST_ON_TIMEOUT);
+            })
+            .catch(error => {
+              console.log(error);
+              toastService.error(Constants.MESSAGES.POWER_OP.POWER_ON_FAILED);
+            })
+            .finally(() => {
+              $scope.operationPending = false;
+            });
+      };
+
+      /*
+       *  Power operations modal
+       */
+      const initPowerOperation = function(powerOperation) {
+        switch (powerOperation) {
+          case powerOperations.WARM_REBOOT:
+            warmReboot();
+            break;
+          case powerOperations.COLD_REBOOT:
+            coldReboot();
+            break;
+          case powerOperations.WARM_SHUTDOWN:
+            orderlyShutdown();
+            break;
+          case powerOperations.COLD_SHUTDOWN:
+            immediateShutdown();
+            break;
+          default:
+            // do nothing
         }
-        $scope.confirm = true;
-        $scope.confirmImmediateShutdown = true;
+      };
+
+      $scope.rebootConfirmModal = function() {
+        if ($scope.rebootForm.radioReboot.$modelValue == 'warm-reboot') {
+          $scope.activeModal = powerOperations.WARM_REBOOT;
+        } else if ($scope.rebootForm.radioReboot.$modelValue == 'cold-reboot') {
+          $scope.activeModal = powerOperations.COLD_REBOOT;
+        }
+
+        $uibModal
+            .open({
+              template: modalTemplate,
+              windowTopClass: 'uib-modal',
+              scope: $scope,
+              ariaLabelledBy: 'modal-operation'
+            })
+            .result
+            .then(function(activeModal) {
+              initPowerOperation(activeModal);
+              $scope.activeModal = undefined;
+            })
+            .catch(function() {
+              $scope.activeModal = undefined;
+            });
+      };
+
+      $scope.shutdownConfirmModal = function() {
+        if ($scope.shutdownForm.radioShutdown.$modelValue == 'warm-shutdown') {
+          $scope.activeModal = powerOperations.WARM_SHUTDOWN;
+        } else if (
+            $scope.shutdownForm.radioShutdown.$modelValue == 'cold-shutdown') {
+          $scope.activeModal = powerOperations.COLD_SHUTDOWN;
+        }
+
+        $uibModal
+            .open({
+              template: modalTemplate,
+              windowTopClass: 'uib-modal',
+              scope: $scope,
+              ariaLabelledBy: 'modal-operation'
+            })
+            .result
+            .then(function(activeModal) {
+              initPowerOperation(activeModal);
+              $scope.activeModal = undefined;
+            })
+            .catch(function() {
+              $scope.activeModal = undefined;
+            });
+      };
+
+      /*
+       *   Emitted every time the view is reloaded
+       */
+      $scope.$on('$viewContentLoaded', function() {
+        APIUtils.getLastPowerTime()
+            .then(
+                function(data) {
+                  if (data.data == 0) {
+                    $scope.powerTime = 'not available';
+                  } else {
+                    $scope.powerTime = data.data;
+                  }
+                },
+                function(error) {
+                  console.log(JSON.stringify(error));
+                })
+            .finally(function() {
+              $scope.loading = false;
+            });
+
+        $scope.loadBootSettings();
+        loadTPMStatus();
+      });
+
+      $scope.loadBootSettings = function() {
+        APIUtils.getBootOptions()
+            .then(function(response) {
+              const boot = response.Boot;
+              const BootSourceOverrideEnabled =
+                  boot['BootSourceOverrideEnabled'];
+              const BootSourceOverrideTarget = boot['BootSourceOverrideTarget'];
+              const bootSourceValues =
+                  boot['BootSourceOverrideTarget@Redfish.AllowableValues'];
+
+              $scope.bootSources = bootSourceValues;
+
+              $scope.boot = {
+                BootSourceOverrideEnabled: BootSourceOverrideEnabled,
+                BootSourceOverrideTarget: BootSourceOverrideTarget
+              };
+
+              if (BootSourceOverrideEnabled == 'Once') {
+                $scope.boot.oneTimeBootEnabled = true;
+              }
+            })
+            .catch(function(error) {
+              $scope.bootOverrideError = true;
+              toastService.error('Unable to get boot override values.');
+              console.log(
+                  'Error loading boot settings:', JSON.stringify(error));
+            });
+        $scope.loading = false;
+      };
+
+      $scope.saveBootSettings = function() {
+        if ($scope.hostBootSettings.bootSelected.$dirty) {
+          const data = {};
+          data.Boot = {};
+
+          let isOneTimeBoot = $scope.boot.oneTimeBootEnabled;
+          let overrideTarget = $scope.boot.BootSourceOverrideTarget || 'None';
+          let overrideEnabled = 'Disabled';
+
+          if (isOneTimeBoot) {
+            overrideEnabled = 'Once';
+          } else if (overrideTarget !== 'None') {
+            overrideEnabled = 'Continuous';
+          }
+
+          data.Boot.BootSourceOverrideEnabled = overrideEnabled;
+          data.Boot.BootSourceOverrideTarget = overrideTarget;
+
+          APIUtils.saveBootSettings(data).then(
+              function(response) {
+                toastService.success('Successfully updated boot settings.');
+              },
+              function(error) {
+                toastService.error('Unable to save boot settings.');
+                console.log(JSON.stringify(error));
+              });
+        };
+      };
+
+      const loadTPMStatus = function() {
+        APIUtils.getTPMStatus()
+            .then(function(response) {
+              $scope.TPMToggle = response.data;
+            })
+            .catch(function(error) {
+              console.log('Error loading TPM status', JSON.stringify(error));
+            });
+        $scope.loading = false;
+      };
+
+      /*
+       *   Toggle TPM required policy
+       */
+      $scope.toggleTPMPolicy = function() {
+        if ($scope.hostBootSettings.toggle.$dirty) {
+          const tpmEnabled = $scope.TPMToggle.TPMEnable;
+
+          if (tpmEnabled === undefined) {
+            return;
+          }
+
+          APIUtils.saveTPMEnable(tpmEnabled)
+              .then(
+                  function(response) {
+                    toastService.success(
+                        'Sucessfully updated TPM required policy.');
+                  },
+                  function(error) {
+                    toastService.error('Unable to update TPM required policy.');
+                    console.log(JSON.stringify(error));
+                  });
+        }
       };
     }
   ]);
