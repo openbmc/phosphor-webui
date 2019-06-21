@@ -1,9 +1,10 @@
-label, legend {
-  font-size:1em;
+label,
+legend {
+  font-size: 1em;
   font-weight: 300;
   margin: 0;
   .error {
-    font-size: .9em;
+    font-size: 0.9em;
   }
 }
 
@@ -66,7 +67,7 @@ textarea {
 }
 
 .form-error {
-  margin-bottom: .7em;
+  margin-bottom: 0.7em;
   font-size: 0.8rem;
   color: $status-error;
   height:1rem;
@@ -82,21 +83,24 @@ textarea {
 }
 
 input[readonly],
-input[readonly]:focus{
+input[readonly]:focus {
   box-shadow: 0 0 0;
   background: $background-03;
   border: 1px solid $border-color-02;
 }
 
-textarea { padding: .2em;
-  height: auto;}
-input[type="submit"], .submit {
+textarea {
+  padding: 0.2em;
+  height: auto;
+}
+input[type="submit"],
+.submit {
   margin: 1em 0;
   width: 100%;
 }
 
 //Custom select
-select{
+select {
   border-radius: 0px;
   height: auto;
   padding-right: 0.5rem; //override inherited Foundation style
@@ -120,4 +124,16 @@ select{
 .form__validation-message {
   color: $status-error;
   font-size: 0.9em;
+}
+
+.form-actions {
+  width: 100%;
+  margin-top: 2em;
+  padding-top: 1em;
+  border-top: 1px solid $border-color-01;
+  button {
+    display: block;
+    float: right;
+    margin: 0.5em 0 0 1em;
+  }
 }
