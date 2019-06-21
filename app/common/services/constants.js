@@ -113,11 +113,11 @@ window.angular && (function(angular) {
               'Time out. Did not download image in allotted time.',
         },
         POWER_OP: {
-          POWER_ON_FAILED: 'Power On Failed',
-          WARM_REBOOT_FAILED: 'Warm Reboot Failed',
-          COLD_REBOOT_FAILED: 'Cold Reboot Failed',
-          ORDERLY_SHUTDOWN_FAILED: 'Orderly Shutdown Failed',
-          IMMEDIATE_SHUTDOWN_FAILED: 'Immediate Shutdown Failed',
+          POWER_ON_FAILED: 'Power on failed.',
+          WARM_REBOOT_FAILED: 'Warm reboot failed.',
+          COLD_REBOOT_FAILED: 'Cold reboot failed.',
+          ORDERLY_SHUTDOWN_FAILED: 'Orderly shutdown failed.',
+          IMMEDIATE_SHUTDOWN_FAILED: 'Immediate shutdown failed.',
         },
         SENSOR: {
           NO_SENSOR_DATA: 'There are no sensors found.',
