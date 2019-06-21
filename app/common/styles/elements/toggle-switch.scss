@@ -54,6 +54,7 @@ input.toggle-switch__round-flat + label:after {
   position: absolute;
   content: "";
 }
+
 input.toggle-switch__round-flat + label:before {
   top: 2px;
   left: 2px;
@@ -63,6 +64,7 @@ input.toggle-switch__round-flat + label:before {
   @include borderRadius;
   @include marginTransition;
 }
+
 input.toggle-switch__round-flat + label:after {
   top: 4px;
   left: 4px;
@@ -74,12 +76,15 @@ input.toggle-switch__round-flat + label:after {
   border-radius: 52px;
   @include marginTransition;
 }
+
 input.toggle-switch__round-flat:checked + label {
   background-color: $primary-accent;
 }
+
 input.toggle-switch__round-flat:checked + label:before {
   background-color: $primary-accent;
 }
+
 input.toggle-switch__round-flat:checked + label:after {
   margin-left: 20px;
   background-color: $primary-light;
