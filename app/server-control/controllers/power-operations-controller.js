@@ -28,6 +28,33 @@ window.angular && (function(angular) {
       var pollChassisStatusTimer = undefined;
       var pollStartTime = null;
 
+      /**
+       * Checks the host status provided by the dataService using an
+       * interval timer
+       * @param {string} statusType : host status type to check for
+       * @param {number} timeout : timeout limit
+       * @param {string} error : error message
+       * @returns {Promise} : returns a deferred promise that will be fulfilled
+       * if the status is met or be rejected if the timeout is reached
+       */
+      var checkHostStatus = (statusType, timeout, error = 'Time out.') => {
+        const deferred = $q.defer();
+        const start = new Date();
+        const checkHostStatusInverval = $interval(() => {
+          let now = new Date();
+          let timePassed = now.getTime() - start.getTime();
+          if (timePassed > timeout) {
+            deferred.reject(error);
+            $interval.cancel(checkHostStatusInverval);
+          }
+          if (dataService.server_state === statusType) {
+            deferred.resolve();
+            $interval.cancel(checkHostStatusInverval);
+          }
+        }, Constants.POLL_INTERVALS.POWER_OP);
+        return deferred.promise;
+      };
+
       APIUtils.getLastPowerTime()
           .then(
               function(data) {
@@ -129,29 +156,28 @@ window.angular && (function(angular) {
         $scope.loading = true;
         dataService.setUnreachableState();
         APIUtils.chassisPowerOff()
-            .then(function(state) {
-              return state;
+            .then(function() {
+              return checkHostStatus(
+                  Constants.HOST_STATE_TEXT.off,
+                  Constants.TIMEOUT.HOST_OFF_IMMEDIATE,
+                  Constants.MESSAGES.POLL.HOST_OFF_TIMEOUT);
             })
-            .then(function(lastState) {
-              pollStartTime = new Date();
-              return pollChassisStatusTillOff();
+            .then(function() {
+              return APIUtils.hostPowerOn();
             })
-            .then(function(chassisState) {
-              return APIUtils.hostPowerOn().then(function(hostState) {
-                return hostState;
-              });
-            })
-            .then(function(hostState) {
-              return APIUtils.pollHostStatusTillOn();
-            })
-            .then(function(state) {
-              $scope.loading = false;
+            .then(function() {
+              return checkHostStatus(
+                  Constants.HOST_STATE_TEXT.on, Constants.TIMEOUT.HOST_ON,
+                  Constants.MESSAGES.POLL.HOST_ON_TIMEOUT);
             })
             .catch(function(error) {
+              console.log(error);
               toastService.error(
                   Constants.MESSAGES.POWER_OP.COLD_REBOOT_FAILED);
+            })
+            .finally(function() {
               $scope.loading = false;
-            });
+            })
       };
       $scope.coldRebootConfirm = function() {
         if ($scope.confirm) {
