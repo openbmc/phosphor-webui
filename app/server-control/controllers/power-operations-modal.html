@@ -1,0 +1,45 @@
+<!-- Shutdown and Reboot modal -->
+<div class="uib-modal__content" role="dialog">
+  <button
+    type="button"
+    class="btn  btn--close  float-right"
+    ng-click="$close()"
+  >
+    <icon file="icon-close.svg"></icon>
+  </button>
+  <div class="modal-header">
+    <h3>
+      <div class="icon__warning inline" aria-label="Warning"></div>
+      {{
+        activeModal === 2 || activeModal === 3
+          ? "Server shutdown will cause outage"
+          : "Server reboot will cause outage"
+      }}
+    </h3>
+  </div>
+  <div class="modal-body" id="modal-operation">
+    <p ng-if="activeModal === 2 || activeModal === 3">
+      There will be a server outage for several minutes during the shutdown. Are
+      you sure you want to shutdown?
+    </p>
+    <p ng-if="activeModal === 0 || activeModal === 1">
+      There will be a server outage for several minutes during the reboot. Are
+      you sure you want to reboot?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <!-- Power operation confirm buttons -->
+    <button
+      type="button"
+      class="btn btn-primary"
+      ng-click="initPowerOperation(activeModal);$close()"
+    >
+      <span ng-if="activeModal === 0 || activeModal === 1">Reboot</span>
+      <span ng-if="activeModal === 2 || activeModal === 3">Shutdown</span>
+    </button>
+    <!-- Cancel modal power confirmation -->
+    <button type="button" class="btn btn-secondary" ng-click="$close()">
+      Cancel
+    </button>
+  </div>
+</div>
