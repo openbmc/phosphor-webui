@@ -107,6 +107,15 @@
 }
 .uib-modal__content {
   padding: 1em;
+  .modal-header {
+    display: block;
+  }
+  .btn--close {
+    padding: 0;
+    svg {
+      height: 1.6em;
+    }
+  }
 }
 
 .uib-modal {

@@ -679,6 +679,45 @@ window.angular && (function(angular) {
             data: JSON.stringify({'data': state})
           })
         },
+        getBootOptions: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + '/redfish/v1/Systems/system',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        saveBootSettings: function(data) {
+          return $http({
+            method: 'PATCH',
+            url: DataService.getHost() + '/redfish/v1/Systems/system',
+            withCredentials: true,
+            data: data
+          });
+        },
+        getTPMStatus: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/control/host0/TPMEnable',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        saveTPMEnable: function(data) {
+          return $http({
+            method: 'PUT',
+            url: DataService.getHost() +
+                '/xyz/openbmc_project/control/host0/TPMEnable/attr/TPMEnable',
+            withCredentials: true,
+            data: JSON.stringify({'data': data})
+          })
+        },
+
         bmcReboot: function() {
           return $http({
             method: 'PUT',
