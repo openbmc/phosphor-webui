@@ -1,155 +1,151 @@
-@mixin state-label {
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: .8em;
+.sensors {
+  max-width: 1196px;
 }
 
-$title-minWidth: 210px;
-
-.header__actions-bar {
-  padding-left: 1.5em;
-  padding-right: 1em;
-  font-weight: 700;
-  .sensor__title {
-    margin-left: 1.5em;
-  }
-  .sensor__reading {
-    margin-right: .2em;
-  }
-  .sensor__heading-current {
-    padding-right: 1em;
-  }
+.sensors__table {
+  display: block;
+  border-collapse: collapse;
 }
 
-.sensor__heading-current {
-  margin: 0;
+.sensors__thead {
+  display: block;
+}
+
+.sensors__thead-row {
+  display: block;
+  background: $darkblue;
+  color: $white;
+  margin-bottom: 1rem;
+
   @include mediaQuery(medium) {
-    margin-left: 10px;
-    margin-right: 10px;
+    display: flex;
+    margin-bottom: 0;
   }
 }
 
-.sensor__label {
-  float: left;
+.sensors__thead-cell {
+  display: block;
+  padding: 1rem;
+  font-weight: 700;
+
+  &:not(:first-child) {
+    display: none;
+  }
+
+  @include mediaQuery(medium) {
+    flex: 1;
+
+    &:not(:first-child) {
+      display: block;
+      flex-grow: 0;
+      flex-shrink: 0;
+      flex-basis: 0;
+      min-width: 16%;
+    }
+  }
+}
+
+.sensors__tbody {
+  display: block;
+}
+
+.sensors__tbody-row {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid $medgrey;
+  margin-bottom: 1rem;
+
+  @include mediaQuery(medium) {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0;
+  }
+}
+
+.sensors__tbody-header {
+  display: block;
+  background: darken($lightgrey, 5%);
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  .icon.icon__normal {
+    display: none;
+  }
+
+  @include mediaQuery(medium) {
+    flex: 1;
+    align-items: center;
+    background: transparent;
+    font-weight: 400;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.sensors__tbody-cell {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  @include fontCourierBold;
+
+  @include mediaQuery(medium) {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 0;
+    align-items: center;
+    min-width: 16%;
+    justify-content: flex-start;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.sensors__tbody-cell__title {
   font-weight: 300;
+
   @include mediaQuery(medium) {
     display: none;
   }
 }
 
-.sensor__title {
-  min-width: 28%;
-  margin-bottom: 0;
-}
+.sensors__tbody-unit {
+  display: inline-block;
+  color: $darkgrey;
+  margin-left: 0.5em;
+  font-weight: 700;
+  text-transform: uppercase;
 
-.sensor__reading {
-  width: 100%;
-  text-align: right;
-  margin-bottom: 0;
-  display: none;
   @include mediaQuery(medium) {
-    display: inline-block;
-    width: auto;
-    min-width: calc(70% * (1 / 5) - 18px);
+    margin-left: 0;
   }
 }
 
-.sensor__readings-row {
-  width: 100%;
-  position: relative;
-  display: block;
-  margin: 0;
-  background: $white;
-  text-decoration: none;
-  border: 1px solid $medgrey;
-  background: lighten($lightgrey,1%);
-  margin-top: 1em;
-  @include mediaQuery(medium) {
-    padding: .3em 1em .3em 1.5em;
-    margin-top: 0;
-    border-top: 0;
-    background: transparent;
-  }
-  .sensor__title {
+.sensors__tbody-degree {
+  display: inline-block;
+  margin-left: -8px;
+}
+
+.sensors__tbody-current {
+  background: darken($thresh-normal, 3%);
+
+  .sensors__tbody-cell__title {
     font-weight: 700;
-    background: darken($lightgrey, 5%);
-    min-width: 100%;
-    padding: .8em;
-    @include mediaQuery(medium) {
-      min-width: 30%;
-      background: transparent;
-      padding: .5em .5em .5em 0;
-    }
-    .icon__normal {
-      width: 0;
-    }
   }
-  .content-label {
-    font-size: 1em;
-    margin-left: .8em;
-    color: $darkgrey;
-  }
-  .sensor__reading {
-    @include fontCourierBold;
-    display: block;
-    padding: .3em .8em;
-    @include mediaQuery(medium) {
-      display: inline-block;
-      padding: 0;
-    }
-  }
-  .sensor__current {
-    background: darken($thresh-normal, 3%);
-    margin: 0;
-    @include mediaQuery(medium) {
-      background: $thresh-normal;
-      padding: .7em .3em;
-      margin-left: 10px;
-      min-width: 109px;
-    }
-    @include mediaQuery(large) {
-      background: $thresh-normal;
-      padding: .7em;
-      margin-left: .3em;
-      margin-right: .3em;
-      min-width: 150px;
-    }
-    .sensor__label {
-      font-weight: 700;
-      @include mediaQuery(medium) {
-        font-weight:300;
-      }
-    }
-  }
-  .sensor__critical {
-    background: $thresh-critical;
+}
+
+.sensors__tbody-current--critical {
+  background: $thresh-critical;
+  color: $white;
+
+  .sensors__tbody-unit {
     color: $white;
-    .content-label {
-      color: $white;
-    }
   }
-  .sensor__warn {
-    background: $thresh-warning;
+}
+
+.sensors__tbody-current--warn {
+  background: $thresh-warning;
+  color: $black;
+
+  .sensors__tbody-unit {
     color: $black;
-    .content-label {
-      color: $black;
-    }
-  }
-
-}
-
-// Sensors
-
-#sensors, #sensors-overview {
-
-  .toggle-filter {
-    margin-bottom: 20px;
-    font-size: 0.9em;
-  }
-  .column, .columns {
-    padding-left: 0px;
-    padding-right: 0px;
   }
 }
-
-//end sensor details
