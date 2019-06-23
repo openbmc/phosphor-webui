@@ -1,16 +1,12 @@
 <loader loading="loading"></loader>
-<div id="sensors-overview">
-  <div class="row column">
-    <h1>Sensors</h1>
+<div id="sensors" class="sensors">
+  <h1>Sensors</h1>
+  <div class="page-header">
+    <h2 class="inline">All sensors present in the system</h2>
+    <a ng-href="data:text/json;charset=utf-8,{{export_data}}" class="inline btn-export float-right" download="{{export_name}}">Export</a>
   </div>
-  <section class="row column">
-    <div class="page-header">
-      <h2 class="inline">All sensors present in the system</h2>
-      <a ng-href="data:text/json;charset=utf-8,{{export_data}}" class="inline btn-export float-right" download="{{export_name}}">Export</a>
-    </div>
-  </section>
-  <section class="row column">
-    <!-- search -->
+
+  <div>
     <p class="content-label" aria-label="sensors filter">Filter sensors</p>
     <div class="content__search">
       <label for="content__search-input">Sensors Search</label>
@@ -19,7 +15,7 @@
         <button class="clear-input" ng-click="clear()">&#10005;</button>
         <input id="content__search-submit" type="submit" class="btn btn-primary content__search-submit" value="Filter" ng-click="doSearchOnClick()"/>
       </div>
-    </div>  <!-- end search -->
+    </div>
 
     <div class="toggle-filter">
       <p class="content-label">FILTER BY SEVERITY</p>
@@ -36,37 +32,76 @@
           ng-class="selectedSeverity.normal ? 'btn-primary' : 'btn-secondary'">Normal
       </button>
     </div>
+  </div>
 
-  </section>
-
-  <section class="row column" ng-show="filteredSensorData.length == 0">
+  <div ng-show="filteredSensorData.length == 0">
     <!-- message -->
     <span ng-if="selectedSeverity.all">{{messages.NO_SENSOR_DATA}}</span>
     <span ng-if="selectedSeverity.critical">{{messages.CRITICAL_NO_SENSOR_DATA}}</span>
     <span ng-if="selectedSeverity.warning">{{messages.WARNING_NO_SENSOR_DATA}}</span>
     <span ng-if="selectedSeverity.normal">{{messages.NORMAL_NO_SENSOR_DATA}}</span>
     <!-- end message -->
-  </section>
+  </div>
 
-  <section id="sensor-categories" class="row column" ng-show="filteredSensorData.length">
-    <div class="row column header-row fixed-table-header">
-      <div class="column large-12 header__actions-bar">
-        <p class="inline sensor__title">Sensors ({{filteredSensorData.length}})</p>
-        <p class="inline sensor__reading">Low critical</p>
-        <p class="inline sensor__reading">Low warning</p>
-        <p class="inline sensor__reading sensor__heading-current">Current</p>
-        <p class="inline sensor__reading">High warning</p>
-        <p class="inline sensor__reading">High critical</p>
-      </div>
-    </div>
+  <table id="sensor-categories" class="sensors__table" cellpadding="0" cellspacing="0" ng-show="filteredSensorData.length">
+    <thead class="sensors__thead fixed-table-header">
+      <tr class="sensors__thead-row">
+        <th class="sensors__thead-cell">Sensors ({{filteredSensorData.length}})<th>
+        <th class="sensors__thead-cell">Low critical<th>
+        <th class="sensors__thead-cell">Low warning<th>
+        <th class="sensors__thead-cell sensor__heading-current">Current<th>
+        <th class="sensors__thead-cell">High warning<th>
+        <th class="sensors__thead-cell">High critical<th>
+      </tr>
+    </thead>
     <!-- sensor -->
-    <div class="sensor__readings-row" ng-repeat="sensor in data|filter:filterBySeverity|filter:filterBySearchTerms|orderBy:'+custom_order' as filteredSensorData">
-      <p class="inline sensor__title"><span class="icon" ng-class="{'icon__critical': sensor.status == 'critical', 'icon__warning': sensor.status == 'warning', 'icon__normal': sensor.status == 'normal'}" aria-label="sensor.status" ></span>{{sensor.title}}</p>
-      <p class="inline sensor__reading"><span class="sensor__label">Low critical</span>{{sensor.CriticalLow}}<span class="content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></p>
-      <p class="inline sensor__reading"><span class="sensor__label">Low warning</span>{{sensor.WarningLow}}<span class="content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></p>
-      <p class="inline sensor__reading sensor__current" ng-class="{'sensor__critical': sensor.status == 'critical', 'sensor__warn': sensor.status == 'warning', 'sensor__normal': sensor.status == 'normal'}"><span class="sensor__label">Current</span>{{sensor.Value}}<span class="content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></span></p>
-      <p class="inline sensor__reading"><span class="sensor__label">High warning</span>{{sensor.WarningHigh}}<span class="content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></p>
-      <p class="inline sensor__reading"><span class="sensor__label">High critical</span>{{sensor.CriticalHigh}}<span class="content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></p>
-    </div>
-  </section>
+    <tbody class="sensors__tbody">
+      <tr class="sensors__tbody-row" ng-repeat="sensor in data|filter:filterBySeverity|filter:filterBySearchTerms|orderBy:'+custom_order' as filteredSensorData">
+        <th class="sensors__tbody-header">
+          <span class="icon" ng-class="{'icon__critical': sensor.status == 'critical', 'icon__warning': sensor.status == 'warning', 'icon__normal': sensor.status == 'normal'}" aria-label="Sensor status: {{sensor.status}}" ></span>
+          <span>{{sensor.title}}</span>
+        </th>
+        <td class="sensors__tbody-cell">
+          <span class="sensors__tbody-cell__title">Low critical</span>
+          <span class="sensors__tbody-cell__content">
+              <span class="sensors__tbody-info">{{sensor.CriticalLow}}</span>
+              <span class="sensors__tbody-degree" ng-if="sensor.unit == 'C'">&deg;</span>
+            <span class="sensors__tbody-unit">{{sensor.unit}}</span>
+          </span>
+        </td>
+        <td class="sensors__tbody-cell">
+          <span class="sensors__tbody-cell__title">Low warning</span>
+          <span class="sensors__tbody-cell__content">
+              <span class="sensors__tbody-info">{{sensor.WarningLow}}</span>
+              <span class="sensors__tbody-degree" ng-if="sensor.unit == 'C'">&deg;</span>
+            <span class="sensors__tbody-unit">{{sensor.unit}}</span>
+          </span>
+        </td>
+        <td class="sensors__tbody-cell sensors__tbody-current" ng-class="{'sensors__tbody-current--critical': sensor.status == 'critical', 'sensors__tbody-current--warn': sensor.status == 'warning', 'sensors__tbody-current--normal': sensor.status == 'normal'}">
+          <span class="sensors__tbody-cell__title">Current</span>
+          <span class="sensors__tbody-cell__content">
+              <span class="sensors__tbody-info">{{sensor.Value}}</span>
+              <span class="sensors__tbody-degree" ng-if="sensor.unit == 'C'">&deg;</span>
+            <span class="sensors__tbody-unit">{{sensor.unit}}</span>
+          </span>
+        </td>
+        <td class="sensors__tbody-cell">
+          <span class="sensors__tbody-cell__title">High warning</span>
+          <span class="sensors__tbody-cell__content">
+            <span class="sensors__tbody-info">{{sensor.WarningHigh}}</span>
+            <span class="sensors__tbody-degree" ng-if="sensor.unit == 'C'">&deg;</span>
+            <span class="sensors__tbody-unit">{{sensor.unit}}</span>
+          </span>
+        </td>
+        <td class="sensors__tbody-cell">
+          <span class="sensors__tbody-cell__title">High critical</span>
+          <span class="sensors__tbody-cell__content">
+            <span class="sensors__tbody-info">{{sensor.CriticalHigh}}</span>
+            <span class="sensors__tbody-degree" ng-if="sensor.unit == 'C'">&deg;</span>
+            <span class="sensors__tbody-unit">{{sensor.unit}}</span>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
