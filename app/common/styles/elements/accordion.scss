@@ -5,7 +5,7 @@
   padding-top: 1em;
   padding-bottom: 1em;
   padding-right: 1em;
-  background: $darkblue;
+  background: $background-05;
   color: $white;
   margin-left: 0;
   .event__actions {
@@ -21,7 +21,7 @@
 .accord-trigger {
   transform: rotate(90deg);
   font-size: 1.5em;
-  color: lighten($darkgrey, 10%);
+  color: $text-02;
   padding: .3em;
   display: block;
   margin: 0 auto;
@@ -34,7 +34,7 @@
   }
   &:focus {
     outline: 0;
-    color: $darkbg__accent;
+    color: $primary-accent;
   }
 }
 
