@@ -11,7 +11,7 @@
   .sys-log__timezone button {
     position: relative;
     text-transform: uppercase;
-    color: $lightbg__primary;
+    color: $primary-accent;
     font-size: .9em;
     font-weight: 700;
     border: 0;
@@ -30,7 +30,7 @@
 
 #sys-log-filter {
   .filter-label {
-    color: $darkgrey;
+    color: $text-02;
     text-transform: uppercase;
     font-weight: 700;
     font-size: .75em;
@@ -50,7 +50,7 @@
   }
   .sys-log__date-filter {
     margin-right: 1em;
-    color: $darkgrey;
+    color: $text-02;
     float:left;
     input {
       width: 170px;
@@ -180,14 +180,14 @@
 
   // Single event log card
   .sys-log__single-event {
-    border: 1px solid $medgrey;
+    border: 1px solid $border-color-01;
     padding: 1em 1em 1em .7em;
     margin: .5em 0 .5em 0;
     position: relative;
     overflow: hidden;
     @include fastTransition-all;
     &.active {
-      background-color: $lightgrey;
+      background-color: $background-02;
       @include slowTransition-all;
     }
   }
@@ -208,7 +208,7 @@
   .event__id {
     @include fontCourierBold;
     font-size: .9em;
-    color: $darkgrey;
+    color: $text-02;
     margin-right: 1em;
   }
 
@@ -216,7 +216,7 @@
     text-align: right;
     @include fontCourierBold;
     font-size: .9em;
-    color: $darkgrey;
+    color: $text-02;
     max-width: 18em;
     @media (min-width: 1105px) {
       float: right;
@@ -243,7 +243,7 @@
   .event__metadata {
     height: 200px;
     overflow-y: scroll;
-    border: 1px solid $medgrey;
+    border: 1px solid $border-color-01;
     padding: .5em .5em 0;
     background: $white;
     display: block;
@@ -297,16 +297,16 @@
     padding: 0;
     transform: rotate(-90deg);
     font-size: 1em;
-    color: lighten($darkgrey, 10%);
+    color: $text-02;
     &:hover {
-      color: $darkbg__accent;
+      color: $primary-accent;
     }
     &:after {
       content: '\276F'
     }
     &:focus {
       outline: 0;
-      color: $darkbg__accent;
+      color: $primary-accent;
     }
   }
   .sort-descending {
@@ -314,16 +314,16 @@
     padding: 0;
     transform: rotate(-90deg);
     font-size: 1em;
-    color: lighten($darkgrey, 10%);
+    color: $text-02;
     &:hover {
-      color: $darkbg__accent;
+      color: $primary-accent;
     }
     &:after {
       content: '\276e'
     }
     &:focus {
       outline: 0;
-      color: $darkbg__accent;
+      color: $primary-accent;
     }
   }
 }

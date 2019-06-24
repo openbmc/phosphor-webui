@@ -7,7 +7,7 @@
   width: 100%;
   height: 100%;
   z-index: 5;
-  background: $darkbg__primary;
+  background: $background-04;
   color: $white;
   padding: 2em 2em 1.55em 2em;
   overflow: hidden;
@@ -20,43 +20,13 @@
 
 // Power confirmation buttons
 .inline__confirm-buttons {
-  margin-left: 1.8em;
-  .btn-primary {
-    background: transparent;
-    border: 2px solid $white;
-    padding: 1em 2.2em;
-    margin: 0 10px;
-    &:focus,
-    &.default {
-      background: $primebtn__bg;
-      border: 2px solid $primebtn__bg;
-    }
-    &:hover {
-      background: darken($primebtn__bg, 10%);
-      border: 2px solid $primebtn__bg;
-    }
-  }
   @media (min-width: 900px) {
     position: absolute;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
   }
-}
-
-// confirmation message
-.inline__confirm-message {
-  display: inline-block;
-  font-weight: 400;
-}
-
-// Power confirmation message icon
-.inline__confirm-message i::before {
-  content: '\26A0';
-  color: $status-warn;
-  display: inline-block;
-  font-size: 2em;
-  vertical-align: middle;
-  font-style: normal;
-  margin-right: 15px;
+  .btn {
+    min-width: 100px!important;
+  }
 }

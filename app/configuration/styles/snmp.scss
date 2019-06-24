@@ -7,7 +7,7 @@
   }
   .help__text {
     font-size: 0.8rem;
-    color: $disabled-row-txt;
+    color: $text-02;
     padding-top: .3em;
     display: none;
   }
@@ -15,7 +15,7 @@
     display: none;
   }
   .manager_group {
-    border-bottom: 1px solid $lightbg__grey;
+    border-bottom: 1px solid $border-color-02;
     &.ng-invalid {
       input {
         color: black;
@@ -30,7 +30,7 @@
       }
     }
     &.empty {
-      color: $disabled-row-txt;
+      color: $text-02;
       padding: 1em 0 1em 0;
     }
   }
@@ -47,7 +47,7 @@
     input {
       border-style: none;
       pointer-events: none;
-      color: $disabled-row-txt;
+      color: $text-02;
       height: 2.4em;
     }
     &:focus-within {
@@ -70,7 +70,7 @@
       padding: 0;
       width: auto;
       svg {
-        fill: $color--blue-40;
+        fill: $primary-accent;
         width: auto;
         height: 1.3em;
       }
@@ -79,7 +79,7 @@
 
   .snmp__submit-wrapper {
     width: 100%;
-    border-top: 1px solid $medgrey;
+    border-top: 1px solid $border-color-01;
     button {
       float: right;
       margin: .5em;
