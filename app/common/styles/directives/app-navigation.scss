@@ -1,5 +1,8 @@
 $nav__toplvlWidth: 125px;
 $nav__seclvlWidth: 240px;
+$nav__top-level-color: $color--blue-100;
+$nav__second-level-color: $color--grey-20;
+$nav__second-level-text-color: $color--grey-100;
 
 //Navigation icons
 @mixin navIcons {
@@ -73,33 +76,33 @@ $nav__seclvlWidth: 240px;
     border-radius: 0;
     text-decoration: none;
     border-top: 1px solid transparent;
-    border-bottom: 1px solid $darkgrey;
+    border-bottom: 1px solid $border-color-02;
     font-weight: normal;
     font-size: .9em;
     line-height: 1.2;
     &:hover {
       background: $white;
       fill: $black;
-      color: $medblue;
+      color: $primary-accent;
       padding: 1em;
       border-radius: 0;
-      border-bottom: 1px solid $lightgrey;
+      border-bottom: 1px solid $border-color-01;
       .nav__icon-help__outer {
         stroke: $black;
       }
       .nav__icon-help__inner {
-        fill: $lightbg__primary;
+        fill: $primary-accent;
       }
       .nav-icon {
-        fill: $medblue;
-        color: $medblue;
+        fill: $primary-accent;
+        color: $primary-accent;
         .st0 {
-          stroke: $medblue;
+          stroke: $primary-accent;
         }
         .st1 {
-          fill: $medblue;
-          color: $medblue;
-          stroke: $medblue;
+          fill: $primary-accent;
+          color: $primary-accent;
+          stroke: $primary-accent;
         }
       }
     }
@@ -107,18 +110,18 @@ $nav__seclvlWidth: 240px;
   .opened {
     background: $nav__second-level-color;
     fill: $black;
-    color: darken($medblue, 10%);
-    border-bottom: 1px solid $lightgrey;
+    color: darken($primary-accent, 10%);
+    border-bottom: 1px solid $border-color-01;
     .nav-icon {
-      fill: $medblue;
-      color: $medblue;
+      fill: $primary-accent;
+      color: $primary-accent;
       .st0 {
-        stroke: $medblue;
+        stroke: $primary-accent;
       }
       .st1 {
-        fill: $medblue;
-        color: $medblue;
-        stroke: $medblue;
+        fill: $primary-accent;
+        color: $primary-accent;
+        stroke: $primary-accent;
       }
     }
   }
@@ -139,7 +142,7 @@ $nav__seclvlWidth: 240px;
     @include fastTransition-all;
     &.opened {
       left: $nav__toplvlWidth;
-      box-shadow: 7px 0 28px -10px $darkgrey;
+      box-shadow: 7px 0 28px -10px $color--grey-80;
       @include fastTransition-all;
     }
     a {

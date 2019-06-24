@@ -39,13 +39,13 @@ input.toggle-switch__round-flat + label {
   padding: 2px;
   width: 50px;
   height: 30px;
-  background-color: darken($medgrey, 8%);
+  background-color: $border-color-02;
   @include borderRadius;
   @include marginTransition;
 }
 
 input.toggle-switch__round-flat:focus + label {
-  box-shadow: 0 0 4px 4px $darkbg__accent;
+  box-shadow: 0 0 4px 4px $primary-accent;
 }
 input.toggle-switch__round-flat + label:before, input.toggle-switch__round-flat + label:after {
   display: block;
@@ -66,19 +66,19 @@ input.toggle-switch__round-flat + label:after {
   left: 4px;
   bottom: 4px;
   width: 20px;
-  background-color: darken($medgrey, 8%);
+  background-color: $border-color-02;
   -webkit-border-radius: 52px;
   -moz-border-radius: 52px;
   border-radius: 52px;
   @include marginTransition;
 }
 input.toggle-switch__round-flat:checked + label {
-  background-color: $primebtn__bg;
+  background-color: $primary-accent;
 }
 input.toggle-switch__round-flat:checked + label:before {
-  background-color: $lightbg__accent;
+  background-color: $background-02;
 }
 input.toggle-switch__round-flat:checked + label:after {
   margin-left: 20px;
-  background-color: $primebtn__bg;
+  background-color: $primary-accent;
 }

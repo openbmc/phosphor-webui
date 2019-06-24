@@ -33,97 +33,26 @@ $color--red-20: #FAD3D3;
 // Global
 $white: $color--grey-0;
 $black: $color--grey-100;
-$darkgrey: $color--grey-80;
-$medgrey: #d7dbe0;
-$lightgrey: #f5f7fa;
-$lightblue: #f1f2f6;
-$medblue: #3f71ec;
-$darkblue: #1e3359;
-$purple: #5A3EC8;
-$field__disabled: #e6e6e6;
-$field__focus: #3C6DEF;
+$primary-accent: $color--blue-40;
 
-// Dark background
-$darkbg__grey: #E3ECEC;
-$darkbg__accent: #79a6f6;
-$darkbg__primary: #19273c;
+$text-01: $black;
+$text-02: $color--grey-80;
+$text-03: $color--grey-20;
 
-//Disabled table elements
-$disabled-row: #dddee0;
-$disabled-row-txt: $color--grey-60;
+$link: $color--blue-40;
+$link--hover: $color--blue-30;
 
-//Forms
-$input-border: #a7a7a7;
+$background-01: $white;
+$background-02: $color--grey-20;
+$background-03: $color--grey-30;
+$background-04: $color--blue-100;
+$background-05: $color--blue-50;
 
-// Light Background
-$lightbg__grey: #b8c1c1;
-$lightbg__accent: #d8e2fc;
-$lightbg__primary: $color--blue-40;
+$border-color-01: $color--grey-30;
+$border-color-02: $color--grey-60;
 
-// Primary Button colors
-$primebtn__bg: $color--blue-40;
-$primebtn__text: $white;
+$box-shadow-color: $color--grey-30;
 
-// Secondary Button colors
-$secbtn__bg: #ebf0fc;
-$secbtn__border: #3863ce;
-$secbtn__text: #3863ce;
-
-// Dropdowns
-$dropdown__focus-bg: #e6e9ee;
-
-// Status colors
-$error-color: #e62425;
-$status-ok: #34bc6e;
-$status-ok-light: #cceedf;
-$status-warn: #ffb000;
-
-// Alerts
-$alert__error: rgb(230, 35, 37);
-$alert__warning: rgb(255, 127, 0);
-$alert__message: rgb(203, 221, 235);
-$alert__danger: #fad3D3;
-
-// Severity
-$critical-lightbg: #da1416;
-$critical-darkbg: #ff5c49;
-$severity-medium-lightbg: #dc267f;
-$medium-darkbg: #FF509E;
-$warning-lightbg: #ff836f;
-$warning-darkbg: #ffb000;
-$low-lightbg: #c42cd6;
-$normal: #00baa1;
-
-// Priority tags
-$lowPriorityColor: $color--teal-50;
-$lowPriorty-bg: #cdf0f6;
-$medPriorityColor: #feb101;
-$medPriorty-bg: #fef0cd;
-$highPriorityColor: #e62425;
-$highPriority-bg: #edc9cb;
-$resolvedColor: $color--grey-60;
-$resolved-bg: #d6d6d6;
-
-
-// Threshold graphs
-$thresh-critical: $error-color;
-$thresh-warning: #ffb001;
-$thresh-normal: #cceedf;
-
-//Inventory
-$active: #c6b6f5;
-$inactive: $severity-medium-lightbg;
-
-// Links
-$links: $color--blue-40;
-$links__hover: $lightbg__primary;
-$links__visited: #8ea7ea;
-$links__disabled: rgba(27, 40, 52, 0.70);
-
-// Navigation
-$nav__top-level-color: #1a273b;
-$nav__second-level-color: #e6e9ed;
-$nav__second-level-text-color: #4b5d78;
-
-//Loader
-$loaderColor: $color--blue-50;
+$status-error: $color--red-50;
+$status-ok: $color--green-50;
+$status-warn: $color--yellow-70;

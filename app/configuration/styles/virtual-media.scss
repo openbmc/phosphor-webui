@@ -48,13 +48,13 @@
 
 .vm__upload-name {
   flex: 1 0 220px;
-  background-color: $medgrey;
+  background-color: $background-03;
   padding: 0.5em;
 }
 
 .vm__error-border,
 .vm__active-border {
-  border-top: 2px solid $error-color;
+  border-top: 2px solid $status-error;
   margin-top: 4px;
   padding-top: 4px;
 }

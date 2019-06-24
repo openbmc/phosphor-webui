@@ -12,18 +12,18 @@ p {
 }
 
 a, button.link {
-  color: $links;
+  color: $link;
   text-decoration: none;
   font-weight: 700;
   &:visited {
-    color: lighten($links, 5%);
+    color: lighten($link, 5%);
   }
   &:hover {
     text-decoration: underline;
     cursor: pointer;
   }
   :focus {
-    color: $links;
+    color: $link;
   }
 }
 
