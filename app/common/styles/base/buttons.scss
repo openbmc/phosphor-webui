@@ -1,18 +1,18 @@
-$btn-primary__bg: $color--blue-40;
-$btn-primary__bg--hover: $color--blue-30;
-$btn-primary__bg--disabled: $color--grey-40;
-$btn-primary__txt: $color--grey-0;
-$btn-primary__txt--disabled: $color--grey-60;
+$btn-primary__bg: $base-01--03;
+$btn-primary__bg--hover: $base-01--04;
+$btn-primary__bg--disabled: $base-02--04;
+$btn-primary__txt: $base-02--08;
+$btn-primary__txt--disabled: $base-02--03;
 
-$btn-secondary__bg: $color--grey-0;
-$btn-secondary__txt: $color--blue-40;
-$btn-secondary__txt--hover: $color--blue-30;
-$btn-secondary__txt--disabled: $color--grey-60;
+$btn-secondary__bg: $base-02--08;
+$btn-secondary__txt: $base-01--03;
+$btn-secondary__txt--hover: $base-01--04;
+$btn-secondary__txt--disabled: $base-02--03;
 
 $btn-tertiary__bg: transparent;
-$btn-tertiary__txt: $color--blue-40;
-$btn-tertiary__txt--hover: $color--blue-30;
-$btn-tertiary__txt--disabled: $color--grey-60;
+$btn-tertiary__txt: $base-01--03;
+$btn-tertiary__txt--hover: $base-01--04;
+$btn-tertiary__txt--disabled: $base-02--03;
 
 /***
 Include .btn class in addition to the button type.

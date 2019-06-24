@@ -20,21 +20,20 @@
   font-weight: 300;
   padding-top: 1px;
   text-decoration:none;
-  border: 1px solid $medgrey;
+  border: 1px solid $border-color-01;
   border-left-width: 0;
   min-width:44px;
   min-height:44px;
-  color: $darkbg__primary;
+  color: $text-01;
 }
 
 .pagination li:not([class*="current"]) a:hover {
-  background-color: $primebtn__bg;
-  color: $white;
+  background-color: $primary-accent;
+  color: $primary-light;
 }
 
 .pagination li:not([class*="current"]) a:focus,
-.pagination li:not([class*="current"]) a:active {;
-  //box-shadow: 0px 0px 10px 1px rgba(0,0,0,.25);
+.pagination li:not([class*="current"]) a:active {
   border-left-width:1px;
 }
 
@@ -76,8 +75,8 @@
 
 .pagination li.current a, .pagination li.active a {
   padding-top:.25em;
-  color: $white;
-  background-color: $lightbg__primary;
+  color: $primary-light;
+  background-color: $background-05;
   cursor: default;
   pointer-events: none;
   font-weight: 700;

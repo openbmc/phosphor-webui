@@ -30,37 +30,37 @@ $logoMaxWidth: 125px;
 
 .header__info-section {
   position: relative;
-  background: $black;
-  color: $white;
+  background: $primary-dark;
+  color: $primary-light;
   overflow: hidden;
 }
 
 .header__logout {
   float: right;
-  color: $white;
+  color: $primary-light;
   font-size: .9em;
   text-decoration: none;
   padding: 1em;
   font-weight: 400;
   &:visited {
-    color: $white;
+    color: $primary-light;
   }
 }
 
 .header__functions-section {
-  color: $white;
+  color: $primary-light;
   padding: 0 1.1em;
   box-sizing: border-box;
   display: block;
   position: relative;
   overflow: hidden;
   min-height: 5em;
-  border-bottom: 1px solid $medgrey;
-  background: $white;
+  border-bottom: 1px solid $border-color-01;
+  background: $primary-light;
   .header__server-name {
     font-size: 1.5em;
     font-weight: 500;
-    color: $darkgrey;
+    color: $text-02;
     padding: .4em 0 0 1em;
     height: 100%;
     background: transparent;
@@ -68,7 +68,7 @@ $logoMaxWidth: 125px;
     white-space: nowrap;
     overflow: hidden;
     .header__hostname {
-      color: $black;
+      color: $primary-dark;
       font-size: 1.2rem;
       font-weight: 700;
       margin-bottom: 0;
@@ -98,7 +98,7 @@ $logoMaxWidth: 125px;
     bottom: 0;
     z-index: 100;
     margin: .3em 0;
-    background: $white;
+    background: $primary-light;
     @include fastTransition-all;
     &.active {
       right: 1em;
@@ -108,14 +108,14 @@ $logoMaxWidth: 125px;
     }
     span {
       display: block;
-      color: $black;
+      color: $primary-dark;
       font-size: 1em;
     }
     a, p {
       display: block;
       float: left;
       text-decoration: none;
-      color: $darkgrey;
+      color: $text-02;
       padding: 1.250em;
       height: 100%;
       font-size: 0.875em;
@@ -135,15 +135,15 @@ $logoMaxWidth: 125px;
   .header__server-health,
   .header__info,
   .header__multi-server {
-    background: $lightgrey;
+    background: $background-02;
     @include round-corners;
     margin: 0 .3em;
     height: 100%;
-    border: 1px solid $medgrey;
+    border: 1px solid $border-color-01;
     opacity: 1;
     @include fastTransition-all;
     &:hover {
-      background: rgba(255, 255, 255, 1);
+      background: $background-01;
     }
   }
 
@@ -175,7 +175,7 @@ $logoMaxWidth: 125px;
         padding: .7em 0 .3em;
         font-size: 1em;
         font-weight: 400;
-        color: $darkgrey;
+        color: $text-02;
       }
       .icon-angle {
         margin: 0.2em 0 0 0;
@@ -199,7 +199,7 @@ $logoMaxWidth: 125px;
     }
 
     .header__refresh {
-      color: $darkgrey;
+      color: $text-02;
       line-height: 1.4;
       border-radius: 6px;
       span {
@@ -212,7 +212,7 @@ $logoMaxWidth: 125px;
     span {
       font-size: 0.875em;
       font-weight: 400;
-      color: $darkgrey;
+      color: $text-02;
       display: block;
       margin-bottom: .2em;
     }
@@ -224,7 +224,7 @@ $logoMaxWidth: 125px;
     svg {
       width: 25px;
       height: auto;
-      fill: $color--blue-40;
+      fill: $primary-accent;
     }
   }
 }

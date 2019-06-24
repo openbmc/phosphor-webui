@@ -1,6 +1,6 @@
 #login {
   @include mediaQuery(medium) {
-    background: linear-gradient(to right, #ffffff 49.999%, #e6e9ed 50%);
+    background: linear-gradient(to right, $background-01 49.999%, $background-02 50%);
     @include fastTransition-all;
   }
 }
@@ -8,7 +8,7 @@
 .login__wrapper {
   position: relative;
   padding-top: 1em;
-  color: $black;
+  color: $primary-dark;
   .row {
     max-width: 1080px;
   }
@@ -39,7 +39,7 @@
 }
 
 #login__form {
-  color: $black;
+  color: $primary-dark;
   background: transparent;
   padding: 1em 0;
   display: block;
@@ -59,7 +59,7 @@
 
   input:disabled,
   input:disabled:hover {
-    background-color: $lightbg__grey;
+    background-color: $background-03;
     cursor: default;
   }
 }
@@ -84,7 +84,7 @@
   }
   li {
     padding: 1em 0;
-    border-top: 1px solid $medgrey;
+    border-top: 1px solid $border-color-01;
   }
   p {
     margin-bottom: 0;
@@ -102,6 +102,6 @@
 .login__status {
   color: $status-ok;
   &.error {
-    color: $error-color;
+    color: $status-error;
   }
 }

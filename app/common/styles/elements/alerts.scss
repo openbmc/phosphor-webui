@@ -1,19 +1,15 @@
 //Fixed alerts
-
 .alert-danger {
-  background-color: $alert__danger;
-  border-color: $critical-lightbg;
+  background-color: $accent-04--02;
+  border-color: $accent-04--01;
   border-radius: 0;
-  color: $black;
+  color: $primary-dark;
   text-align: left;
 }
-
 .alert-warning {
-  background-color: $warning-lightbg;
-  border-color: $warning-border;
+  background-color: $accent-03--03;
+  border-color: $accent-03--02;
   border-radius: 0;
-  color: $black;
+  color: $primary-dark;
   text-align: left;
 }
-
-

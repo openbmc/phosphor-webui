@@ -74,7 +74,7 @@
           <label class="col-md-1 control-label" for="user-manage__passwd">Password</label>
           <div class="col-md-3 user-manage__input-wrapper inline">
             <input type="{{showpassword ? 'text' : 'password'}}" class="user-manage__new-password inline" name="Password" id="user-manage__passwd" ng-model="selectedUser.Password" ng-minlength="properties.MinPasswordLength" ng-maxlength="properties.MaxPasswordLength" required autocomplete="off"/>
-            <button ng-model="showpassword" ng-click="togglePassword = !togglePassword; showpassword = !showpassword;" class="password-toggle">
+            <button ng-model="showpassword" ng-click="togglePassword = !togglePassword; showpassword = !showpassword;" class="btn btn-tertiary  password-toggle">
               <span ng-hide="togglePassword">Show</span>
               <span ng-show="togglePassword">Hide</span>
             </button>
@@ -89,7 +89,7 @@
           <label class="col-md-1 control-label" for="user-manage__verifypasswd">Retype Password</label>
           <div class="col-md-3 user-manage__input-wrapper inline">
             <input type="{{showpasswordVerify ? 'text' : 'password'}}" class="user-manage__verify-password inline" name="VerifyPassword" id="user-manage__verifypasswd" ng-model="selectedUser.VerifyPassword" has-error="selectedUser.VerifyPassword != selectedUser.Password" required autocomplete="off">
-            <button ng-model="showpasswordVerify" ng-click="toggleVerify = !toggleVerify; showpasswordVerify = !showpasswordVerify;" class="password-toggle">
+            <button ng-model="showpasswordVerify" ng-click="toggleVerify = !toggleVerify; showpasswordVerify = !showpasswordVerify;" class="btn  btn-tertiary  password-toggle">
               <span ng-hide="toggleVerify">Show</span>
               <span ng-show="toggleVerify">Hide</span>
             </button>

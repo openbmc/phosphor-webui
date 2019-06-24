@@ -1,10 +1,13 @@
 $nav__toplvlWidth: 125px;
 $nav__seclvlWidth: 240px;
+$nav__top-level-color: $base-01--01;
+$nav__second-level-color: $base-02--06;
+$nav__second-level-text-color: $base-02--01;
 
 //Navigation icons
 @mixin navIcons {
-  color: $white;
-  fill: $white;
+  color: $primary-light;
+  fill: $primary-light;
   max-height: 40px;
   stroke-width: .5;
   display: block;
@@ -12,13 +15,13 @@ $nav__seclvlWidth: 240px;
   overflow: hidden;
   .st0 {
     fill: none;
-    stroke: $white;
+    stroke: $primary-light;
     stroke-width: 2;
     stroke-miterlimit: 10;
   }
   .st1 {
     fill: none;
-    stroke: $white;
+    stroke: $primary-light;
     stroke-width: 4;
     stroke-miterlimit: 10;
   }
@@ -62,8 +65,8 @@ $nav__seclvlWidth: 240px;
   .button, button, a {
     background: transparent;
     border: 0;
-    color: $white;
-    fill: $white;
+    color: $primary-light;
+    fill: $primary-light;
     width: 100%;
     padding: 1em;
     display: block;
@@ -73,52 +76,52 @@ $nav__seclvlWidth: 240px;
     border-radius: 0;
     text-decoration: none;
     border-top: 1px solid transparent;
-    border-bottom: 1px solid $darkgrey;
+    border-bottom: 1px solid $border-color-02;
     font-weight: normal;
     font-size: .9em;
     line-height: 1.2;
     &:hover {
-      background: $white;
-      fill: $black;
-      color: $medblue;
+      background: $primary-light;
+      fill: $primary-dark;
+      color: $primary-action;
       padding: 1em;
       border-radius: 0;
-      border-bottom: 1px solid $lightgrey;
+      border-bottom: 1px solid $border-color-01;
       .nav__icon-help__outer {
-        stroke: $black;
+        stroke: $primary-dark;
       }
       .nav__icon-help__inner {
-        fill: $lightbg__primary;
+        fill: $primary-action;
       }
       .nav-icon {
-        fill: $medblue;
-        color: $medblue;
+        fill: $primary-action;
+        color: $primary-action;
         .st0 {
-          stroke: $medblue;
+          stroke: $primary-action;
         }
         .st1 {
-          fill: $medblue;
-          color: $medblue;
-          stroke: $medblue;
+          fill: $primary-action;
+          color: $primary-action;
+          stroke: $primary-action;
         }
       }
     }
   }
   .opened {
     background: $nav__second-level-color;
-    fill: $black;
-    color: darken($medblue, 10%);
-    border-bottom: 1px solid $lightgrey;
+    fill: $primary-dark;
+    color: darken($primary-action, 10%);
+    border-bottom: 1px solid $border-color-01;
     .nav-icon {
-      fill: $medblue;
-      color: $medblue;
+      fill: $primary-action;
+      color: $primary-action;
       .st0 {
-        stroke: $medblue;
+        stroke: $primary-action;
       }
       .st1 {
-        fill: $medblue;
-        color: $medblue;
-        stroke: $medblue;
+        fill: $primary-action;
+        color: $primary-action;
+        stroke: $primary-action;
       }
     }
   }
@@ -139,20 +142,20 @@ $nav__seclvlWidth: 240px;
     @include fastTransition-all;
     &.opened {
       left: $nav__toplvlWidth;
-      box-shadow: 7px 0 28px -10px $darkgrey;
+      box-shadow: 7px 0 28px -10px $base-02--02;
       @include fastTransition-all;
     }
     a {
       padding: 1.2em 1em 1.2em 1em;
       display: block;
-      color: $black;
+      color: $primary-dark;
       text-decoration: none;
       position: relative;
       font-weight: 400;
       text-align: left;
       border-bottom: 1px solid transparent;
       &:hover {
-        background: $white;
+        background: $primary-light;
       }
     }
 

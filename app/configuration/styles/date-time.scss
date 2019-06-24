@@ -12,7 +12,7 @@
   .date-time__owner-dropdown {
     width: 200px;
     &:hover {
-      background-color: $dropdown__focus-bg;
+      background-color: $background-02;
     }
   }
   .date-time__ntp-servers{
@@ -39,7 +39,7 @@
     width: 100%;
     margin-top: 3em;
     padding-top: 1em;
-    border-top: 1px solid $medgrey;
+    border-top: 1px solid $border-color-01;
     button {
       float: right;
       margin: .5em;
