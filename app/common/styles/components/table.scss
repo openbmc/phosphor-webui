@@ -2,11 +2,11 @@
 // Table Header
 .table-header {
   width: 100%;
-  color: $black;
+  color: $primary-dark;
   line-height: 30px;
   padding: .8em 0 0;
   margin-bottom: .8em;
-  border-bottom: 1px solid $medgrey;
+  border-bottom: 1px solid $border-color-01;
   font-size: 1.25em;
   @include mediaQuery(medium) {
     margin: 1.8em 0;
@@ -30,8 +30,8 @@
   font-weight: 400;
   position: relative;
   &.disabled {
-    background-color: $disabled-row;
-    color: $disabled-row-txt;
+    background-color: $background-03;
+    color: $text-02;
   }
 }
 
@@ -41,9 +41,9 @@
   left: 0;
   width: 100%;
   height:100%;
-  background: $darkbg__primary;
+  background: $background-04;
   z-index:200;
-  color: $white;
+  color: $primary-light;
   padding: .8em 1em;
   text-align: center;
   font-size: 1.5em;
@@ -57,7 +57,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-bottom: 1px solid $medgrey;
+  border-bottom: 1px solid $border-color-01;
   @include mediaQuery(small) {
     flex: 1;
   }
@@ -84,9 +84,9 @@
   .table__row {
     display: none;
     font-weight: 700;
-    border-bottom: 1px solid $medgrey;
-    background-color: $darkbg__primary;
-    color: $white;
+    border-bottom: 1px solid $border-color-01;
+    background-color: $background-05;
+    color: $primary-light;
 
     @include mediaQuery(small) {
       display: flex;
@@ -104,7 +104,7 @@
 }
 
 .table__row-uploading {
-  color: $darkgrey;
+  color: $text-02;
   font-weight: 700;
   @include indeterminate-bar;
 }
@@ -119,7 +119,7 @@
 //sortable heading
 .sort-heading {
   position: relative;
-  color: $lightblue;
+  color: $text-03;
   &::after {
     content: '\025be';
     position: absolute;
@@ -137,12 +137,12 @@
   }
   &.sort-up {
     &::before {
-      color: $darkbg__accent;
+      color: $primary-accent;
     }
   }
   &.sort-down {
     &::after {
-      color: $darkbg__accent;
+      color: $primary-accent;
     }
   }
 }

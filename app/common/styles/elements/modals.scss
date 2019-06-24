@@ -2,7 +2,7 @@
   width: 100%;
   height: 100%;
   z-index: -1;
-  background-color: #000;
+  background-color: $primary-dark;
   position: fixed;
   top: 0;
   left: 0;
@@ -27,8 +27,8 @@
   max-width: 850px;
   min-width: 450px;
   padding: .8em 1.5em;
-  border: thin #000 solid;
-  background-color :#fff;
+  border: thin $primary-dark solid;
+  background-color :$background-01;
   z-index: 101;
   position: fixed;
   overflow: hidden;
@@ -55,7 +55,7 @@
   top: auto;
 }
 .modal__content {
-  border-bottom: 1px solid $lightbg__grey;
+  border-bottom: 1px solid $border-color-02;
   padding-bottom: 1em;
   margin-bottom: 2em;
 }
@@ -92,7 +92,7 @@
   }
   .modal-content {
     border-radius: 0;
-    border-color: $black;
+    border-color: $primary-dark;
   }
 }
 

@@ -1,3 +1,8 @@
+// Threshold graphs
+$thresh-critical: $status-error;
+$thresh-warning: $accent-03--02;
+$thresh-normal: $accent-02--02;
+
 .sensors {
   max-width: 1196px;
 }
@@ -13,8 +18,8 @@
 
 .sensors__thead-row {
   display: block;
-  background: $darkblue;
-  color: $white;
+  background: $background-05;
+  color: $primary-light;
   margin-bottom: 1rem;
 
   @include mediaQuery(medium) {
@@ -52,7 +57,7 @@
 .sensors__tbody-row {
   display: flex;
   flex-direction: column;
-  border: 1px solid $medgrey;
+  border: 1px solid $border-color-01;
   margin-bottom: 1rem;
 
   @include mediaQuery(medium) {
@@ -64,7 +69,7 @@
 
 .sensors__tbody-header {
   display: block;
-  background: darken($lightgrey, 5%);
+  background: $background-02;
   padding: 0.5rem 1rem;
   font-weight: 700;
   .icon.icon__normal {
@@ -109,7 +114,7 @@
 
 .sensors__tbody-unit {
   display: inline-block;
-  color: $darkgrey;
+  color: $text-01;
   margin-left: 0.5em;
   font-weight: 700;
   text-transform: uppercase;
@@ -134,18 +139,18 @@
 
 .sensors__tbody-current--critical {
   background: $thresh-critical;
-  color: $white;
+  color: $primary-light;
 
   .sensors__tbody-unit {
-    color: $white;
+    color: $primary-light;
   }
 }
 
 .sensors__tbody-current--warn {
   background: $thresh-warning;
-  color: $black;
+  color: $primary-dark;
 
   .sensors__tbody-unit {
-    color: $black;
+    color: $primary-dark;
   }
 }

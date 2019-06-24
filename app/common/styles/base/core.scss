@@ -3,7 +3,7 @@ html, body {
   @include fontFamily;
   font-size: 16px;
   font-weight: 400;
-  color: $black;
+  color: $primary-dark;
 }
 
 p {
@@ -11,19 +11,20 @@ p {
   transition: margin .05s;
 }
 
-a, button.link {
-  color: $links;
+a,
+button.link {
+  color: $primary-action;
   text-decoration: none;
   font-weight: 700;
   &:visited {
-    color: lighten($links, 5%);
+    color: lighten($primary-action, 5%);
   }
   &:hover {
     text-decoration: underline;
     cursor: pointer;
   }
   :focus {
-    color: $links;
+    color: $primary-action;
   }
 }
 

@@ -4,7 +4,7 @@
 
   // Power Current status wrapper
   .power__current-status {
-    border-bottom: 1px solid $medgrey;
+    border-bottom: 1px solid $border-color-01;
     margin: 1.3em 0 1.2em 0;
   }
 
@@ -27,7 +27,7 @@
     padding: 1em 2em .7em;
     margin-bottom: 3em;
     background-size: 200% 100%;
-    background-image: linear-gradient(to right, darken($lightgrey,3%) 50%, $status-ok-light 50%);
+    background-image: linear-gradient(to right, darken($background-02,3%) 50%, $accent-02--02 50%);
     background-position: 0;
     transition: background-position 2s ease;
     overflow: hidden;
@@ -50,7 +50,7 @@
     }
     &.power__state-off {
       background-position: 0;
-      color: $black;
+      color: $primary-dark;
       .power__state {
         span:before {
           content: '';
@@ -59,7 +59,7 @@
       }
     }
     &.power__state-indet {
-      color: $darkgrey;
+      color: $text-02;
       @include indeterminate-bar;
       .power__state {
         span:before {
@@ -71,7 +71,7 @@
     }
     &.power__state-error {
       background-position: 0;
-      color: $black;
+      color: $primary-dark;
       .power__state {
         span:before {
           content: '';

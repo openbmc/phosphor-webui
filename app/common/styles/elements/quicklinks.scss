@@ -1,6 +1,6 @@
 //Quick links block
 .quick-links {
-  background-color: $lightgrey;
+  background-color: $background-02;
   padding: .5em 1em;
   font-size: .9em;
   font-weight: 400;
@@ -9,7 +9,7 @@
     margin: 0 0 0 1em;
   }
   a {
-    color: $black;
+    color: $primary-dark;
     text-decoration: none;
     display: block;
   }
@@ -23,7 +23,7 @@
 
 .quick-links__item {
   padding: 1em 0 1em 0;
-  border-bottom: 1px solid $medgrey;
+  border-bottom: 1px solid $border-color-01;
   position: relative;
   &:after {
     content: '\203A';
@@ -31,7 +31,7 @@
     top: 50%;
     right: 0;
     font-size: 3em;
-    color: lighten($darkgrey, 15%);
+    color: $text-02;
     transform: translateY(-50%);
   }
   &.no-icon {
@@ -69,12 +69,12 @@
 }
 
 .quick-links__event-copy {
-  color: $alert__error;
+  color: $status-error;
   margin-bottom: 0;
   font-weight: 700;
   font-size: .9em;
   a {
-    color: $alert__error;
+    color: $status-error;
   }
 }
 

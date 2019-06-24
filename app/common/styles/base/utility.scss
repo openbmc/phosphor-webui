@@ -3,8 +3,6 @@
 }
 
 .disabled {
-  color: $lightbg__grey;
-  @include fastTransition-all;
   &:hover {
     cursor: default;
     text-decoration: none;
@@ -22,7 +20,7 @@
   }
 }
 .error {
-  color: $error-color;
+  color: $status-error;
 }
 
 .hide {
@@ -34,7 +32,7 @@
 }
 
 .close {
-  color: $lightbg__primary;
+  color: $primary-accent;
   font-size: 1.5em;
   padding: 1em;
   box-sizing: border-box;
@@ -46,7 +44,7 @@
   border: 0px;
   margin: 0;
   &:hover {
-    color: $lightbg__accent;
+    color: $text-03;
     background: transparent;
   }
 }
@@ -78,7 +76,7 @@
 }
 
 .btm-border-grey {
-  border-bottom: 1px solid $lightbg__grey;
+  border-bottom: 1px solid $border-color-02;
 }
 
 .transitionAll {
@@ -108,7 +106,7 @@
 .show-scroll {
   // Force scrollbar to always be visible in webkit browsers
   &::-webkit-scrollbar {
-    background-color: lighten($medgrey, 5%);
+    background-color: $background-03;
     width: 8px;
   }
 
@@ -126,14 +124,14 @@
   -webkit-animation-name: flash;
   -webkit-animation-timing-function: ease-out;
   -webkit-animation-duration: 1s;
-  color: $white;
+  color: $primary-light;
 }
 @-webkit-keyframes flash {
-  from { background: $field__focus; }
+  from { background: $primary-accent; }
   to  { background: none; }
 }
 
 @keyframes flash {
-  0% { background: $field__focus; }
+  0% { background: $primary-accent; }
   100% { background: none; }
 }

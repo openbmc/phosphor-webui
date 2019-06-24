@@ -1,6 +1,6 @@
 .acnt-prop-header {
   width: 100%;
-  border-bottom: 2px solid #b8c1c1;
+  border-bottom: 2px solid $border-color-01;
   margin: 0px 0px 15px;
 }
 .user-manage__form {
@@ -23,7 +23,7 @@
     display: block;
     padding-left: 1.5em;
     margin-bottom: 1em;
-    border-bottom: 1px solid $medgrey;
+    border-bottom: 1px solid $border-color-01;
   }
   .acnt-prop__input-wrapper,
   .user-manage__input-wrapper {
@@ -42,7 +42,6 @@
     right: 20px;
     top: .6em;
     padding: 3px;
-    color: $primebtn__bg;
     font-size: .8em;
   }
   .acnt-prop__submit-wrapper,
@@ -50,24 +49,24 @@
     width: 100%;
     margin-top: 6px;
     padding-top: 1px;
-    border-top: 1px solid $medgrey;
+    border-top: 1px solid $border-color-01;
     button {
       float: right;
       margin: .5em;
     }
   }
   .user-manage__error {
-    background: lighten($error-color, 20%);
+    background: lighten($status-error, 20%);
     padding: 1em;
     text-align: center;
     font-size: 1em;
-    border: 1px solid $error-color;
-    color: $black;
+    border: 1px solid $status-error;
+    color: $primary-dark;
     font-family: "Courier New", Helvetica, Arial, sans-serif;
     font-weight: 700;
   }
   .user-manage__success {
-    color: $primebtn__bg;
+    color: $primary-accent;
     padding: 1em;
     font-size: 1em;
     font-family: "Courier New", Helvetica, Arial, sans-serif;
