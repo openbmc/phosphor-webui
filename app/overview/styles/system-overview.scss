@@ -3,7 +3,7 @@
 }
 
 .overview__server-metadata {
-  border-bottom: 1px solid $medgrey;
+  border-bottom: 1px solid $border-color-01;
   padding: 1.8em 0 0 0;
 }
 .overview__metadata-wrapper {
@@ -48,9 +48,9 @@ input.modal__edit-server-name {
 .modal__char-count,
 .modal__error {
   font-size: .8em;
-  color: $darkgrey;
+  color: $text-02;
 }
 
 .modal__error {
-  color: $error-color;
+  color: $status-error;
 }

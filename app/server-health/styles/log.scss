@@ -1,3 +1,13 @@
+// Priority tags
+$priority-high: $accent-04--01;
+$priority-high--light: $accent-04--02;
+$priority-medium: $accent-03--01;
+$priority-medium--light: $accent-03--03;
+$priority-low: $accent-01--01;
+$priority-low--light: $accent-01--03;
+$prioriy-resolved: $base-02--02;
+$priority-resolve--light: $base-02--04;
+
 // Event Log SCSS
 #event-log {
 
@@ -14,7 +24,7 @@
   .event-log__timezone button {
     position: relative;
     text-transform: uppercase;
-    color: $lightbg__primary;
+    color: $primary-accent;
     font-size: .9em;
     font-weight: 700;
     border: 0;
@@ -29,7 +39,7 @@
 
 #event-filter {
   .filter-label {
-    color: $darkgrey;
+    color: $text-02;
     text-transform: uppercase;
     font-weight: 700;
     font-size: .75em;
@@ -49,7 +59,7 @@
   }
   .event__date-filter {
     margin-right: 1.5em;
-    color: $darkgrey;
+    color: $text-02;
     float:left;
     input {
       width: 170px;
@@ -83,7 +93,7 @@
   }
 }
 .empty__logs {
-  border: 1px solid $lightbg__grey;
+  border: 1px solid $border-color-02;
   margin-top: .5em;
   text-align: center;
   padding: 2em;
@@ -148,14 +158,14 @@
 
   // Single event log card
   .event-log__single-event {
-    border: 1px solid $medgrey;
+    border: 1px solid $border-color-01;
     padding: 1em 1em 1em .7em;
     margin: .5em 0 .5em 0;
     position: relative;
     overflow: hidden;
     @include fastTransition-all;
     &.active {
-      background-color: $lightgrey;
+      background-color: $background-02;
       @include slowTransition-all;
     }
   }
@@ -176,24 +186,24 @@
     min-width: 103px;
     text-align: center;
     &.high-priority {
-      background: $highPriority-bg;
-      border: 2px solid $highPriorityColor;
-      color: darken($highPriorityColor, 5%);
+      background: $priority-high--light;
+      border: 2px solid $priority-high;
+      color: $priority-high;
     }
-    &.med-priority {
-      background: $medPriorty-bg;
-      border: 2px solid $medPriorityColor;
-      color: darken($medPriorityColor, 15%);
+    &.medium-priority {
+      background: $priority-medium--light;
+      border: 2px solid $priority-medium;
+      color: $priority-medium;
     }
     &.low-priority {
-      background: $lowPriorty-bg;
-      border: 2px solid $lowPriorityColor;
-      color: darken($lowPriorityColor, 5%);
+      background: $priority-low--light;
+      border: 2px solid $priority-low;
+      color: $priority-low;
     }
     &.event-resolved {
-      background: $resolved-bg;
-      border: 2px solid $resolvedColor;
-      color: $resolvedColor;
+      background: $priority-low--light;
+      border: 2px solid $priority-low;
+      color: $priority-low;
     }
   }
 
@@ -204,16 +214,16 @@
     font-weight: 700;
     min-width: 103px;
     &.high-priority {
-      color: darken($highPriorityColor, 5%);
+      color: $priority-high;
     }
-    &.med-priority {
-      color: darken($medPriorityColor, 15%);
+    &.medium-priority {
+      color: $priority-medium;
     }
     &.low-priority {
-      color: darken($lowPriorityColor, 5%);
+      color: $priority-low;
     }
     &.event-resolved {
-      color: $resolvedColor;
+      color: $priority-low;
     }
   }
 
@@ -221,7 +231,7 @@
   .event__id {
     @include fontCourierBold;
     font-size: .9em;
-    color: $darkgrey;
+    color: $text-02;
     margin-right: 1em;
   }
 
@@ -229,7 +239,7 @@
     text-align: left;
     @include fontCourierBold;
     font-size: .9em;
-    color: $darkgrey;
+    color: $text-02;
     max-width: 18em;
     @include mediaQuery(medium) {
       float: right;
@@ -256,7 +266,7 @@
   .event__metadata {
     height: 200px;
     overflow-y: scroll;
-    border: 1px solid $medgrey;
+    border: 1px solid $border-color-01;
     padding: .5em .5em 0;
     background: $white;
     display: block;

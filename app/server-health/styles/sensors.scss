@@ -1,3 +1,8 @@
+// Threshold graphs
+$thresh-critical: $status-error;
+$thresh-warning: $accent-03--02;
+$thresh-normal: $accent-02--02;
+
 @mixin state-label {
   text-transform: uppercase;
   font-weight: 700;
@@ -61,8 +66,8 @@ $title-minWidth: 210px;
   margin: 0;
   background: $white;
   text-decoration: none;
-  border: 1px solid $medgrey;
-  background: lighten($lightgrey,1%);
+  border: 1px solid $border-color-01;
+  background: $background-02;
   margin-top: 1em;
   @include mediaQuery(medium) {
     padding: .3em 1em .3em 1.5em;
@@ -72,7 +77,7 @@ $title-minWidth: 210px;
   }
   .sensor__title {
     font-weight: 700;
-    background: darken($lightgrey, 5%);
+    background: $background-03;
     min-width: 100%;
     padding: .8em;
     @include mediaQuery(medium) {
@@ -87,7 +92,7 @@ $title-minWidth: 210px;
   .content-label {
     font-size: 1em;
     margin-left: .8em;
-    color: $darkgrey;
+    color: $text-02;
   }
   .sensor__reading {
     @include fontCourierBold;

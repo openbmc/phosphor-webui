@@ -5,8 +5,8 @@
 }
 
 .icon__more {
-  fill: $medblue;
-  stroke: $medblue;
+  fill: $primary-accent;
+  stroke: $primary-accent;
   background: transparent;
   overflow: visible;
   &:hover {
@@ -15,7 +15,7 @@
 }
 
 .icon__more-dropdown {
-  background: $lightgrey;
+  background: $background-02;
   position: absolute;
   right: 3px;
   white-space: normal;
@@ -23,7 +23,7 @@
   z-index: 200;
   padding: 1em;
   font-size: 1em;
-  box-shadow: 2px 4px 5px $medgrey;
+  box-shadow: 2px 4px 5px $box-shadow-color;
 }
 
 .icon__bar-arrow {
@@ -47,7 +47,7 @@
     display: inline-block;
     font-size: 1em;
     margin-left: 1em;
-    color: lighten($darkgrey, 4%);
+    color: $text-02;
   }
 }
 //Status icons
@@ -89,7 +89,7 @@
   margin-right: .5em;
   width: 25px;
   height: 25px;
-  fill: $medblue;
+  fill: $primary-accent;
   float: left;
 }
 

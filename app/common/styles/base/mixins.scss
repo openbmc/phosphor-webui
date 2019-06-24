@@ -154,7 +154,7 @@
 @mixin table-row-save {
   @-webkit-keyframes row-flash {
     from {
-      background-color: $lightblue;
+      background-color: $background-02;
     }
     to {
       background-color: inherit;
@@ -162,7 +162,7 @@
   }
   @-moz-keyframes row-flash {
     from {
-      background-color: $lightblue;
+      background-color: $background-02;
     }
     to {
       background-color: inherit;
@@ -170,7 +170,7 @@
   }
   @-o-keyframes row-flash {
     from {
-      background-color: $lightblue;
+      background-color: $background-02;
     }
     to {
       background-color: inherit;
@@ -178,7 +178,7 @@
   }
   @keyframes row-flash {
     from {
-      background-color: $lightblue;
+      background-color: $background-02;
     }
     to {
       background-color: inherit;
