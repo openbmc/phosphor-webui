@@ -18,6 +18,6 @@ echo "Formatting code under $DIR/"
 # formatting due to some imported code in webui
 
 if [ -f ".clang-format" ]; then
-    clang-format-6.0 -i `git ls-files '*.js'`
+    clang-format-8.0 -i `git ls-files '*.js'`
     git --no-pager diff --exit-code
 fi
