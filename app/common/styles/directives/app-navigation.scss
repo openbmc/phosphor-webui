@@ -9,7 +9,6 @@ $nav__seclvlWidth: 240px;
   stroke-width: .5;
   display: block;
   margin: .5em auto;
-  overflow: hidden;
   .st0 {
     fill: none;
     stroke: $white;
@@ -57,6 +56,12 @@ $nav__seclvlWidth: 240px;
     svg {
       width: 36px;
       height: auto;
+    }
+  }
+  .nav-icon__control {
+    margin-bottom: 1em;
+    svg {
+      width: 30px;
     }
   }
   .button, button, a {
