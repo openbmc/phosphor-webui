@@ -100,7 +100,9 @@
 
     <!-- CSR Code display content-->
     <div ng-if="displayCSRCode==true">
-      <div class="page-header add-csr-code__header"></div>
+      <div class="page-header add-csr-code__header">
+          <h2>Certificate Signing Request (CSR)</h2>
+      </div>
       <div class="modal__content add-csr__container">
         <span id="csrCode" class="add-csr__container-csr-code">{{csrCode}}</span>
       </div>
@@ -127,8 +129,7 @@
         <button class="certificate__close-modal" ng-click="resetCSRModal(); add__csr__form.$setUntouched()">
           <icon aria-hidden="true" file="icon-close.svg">
         </button>
-        <h2 class="page-header" ng-if="displayCSRCode==false">Generate a Certificate Signing Request (CSR)</h2>
-        <h2 class="page-header" ng-if="displayCSRCode==true">Certificate Signing Request (CSR)</h2>
+        <h2 class="page-header">Generate a Certificate Signing Request (CSR)</h2>
         <div class="row">
           <fieldset class="column medium-8 add-csr__section">
             <legend class="add-csr__section-title">General</legend>
@@ -137,7 +138,9 @@
                 <label for="cert__type" class="add-csr__label">Certificate Type *</label>
                 <select class="add-csr__select" id="cert__type" name="cert__type" ng-model="newCSR.certificateCollection" required>
                   <option class="courier-bold" ng-value="default" ng-model="selectOption">Select an option</option>
-                  <option class="courier-bold" ng-value="type" ng-repeat="type in allCertificateTypes">
+                  <!-- Do not show CA certificate as an option. Only a certificate authority can generate a CA certificate (known as TrustStore Certificate in Redfish) -->
+                  <option class="courier-bold" ng-value="type" ng-repeat="type in allCertificateTypes"
+                    ng-if="type.Description !== 'TrustStore Certificate'">
                     {{type.Description}}</option>
                 </select>
                 <div ng-messages="add__csr__form.cert__type.$error" class="form-error" ng-class="{'visible' : add__csr__form.cert__type.$touched}">
