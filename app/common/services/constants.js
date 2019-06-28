@@ -24,11 +24,18 @@ window.angular && (function(angular) {
         {
           'Description': 'HTTPS Certificate',
           'location':
-              '/redfish/v1/Managers/bmc/NetworkProtocol/HTTPS/Certificates/'
+              '/redfish/v1/Managers/bmc/NetworkProtocol/HTTPS/Certificates/',
+          'name': 'HTTPS Certificate'
         },
         {
           'Description': 'LDAP Certificate',
-          'location': '/redfish/v1/AccountService/LDAP/Certificates/'
+          'location': '/redfish/v1/AccountService/LDAP/Certificates/',
+          'name': 'LDAP Certificate'
+        },
+        {
+          'Description': 'TrustStore Certificate',
+          'location': '/redfish/v1/Managers/bmc/Truststore/Certificates/',
+          'name': 'CA Certificate'
         }
       ],
       CHASSIS_POWER_STATE: {
