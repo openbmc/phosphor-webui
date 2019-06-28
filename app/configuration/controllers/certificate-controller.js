@@ -74,14 +74,14 @@ window.angular && (function(angular) {
             .then(
                 function(data) {
                   toastService.success(
-                      $scope.newCertificate.selectedType.Description +
+                      $scope.newCertificate.selectedType.name +
                       ' was uploaded.');
                   $scope.newCertificate = {};
                   $scope.loadCertificates();
                 },
                 function(error) {
                   toastService.error(
-                      $scope.newCertificate.selectedType.Description +
+                      $scope.newCertificate.selectedType.name +
                       ' failed upload.');
                   console.log(JSON.stringify(error));
                 });
