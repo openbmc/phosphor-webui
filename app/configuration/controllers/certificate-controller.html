@@ -5,13 +5,13 @@
   </div>
   <div ng-repeat="certificate in certificates | filter:{isExpiring:true}" class="row column">
     <div class="small-12 alert alert-warning" role="alert">
-      <icon aria-hidden="true" file="icon-warning.svg" /> The uploaded {{certificate.Description}} is expiring in {{getDays(certificate.ValidNotAfter) === 0 ? 'less than one
+      <icon aria-hidden="true" file="icon-warning.svg" /> The uploaded {{certificate.name}} is expiring in {{getDays(certificate.ValidNotAfter) === 0 ? 'less than one
       day!' : getDays(certificate.ValidNotAfter) + ' days!'}}. Consider replacing it with a new certificate.
     </div>
   </div>
   <div ng-repeat="certificate in certificates|filter:{isExpired:true}" class="row column">
     <div class="small-12 alert alert-danger" role="alert">
-      <div class="icon__critical inline"></div> The uploaded {{certificate.Description}} has expired! Consider replacing it with a new certificate.
+      <div class="icon__critical inline"></div> The uploaded {{certificate.name}} has expired! Consider replacing it with a new certificate.
     </div>
   </div>
   <div class="row column">
@@ -66,7 +66,7 @@
             <select id="cert__type" name="cert__type" ng-model="newCertificate.selectedType" required>
               <option class="courier-bold" ng-value="">Select an option</option>
               <option class="courier-bold" ng-value="type" ng-repeat="type in availableCertificateTypes">
-                {{type.Description}}</option>
+                {{type.name}}</option>
             </select>
             <div ng-messages="add__cert__form.cert__type.$error" class="form-error" ng-class="{'visible' : add__cert__form.cert__type.$touched || submitted }">
               <p ng-message="required">Field is required</p>
@@ -143,8 +143,10 @@
                 <label for="cert__type" class="add-csr__label">Certificate Type *</label>
                 <select class="add-csr__select" id="cert__type" name="cert__type" ng-model="newCSR.certificateCollection" required>
                   <option class="courier-bold" ng-value="default" ng-model="selectOption">Select an option</option>
-                  <option class="courier-bold" ng-value="type" ng-repeat="type in allCertificateTypes">
-                    {{type.Description}}</option>
+                  <!-- Do not show CA certificate as an option. Only a certificate authority can generate a CA certificate (known as TrustStore Certificate in Redfish) -->
+                  <option class="courier-bold" ng-value="type" ng-repeat="type in allCertificateTypes"
+                    ng-if="type.Description !== 'TrustStore Certificate'">
+                    {{type.name}}</option>
                 </select>
                 <div ng-messages="add__csr__form.cert__type.$error" class="form-error" ng-class="{'visible' : add__csr__form.cert__type.$touched}">
                   <p ng-message="required">Field is required</p>
