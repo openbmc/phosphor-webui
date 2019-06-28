@@ -9,9 +9,18 @@ window.angular && (function(angular) {
         'template': require('./certificate.html'),
         'scope': {'cert': '=', 'reload': '&'},
         'controller': [
-          '$scope', 'APIUtils', 'toastService',
-          function($scope, APIUtils, toastService) {
+          '$scope', 'APIUtils', 'toastService', 'Constants',
+          function($scope, APIUtils, toastService, Constants) {
             var certificateType = 'PEM';
+            var availableCertificateTypes = Constants.CERTIFICATE_TYPES;
+
+            $scope.getCertificateName = function(certificateDescription) {
+              var matched = availableCertificateTypes.find(function(certificate) {
+                return certificate.Description === certificateDescription;
+              })
+              return matched.name;
+            }
+
             $scope.replaceCertificate = function(certificate) {
               $scope.loading = true;
               if (certificate.file.name.split('.').pop() !==
