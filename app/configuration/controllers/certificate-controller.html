@@ -60,7 +60,7 @@
             <select id="cert__type" name="cert__type" ng-model="newCertificate.selectedType" required>
               <option class="courier-bold" ng-value="">Select an option</option>
               <option class="courier-bold" ng-value="type" ng-repeat="type in availableCertificateTypes">
-                {{type.Description}}</option>
+                {{type.name}}</option>
             </select>
             <div ng-messages="add__cert__form.cert__type.$error" class="form-error" ng-class="{'visible' : add__cert__form.cert__type.$touched || submitted}">
               <p ng-message="required">Field is required</p>
@@ -99,11 +99,11 @@
     <h2 class="page-header" ng-if="displayCSRCode==false">Generate a Certificate Signing Request (CSR)</h2>
     <h2 class="page-header" ng-if="displayCSRCode==true">Certificate Signing Request (CSR)</h2>
 
+    <form name="add__csr__form" id="add__csr__form" novalidate ng-if="displayCSRCode==false">
     <div class="modal__content add-csr__container">
       <div ng-if="displayCSRCode==true">
         <span id="csrCode" class="add-csr__container-csr-code">{{csrCode}}</span>
       </div>
-      <form name="add__csr__form" id="add__csr__form" novalidate ng-if="displayCSRCode==false">
         <div class="row">
           <fieldset class="column medium-8 add-csr__section">
             <legend class="add-csr__section-title">General</legend>
@@ -112,8 +112,10 @@
                 <label for="cert__type" class="add-csr__label">Certificate Type *</label>
                 <select class="add-csr__select" id="cert__type" name="cert__type" ng-model="newCSR.certificateCollection" required>
                   <option class="courier-bold" ng-value="default" ng-model="selectOption">Select an option</option>
-                  <option class="courier-bold" ng-value="type" ng-repeat="type in allCertificateTypes">
-                    {{type.Description}}</option>
+                  <!-- Do not show CA certificate as an option. Only a certificate authority can generate a CA certificate (known as TrustStore Certificate in Redfish) -->
+                  <option class="courier-bold" ng-value="type" ng-repeat="type in allCertificateTypes"
+                    ng-if="type.Description !== 'TrustStore Certificate'">
+                    {{type.name}}</option>
                 </select>
                 <div ng-messages="add__csr__form.cert__type.$error" class="form-error" ng-class="{'visible' : add__csr__form.cert__type.$touched}">
                   <p ng-message="required">Field is required</p>
@@ -249,26 +251,26 @@
             </div>
           </fieldset>
         </div>
-      </form>
-    </div>
+      </div>
 
-    <div class="modal__button-wrapper">
-      <button class="btn btn-secondary" ng-click="resetCSRModal();add__csr__form.$setUntouched();" ng-if="displayCSRCode==false">Cancel</button>
-      <button class="btn btn-secondary" ng-if="displayCSRCode==true" clipboard text="csrCode" on-copied="copySuccess(event)" on-error="copyfailed(err)">
-        <span ng-if="!copied">Copy</span>
-        <span ng-if="copied">
-          <icon aria-hidden="true" file="icon-check.svg"></icon>
-          <span>Copied</span>
-        </span>
-      </button>
+      <div class="modal__button-wrapper">
+        <button class="btn btn-secondary" ng-click="resetCSRModal();add__csr__form.$setUntouched();" ng-if="displayCSRCode==false">Cancel</button>
+        <button class="btn btn-secondary" ng-if="displayCSRCode==true" clipboard text="csrCode" on-copied="copySuccess(event)" on-error="copyfailed(err)">
+          <span ng-if="!copied">Copy</span>
+          <span ng-if="copied">
+            <icon aria-hidden="true" file="icon-check.svg"></icon>
+            <span>Copied</span>
+          </span>
+        </button>
 
-      <button class="btn btn-primary" ng-click="csrSubmitted = true; getCSRCode();add__csr__form.$setUntouched();" ng-disabled="add__csr__form.$invalid"
+        <button class="btn btn-primary" ng-click="csrSubmitted = true; getCSRCode();add__csr__form.$setUntouched();" ng-disabled="add__csr__form.$invalid"
         ng-if="displayCSRCode==false">Generate CSR</button>
-      <button class="btn btn-primary" ng-click="addCSRModal = false;newCertificate={};add__cert__form.$setUntouched();" ng-if="displayCSRCode==true">
-        <a ng-href="data:text/json;charset=utf-8,{{csrCode}}" download="csrCode.txt" class="add-csr__text-download">
-          Download</a>
-      </button>
-    </div>
+        <button class="btn btn-primary" ng-click="addCSRModal = false;newCertificate={};add__cert__form.$setUntouched();" ng-if="displayCSRCode==true">
+          <a ng-href="data:text/json;charset=utf-8,{{csrCode}}" download="csrCode.txt" class="add-csr__text-download">
+            Download</a>
+          </button>
+      </div>
+    </form>
   </section>
 </div>
 <div class="modal-overlay" tabindex="-1" ng-class="{'active': addCertificateModal || addCSRModal}"></div>
