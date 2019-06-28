@@ -55,7 +55,7 @@
           <label for="cert__type">Certificate type</label>
           <select id="cert__type" name="cert__type" ng-model="newCertificate.selectedType" required>
             <option class="courier-bold" ng-value="">Select an option</option>
-            <option class="courier-bold" ng-value="type" ng-repeat="type in availableCertificateTypes">{{type.Description}}</option>
+            <option class="courier-bold" ng-value="type" ng-repeat="type in availableCertificateTypes">{{type.name}}</option>
           </select>
           <div ng-messages="add__cert__form.cert__type.$error" class="form-error" ng-class="{'visible' : add__cert__form.cert__type.$touched || submitted}">
             <p ng-message="required">Field is required</p>
