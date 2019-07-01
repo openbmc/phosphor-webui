@@ -3,6 +3,7 @@
   "description": "openbmc_browser_interface",
   "version": "0.0.1",
   "private": false,
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git://github.com/openbmc/phosphor-webui"
