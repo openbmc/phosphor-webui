@@ -12,7 +12,6 @@ $nav__second-level-text-color: $base-02--01;
   stroke-width: .5;
   display: block;
   margin: .5em auto;
-  overflow: hidden;
   .st0 {
     fill: none;
     stroke: $primary-light;
@@ -60,6 +59,12 @@ $nav__second-level-text-color: $base-02--01;
     svg {
       width: 36px;
       height: auto;
+    }
+  }
+  .nav-icon__control {
+    margin-bottom: 1em;
+    svg {
+      width: 30px;
     }
   }
   .button, button, a {
