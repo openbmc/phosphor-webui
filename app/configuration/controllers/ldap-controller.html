@@ -7,17 +7,17 @@
     <p>Configure LDAP settings and manage role groups.</p>
   </div>
   <div class="row column">
-    <h2 class="page-subhead">
+    <h2 class="subhead">
       Settings
     </h2>
   </div>
   <div class="row column">
     <label class="control-check ldap__control-check">
-      <input type="checkbox" id="enable-ldap-checkbox"
-        ng-change="updateServiceEnabled(); ldap__configuration.$setUntouched()"
-        ng-model="ldapProperties.ServiceEnabled" />
+      <input type="checkbox" aria-labelledby="ldap-auth-label"
+      ng-change="updateServiceEnabled(); ldap__configuration.$setUntouched()"
+      ng-model="ldapProperties.ServiceEnabled" />
       <span class="control__indicator"></span>
-      <span class="control__label">
+      <span id="ldap-auth-label" class="control__label">
         <strong>Enable LDAP authentication</strong> <br>
         LDAP authentication must be enabled to modify role groups.
       </span>
@@ -27,13 +27,15 @@
     <form id="ldap__configuration" name="ldap__configuration" ng-class="{'submitted': submitted}"
       class="ldap__configuration" novalidate>
       <fieldset ng-disabled="!ldapProperties.ServiceEnabled">
+        <legend class="screen-reader-offscreen">LDAP Settings</legend>
         <div class="ldap__configure-settings row column">
           <div class="large-3 column ldap__ssl-column">
             <label class="control-check" ng-class="{'disabled' : certificates.length < 1}">
-              <input id="secure-ldap-ssl" type="checkbox" ng-model="ldapProperties.useSSL"
-                ng-checked="ldapProperties.useSSL" ng-disabled="certificates.length < 1" />
+              <input id="secure-ldap-ssl" aria-labelledby="use-ssl" type="checkbox"
+                ng-model="ldapProperties.useSSL" ng-checked="ldapProperties.useSSL"
+                ng-disabled="certificates.length < 1" />
               <span class="control__indicator"></span>
-              <span class="control__label">Secure LDAP using SSL</span>
+              <span class="control__label" id="use-ssl">Secure LDAP using SSL</span>
             </label>
             <div>
               <div class="ldap__certificate-info" ng-if="ldapProperties.ServiceEnabled">
@@ -53,14 +55,14 @@
             <div class="column service-type-column">
               <fieldset class="ldap__server-info-service-type">
                 <legend class="content-label">Service Type</legend>
-                <label class="control-radio control__radio__label" for="open-ldap">Open LDAP
+                <label class="control-radio control__radio__label">Open LDAP
                   <input type="radio" name="service_enabled_type" id="open-ldap" value="ldap"
                     ng-checked="ldapProperties.LDAPServiceEnabled"
                     ng-change="ldapProperties.EnabledServiceUpdated = true" ng-model="ldapProperties.EnabledServiceType"
                     required />
                   <span class="control__indicator control__indicator-on control__indicator-service-type"></span>
                 </label>
-                <label class="control-radio control__radio__label" for="active-directory">Active directory
+                <label class="control-radio control__radio__label">Active directory
                   <input type="radio" name="service_enabled_type" id="active-directory"
                     ng-change="ldapProperties.EnabledServiceUpdated = true" value="ad"
                     ng-checked="ldapProperties.ADServiceEnabled" ng-model="ldapProperties.EnabledServiceType"
@@ -126,7 +128,7 @@
                 class="ldap__optional-field" />
             </div>
             <div class="column ldap__configuration-buttons">
-              <button type="button" class="btn btn-primary" ng-disabled="!ldap__configuration.$valid"
+              <button type="submit" class="btn btn-primary" ng-disabled="!ldap__configuration.$valid"
                 ng-click="$parent.submitted=true; ldap__configuration.$valid && saveLdapSettings(); ldap__configuration.$setUntouched()">Save</button>
               <button type="button" class="btn btn-secondary"
                 ng-click="loadLdap(); ldap__configuration.$setUntouched()">Reset</button>
@@ -136,7 +138,7 @@
   </div>
 </div>
 <div class="ldap-groups row column">
-  <h2 class="small-12 page-subhead">
+  <h2 class="small-12 subhead">
     Role groups
   </h2>
   <div class="row column">
