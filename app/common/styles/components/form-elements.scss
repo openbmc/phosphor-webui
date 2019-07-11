@@ -143,8 +143,6 @@
 /* Check mark */
 .control__indicator:after,
 .control-check input:not(:checked){
-  position: absolute;
-  display: none;
   content: '';
 }
 
