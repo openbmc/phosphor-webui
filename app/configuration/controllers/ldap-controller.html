@@ -13,7 +13,7 @@
   </div>
   <div class="row column">
     <label class="control-check ldap__control-check">
-      <input type="checkbox" id="enable-ldap-checkbox"
+      <input type="checkbox" aria-label="select to enable or disable ldap" id="enable-ldap-checkbox"
         ng-change="updateServiceEnabled(); ldap__configuration.$setUntouched()"
         ng-model="ldapProperties.ServiceEnabled" />
       <span class="control__indicator"></span>
@@ -27,11 +27,13 @@
     <form id="ldap__configuration" name="ldap__configuration" ng-class="{'submitted': submitted}"
       class="ldap__configuration" novalidate>
       <fieldset ng-disabled="!ldapProperties.ServiceEnabled">
+        <legend class="screen-reader-offscreen">LDAP Settings</legend>
         <div class="ldap__configure-settings row column">
           <div class="large-3 column ldap__ssl-column">
             <label class="control-check" ng-class="{'disabled' : certificates.length < 1}">
-              <input id="secure-ldap-ssl" type="checkbox" ng-model="ldapProperties.useSSL"
-                ng-checked="ldapProperties.useSSL" ng-disabled="certificates.length < 1" />
+              <input id="secure-ldap-ssl" aria-label="select to secure LDAP with SSL" type="checkbox"
+                ng-model="ldapProperties.useSSL" ng-checked="ldapProperties.useSSL"
+                ng-disabled="certificates.length < 1" />
               <span class="control__indicator"></span>
               <span class="control__label">Secure LDAP using SSL</span>
             </label>
@@ -53,14 +55,14 @@
             <div class="column service-type-column">
               <fieldset class="ldap__server-info-service-type">
                 <legend class="content-label">Service Type</legend>
-                <label class="control-radio control__radio__label" for="open-ldap">Open LDAP
+                <label class="control-radio control__radio__label">Open LDAP
                   <input type="radio" name="service_enabled_type" id="open-ldap" value="ldap"
                     ng-checked="ldapProperties.LDAPServiceEnabled"
                     ng-change="ldapProperties.EnabledServiceUpdated = true" ng-model="ldapProperties.EnabledServiceType"
                     required />
                   <span class="control__indicator control__indicator-on control__indicator-service-type"></span>
                 </label>
-                <label class="control-radio control__radio__label" for="active-directory">Active directory
+                <label class="control-radio control__radio__label">Active directory
                   <input type="radio" name="service_enabled_type" id="active-directory"
                     ng-change="ldapProperties.EnabledServiceUpdated = true" value="ad"
                     ng-checked="ldapProperties.ADServiceEnabled" ng-model="ldapProperties.EnabledServiceType"
@@ -126,7 +128,7 @@
                 class="ldap__optional-field" />
             </div>
             <div class="column ldap__configuration-buttons">
-              <button type="button" class="btn btn-primary" ng-disabled="!ldap__configuration.$valid"
+              <button type="submit" class="btn btn-primary" ng-disabled="!ldap__configuration.$valid"
                 ng-click="$parent.submitted=true; ldap__configuration.$valid && saveLdapSettings(); ldap__configuration.$setUntouched()">Save</button>
               <button type="button" class="btn btn-secondary"
                 ng-click="loadLdap(); ldap__configuration.$setUntouched()">Reset</button>
@@ -145,4 +147,4 @@
       </ldap-user-roles>
     </div>
   </div>
-</div>
+</div> 
