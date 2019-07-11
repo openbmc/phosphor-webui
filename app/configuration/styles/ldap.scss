@@ -12,6 +12,10 @@
   margin-bottom: 3em;
 }
 
+.legend--hidden {
+  display: none;
+}
+
 .ldap__server-info {
   @media (min-width: 1024px) {
     border-left: 1px solid $border-color-01;
@@ -136,7 +140,7 @@
 
 .password-toggle.disabled {
   background: transparent;
-  color: $base-02--03;
+  color: $base-02--02;
   border: none;
 }
 
@@ -156,6 +160,10 @@
       color: $primary-light;
       font-weight: 700;
       padding: 0;
+
+      .control-check {
+        color: $primary-light;
+      }
     }
 
     .table__row-header.disabled {
