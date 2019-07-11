@@ -194,7 +194,7 @@ window.angular && (function(angular) {
                   .then(
                       (response) => {
                         toastService.success(
-                            'Groups has been removed successfully.');
+                            'Groups have been removed successfully.');
                       },
                       (error) => {
                         toastService.error('Failed to remove groups.');
