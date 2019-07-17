@@ -1,0 +1,34 @@
+<table class="bmc-table">
+  <tbody>
+    <!-- Header row -->
+    <tr>
+      <th ng-repeat="header in $ctrl.model.header"
+          class="bmc-table__column-header" >
+        {{header}}</th>
+    </tr>
+
+    <!-- Data rows -->
+    <tr ng-if="$ctrl.model.data.length > 0"
+        ng-repeat="row in $ctrl.model.data"
+        class="bmc-table__row">
+      <!-- Row item -->
+      <td ng-repeat="item in row.uiData"
+          class="bmc-table__cell">
+        {{item}}
+      </td>
+      <!-- Row Actions -->
+      <td ng-if="$ctrl.model.actions.length > 0"
+          class="bmc-table__cell  bmc-table__row-actions">
+        <button ng-repeat="action in $ctrl.model.actions"
+                ng-click="$ctrl.onClickAction(action, row);"
+                class="btn  btn-tertiary">
+          {{action}}
+        </button>
+      </td>
+    </tr>
+    <!-- Empty table -->
+    <tr ng-if="$ctrl.model.data.length === 0">
+      <td>No data</td>
+    </tr>
+  </tbody>
+</table>

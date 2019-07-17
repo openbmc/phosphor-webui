@@ -1,0 +1,131 @@
+<div role="dialog" class="uib-modal__content  modal__local-users">
+  <div class="modal-header">
+    <h2 class="modal-title" id="dialog_label">
+      {{ modalCtrl.user.new ? 'Add user' : 'Modify user' }}
+    </h2>
+    <button type="button" class="btn  btn--close" ng-click="$dismiss()">
+      <icon file="icon-close.svg"></icon>
+    </button>
+  </div>
+  <form name="form">
+    <div class="modal-body">
+      <div class="row">
+        <div class="col medium-6">
+            <!-- Account Status -->
+            <fieldset class="field-group-container">
+              <legend>Account Status</legend>
+              <label class="radio-label">
+                <input type="radio"
+                       name="accountStatus1"
+                       ng-value="1"
+                       ng-model="modalCtrl.user.accountStatus"
+                       ng-disabled="modalCtrl.user.isRoot">
+                Enabled
+              </label>
+              <label class="radio-label">
+                <input type="radio"
+                       name="accountStatus0"
+                       ng-value="0"
+                       ng-model="modalCtrl.user.accountStatus"
+                       ng-disabled="modalCtrl.user.isRoot">
+                Disabled
+              </label>
+            </fieldset>
+            <!-- Username -->
+            <div class="field-group-container">
+              <label for="username">Username</label>
+              <p class="label__helper-text">Must have at least 1 letter and no more than 16 characters</p>
+              <input id="username"
+                     name="username"
+                     type="text"
+                     required
+                     minlength="1"
+                     maxlength="16"
+                     ng-readonly="modalCtrl.user.isRoot"
+                     ng-model="modalCtrl.user.username"/>
+              <div ng-if="form.username.$invalid && form.username.$dirty" class="form__validation-message">
+                <span ng-show="form.username.$error.required">Field is required</span>
+                <span ng-show="form.username.$error.minlength || form.username.$error.maxlength">
+                  Length must be between <span class="nowrap">1 – 16</span> characters
+                </span>
+              </div>
+            </div>
+            <!-- Privlege -->
+            <div class="field-group-container">
+              <label for="privilege">Privilege</label>
+              <select id="privilege"
+                      name="privilege"
+                      required
+                      ng-disabled="modalCtrl.user.isRoot"
+                      ng-model="modalCtrl.user.privilege">
+                <option ng-if="modalCtrl.user.new"
+                        ng-selected="modalCtrl.user.new"
+                        value=""
+                        disabled>
+                  Select an option
+                </option>
+                <option ng-value="role"
+                        ng-repeat="role in modalCtrl.user.privilegeRoles">
+                  {{role}}
+                </option>
+              </select>
+            </div>
+        </div>
+        <div class="col medium-6">
+           <!-- Password -->
+           <div class="field-group-container">
+            <label for="password">User password</label>
+            <p class="label__helper-text">Password must between <span class="nowrap">1 – 16</span> characters</p>
+            <input id="password"
+                   name="password"
+                   type="password"
+                   minlength="1"
+                   maxlength="16"
+                   autocomplete="new-password"
+                   ng-required="modalCtrl.user.new || form.password.$touched || form.passwordConfirm.$touched"
+                   ng-model="modalCtrl.user.password"/>
+            <div ng-if="form.password.$invalid && form.password.$touched" class="form__validation-message">
+              <span ng-show="form.password.$error.required">Field is required</span>
+              <span ng-show="form.password.$error.minlength || form.password.$error.maxlength">
+                Length must be between <span class="nowrap">1 – 16</span> characters
+              </span>
+            </div>
+          </div>
+          <!-- Password confirm -->
+          <div class="field-group-container">
+            <label for="passwordConfirm">Confirm user password</label>
+            <input id="passwordConfirm"
+                   name="passwordConfirm"
+                   type="password"
+                   autocomplete="new-password"
+                   ng-required="modalCtrl.user.new || form.password.$touched || form.passwordConfirm.$touched"
+                   ng-model="modalCtrl.user.passwordConfirm"
+                   password-confirm="{{form.password.$modelValue}}"/>
+            <div ng-if="form.passwordConfirm.$invalid && form.passwordConfirm.$touched" class="form__validation-message">
+              <span ng-show="form.passwordConfirm.$error.required">Field is required</span>
+              <span ng-show="form.passwordConfirm.$error.passwordConfirm"
+                    ng-hide="form.passwordConfirm.$error.required">
+                    Passwords don't match
+                </span>
+              <span ng-show="form.passwordConfirm.$error.minlength || form.passwordConfirm.$error.maxlength">
+                Length must be between 1 – 16 characters
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" ng-click="$dismiss()" type="button">
+        Cancel
+      </button>
+      <button class="btn btn-primary"
+              type="submit"
+              ng-click="$close(form)"
+              ng-disabled="form.$invalid"
+              ng-class="{'disabled': form.$invalid}">
+        {{ modalCtrl.user.new ? 'Add user' : 'Save' }}
+      </button>
+    </div>
+  </form>
+</div>
