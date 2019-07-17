@@ -146,3 +146,25 @@
     }
   }
 }
+
+.bmc-table {
+  width: 100%;
+}
+
+.bmc-table__row {
+  border-bottom: 1px solid $border-color-01;
+}
+
+.bmc-table__column-header {
+  padding: 10px 16px;
+  background-color: $background-03;
+}
+
+.bmc-table__cell {
+  padding: 4px 16px;
+  background-color: $base-02--07;
+}
+
+.bmc-table__row-actions {
+  text-align: right;
+}

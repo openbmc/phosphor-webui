@@ -131,3 +131,7 @@
   0% { background: $primary-accent; }
   100% { background: none; }
 }
+
+.nowrap {
+  white-space: nowrap!important;
+}
