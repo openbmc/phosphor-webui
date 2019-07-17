@@ -1,0 +1,61 @@
+<div role="dialog" class="uib-modal__content  modal__local-users-settings">
+  <div class="modal-header">
+    <h2 class="modal-title" id="dialog_label">Account policy settings</h2>
+    <button type="button" class="btn  btn--close  float-right" ng-click="$dismiss()">
+      <icon file="icon-close.svg"></icon>
+    </button>
+  </div>
+  <form name="form">
+    <div class="modal-body">
+      <div class="row">
+        <div class="col medium-6">
+            <!-- Max login attempts -->
+            <div class="field-group-container">
+              <label for="maxLogin">Max failed login attempts</label>
+              <p class="label__helper-text">Value must be between <span class="nowrap">0 – 65535</span></p>
+              <input id="maxLogin"
+                     name="maxLogin"
+                     type="number"
+                     required
+                     min="0"
+                     max="65535"
+                     ng-model="modalCtrl.maxLogin" />
+              <div ng-if="form.maxLogin.$invalid && form.maxLogin.$dirty" class="form__validation-message">
+                <span ng-show="form.maxLogin.$error.required">
+                  Field is required</span>
+                <span ng-show="form.maxLogin.$error.min || form.maxLogin.$error.max">
+                  Value must be between <span class="nowrap">1 - 65535</span></span>
+              </div>
+            </div>
+        </div>
+        <div class="col medium-6">
+          <!-- Lockout duration -->
+          <div class="field-group-container">
+            <label for="lockoutMethod1">Lockout duration (seconds)</label>
+            <p class="label__helper-text" id="lockoutMethod1Helper">If set to 0, no lockout occurs</p>
+            <input id="lockoutMethod1"
+                    name="lockoutDuration"
+                    type="number"
+                    required
+                    min="0"
+                    ng-model="modalCtrl.lockoutDuration"/>
+            <div ng-if="form.lockoutDuration.$invalid && form.lockoutDuration.$touched" class="form__validation-message">
+              <span ng-show="form.lockoutDuration.$error.required">
+                Field is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" ng-click="$dismiss()" type="button">Cancel</button>
+      <button class="btn btn-primary"
+              type="submit"
+              ng-click="$close(form)"
+              ng-disabled="form.$invalid || form.$pristine"
+              ng-class="{'disabled': form.$invalid}">
+        Save
+      </button>
+    </div>
+  </form>
+</div>
