@@ -1,6 +1,33 @@
 <loader loading="loading"></loader>
-<div id="user-accounts">
-
+<div class="local-users">
+  <div class="row column">
+    <div class="column col-sm-12">
+      <h1 class="page-title">Local user management</h1>
+    </div>
+  </div>
+  <div class="row column">
+    <div class="column col-sm-12">
+      <div class="local-users__actions">
+        <button ng-click="onClickAccountSettingsPolicy()"
+                class="btn btn-tertiary">
+          <icon file="icon-config.svg"></icon>
+          Account policy settings
+        </button>
+        <button ng-disabled="userRoles === null || localUsers.length >= 15"
+                ng-click="onClickAddUser()"
+                class="btn btn-primary">
+          <icon file="icon-plus.svg"></icon>
+          Add user
+        </button>
+      </div>
+      <bmc-table
+        model="tableModel"
+        emit-action="onEmitAction(value)"
+        class="local-users__table">
+      </bmc-table>
+    </div>
+  </div>
+<!--
   <div class="row column acnt-prop-header">
     <h1>User account properties</h1>
   </div>
@@ -125,5 +152,5 @@
             <button type="button" class="btn  btn-primary" ng-if="isUserSelected" ng-click="cancel()">Cancel</button>
         </div>
     </section>
-  </form>
+  </form> -->
 </div>

@@ -58,6 +58,9 @@ import dir_paginate from './common/directives/dirPagination.js';
 import form_input_error from './common/directives/form-input-error.js';
 import icon_provider from './common/directives/icon-provider.js';
 
+import components_index from './common/components/index.js';
+import table_component from './common/components/table/table.js';
+
 import login_index from './login/index.js';
 import login_controller from './login/controllers/login-controller.js';
 
@@ -106,7 +109,7 @@ window.angular && (function(angular) {
             'ui.bootstrap',
             // Basic resources
             'app.common.services', 'app.common.directives',
-            'app.common.filters',
+            'app.common.filters', 'app.common.components',
             // Model resources
             'app.login', 'app.overview', 'app.serverControl',
             'app.serverHealth', 'app.configuration', 'app.users', 'app.redfish'
