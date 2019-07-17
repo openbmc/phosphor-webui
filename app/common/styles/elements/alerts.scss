@@ -13,3 +13,12 @@
   color: $primary-dark;
   text-align: left;
 }
+
+.message-container {
+  background-color: $background-02;
+  padding: 1em 1.5em;
+  display: inline-block;
+  >*:last-child {
+    margin: 0;
+  }
+}

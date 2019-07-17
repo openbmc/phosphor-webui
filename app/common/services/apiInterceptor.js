@@ -11,8 +11,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.common.services').service('apiInterceptor', [
-    '$q', '$rootScope', 'dataService',
-    function($q, $rootScope, dataService) {
+    '$q', '$rootScope', 'dataService', '$location',
+    function($q, $rootScope, dataService, $location) {
       return {
         'request': function(config) {
           dataService.loading = true;
@@ -50,6 +50,13 @@ window.angular && (function(angular) {
             if (rejection.status == 401) {
               if (dataService.path != '/login') {
                 $rootScope.$emit('timedout-user', {});
+              }
+            } else if (rejection.status == 403) {
+              // TODO: when permission role mapping ready, remove
+              // this global redirect and handle unauthorized
+              // requests in context of user action
+              if (dataService.path != '/login') {
+                $location.url('/unauthorized');
               }
             } else if (rejection.status == -1) {
               dataService.server_unreachable = true;
