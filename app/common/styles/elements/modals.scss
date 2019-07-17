@@ -102,3 +102,14 @@
 .uib-modal__content {
   padding: 1em;
 }
+
+.uib-modal {
+  .btn--close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    svg {
+      height: 2em;
+    }
+  }
+}
