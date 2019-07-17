@@ -551,22 +551,17 @@ window.angular && (function(angular) {
                        '/redfish/v1/AccountService/Roles',
                    withCredentials: true
                  })
-              .then(
-                  function(response) {
-                    var members = response.data['Members'];
-                    angular.forEach(members, function(member) {
-                      roles.push(member['@odata.id'].split('/').pop());
-                    });
-                    return roles;
-                  },
-                  function(error) {
-                    console.log(error);
-                  });
+              .then(function(response) {
+                var members = response.data['Members'];
+                angular.forEach(members, function(member) {
+                  roles.push(member['@odata.id'].split('/').pop());
+                });
+                return roles;
+              });
         },
         getAllUserAccounts: function() {
           var deferred = $q.defer();
           var promises = [];
-          var users = [];
 
           $http({
             method: 'GET',
@@ -602,19 +597,15 @@ window.angular && (function(angular) {
           return deferred.promise;
         },
 
-        getAllUserAccountProperties: function(callback) {
+        getAllUserAccountProperties: function() {
           return $http({
                    method: 'GET',
                    url: DataService.getHost() + '/redfish/v1/AccountService',
                    withCredentials: true
                  })
-              .then(
-                  function(response) {
-                    return response.data;
-                  },
-                  function(error) {
-                    console.log(error);
-                  });
+              .then(function(response) {
+                return response.data;
+              });
         },
 
         saveUserAccountProperties: function(lockoutduration, lockoutthreshold) {
