@@ -97,9 +97,25 @@
   }
 }
 
+.uib-modal .modal-dialog {
+  // override bootstrap max-width set at 500px
+  max-width: 550px;
+}
+
 .modal-backdrop.in {
   opacity: 0.5;
 }
 .uib-modal__content {
   padding: 1em;
+}
+
+.uib-modal {
+  .btn--close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    svg {
+      height: 2em;
+    }
+  }
 }
