@@ -1,8 +1,12 @@
 label,
 legend {
-  font-size: 1em;
-  font-weight: 300;
   margin: 0;
+  color: $text-02;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.75em;
+  margin-bottom: 0;
+  line-height: 2.2;
   .error {
     font-size: 0.9em;
   }
@@ -141,7 +145,21 @@ select {
 }
 .form__validation-message {
   color: $status-error;
+  font-size: 0.8em;
+  line-height: 1.1;
+  padding-top: 2px;
+}
+
+.radio-label {
+  text-transform: none;
+  font-weight: normal;
   font-size: 0.9em;
+  line-height: 1.2;
+  margin: 0.8em 0;
+  color: $text-01;
+  input[type=radio] {
+    margin-bottom: 0;
+  }
 }
 
 /**
@@ -208,5 +226,21 @@ select {
   button:first-of-type {
     order: 1;
     margin-left: 1rem;
+  }
+}
+
+.radio-option__input-field-group {
+  margin-left: 1.5em;
+}
+
+.field-group-container {
+  margin-bottom: 30px;
+  position: relative;
+  &:last-child {
+    margin-bottom: 12px;
+  }
+
+  input + .form__validation-message {
+    position: absolute;
   }
 }
