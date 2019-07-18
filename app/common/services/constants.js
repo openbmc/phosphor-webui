@@ -29,6 +29,10 @@ window.angular && (function(angular) {
         {
           'Description': 'LDAP Certificate',
           'location': '/redfish/v1/AccountService/LDAP/Certificates'
+        },
+        {
+          'Description': 'TLS Auth Certificate',
+          'location': '/redfish/v1/AccountService/TLSAuth/Certificates'
         }
       ],
       CHASSIS_POWER_STATE: {
