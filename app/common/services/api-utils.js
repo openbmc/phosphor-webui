@@ -686,7 +686,8 @@ window.angular && (function(angular) {
                 '/xyz/openbmc_project/state/chassis0/attr/RequestedPowerTransition',
             withCredentials: true,
             data: JSON.stringify(
-                {'data': 'xyz.openbmc_project.State.Chassis.Transition.Off'})
+                {'data': 'xyz.openbmc_project.State.Chassis.Transition.Off'}),
+            timeout: Constants.TIMEOUT.CHASSIS_OFF
           })
               .then(
                   function(response) {
@@ -738,7 +739,8 @@ window.angular && (function(angular) {
                 '/xyz/openbmc_project/state/host0/attr/RequestedHostTransition',
             withCredentials: true,
             data: JSON.stringify(
-                {'data': 'xyz.openbmc_project.State.Host.Transition.On'})
+                {'data': 'xyz.openbmc_project.State.Host.Transition.On'}),
+            timeout: Constants.TIMEOUT.HOST_ON
           })
               .then(
                   function(response) {
@@ -760,7 +762,8 @@ window.angular && (function(angular) {
                 '/xyz/openbmc_project/state/host0/attr/RequestedHostTransition',
             withCredentials: true,
             data: JSON.stringify(
-                {'data': 'xyz.openbmc_project.State.Host.Transition.Off'})
+                {'data': 'xyz.openbmc_project.State.Host.Transition.Off'}),
+            timeout: Constants.TIMEOUT.HOST_OFF
           })
               .then(
                   function(response) {
@@ -782,7 +785,8 @@ window.angular && (function(angular) {
                 '/xyz/openbmc_project/state/host0/attr/RequestedHostTransition',
             withCredentials: true,
             data: JSON.stringify(
-                {'data': 'xyz.openbmc_project.State.Host.Transition.Reboot'})
+                {'data': 'xyz.openbmc_project.State.Host.Transition.Reboot'}),
+            timeout: (Constants.TIMEOUT.HOST_ON + Constants.TIMEOUT.HOST_OFF)
           })
               .then(
                   function(response) {
