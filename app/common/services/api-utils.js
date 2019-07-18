@@ -26,31 +26,10 @@ window.angular && (function(angular) {
       var SERVICE = {
         API_CREDENTIALS: Constants.API_CREDENTIALS,
         API_RESPONSE: Constants.API_RESPONSE,
-        CHASSIS_POWER_STATE: Constants.CHASSIS_POWER_STATE,
         HOST_STATE_TEXT: Constants.HOST_STATE,
         LED_STATE: Constants.LED_STATE,
         LED_STATE_TEXT: Constants.LED_STATE_TEXT,
         HOST_SESSION_STORAGE_KEY: Constants.API_CREDENTIALS.host_storage_key,
-        getChassisState: function() {
-          var deferred = $q.defer();
-          $http({
-            method: 'GET',
-            url: DataService.getHost() +
-                '/xyz/openbmc_project/state/chassis0/attr/CurrentPowerState',
-            withCredentials: true
-          })
-              .then(
-                  function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
-                    deferred.resolve(content.data);
-                  },
-                  function(error) {
-                    console.log(error);
-                    deferred.reject(error);
-                  });
-          return deferred.promise;
-        },
         validIPV4IP: function(ip) {
           // Checks for [0-255].[0-255].[0-255].[0-255]
           return ip.match(
