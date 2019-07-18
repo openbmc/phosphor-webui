@@ -33,6 +33,11 @@ window.angular && (function(angular) {
           'name': 'LDAP Certificate'
         },
         {
+          'Description': 'TLS Auth Certificate',
+          'location': '/redfish/v1/AccountService/TLSAuth/Certificates',
+          'name': 'TLS Auth Certificate'
+        },
+        {
           'Description': 'TrustStore Certificate',
           'location': '/redfish/v1/Managers/bmc/Truststore/Certificates/',
           'name': 'CA Certificate'
