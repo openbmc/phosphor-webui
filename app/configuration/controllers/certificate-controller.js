@@ -201,12 +201,12 @@ window.angular && (function(angular) {
 
 
       var updateAvailableTypes = function(certificate) {
-        // TODO: at this time only one of each type of certificate is allowed.
-        // When this changes, this will need to be updated.
-        // Removes certificate type from available types to be added.
         $scope.availableCertificateTypes =
             $scope.availableCertificateTypes.filter(function(type) {
-              return type.Description !== certificate.Description;
+                if (type.Description == 'TLS Auth Certificate') {
+                    return true;
+                }
+                return type.Description !== certificate.Description;
             });
       };
 
