@@ -105,21 +105,26 @@
           <!-- link to event log filtered to the high priority events -->
           <p class="inline quick-links__event-copy">View {{logs.length}} high priority events</p>
         </a>
-        <dl class="quick-links__item no-icon">
-          <dt class="inline quick-links__label">BMC time</dt>
-          <dd class="courier-bold bmc-time">{{ bmc_time | localeDate }}</dd>
-        </dl>
         <div class="quick-links__item no-icon">
-          <p class="inline quick-links__label">Turn <span ng-if="dataService.LED_state == 'off'">on</span><span
-              ng-if="dataService.LED_state == 'on'">off</span> server LED</p>
-          <div class="toggle inline float-right">
-            <input id="toggle__switch-round" class="toggle-switch toggle-switch__round-flat" type="checkbox"
-              tabindex="0" ng-click="toggleLED()" ng-checked="dataService.LED_state == 'on'"
-              ng-disabled="dataService.server_unreachable">
-            <label for="toggle__switch-round" tabindex="0">Server LED is <span
-                class="led-switch__status">{{dataService.LED_state}}</span></label>
-          </div>
+          <div class="inline quick-links__label">BMC time</div>
+          <div class="courier-bold bmc-time">{{ bmc_time | localeDate }}</div>
         </div>
+        <div class="quick-links__item no-icon">
+          <p class="inline quick-links__label">Turn <span ng-if="dataService.LED_state == 'off'">on</span>
+            <span ng-if="dataService.LED_state == 'on'">off</span> server LED</p>
+          <div class="toggle-container">
+            <div class="toggle">
+              <input id="toggle__switch-round" class="toggle-switch toggle-switch__round-flat" type="checkbox"
+                tabindex="0" ng-click="toggleLED()" ng-checked="dataService.LED_state == 'on'"
+                ng-disabled="dataService.server_unreachable">
+              <label for="toggle__switch-round" tabindex="0">Server LED is <span
+                  class="uid-switch__status">{{dataService.LED_state}}</span></label>
+            </div>
+          <span>
+              {{ dataService.LED_state == 'on' ? "On" : "Off" }}
+          </span>
+        </div>
+      </div>
         <a href="#/server-control/remote-console" class="no-icon quick-links__item">
           <p class="inline quick-links__label">Serial over LAN console</p>
           <icon file="icon-launch.svg" class="float-right"></icon>
