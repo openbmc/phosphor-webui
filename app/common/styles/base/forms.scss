@@ -1,28 +1,31 @@
-label, legend {
-  font-size:1em;
+label,
+legend {
+  font-size: 1em;
   font-weight: 300;
   margin: 0;
   .error {
-    font-size: .9em;
+    font-size: 0.9em;
   }
 }
 
-.label__helper-text {
+// TODO: Start replacing use of label__helper-text
+.label__helper-text,
+.form__helper-text {
   color: $text-02;
   line-height: 1.2;
   font-size: 0.9em;
   margin-bottom: 0.4em;
 }
 
-input[type='email'],
-input[type='number'],
-input[type='password'],
-input[type='search'],
-input[type='tel'],
-input[type='url'],
-input[type='text'],
-input[type='date'],
-input[type='time'],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+input[type="text"],
+input[type="date"],
+input[type="time"],
 textarea {
   border-radius: 0px;
   border: 1px solid $border-color-02;
@@ -66,37 +69,57 @@ textarea {
 }
 
 .form-error {
-  margin-bottom: .7em;
+  margin-bottom: 0.7em;
   font-size: 0.8rem;
   color: $status-error;
-  height:1rem;
+  height: 1rem;
   display: block;
   visibility: hidden;
+  // TODO: Create state rulesets rather than relying on one off solutions
   .visible {
     visibility: visible;
   }
 }
 //Foundation overwrite
-[type=color], [type=date], [type=datetime-local], [type=datetime], [type=email], [type=month], [type=number], [type=password], [type=search], [type=tel], [type=text], [type=time], [type=url], [type=week], textarea {
+[type="color"],
+[type="date"],
+[type="datetime-local"],
+[type="datetime"],
+[type="email"],
+[type="month"],
+[type="number"],
+[type="password"],
+[type="search"],
+[type="tel"],
+[type="text"],
+[type="time"],
+[type="url"],
+[type="week"],
+textarea {
   border-color: $border-color-02;
 }
 
 input[readonly],
-input[readonly]:focus{
+input[readonly]:focus {
   box-shadow: 0 0 0;
   background: $background-03;
   border: 1px solid $border-color-02;
 }
 
-textarea { padding: .2em;
-  height: auto;}
-input[type="submit"], .submit {
+textarea {
+  padding: 0.2em;
+  height: auto;
+}
+
+input[type="submit"],
+.submit {
   margin: 1em 0;
   width: 100%;
 }
 
-//Custom select
-select{
+// TODO:
+// Custom select
+select {
   border-radius: 0px;
   height: auto;
   padding-right: 0.5rem; //override inherited Foundation style
@@ -120,4 +143,71 @@ select{
 .form__validation-message {
   color: $status-error;
   font-size: 0.9em;
+}
+
+/**
+ * Used for basic vertically stacked forms
+ * that do not need a grid for layout
+ * Should only wrap form elements and label
+ * Helper text shoul not be wrapped in the
+ * form-field container
+ * EX: Manage Power Usage
+ * Markup
+    <div class="section-content">
+      <p class="form__helper-text">Some helper text</p>
+      <div class=" form__field">
+        <label for="power-cap" class="content-label">POWER CAP VALUE IN WATTS</label>
+        <input id="power-cap type="number" />
+      </div>
+    </div>
+  */
+
+.form__field {
+  min-width: 150px;
+  max-width: 240px;
+}
+
+.form__field--large {
+  max-width: 330px;
+}
+
+// TODO Replace form-actions with form__actions. see below
+.form-actions {
+  width: 100%;
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid $border-color-01;
+
+  button {
+    display: block;
+    float: right;
+    margin: 0.5em 0 0 1em;
+  }
+}
+
+/**
+ * Use to wrap the cancel and submit buttons on
+ * a form to create the top border and white space
+ * Markup
+  <div class="form-actions">
+    <button type="submit" class="btn-primary" ng-click="setPowerCap()">
+      Save settings
+    </button>
+    <button type="button" class="btn btn-secondary" ng-click="refresh()">
+      Cancel
+    </button>
+  </div>
+ */
+
+.form__actions {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid $border-color-01;
+  display: flex;
+  justify-content: flex-end;
+
+  button:first-of-type {
+    order: 1;
+    margin-left: 1rem;
+  }
 }
