@@ -191,3 +191,11 @@
     animation: row-flash 1s infinite; /* IE 10+ */
   }
 }
+
+@mixin label {
+  color: $text-02;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.75em;
+  margin-bottom: 0.5rem;
+}
