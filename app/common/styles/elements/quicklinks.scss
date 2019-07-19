@@ -50,12 +50,14 @@
     &:after {
       display: none;
     }
+    .toggle-container {
+      float: right;
+    }
   }
   &:last-child {
     border-bottom: 0;
   }
   .float-right {
-    display:inline-block;
     float: right;
     @media(min-width: 1024px) and (max-width: 1140px) {
       display: block;
@@ -76,10 +78,4 @@
   a {
     color: $status-error;
   }
-}
-
-//toggle switch
-.quick-links__item .toggle label {
-  transform: translateY(-2px);
-  margin-right: 0;
 }
