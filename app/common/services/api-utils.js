@@ -1095,12 +1095,15 @@ window.angular && (function(angular) {
                             break;
                           }
                         }
-                        var titlePart = parts.splice(0, numberIndex);
-                        titlePart = titlePart.join('');
-                        titlePart = titlePart[0].toUpperCase() +
-                            titlePart.substr(1, titlePart.length);
-                        var versionPart = parts.join('-');
-                        versions.push({title: titlePart, version: versionPart});
+                        if (numberIndex > 0) {
+                          var titlePart = parts.splice(0, numberIndex);
+                          titlePart = titlePart.join('');
+                          titlePart = titlePart[0].toUpperCase() +
+                              titlePart.substr(1, titlePart.length);
+                          var versionPart = parts.join('-');
+                          versions.push({title: titlePart,
+                                         version: versionPart});
+                        }
                       });
 
                       return versions;
