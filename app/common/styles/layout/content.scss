@@ -2,14 +2,7 @@
 $nav__toplvlWidth: 120px;
 $nav__seclvlWidth: 240px;
 
-// Page header
-.page-header {
-  width: 100%;
-  position: relative;
-  border-bottom: 1px solid $border-color-02;
-  margin: 0.5em 0 2.2em;
-  padding-left: 0;
-}
+
 
 // Main element class
 .content__container {
@@ -50,8 +43,18 @@ label {
   margin-bottom: 0;
 }
 
+// Page header
+.page-header {
+  width: 100%;
+  position: relative;
+  border-bottom: 1px solid $border-color-02;
+  margin: 0.5em 0 2.2em;
+  padding-left: 0;
+}
+
 .subhead {
   width: 100%;
   border-bottom: 1px solid $border-color-01;
   padding-bottom: 0.5em;
 }
+
