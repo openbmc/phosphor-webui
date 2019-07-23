@@ -1,6 +1,11 @@
 {
   "name": "openbmc_browser_interface",
   "description": "Web-based user interface for the OpenBMC firmware stack",
+  "author": {
+    "name": "OpenBMC Developers",
+    "email": "openbmc@lists.ozlabs.org",
+    "url": "https://www.openbmc.org/"
+  },
   "version": "0.0.1",
   "private": false,
   "repository": {
@@ -88,6 +93,5 @@
   "engines": {
     "node": ">=4.2.6",
     "npm": ">=5.6.0"
-  },
-  "author": ""
+  }
 }
