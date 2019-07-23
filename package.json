@@ -1,5 +1,5 @@
 {
-  "name": "openbmc_browser_interface",
+  "name": "phosphor-webui",
   "description": "Web-based user interface for the OpenBMC firmware stack",
   "author": {
     "name": "OpenBMC Developers",
