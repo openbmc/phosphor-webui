@@ -1,0 +1,10 @@
+Ok-To-Test+1: Jenkins <openbmc-ci-admin@ozlabs.org>
+Verified+1: Jenkins <openbmc-ci-admin@ozlabs.org>
+Code-Review+1: John Wang <wangzq.jn@gmail.com>
+Code-Review+1: Xiaochao Ma <maxiaochao@inspur.com>
+Code-Review+2: Gunnar Mills <gmills@us.ibm.com>
+Submitted-by: Gunnar Mills <gmills@us.ibm.com>
+Submitted-at: Tue, 23 Jul 2019 20:36:31 +0000
+Reviewed-on: https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-webui/+/23660
+Project: openbmc/phosphor-webui
+Branch: refs/heads/master
