@@ -6,7 +6,7 @@
     "email": "openbmc@lists.ozlabs.org",
     "url": "https://www.openbmc.org/"
   },
-  "version": "0.0.1",
+  "version": "2.8.0-dev",
   "private": false,
   "repository": {
     "type": "git",
