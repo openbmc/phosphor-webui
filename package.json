@@ -1,6 +1,6 @@
 {
   "name": "openbmc_browser_interface",
-  "description": "openbmc_browser_interface",
+  "description": "Web-based user interface for the OpenBMC firmware stack",
   "version": "0.0.1",
   "private": false,
   "repository": {
