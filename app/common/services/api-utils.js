@@ -1479,17 +1479,29 @@ window.angular && (function(angular) {
             for (var key in content.data) {
               if (content.data.hasOwnProperty(key) &&
                   key.indexOf(Constants.HARDWARE.component_key_filter) == 0) {
-                data = camelcaseToLabel(content.data[key]);
-                searchText = getSearchText(data);
-                title = key.split('/').pop();
                 // All and only associations have the property "endpoints".
-                // We don't want to show associations on the hardware page.
+                // We don't want to show forward/reverse association objects
+                // that the mapper created on the inventory panel.
                 // Example: An association from the BMC inventory item to the
-                // BMC firmware images.
+                // BMC firmware images. See:
+                // https://github.com/openbmc/docs/blob/master/object-mapper.md#associations
                 if (content.data[key].hasOwnProperty('endpoints')) {
                   continue;
                 }
+                // There is also an "Associations" property created by the
+                // Association interface. These would show on the inventory
+                // panel under the individual inventory item drop down. There
+                // can be a lot of associtations in this property and they are
+                // long, full full D-Bus paths. Not particularly useful. Remove
+                // for now.
 
+                if (content.data[key].hasOwnProperty('Associations')) {
+                  delete content.data[key].Associations;
+                }
+
+                data = camelcaseToLabel(content.data[key]);
+                searchText = getSearchText(data);
+                title = key.split('/').pop();
                 title = titlelize(title);
                 // e.g. /xyz/openbmc_project/inventory/system and
                 // /xyz/openbmc_project/inventory/system/chassis are depths of 5
@@ -1512,6 +1524,7 @@ window.angular && (function(angular) {
                         original_data: {key: key, value: content.data[key]}
                       },
                       {items: data}));
+
 
                   keyIndexMap[key] = hardwareData.length - 1;
                 } else {
