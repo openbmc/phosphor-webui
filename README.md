@@ -13,7 +13,7 @@ firmware stack. The WebUI uses AngularJS. Features include:
 
 ## Requirements
 nodejs (>= 4.2.6)
-npm (>= 5.6.0)
+npm (>= 6.0.1)
 
 **Note** The default installation of your Linux distro may not come with the
 required versions above. See the following for more information on updating:
