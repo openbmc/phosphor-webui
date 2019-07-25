@@ -3,10 +3,22 @@
     {{cert.Description}}
   </div>
   <div class="certificate__title-inline">
+    Issued by:
+  </div>
+  <div class="certificate__issue-cell">
+    {{cert.Issuer.CommonName}}
+  </div>
+  <div class="certificate__title-inline">
+    Issued to:
+  </div>
+  <div class="certificate__issue-cell">
+    {{cert.Subject.CommonName}}
+  </div>
+  <div class="certificate__title-inline">
     Valid from:
   </div>
   <div class="certificate__date-cell">
-    {{cert.ValidNotBefore | localeDate}}
+    {{cert.ValidNotBefore | date:medium}}
   </div>
   <div class="certificate__title-inline">
     Valid until:
@@ -17,7 +29,7 @@
       ng-if="cert.isExpired || cert.isExpiring"></span>
   </div>
   <div class="certificate__date-cell">
-    {{cert.ValidNotAfter | localeDate}}
+    {{cert.ValidNotAfter | date:medium}}
   </div>
   <div class="certificate__buttons-cell">
     <button type="button" class="btn  btn-tertiary  certificate__button">
