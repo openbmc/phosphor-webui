@@ -58,6 +58,7 @@ import dir_paginate from './common/directives/dirPagination.js';
 import form_input_error from './common/directives/form-input-error.js';
 import icon_provider from './common/directives/icon-provider.js';
 import password_confirmation from './common/directives/password-confirmation.js';
+import password_visibility_toggle from './common/directives/password-visibility-toggle/password-visibility-toggle.js';
 
 import components_index from './common/components/index.js';
 import table_component from './common/components/table/table.js';
