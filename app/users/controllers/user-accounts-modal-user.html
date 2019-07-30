@@ -92,6 +92,7 @@
                    autocomplete="new-password"
                    ng-required="modalCtrl.user.new || form.password.$touched || form.passwordConfirm.$touched"
                    ng-model="modalCtrl.user.password"
+                   password-visibility-toggle
                    ng-click="form.password.$setTouched()"
                    placeholder="{{
                     (modalCtrl.user.new ||
@@ -113,6 +114,7 @@
                    autocomplete="new-password"
                    ng-required="modalCtrl.user.new || form.password.$touched || form.passwordConfirm.$touched"
                    ng-model="modalCtrl.user.passwordConfirm"
+                   password-visibility-toggle
                    password-confirm
                    first-password="form.password.$modelValue"
                    ng-click="form.passwordConfirm.$setTouched()"
