@@ -13,6 +13,10 @@ var path = require('path');
 var FilterChunkWebpackPlugin = require('filter-chunk-webpack-plugin');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const isPathInside = require('is-path-inside')
+const pkgDir = require('pkg-dir')
+const coreJsDir = pkgDir.sync(require.resolve('core-js'))
+
 module.exports = (env, options) => {
   var isProd = options.mode === 'production';
 
@@ -71,8 +75,13 @@ module.exports = (env, options) => {
         // Transpile .js files using babel-loader
         // Compiles ES6 and ES7 into ES5 code
         test: /\.js$/,
-        use: 'babel-loader',
-        exclude: /node_modules/
+        exclude: (input) => isPathInside(input, coreJsDir),
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [['@babel/preset-env', {useBuiltIns: 'entry', corejs: 3}]]
+          }
+        }
       },
       {
         // ASSET LOADER
