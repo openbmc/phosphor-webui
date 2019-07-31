@@ -109,11 +109,6 @@ window.angular && (function(angular) {
         $scope.selectedUser.CurrentUserName = $scope.selectedUser.UserName;
       };
       $scope.createNewUser = function() {
-        if ($scope.users.length >= 15) {
-          toastService.error(
-              'Cannot create user. The maximum number of users that can be created is 15');
-          return;
-        }
         if (!$scope.selectedUser.UserName || !$scope.selectedUser.Password) {
           toastService.error('Username or password cannot be empty');
           return;
@@ -121,10 +116,6 @@ window.angular && (function(angular) {
         if ($scope.selectedUser.Password !==
             $scope.selectedUser.VerifyPassword) {
           toastService.error('Passwords do not match');
-          return;
-        }
-        if ($scope.doesUserExist()) {
-          toastService.error('Username already exists');
           return;
         }
         var user = $scope.selectedUser.UserName;
@@ -142,7 +133,65 @@ window.angular && (function(angular) {
                   toastService.success('User has been created successfully');
                 },
                 function(error) {
-                  toastService.error('Failed to create new user');
+                  try {
+                    if ((error.data['UserName@Message.ExtendedInfo'] !=
+                         undefined) ||
+                        (error.data['UserName@Message.ExtendedInfo'].length !=
+                         0)) {
+                      if (error
+                              .data['UserName@Message.ExtendedInfo'][0]
+                                   ['Message']
+                              .includes('already exists')) {
+                        toastService.error(
+                            'Username ' + user + ' already exists');
+                        return;
+                      }
+                    }
+                  } catch {
+                  }
+
+                  try {
+                    if ((error.data.error['@Message.ExtendedInfo'] !=
+                         undefined) &&
+                        (error.data.error['@Message.ExtendedInfo'].length !=
+                         0)) {
+                      if (error.data
+                              .error['@Message.ExtendedInfo'][0]['Message']
+                              .includes(
+                                  'reached the limit of possible resources')) {
+                        toastService.error(
+                            'Cannot create user. The maximum number of users that can be created is 15');
+                        return;
+                      } else if (
+                          error.data
+                              .error['@Message.ExtendedInfo'][0]['Message']
+                              .includes(
+                                  'The action UserName was submitted with the invalid parameter')) {
+                        toastService.error(
+                            'Inavalid Username. Username should start with Alphabet');
+                        return;
+                      } else if (error.data
+                                     .error['@Message.ExtendedInfo'][0]
+                                           ['Message']
+                                     .includes('exceeds the length limit')) {
+                        toastService.error(
+                            'Username length should not exceed 16 characters');
+                        return;
+                      } else if (
+                          error.data
+                              .error['@Message.ExtendedInfo'][0]['Message']
+                              .localeCompare(
+                                  'The object at Password is invalid.') == 0) {
+                        toastService.error(
+                            'Password is too simple to create new user');
+                        return;
+                      } else {
+                        toastService.error('Failed to create new user');
+                        return;
+                      }
+                    }
+                  } catch {
+                  }
                 })
             .finally(function() {
               loadUserInfo();
