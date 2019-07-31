@@ -29,6 +29,7 @@
   "files": [
     "dist"
   ],
+  "browserslist": "> 0.25%, not dead",
   "keywords": [
     "node"
   ],
@@ -44,6 +45,7 @@
     "angular-ui-bootstrap": "2.5.6",
     "angular-ui-router": "1.0.22",
     "bootstrap": "4.3.1",
+    "core-js": "3.1.4",
     "ng-toast": "2.0.0",
     "xterm": "3.14.5"
   },

@@ -6,6 +6,11 @@
  * @exports app/index
  *
  */
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+import "core-js/es/symbol";
+
+
 import 'angular/angular-csp.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -133,16 +138,16 @@ window.angular && (function(angular) {
         function($httpProvider) {
           $httpProvider.interceptors.push('apiInterceptor');
           $httpProvider.defaults.headers.common = {
-            'Accept': 'application/json'
+            'Accept': 'application/json; charset=utf-8'
           };
           $httpProvider.defaults.headers.post = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json; charset=utf-8'
           };
           $httpProvider.defaults.headers.put = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json; charset=utf-8'
           };
           $httpProvider.defaults.headers.patch = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json; charset=utf-8'
           };
         }
       ])
