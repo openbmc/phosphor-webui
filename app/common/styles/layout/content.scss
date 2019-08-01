@@ -38,12 +38,12 @@ label {
   @include label;
 }
 
-// TODO: Remove and replace with page and page-title pattern
+// TODO: Remove and replace with section and section-title pattern
 // Page header
 .page-header {
   width: 100%;
   position: relative;
-  border-bottom: 1px solid $border-color-02;
+  border-bottom: 1px solid $border-color-01;
   margin: 0.5em 0 2.2em;
   padding-left: 0;
 }

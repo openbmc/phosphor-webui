@@ -8,11 +8,17 @@
  */
 
 .list-pair {
+  margin-bottom: 0;
+
   dt {
     @include label;
   }
   dd {
     @include fontCourierBold;
     margin-bottom: 0;
+  }
+
+  + .list-pair {
+    margin-top: 1.5rem;
   }
 }

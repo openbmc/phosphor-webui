@@ -11,9 +11,9 @@
   opacity: 0;
 }
 
-.modal-overlay.active{
+.modal-overlay.active {
   z-index: 100;
-  opacity: .5;
+  opacity: 0.5;
   display: block;
   @include fastTransition-all;
 }
@@ -23,12 +23,12 @@
   height: auto;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   max-width: 850px;
   min-width: 450px;
-  padding: .8em 1.5em;
+  padding: 0.8em 1.5em;
   border: thin $primary-dark solid;
-  background-color :$background-01;
+  background-color: $background-01;
   z-index: 101;
   position: fixed;
   overflow: hidden;
@@ -38,13 +38,13 @@
   }
 }
 
-.modal.active{
+.modal.active {
   @include fastTransition-all;
   display: block;
 }
 
 .modal .page-header {
-  padding-bottom: .7em;
+  padding-bottom: 0.7em;
 }
 
 .screen-reader-offscreen {
@@ -61,20 +61,21 @@
 }
 .modal__link {
   display: block;
-  margin: .8em 0 1em;
+  margin: 0.8em 0 1em;
   @include mediaQuery(medium) {
     display: inline-block;
-    margin: .6em 0;
+    margin: 0.6em 0;
   }
 }
+// TODO: Use the form__actions pattern / selector
 .modal__button-wrapper {
   float: right;
   button {
-    margin-bottom: .8em;
-    margin-right: .8em;
+    margin-bottom: 0.8em;
+    margin-right: 0.8em;
     display: inline-block;
     @include mediaQuery(medium) {
-      margin-left: .8em;
+      margin-left: 0.8em;
       margin-right: 0;
     }
   }
