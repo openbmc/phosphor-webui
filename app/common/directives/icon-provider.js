@@ -13,8 +13,9 @@ window.angular && ((angular) => {
 
   angular.module('app.common.directives').directive('icon', () => {
     return {
-      restrict: 'E', link: (scope, element, attrs) => {
-        const file = attrs.file;
+      restrict: 'E',
+      link: (scope, element, attrs) => {
+        const file = attrs.file || attrs.ngFile;
         if (file === undefined) {
           console.log('File name not provided for <icon> directive.')
           return;
@@ -23,6 +24,6 @@ window.angular && ((angular) => {
         element.html(svg);
         element.addClass('icon');
       }
-    }
+    };
   })
 })(window.angular);
