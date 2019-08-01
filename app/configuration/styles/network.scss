@@ -1,60 +1,232 @@
-.net-config__form {
-  .dropdown__button {
-    margin-bottom: 1.2em;
-  }
-  .dropdown__list {
-    margin-top: -17px;
-  }
-  .dropdown__button {
-    width: 200px;
-    margin-top: 0;
-    text-align: left;
-  }
-  input {
-    margin-bottom: 2em;
-  }
 
-  .net-config__fieldset {
-    legend {
-      padding-bottom: 0.5rem;
-    }
+.dropdown__button {
+  width: 200px;
+  margin-top: 0;
+  text-align: left;
+}
 
-    .net-config__fieldset-content {
-      padding-left: 1.8em;
-    }
-  }
+.net-config__settings {
+background-color: $background-02;
+padding-top: 1.5em;
+padding-bottom: 1.5em;
+margin-top: 1em;
+margin-bottom: 3em;
+.row {
+  margin-left: 0.8em;
+  padding-right: 1em;
+}
+}
 
-  .net-config__static-ip-wrap {
-    width: 100%;
-    padding-left: 0;
-    padding-top: 1em;
-    display: block;
-    label {
-      min-width: 250px;
-    }
-  }
-  .control-radio {
-    margin-top: 1em;
-    margin-left: .7em;
-    font-weight: 700;
-  }
-  .network-config__submit-wrapper {
-    padding-top: 1em;
-    border-top: 1px solid $border-color-01;
-    margin-top: 2em;
+input.net-config__input {
+width: 150px;
+}
 
-    .btn:not(:last-child) {
-      margin-right: 1em;
-    }
+input.net-config__input--fqdn {
+  width: 240px;
+}
 
-    &::after {
-      content: " ";
-      display: block;
-      clear: both;
-    }
+.net-config__row {
+margin-bottom: 1rem;
+}
 
-  }
-  .network-config__ipv4-wrap {
-    padding-bottom: 1.8em;
+.net-config__static-ip-wrap {
+  width: 100%;
+  padding-left: 0;
+  padding-top: 1em;
+  display: block;
+  label {
+    min-width: 250px;
   }
 }
+.control-radio {
+  margin-top: 1em;
+  margin-left: .7em;
+  font-weight: 700;
+}
+.network-config__submit-wrapper {
+  padding-top: 1em;
+  border-top: 1px solid $border-color-02;
+  margin-top: 2em;
+}
+
+.net-config__input-disabled.net-config__input-disabled {
+background-color: $background-02;
+border: $border-color-01;
+}
+
+.net-config__table {
+border-collapse: collapse;
+}
+
+.net-config__thead {
+display: block;
+}
+
+.net-config__thead--title {
+white-space: nowrap;
+}
+
+.net-config__tbody {
+display: block;
+}
+
+.net-config__input-error {
+white-space: nowrap;
+}
+
+.net-config__tbody-row {
+display: flex;
+flex-direction: column;
+margin-bottom: 1rem;
+
+@include mediaQuery(medium) {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0;
+}
+}
+
+.net-config__tbody-unit {
+flex: 1;
+margin-top: .5em;
+margin-right: 1em;
+}
+
+.net-config__tbody-unit--ipv4 {
+min-width: 50px;
+
+}
+
+.net-config__text-empty-state {
+text-align: center;
+margin-bottom: .6em;
+color: $primary-dark;
+}
+
+.net-config__thead-row {
+display: block;
+margin-bottom: 1rem;
+
+@include mediaQuery(medium) {
+  display: flex;
+  margin-bottom: 0;
+}
+}
+
+.net-config__rows {
+padding-bottom: 1rem;
+}
+
+.net-config__table-dns {
+border-bottom: 1px solid $border-color-02;
+}
+
+.net-config__table-cell {
+display: block;
+flex: 1;
+}
+
+.net-config__btn-dns--text {
+padding: 0;
+margin-top: 1em;
+}
+
+.net-config__btn-form-control {
+margin-left: auto;
+float: right;
+}
+
+.control-radio .control__indicator {
+width: 20px;
+height: 20px;
+}
+
+.control-radio .control__indicator:after {
+top: 3px;
+left: 3px;
+width: 10px;
+height: 10px;
+}
+
+.control-radio input:disabled ~ .control__indicator:after {
+top: 0;
+left: 0;
+width: 20px;
+height: 20px;
+}
+
+.control__radio__label {
+padding: 0.2em 1em 0 2em;
+text-transform: none;
+font-weight: 400;
+font-size: 16px;
+//color: $primary-dark;
+}
+// input {
+//   margin-bottom: 1.2em;
+// }
+
+// .net-config__network-interface {
+//   padding-left: 0;
+// }
+
+
+
+//   // .net-config__fieldset {
+//   //   margin-bottom: 1.2rem;
+
+//   //   legend {
+//   //     padding-bottom: 0.5rem;
+//   //   }
+
+//   //   .net-config__fieldset-content {
+//   //     padding-left: 1.8em;
+//   //   }
+//   // }
+
+//   .net-config__rows {
+//     padding-bottom: 1rem;
+//   }
+//   .net-config__static-ip-wrap {
+//     width: 100%;
+//     padding-left: 0;
+//     padding-top: 1em;
+//     display: block;
+//     label {
+//       min-width: 250px;
+//     }
+//   }
+//   .control-radio {
+//     margin-top: 1em;
+//     margin-left: .7em;
+//     font-weight: 700;
+//   }
+//   .network-config__submit-wrapper {
+//     width: 100%;
+//     margin-top: 3em;
+//     padding-top: 1em;
+//     border-top: 1px solid $medgrey;
+
+//     &::after {
+//       content: " ";
+//       display: block;
+//       clear: both;
+//     }
+
+//     button {
+//       float: right;
+//       margin: .5em;
+//     }
+//   }
+//   .network-config__ipv4-wrap {
+//     padding-bottom: 1.8em;
+//   }
+//   .network-config_remove-button {
+//     color: $medblue;
+//     margin-left: 1em;
+//     opacity: 1;
+//     &:hover {
+//       cursor: pointer;
+//     }
+//   }
+//}
