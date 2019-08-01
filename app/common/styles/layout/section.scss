@@ -1,28 +1,41 @@
 /**
  * Used for section layout. This should be used for the page container
  * Mark up
- <div class="section">
-   <h2 class="section-title">Section Title</h2>
+ <section class="section">
+   <div class="section-header">
+    <h2 class="section-title">Section Title</h2>
+    ... any element added here will be right aligned
+   </div>
    <div class="section-content">
      ...
     </div>
     <div class="section-content">
      ...
     </div>
- </div>
+ </section>
  */
 
 .section {
   margin-bottom: 3rem;
 }
 
-.section-title {
+.section-header {
+  display: flex;
+  justify-content: space-between;
   border-bottom: 1px solid $border-color-01;
   padding-bottom: 0.5rem;
   margin-bottom: 1.5rem;
 }
 
+.section-title {
+  margin-bottom: 0;
+}
+
 .section-content {
-  margin-bottom: 1.5rem;
   margin-top: 0;
+  margin-bottom: 0;
+
+  + .section-content {
+    margin-top: 1.5rem;
+  }
 }
