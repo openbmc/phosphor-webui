@@ -18,13 +18,12 @@
         {{item}}
       </td>
       <!-- Row Actions -->
-      <td ng-if="$ctrl.model.actions.length > 0"
+      <td ng-if="$ctrl.model.rowActionsEnabled"
           class="bmc-table__cell  bmc-table__row-actions">
-        <button ng-repeat="action in $ctrl.model.actions"
-                ng-click="$ctrl.onClickAction(action, row);"
-                class="btn  btn-tertiary">
-          {{action}}
-        </button>
+        <table-actions
+          actions="row.actions"
+          emit-action="$ctrl.onEmitTableAction(action, row)">
+        </table-actions>
       </td>
     </tr>
     <!-- Empty table -->
