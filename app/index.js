@@ -61,6 +61,7 @@ import password_confirmation from './common/directives/password-confirmation.js'
 
 import components_index from './common/components/index.js';
 import table_component from './common/components/table/table.js';
+import table_actions_component from './common/components/table/table-actions.js';
 
 import login_index from './login/index.js';
 import login_controller from './login/controllers/login-controller.js';
