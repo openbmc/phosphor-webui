@@ -34,6 +34,18 @@ window.angular && (function(angular) {
       }
 
       /**
+       * Returns lockout method based on the lockout duration property
+       * If the lockoutDuration is greater than 0 the lockout method
+       * is automatic otherwise the lockout method is manual
+       * @param {number} lockoutDuration
+       * @returns {number} : returns the account lockout method
+       *                     1(automatic) / 0(manual)
+       */
+      function mapLockoutMethod(lockoutDuration) {
+        return lockoutDuration > 0 ? 1 : 0;
+      }
+
+      /**
        * API call to get all user accounts
        */
       function getLocalUsers() {
@@ -103,9 +115,13 @@ window.angular && (function(angular) {
       /**
        * API call to update existing user
        */
-      function updateUser(originalUsername, username, password, role, enabled) {
+      function updateUser(
+          originalUsername, username, password, role, enabled, locked) {
         $scope.loading = true;
-        APIUtils.updateUser(originalUsername, username, password, role, enabled)
+        console.log(originalUsername, username, password, role, enabled, locked)
+        APIUtils
+            .updateUser(
+                originalUsername, username, password, role, enabled, locked)
             .then(() => {
               getLocalUsers();
               toastService.success('User has been updated successfully.')
@@ -176,11 +192,9 @@ window.angular && (function(angular) {
               ariaLabelledBy: 'dialog_label',
               controllerAs: 'modalCtrl',
               controller: function() {
-                // If AccountLockoutDuration is not 0 the lockout
-                // method is automatic. If AccountLockoutDuration is 0 the
-                // lockout method is manual
-                const lockoutMethod =
-                    $scope.accountSettings.AccountLockoutDuration ? 1 : 0;
+                const lockoutMethod = mapLockoutMethod(
+                    $scope.accountSettings.AccountLockoutDuration);
+
                 this.settings = {};
                 this.settings.maxLogin =
                     $scope.accountSettings.AccountLockoutThreshold;
@@ -250,7 +264,11 @@ window.angular && (function(angular) {
                 this.user.accountStatus = status;
                 this.user.username = newUser ? '' : user.UserName;
                 this.user.privilege = newUser ? '' : user.RoleId;
+                this.user.locked = newUser ? null : user.Locked;
 
+                this.manualUnlockProperty = false;
+                this.automaticLockout = mapLockoutMethod(
+                    $scope.accountSettings.AccountLockoutDuration);
                 this.privilegeRoles = $scope.userRoles;
                 this.existingUsernames = existingUsernames;
                 this.minPasswordLength = $scope.accountSettings ?
@@ -279,11 +297,16 @@ window.angular && (function(angular) {
                                  form.accountStatus1.$pristine) ?
                     null :
                     form.accountStatus.$modelValue;
+                const locked = (form.lock && form.lock.$dirty) ?
+                    form.lock.$modelValue :
+                    null;
 
                 if (!newUser) {
                   updateUser(
-                      originalUsername, username, password, role, enabled);
-                } else {
+                      originalUsername, username, password, role, enabled,
+                      locked);
+                }
+                else {
                   createUser(
                       username, password, role, form.accountStatus.$modelValue);
                 }
