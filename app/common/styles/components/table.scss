@@ -161,10 +161,14 @@
 }
 
 .bmc-table__cell {
-  padding: 4px 16px;
+  padding: 10px 16px;
   background-color: $base-02--07;
 }
 
 .bmc-table__row-actions {
   text-align: right;
+  .btn {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
