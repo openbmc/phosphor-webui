@@ -1,41 +1,19 @@
-.row {
-  width: 100%;
-}
-
-.overview__server-metadata {
-  border-bottom: 1px solid $border-color-01;
-  padding: 1.8em 0 0 0;
-}
-.overview__metadata-wrapper {
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-}
-.overview__metadata-block {
-  list-style-type: none;
-  min-width: 47%;
-  margin-bottom: 1em;
-  margin-right: .7em;
-  display: inline-block;
-  white-space: normal;
-  word-break: break-all;
-  @include mediaQuery(small) {
-    float: left;
-  }
-}
 .overview__event-log {
-  padding-top: 2em;
   .event__description {
     color: $primary-dark;
     text-decoration: none;
   }
-  .control-check {display: none;}
+
+  .control-check {
+    display: none;
+  }
   .accord-trigger {
     transform: rotate(0deg) translateY(-50%);
     position: absolute;
     top: 50%;
     right: 0;
   }
+
   .event-log__event-info {
     padding-left: 1.4em;
   }
@@ -47,14 +25,10 @@ input.modal__edit-server-name {
 
 .modal__char-count,
 .modal__error {
-  font-size: .8em;
+  font-size: 0.8em;
   color: $text-02;
 }
 
 .modal__error {
   color: $status-error;
-}
-
-dl {
-  margin-bottom: 0;
 }

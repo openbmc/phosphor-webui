@@ -136,43 +136,26 @@ $logoMaxWidth: 125px;
     }
   }
 
-  .header__server-power,
-  .header__page-refresh,
-  .header__server-health,
-  .header__info,
-  .header__multi-server {
-    background: $background-02;
-    @include round-corners;
-    margin: 0 0.3em;
-    height: 100%;
-    border: 1px solid $border-color-01;
-    opacity: 1;
+  .header__action {
     @include fastTransition-all;
+    @include round-corners;
+    height: 100%;
+    background: $background-02;
+    border: 1px solid $border-color-01;
+    margin: 0 0.3em;
+    opacity: 1;
+
+    .icon svg {
+      width: 1rem;
+    }
+
     &:hover {
       background: $background-01;
     }
   }
 
-  .header__multi-server {
-    padding: 0.5em;
-    padding-top: 0.8em;
-    float: left;
-    margin-top: 10px;
-    margin-right: -10px;
-    .icon-angle::before {
-      margin-left: 0;
-      transform: rotate(90deg);
-      @include fastTransition-all;
-    }
-    &.active {
-      .icon-angle::before {
-        transform: rotate(266deg);
-        @include fastTransition-all;
-      }
-    }
-  }
   .header__functions {
-    .header__info {
+    .header__action--info {
       padding: 0.3em;
       min-width: 40px;
       text-align: center;
@@ -183,25 +166,24 @@ $logoMaxWidth: 125px;
         font-weight: 400;
         color: $text-02;
       }
-      .icon-angle {
-        margin: 0.2em 0 0 0;
-      }
-      .icon-angle::before {
-        font-size: 1.625em;
-        font-weight: 400;
-        margin-left: 0;
-        display: block;
-        transform: rotate(180deg);
+
+      .icon {
         @include fastTransition-all;
+        margin: 0.2em 0 0 0;
+
+        svg {
+          width: 2.6rem;
+          height: auto;
+        }
       }
+
       @media (min-width: 1025px) {
         display: none;
       }
     }
 
-    &.active > .header__info > .icon-angle::before {
-      transform: rotate(-360deg);
-      @include fastTransition-all;
+    &.active > .header__action--info > .icon {
+      transform: rotate(-180deg);
     }
 
     .header__refresh {
@@ -213,7 +195,7 @@ $logoMaxWidth: 125px;
       }
     }
   }
-  .header__page-refresh {
+  .header__action--refresh {
     padding-top: 1em;
     span {
       font-size: 0.875em;
@@ -226,11 +208,12 @@ $logoMaxWidth: 125px;
       display: block;
       margin-left: auto;
       margin-right: auto;
-    }
-    svg {
-      width: 25px;
-      height: auto;
-      fill: $primary-accent;
+
+      svg {
+        width: 1.6rem;
+        height: auto;
+        fill: $primary-accent;
+      }
     }
   }
 }
