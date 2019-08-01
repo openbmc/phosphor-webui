@@ -3,19 +3,24 @@ window.angular && (function(angular) {
 
   /**
    *
-   * Controller for bmcTable Component
+   * bmcTable Component
    *
    * To use:
    * The <bmc-table> component expects a 'model' attribute
    * that will contain all the data needed to render the table.
    *
-   * The model object should contain 'header', 'data', and 'actions'
+   * The component also accepts a 'row-actions-enabled' attribute,
+   * to optionally render table row actions. Defaults to false.
+   * Pass true to render actions. Row actions are defined in
+   * model.data.actions.
+   *
+   *
+   * The model object should contain 'header', and 'data'
    * properties.
    *
    * model: {
-   *    header: <string>[],   // Array of header labels
-   *    data: <any>[],        // Array of each row object
-   *    actions: <string>[]   // Array of action labels
+   *    header: <string>[],  // Array of header labels
+   *    data: <any>[],       // Array of each row object
    * }
    *
    * The header property will render each label as a <th> in the table.
@@ -24,13 +29,15 @@ window.angular && (function(angular) {
    * Each row object in the model.data array should also have a 'uiData'
    * property that should be an array of the properties that will render
    * as each table cell <td>.
+   * Each row object in the model.data array can optionally have an
+   * 'actions' property that should be an array of actions to provide the
+   * <bmc-table-actions> component.
    *
-   * The actions property will render into clickable buttons at the end
-   * of each row.
-   * When a user clicks an action button, the component
-   * will emit the action label with the associated row object.
+   * The 'rowActionsEnabled' property will render <bmc-table-actions> if set
+   * to true.
    *
    */
+
   const TableController = function() {
     /**
      * Init model data
@@ -46,14 +53,6 @@ window.angular && (function(angular) {
         }
         return row;
       })
-      model.actions = model.actions === undefined ? [] : model.actions;
-
-      if (model.actions.length > 0) {
-        // If table actions were provided, push an empty
-        // string to the header array to account for additional
-        // table actions cell
-        model.header.push('');
-      }
       return model;
     };
 
@@ -64,7 +63,7 @@ window.angular && (function(angular) {
      * @param {string} action : action type
      * @param {any} row : user object
      */
-    this.onClickAction = (action, row) => {
+    this.onEmitTableAction = (action, row) => {
       if (action !== undefined && row !== undefined) {
         const value = {action, row};
         this.emitAction({value});
@@ -75,7 +74,18 @@ window.angular && (function(angular) {
      * onInit Component lifecycle hooked
      */
     this.$onInit = () => {
+      if (this.model === undefined) {
+        console.log('<bmc-table> Component is missing "model" attribute.');
+        return;
+      }
       this.model = setModel(this.model);
+      this.rowActionsEnabled = this.rowActionsEnabled === undefined ? false : true;
+      if (this.rowActionsEnabled) {
+        // If table actions are enabled push an empty
+        // string to the header array to account for additional
+        // table actions cell
+        this.model.header.push('');
+      }
     };
   };
 
@@ -85,6 +95,6 @@ window.angular && (function(angular) {
   angular.module('app.common.components').component('bmcTable', {
     template: require('./table.html'),
     controller: TableController,
-    bindings: {model: '<', emitAction: '&'}
+    bindings: {model: '<', rowActionsEnabled: '<', emitAction: '&'}
   })
 })(window.angular);
