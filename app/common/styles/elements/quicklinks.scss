@@ -8,14 +8,19 @@
   @include mediaQuery(medium) {
     margin: 0 0 0 1em;
   }
+
   a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     color: $primary-dark;
     text-decoration: none;
-    display: block;
   }
+
   p {
     margin-bottom: 0;
   }
+
   .event-log__events {
     margin-top: 0;
   }
@@ -25,15 +30,15 @@
   padding: 1em 0 1em 0;
   border-bottom: 1px solid $border-color-01;
   position: relative;
-  &:after {
-    content: '\203A';
-    position: absolute;
-    top: 50%;
-    right: 0;
-    font-size: 3em;
-    color: $text-02;
-    transform: translateY(-50%);
-  }
+  // &:after {
+  //   content: '\203A';
+  //   position: absolute;
+  //   top: 50%;
+  //   right: 0;
+  //   font-size: 3em;
+  //   color: $text-02;
+  //   transform: translateY(-50%);
+  // }
   &.no-icon {
     overflow: auto;
     .bmc-time {

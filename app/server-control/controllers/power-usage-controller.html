@@ -3,16 +3,20 @@
   <h1 class="page-title">Manage Power Usage</h1>
   <form class="power-usage__form" role="form" action="">
     <section class="section">
-      <h2 class="section-title">Power information</h2>
+      <div class="section-header">
+        <h2 class="section-title">Power information</h2>
+      </div>
       <dl class="list-pair">
         <dt>Power Consumption</dt>
         <dd>{{ power_consumption }}</dd>
       </dl>
     </section>
     <section class="section">
-      <h2 class="section-title">
-        Server power cap setting
-      </h2>
+      <div class="section-header">
+        <h2 class="section-title">
+          Server power cap setting
+        </h2>
+      </div>
       <div class="section-content">
         <p>
           Set a power cap to keep power consumption at or below the specified
@@ -40,7 +44,7 @@
           </span>
         </div>
       </div>
-      <div class="section-content form-field">
+      <div class="section-content form__field">
         <label for="power-cap" class="content-label"
           >POWER CAP VALUE IN WATTS</label
         >
