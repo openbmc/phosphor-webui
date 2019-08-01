@@ -9,6 +9,29 @@
   </div>
   <form name="form">
     <div class="modal-body">
+      <!-- Manual unlock -->
+      <div class="row" ng-if="modalCtrl.user.locked && !modalCtrl.automaticLockout">
+        <div class="column medium-9">
+          <div class="notification-banner"
+               aria-live="polite"
+               ng-class="{'notification-banner--warning': !form.lock.$dirty,
+                          'notification-banner--information': form.lock.$dirty}">
+            <p class="notification-banner__text" ng-if="!form.lock.$dirty">Account locked</p>
+            <p class="notification-banner__text" ng-if="form.lock.$dirty">Click "Save" to unlock account</p>
+          </div>
+        </div>
+        <div class="column medium-3">
+          <input
+            type="hidden"
+            name="lock"
+            ng-model="modalCtrl.manualUnlockProperty"
+            value="false">
+          <button class="btn btn-primary"
+                  type="button"
+                  ng-click="form.lock.$setDirty()"
+                  ng-disabled="form.lock.$dirty">Unlock</button>
+        </div>
+      </div>
       <div class="row">
         <div class="column medium-6">
             <!-- Account Status -->

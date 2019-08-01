@@ -618,7 +618,7 @@ window.angular && (function(angular) {
             data: data
           });
         },
-        updateUser: function(user, newUser, passwd, role, enabled) {
+        updateUser: function(user, newUser, passwd, role, enabled, locked) {
           var data = {};
           if ((newUser !== undefined) && (newUser != null)) {
             data['UserName'] = newUser;
@@ -631,6 +631,9 @@ window.angular && (function(angular) {
           }
           if ((passwd !== undefined) && (passwd != null)) {
             data['Password'] = passwd;
+          }
+          if ((locked !== undefined) && (locked !== null)) {
+            data['Locked'] = locked
           }
           return $http({
             method: 'PATCH',
