@@ -266,6 +266,31 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+
+        getNetworkInterfaceOptions: function() {
+          var deferred = $q.defer();
+          const options = [];
+          $http({
+            method: 'GET',
+            url: DataService.getHost() +
+                '/redfish/v1/Managers/bmc/EthernetInterfaces',
+            withCredentials: true
+          })
+              .then(
+                  function(response) {
+                    for (let i = 0; i < response.data.Members.length; i++) {
+                      options.push(response.data.Members[i]['@odata.id']);
+                    }
+                    deferred.resolve(options);
+                  },
+                  function(error) {
+                    console.log(error);
+                    deferred.reject(error);
+                  })
+
+          return deferred.promise;
+        },
+
         getNetworkInfo: function() {
           var deferred = $q.defer();
           $http({
@@ -374,89 +399,133 @@ window.angular && (function(angular) {
                   });
           return deferred.promise;
         },
-        setMACAddress: function(interface_name, mac_address) {
+
+
+        getFQDNRedfish: function() {
           return $http({
-                   method: 'PUT',
+                   method: 'GET',
                    url: DataService.getHost() +
-                       '/xyz/openbmc_project/network/' + interface_name +
-                       '/attr/MACAddress',
-                   withCredentials: true,
-                   data: JSON.stringify({'data': mac_address})
+                       '/redfish/v1/Managers/bmc/NetworkProtocol',
+                   withCredentials: true
                  })
               .then(function(response) {
-                return response.data;
-              });
+                var fqdn = response.data.FQDN;
+                return fqdn;
+              })
         },
-        setDefaultGateway: function(defaultGateway) {
+
+
+        getNetworkInfoRedfish: function(selectedInterface) {
           return $http({
-                   method: 'PUT',
+                   method: 'GET',
                    url: DataService.getHost() +
-                       '/xyz/openbmc_project/network/config/attr/DefaultGateway',
-                   withCredentials: true,
-                   data: JSON.stringify({'data': defaultGateway})
+                       '/redfish/v1/Managers/bmc/EthernetInterfaces/' +
+                       selectedInterface,
+                   withCredentials: true
                  })
               .then(function(response) {
-                return response.data;
-              });
+                const responseObject = {};
+                responseObject.dhcpEnabled = response.data.DHCPv4.DHCPEnabled;
+                responseObject.macAddress = response.data.MACAddress;
+                responseObject.hostname = response.data.HostName;
+                responseObject.staticNameServers =
+                    response.data.StaticNameServers;
+                responseObject.nameServers = response.data.NameServers;
+                responseObject.ipv4Addresses = response.data.IPv4Addresses;
+                responseObject.ipv4StaticAddresses =
+                    response.data.IPv4StaticAddresses;
+
+                return responseObject;
+              })
         },
-        setDHCPEnabled: function(interfaceName, dhcpEnabled) {
+
+        editDnsServer: function(selectedInterface, dnsServer) {
+          var data = {};
+
+          if ((dnsServer !== undefined) && (dnsServer != null)) {
+            data['StaticNameServers'] = dnsServer;
+          }
+
           return $http({
-                   method: 'PUT',
-                   url: DataService.getHost() +
-                       '/xyz/openbmc_project/network/' + interfaceName +
-                       '/attr/DHCPEnabled',
-                   withCredentials: true,
-                   data: JSON.stringify({'data': dhcpEnabled})
-                 })
-              .then(function(response) {
-                return response.data;
-              });
+            method: 'PATCH',
+            url: DataService.getHost() +
+                '/redfish/v1/Managers/bmc/EthernetInterfaces/' +
+                selectedInterface,
+            withCredentials: true,
+            data: data
+          })
         },
-        setNameservers: function(interfaceName, dnsServers) {
+
+        editIpv4: function(selectedInterface, ipv4) {
+          var data = {};
+
+          if ((ipv4 !== undefined) && (ipv4 != null)) {
+            data['IPv4StaticAddresses'] = ipv4;
+          }
+
           return $http({
-                   method: 'PUT',
-                   url: DataService.getHost() +
-                       '/xyz/openbmc_project/network/' + interfaceName +
-                       '/attr/Nameservers',
-                   withCredentials: true,
-                   data: JSON.stringify({'data': dnsServers})
-                 })
-              .then(function(response) {
-                return response.data;
-              });
+            method: 'PATCH',
+            url: DataService.getHost() +
+                '/redfish/v1/Managers/bmc/EthernetInterfaces/' +
+                selectedInterface,
+            withCredentials: true,
+            data: data
+          })
         },
-        deleteIPV4: function(interfaceName, networkID) {
+
+        // questions that need to be addressed for this
+        setIPv4ConfigRedfish: function(selectedInterface, ipv4Config) {
+          var data = {};
+
+          if ((ipv4Config !== undefined) && (ipv4Config !== null)) {
+            data.DHCPv4 = {};
+            data.DHCPv4.DHCPEnabled = ipv4Config;
+          }
+
           return $http({
-                   method: 'POST',
-                   url: DataService.getHost() +
-                       '/xyz/openbmc_project/network/' + interfaceName +
-                       '/ipv4/' + networkID + '/action/Delete',
-                   withCredentials: true,
-                   data: JSON.stringify({'data': []})
-                 })
-              .then(function(response) {
-                return response.data;
-              });
+            method: 'PATCH',
+            url: DataService.getHost() +
+                '/redfish/v1/Managers/bmc/EthernetInterfaces/' +
+                selectedInterface,
+            withCredentials: true,
+            data: data
+          })
         },
-        addIPV4: function(
-            interfaceName, ipAddress, netmaskPrefixLength, gateway) {
+        setFQDNRedfish: function(fqdn) {
+          var data = {};
+
+          if ((fqdn !== undefined) && (fqdn !== null)) {
+            data['HostName'] = fqdn;
+          }
+
           return $http({
-                   method: 'POST',
-                   url: DataService.getHost() +
-                       '/xyz/openbmc_project/network/' + interfaceName +
-                       '/action/IP',
-                   withCredentials: true,
-                   data: JSON.stringify({
-                     'data': [
-                       'xyz.openbmc_project.Network.IP.Protocol.IPv4',
-                       ipAddress, +netmaskPrefixLength, gateway
-                     ]
-                   })
-                 })
-              .then(function(response) {
-                return response.data;
-              });
+            method: 'PATCH',
+            url: DataService.getHost() +
+                '/redfish/v1/Managers/bmc/NetworkProtocol',
+            withCredentials: true,
+            data: data
+          })
         },
+
+
+
+        setDefaultGatewayRedfish: function(selectedInterface, gateway, index) {
+          var data = {};
+          var lastIpv4Instance = data['IPv4Address'];
+          if ((gateway !== undefined) && (gateway !== null)) {
+            lastIPv4Instance[index].Gateway = gateway;
+          }
+
+          return $http({
+            method: 'PATCH',
+            url: DataService.getHost() +
+                'redfish/v1/Managers/bmc/EthernetInterfaces/' +
+                selectedInterface,
+            withCredentials: true,
+            data: data
+          })
+        },
+
         getLEDState: function() {
           var deferred = $q.defer();
           $http({
