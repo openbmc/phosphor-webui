@@ -1,0 +1,22 @@
+<div class="uib-modal__content">
+    <section>
+        <div class="modal__tftp-unreachable" role="document">
+            <div class="screen-reader-offscreen modal-description">Change network settings</div>
+            <!-- accessibility only; used for screen readers -->
+            <div class="page-header">
+                <span class="icon icon__warning inline">
+                    <span class="accessible-text" role="alert">Warning</span>
+                </span>
+                <h3 class="modal-title inline">Change network settings</h3>
+            </div>
+            <div class="modal__content">
+                <p>Changing network settings may cause the system to become unavailable (e.g. changing the BMC IP address).
+                    Proceed with caution and make note of any new settings that may affect connectivity.</p>
+            </div>
+            <div class="modal__button-wrapper">
+                <button class="inline btn-secondary" ng-click="$dismiss()">Cancel</button>
+                <button class="inline btn-primary" ng-click="$close()">Continue</button>
+            </div>
+        </div>
+    </section>
+</div>

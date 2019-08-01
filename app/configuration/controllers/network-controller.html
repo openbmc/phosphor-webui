@@ -1,136 +1,211 @@
 <loader loading="loading"></loader>
 <div id="configuration-network">
   <div class="row column">
-    <h1>BMC network settings</h1>
+    <h1 class="net-config__header">BMC network settings</h1>
+    <p>Manage a network's settings as well as the associated IP addresses, DNS servers, and VLAN interfaces.</p>
+    <h2 class="page-header">
+      Interface
+    </h2>
   </div>
-  <form class="net-config__form" role="form" action="">
-    <fieldset class="net-config__fieldset row column">
-      <legend class="column small-12 page-header h2">
-        Common settings
-      </legend>
-      <div class="net-config__fieldset-content">
-        <div class="column small-12 large-3">
-          <label for="net-config__mac">Hostname</label>
-          <input id="net-config__mac" type="text" ng-model="hostname" />
-        </div>
-        <div class="column small-12 large-3">
-          <label for="netinterface-select">Network interface</label>
-          <div id="netinterface-select" class="dropdown__wrapper">
-            <button type="button" class="dropdown__button"
-              ng-click="networkDevice = !networkDevice">{{selectedInterface}}</button>
-            <ul class="dropdown__list inline" ng-show="networkDevice">
-              <li ng-repeat="interface_id in network.interface_ids">
-                <button type="button" ng-click="selectInterface(interface_id);">{{interface_id}}</button>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="column small-12 large-3">
-          <label for="net-config__host">MAC address</label>
-          <input id="net-config__host" type="text" ng-model="interface.MACAddress" />
-        </div>
-        <div class="column small-12 large-3">
-          <label for="net-config__domain">Default Gateway</label>
-          <input id="net-config__domain" type="text" ng-model="defaultGateway" />
-        </div>
+
+  <!-- There are three forms, and they are formatted in row column-->
+  <div class="row column">
+    <form role="form" name="networkFormGeneral" class="row column">
+      <div>
+        <label for="netinterfaceSelect">Network interface</label>
+        <select class="net-config__select">
+          <option ng-repeat="(key, value) in networkInterfaceOptions">{{key}}</option>
+        </select>
       </div>
-    </fieldset>
-    <fieldset class="net-config__fieldset row column">
-      <legend class="column small-12 page-header h2">
-        IPV4 settings
-      </legend>
-      <div class="net-config__fieldset-content">
-        <div class="row column">
-          <label class="control-radio" for="dhcp-address">Obtain an IP address automatically using DHCP
-            <input type="radio" name="ip-address" id="dhcp-address" ng-checked="true" ng-model="interface.DHCPEnabled"
-              ng-value="true">
-            <span class="control__indicator control__indicator-on"></span>
-          </label>
-        </div>
-        <div class="row column">
-          <label class="control-radio" for="static-ip-address">Assign a static IP address
-            <input type="radio" name="ip-address" id="static-ip-address" ng-model="interface.DHCPEnabled"
-              ng-value="false" />
-            <span class="control__indicator control__indicator-on"></span>
-          </label>
-        </div>
-        <div class="row column network-config__ipv4-wrap">
-          <fieldset class="net-config__fieldset net-config__static-ip-wrap" ng-repeat="ipv4 in interface.ipv4.values track by $index">
-            <div class="column small-12 large-3">
-              <label for="ipv4-address-{{$index+1}}">IPV4 address</label>
-              <input id="ipv4-address-{{$index+1}}" ng-change="ipv4.updateAddress = true" type="text"
-                ng-disabled="interface.DHCPEnabled" ng-model="ipv4.Address" />
-            </div>
-            <div class="column small-12 large-3">
-              <label for="ipv4-gateway-{{$index+1}}">Gateway</label>
-              <input id="ipv4-gateway-{{$index+1}}" ng-change="ipv4.updateGateway = true" type="text"
-                ng-disabled="interface.DHCPEnabled" value="" ng-model="ipv4.Gateway" />
-            </div>
-            <!-- This netmask prefix length max only works with IPV4 -->
-            <div class="column small-12 large-6">
-              <label for="ipv4-prefix-{{$index+1}}">Netmask Prefix Length</label>
-              <input id="ipv4-prefix-{{$index+1}}" class="column small-6" ng-change="ipv4.updatePrefix = true"
-                type="number" min="1" max="32" step="1" ng-disabled="interface.DHCPEnabled"
-                ng-model="ipv4.PrefixLength" />
-              <button type="button" class="btn  btn-tertiary network-config_remove-button" ng-click="removeIpv4Address($index)">Remove</button>
-            </div>
-          </fieldset>
-          <div class="row column">
-            <div class="column small-12">
-              <button type="button" class="btn  btn-primary" ng-click="addIpv4Field()">Add IPV4 address</button>
-            </div>
+
+
+
+
+      <!-- Grey box of network form-->
+      <div class="row columns net-config__settings">
+        <!-- FQDN and Mac Address Row-->
+        <div class="row large-6 net-config__row">
+          <div class="columns large-4">
+            <label for="macAddress">Mac Address</label>
+            <p id="macAddress">{{selectedInterface.macAddress}}</p>
+          </div>
+          <div class="columns large-8">
+            <label for="fqdn">Fully Qualified Domain Name (FQDN)</label>
+            <input id="fqdn" name="fqdn" type="text" ng-model="selectedInterface.fqdn" class="net-config__input--fqdn" />
           </div>
         </div>
+
+        <!--Ipv4 Config & IPV$ Default Gateway-->
+        <div class="row large-6 net-config__row">
+          <div class="columns large-4 small-12">
+            <fieldset>
+              <legend for="ipConfig" class="content-label">Ipv4 Config</legend>
+              <label>
+                <input type="radio" name="ipConfig1" ng-model="selectedInterface.dhcpEnabled" ng-value="true" ng-change="onConfigChange()"
+                />
+                <span class="radio-label">DHCP</span>
+              </label>
+              <label>
+                <input type="radio" name="ipConfig2" ng-model="selectedInterface.dhcpEnabled" ng-value="false" ng-change="onConfigChange()"
+                />
+                <span class="radio-label">Static</span>
+              </label>
+            </fieldset>
+          </div>
+
+          <div class="columns large-8 small-12 end">
+            <label for="ipDefaultGateway">Ipv4 Default Gateway</label>
+            <input id="ipDefaultGateway" ng-model="selectedInterface.defaultGateway" type="text" class="net-config__input" name="ipDefaultGateway"
+              ng-class="{'net-config__input-disabled': selectedInterface.dhcpEnabled}" ng-pattern="/\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/"
+              required/>
+            <span class="form-error" ng-class="{'visible' : networkFormGeneral.ipDefaultGateway.$touched && networkFormGeneral.ipDefaultGateway.$error || submitted}"
+              ng-show="networkFormGeneral.ipDefaultGateway.$error.required">Field is required</span>
+            <span class="form-error" ng-class="{'visible' : networkFormGeneral.ipDefaultGateway.$touched && networkFormGeneral.ipDefaultGateway.$error.pattern || submitted}"
+              ng-show="networkFormGeneral.ipDefaultGateway.$error.pattern">Invalid IP</span>
+          </div>
+        </div>
+    </form>
+
+
+
+    <!--DNS Servers and IPv4 Addresses-->
+    <div class="row">
+      <div class="columns medium-4">
+        <!--DNS table-->
+        <form name="networkFormDNS">
+
+          <table class="net-config__table" id="server_table">
+            <thead class="net-config__thead net-config__table-dns">
+              <tr class="net-config__thead-row">
+                <th class="net-config__table-cell net-config__thead--title">DNS server IP address</th>
+                <th class="net-config__table-cell" ng-if="!selectedInterface.dhcpEnabled">
+                </th>
+              </tr>
+            </thead>
+            <tbody class="net-config__body">
+              <tr ng-if="selectedInterface.nameServers.length==0" class="net-config__tbody-row net-config__table-dns">
+                <td class="net-config__tbody-unit net-config__text-empty-state">No DNS servers have been configured </td>
+              </tr>
+              <tr class="net-config__tbody-row net-config__table-dns" ng-repeat="dns in selectedInterface.nameServers track by ($index)">
+                <td class="net-config__tbody-unit">
+                  <ng-form name="dnsInnerForm">
+                    <input class="net-config__input" name="dns" id="net-config__prime-dns{{$index}}" set-focus-on-new-input ng-model="dns" ng-blur="selectedInterface.nameServers[$index] = dns"
+                      ng-readonly="selectedInterface.dhcpEnabled" type="text" ng-class="{'net-config__input-disabled': selectedInterface.dhcpEnabled}"
+                      ng-pattern="/\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/"
+                      required />
+                    <span class="form-error" ng-class="{'visible' : dnsInnerForm.dns.$touched && dnsInnerForm.dns.$error.required || submitted}"
+                      ng-show="dnsInnerForm.dns.$error.required">Field is required</span>
+                    <span class="form-error" ng-class="{'visible' : dnsInnerForm.dns.$touched && dnsInnerForm.dns.$error.pattern || submitted}"
+                      ng-show="dnsInnerForm.dns.$error.pattern">Invalid IP</span>
+
+                  </ng-form>
+
+                </td>
+                <td class="net-config__tbody-unit--trash net-config__tbody-unit" ng-if="!selectedInterface.dhcpEnabled">
+                  <button class="btn btn-icon btn  btn-tertiary" aria-label="Delete dns field" aria-controls="alternate-name-input-{{$index}}"
+                    ng-click="removeDNSField($index); networkFormDNS.$dirty=true" ng-disabled="multiSelected">
+                    <icon aria-hidden="true" file="icon-trashcan.svg">
+                  </button>
+                </td>
+              </tr>
+
+
+            </tbody>
+          </table>
+          <button class="btn btn-tertiary net-config__btn-dns--text" ng-if="!selectedInterface.dhcpEnabled" ng-click="addDNSField()"
+            class="btn btn-tertiary">
+            <icon aria-hidden="true" file="icon-plus.svg"></icon>
+            Add static DNS server
+          </button>
+        </form>
+
       </div>
-    </fieldset>
-    <fieldset class="net-config__fieldset row column">
-      <legend class="column small-12 page-header h2">
-        DNS settings
-      </legend>
-      <div class="net-config__fieldset-content">
-        <!-- Call Nameservers "DNS Servers" on the GUI -->
-        <div class="net-config__static-ip-wrap" ng-repeat="dns in interface.Nameservers track by $index">
-          <div class="column small-12">
-            <label for="net-config__prime-dns{{$index+1}}">DNS Server {{$index+1}}</label>
-            <input id="net-config__prime-dns{{$index+1}}" class="network-input column small-6 large-4 inline"
-              type="text" ng-model="dns" ng-blur="interface.Nameservers[$index] = dns" set-focus-on-new-input />
-            <button type="button" class="btn  btn-tertiary  network-config_remove-button" ng-click="removeDNSField($index)">Remove</button>
-          </div>
-        </div>
-        <div class="row column">
-          <div class="column small-12">
-            <button type="button" class="btn  btn-primary dns_add" ng-click="addDNSField()">Add DNS server</button>
-          </div>
-        </div>
-      </div>
-    </fieldset>
-    <div class="row column">
-      <div class="network-config__submit-wrapper column">
-        <div class="float-right">
-          <button type="button" class="btn  btn-secondary" ng-click="refresh()">Cancel</button>
-          <button type="button" class="btn  btn-primary" ng-click="confirmSettings=true;">Save settings</button>
-        </div>
+
+      <!--IPv4 table-->
+      <div class="columns medium-8">
+        <form name="networkFormIpv4">
+
+          <table class="net-config__table" id="ip-table">
+            <thead class="net-config__thead net-config__table-dns">
+              <tr class="net-config__thead-row">
+                <th class="net-config__table-cell">IP address</th>
+                <th class="net-config__table-cell">Subnet mask</th>
+                <th class="net-config__table-cell net-config__thead-unit--origin ">Origin</th>
+              </tr>
+            </thead>
+            <tbody class="net-config__tbody">
+              <tr class="net-config__tbody-row net-config__table-dns" ng-repeat="ipv4 in selectedInterface.linkLocal">
+                <td class="net-config__tbody-unit--dhcp net-config__tbody-unit--ipv4">
+                  {{ipv4.Address}}
+                </td>
+                <td class="net-config__tbody-unit--dhcp net-config__tbody-unit--ipv4">{{ipv4.SubnetMask}}</td>
+                <td class="net-config__tbody-unit--dhcp net-config__row--dhcpAddressOrigin net-config__tbody-unit--ipv4">Zero-configuration</td>
+                <td class="net-config__tbody-unit--trash net-config__tbody-unit--ipv4"></td>
+              </tr>
+
+              <!-- Only display if dhcp configuration is selected -->
+              <tr class="net-config__tbody-row net-config__table-dns" ng-repeat="ipv4 in selectedInterface.dhcpIpv4Addresses" ng-if="selectedInterface.dhcpEnabled && ipv4.AddressOrigin === 'DHCP' ">
+                <td class="net-config__tbody-unit--dhcp">
+                  {{ipv4.Address}}
+                </td>
+                <td class="net-config__tbody-unit--dhcp">
+                  {{ipv4.SubnetMask}}
+                </td>
+                <td class="net-config__tbody-unit--dhcp">
+                  DHCP
+                </td>
+                <td class="net-config__tbody-unit--trash net-config__tbody-unit--ipv4"></td>
+              </tr>
+
+
+              <!-- Only display static ipv4s if dhcp configuration is not selected -->
+              <tr class="net-config__tbody-row net-config__table-dns" ng-if="!selectedInterface.dhcpEnabled" ng-repeat="ipv4 in selectedInterface.static"
+                ng-form="ipv4Instance">
+                <td class="net-config__tbody-unit net-config__tbody-unit--ipv4">
+                  <input ng-model="ipv4.Address" name="ipv4Address" ng-readonly="selectedInterface.dhcpEnabled || ipv4.AddressOrigin === 'IPv4LinkLocal' "
+                    type="text" ng-class="{'net-config__input-disabled': selectedInterface.dhcpEnabled || ipv4.AddressOrigin === 'IPv4LinkLocal' }"
+                    ng-pattern="/\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/"
+                    required />
+                  <span class="form-error" ng-class="{'visible' : ipv4Instance.ipv4Address.$touched && ipv4Instance.ipv4Address.$error.required || submitted}"
+                    ng-show="ipv4Instance.ipv4Address.$error.required">Field is required</span>
+                  <span class="form-error" ng-class="{'visible' : ipv4Instance.ipv4Address.$touched && ipv4Instance.ipv4Address.$error.pattern || submitted}"
+                    ng-show="ipv4AddressInnerForm.ipv4Address.$error.pattern">Invalid IP</span>
+                </td>
+                <td class="net-config__tbody-unit net-config__tbody-unit--ipv4">
+                  <input ng-model="ipv4.SubnetMask" name="ipv4SubnetMask" ng-readonly="selectedInterface.dhcpEnabled || ipv4.AddressOrigin === 'IPv4LinkLocal' "
+                    type="text" ng-class="{'net-config__input-disabled': selectedInterface.dhcpEnabled || ipv4.AddressOrigin === 'IPv4LinkLocal' }"
+                    ng-pattern="/^(?:(?:255\.){3}(255|254|252|248|240|224|192|128|0+))|((255\.){2}(255|254|252|248|240|224|192|128|0+)\.0)|((255\.)(255|254|252|248|240|224|192|128|0+)(\.0+){2})|((255|254|252|248|240|224|192|128|0+)(\.0+){3}?)$/"
+                    required/>
+                  <span class="form-error" ng-class="{'visible' : ipv4Instance.ipv4SubnetMask.$touched && ipv4Instance.ipv4SubnetMask.$error || submitted}"
+                    ng-show="ipv4Instance.ipv4SubnetMask.$error.required">Field is required</span>
+                  <span class="form-error" ng-class="{'visible' : ipv4Instance.ipv4SubnetMask.$touched && ipv4Instance.ipv4SubnetMask.$error.pattern || submitted}"
+                    ng-show="ipv4Instance.ipv4SubnetMask.$error.pattern">Invalid Subnet mask</span>
+                </td>
+                <td class="net-config__tbody-unit net-config__tbody-unit--ipv4">
+                  <input name="addressOrigin" class="net-config__input-disabled" type="text" ng-model="ipv4.AddressOrigin" />
+                </td>
+                <td class="net-config__tbody-unit--trash net-config__tbody-unit--ipv4" ng-if="!selectedInterface.dhcpEnabled">
+                  <button name="deleteInstance" class="btn btn-icon btn  btn-tertiary" aria-label="Delete dns field" aria-controls="alternate-name-input-{{$index}}"
+                    ng-click="removeIpv4Address($index); networkFormIpv4.$dirty=true" ng-disabled="multiSelected" ng-if="!(ipv4.AddressOrigin === 'IPv4LinkLocal') ">
+                    <icon aria-hidden="true" file="icon-trashcan.svg">
+                  </button>
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn  btn-tertiary net-config__btn-dns--text" ng-if="!selectedInterface.dhcpEnabled && selectedInterface.static.length <1"
+            ng-click="addIpv4Field()">
+            <icon aria-hidden="true" file="icon-plus.svg"></icon>
+            Add static IP address
+          </button>
+        </form>
       </div>
     </div>
-  </form>
-</div>
-<div class="modal-overlay" tabindex="-1" ng-class="{'active': confirmSettings}"></div>
-<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog"
-  ng-class="{'active': confirmSettings}">
-  <div class="modal__tftp-unreachable" role="document">
-    <div class="screen-reader-offscreen modal-description">Change network settings</div>
-    <!-- accessibility only; used for screen readers -->
-    <div class="page-header">
-      <icon file="icon-warning.svg" aria-hidden="true"></icon><span class="accessible-text" role="alert">Warning</span>
-      <h3 class="modal-title inline">Change network settings</h3>
     </div>
-    <div class="modal__content">
-      <p>Changing network settings may cause the system to become unavailable (e.g. changing the BMC IP address).
-        Proceed with caution and make note of any new settings that may affect connectivity.</p>
-    </div>
-    <div class="modal__button-wrapper">
-      <button class="btn btn-secondary" ng-click="confirmSettings=false;">Cancel</button>
-      <button class="btn btn-primary" ng-click="setNetworkSettings()">Continue</button>
+
+    <div class="net-config__btn-form-control">
+      <button type="button" class="btn-secondary inline" ng-click="resetNetworkForm();">Cancel</button>
+      <button type="button" class="btn-primary inline" ng-click="displaySettingsModal()">Save settings</button>
     </div>
   </div>
-</section>
