@@ -1,6 +1,6 @@
 //status light states
 @mixin status-light-before {
-  content: '';
+  content: "";
   display: inline-block;
   margin-right: -12%;
   transform: translateY(-2px);
@@ -13,7 +13,7 @@
 
 @mixin status-light-header {
   padding-left: 1.6em;
-  margin-top: .7em;
+  margin-top: 0.7em;
   position: relative;
 }
 @mixin status-light__good {
@@ -30,11 +30,10 @@
 
 @mixin status-light__warn {
   @include status-light-before;
-
 }
 
 .status-light__disabled,
-.status-light__off{
+.status-light__off {
   @include status-light-header;
   &::before {
     @include status-light__disabled;
@@ -56,7 +55,6 @@
     @include status-light__error;
     @extend .icon__critical;
   }
-
 }
 
 .status-light__warn {
