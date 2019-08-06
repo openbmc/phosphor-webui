@@ -1,10 +1,12 @@
-window.angular && (function(angular) {
-  'use strict';
+window.angular &&
+  (function(angular) {
+    'use strict';
 
-  angular.module('app.common.directives')
+    angular
+      .module('app.common.directives')
       .directive('setFocusOnNewInput', function() {
         return function(scope, element, attrs) {
-          var elem = window.document.getElementById(element[0].id);
+          const elem = window.document.getElementById(element[0].id);
           // Focus on the newly created input.
           // Since this directive is also called when initializing fields
           // on a page load, need to determine if the call is from a page load
@@ -16,4 +18,4 @@ window.angular && (function(angular) {
           }
         };
       });
-})(window.angular);
+  })(window.angular);
