@@ -6,36 +6,54 @@
  * @name logController
  */
 
-window.angular && (function(angular) {
-  'use strict';
-  angular.module('app.serverHealth')
+window.angular &&
+  (function(angular) {
+    'use strict';
+    angular
+      .module('app.serverHealth')
       .config([
         'paginationTemplateProvider',
         function(paginationTemplateProvider) {
           paginationTemplateProvider.setString(
-              require('../../common/directives/dirPagination.tpl.html'));
-        }
+            require('../../common/directives/thirdParty/dirPagination.tpl.html')
+          );
+        },
       ])
       .controller('logController', [
-        '$scope', '$window', 'APIUtils', 'dataService', 'Constants',
-        '$routeParams', '$filter',
+        '$scope',
+        '$window',
+        'APIUtils',
+        'dataService',
+        'Constants',
+        '$routeParams',
+        '$filter',
         function(
-            $scope, $window, APIUtils, dataService, Constants, $routeParams,
-            $filter) {
+          $scope,
+          $window,
+          APIUtils,
+          dataService,
+          Constants,
+          $routeParams,
+          $filter
+        ) {
           $scope.dataService = dataService;
           $scope.logs = [];
           $scope.filteredLogs = [];
           $scope.tmz = '';
           $scope.itemsPerPage = Constants.PAGINATION.LOG_ITEMS_PER_PAGE;
           $scope.loading = false;
-          var expandedSelectedIdOnce = false;
+          let expandedSelectedIdOnce = false;
 
-          var sensorType = $routeParams.type;
-          var eventId = $routeParams.id;
+          const sensorType = $routeParams.type;
+          const eventId = $routeParams.id;
 
           // priority buttons
-          $scope.selectedSeverity =
-              {all: true, low: false, medium: false, high: false};
+          $scope.selectedSeverity = {
+            all: true,
+            low: false,
+            medium: false,
+            high: false,
+          };
 
           if (sensorType == 'high') {
             $scope.selectedSeverity.all = false;
@@ -57,7 +75,7 @@ window.angular && (function(angular) {
             $scope.loading = true;
             APIUtils.getLogs().then(function(result) {
               if (eventId && expandedSelectedIdOnce == false) {
-                var log = result.data.filter(function(item) {
+                const log = result.data.filter(function(item) {
                   return item.Id == eventId;
                 });
 
@@ -80,30 +98,34 @@ window.angular && (function(angular) {
             if ($scope.selectedSeverity.all) return true;
 
             return (
-                (log.severity_flags.low && $scope.selectedSeverity.low) ||
-                (log.severity_flags.medium && $scope.selectedSeverity.medium) ||
-                (log.severity_flags.high && $scope.selectedSeverity.high));
+              (log.severity_flags.low && $scope.selectedSeverity.low) ||
+              (log.severity_flags.medium && $scope.selectedSeverity.medium) ||
+              (log.severity_flags.high && $scope.selectedSeverity.high)
+            );
           };
 
           $scope.filterByStatus = function(log) {
             if ($scope.selectedStatus.all) return true;
             return (
-                (log.Resolved && $scope.selectedStatus.resolved) ||
-                (!log.Resolved && !$scope.selectedStatus.resolved));
+              (log.Resolved && $scope.selectedStatus.resolved) ||
+              (!log.Resolved && !$scope.selectedStatus.resolved)
+            );
           };
 
           $scope.filterByDate = function(log) {
-            var endDate;
-            if ($scope.end_date &&
-                typeof $scope.end_date.getTime === 'function') {
+            let endDate;
+            if (
+              $scope.end_date &&
+              typeof $scope.end_date.getTime === 'function'
+            ) {
               endDate = new Date($scope.end_date.getTime());
               endDate.setTime(endDate.getTime() + 86399000);
             }
 
             if ($scope.start_date && endDate) {
               return (
-                  log.Timestamp >= $scope.start_date &&
-                  log.Timestamp <= endDate);
+                log.Timestamp >= $scope.start_date && log.Timestamp <= endDate
+              );
             } else {
               return true;
             }
@@ -112,17 +134,22 @@ window.angular && (function(angular) {
           $scope.filterBySearchTerms = function(log) {
             if (!$scope.searchItems.length) return true;
 
-            for (var i = 0, length = $scope.searchItems.length; i < length;
-                 i++) {
-              if (log.search_text.indexOf(
-                      $scope.searchItems[i].toLowerCase()) == -1)
+            for (
+              let i = 0, length = $scope.searchItems.length;
+              i < length;
+              i++
+            ) {
+              if (
+                log.search_text.indexOf($scope.searchItems[i].toLowerCase()) ==
+                -1
+              )
                 return false;
             }
             return true;
           };
 
           $scope.addSearchItem = function(searchTerms) {
-            var terms = searchTerms.split(' ');
+            const terms = searchTerms.split(' ');
             terms.forEach(function(searchTerm) {
               if ($scope.searchItems.indexOf(searchTerm) == -1) {
                 $scope.searchItems.push(searchTerm);
@@ -135,7 +162,7 @@ window.angular && (function(angular) {
           };
 
           $scope.removeSearchItem = function(searchTerm) {
-            var termIndex = $scope.searchItems.indexOf(searchTerm);
+            const termIndex = $scope.searchItems.indexOf(searchTerm);
 
             if (termIndex > -1) {
               $scope.searchItems.splice(termIndex, 1);
@@ -149,10 +176,11 @@ window.angular && (function(angular) {
           });
 
           function updateExportData() {
-            $scope.export_name = ($scope.selectedEvents.length == 1) ?
-                $scope.selectedEvents[0].Id + '.json' :
-                'export.json';
-            var data = {};
+            $scope.export_name =
+              $scope.selectedEvents.length == 1
+                ? $scope.selectedEvents[0].Id + '.json'
+                : 'export.json';
+            const data = {};
             $scope.selectedEvents.forEach(function(item) {
               data[item.data.key] = item.data.value;
             });
@@ -167,32 +195,37 @@ window.angular && (function(angular) {
           };
 
           $scope.resolve = function() {
-            var events = $scope.selectedEvents.filter(function(item) {
+            const events = $scope.selectedEvents.filter(function(item) {
               return item.Resolved != 1;
             });
 
             if (!events.length) return;
 
             APIUtils.resolveLogs(events).then(
-                function(data) {
-                  events.forEach(function(item) {
-                    item.Resolved = 1;
-                  });
-                },
-                function(error) {
-                  // TODO: Show error to user
-                  console.log(JSON.stringify(error));
+              function(data) {
+                events.forEach(function(item) {
+                  item.Resolved = 1;
                 });
+              },
+              function(error) {
+                // TODO: Show error to user
+                console.log(JSON.stringify(error));
+              }
+            );
           };
 
-          $scope.$watch('logs', function() {
-            $scope.selectedEvents = $scope.logs.filter(function(item) {
-              return item.selected;
-            });
-            updateExportData();
-          }, true);
+          $scope.$watch(
+            'logs',
+            function() {
+              $scope.selectedEvents = $scope.logs.filter(function(item) {
+                return item.selected;
+              });
+              updateExportData();
+            },
+            true
+          );
 
           $scope.loadLogs();
-        }
+        },
       ]);
-})(angular);
+  })(angular);

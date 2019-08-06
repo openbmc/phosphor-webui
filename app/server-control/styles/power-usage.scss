@@ -1,6 +1,5 @@
 // Power Usage SCSS
 .power-usage__form {
-
   input {
     margin-bottom: 0em;
   }
@@ -10,12 +9,14 @@
   }
 
   .power-usage__switch-label {
-    padding-bottom: .5em;
+    padding-bottom: 0.5em;
   }
 
   .power-usage__switch-label p {
     margin: 0;
-    &:first-child {font-weight: 700;}
+    &:first-child {
+      font-weight: 700;
+    }
   }
 
   .power-usage__metadata-wrapper {
@@ -26,7 +27,7 @@
   .power-usage__metadata-block {
     min-width: 47%;
     margin-bottom: 1.8em;
-    margin-right: .7em;
+    margin-right: 0.7em;
     display: inline-block;
     white-space: normal;
     word-break: break-all;
@@ -42,7 +43,7 @@
     border-top: 1px solid $border-color-01;
     button {
       float: right;
-      margin: .5em;
+      margin: 0.5em;
     }
   }
 }

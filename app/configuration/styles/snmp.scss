@@ -3,15 +3,15 @@
     padding-left: 0;
   }
   .snmp_description {
-    padding:1em 0 1em 0;
+    padding: 1em 0 1em 0;
   }
   .help__text {
     font-size: 0.8rem;
     color: $text-02;
-    padding-top: .3em;
+    padding-top: 0.3em;
     display: none;
   }
-  .form-error{
+  .form-error {
     display: none;
   }
   .manager_group {
@@ -35,13 +35,13 @@
     }
   }
   .snmp__port {
-    padding: .3em 0 .3em 1em;
+    padding: 0.3em 0 0.3em 1em;
     &.label {
-      padding: .3em 0 .3em 0em;
+      padding: 0.3em 0 0.3em 0em;
     }
   }
   .snmp__address {
-    padding: .3em 1em .3em 0;
+    padding: 0.3em 1em 0.3em 0;
   }
   .snmp__fields {
     input {
@@ -66,7 +66,7 @@
   }
   .snmp__buttons {
     text-align: right;
-    .btn{
+    .btn {
       padding: 0;
       width: auto;
       svg {
@@ -82,7 +82,7 @@
     border-top: 1px solid $border-color-01;
     button {
       float: right;
-      margin: .5em;
+      margin: 0.5em;
     }
   }
 }
