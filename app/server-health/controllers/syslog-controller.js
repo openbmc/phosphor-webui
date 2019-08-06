@@ -6,18 +6,23 @@
  * @name sysLogController
  */
 
-window.angular && (function(angular) {
-  'use strict';
-  angular.module('app.serverHealth')
+window.angular &&
+  (function(angular) {
+    'use strict';
+    angular
+      .module('app.serverHealth')
       .config([
         'paginationTemplateProvider',
         function(paginationTemplateProvider) {
           paginationTemplateProvider.setString(
-              require('../../common/directives/dirPagination.tpl.html'));
-        }
+            require('../../common/directives/thirdParty/dirPagination.tpl.html')
+          );
+        },
       ])
       .controller('sysLogController', [
-        '$scope', 'APIUtils', 'Constants',
+        '$scope',
+        'APIUtils',
+        'Constants',
         function($scope, APIUtils, Constants) {
           $scope.itemsPerPage = Constants.PAGINATION.LOG_ITEMS_PER_PAGE;
           $scope.loading = true;
@@ -26,9 +31,8 @@ window.angular && (function(angular) {
           $scope.searchTerms = [];
           $scope.sortKey = 'Id';
           $scope.showLogDropdown = false;
-          $scope.recordTypeList =
-              ['SEL', 'Event', 'Oem'];        // From Redfish specification.
-          $scope.selectedRecordType = 'SEL';  // Default Select to SEL.
+          $scope.recordTypeList = ['SEL', 'Event', 'Oem']; // From Redfish specification.
+          $scope.selectedRecordType = 'SEL'; // Default Select to SEL.
           $scope.typeFilter = false;
           $scope.selectedSeverityList = [];
           $scope.severityList = ['All', 'Critical', 'Warning', 'Ok'];
@@ -41,37 +45,39 @@ window.angular && (function(angular) {
             $scope.filterTypes = [];
 
             APIUtils.getSystemLogs(recordType)
-                .then(
-                    function(res) {
-                      $scope.sysLogs = res;
-                      $scope.filterTypes.push('All');
-                      $scope.sysLogs.forEach(function(log) {
-                        if ($scope.filterTypes.indexOf(log.SensorType) < 0) {
-                          $scope.filterTypes.push(log.SensorType);
-                        }
-                      });
-                    },
-                    function(error) {
-                      console.log(JSON.stringify(error));
-                    })
-                .finally(function() {
-                  $scope.loading = false;
-                });
+              .then(
+                function(res) {
+                  $scope.sysLogs = res;
+                  $scope.filterTypes.push('All');
+                  $scope.sysLogs.forEach(function(log) {
+                    if ($scope.filterTypes.indexOf(log.SensorType) < 0) {
+                      $scope.filterTypes.push(log.SensorType);
+                    }
+                  });
+                },
+                function(error) {
+                  console.log(JSON.stringify(error));
+                }
+              )
+              .finally(function() {
+                $scope.loading = false;
+              });
           };
 
           $scope.clearSystemLogEntries = function() {
             $scope.confirm = false;
             APIUtils.clearSystemLogs()
-                .then(
-                    function(res) {
-                      console.log(JSON.stringify(res));
-                    },
-                    function(error) {
-                      console.log(JSON.stringify(error));
-                    })
-                .finally(function() {
-                  $scope.selectRecordType($scope.selectedRecordType);
-                });
+              .then(
+                function(res) {
+                  console.log(JSON.stringify(res));
+                },
+                function(error) {
+                  console.log(JSON.stringify(error));
+                }
+              )
+              .finally(function() {
+                $scope.selectRecordType($scope.selectedRecordType);
+              });
           };
 
           $scope.sortBy = function(keyname, isReverse) {
@@ -85,8 +91,9 @@ window.angular && (function(angular) {
           };
 
           $scope.doSearchOnEnter = function(event) {
-            var search =
-                $scope.customSearch.replace(/^\s+/g, '').replace(/\s+$/g, '');
+            const search = $scope.customSearch
+              .replace(/^\s+/g, '')
+              .replace(/\s+$/g, '');
             if (event.keyCode === 13 && search.length >= 2) {
               $scope.searchTerms = $scope.customSearch.split(' ');
             } else {
@@ -97,8 +104,9 @@ window.angular && (function(angular) {
           };
 
           $scope.doSearchOnClick = function() {
-            var search =
-                $scope.customSearch.replace(/^\s+/g, '').replace(/\s+$/g, '');
+            const search = $scope.customSearch
+              .replace(/^\s+/g, '')
+              .replace(/\s+$/g, '');
             if (search.length >= 2) {
               $scope.searchTerms = $scope.customSearch.split(' ');
             } else {
@@ -113,13 +121,21 @@ window.angular && (function(angular) {
               return true;
             }
 
-            for (var i = 0, length = $scope.searchTerms.length; i < length;
-                 i++) {
+            for (
+              let i = 0, length = $scope.searchTerms.length;
+              i < length;
+              i++
+            ) {
               // TODO: Form it while getting data
-              var search_text = log.Id + ' ' + log.Name.toLowerCase() + ' ' +
-                  log.Message.toLowerCase();
-              if (search_text.indexOf($scope.searchTerms[i].toLowerCase()) ==
-                  -1)
+              const search_text =
+                log.Id +
+                ' ' +
+                log.Name.toLowerCase() +
+                ' ' +
+                log.Message.toLowerCase();
+              if (
+                search_text.indexOf($scope.searchTerms[i].toLowerCase()) == -1
+              )
                 return false;
             }
             return true;
@@ -130,7 +146,7 @@ window.angular && (function(angular) {
               return true;
             }
 
-            return ($scope.selectedSeverityList.indexOf(log.Severity) > -1);
+            return $scope.selectedSeverityList.indexOf(log.Severity) > -1;
           };
 
           $scope.filterByType = function(log) {
@@ -138,20 +154,19 @@ window.angular && (function(angular) {
               return true;
             }
 
-            return (($scope.selectedType == log.SensorType));
+            return $scope.selectedType == log.SensorType;
           };
 
           $scope.filterByDate = function(log) {
-            var logDate = new Date(log.Created);
+            const logDate = new Date(log.Created);
             if ($scope.start_date && $scope.end_date) {
-              return (
-                  logDate >= $scope.start_date && logDate <= $scope.end_date);
+              return logDate >= $scope.start_date && logDate <= $scope.end_date;
             } else {
               return true;
             }
           };
 
           setTimeout($scope.selectRecordType($scope.selectedRecordType), 2000);
-        }
+        },
       ]);
-})(angular);
+  })(angular);
