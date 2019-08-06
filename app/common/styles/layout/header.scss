@@ -38,7 +38,7 @@ $logoMaxWidth: 125px;
 .header__logout {
   float: right;
   color: $primary-light;
-  font-size: .9em;
+  font-size: 0.9em;
   text-decoration: none;
   padding: 1em;
   font-weight: 400;
@@ -61,7 +61,7 @@ $logoMaxWidth: 125px;
     font-size: 1.5em;
     font-weight: 500;
     color: $text-02;
-    padding: .4em 0 0 1em;
+    padding: 0.4em 0 0 1em;
     height: 100%;
     background: transparent;
     max-width: 600px;
@@ -78,7 +78,7 @@ $logoMaxWidth: 125px;
     }
   }
   .logo__wrapper {
-    padding-top: .5em;
+    padding-top: 0.5em;
   }
 
   .header__logo {
@@ -97,7 +97,7 @@ $logoMaxWidth: 125px;
     right: -480px;
     bottom: 0;
     z-index: 100;
-    margin: .3em 0;
+    margin: 0.3em 0;
     background: $primary-light;
     @include fastTransition-all;
     &.active {
@@ -111,12 +111,13 @@ $logoMaxWidth: 125px;
       color: $primary-dark;
       font-size: 1em;
     }
-    a, p {
+    a,
+    p {
       display: block;
       float: left;
       text-decoration: none;
       color: $text-02;
-      padding: 1.250em;
+      padding: 1.25em;
       height: 100%;
       font-size: 0.875em;
       font-weight: 400;
@@ -125,7 +126,7 @@ $logoMaxWidth: 125px;
         display: block;
         font-size: 1rem;
         font-weight: bold;
-        margin-top: .5em;
+        margin-top: 0.5em;
       }
     }
   }
@@ -137,7 +138,7 @@ $logoMaxWidth: 125px;
   .header__multi-server {
     background: $background-02;
     @include round-corners;
-    margin: 0 .3em;
+    margin: 0 0.3em;
     height: 100%;
     border: 1px solid $border-color-01;
     opacity: 1;
@@ -148,8 +149,8 @@ $logoMaxWidth: 125px;
   }
 
   .header__multi-server {
-    padding: .5em;
-    padding-top: .8em;
+    padding: 0.5em;
+    padding-top: 0.8em;
     float: left;
     margin-top: 10px;
     margin-right: -10px;
@@ -167,12 +168,12 @@ $logoMaxWidth: 125px;
   }
   .header__functions {
     .header__info {
-      padding: .3em;
+      padding: 0.3em;
       min-width: 40px;
       text-align: center;
       float: left;
       span {
-        padding: .7em 0 .3em;
+        padding: 0.7em 0 0.3em;
         font-size: 1em;
         font-weight: 400;
         color: $text-02;
@@ -214,7 +215,7 @@ $logoMaxWidth: 125px;
       font-weight: 400;
       color: $text-02;
       display: block;
-      margin-bottom: .2em;
+      margin-bottom: 0.2em;
     }
     .icon {
       display: block;

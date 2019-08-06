@@ -40,9 +40,9 @@
   .password-toggle {
     position: absolute;
     right: 20px;
-    top: .6em;
+    top: 0.6em;
     padding: 3px;
-    font-size: .8em;
+    font-size: 0.8em;
   }
   .acnt-prop__submit-wrapper,
   .user-manage__submit-wrapper {
@@ -52,7 +52,7 @@
     border-top: 1px solid $border-color-01;
     button {
       float: right;
-      margin: .5em;
+      margin: 0.5em;
     }
   }
   .user-manage__error {

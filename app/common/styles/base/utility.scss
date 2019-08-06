@@ -50,9 +50,9 @@
 }
 
 .fixed {
-  position:fixed;
-  top:130px;
-  z-index:200;
+  position: fixed;
+  top: 130px;
+  z-index: 200;
 }
 
 .bold {
@@ -64,7 +64,7 @@
 }
 
 .no-padding {
-  padding:0 !important;
+  padding: 0 !important;
 }
 
 .no-bottom-margin {
@@ -80,15 +80,15 @@
 }
 
 .transitionAll {
-  transition: all .5s ease;
+  transition: all 0.5s ease;
 }
 
 //Uploading
 .uploading {
   @include indeterminate-bar;
   font-weight: 700;
-  padding: .2em 6em .2em 1em;
-  margin: .8em 0;
+  padding: 0.2em 6em 0.2em 1em;
+  margin: 0.8em 0;
   width: 100%;
 }
 
@@ -112,8 +112,8 @@
 
   &::-webkit-scrollbar-thumb {
     border-radius: 5px;
-    background-color: rgba(0,0,0,.5);
-    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
   }
 }
 
@@ -127,11 +127,19 @@
   color: $primary-light;
 }
 @-webkit-keyframes flash {
-  from { background: $primary-accent; }
-  to  { background: none; }
+  from {
+    background: $primary-accent;
+  }
+  to {
+    background: none;
+  }
 }
 
 @keyframes flash {
-  0% { background: $primary-accent; }
-  100% { background: none; }
+  0% {
+    background: $primary-accent;
+  }
+  100% {
+    background: none;
+  }
 }
