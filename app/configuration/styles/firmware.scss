@@ -65,7 +65,7 @@
 
 .firmware__active-version {
   color: $text-02;
-  font-size: .8em;
+  font-size: 0.8em;
   float: right;
   font-weight: 400;
 }
@@ -88,12 +88,11 @@
   }
 }
 
-
 .icon__more-dropdown {
   width: 100%;
   top: 68%;
   right: 0;
-  @include mediaQuery(medium){
+  @include mediaQuery(medium) {
     width: 30%;
     right: 18%;
     top: 74%;
@@ -110,21 +109,21 @@
   text-transform: none;
 }
 .firmware__upload-chooser {
-    display: inline-block;
-    width: 100%;
-    background: $background-02;
-    padding-left: 1em;
-    padding-right: 1em;
-    margin-bottom: 1em;
+  display: inline-block;
+  width: 100%;
+  background: $background-02;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-bottom: 1em;
   .btn {
-    margin: 1em .5em 1em 0;
+    margin: 1em 0.5em 1em 0;
     min-width: 3em;
   }
   &.uploading {
     @include indeterminate-bar;
   }
   @include mediaQuery(medium) {
-     width: 70%;
+    width: 70%;
   }
 }
 .firmware__upload-station {
@@ -142,5 +141,3 @@
     margin-top: 15px;
   }
 }
-
-
