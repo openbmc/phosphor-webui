@@ -1,0 +1,25 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "globals": {
+    "angular": "readonly"
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "extends": ["google", "plugin:prettier/recommended"],
+  "rules": {
+    "camelcase": "warn",
+    "new-cap": "warn",
+    "no-invalid-this": "warn",
+    "no-unused-vars": "warn",
+    "no-var": "warn",
+    "require-jsdoc": "warn",
+    "prettier/prettier": "error"
+  }
+}
