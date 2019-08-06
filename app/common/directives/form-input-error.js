@@ -6,6 +6,6 @@ angular.module('app.common.directives').directive('hasError', function() {
       scope.$watch('hasError', function(value) {
         ngModel.$setValidity('hasError', value ? false : true);
       });
-    }
+    },
   };
 });
