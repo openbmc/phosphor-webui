@@ -1,9 +1,10 @@
-label, legend {
-  font-size:1em;
+label,
+legend {
+  font-size: 1em;
   font-weight: 300;
   margin: 0;
   .error {
-    font-size: .9em;
+    font-size: 0.9em;
   }
 }
 
@@ -14,15 +15,15 @@ label, legend {
   margin-bottom: 0.4em;
 }
 
-input[type='email'],
-input[type='number'],
-input[type='password'],
-input[type='search'],
-input[type='tel'],
-input[type='url'],
-input[type='text'],
-input[type='date'],
-input[type='time'],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+input[type="text"],
+input[type="date"],
+input[type="time"],
 textarea {
   border-radius: 0px;
   border: 1px solid $border-color-02;
@@ -66,10 +67,10 @@ textarea {
 }
 
 .form-error {
-  margin-bottom: .7em;
+  margin-bottom: 0.7em;
   font-size: 0.8rem;
   color: $status-error;
-  height:1rem;
+  height: 1rem;
   display: block;
   visibility: hidden;
   .visible {
@@ -77,26 +78,43 @@ textarea {
   }
 }
 //Foundation overwrite
-[type=color], [type=date], [type=datetime-local], [type=datetime], [type=email], [type=month], [type=number], [type=password], [type=search], [type=tel], [type=text], [type=time], [type=url], [type=week], textarea {
+[type="color"],
+[type="date"],
+[type="datetime-local"],
+[type="datetime"],
+[type="email"],
+[type="month"],
+[type="number"],
+[type="password"],
+[type="search"],
+[type="tel"],
+[type="text"],
+[type="time"],
+[type="url"],
+[type="week"],
+textarea {
   border-color: $border-color-02;
 }
 
 input[readonly],
-input[readonly]:focus{
+input[readonly]:focus {
   box-shadow: 0 0 0;
   background: $background-03;
   border: 1px solid $border-color-02;
 }
 
-textarea { padding: .2em;
-  height: auto;}
-input[type="submit"], .submit {
+textarea {
+  padding: 0.2em;
+  height: auto;
+}
+input[type="submit"],
+.submit {
   margin: 1em 0;
   width: 100%;
 }
 
 //Custom select
-select{
+select {
   border-radius: 0px;
   height: auto;
   padding-right: 0.5rem; //override inherited Foundation style
