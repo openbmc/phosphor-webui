@@ -1,6 +1,10 @@
 #login {
   @include mediaQuery(medium) {
-    background: linear-gradient(to right, $background-01 49.999%, $background-02 50%);
+    background: linear-gradient(
+      to right,
+      $background-01 49.999%,
+      $background-02 50%
+    );
     @include fastTransition-all;
   }
 }

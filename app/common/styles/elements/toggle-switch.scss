@@ -47,7 +47,8 @@ input.toggle-switch__round-flat + label {
 input.toggle-switch__round-flat:focus + label {
   box-shadow: 0 0 4px 4px $primary-accent;
 }
-input.toggle-switch__round-flat + label:before, input.toggle-switch__round-flat + label:after {
+input.toggle-switch__round-flat + label:before,
+input.toggle-switch__round-flat + label:after {
   display: block;
   position: absolute;
   content: "";
