@@ -47,7 +47,7 @@
     input {
       border-style: none;
       pointer-events: none;
-      color: $text-02;
+      color: $base-02--01;
       height: 2.4em;
     }
     &:focus-within {
@@ -69,11 +69,6 @@
     .btn{
       padding: 0;
       width: auto;
-      svg {
-        fill: $primary-accent;
-        width: auto;
-        height: 1.3em;
-      }
     }
   }
 
