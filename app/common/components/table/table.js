@@ -85,6 +85,10 @@ window.angular && (function(angular) {
   angular.module('app.common.components').component('bmcTable', {
     template: require('./table.html'),
     controller: TableController,
-    bindings: {model: '<', emitAction: '&'}
+    bindings: {
+      model: '<',
+      size: '<',
+      emitAction: '&'
+    }
   })
 })(window.angular);
