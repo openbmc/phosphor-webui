@@ -35,29 +35,16 @@
                 <fieldset>
                   <div class="row column" ng-class="{'submitted':submitted}">
                     <div class="small-6 snmp__address">
-                      <input id="snmp-manager{{$index+1}}-address"
-                            name="snmp-manager{{$index+1}}-address"
-                            type="text"
-                            ng-change="manager.updateAddress=true"
-                            ng-model="manager.address"
-                            required
-                            aria-labeledby="host-name-ip-label"/>
+                      <input id="snmp-manager{{$index+1}}-address" name="snmp-manager{{$index+1}}-address" type="text" ng-change="manager.updateAddress=true"
+                        ng-model="manager.address" required aria-labeledby="host-name-ip-label" />
                       <div ng-messages="manager_group['snmp-manager'+($index+1)+'-address'].$error" class="form-error" ng-class="{'visible': manager_group['snmp-manager'+($index+1)+'-address'].$touched || submitted}">
                         <p ng-message="required" role="alert">Field is required</p>
                       </div>
                     </div>
                     <div class="small-6 snmp__port">
-                      <input id="snmp-manager{{$index+1}}-port"
-                            name="snmp-manager{{$index+1}}-port"
-                            type="number"
-                            min="0"
-                            max="65535"
-                            step="1"
-                            ng-change="manager.updatePort=true"
-                            ng-model="manager.port"
-                            required
-                            aria-labeledby="port-label"
-                            aria-describedby="snmp-manager{{$index+1}}-port-description"/>
+                      <input id="snmp-manager{{$index+1}}-port" name="snmp-manager{{$index+1}}-port" type="number" min="0" max="65535" step="1"
+                        ng-change="manager.updatePort=true" ng-model="manager.port" required aria-labeledby="port-label" aria-describedby="snmp-manager{{$index+1}}-port-description"
+                      />
                       <div ng-messages="manager_group['snmp-manager'+($index+1)+'-port'].$error" class="form-error" ng-class="{'visible': manager_group['snmp-manager'+($index+1)+'-port'].$touched || submitted}">
                         <div ng-message-exp="['min', 'max', 'number', 'step']">
                           Invalid format
@@ -69,14 +56,15 @@
                 </fieldset>
               </div>
               <div class="small-2 align-self-center snmp__buttons">
-                <button class="btn edit_button" type="button">
+                <button class="btn btn-tertiary" type="button" ng-disabled="(!manager_group['snmp-manager'+($index+1)+'-address'].$valid) || (!manager_group['snmp-manager'+($index+1)+'-port'].$valid)"
+                  ng-class="{'disabled': (!manager_group['snmp-manager'+($index+1)+'-address'].$valid) || (!manager_group['snmp-manager'+($index+1)+'-port'].$valid)}">
                   <icon file="icon-edit.svg" aria-label="Edit"></icon>
                 </button>
               </div>
             </div>
           </div>
           <div class="small-1 align-self-center snmp__buttons trash">
-            <button class="btn trash_button" type="button" ng-click="removeSNMPManager($index)">
+            <button class="btn btn-tertiary" type="button" ng-click="removeSNMPManager($index)">
               <icon file="icon-trashcan.svg" aria-label="Remove"></icon>
             </button>
           </div>
