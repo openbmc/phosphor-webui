@@ -9,6 +9,10 @@ window.angular && (function(angular) {
    * The <bmc-table> component expects a 'model' attribute
    * that will contain all the data needed to render the table.
    *
+   * The component also accepts a 'size' attribute which can be
+   * set to 'small' which will render a smaller font size in the
+   * table.
+   *
    * The model object should contain 'header', 'data', and 'actions'
    * properties.
    *
@@ -85,6 +89,6 @@ window.angular && (function(angular) {
   angular.module('app.common.components').component('bmcTable', {
     template: require('./table.html'),
     controller: TableController,
-    bindings: {model: '<', emitAction: '&'}
+    bindings: {model: '<', size: '<', emitAction: '&'}
   })
 })(window.angular);
