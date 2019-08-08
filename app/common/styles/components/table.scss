@@ -149,6 +149,9 @@
 
 .bmc-table {
   width: 100%;
+  &.small {
+    font-size: 90%;
+  }
 }
 
 .bmc-table__row {

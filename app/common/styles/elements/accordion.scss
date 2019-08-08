@@ -50,3 +50,14 @@
     @include fastTransition-all;
   }
 }
+
+.accordion-trigger {
+  .icon {
+    transition: transform $duration--fast-01;
+  }
+  &.accordion-trigger--expanded {
+    .icon {
+      transform: rotate(90deg);
+    }
+  }
+}
