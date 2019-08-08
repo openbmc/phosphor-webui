@@ -9,13 +9,16 @@ window.angular && (function(angular) {
    * The <bmc-table> component expects a 'model' attribute
    * that will contain all the data needed to render the table.
    *
-   * The component also accepts a 'row-actions-enabled' attribute,
+   * The component accepts a 'row-actions-enabled' attribute,
    * to optionally render table row actions. Defaults to false.
    * Pass true to render actions. Row actions are defined in
    * model.data.actions.
    *
+   * The component accepts a 'size' attribute which can be
+   * set to 'small' which will render a smaller font size in the
+   * table.
    *
-   * The model object should contain 'header', and 'data'
+   * The model object should contain 'header' and 'data'
    * properties.
    *
    * model: {
@@ -96,6 +99,6 @@ window.angular && (function(angular) {
   angular.module('app.common.components').component('bmcTable', {
     template: require('./table.html'),
     controller: TableController,
-    bindings: {model: '<', rowActionsEnabled: '<', emitAction: '&'}
+    bindings: {model: '<', rowActionsEnabled: '<', size: '<', emitAction: '&'}
   })
 })(window.angular);
