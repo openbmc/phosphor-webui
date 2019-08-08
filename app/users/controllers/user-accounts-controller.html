@@ -1,5 +1,5 @@
 <loader loading="loading"></loader>
-<div class="local-users">
+<div class="page local-users">
   <div class="row column">
     <div class="column small-12">
       <h1 class="page-title">Local user management</h1>
@@ -21,11 +21,18 @@
           Add user
         </button>
       </div>
+      <!-- Local user table -->
       <bmc-table
         model="tableModel"
         emit-action="onEmitAction(value)"
         class="local-users__table">
       </bmc-table>
+    </div>
+  </div>
+  <div class="row column">
+    <div class="column small-12">
+      <!-- Role table -->
+      <role-table></role-table>
     </div>
   </div>
 </div>
