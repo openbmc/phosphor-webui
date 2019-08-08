@@ -104,6 +104,7 @@ import vm_controller from './configuration/controllers/virtual-media-controller.
 import users_index from './users/index.js';
 import user_accounts_controller from './users/controllers/user-accounts-controller.js';
 import username_validator from './users/directives/username-validator.js';
+import role_table from './users/directives/role-table.js';
 
 window.angular && (function(angular) {
   'use strict';
