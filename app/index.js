@@ -79,7 +79,8 @@ import power_operations_controller from './server-control/controllers/power-oper
 import power_usage_controller from './server-control/controllers/power-usage-controller.js';
 import remote_console_window_controller from './server-control/controllers/remote-console-window-controller.js';
 import server_led_controller from './server-control/controllers/server-led-controller.js';
-import kvm_controller from './server-control/controllers/kvm-controller.js';
+import kvm_terminal from './server-control/directives/kvm-terminal.js';
+import kvm_window_controller from './server-control/controllers/kvm-window-controller.js';
 
 import server_health_index from './server-health/index.js';
 import inventory_overview_controller from './server-health/controllers/inventory-overview-controller.js';

@@ -50,7 +50,11 @@ window.angular && (function(angular) {
               })
               .when('/server-control/kvm', {
                 'template': require('./controllers/kvm-controller.html'),
-                'controller': 'kvmController',
+                authenticated: true
+              })
+              .when('/server-control/kvm-window', {
+                'template': require('./controllers/kvm-window-controller.html'),
+                'controller': 'kvmWindowController',
                 authenticated: true
               })
               .when('/server-control', {
