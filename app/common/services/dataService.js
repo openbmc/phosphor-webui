@@ -69,6 +69,7 @@ window.angular && (function(angular) {
 
       this.host = this.getHost();
       this.server_id = this.getServerId();
+      this.user_id = this.getUser();
 
       this.setNetworkInfo = function(data) {
         this.hostname = data.hostname;

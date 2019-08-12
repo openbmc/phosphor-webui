@@ -1,10 +1,15 @@
-// Content layout styles
-$nav__toplvlWidth: 120px;
-$nav__seclvlWidth: 240px;
+// Page header
+.page-header {
+  width: 100%;
+  position: relative;
+  margin: 0.5em 0 2.2em;
+  padding-left: 0;
+}
 
 // Main element class
 .content__container {
-  margin-left: $nav__toplvlWidth;
+  @include header-height(page-container);
+  border-left: $nav__toplvlWidth solid $color--blue-50;
   padding: 1em 0.1em;
 
   @include mediaQuery(x-small) {
@@ -26,6 +31,35 @@ $nav__seclvlWidth: 240px;
   }
 }
 
+.content__container{
+  background-position: bottom 8px right 50px;
+  background-repeat: no-repeat;
+  padding-bottom:64px;
+  min-height:400px;
+}
+
+.content__container div:first-child{
+ border:0;
+}
+.content__container2>div:nth-child(2){
+  @include page-contentborder;
+  @include page-dropshadow;
+  @include page-boxcorners;
+  @include page-spaceafter;
+}
+.content__container div>form{
+  @include page-contentborder;
+  @include page-dropshadow;
+  @include page-roundcorners;
+  @include page-spaceafter;
+}
+.content__container2 div:nth-child(3){
+  @include page-contentborder;
+  @include page-dropshadow;
+  @include page-roundcorners;
+  @include page-spaceafter;
+}
+
 .content-header {
   font-weight: 700;
   margin-bottom: 0;
@@ -35,7 +69,8 @@ $nav__seclvlWidth: 240px;
 // TODO: Determine if label and content-label are the same - remove generic element selector
 .content-label,
 label {
-  @include label;
+  color: $text-02;
+  margin-bottom: 0;
 }
 
 // TODO: Remove and replace with section and section-title pattern
@@ -52,4 +87,13 @@ label {
   width: 100%;
   border-bottom: 1px solid $border-color-01;
   padding-bottom: 0.5em;
+}
+
+.trim-text{
+  @include mediaQuery(x-small) {
+    display:none;
+  }
+  @include mediaQuery(small) {
+    display:inherit;
+  }
 }

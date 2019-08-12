@@ -122,6 +122,8 @@ window.angular && (function(angular) {
 
             loadData();
 
+            var myUsername = sessionStorage.getItem('LOGIN_ID');
+
             $scope.logout = function() {
               userModel.logout(function(status, error) {
                 if (status) {
@@ -149,7 +151,6 @@ window.angular && (function(angular) {
                 $rootScope.$on('user-logged-in', function(event, arg) {
                   loadData();
                 });
-
             $scope.$on('$destroy', function() {
               loginListener();
             });

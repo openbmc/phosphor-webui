@@ -20,10 +20,6 @@ window.angular && (function(angular) {
             type === 'danger' ? 'error' : type === 'warning' ? 'warn' : null;
         const content = $sce.trustAsHtml(`
           <div role="alert" class="alert-content-container">
-            <status-icon ng-if="${iconStatus !== null}"
-                         status="${iconStatus}"
-                         class="status-icon">
-            </status-icon>
             <div class="alert-content">
               <h2 class="alert-content__header">${title}</h2>
               <p class="alert-content__body">${message}</p>

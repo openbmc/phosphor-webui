@@ -1,19 +1,28 @@
 // Base colors
-$color--blue-100: #1B2834;
-$color--blue-50: #1D3458;
-$color--blue-40: #2D60E5;
-$color--blue-30: #7295F1;
-$color--blue-20: #CCD7F4;
-$color--blue-10: #EFF2FB;
+$color--blue-100: #536270;
+$color--blue-60: #307fad;
+$color--blue-50: #0f8dc3;
+$color--blue-40: #00aeef;
+$color--blue-38: #8acfea;
+$color--blue-35: #a8cbe3;
+$color--blue-30: #bde3f3;
+$color--blue-20: #e3f1f8;
+$color--blue-10: #e1edf8;
+$color--blue-05: #f0f7fb;
 
 $color--grey-100: #333333;
-$color--grey-80: #666666;
-$color--grey-60: #999999;
-$color--grey-40: #CCCCCC;
-$color--grey-30: #DCDEE0;
-$color--grey-20: #F0F2F5;
-$color--grey-10: #FAFBFC;
-$color--grey-0: #FFFFFF;
+$color--grey-90: #5b5b5b;
+$color--grey-80: #697278;
+$color--grey-70: #88898a;
+$color--grey-60: #979a9d;
+$color--grey-50: #c0c5d1;
+$color--grey-40: #cccccc;
+$color--grey-30: #dcdee0;
+$color--grey-20: #f0f2f5;
+$color--grey-10: #f9fcfe;
+$color--grey-0: #ffffff;
+
+$color-white: #ffffff;
 
 // Accent colors
 $color--teal-70: #098292;
@@ -21,17 +30,50 @@ $color--teal-50: #00B6CB;
 $color--teal-20: #CCF0F5;
 
 $color--green-50: #0A7D06;
+$color--green-40: #26af5e;
+$color--green-30: #34bc6e;
 $color--green-20: #C6E8C5;
-$color--green-10: #ECFDF1;
+$color--green-10: #e7f6f1;
 
 $color--yellow-70: #DB7C00;
+$color--yellow-60: #fec201;
 $color--yellow-50: #FEDF39;
 $color--yellow-20: #FFF8E4;
-$color--yellow-10: #FFF8E4;
+$color--yellow-10: #fffbea;
 
-$color--red-50: #DA1416;
+$color--red-50: #e62425;
+$color--red-40: #ff5560;
+$color--red-30: #e36669;
 $color--red-20: #FAD3D3;
-$color--red-10: #FCE9E9;
+$color--red-10: #fdf7f2;
+
+@mixin whitefilter {
+  filter: invert(92%) sepia(17%) saturate(0%) hue-rotate(326deg) brightness(112%) contrast(103%);
+}
+@mixin SuperLtBluefilter {
+   filter: invert(92%) sepia(17%) saturate(0%) hue-rotate(326deg) brightness(112%) contrast(103%);
+}
+@mixin LtBluefilter {
+  filter: invert(87%) sepia(27%) saturate(6400%) hue-rotate(166deg) brightness(96%) contrast(88%);
+}
+@mixin greyFilter {
+  filter: invert(59%) sepia(0%) saturate(298%) hue-rotate(252deg) brightness(92%) contrast(88%);
+}
+@mixin redFilter {
+    filter: invert(17%) sepia(69%) saturate(5244%) hue-rotate(355deg) brightness(97%) contrast(86%);
+}
+@mixin yellowFilter {
+    filter: invert(73%) sepia(72%) saturate(465%) hue-rotate(351deg) brightness(102%) contrast(103%);
+}
+@mixin greenFilter {
+    filter: invert(55%) sepia(16%) saturate(1608%) hue-rotate(92deg) brightness(96%) contrast(101%);
+}
+
+
+@mixin bg-gradient{
+    background: rgb(20,160,210);
+    background: linear-gradient(90deg, rgba(20,160,210,1) 0%, rgba(16,126,184,1) 100%);
+  }
 
 // Color mapping
 $base-01--01: $color--blue-100;
@@ -39,8 +81,9 @@ $base-01--02: $color--blue-50;
 $base-01--03: $color--blue-40;
 $base-01--04: $color--blue-30;
 $base-01--05: $color--blue-20;
+$base-01--06: $color--blue-10;
 
-$base-02--01: $color--grey-100;
+$base-02--01: $color--grey-90;
 $base-02--02: $color--grey-80;
 $base-02--03: $color--grey-60;
 $base-02--04: $color--grey-40;
@@ -72,7 +115,7 @@ $primary-action: $base-01--03;
 $primary-action--hover: $base-01--04;
 
 $text-01: $base-02--01;
-$text-02: $base-02--02;
+$text-02: $base-02--03;
 $text-03: $base-02--06;
 
 $background-01: $primary-light;
@@ -99,3 +142,107 @@ $notification-warn--light: $color--yellow-10;
 $notification-error--dark: $color--red-50;
 $notification-error--light: $color--red-10;
 
+$white: $color--grey-0;
+$black: $color--grey-100;
+$darkgrey: $color--grey-80;
+$medgrey: #d7dbe0;
+$lightgrey: #f5f7fa;
+$lightblue: #f1f2f6;
+$medblue: #3f71ec;
+$darkblue: #1e3359;
+$purple: #5A3EC8;
+$field__disabled: #e6e6e6;
+$field__focus: #3C6DEF;
+
+// Dark background
+$darkbg__grey: #E3ECEC;
+$darkbg__accent: #79a6f6;
+$darkbg__primary: #19273c;
+
+//Disabled table elements
+$disabled-row: #dddee0;
+$disabled-row-txt: $color--grey-60;
+
+//Forms]
+$input-border: #a7a7a7;
+
+// Light Background
+$lightbg__grey: #b8c1c1;
+$lightbg__accent: #d8e2fc;
+$lightbg__primary: $color--blue-40;
+
+// Dropdowns
+$dropdown__focus-bg: #e6e9ee;
+
+// Status messages //KP TODO: need to merge old & new formatting for status/error/alert colors
+$color-status-error: $color--red-40;
+$color-status-error-text: $color--red-30;
+$color-status-error-bg: $color--red-10;
+
+$color-status-warning: $color--yellow-60;
+$color-status-warning-text: $color--yellow-60;
+$color-status-warning-bg: $color--yellow-10;
+
+$color-status-success: $color--green-30;
+$color-status-success-text: $color--green-40;
+$color-status-success-bg:  $color--green-10;
+
+$color-status-info: $color--blue-50;
+$color-status-info-text: $color--blue-50;
+$color-status-info-bg: $color--blue-05;
+
+// Status colors
+$error-color: $color--red-50;
+$status-ok: $color--green-30;
+$status-ok-light: #cceedf;
+$status-warn: #ffb000;
+
+// Alerts
+$alert__error: rgb(230, 35, 37);
+$alert__warning: rgb(255, 127, 0);
+$alert__message: rgb(203, 221, 235);
+$alert__danger: #fad3D3;
+
+// Severity
+$critical-lightbg: #da1416;
+$critical-darkbg: #ff5c49;
+$severity-medium-lightbg: #dc267f;
+$medium-darkbg: #FF509E;
+$warning-lightbg: #ff836f;
+$warning-darkbg: #ffb000;
+$low-lightbg: #c42cd6;
+$normal: #00baa1;
+
+// Priority tags
+$lowPriorityColor: $color--teal-50;
+$lowPriorty-bg: #cdf0f6;
+$medPriorityColor: #feb101;
+$medPriorty-bg: #fef0cd;
+$highPriorityColor: #e62425;
+$highPriority-bg: #edc9cb;
+$resolvedColor: $color--grey-60;
+$resolved-bg: #d6d6d6;
+
+
+// Threshold graphs
+$thresh-critical: $error-color;
+$thresh-warning: #ffb001;
+$thresh-normal: #cceedf;
+
+//Inventory
+$active: #c6b6f5;
+$inactive: $severity-medium-lightbg;
+
+// Links
+$links: $color--blue-40;
+$links__hover: $lightbg__primary;
+$links__visited: #8ea7ea;
+$links__disabled: rgba(27, 40, 52, 0.70);
+
+// Navigation
+$nav__top-level-color: $color--blue-50;
+$nav__second-level-color: transparent;
+$nav__second-level-text-color: $color--blue-38;
+
+//Loader
+$loaderColor: $color--blue-50;

@@ -1,4 +1,127 @@
-// Drop downs
+//Use to pass in color of error format in below mixin
+@mixin input-highlight-format($color-status){
+  border: 2px solid $color-status;
+}
+
+@mixin form-inputs($input-style){
+  box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.18);
+  padding: 15px 18px 15px 18px;
+  @if ($input-style=="icon"){
+    padding-left: 30px;
+  }
+  border-radius: 4px;
+  background-repeat:no-repeat;
+  background-position:6px;
+  min-height:44px;
+  max-height:none;
+  font-size:14px;
+  box-sizing: border-box;
+}
+
+
+/* FORM STYLE */
+input[type='email'], input[type='number'], input[type='password'], input[type='search'], input[type='tel'], input[type='url'], input[type='text'], input[type='date'], input[type='time'], textarea {
+  @include form-inputs("");
+  border-color:transparent;
+  &:focus{
+    @include form-inputs("");
+    @include input-highlight-format($color--blue-50);
+  }
+}
+
+
+
+/* SELECT DROPDOWN */
+select {
+  /* styling */
+  background-color: white;
+  box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.08);
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  display: inline-block;
+  font: inherit;
+  line-height: 1.5em;
+  padding: 0.5em 3.5em 0.5em 1em;
+  color: #5b5b5b;
+
+  /* reset */
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+select.minimal {
+  background-image:
+    linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    calc(100% - 2.5em) 0.5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1px 1.5em;
+  background-repeat: no-repeat;
+}
+
+select.minimal:focus {
+  background-image:
+    linear-gradient(45deg, #0f8dc3 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, #0f8dc3 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position:
+    calc(100% - 15px) 1em,
+    calc(100% - 20px) 1em,
+    calc(100% - 2.5em) 0.5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1px 1.5em;
+  background-repeat: no-repeat;
+  border-color: #0f8dc3;
+  outline: 0;
+}
+
+select.classic {
+  background-image:
+    linear-gradient(45deg, transparent 50%, blue 50%),
+    linear-gradient(135deg, blue 50%, transparent 50%),
+    linear-gradient(to right, skyblue, skyblue);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    100% 0;
+  background-size:
+    5px 5px,
+    5px 5px,
+    2.5em 2.5em;
+  background-repeat: no-repeat;
+}
+
+select.classic:focus {
+  background-image:
+    linear-gradient(45deg, white 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, white 50%),
+    linear-gradient(to right, gray, gray);
+  background-position:
+    calc(100% - 15px) 1em,
+    calc(100% - 20px) 1em,
+    100% 0;
+  background-size:
+    5px 5px,
+    5px 5px,
+    2.5em 2.5em;
+  background-repeat: no-repeat;
+  border-color: grey;
+  outline: 0;
+}
+
+/* DROPDOWNS */
 .dropdown__button {
   position: relative;
   padding-top: .5em;
@@ -259,4 +382,106 @@
   background: $base-02--03;
   width: 20px;
   height: 20px;
+}
+
+
+/* PLACEHOLDERS */
+::placeholder { // Chrome, Firefox, Opera, Safari 10.1+
+  color: $color--grey-60;
+  opacity: 1; // Firefox
+}
+:-ms-input-placeholder { // Internet Explorer 10-11
+  color: $color--grey-60;
+}
+::-ms-input-placeholder { // Microsoft Edge
+  color: $color--grey-60;
+}
+
+/* FORM VALIATION */
+.ng-invalid.ng-touched {
+  @include input-highlight-format($color-status-error);
+  &:focus {
+    @include input-highlight-format($color-status-error);
+  }
+}
+.submitted .ng-invalid {
+  @include input-highlight-format($color-status-error);
+  &:focus {
+    @include input-highlight-format($color-status-error);
+  }
+}
+
+.form-row
+{
+  display: block;
+  margin: auto;
+  width: 100%;
+  padding:4px 10px 2px 15px;
+}
+
+.form-intro{
+  font-size:1.7em;
+  padding: 5px;
+  color: $color--grey-90;
+}
+
+.form-error {
+  margin-bottom: .7em;
+  font-size: 0.8rem;
+  color: $color-status-error;
+  height:1rem;
+  display: block;
+  visibility: hidden;
+  .visible {
+    visibility: visible;
+  }
+}
+
+// Old code from forms.scss
+//Foundation overwrite
+
+button,
+.btn,
+[type='button'] {
+  box-shadow: none;
+}
+
+[type=color], [type=date], [type=datetime-local], [type=datetime], [type=email], [type=month], [type=number], [type=password], [type=search], [type=tel], [type=text], [type=time], [type=url], [type=week], textarea {
+  border-color: $input-border;
+}
+
+input[readonly],
+input[readonly]:focus{
+  box-shadow: 0 0 0;
+  background: $field__disabled;
+  border: 1px solid $lightbg__grey;
+}
+
+textarea { padding: .2em;
+  height: auto;}
+input[type="submit"], .submit {
+  margin: 1em 0;
+  width: 100%;
+}
+
+//Custom select
+select{
+  border-radius: 0px;
+  height: auto;
+  padding-right: 0.5rem; //override inherited Foundation style
+  border-color: $input-border;
+  @include fastTransition-all;
+  @include bgImage__arrowDown-primary;
+  &:focus {
+    box-shadow: 0 0 0;
+  }
+  &[disabled] {
+    @include bgImage__arrowDown-disabled;
+  }
+}
+
+
+.form__validation-message {
+  color: $error-color;
+  font-size: 0.9em;
 }
