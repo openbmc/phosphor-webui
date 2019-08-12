@@ -12,6 +12,8 @@ window.angular && (function(angular) {
             function($scope, $location, dataService) {
               $scope.dataService = dataService;
               $scope.showSubMenu = false;
+              $scope.configuration = false;
+              $scope.serverControl = false;
               $scope.change = function(firstLevel) {
                 if (firstLevel != $scope.firstLevel) {
                   $scope.firstLevel = firstLevel;
@@ -21,7 +23,10 @@ window.angular && (function(angular) {
                 }
               };
               $scope.closeSubnav = function() {
-                $scope.showSubMenu = false;
+                //   $scope.showSubMenu = false;
+              };
+              $scope.RedirectToURL = function(destinationURL) {
+                $location.url(destinationURL);
               };
               $scope.$watch('path', function() {
                 var urlRoot = $location.path().split('/')[1];
@@ -30,22 +35,15 @@ window.angular && (function(angular) {
                 } else {
                   $scope.firstLevel = 'overview';
                 }
-                $scope.showSubMenu = false;
+                $scope.showSubMenu = true;
               });
               $scope.$watch('showNavigation', function() {
-                var paddingTop = 0;
                 var urlRoot = $location.path().split('/')[1];
                 if (urlRoot != '') {
                   $scope.firstLevel = urlRoot;
                 } else {
                   $scope.firstLevel = 'overview';
                 }
-
-                if ($scope.showNavigation) {
-                  paddingTop = document.getElementById('header').offsetHeight;
-                }
-                dataService.bodyStyle = {'padding-top': paddingTop + 'px'};
-                $scope.navStyle = {'top': paddingTop + 'px'};
               });
             }
           ],
@@ -56,7 +54,7 @@ window.angular && (function(angular) {
 
               if (scope.showSubMenu) {
                 scope.$apply(function() {
-                  scope.showSubMenu = false;
+                  scope.showSubMenu = true;
                 });
               }
             });

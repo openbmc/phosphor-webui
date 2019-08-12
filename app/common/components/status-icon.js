@@ -13,26 +13,24 @@ window.angular && (function(angular) {
   /**
    * statusIcon Component template
    */
-  const template = `<icon ng-if="$ctrl.status === 'on'"
-                          file="icon-on.svg"
-                          aria-hidden="true"
+
+  const template = `<img  ng-if="$ctrl.status === 'on'"
+                          src="../app/assets/icons/icon-on.svg"
+                          alt=""
                           class="status-icon">
-                    </icon>
-                    <icon ng-if="$ctrl.status === 'off'"
-                          file="icon-off.svg"
-                          aria-hidden="true"
+                    <img ng-if="$ctrl.status === 'off'"
+                          src="../app/assets/icons/icon-off.svg"
+                          alt=""
                           class="status-icon">
-                    </icon>
-                    <icon ng-if="$ctrl.status === 'warn'"
-                          file="icon-warning.svg"
-                          aria-hidden="true"
+                    <img ng-if="$ctrl.status === 'warn'"
+                          src="../app/assets/icons/icon-warning.svg"
+                          alt=""
                           class="status-icon">
-                    </icon>
-                    <icon ng-if="$ctrl.status === 'error'"
-                          file="icon-critical.svg"
-                          aria-hidden="true"
+                    <img ng-if="$ctrl.status === 'error'"
+                          src="../app/assets/icons/icon-critical.svg"
+                          alt=""
                           class="status-icon">
-                    </icon>`
+                    `
 
   /**
    * Register statusIcon component

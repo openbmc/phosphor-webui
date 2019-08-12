@@ -1,29 +1,101 @@
-//Fixed alerts
-.alert-danger {
-  background-color: $accent-04--02;
-  border-color: $accent-04--01;
-  border-radius: 0;
-  color: $primary-dark;
+@mixin alert-format($alert-type){
+  @if ($alert-type=="warning") {
+    background-color: $color-status-warning-bg;
+    border-left: solid 4px $color-status-warning;
+  }
+  @if ($alert-type=="error") {
+    background-color: $color-status-error-bg;
+    border-left: solid 4px $color-status-error;
+  }
+  @if ($alert-type=="good") {
+    background-color: $color-status-success-bg;
+    border-left: solid 4px $color-status-success;
+  }
+  @if ($alert-type=="info") {
+    background-color: $color-status-info-bg;
+    border-left: solid 4px $color-status-info;
+  }
+  background-position: 9px 0px;
+  background-repeat: no-repeat;
+  line-height: 18px;
+  overflow: hidden;
+  padding: 15px 40px 15px 60px;
+  border-radius: 6px;
   text-align: left;
+  font-size: 14px;
+  width: 100%;
+  margin: 15px auto;
+  color: #333;
 }
-.alert-warning {
-  background-color: $accent-03--03;
-  border-color: $accent-03--02;
-  border-radius: 0;
-  color: $primary-dark;
-  text-align: left;
-  .icon {
-    vertical-align: bottom;
+
+//TODO: merge color definitions and naming
+@mixin alert-pseudo-element($alert-type){
+  content: "";
+  position: absolute;
+  top: 20px; left: 10px;
+  width: 100%; height: 100%;
+  background-position: top 20px 0px;
+  background-repeat: no-repeat;
+  background-size: 30px 30px;
+
+  @if ($alert-type=="warning") {
+    background-image: url(../assets/icons/icon-alert-warning.svg);
+    @include yellowFilter;
+  }
+  @if ($alert-type=="error") {
+    background-image: url(../assets/icons/icon-alert-error.svg);
+    @include redFilter;
+  }
+  @if ($alert-type=="good") {
+    background-image: url(../assets/icons/icon-check.svg);
+    @include greenFilter;
+  }
+  @if ($alert-type=="info") {
+    background-image: url(../assets/icons/icon-information.svg);
+    @include LtBluefilter;
   }
 }
 
-.message-container {
-  background-color: $background-02;
-  padding: 1em 1.5em;
-  display: inline-block;
-  >*:last-child {
-    margin-bottom: 0;
-  }
+.alert-danger::before{
+  @include alert-pseudo-element(error)
+}
+.alert-warning::before{
+  @include alert-pseudo-element(warning)
+}
+.alert-good::before, .alert-success::before{
+  @include alert-pseudo-element(good)
+}
+.alert-info::before{
+  @include alert-pseudo-element(info)
+}
+
+.alert-danger{
+  @include alert-format(error)
+}
+.alert-warning{
+    @include alert-format(warning)
+}
+.alert-good, .alert-success{
+  @include alert-format(good)
+}
+.alert-info{
+  @include alert-format(info)
+}
+
+.alert-text-critical{
+  color: $color-status-error-text;
+}
+.alert-text-warning{
+  color: $color-status-warning-text;
+}
+.alert-text-good{
+  color: $color-status-success-text;
+}
+.alert-text-info{
+  color: $color-status-info-text;
+}
+.alert-text-neutral{
+  color: $color--grey-50;
 }
 
 .notification-banner {

@@ -1,65 +1,51 @@
-<header id="header" class="header">
-  <!-- HEADER -->
-  <div class="header__info-section">
-    <span class="header__title">OpenBMC</span>
-    <a href="" class="header__logout" ng-click="logout()">Log out</a>
-  </div>
-  <div class="header__functions-section">
-    <div class="logo__wrapper">
-      <img
-        src="../../assets/images/logo.svg"
-        class="header__logo"
-        alt="company logo"
-      />
+<header id="header">
+  <div class="header">
+    <div class="header__info-section">
+      <div class="header__title">
+        <div>{{ dataService.hostname | limitTo: 15 }}{{dataService.hostname.length > 15 ? '...' : ''}}</div>
+        <div>{{ dataService.server_id }}</div>
+      </div>
     </div>
-    <div class="inline header__server-name">
-      <p class="header__hostname">{{ dataService.hostname }}</p>
-      <p class="header__server-ip courier-bold">{{ dataService.server_id }}</p>
-    </div>
-    <div class="header__functions" ng-class="{'active' : toggle}">
-      <button
-        type="button"
-        class="header__action header__action--info"
-        ng-click="toggle = !toggle"
-      >
-        <icon aria-hidden="true" file="icon-chevron-right.svg"></icon>
-      </button>
-      <a href="#/server-health/event-log" class="header__action">
-        Server health
-        <icon aria-hidden="true" file="icon-chevron-right.svg"></icon>
-        <span>
-            <status-icon status="{{ dataService.server_health == 'Critical' ? 'error' :
-                                    dataService.server_health == 'Warning' ? 'warn' :
-                                    dataService.server_health == 'Good' ? 'on' : null }}">
-            </status-icon>
-          {{ dataService.server_health }}
-        </span>
-      </a>
-      <a href="#/server-control/power-operations" class="header__action">
-        Server power
-        <icon aria-hidden="true" file="icon-chevron-right.svg"></icon>
-        <span>
-          <status-icon status="{{ dataService.server_state == 'Quiesced' ? 'error' :
-                                  dataService.server_state == 'Running' ? 'on' :
-                                  dataService.server_state == 'Off' ? 'off' :
-                                  dataService.server_state == 'Unreachable' ? 'off' : null }}">
+    <div class="header__functions-section">
+      <div class="header__functions">
+        <a href="#/server-health/event-log"> H<span class="header__textlink">ealth</span>
+          <status-icon status="{{ dataService.server_health == 'Critical' ? 'error' :
+                                      dataService.server_health == 'Warning' ? 'warn' :
+                                      dataService.server_health == 'Good' ? 'on' : null }}">
           </status-icon>
-          {{ dataService.server_state | quiescedToError }}
-        </span>
-      </a>
-      <p class="header__refresh">
-        Data last refreshed<span>{{
-          dataService.last_updated | localeDate
-        }}</span>
-      </p>
-      <button
-        class="header__action header__action--refresh"
-        ng-click="refresh()"
-        aria-label="refresh page data"
-      >
-        <span>Refresh</span>
-        <icon file="icon-restart.svg"></icon>
-      </button>
+        </a>
+
+        <a href="#/server-control/power-operations" role="button"> P<span class="header__textlink">ower</span>
+          <status-icon status="{{ dataService.server_state == 'Quiesced' ? 'error' :
+                                        dataService.server_state == 'Running' ? 'on' :
+                                        dataService.server_state == 'Off' ? 'off' :
+                                        dataService.server_state == 'Unreachable' ? 'off' : null }}">
+          </status-icon>
+        </a>
+
+        <a href="#" class="header__page-refresh" ng-click="refresh()" ng-mouseover="loginHover=false; refreshHover=true"
+          ng-mouseleave="refreshHover=false" aria-label="refresh page data">
+          <img class="header-icon" src="../../assets/icons/icon-restart.svg"> <span class="header__textlink">Refresh
+            data</span>
+        </a>
+        <div class="refresh-hover header__hover-box" ng-show="refreshHover"
+          ng-class="refreshHover ? 'refresh-hover header__hover-box show' : 'refresh-hover header__hover-box'">
+          <span class="small-text">Last Refreshed</span><br>
+          <span class="small-text black"><span>{{dataService.last_updated | localeDate}}</span>
+        </div>
+
+        <a href="#" class="header__page-login" ng-click="logout()" ng-mouseover="refreshHover=false; loginHover=true"
+          ng-mouseleave="loginHover=false">
+          <img class="header-icon" src="../../assets/icons/icon-user-avatar.svg"> <span
+            class="header__textlink">Logout</span>
+        </a>
+        <div ng-show="loginHover"
+          ng-class="loginHover ? 'login-hover header__hover-box show' : 'login-hover header__hover-box'">
+          <span class="small-text">Logged in as</span><br>
+          <span class="small-text black"><span>{{dataService.user_id}}</span>
+        </div>
+
+      </div>
     </div>
   </div>
 </header>

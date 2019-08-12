@@ -1,9 +1,22 @@
+// Content layout styles (Moved from content.scss b/c need for header)
+$nav__toplvlWidth: 240px;
+$nav__seclvlWidth: 240px;
+
+
+
 html, body {
   height: 100%;
   @include fontFamily;
   font-size: 16px;
   font-weight: 400;
   color: $primary-dark;
+  background: $color--grey-10;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  color: $color--grey-90;
+  font-size:14px;
+  text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+  text-rendering: optimizeLegibility;
 }
 
 p {
@@ -31,4 +44,16 @@ button.link {
 button.link {
   padding-left: .3em;
   padding-right: .3em;
+}
+
+.padding{
+  padding:10px;
+}
+
+.padding-top{
+  padding-top:15px;
+}
+
+.center{
+  text-align:center;
 }
