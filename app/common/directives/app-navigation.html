@@ -1,95 +1,119 @@
 <nav class="nav__wrapper">
   <ul id="nav__top-level" ng-style="navStyle">
-    <li>
-      <a class="btn-overview" ng-class="{opened: firstLevel == 'overview'}" href="#/overview/server" ng-click="change('overview')">
-        <icon class="nav-icon" file="icon-overview.svg" aria-hidden="true"></icon>
-        Server overview
-      </a>
+    <li class="above-nav">
+      <img src="../../assets/images/logo-OpenBmc-reversed.png">
     </li>
     <li>
-      <button class="btn-health" ng-class="{opened: firstLevel == 'server-health'}" ng-click="change('server-health')">
-        <icon class="nav-icon" file="icon-health.svg" aria-hidden="true"></icon>
-        Server health
+      <button class="btn-overview" ng-click="change('overview'); RedirectToURL('/overview/server')">
+        <a ng-class="{opened: firstLevel == 'overview'}" href="#/overview/server">
+          <img class="nav-icon nav-icon-img" src="../../assets/icons/icon-overview.svg">
+          <div class="nav-link">Overview</div>
+        </a>
       </button>
-      <ul class="nav__second-level btn-health" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'server-health')}">
-        <li ng-class="{'active': (path == '/server-health/event-log')}">
-          <a href="#/server-health/event-log" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">Event log</a>
+    </li>
+    <li>
+      <button class="btn-health" ng-class="{opened: firstLevel == 'server-health'}"
+        ng-click="change('server-health'); RedirectToURL('/server-health/sys-log')">
+        <img class="nav-icon nav-icon-img" src="../../assets/icons/icon-health.svg">
+        <div class="nav-link">Health</div>
+      </button>
+      <ul class="nav__second-level btn-health" ng-style="navStyle"
+        ng-class="{opened: (showSubMenu && firstLevel == 'server-health')}">
+        <li ng-class="{'active': (path == '/server-health/sys-log')}">
+          <a href="#/server-health/sys-log" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">Event log</a>
         </li>
         <li ng-class="{'active': (path == '/server-health/inventory-overview' || path == '/server-health/inventory')}">
-          <a href="#/server-health/inventory-overview" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">Hardware status</a>
+          <a href="#/server-health/inventory-overview" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">Hardware status</a>
         </li>
         <li ng-class="{'active': (path == '/server-health/sensors-overview' || path == '/server-health/sensors')}">
-          <a href="#/server-health/sensors-overview" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">Sensors</a>
-        </li>
-        <li ng-class="{'active': (path == '/server-health/sys-log')}" ng-show="!dataService.configJson.redfishEventLogDisabled">
-          <a href="#/server-health/sys-log" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">System logs</a>
+          <a href="#/server-health/sensors-overview" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">Sensors</a>
         </li>
       </ul>
     </li>
     <li>
-      <button class="btn-control" ng-class="{opened: firstLevel == 'server-control'}" ng-click="change('server-control')">
-        <icon class="nav-icon  nav-icon__control" file="icon-control.svg" aria-hidden="true"></icon>
-        Server control
+      <button class="btn-control" ng-class="{opened: firstLevel == 'server-control'}"
+        ng-click="change('server-control'); RedirectToURL('/server-control/power-operations')">
+        <img class="nav-icon nav-icon-img" src="../../assets/icons/icon-control.svg">
+        <div class="nav-link">Control</div>
       </button>
-      <ul class="nav__second-level btn-control" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'server-control')}">
+      <ul class="nav__second-level btn-control" ng-class="{opened: (showSubMenu && firstLevel == 'server-control')}">
         <li ng-class="{'active': (path == '/server-control' || path == '/server-control/power-operations')}">
-          <a href="#/server-control/power-operations" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Server power operations</a>
+          <a href="#/server-control/power-operations" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Server power operations</a>
         </li>
         <li ng-class="{'active': (path == '/server-control/power-usage')}">
-          <a href="#/server-control/power-usage" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Manage power usage</a>
+          <a href="#/server-control/power-usage" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Manage power usage</a>
         </li>
         <li ng-class="{'active': (path == '/server-control/server-led')}">
-          <a href="#/server-control/server-led" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Server LED</a>
+          <a href="#/server-control/server-led" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Server LED</a>
         </li>
         <li ng-class="{'active': (path == '/server-control/bmc-reboot')}">
-          <a href="#/server-control/bmc-reboot" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Reboot BMC</a>
+          <a href="#/server-control/bmc-reboot" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Reboot BMC</a>
         </li>
         <li ng-class="{'active': (path == '/server-control/remote-console')}">
-          <a href="#/server-control/remote-console" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Serial over LAN console</a>
+          <a href="#/server-control/remote-console" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Serial over LAN console</a>
         </li>
         <li ng-class="{'active': (path == '/server-control/kvm')}">
-          <a href="#/server-control/kvm" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">KVM</a>
+          <a href="#/server-control/kvm" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">KVM</a>
         </li>
-        <li ng-class="{'active': (path == '/server-control/virtual-media')}">
-          <a href="#/server-control/virtual-media" ng-click="closeSubnav()"
+        <li ng-class="{'active': (path == '/configuration' || path == '/configuration/virtual-media')}">
+          <a href="#/configuration/virtual-media" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Virtual Media</a>
         </li>
       </ul>
     </li>
     <li>
-      <button class="btn-config" ng-class="{opened: firstLevel == 'configuration'}" ng-click="change('configuration')">
-        <icon class="nav-icon" file="icon-config.svg" aria-hidden="true"></icon>
-        Server configuration
+      <button class="btn-config" ng-class="{opened: firstLevel == 'configuration'}"
+        ng-click="change('configuration'); RedirectToURL('/configuration/network')">
+        <img class="nav-icon nav-icon-img" src="../../assets/icons/icon-config.svg">
+        <div class="nav-link">Configuration</div>
       </button>
-      <ul class="nav__second-level btn-firmware" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'configuration')}">
+      <ul class="nav__second-level btn-firmware" ng-class="{opened: (showSubMenu && firstLevel == 'configuration')}">
         <li ng-class="{'active': (path == '/configuration' || path == '/configuration/network')}">
-          <a href="#/configuration/network" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">Network settings</a>
+          <a href="#/configuration/network" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">Network settings</a>
         </li>
         <li ng-class="{'active': (path == '/configuration' || path == '/configuration/snmp')}">
-          <a href="#/configuration/snmp" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">SNMP settings</a>
+          <a href="#/configuration/snmp" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">SNMP settings</a>
         </li>
         <li ng-class="{'active': (path == '/configuration' || path == '/configuration/firmware')}">
-          <a href="#/configuration/firmware" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">Firmware</a>
+          <a href="#/configuration/firmware" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">Firmware</a>
         </li>
         <li ng-class="{'active': (path == '/configuration' || path == '/configuration/date-time')}">
-          <a href="#/configuration/date-time" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">Date and time settings</a>
+          <a href="#/configuration/date-time" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">Date and time settings</a>
         </li>
       </ul>
     </li>
     <li>
-      <button class="btn-access-control" ng-class="{opened: firstLevel == 'access-control'}" ng-click="change('access-control')">
-          <icon class="nav-icon nav-icon__key" file="icon-key.svg" aria-hidden="true"></icon>
-          Access control
+      <button class="btn-users" ng-class="{opened: firstLevel == 'access-control'}"
+        ng-click="change('access-control'); RedirectToURL('/access-control/ldap')">
+        <img class="nav-icon nav-icon-img" src="../../assets/icons/icon-user.svg">
+        <div class="nav-link">Access</div>
       </button>
-      <ul class="nav__second-level btn-access-control" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'access-control')}">
+      <ul class="nav__second-level btn-users" ng-style="navStyle"
+        ng-class="{opened: (showSubMenu && firstLevel == 'access-control')}">
         <li ng-class="{'active': (path == '/access-control' || path == '/access-control/ldap')}">
-          <a href="#/access-control/ldap" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">LDAP</a>
+          <a href="#/access-control/ldap" ng-click="closeSubnav()"
+            tabindex="{{ (showSubMenu && firstLevel == 'access-control') ? 0 : -1}}">LDAP</a>
         </li>
         <li ng-class="{'active': (path == '/access-control' || path == '/access-control/local-users')}">
-          <a href="#/access-control/local-users" ng-click="closeSubnav()" tabindex="{{ (showSubMenu && firstLevel == 'access-control') ? 0 : -1}}">Local users</a>
+          <a href="#/access-control/local-users" ng-click="closeSubnav()"
+            tabindex="{{ (showSubMenu && firstLevel == 'access-control') ? 0 : -1}}">Local users</a>
         </li>
         <li ng-class="{'active': (path == '/access-control' || path == '/access-control/ssl-certificates')}">
-          <a href="#/access-control/ssl-certificates" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">SSL certificates</a>
+          <a href="#/access-control/ssl-certificates" ng-click="closeSubnav()"
+            tabindex="{{ (showSubMenu && firstLevel == 'access-control') ? 0 : -1}}">SSL certificates</a>
         </li>
       </ul>
     </li>

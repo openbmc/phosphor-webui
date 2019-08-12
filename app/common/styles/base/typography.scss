@@ -20,12 +20,9 @@ h5 {
   color: $text-01;
 }
 
-h1,
-.h1 {
-  font-size: 2.25rem;
-  font-weight: 500;
-  padding-top: 0.5rem;
-  margin-bottom: 3rem;
+h1, .h1 {
+  color: $color--blue-100;
+  font-size:24px;
 }
 
 h2,

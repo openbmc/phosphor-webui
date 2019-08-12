@@ -3,220 +3,166 @@
  * Should only be used for the application header
  */
 
-$logoHeight: 30px;
-$logoMaxHeight: 100px;
-$logoMaxWidth: 125px;
-
-@mixin round-corners {
+ @mixin round-corners {
   -webkit-border-radius: 6px 6px;
   -moz-border-radius: 6px 6px;
   border-radius: 6px 6px;
 }
 
+@mixin header-height($location) {
+  @include mediaQuery(x-small) {
+    $header_Height: 80px;
+    @if ($location=="header"){
+      height: $header_Height;
+    }
+    @if ($location=="page-container"){
+      margin-top: $header_Height;
+    }
+  }
+  @include mediaQuery(small) {
+    $header_Height: 50px;
+    @if ($location=="header"){
+      height: $header_Height;
+    }
+    @if ($location=="page-container"){
+      margin-top: $header_Height;
+    }
+  }
+}
+
+.header__functions a:hover{
+  opacity: .7;
+}
+
 .header {
-  position: fixed;
+  position:fixed;
+  display:block;
+  width:100%;
   top: 0;
-  left: 0;
   right: 0;
   z-index: 300;
+  background: white;
+  border-bottom:1px solid $color--blue-20;
+  @include header-height(header);
+  padding-left: $nav__toplvlWidth;
+  padding-top:10px;
+  padding-bottom:10px;
+  z-index: 10;
+}
+
+.header__info-section{
+  overflow: hidden;
+  display: block;
+  margin-left: 30px;
+  float:left;
+  @include mediaQuery(x-small) {
+    max-width: 300px;
+  }
+  @include mediaQuery(small) {
+    display:inline;
+    max-width: 200px;
+  }
+  @include mediaQuery(medium) {
+    display:inline;
+    max-width: inherit;
+  }
+}
+
+.header__info-section{
+  overflow: hidden;
+  max-width: 260px;
+  display: block;
+  margin-left: 30px;
+  @include mediaQuery(small) {
+    display:inline;
+  }
 }
 
 .header__title {
-  margin-left: 1em;
-  display: none;
-  float: left;
-  @include mediaQuery(x-small) {
-    display: inline-block;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+  color: $color--grey-50;
+  font-size:12px;
+  display:block;
+  float:left;
+  font-size:12px;
+  div{
+    height:15px;
+    overflow:hidden;
+  }
+  div:first-child{
+    clear: right;
+    font-size:16px;
+    height:17px;
+    color: $color--blue-50;
+  }
+
+  display:none;
+  @include mediaQuery(small) {
+    display:inline;
   }
 }
 
-.header__info-section {
-  position: relative;
-  background: $primary-dark;
-  color: $primary-light;
+.header__functions-section{
   overflow: hidden;
-}
-
-.header__logout {
+  white-space: nowrap;
   float: right;
-  color: $primary-light;
-  font-size: 0.9em;
-  text-decoration: none;
-  padding: 1em;
-  font-weight: 400;
-  &:visited {
-    color: $primary-light;
-  }
+  margin-right: 30px;
+  font-size:12px;
+  padding-top:7px;
+
 }
 
-.header__functions-section {
-  color: $primary-light;
-  padding: 0 1.1em;
-  box-sizing: border-box;
-  display: block;
-  position: relative;
-  overflow: hidden;
-  min-height: 5em;
-  border-bottom: 1px solid $border-color-01;
-  background: $primary-light;
-  .header__server-name {
-    font-size: 1.5em;
-    font-weight: 500;
-    color: $text-02;
-    padding: 0.4em 0 0 1em;
-    height: 100%;
-    background: transparent;
-    max-width: 600px;
-    white-space: nowrap;
-    overflow: hidden;
-    .header__hostname {
-      color: $primary-dark;
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0;
-    }
-    .header__server-ip {
-      font-size: 1rem;
-    }
-  }
-  .logo__wrapper {
-    padding-top: 0.5em;
-  }
-
-  .header__logo {
-    vertical-align: middle;
-    margin: 1em;
-    float: left;
-    height: $logoHeight; //required for <SVG> logos - can remove if using img
-    max-height: $logoMaxHeight;
-    max-width: $logoMaxWidth;
-    width: auto;
-  }
-
-  .header__functions {
-    position: absolute;
-    top: 0;
-    right: -480px;
-    bottom: 0;
-    z-index: 100;
-    margin: 0.3em 0;
-    background: $primary-light;
-    @include fastTransition-all;
-    &.active {
-      right: 1em;
-    }
-    @media (min-width: 1025px) {
-      right: 0;
-    }
-    span {
-      display: block;
-      color: $primary-dark;
-      font-size: 1em;
-    }
-    a,
-    p {
-      display: block;
-      float: left;
-      text-decoration: none;
-      color: $text-02;
-      padding: 1.25em;
-      height: 100%;
-      font-size: 0.875em;
-      font-weight: 400;
-      line-height: 1;
-      > span {
-        display: block;
-        font-size: 1rem;
-        font-weight: bold;
-        margin-top: 0.5em;
-      }
-    }
-  }
-
-  .header__action {
-    @include fastTransition-all;
-    @include round-corners;
-    height: 100%;
-    background: $background-02;
-    border: 1px solid $border-color-01;
-    margin: 0 0.3em;
-    opacity: 1;
-
-    .icon svg {
-      height: 1rem;
-    }
-
-    .status-icon {
-      vertical-align: text-top;
-    }
-
+.header__functions {
+  a{
+    font-weight:normal;
+    color: $color--grey-70;
+    padding: 0 5px 10px 0;
+    display: inline-block;
     &:hover {
-      background: $background-01;
+      color: $color--blue-50;
+      text-decoration: none;
     }
   }
-
-  .header__functions {
-    .header__action--info {
-      padding: 0.3em;
-      min-width: 40px;
-      text-align: center;
-      float: left;
-      span {
-        padding: 0.7em 0 0.3em;
-        font-size: 1em;
-        font-weight: 400;
-        color: $text-02;
-      }
-
-      .icon {
-        @include fastTransition-all;
-        svg {
-          width: 1.25rem;
-          height: auto;
-        }
-      }
-
-      @media (min-width: 1025px) {
-        display: none;
-      }
-    }
-
-    &.active > .header__action--info > .icon {
-      transform: rotate(-180deg);
-    }
-
-    .header__refresh {
-      color: $text-02;
-      line-height: 1.4;
-      border-radius: 6px;
-      span {
-        @include fontCourierBold;
-      }
-    }
+  display:inline;
+  span{
+    display:inline;
   }
-  .header__action--refresh {
-    padding-top: 1em;
-    span {
-      font-size: 0.875em;
-      font-weight: 400;
-      color: $text-02;
-      display: block;
-      margin-bottom: 0.2em;
-    }
-    .icon {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-
-      svg {
-        height: 1.5rem;
-        fill: $primary-accent;
-      }
+  button{
+    display:inline;
+    width: 40px;
+  }
+  .header__textlink{
+    display: none;
+    @include mediaQuery(small) {
+      display:inline;
     }
   }
 }
 
-// end header__functions-section
+.header__functions-section button{
+  color: $color--blue-50;
+  text-transform: capitalize;
+  display: inline;
+}
+
+.help-hover{
+  opacity: 0;
+}
+
+.refresh-hover, .login-hover, .help-hover{
+    box-shadow: 0px 7px 6px 0px rgba(0,0,0,0.18);
+    padding: 8px 14px 4px 14px;
+    border-radius: 4px;
+    background: white;
+    position: absolute;
+    right: 35px;
+    margin-top:-10px;
+    transition: all .2s ease;
+    z-index:0;
+    &.show {
+      visibility: visible;
+      z-index: 200;
+      opacity: 1;
+      transform: translateY(10px);
+      display: block;
+    }
+}

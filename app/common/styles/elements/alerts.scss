@@ -1,29 +1,79 @@
-//Fixed alerts
-.alert-danger {
-  background-color: $accent-04--02;
-  border-color: $accent-04--01;
-  border-radius: 0;
-  color: $primary-dark;
-  text-align: left;
-}
-.alert-warning {
-  background-color: $accent-03--03;
-  border-color: $accent-03--02;
-  border-radius: 0;
-  color: $primary-dark;
-  text-align: left;
-  .icon {
-    vertical-align: bottom;
+@mixin alert-format($alert-type){
+  @if ($alert-type=="warning") {
+    background-color: $color-status-warning-bg;
+    background-image: url(../assets/icons/icon-alert-warning.png);
+    border-left: solid 4px $color-status-warning;
   }
+  @if ($alert-type=="error") {
+    background-color: $color-status-error-bg;
+    background-image: url(../assets/icons/icon-alert-error.png);
+    border-left: solid 4px $color-status-error;
+  }
+  @if ($alert-type=="good") {
+    background-color: $color-status-success-bg;
+    background-image: url(../assets/icons/icon-alert-good.png);
+    border-left: solid 4px $color-status-success;
+  }
+  @if ($alert-type=="info") {
+    background-color: $color-status-info-bg;
+    background-image: url(../assets/icons/icon-alert-info.png);
+    border-left: solid 4px $color-status-info;
+  }
+  background-position: 9px 0px;
+  background-repeat: no-repeat;
+  line-height: 18px;
+  overflow: hidden;
+  padding: 15px 40px 15px 60px;
+  border-radius: 6px;
+  text-align: left;
+  font-size: 14px;
+  width: 100%;
+  margin: 15px auto;
+  color: #333;
 }
 
-.message-container {
-  background-color: $background-02;
-  padding: 1em 1.5em;
-  display: inline-block;
-  >*:last-child {
-    margin-bottom: 0;
-  }
+.alert-danger{
+  @include alert-format(error)
+}
+
+.alert-warning{
+    @include alert-format(warning)
+}
+
+.alert-good{
+  @include alert-format(good)
+}
+
+.alert-info{
+  @include alert-format(info)
+}
+
+.alert-text-critical{
+  color: $color-status-error-text;
+}
+.alert-text-warning{
+  color: $color-status-warning-text;
+}
+.alert-text-good{
+  color: $color-status-success-text;
+}
+.alert-text-info{
+  color: $color-status-info-text;
+}
+.alert-text-neutral{
+  color: $color--grey-50;
+}
+
+//For switching icons to svg
+.filter-yellow{
+  filter: invert(73%) sepia(72%) saturate(465%) hue-rotate(351deg) brightness(102%) contrast(103%);
+}
+.filter-red{
+  filter: invert(17%) sepia(69%) saturate(5244%) hue-rotate(355deg) brightness(97%) contrast(86%);
+}
+
+.filter-white{
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(304deg) brightness(104%) contrast(103%);
 }
 
 .notification-banner {

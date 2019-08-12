@@ -1,42 +1,33 @@
-$nav__toplvlWidth: 125px;
-$nav__seclvlWidth: 240px;
-$nav__top-level-color: $base-01--01;
-$nav__second-level-color: $base-02--06;
-$nav__second-level-text-color: $base-02--01;
-
-//Navigation icons
-@mixin navIcons {
-  color: $primary-light;
-  fill: $primary-light;
-  max-height: 40px;
-  stroke-width: .5;
-  display: block;
-  margin: .5em auto;
-  .st0 {
-    fill: none;
-    stroke: $primary-light;
-    stroke-width: 2;
-    stroke-miterlimit: 10;
-  }
-  .st1 {
-    fill: none;
-    stroke: $primary-light;
-    stroke-width: 4;
-    stroke-miterlimit: 10;
-  }
+@mixin nav-whitefilter {
+  filter: invert(92%) sepia(17%) saturate(0%) hue-rotate(326deg) brightness(112%) contrast(103%);
+}
+@mixin nav-SuperLtBluefilter {
+   filter: invert(92%) sepia(17%) saturate(0%) hue-rotate(326deg) brightness(112%) contrast(103%);
+}
+@mixin nav-LtBluefilter {
+  filter: invert(87%) sepia(27%) saturate(6400%) hue-rotate(166deg) brightness(96%) contrast(88%);
 }
 
+//Navigation icons
 .nav__wrapper {
   height: 100%;
-  position: fixed;
+  position: absolute;
   top: 0;
   z-index: 100;
+}
+
+.above-nav{
+  text-align: center;
+  padding: 15px 30px 4px 0;
+  img{
+    padding-bottom:10px;
+  }
 }
 
 // Top level navigation
 #nav__top-level {
   background: $nav__top-level-color;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   bottom: 0;
@@ -44,150 +35,170 @@ $nav__second-level-text-color: $base-02--01;
   margin: 0;
   padding: 0;
   width: $nav__toplvlWidth;
-  overflow-y: auto;
+  z-index:100;
+  //overflow-y: auto;
   li {
     margin: 0;
   }
   > li > a,
   > li > button {
-    height: 120px;
+    height: inherit;
+}
+
+button, .button, a {
+  .nav-icon-img {
+    @include whitefilter;
   }
-  //svg icons
-  .nav-icon {
-    @include navIcons;
-    width: 100%;
-    height: 100%;
-    svg {
-      width: 36px;
-      height: auto;
+  &:hover {
+    .nav-icon-img {
+      @include LtBluefilter;
+    }
+    &.opened{
+      color: $white;
     }
   }
-  .nav-icon__control,
-  .nav-icon__key {
-    svg {
-      width: 30px;
+  &.opened{
+    .nav-icon-img {
+      @include whitefilter;
+    }
+    .nav-link{
+      color:$white;
     }
   }
-  .button, button, a {
+}
+
+.nav-icon-img {
+    width: 26px;
+    height: auto;
+    float: left;
+    margin-top: 6px;
+}
+.nav-link {
+    float: left;
+    font-size: 1.2em;
+    padding: 10px 0 0 5px;
+    text-transform: capitalize;
+}
+}
+
+.nav__wrapper .button, .nav__wrapper button {
+background: transparent;
+border: 0;
+color: $white;
+width: 95%;
+padding: 5px 5px 9px 10px;
+margin: 0 0 0 4px;
+display: block;
+text-align: center;
+white-space: normal;
+border-radius: 0;
+text-decoration: none;
+border: 1px solid transparent;
+font-weight: normal;
+font-size: .9em;
+&:hover {
+  background: $color--blue-60;
+  color: $color--blue-38;
+  border-radius: 0;
+  border: 1px solid $color--blue-35;
+}
+&:focus{
+  outline: 0px;
+}
+}
+
+
+
+.btn-overview {
+.nav-link{
+  color:$white;
+  font-weight:400;
+}
+&:hover {
+  background: $color--blue-60;
+  .nav-link{
+    color: $color--blue-35;
+  }
+}
+}
+
+.nav__second-level  {
+  list-style-type: none;
+  opacity: 0;
+  left: $nav__toplvlWidth;
+  padding: 0px;
+  margin: 0;
+  background-image: url('../assets/images/img-dots-tall.png');
+  background-position: left 31px bottom 0;
+  background-repeat: no-repeat;
+  transform: scaleY(0);
+  transform-origin: 0 0;
+  transition: all .3s ease-in-out;
+  overflow:hidden;
+  line-height: 0;
+  a{
     background: transparent;
     border: 0;
-    color: $primary-light;
-    fill: $primary-light;
-    width: 100%;
-    padding: 1em;
-    display: block;
+    color: $white;
+    width: 95%;
+    padding: 5px 5px 9px 10px;
+    margin: 0 0 0 8px;
     text-align: center;
-    margin-bottom: 0;
     white-space: normal;
     border-radius: 0;
     text-decoration: none;
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid $border-color-02;
+    border: 1px solid transparent;
     font-weight: normal;
     font-size: .9em;
-    line-height: 1.2;
+    text-align:left;
+    margin-left:26px;
+    color: $color--blue-30;
     &:hover {
-      background: $primary-light;
-      fill: $primary-dark;
-      color: $primary-action;
-      padding: 1em;
+      background: $color--blue-60;
+      color: $color--blue-38;
       border-radius: 0;
-      border-bottom: 1px solid $border-color-01;
-      .nav__icon-help__outer {
-        stroke: $primary-dark;
-      }
-      .nav__icon-help__inner {
-        fill: $primary-action;
-      }
-      .nav-icon {
-        fill: $primary-action;
-        color: $primary-action;
-        .st0 {
-          stroke: $primary-action;
-        }
-        .st1 {
-          fill: $primary-action;
-          color: $primary-action;
-          stroke: $primary-action;
-        }
-      }
+      border: 1px solid $color--blue-35;
+    }
+    &:focus{
+      outline: 0px;
     }
   }
-  .opened {
-    background: $nav__second-level-color;
-    fill: $primary-dark;
-    color: darken($primary-action, 10%);
-    border-bottom: 1px solid $border-color-01;
-    .nav-icon {
-      fill: $primary-action;
-      color: $primary-action;
-      .st0 {
-        stroke: $primary-action;
-      }
-      .st1 {
-        fill: $primary-action;
-        color: $primary-action;
-        stroke: $primary-action;
+  &.opened {
+    line-height: 1.2;
+    overflow: visible;
+    opacity: 1;
+    transform: scaleY(1);
+    li a{
+      display:block;
+      &:hover{
+        background-image: url('../assets/images/img-dots-tall.png');
+        background-repeat:no-repeat;
+        background-position: left 27px bottom -10px;
       }
     }
   }
 
-  // Second Level Navigation
-  .nav__second-level {
-    position: fixed;
-    background: $nav__second-level-color;
-    top: 0;
-    bottom: 0;
-    left: -245px;
-    width: $nav__seclvlWidth;
-    z-index: -1;
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-    display: block;
-    transition: left $duration--slow-01 $standard-easing--productive;
-    &.opened {
-      left: $nav__toplvlWidth;
-      box-shadow: 7px 0 28px -10px $base-02--02;
-    }
-    a {
-      padding: 1.2em 1em 1.2em 1em;
-      display: block;
-      color: $primary-dark;
-      text-decoration: none;
-      position: relative;
-      font-weight: 400;
-      text-align: left;
-      border-bottom: 1px solid transparent;
-      &:hover {
-        background: $primary-light;
-      }
-    }
+  li:last-child a:hover{
+    background-image: url('../assets/images/img-dots-tall.png');
+      background-repeat:no-repeat;
+      background-position: left 27px bottom -1px;
+  }
 
-    li {
-      a:after{
-        content: '\203A';
-        position: absolute;
-        font-size: 2em;
-        font-weight: 700;
-        top: 50%;
-        right: .6em;
-        transform: translateY(-59%);
-        color: $nav__second-level-text-color;
-        opacity: 0;
+  li {
+    a:before{
+      content: "\00B7 \00a0 \00B7 \00a0 \00B7 \00a0"; // \00B7 = middle dot  \00a0 = space
+    }
+    &:focus,
+    &:hover {
+      a {
+        color: $color--blue-38;
+        margin: -1px 0 0px 3px;
+        padding: 6px 5px 9px 33px;
       }
-      &.active {
-        a {font-weight: 700;}
-      }
-      &.active,
-      &:focus,
-      &:hover {
-        a {color: $nav__second-level-text-color;}
-        a:after {
-          opacity: 1;
-          right: .3em;
-          @include fastTransition-all;
-        }
+    }
+    &.active {
+      a {
+        color: $white;
       }
     }
   }
