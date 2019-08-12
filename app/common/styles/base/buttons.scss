@@ -1,12 +1,17 @@
-$btn-primary__bg: $base-01--03;
-$btn-primary__bg--hover: $base-01--04;
-$btn-primary__bg--disabled: $base-02--04;
+$btn-primary__bg: $base-01--02;
+$btn-primary__bg--hover: $base-01--03;
+$btn-primary__border: transparent;
 $btn-primary__txt: $base-02--08;
+$btn-primary__txt--hover: $base-02--08;
+$btn-primary__bg--disabled: $base-02--04;
 $btn-primary__txt--disabled: $base-02--03;
 
-$btn-secondary__bg: $base-02--08;
-$btn-secondary__txt: $base-01--03;
-$btn-secondary__txt--hover: $base-01--04;
+$btn-secondary__bg: $base-02--03;
+$btn-secondary__bg--hover: $base-02--04;
+$btn-secondary__border: transparent;
+$btn-secondary__txt: $base-02--08;
+$btn-secondary__txt--hover: $base-02--08;
+$btn-secondary__bg--disabled: $base-02--04;
 $btn-secondary__txt--disabled: $base-02--03;
 
 $btn-tertiary__bg: transparent;
@@ -14,6 +19,11 @@ $btn-tertiary__txt: $base-01--03;
 $btn-tertiary__txt--hover: $base-01--04;
 $btn-tertiary__txt--disabled: $base-02--03;
 
+@mixin resize-button($size){
+  @if ($size=="x-small") {
+    padding: .5em 1em;
+  }
+}
 /***
 Include .btn class in addition to the button type.
 These styles provide structural and base properties
@@ -24,18 +34,20 @@ properties
 button,
 .btn,
 [type='button'] {
-  @include fontFamilyBold;
+  @include fontFamily;
   @include fastTransition-all;
-  border-style: solid;
-  border-width: 2px;
-  border-color: transparent;
-  font-size: 1em;
-  text-transform: none;
+  font-size: .8em;
+  text-transform: uppercase;
   border-radius: 0;
   padding: .5em 1em;
   line-height: 1;
   display: inline-block;
   cursor: pointer;
+  border-radius: 26px;
+  box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.08);
+  padding: 15px 35px;
+  border: 0;
+
   &[disabled],
   &.disabled {
     opacity: 1;
@@ -53,7 +65,6 @@ button,
     display: inline-block;
     margin-right: 0.3em;
     vertical-align: bottom;
-    margin-left: -0.5em;
   }
   img {
     width: 1.5em;
@@ -66,12 +77,8 @@ button,
     width: auto;
     max-width: 100%;
   }
-
-  // Override for specific icons
-  .icon-add {
-    margin-right: 0;
-  }
 }
+
 
 /***
 Use for the primary use-case/s that is non-destructive.
@@ -84,6 +91,7 @@ e.g. directing to a new page, a call to action
   &:hover {
     background-color: $btn-primary__bg--hover;
     border-color: $btn-primary__bg--hover;
+    color: $btn-primary__txt--hover;
   }
   &[disabled],
   &.disabled {
@@ -97,6 +105,14 @@ e.g. directing to a new page, a call to action
   .icon {
     fill: $btn-primary__txt;
   }
+
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: $color--blue-50;
+  border-color: $color--blue-20;
 }
 
 /***
@@ -106,10 +122,10 @@ These usually come coupled with a primary.
 ***/
 .btn-secondary {
   background-color: $btn-secondary__bg;
-  border-color: $btn-secondary__txt;
   color: $btn-secondary__txt;
+  border-color: $btn-secondary__bg;
   &:hover {
-    background-color: $btn-secondary__bg;
+    background-color: $btn-secondary__bg--hover;
     border-color: $btn-secondary__txt--hover;
     color: $btn-secondary__txt--hover;
     .icon {
@@ -129,6 +145,7 @@ These usually come coupled with a primary.
     fill: $btn-secondary__txt;
   }
 }
+
 
 /***
 Tertiary text buttons are used to identify less pressing or
@@ -156,29 +173,34 @@ optional actions given on a page.
   }
 }
 
-.btn-password-toggle {
-  position: absolute;
-  right: 0;
-  margin-top: -34px;
-  height: 32px;
-  width: 52px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  padding-right: 0;
-  .icon {
-    margin-right: 0;
+/***
+Filter text buttons are used for toggle filters, such as on the sensors page
+***/
+.btn-filter-primary, .btn-filter-secondary{
+  font-size: 14px;
+  text-transform: inherit;
+  border-radius: 0;
+  padding: .5em 1em;
+  line-height: 1;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 0px;
+  padding: 15px .2em;
+  @include mediaQuery(small) {
+  padding: 15px 1em;
+  width:100%;
   }
-  &.password-visible {
-    .icon {
-      fill: $btn-tertiary__txt--disabled;
-    }
+  color: $color--grey-90;
+  @include fastTransition-all;
+  &:hover{
+    border: 1px solid $color--blue-20;
+    background: #ffffff;
   }
-  &.password-hidden {
-    .icon {
-      // Adding tweaks to make sure the icons
-      // are in the same place when toggling show/hide
-      margin-right: 1px;
-      width: 20px;
-    }
-  }
+}
+.btn-filter-primary {
+  border: 1px solid $color--blue-10;
+  background:#ffffff;
+}
+.btn-filter-secondary{
+  border: 1px solid transparent;
 }
