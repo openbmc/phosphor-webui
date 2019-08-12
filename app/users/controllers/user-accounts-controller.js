@@ -19,16 +19,24 @@ window.angular && (function(angular) {
 
       $scope.tableModel = {};
       $scope.tableModel.data = [];
-      $scope.tableModel.header = ['Username', 'Privilege', 'Account status']
-      $scope.tableModel.actions = ['Edit', 'Delete'];
+      $scope.tableModel.header = ['Username', 'Privilege', 'Account status'];
 
       /**
        * Data table mapper
        * @param {*} user
+       * @returns user
        */
       function mapTableData(user) {
-        let accountStatus =
+        const accountStatus =
             user.Locked ? 'Locked' : user.Enabled ? 'Enabled' : 'Disabled';
+        const editAction = {type: 'Edit', enabled: true, file: 'icon-edit.svg'};
+        const deleteAction = {
+          type: 'Delete',
+          enabled: user.UserName === 'root' ? false : true,
+          file: 'icon-trashcan.svg'
+        };
+
+        user.actions = [editAction, deleteAction];
         user.uiData = [user.UserName, user.RoleId, accountStatus];
         return user;
       }
