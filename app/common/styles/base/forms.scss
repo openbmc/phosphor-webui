@@ -244,3 +244,19 @@ select {
     position: absolute;
   }
 }
+
+.radio-option__input-field-group {
+  margin-left: 1.5em;
+}
+
+.field-group-container {
+  margin-bottom: 30px;
+  position: relative;
+  &:last-child {
+    margin-bottom: 12px;
+  }
+
+  input + .form__validation-message {
+    position: absolute;
+  }
+}
