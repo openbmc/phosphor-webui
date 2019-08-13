@@ -136,6 +136,7 @@ module.exports = (env, options) => {
       'object-src': '\'none\'',
       'script-src': ['\'self\''],
       'style-src': ['\'self\''],
+      'connect-src': ['\'self\''],
       // KVM requires image buffers from data: payloads, so allow that in
       // img-src
       // https://stackoverflow.com/questions/18447970/content-security-policy-data-not-working-for-base64-images-in-chrome-28
