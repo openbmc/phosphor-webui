@@ -30,6 +30,11 @@ window.angular && (function(angular) {
       $scope.countryList = Constants.COUNTRIES;
 
 
+      $scope.$on('$viewContentLoaded', () => {
+        getBMCTime();
+        $scope.loadCertificates();
+      })
+
       $scope.loadCertificates = function() {
         $scope.certificates = [];
         $scope.availableCertificateTypes = Constants.CERTIFICATE_TYPES;
@@ -97,12 +102,18 @@ window.angular && (function(angular) {
       };
 
       var isExpiring = function(certificate) {
-        // if ValidNotAfter is less than or equal to 30 days from today
-        // (2592000000), isExpiring. If less than or equal to 0, is expired.
-        var difference = certificate.ValidNotAfter - new Date();
+        // NOTE: all calculations are done in seconds
+        // if ValidNotAfter is less than or equal to 30 days from bmc time
+        // isExpiring. If less than or equal to 0, is expired.
+        // dividing certificate.ValidNotAfter by 1000 converts epoch
+        // milliseconds to seconds NOTE: all calculations are made in seconds
+        // unit
+        var difference =
+            (new Date(certificate.ValidNotAfter).getTime() / 1000) -
+            ($scope.bmcTime);
         if (difference <= 0) {
           certificate.isExpired = true;
-        } else if (difference <= 2592000000) {
+        } else if (difference <= 2592000) {
           certificate.isExpiring = true;
         } else {
           certificate.isExpired = false;
@@ -200,6 +211,14 @@ window.angular && (function(angular) {
       };
 
 
+      var getBMCTime = function() {
+        // NOTE: bmc time is originally set to microseconds, therefore have to
+        // divide by 1000 twice to convert to seconds
+        APIUtils.getBMCTime().then(function(data) {
+          $scope.bmcTime = (data.data.Elapsed / 1000) / 1000;
+        });
+      };
+
       var updateAvailableTypes = function(certificate) {
         // TODO: at this time only one of each type of certificate is allowed.
         // When this changes, this will need to be updated.
@@ -212,11 +231,10 @@ window.angular && (function(angular) {
 
       $scope.getDays = function(endDate) {
         // finds number of days until certificate expiration
-        var ms = endDate - new Date();
-        return Math.floor(ms / (24 * 60 * 60 * 1000));
+        // dividing bmc time by 1000 converts milliseconds to seconds
+        var seconds = (new Date(endDate).getTime() / 1000) - ($scope.bmcTime);
+        return Math.floor(seconds / (24 * 60 * 60));
       };
-
-      $scope.loadCertificates();
     }
   ]);
 })(angular);
