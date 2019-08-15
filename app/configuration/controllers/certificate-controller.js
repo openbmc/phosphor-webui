@@ -30,6 +30,10 @@ window.angular && (function(angular) {
       $scope.countryList = Constants.COUNTRIES;
 
 
+      $scope.$on('$viewContentLoaded', () => {
+        getBMCTime();
+      })
+
       $scope.loadCertificates = function() {
         $scope.certificates = [];
         $scope.availableCertificateTypes = Constants.CERTIFICATE_TYPES;
@@ -97,9 +101,12 @@ window.angular && (function(angular) {
       };
 
       var isExpiring = function(certificate) {
-        // if ValidNotAfter is less than or equal to 30 days from today
+        // convert certificate time to epoch time
+        // if ValidNotAfter is less than or equal to 30 days from bmc time
         // (2592000000), isExpiring. If less than or equal to 0, is expired.
-        var difference = certificate.ValidNotAfter - new Date();
+        // dividing bmc time by 1000 converts epoch milliseconds to seconds
+        var difference = (new Date(certificate.ValidNotAfter).getTime()) -
+            ($scope.bmcTime) / 1000;
         if (difference <= 0) {
           certificate.isExpired = true;
         } else if (difference <= 2592000000) {
@@ -200,6 +207,14 @@ window.angular && (function(angular) {
       };
 
 
+      var getBMCTime = function() {
+        APIUtils.getBMCTime().then(function(data) {
+          $scope.bmcTime = data.data.Elapsed;
+        });
+
+        return $scope.bmcTime;
+      };
+
       var updateAvailableTypes = function(certificate) {
         // TODO: at this time only one of each type of certificate is allowed.
         // When this changes, this will need to be updated.
@@ -212,7 +227,8 @@ window.angular && (function(angular) {
 
       $scope.getDays = function(endDate) {
         // finds number of days until certificate expiration
-        var ms = endDate - new Date();
+        // dividing bmc time by 1000 converts milliseconds to seconds
+        var ms = (new Date(endDate).getTime()) - ($scope.bmcTime) / 1000;
         return Math.floor(ms / (24 * 60 * 60 * 1000));
       };
 
