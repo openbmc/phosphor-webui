@@ -24,26 +24,21 @@
     Valid until:
   </div>
   <div class="certificate__status-cell">
-    <span class="inline"
-      ng-class="{'icon__warning' : cert.isExpiring , 'icon__critical' : cert.isExpired}"
+    <span class="inline" ng-class="{'icon__warning certificate__table__icon' : cert.isExpiring , 'icon__critical certificate__table__icon' : cert.isExpired}"
       ng-if="cert.isExpired || cert.isExpiring"></span>
   </div>
   <div class="certificate__date-cell">
     {{cert.ValidNotAfter | date:medium}}
   </div>
   <div class="certificate__buttons-cell">
-    <button type="button" ng-click="cert.upload = true" aria-label="Replace certificate"
-      class="btn  btn-tertiary certificate__button">
+    <button type="button" ng-click="cert.upload = true" aria-label="Replace certificate" class="btn  btn-tertiary certificate__button">
       <icon file="icon-replace.svg" aria-hidden="true"></icon>
     </button>
   </div>
   <div ng-show="cert.upload === true" class="upload__certificate">
     <div class="certificate__upload-chooser row">
       <div class="small-1 column">
-        <button
-          type="button"
-          ng-click="cert.upload=false"
-          aria-label="close replace certificate upload form">
+        <button type="button" ng-click="cert.upload=false" aria-label="close replace certificate upload form">
           <icon file="icon-close.svg" aria-hidden="true"></icon>
         </button>
       </div>
@@ -60,17 +55,12 @@
       <div class="small-6 column">
         <span ng-if="!cert.file">No file selected</span>
         <span>{{cert.file.name}}</span>
-        <button
-          type="reset"
-          ng-if="cert.file.name"
-          ng-click="cert.file = '';"
-          aria-label="remove selected file">
+        <button type="reset" ng-if="cert.file.name" ng-click="cert.file = '';" aria-label="remove selected file">
           <icon file="icon-close.svg" aria-hidden="true"></icon>
         </button>
       </div>
       <div class="small-3 column">
-        <button type="submit" ng-class="{disabled:!cert.file}" class="btn btn-primary"
-          ng-click="replaceCertificate(cert)">
+        <button type="submit" ng-class="{disabled:!cert.file}" class="btn btn-primary" ng-click="replaceCertificate(cert)">
           Replace
         </button>
       </div>

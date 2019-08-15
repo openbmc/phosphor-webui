@@ -30,6 +30,11 @@ window.angular && (function(angular) {
       $scope.countryList = Constants.COUNTRIES;
 
 
+      $scope.$on('$viewContentLoaded', () => {
+        getBmcTime();
+        $scope.loadCertificates();
+      })
+
       $scope.loadCertificates = function() {
         $scope.certificates = [];
         $scope.availableCertificateTypes = Constants.CERTIFICATE_TYPES;
@@ -97,9 +102,11 @@ window.angular && (function(angular) {
       };
 
       var isExpiring = function(certificate) {
-        // if ValidNotAfter is less than or equal to 30 days from today
-        // (2592000000), isExpiring. If less than or equal to 0, is expired.
-        var difference = certificate.ValidNotAfter - new Date();
+        // if ValidNotAfter is less than or equal to 30 days from bmc time
+        // isExpiring. If less than or equal to 0, is expired.
+        // NOTE: all calculations are made in milliseconds
+        var difference = new Date(certificate.ValidNotAfter).getTime() -
+            $scope.bmcTimeInMilliseconds;
         if (difference <= 0) {
           certificate.isExpired = true;
         } else if (difference <= 2592000000) {
@@ -200,6 +207,14 @@ window.angular && (function(angular) {
       };
 
 
+      var getBmcTime = function() {
+        // NOTE: bmc time is originally set to microseconds, therefore have to
+        // divide by 1000 to convert to ms
+        APIUtils.getBMCTime().then(function(data) {
+          $scope.bmcTimeInMilliseconds = data.data.Elapsed / 1000;
+        });
+      };
+
       var updateAvailableTypes = function(certificate) {
         // TODO: at this time only one of each type of certificate is allowed.
         // When this changes, this will need to be updated.
@@ -212,11 +227,10 @@ window.angular && (function(angular) {
 
       $scope.getDays = function(endDate) {
         // finds number of days until certificate expiration
-        var ms = endDate - new Date();
+        // NOTE: everything is calculated in milliseconds
+        var ms = new Date(endDate).getTime() - $scope.bmcTimeInMilliseconds;
         return Math.floor(ms / (24 * 60 * 60 * 1000));
       };
-
-      $scope.loadCertificates();
     }
   ]);
 })(angular);
