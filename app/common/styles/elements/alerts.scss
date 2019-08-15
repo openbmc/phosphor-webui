@@ -12,6 +12,9 @@
   border-radius: 0;
   color: $primary-dark;
   text-align: left;
+  .icon {
+    vertical-align: bottom;
+  }
 }
 
 .message-container {
