@@ -147,6 +147,105 @@
   }
 }
 
+
+.fixed-table-header .table__cell, .table__head .table__cell{
+  // background-color: $color--grey-20;
+   cursor: pointer;
+   margin-right:2px;
+   line-height: 1;
+   padding-top: 18px;
+   padding-bottom: 18px;
+   &.status-icon {
+     border-right: 0px solid $primary-light;
+     margin-left:0px;
+   }
+   .status-icon_wrapper + .status-icon {
+     margin-right:2px;
+   }
+ }
+
+ // Status table cells for sensor and event log
+ .status-icon {
+   max-width:32px;
+   margin-right:0px;
+   padding:0px;
+ }
+ .status-row__OK{
+   color: inherit;
+ }
+ .status-row__Warning{
+   border-bottom:2px solid $notification-warn--dark;
+   background: $notification-warn--light;
+ }
+ .status-row__Critical{
+   font-weight:500;
+   border-bottom:2px solid $notification-error--dark;
+   background: $notification-error--light;
+ }
+ .status__OK{
+   @include bg-icon;
+   background-image: url(../assets/icons/checkmark--filled.svg);
+   border-bottom: 0px;
+ }
+ .status__Critical{
+   @include bg-icon;
+   background-image: url(../assets/icons/warning--filled.svg);
+ }
+ .status__Warning{
+   @include bg-icon;
+   background-image: url(../assets/icons/warning--alt--filled.svg);
+ }
+ .status-icon_wrapper{
+   text-align:left;
+   font-weight: 500;
+   background-color: $color--grey-20;
+   @include mediaQuery(x-small) {
+     background-color: inherit;
+     font-weight: inherit;
+   }
+   @include mediaQuery(medium) {
+     font-weight: inherit;
+   }
+   .sortorder{
+     padding-right: 0px;
+   }
+ }
+
+ //Sorting
+ .sort_button_wrapper{
+   background-repeat: no-repeat;
+   background-position: right 20px bottom 50%;
+ }
+
+ .sort_button_wrapper:hover{
+   background-image: url(../assets/icons/chevron--up.svg);
+   background-size: 15px 15px;
+ }
+
+ .sort_button_wrapper.reverse:hover{
+   background-image: url(../assets/icons/chevron--down.svg);
+   background-size: 15px 15px;
+ }
+
+ @include mediaQuery(medium) {
+   .sort_button_wrapper.status-icon_wrapper {
+     background-position: right 0px bottom 50%;
+   }
+   .status-icon_wrapper div{
+     padding-left: 32px;
+   }
+ }
+
+ .sort_button_wrapper .sortorder{
+   visibility: hidden;
+   float: right;
+   padding: 0 15px 0 15px;
+ }
+
+ .sort_button_wrapper:hover{
+   transition: all .4s ease;
+ }
+
 .bmc-table__container {
   position: relative;
 }

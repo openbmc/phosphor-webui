@@ -13,3 +13,88 @@
 .page-title {
   margin-bottom: 3rem;
 }
+.text-outro,.text-outro a{
+    padding-bottom:5px;
+}
+
+.padding-right{
+  padding-right: 10px;
+}
+
+.padding-left{
+  padding-left: 10px;
+}
+
+.align-right{
+  text-align: right;
+}
+
+.align-left{
+  text-align: left;
+}
+
+.trim-text-large{
+  display:none;
+  @include mediaQuery(large) {
+    display:inherit;
+  }
+}
+
+.trim-text{
+  @include mediaQuery(x-small) {
+    display:none;
+  }
+  @include mediaQuery(small) {
+    display:inherit;
+  }
+}
+
+.trim-text-xsmall{
+  display:none;
+  @include mediaQuery(x-small) {
+    display:block;
+  }
+}
+
+.text-intro .trim-text-large,.trim-text-large, .trim-text-large>div{
+  display:none;
+  @include mediaQuery(large) {
+    display:block;
+  }
+  &.inline{
+    @include mediaQuery(large) {
+      display:inline;
+    }
+  }
+}
+
+.text-intro .trim-text-medium,.trim-text-medium, .trim-text-medium>div{
+  display:none;
+  @include mediaQuery(medium) {
+    display:block;
+  }
+  &.inline{
+    @include mediaQuery(medium) {
+      display:inline;
+    }
+  }
+}
+
+  .trim-text-small,.trim-text-small, .trim-text-small>div{
+    display:none;
+    @include mediaQuery(small) {
+      display:block;
+    }
+    &.inline{
+      @include mediaQuery(small) {
+        display:inline;
+      }
+    }
+  }
+
+  h5{
+    padding-top:5px;
+    font-size: 16px;
+    color: #808080;
+    margin-bottom: 10px;
+  }
