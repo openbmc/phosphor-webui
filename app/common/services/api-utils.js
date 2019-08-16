@@ -50,6 +50,49 @@ window.angular && (function(angular) {
                     console.log(JSON.stringify(error));
                   });
         },
+        getSystemLogsInitial: function(recordType) {
+          var uri = '/redfish/v1/Systems/' + DataService.systemName +
+              '/LogServices/EventLog/Entries';
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + uri,
+                   withCredentials: true
+                 })
+              .then(
+                  function(response) {
+                    // Count total records then display just 25 on load
+                    var count = response.data['Members@odata.count'];
+                    var displayCount = Constants.PAGINATION.LOG_ITEMS_PER_PAGE;
+                    return $http({
+                             method: 'GET',
+                             url: DataService.getHost() + uri,
+                             params: {
+                               $top: displayCount,
+                               $skip: count - displayCount
+                             },
+                             withCredentials: true
+                           })
+                        .then(
+                            function(response) {
+                              var logEntries = [];
+                              angular.forEach(
+                                  response.data['Members'], function(log) {
+                                    if (log.hasOwnProperty('EntryType')) {
+                                      if (log['EntryType'] == recordType) {
+                                        logEntries.push(log);
+                                      }
+                                    }
+                                  });
+                              return logEntries;
+                            },
+                            function(error) {
+                              console.log(JSON.stringify(error));
+                            });
+                  },
+                  function(error) {
+                    console.log(JSON.stringify(error));
+                  });
+        },
         getSystemLogs: function(recordType) {
           var uri = '/redfish/v1/Systems/' + DataService.systemName +
               '/LogServices/EventLog/Entries';
@@ -60,6 +103,8 @@ window.angular && (function(angular) {
                  })
               .then(
                   function(response) {
+                    // BEGIN INITIAL CALL
+
                     var logEntries = [];
                     angular.forEach(response.data['Members'], function(log) {
                       if (log.hasOwnProperty('EntryType')) {
@@ -73,6 +118,15 @@ window.angular && (function(angular) {
                   function(error) {
                     console.log(JSON.stringify(error));
                   });
+        },
+        clearSystemLogs: function() {
+          var uri = '/redfish/v1/Systems/' + DataService.systemName +
+              '/LogServices/EventLog/Actions/LogService.ClearLog';
+          return $http({
+            method: 'POST',
+            url: DataService.getHost() + uri,
+            withCredentials: true
+          });
         },
         clearSystemLogs: function() {
           var uri = '/redfish/v1/Systems/' + DataService.systemName +
@@ -909,163 +963,55 @@ window.angular && (function(angular) {
 
           return deferred.promise;
         },
-        getAllSensorStatus: function(callback) {
+        getSensorsInfo: function(url) {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + url,
+                   withCredentials: true
+                 })
+              .then(
+                  function(response) {
+                    return response.data;
+                  },
+                  function(error) {
+                    console.log(JSON.stringify(error));
+                  });
+        },
+        getAllChassisCollection: function() {
+          var deferred = $q.defer();
+          var promises = [];
           $http({
             method: 'GET',
-            url: DataService.getHost() +
-                '/xyz/openbmc_project/sensors/enumerate',
+            url: DataService.getHost() + '/redfish/v1/Chassis',
             withCredentials: true
           })
               .then(
                   function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
-                    var dataClone = JSON.parse(JSON.stringify(content.data));
-                    var sensorData = [];
-                    var severity = {};
-                    var title = '';
-                    var tempKeyParts = [];
-                    var order = 0;
-                    var customOrder = 0;
-
-                    function getSensorStatus(reading) {
-                      var severityFlags = {
-                        critical: false,
-                        warning: false,
-                        normal: false
-                      },
-                          severityText = '', order = 0;
-
-                      if (reading.hasOwnProperty('CriticalLow') &&
-                          reading.Value < reading.CriticalLow) {
-                        severityFlags.critical = true;
-                        severityText = 'critical';
-                        order = 2;
-                      } else if (
-                          reading.hasOwnProperty('CriticalHigh') &&
-                          reading.Value > reading.CriticalHigh) {
-                        severityFlags.critical = true;
-                        severityText = 'critical';
-                        order = 2;
-                      } else if (
-                          reading.hasOwnProperty('CriticalLow') &&
-                          reading.hasOwnProperty('WarningLow') &&
-                          reading.Value >= reading.CriticalLow &&
-                          reading.Value <= reading.WarningLow) {
-                        severityFlags.warning = true;
-                        severityText = 'warning';
-                        order = 1;
-                      } else if (
-                          reading.hasOwnProperty('WarningHigh') &&
-                          reading.hasOwnProperty('CriticalHigh') &&
-                          reading.Value >= reading.WarningHigh &&
-                          reading.Value <= reading.CriticalHigh) {
-                        severityFlags.warning = true;
-                        severityText = 'warning';
-                        order = 1;
-                      } else {
-                        severityFlags.normal = true;
-                        severityText = 'normal';
-                      }
-                      return {
-                        flags: severityFlags,
-                        severityText: severityText,
-                        order: order
-                      };
-                    }
-
-                    for (var key in content.data) {
-                      if (content.data.hasOwnProperty(key) &&
-                          content.data[key].hasOwnProperty('Unit')) {
-                        severity = getSensorStatus(content.data[key]);
-
-                        if (!content.data[key].hasOwnProperty('CriticalLow')) {
-                          content.data[key].CriticalLow = '--';
-                          content.data[key].CriticalHigh = '--';
-                        }
-
-                        if (!content.data[key].hasOwnProperty('WarningLow')) {
-                          content.data[key].WarningLow = '--';
-                          content.data[key].WarningHigh = '--';
-                        }
-
-                        tempKeyParts = key.split('/');
-                        title = tempKeyParts.pop();
-                        title = tempKeyParts.pop() + '_' + title;
-                        title = title.split('_')
-                                    .map(function(item) {
-                                      return item.toLowerCase()
-                                                 .charAt(0)
-                                                 .toUpperCase() +
-                                          item.slice(1);
-                                    })
-                                    .reduce(function(prev, el) {
-                                      return prev + ' ' + el;
-                                    });
-
-                        content.data[key].Value = getScaledValue(
-                            content.data[key].Value, content.data[key].Scale);
-                        content.data[key].CriticalLow = getScaledValue(
-                            content.data[key].CriticalLow,
-                            content.data[key].Scale);
-                        content.data[key].CriticalHigh = getScaledValue(
-                            content.data[key].CriticalHigh,
-                            content.data[key].Scale);
-                        content.data[key].WarningLow = getScaledValue(
-                            content.data[key].WarningLow,
-                            content.data[key].Scale);
-                        content.data[key].WarningHigh = getScaledValue(
-                            content.data[key].WarningHigh,
-                            content.data[key].Scale);
-                        if (Constants.SENSOR_SORT_ORDER.indexOf(
-                                content.data[key].Unit) > -1) {
-                          customOrder = Constants.SENSOR_SORT_ORDER.indexOf(
-                              content.data[key].Unit);
-                        } else {
-                          customOrder = Constants.SENSOR_SORT_ORDER_DEFAULT;
-                        }
-
-                        sensorData.push(Object.assign(
-                            {
-                              path: key,
-                              selected: false,
-                              confirm: false,
-                              copied: false,
-                              title: title,
-                              unit:
-                                  Constants
-                                      .SENSOR_UNIT_MAP[content.data[key].Unit],
-                              severity_flags: severity.flags,
-                              status: severity.severityText,
-                              order: severity.order,
-                              custom_order: customOrder,
-                              search_text:
-                                  (title + ' ' + content.data[key].Value + ' ' +
-                                   Constants.SENSOR_UNIT_MAP[content.data[key]
-                                                                 .Unit] +
-                                   ' ' + severity.severityText + ' ' +
-                                   content.data[key].CriticalLow + ' ' +
-                                   content.data[key].CriticalHigh + ' ' +
-                                   content.data[key].WarningLow + ' ' +
-                                   content.data[key].WarningHigh + ' ')
-                                      .toLowerCase(),
-                              original_data:
-                                  {key: key, value: content.data[key]}
+                    var members = response.data['Members'];
+                    angular.forEach(
+                        members,
+                        function(member) {
+                          promises.push($http({
+                                          method: 'GET',
+                                          url: DataService.getHost() +
+                                              member['@odata.id'],
+                                          withCredentials: true
+                                        }).then(function(res) {
+                            return res.data;
+                          }));
+                        }),
+                        $q.all(promises).then(
+                            function(results) {
+                              deferred.resolve(results);
                             },
-                            content.data[key]));
-                      }
-                    }
-
-                    sensorData.sort(function(a, b) {
-                      return a.title.localeCompare(
-                          b.title, 'en', {numeric: true});
-                    });
-
-                    callback(sensorData, dataClone);
+                            function(errors) {
+                              deferred.reject(errors);
+                            });
                   },
                   function(error) {
-                    console.log(error);
+                    console.log(JSON.stringify(error));
                   });
+          return deferred.promise;
         },
         getActivation: function(imageId) {
           return $http({
