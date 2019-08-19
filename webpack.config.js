@@ -163,7 +163,8 @@ module.exports = (env, options) => {
    * Reference: http://webpack.github.io/docs/configuration.html#devserver
    * Reference: http://webpack.github.io/docs/webpack-dev-server.html
    */
-  config.devServer = {contentBase: './src/public', stats: 'minimal'};
+  config
+      .devServer = {contentBase: './src/public', stats: 'minimal', port: 8080};
 
   return config;
 };
