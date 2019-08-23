@@ -1,0 +1,10 @@
+Code-Review+1: Dixsie Wolmers <dixsie@ibm.com>
+Code-Review+1: Mira Murali <miramurali23@gmail.com>
+Code-Review+2: Gunnar Mills <gmills@us.ibm.com>
+Ok-To-Test+1: Gunnar Mills <gmills@us.ibm.com>
+Verified+1: Jenkins <openbmc-ci-admin@ozlabs.org>
+Submitted-by: Gunnar Mills <gmills@us.ibm.com>
+Submitted-at: Fri, 23 Aug 2019 20:18:23 +0000
+Reviewed-on: https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-webui/+/24249
+Project: openbmc/phosphor-webui
+Branch: refs/heads/master
