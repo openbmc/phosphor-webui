@@ -91,16 +91,20 @@ window.angular && (function(angular) {
             term.setOption('theme', SOL_THEME);
             var hostname = dataService.getHost().replace('https://', '');
             var host = 'wss://' + hostname + '/console0';
-            var ws = new WebSocket(host);
-            term.attach(ws);
-            ws.onopen = function() {
-              console.log('websocket opened');
-            };
-            ws.onclose = function(event) {
-              console.log(
-                  'websocket closed. code: ' + event.code +
-                  ' reason: ' + event.reason);
-            };
+            try {
+              var ws = new WebSocket(host);
+              term.attach(ws);
+              ws.onopen = function() {
+                console.log('websocket opened');
+              };
+              ws.onclose = function(event) {
+                console.log(
+                    'websocket closed. code: ' + event.code +
+                    ' reason: ' + event.reason);
+              };
+            } catch (error) {
+              console.log(JSON.stringify(error));
+            }
             $scope.openTerminalWindow = function() {
               $window.open(
                   '#/server-control/remote-console-window',
