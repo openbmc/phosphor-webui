@@ -32,37 +32,49 @@
     {{cert.ValidNotAfter | date:medium}}
   </div>
   <div class="certificate__buttons-cell">
-    <button type="button" class="btn  btn-tertiary  certificate__button">
-      <icon file="icon-replace.svg" ng-click="cert.upload = true"
-        aria-label="Replace certificate"></icon>
+    <button type="button" ng-click="cert.upload = true" aria-label="Replace certificate"
+      class="btn  btn-tertiary certificate__button">
+      <icon file="icon-replace.svg" aria-hidden="true"></icon>
     </button>
   </div>
   <div ng-show="cert.upload === true" class="upload__certificate">
     <div class="certificate__upload-chooser row">
       <div class="small-1 column">
-        <button type="button">
-          <icon file="icon-close.svg" ng-click="cert.upload=false"></icon>
+        <button
+          type="button"
+          ng-click="cert.upload=false"
+          aria-label="close replace certificate upload form">
+          <icon file="icon-close.svg" aria-hidden="true"></icon>
         </button>
       </div>
+      <!-- TODO: Fix file upload accessibility -->
       <div class="small-2 column">
-        <label for='upload_{{cert.Description + cert.Id}}'>
-          <input name="upload_{{cert.Description + cert.Id}}"
+        <label for="upload_{{cert.Description + cert.Id}}">
+          <input
+            name="upload_{{cert.Description + cert.Id}}"
             id="upload_{{cert.Description + cert.Id}}"
-            type="file" file="cert.file" class="hide"/>
+            type="file"
+            file="cert.file"
+            class="hide" />
           <span class="btn btn-secondary">Choose file</span>
         </label>
       </div>
       <div class="small-6 column">
         <span ng-if="!cert.file">No file selected</span>
         <span>{{cert.file.name}}</span>
-        <button type="button" ng-if="cert.file.name" ng-click="cert.file = '';">
-          <icon file="icon-close.svg"></icon>
+        <button
+          type="reset"
+          ng-if="cert.file.name"
+          ng-click="cert.file = '';"
+          aria-label="remove selected file">
+          <icon file="icon-close.svg" aria-hidden="true"></icon>
         </button>
       </div>
       <div class="small-3 column">
-        <button type="button" ng-class="{disabled:!cert.file}"
-          class="btn btn-primary"
-          ng-click="replaceCertificate(cert)">Replace</button>
+        <button type="submit" ng-class="{disabled:!cert.file}" class="btn btn-primary"
+          ng-click="replaceCertificate(cert)">
+          Replace
+        </button>
       </div>
     </div>
   </div>
