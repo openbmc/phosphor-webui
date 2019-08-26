@@ -35,6 +35,16 @@ function measureChar(term) {
   return rect;
 }
 
+/*
+TextEncoder/TextDecoder does not support IE.
+Use text-encoding instead in IE
+More detail at https://caniuse.com/#feat=textencoder
+*/
+import {TextDecoder} from 'text-encoding';
+if (!window['TextDecoder']) {
+  window['TextDecoder'] = TextDecoder;
+}
+
 window.angular && (function(angular) {
   'use strict';
 
