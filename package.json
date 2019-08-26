@@ -50,7 +50,8 @@
     "ng-toast": "2.0.0",
     "pkg-dir": "4.2.0",
     "regenerator-runtime": "0.13.3",
-    "xterm": "3.14.5"
+    "xterm": "3.14.5",
+    "text-encoding": "0.7.0"
   },
   "peerDependencies": {},
   "devDependencies": {
