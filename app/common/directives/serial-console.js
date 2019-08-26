@@ -34,6 +34,10 @@ function measureChar(term) {
   document.body.removeChild(span);
   return rect;
 }
+import { TextDecoder } from 'text-encoding';
+if (!window['TextDecoder']) {
+  window['TextDecoder'] = TextDecoder;
+}
 
 window.angular && (function(angular) {
   'use strict';
