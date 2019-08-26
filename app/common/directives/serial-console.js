@@ -35,6 +35,16 @@ function measureChar(term) {
   return rect;
 }
 
+/*
+Fix issue on IE cannot open SOL page.
+The root cause is that TextEncoder/TextDecoder does not support IE
+You could get more detail from https://caniuse.com/#feat=textencoder
+*/
+import {TextDecoder} from 'text-encoding';
+if (!window['TextDecoder']) {
+  window['TextDecoder'] = TextDecoder;
+}
+
 window.angular && (function(angular) {
   'use strict';
 
