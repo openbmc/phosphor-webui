@@ -47,18 +47,16 @@
           <icon file="icon-close.svg" aria-hidden="true"></icon>
         </button>
       </div>
-      <!-- TODO: Fix file upload accessibility -->
       <div class="small-2 column">
-        <label for="upload_{{cert.Description + cert.Id}}">
-          <input
-            name="upload_{{cert.Description + cert.Id}}"
+          <label>
+            <input
             id="upload_{{cert.Description + cert.Id}}"
             type="file"
             file="cert.file"
-            class="hide" />
-          <span class="btn btn-secondary">Choose file</span>
-        </label>
-      </div>
+            class="input-file" />
+            <span class="btn btn-secondary">Choose file</span>
+          </label>
+        </div>
       <div class="small-6 column">
         <span ng-if="!cert.file">No file selected</span>
         <span>{{cert.file.name}}</span>
