@@ -72,7 +72,7 @@
               <input id="ipv4-prefix-{{$index+1}}" class="column small-6" ng-change="ipv4.updatePrefix = true"
                 type="number" min="1" max="32" step="1" ng-disabled="interface.DHCPEnabled"
                 ng-model="ipv4.PrefixLength" />
-              <button class="btn  btn-tertiary network-config_remove-button" ng-click="removeIpv4Address($index)">Remove</button>
+              <button type="button" class="btn  btn-tertiary network-config_remove-button" ng-click="removeIpv4Address($index)">Remove</button>
             </div>
           </fieldset>
           <div class="row column">
@@ -94,7 +94,7 @@
             <label for="net-config__prime-dns{{$index+1}}">DNS Server {{$index+1}}</label>
             <input id="net-config__prime-dns{{$index+1}}" class="network-input column small-6 large-4 inline"
               type="text" ng-model="dns" ng-blur="interface.Nameservers[$index] = dns" set-focus-on-new-input />
-            <button class="btn  btn-tertiary  network-config_remove-button" ng-click="removeDNSField($index)">Remove</button>
+            <button type="button" class="btn  btn-tertiary  network-config_remove-button" ng-click="removeDNSField($index)">Remove</button>
           </div>
         </div>
         <div class="row column">
