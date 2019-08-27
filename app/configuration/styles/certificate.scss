@@ -238,3 +238,16 @@ input.add-csr__input-no-validation {
 select.add-csr__multiselect {
   height: 14rem;
 }
+
+.input-file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.input-file:focus + span {
+  outline: 0.2rem solid $box-shadow-color;
+}
