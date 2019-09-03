@@ -27,6 +27,9 @@ window.angular && (function(angular) {
           // TODO: When API changed from D-Bus to Redfish, 'Operator' role
           // should have 'Configure components managed by this service'
           // privilege checked
+          // TODO: When 'Operator' and 'User' roles have ability to change
+          // own account's passwords, should have 'Update password for
+          // current user account' privilege checked
           this.tableModel.data = [
             {
               uiData: [
@@ -37,8 +40,7 @@ window.angular && (function(angular) {
             {uiData: ['Configure manager resources', check, '', '', '']},
             {
               uiData: [
-                'Update password for current user account', check, check, check,
-                ''
+                'Update password for current user account', check, '', '', ''
               ]
             },
             {uiData: ['Configure users and their accounts', check, '', '', '']},
