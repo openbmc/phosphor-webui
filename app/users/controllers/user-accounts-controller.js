@@ -17,9 +17,10 @@ window.angular && (function(angular) {
       $scope.userRoles;
       $scope.localUsers;
 
-      $scope.tableModel = {};
-      $scope.tableModel.data = [];
-      $scope.tableModel.header = ['Username', 'Privilege', 'Account status'];
+      $scope.tableData = [];
+      $scope.tableHeader = [
+        {label: 'Username'}, {label: 'Privilege'}, {label: 'Account status'}
+      ];
 
       /**
        * Data table mapper
@@ -61,7 +62,7 @@ window.angular && (function(angular) {
         APIUtils.getAllUserAccounts()
             .then((users) => {
               $scope.localUsers = users;
-              $scope.tableModel.data = users.map(mapTableData);
+              $scope.tableData = users.map(mapTableData);
             })
             .catch((error) => {
               console.log(JSON.stringify(error));
