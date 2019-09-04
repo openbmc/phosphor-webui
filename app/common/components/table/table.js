@@ -6,57 +6,66 @@ window.angular && (function(angular) {
    * bmcTable Component
    *
    * To use:
-   * The <bmc-table> component expects a 'model' attribute
-   * that will contain all the data needed to render the table.
    *
-   * The component accepts a 'row-actions-enabled' attribute,
-   * to optionally render table row actions. Defaults to false.
-   * Pass true to render actions. Row actions are defined in
-   * model.data.actions.
-   *
-   * The component accepts a 'size' attribute which can be
-   * set to 'small' which will render a smaller font size in the
-   * table.
-   *
-   * The model object should contain 'header' and 'data'
-   * properties.
-   *
-   * model: {
-   *    header: <string>[],  // Array of header labels
-   *    data: <any>[],       // Array of each row object
-   * }
-   *
-   * The header property will render each label as a <th> in the table.
-   *
-   * The data property will render each item as a <tr> in the table.
-   * Each row object in the model.data array should also have a 'uiData'
+   * The 'data' attribute should be an array of all row objects in the table.
+   * It will render each item as a <tr> in the table.
+   * Each row object in the data array should also have a 'uiData'
    * property that should be an array of the properties that will render
    * as each table cell <td>.
-   * Each row object in the model.data array can optionally have an
+   * Each row object in the data array can optionally have an
    * 'actions' property that should be an array of actions to provide the
    * <bmc-table-actions> component.
    *
-   * The 'rowActionsEnabled' property will render <bmc-table-actions> if set
-   * to true.
+   * data = [
+   *  { uiData: ['root', 'Admin', 'enabled' ] },
+   *  { uiData: ['user1', 'User', 'disabled' ] }
+   * ]
+   *
+   * The 'header' attribute should be an array of all header objects in the
+   * table. Each object in the header array should have a 'label' property
+   * that will render as a <th> in the table.
+   * If the table is sortable, a 'sortable' property is required in each
+   * header object
+   *
+   * header = [
+   *  { label: 'Username' },
+   *  { label: 'Privilege' }
+   *  { label: 'Account Status' }
+   * ]
+   *
+   * The 'sortable' attribute should be a boolean value. Defaults to false.
+   * The 'default-sort' attribute should be the index value of the header
+   * obejct that should be sorted on inital load.
+   *
+   * The 'row-actions-enabled' attribute, should be a boolean value
+   * Can be set to true to render table row actions. Defaults to false.
+   *  Row actions are defined in data.actions.
+   *
+   * The 'size' attribute which can be set to 'small' which will
+   * render a smaller font size in the table.
    *
    */
 
   const TableController = function() {
+    this.sortAscending = true;
+    this.activeSort;
+
     /**
-     * Init model data
-     * @param {any} model : table model object
-     * @returns : table model object with defaults
+     * Sorts table data
      */
-    const setModel = (model) => {
-      model.header = model.header === undefined ? [] : model.header;
-      model.data = model.data === undefined ? [] : model.data;
-      model.data = model.data.map((row) => {
-        if (row.uiData === undefined) {
-          row.uiData = [];
+    const sortData = () => {
+      this.data.sort((a, b) => {
+        const aProp = a.uiData[this.activeSort];
+        const bProp = b.uiData[this.activeSort];
+        if (aProp === bProp) {
+          return 0;
+        } else {
+          if (this.sortAscending) {
+            return aProp < bProp ? -1 : 1;
+          }
+          return aProp > bProp ? -1 : 1;
         }
-        return row;
       })
-      return model;
     };
 
     /**
@@ -74,23 +83,64 @@ window.angular && (function(angular) {
     };
 
     /**
-     * onInit Component lifecycle hooked
+     * Callback when sortable table header clicked
+     * @param {number} index : index of header item
+     */
+    this.onClickSort = (index) => {
+      if (index === this.activeSort) {
+        // If clicked header is already sorted, reverse
+        // the sort direction
+        this.sortAscending = !this.sortAscending;
+        this.data.reverse();
+      } else {
+        this.sortAscending = true;
+        this.activeSort = index;
+        sortData();
+      }
+    };
+
+    /**
+     * onInit Component lifecycle hook
+     * Checking for undefined values
      */
     this.$onInit = () => {
-      if (this.model === undefined) {
-        console.log('<bmc-table> Component is missing "model" attribute.');
-        return;
-      }
-      this.model = setModel(this.model);
+      this.header = this.header === undefined ? [] : this.header;
+      this.data = this.data == undefined ? [] : this.data;
+      this.sortable = this.sortable === undefined ? false : this.sortable;
       this.rowActionsEnabled =
-          this.rowActionsEnabled === undefined ? false : true;
+          this.rowActionsEnabled === undefined ? false : this.rowActionsEnabled;
+      this.size = this.size === undefined ? '' : this.size;
+
+      // Check for undefined 'uiData' property for each item in data array
+      this.data = this.data.map((row) => {
+        if (row.uiData === undefined) {
+          row.uiData = [];
+        }
+        return row;
+      })
       if (this.rowActionsEnabled) {
         // If table actions are enabled push an empty
         // string to the header array to account for additional
         // table actions cell
-        this.model.header.push('');
+        this.header.push({label: '', sortable: false});
       }
     };
+
+    /**
+     * onChanges Component lifecycle hook
+     * Check for changes in the data array and apply
+     * default or active sort if one is defined
+     */
+    this.$onChanges = (onChangesObj) => {
+      const dataChange = onChangesObj.data;
+      if (dataChange) {
+        if (this.activeSort !== undefined || this.defaultSort !== undefined) {
+          this.activeSort = this.defaultSort !== undefined ? this.defaultSort :
+                                                             this.activeSort;
+          sortData();
+        }
+      }
+    }
   };
 
   /**
@@ -99,6 +149,14 @@ window.angular && (function(angular) {
   angular.module('app.common.components').component('bmcTable', {
     template: require('./table.html'),
     controller: TableController,
-    bindings: {model: '<', rowActionsEnabled: '<', size: '<', emitAction: '&'}
+    bindings: {
+      data: '<',               // Array
+      header: '<',             // Array
+      rowActionsEnabled: '<',  // boolean
+      size: '<',               // string
+      sortable: '<',           // boolean
+      defaultSort: '<',        // number (index of sort)
+      emitAction: '&'
+    }
   })
 })(window.angular);

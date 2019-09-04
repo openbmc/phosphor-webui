@@ -7,7 +7,8 @@
     <span ng-if="!roleTableCtrl.isCollapsed">Hide privilege role descriptions</span>
   </button>
   <div uib-collapse="roleTableCtrl.isCollapsed">
-    <bmc-table  model="roleTableCtrl.tableModel"
+    <bmc-table  data="roleTableCtrl.tableData"
+                header="roleTableCtrl.tableHeader"
                 size="'small'">
     </bmc-table>
   </div>
