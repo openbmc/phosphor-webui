@@ -154,6 +154,28 @@
   }
 }
 
+.bmc-table__head {
+  .sort-icon {
+    padding: 0;
+    position: absolute;
+    .icon {
+      margin: 0;
+      & + .icon {
+        margin-left: -18px;
+      }
+      svg {
+        height: 1em;
+      }
+    }
+  }
+  .sort-icon--descending {
+    transform: rotate(180deg);
+  }
+  .sort-icon--inactive {
+    opacity: 0.5;
+  }
+}
+
 .bmc-table__row {
   border-bottom: 1px solid $border-color-01;
 }
@@ -161,6 +183,12 @@
 .bmc-table__column-header {
   padding: 10px 16px;
   background-color: $background-03;
+  position: relative;
+}
+
+.bmc-table__column-header--sortable {
+  cursor: pointer;
+  user-select: none;
 }
 
 .bmc-table__cell {
