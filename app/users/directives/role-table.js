@@ -20,9 +20,10 @@ window.angular && (function(angular) {
           const check =
               $sce.trustAsHtml(`<span class="icon__check-mark">${svg}<span>`);
 
-          this.tableModel = {};
-          this.tableModel.header =
-              ['', 'Admin', 'Operator', 'User', 'Callback'];
+          this.tableHeader = [
+            {label: ''}, {label: 'Admin'}, {label: 'Operator'}, {label: 'User'},
+            {label: 'Callback'}
+          ];
 
           // TODO: When API changed from D-Bus to Redfish, 'Operator' role
           // should have 'Configure components managed by this service'
@@ -30,7 +31,7 @@ window.angular && (function(angular) {
           // TODO: When 'Operator' and 'User' roles have ability to change
           // own account's passwords, should have 'Update password for
           // current user account' privilege checked
-          this.tableModel.data = [
+          this.tableData = [
             {
               uiData: [
                 'Configure components managed by this service', check, '', '',
