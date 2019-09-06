@@ -68,17 +68,16 @@
                   </div>
                 </fieldset>
               </div>
-              <div class="small-2 align-self-center snmp__buttons">
-                <button class="btn edit_button" type="button">
-                  <icon file="icon-edit.svg" aria-label="Edit"></icon>
+              <div class="small-1 align-self-center snmp__buttons trash">
+                <button
+                  class="btn trash_button"
+                  type="button"
+                  ng-click="removeSNMPManager($index)"
+                  aria-label="Remove">
+                  <icon file="icon-trashcan.svg" aria-hidden="true"></icon>
                 </button>
               </div>
             </div>
-          </div>
-          <div class="small-1 align-self-center snmp__buttons trash">
-            <button class="btn trash_button" type="button" ng-click="removeSNMPManager($index)">
-              <icon file="icon-trashcan.svg" aria-label="Remove"></icon>
-            </button>
           </div>
         </div>
         <div class="row column">
