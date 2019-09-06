@@ -15,6 +15,9 @@ window.angular && (function(angular) {
    * Each row object in the data array can optionally have an
    * 'actions' property that should be an array of actions to provide the
    * <bmc-table-actions> component.
+   * Each row object can optionally have an 'expandContent' property
+   * that should be a string value and can contain valid HTML. To render
+   * the expanded content, set 'expandable' attribute to true.
    *
    * data = [
    *  { uiData: ['root', 'Admin', 'enabled' ] },
@@ -39,7 +42,10 @@ window.angular && (function(angular) {
    *
    * The 'row-actions-enabled' attribute, should be a boolean value
    * Can be set to true to render table row actions. Defaults to false.
-   *  Row actions are defined in data.actions.
+   * Row actions are defined in data.actions.
+   *
+   * The 'expandable' attribute should be a boolean value. If true each
+   * row object in data array should contain a 'expandContent' property
    *
    * The 'size' attribute which can be set to 'small' which will
    * render a smaller font size in the table.
@@ -49,6 +55,7 @@ window.angular && (function(angular) {
   const TableController = function() {
     this.sortAscending = true;
     this.activeSort;
+    this.expandedRows = new Set();
 
     /**
      * Sorts table data
@@ -67,6 +74,33 @@ window.angular && (function(angular) {
         }
       })
     };
+
+    /**
+     * Prep table
+     * Make adjustments to account for optional configurations
+     */
+    const prepTable = () => {
+      if (this.sortable) {
+        // If sort is enabled, check for undefined 'sortable'
+        // property for each item in header array
+        this.header = this.header.map((column) => {
+          column.sortable =
+              column.sortable === undefined ? true : column.sortable;
+          return column;
+        })
+      }
+      if (this.rowActionsEnabled) {
+        // If table actions are enabled push an empty
+        // string to the header array to account for additional
+        // table actions cell
+        this.header.push({label: '', sortable: false});
+      }
+      if(this.expandable) {
+        // If table is expandable, push an empty string to the
+        // header array to account for additional expansion cell
+        this.header.unshift({label: '', sortable: false});
+      }
+    }
 
     /**
      * Callback when table row action clicked
@@ -100,6 +134,18 @@ window.angular && (function(angular) {
     };
 
     /**
+     * Callback when expand trigger clicked
+     * @param {number} row : index of expanded row
+     */
+    this.onClickExpand = (row) => {
+      if(this.expandedRows.has(row)){
+        this.expandedRows.delete(row)
+      } else {
+        this.expandedRows.add(row);
+      }
+    }
+
+    /**
      * onInit Component lifecycle hook
      * Checking for undefined values
      */
@@ -110,6 +156,7 @@ window.angular && (function(angular) {
       this.rowActionsEnabled =
           this.rowActionsEnabled === undefined ? false : this.rowActionsEnabled;
       this.size = this.size === undefined ? '' : this.size;
+      this.expandable = this.expandable === undefined ? false : this.expandable;
 
       // Check for undefined 'uiData' property for each item in data array
       this.data = this.data.map((row) => {
@@ -118,21 +165,7 @@ window.angular && (function(angular) {
         }
         return row;
       })
-      if (this.sortable) {
-        // If sort is enabled, check for undefined 'sortable'
-        // property for each item in header array
-        this.header = this.header.map((column) => {
-          column.sortable =
-              column.sortable === undefined ? true : column.sortable;
-          return column;
-        })
-      }
-      if (this.rowActionsEnabled) {
-        // If table actions are enabled push an empty
-        // string to the header array to account for additional
-        // table actions cell
-        this.header.push({label: '', sortable: false});
-      }
+      prepTable();
     };
 
     /**
@@ -164,7 +197,8 @@ window.angular && (function(angular) {
       rowActionsEnabled: '<',  // boolean
       size: '<',               // string
       sortable: '<',           // boolean
-      defaultSort: '<',        // number (index of sort)
+      defaultSort: '<',        // number (index of sort),
+      expandable: '<',         // boolean
       emitAction: '&'
     }
   })
