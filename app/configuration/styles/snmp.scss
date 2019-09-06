@@ -15,12 +15,10 @@
     display: none;
   }
   .manager_group {
-    border-bottom: 1px solid $border-color-02;
     &.ng-invalid {
       input {
         color: black;
         border-style: solid;
-        pointer-events: auto;
       }
       .help__text {
         display: block;
@@ -43,27 +41,7 @@
   .snmp__address {
     padding: .3em 1em .3em 0;
   }
-  .snmp__fields {
-    input {
-      border-style: none;
-      pointer-events: none;
-      color: $text-02;
-      height: 2.4em;
-    }
-    &:focus-within {
-      input {
-        color: $primary-dark;
-        border-style: solid;
-        pointer-events: auto;
-      }
-      .form-error {
-        display: block;
-      }
-      .help__text {
-        display: block;
-      }
-    }
-  }
+
   .snmp__buttons {
     text-align: right;
     .btn{
