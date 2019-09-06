@@ -43,8 +43,21 @@
   <tbody class="bmc-table__body">
     <!-- Data rows -->
     <tr ng-if="$ctrl.data.length > 0"
-        ng-repeat="row in $ctrl.data"
-        class="bmc-table__row">
+        ng-repeat-start="row in $ctrl.data track by $index"
+        class="bmc-table__row"
+        ng-class="{
+          'bmc-table__row--expanded': $ctrl.expandedRows.has($index)
+        }">
+      <!-- Row expansion trigger -->
+      <td ng-if="$ctrl.expandable"
+          class="bmc-table__cell">
+        <button type="button"
+                class="btn  btn--expand"
+                aria-label="expand row"
+                ng-click="$ctrl.onClickExpand($index)">
+          <icon file="icon-chevron-right.svg" aria-hidden="true"></icon>
+        </button>
+      </td>
       <!-- Row item -->
       <td ng-repeat="item in row.uiData track by $index"
           class="bmc-table__cell">
@@ -59,9 +72,23 @@
         </table-actions>
       </td>
     </tr>
+    <!-- Expansion row -->
+    <tr ng-repeat-end
+        ng-if="$ctrl.expandedRows.has($index)"
+        class="bmc-table__expansion-row">
+      <td class="bmc-table__cell"></td>
+      <td class="bmc-table__cell"
+          colspan="{{$ctrl.header.length - 1}}">
+        <ng-bind-html
+          ng-bind-html="row.expandContent || 'No data'">
+        </ng-bind-html>
+      </td>
+    </tr>
     <!-- Empty table -->
-    <tr ng-if="$ctrl.data.length === 0">
-      <td>No data</td>
+    <tr ng-if="$ctrl.data.length === 0"
+        class="bmc-table__expansion-row">
+      <td class="bmc-table__cell"
+          colspan="{{$ctrl.header.length}}">No data</td>
     </tr>
   </tbody>
 </table>

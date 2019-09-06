@@ -178,6 +178,31 @@
 
 .bmc-table__row {
   border-bottom: 1px solid $border-color-01;
+  .btn {
+    padding-top: 0;
+    padding-bottom: 0;
+    .icon {
+      margin: 0;
+    }
+  }
+  .btn--expand {
+    padding: 0;
+    .icon {
+      transition: transform $duration--moderate-01;
+      transform: rotate(90deg);
+    }
+  }
+}
+
+.bmc-table__row--expanded {
+  border-style: none;
+  .btn--expand .icon {
+    transform: rotate(0deg);
+  }
+}
+
+.bmc-table__expansion-row {
+  border-bottom: 1px solid $border-color-01;
 }
 
 .bmc-table__column-header {
@@ -198,8 +223,4 @@
 
 .bmc-table__row-actions {
   text-align: right;
-  .btn {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
 }
