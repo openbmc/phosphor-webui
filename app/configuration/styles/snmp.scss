@@ -1,66 +1,14 @@
 #configuration-snmp {
-  .row {
-    padding-left: 0;
+  .page-title {
+    margin-bottom: 1rem;
   }
-  .snmp_description {
-    padding:1em 0 1em 0;
+  .trash_button {
+    margin-top: 2rem;
   }
-  .help__text {
-    font-size: 0.8rem;
-    color: $text-02;
-    padding-top: .3em;
-    display: none;
+  .snmp-field {
+    padding-right: 1.5rem;
   }
-  .form-error{
-    display: none;
-  }
-  .manager_group {
-    &.ng-invalid {
-      input {
-        color: black;
-        border-style: solid;
-      }
-      .help__text {
-        display: block;
-      }
-      .form-error {
-        display: block;
-      }
-    }
-    &.empty {
-      color: $text-02;
-      padding: 1em 0 1em 0;
-    }
-  }
-  .snmp__port {
-    padding: .3em 0 .3em 1em;
-    &.label {
-      padding: .3em 0 .3em 0em;
-    }
-  }
-  .snmp__address {
-    padding: .3em 1em .3em 0;
-  }
-
-  .snmp__buttons {
-    text-align: right;
-    .btn{
-      padding: 0;
-      width: auto;
-      svg {
-        fill: $primary-accent;
-        width: auto;
-        height: 1.3em;
-      }
-    }
-  }
-
-  .snmp__submit-wrapper {
-    width: 100%;
-    border-top: 1px solid $border-color-01;
-    button {
-      float: right;
-      margin: .5em;
-    }
+  .btn-add {
+    padding: 0;
   }
 }
