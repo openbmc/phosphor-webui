@@ -501,6 +501,55 @@ window.angular && (function(angular) {
                     console.log(error);
                   });
         },
+        loginRedfish: function(username, password, callback) {
+          $http({
+            method: 'POST',
+            url: DataService.getHost() + '/redfish/v1/SessionService/Sessions',
+            withCredentials: true,
+            // does not work if I put X-XSRF-TOKEN as well
+            xsrfCookieName: 'X-Auth-Token',
+            xsrfHeaderName: 'X-Auth-Token',
+            data: JSON.stringify({'UserName': username, 'Password': password})
+          })
+              .then(
+                  function(response) {
+                    if (callback) {
+                      callback(response);
+                    }
+                  },
+                  function(error) {
+                    if (callback) {
+                      if (error && error.status && error.status == 'error') {
+                        callback(error);
+                      } else {
+                        callback(error, true);
+                      }
+                    }
+                    console.log(error);
+                  });
+        },
+
+        logoutRedfish: function(id, callback) {
+          $http({
+            method: 'POST',
+            url: DataService.getHost() + 'redfish/v1/SessionService/Sessions/' +
+                id,
+            withCredentials: true,
+            data: JSON.stringify({'data': []})
+          })
+              .then(
+                  function(response) {
+                    if (callback) {
+                      callback(response.data);
+                    }
+                  },
+                  function(error) {
+                    if (callback) {
+                      callback(null, error);
+                    }
+                    console.log(error);
+                  });
+        },
         logout: function(callback) {
           $http({
             method: 'POST',
