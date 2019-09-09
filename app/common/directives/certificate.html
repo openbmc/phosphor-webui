@@ -24,8 +24,16 @@
     Valid until:
   </div>
   <div class="certificate__status-cell">
-    <span class="inline" ng-class="{'icon__warning certificate__table__icon' : cert.isExpiring , 'icon__critical certificate__table__icon' : cert.isExpired}"
-      ng-if="cert.isExpired || cert.isExpiring"></span>
+    <icon file="icon-critical.svg"
+      aria-label="certificate has expired"
+      class="certificate__status-icon"
+      ng-if="cert.isExpired">
+    </icon>
+    <icon file="icon-warning.svg"
+      aria-label="certificate will expire soon"
+      class="certificate__status-icon"
+      ng-if="cert.isExpiring">
+    </icon>
   </div>
   <div class="certificate__date-cell">
     {{cert.ValidNotAfter | date:medium}}
