@@ -80,6 +80,12 @@
     }
     display: none;
   }
+  .certificate__status-icon {
+    width: 1.2em;
+    svg {
+      margin-bottom: .2em;
+    }
+  }
   .certificate__buttons-cell {
     @include mediaQuery(small) {
       width: 10%;
