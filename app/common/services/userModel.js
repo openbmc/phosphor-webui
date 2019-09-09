@@ -13,20 +13,16 @@ window.angular && (function(angular) {
   angular.module('app.common.services').service('userModel', [
     'APIUtils',
     function(APIUtils) {
+      // unsure if this is the best practice to store the login id
+      var loginId;
       return {
         login: function(username, password, callback) {
-          APIUtils.login(username, password, function(response, error) {
+          APIUtils.loginRedfish(username, password, function(response, error) {
             if (response &&
-                (response.status == APIUtils.API_RESPONSE.SUCCESS_STATUS ||
-                 response.status === undefined)) {
+                (response.status == 201 || response.status === undefined)) {
+              loginId = response.data.Id;
               sessionStorage.setItem('LOGIN_ID', username);
               callback(true);
-            } else if (
-                response && response.data && response.data.data &&
-                response.data.data.description) {
-              callback(false, response.data.data.description);
-            } else if (response && response.statusText) {
-              callback(false, response.statusText);
             } else if (error) {
               callback(false, 'Server unreachable');
             } else {
@@ -41,7 +37,7 @@ window.angular && (function(angular) {
           return true;
         },
         logout: function(callback) {
-          APIUtils.logout(function(response, error) {
+          APIUtils.logoutRedfish(loginId, function(response, error) {
             if (response &&
                 response.status == APIUtils.API_RESPONSE.SUCCESS_STATUS) {
               sessionStorage.removeItem('LOGIN_ID');
