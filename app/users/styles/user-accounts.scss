@@ -8,11 +8,6 @@
   justify-content: flex-end;
 }
 
-.local-users__actions,
-.local-users__table .bmc-table {
-  max-width: 900px;
-}
-
 .modal__local-users,
 .modal__local-users-settings {
   .modal-body {
@@ -36,9 +31,6 @@
 
 .role-table {
   margin-top: 30px;
-  .bmc-table {
-    max-width: 750px;
-  }
   .bmc-table__cell:not(:first-of-type) {
     text-align: center;
   }
