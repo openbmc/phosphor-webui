@@ -1,0 +1,110 @@
+<!-- Shutdown and Reboot modal -->
+<form id="hostBootSettings" name="hostBootSettings" class="host-boot-settings" novalidate>
+
+  <div class="uib-modal__content">
+    <button aria-label="Close" type="button" class="AAAbtn btn--close float-right" ng-click="$dismiss()">
+      <img src="../../assets/icons/icon-close.png">
+    </button>
+    <div class="modal-header" id="modal-operation">
+      <h3>
+        Boot Settings
+      </h3>
+    </div>
+    <div class="modal-body">
+
+      <!-- Boot Settings Section -->
+      <section class="row column">
+        <div class="boot-options-wrapper">
+
+          <div class="boot-settings-form">
+
+
+            <div class="row">
+              <div class="columns large-6 small-6">
+                <legend for="boot-selected align-left">
+                  Override system boot</legend>
+              </div>
+              <div class="columns large-6 small-6">
+
+                <select id="boot-selected" name="bootSelected" id="boot-selected" class="minimal"
+                  ng-disabled="dataService.server_unreachable || bootOverrideError"
+                  ng-model="boot.BootSourceOverrideTarget">
+                  <option value="{{bootSource}}" ng-repeat="bootSource in bootSources">
+                    {{prettifyBootTarget(bootSource)}}
+                  </option>
+                </select>
+
+                <div class="boot-options one-time-boot-setting">
+
+                  <label class="control-check" id="one-time-label">
+                    <input type="checkbox" name="oneTime"
+                      ng-disabled="dataService.server_unreachable || bootOverrideError || boot.BootSourceOverrideTarget =='None' "
+                      ng-model="boot.oneTimeBootEnabled" ng-change="oneTimeBootEnabled"
+                      ng-show="boot.BootSourceOverrideTarget != 'None'" />
+                    <div
+                      ng-class="(boot.BootSourceOverrideTarget =='None') ? 'inline boot-checkbox disabled' : 'inline boot-checkbox'">
+                      One time only</div>
+                    <span class="control__indicator"> </span>
+                  </label>
+                  <div class="helper-text" ng-show="boot.oneTimeBootEnabled">Boot will be performed to
+                    {{prettifyBootTarget(boot.BootSourceOverrideTarget)}}. Subsequent
+                    boots will be performed
+                    with the default settings.</div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <!-- TPM Required -->
+              <div class="columns large-6 small-6">
+                <legend class="content-label align-left">
+                  Third Party Module</legend>
+                <p class="helper-text"> Enable to ensure the system only boots when the TPM is functional. </p>
+              </div>
+
+              <!-- Toggle component -->
+              <div class="columns large-6 small-6">
+                <div class="toggle-container">
+                  <div class="toggle">
+                    <input id="toggle__switch-round" class="toggle-switch toggle-switch__round-flat" name="toggle"
+                      type="checkbox" tabindex="0" ng-model="TPMToggle.TPMEnable"
+                      ng-disabled="dataService.server_unreachable" />
+                    <label for="toggle__switch-round" tabindex="0">TPM required policy is
+                      {{ TPMToggle.TPMEnable ? "On" : "Off" }}</label>
+                  </div>
+                  <span>
+                    {{ TPMToggle.TPMEnable ? "On" : "Off" }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+
+      </section>
+
+
+    </div>
+    <div class="modal-footer">
+      <!-- form actions -->
+      <div class="boot-form-actions">
+        <button type="reset" class="btn btn-secondary"
+          ng-click="$dismiss();resetForm();hostBootSettings.$setPristine()">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary"
+          ng-click="saveBootSettings(hostBootSettings.bootSelected.$dirty,hostBootSettings.oneTime.$dirty);saveTPMPolicy(hostBootSettings.toggle.$dirty);$dismiss();"
+          ng-disabled="dataService.server_unreachable || hostBootSettings.$pristine;">
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+
+</form>

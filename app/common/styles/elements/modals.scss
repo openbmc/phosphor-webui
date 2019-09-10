@@ -46,7 +46,13 @@
 }
 
 .modal .page-header {
-  padding-bottom: 0.7em;
+  padding-bottom: .7em;
+}
+
+.modal-header{
+ background: $nav__top-level-color;
+ padding:0;
+ border-bottom: 0;
 }
 
 .screen-reader-offscreen {
@@ -83,40 +89,20 @@
   }
 }
 
-/**
-  * Markup  for bootstrap modal
-  <div class="uib-modal__content">
-    <div class="modal-header">
-      <h2 class="modal-title" id="modal_label">
-        Title here
-      </h2>
-      <button
-        type="button"
-        class="btn  btn--close"
-        ng-click="$dismiss()"
-        aria-label="close">
-        <icon file="icon-close.svg" aria-hidden="true"></icon>
-      </button>
-    </div>
-    <div class="modal-body">
-      Body content
-    </div>
-    <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-secondary"
-        ng-click="$dismiss()">
-        Cancel
-      </button>
-      <button
-        type="submit"
-        class="btn btn-primary"
-        ng-click="function()">
-        Save
-      </button>
-    </div>
-  </div>
-*/
+.modal-header h2.modal-title, .modal-header h3{
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: normal;
+  padding:20px;
+}
+
+.label__helper-text{
+  color: $text-02;
+}
+
+.padding-top{
+  padding-top:20px;
+}
 
 .uib-modal.fade.in {
   opacity: 1;
@@ -140,7 +126,7 @@
 }
 
 .uib-modal__content {
-  padding: 1em;
+  padding: 0;
   .modal-header {
     display: block;
   }

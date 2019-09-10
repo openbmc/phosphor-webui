@@ -1,15 +1,176 @@
-/**
- * Used for page layout. This should be used for the page container
- * Mark up
- <div class="page">
-   <h1 class="page-title">Page Title</h1>
-   ...
- </div>
- */
-.page {
-  max-width: 1080px;
+@mixin page-boxformatting{
+  display: inline-block;
+  width: 100%;
+}
+@mixin page-roundcorners{
+  border-radius: 8px;
+  padding:5px;
+  @include mediaQuery(small) {
+    padding:.5em 1.8em;
+  }
+}
+@mixin page-boxcorners{
+  border-radius:0px;
+  padding:5px;
+  @include mediaQuery(small) {
+    padding:.5em 1.8em;
+  }
+}
+@mixin page-dropshadow{
+  box-shadow: 0px 4px 35px 6px rgba(153,182,255,0.32); //shadow is #99B6FF
+  -webkit-box-shadow: 0px 4px 35px 6px rgba(153,182,255,0.32);
 }
 
-.page-title {
-  margin-bottom: 3rem;
+@mixin page-contentborder{
+  border: 1px solid $color--blue-30;
 }
+
+@mixin page-contentborderbottom{
+  border-bottom: 1px solid $color--grey-30;
+}
+
+@mixin page-spaceafter{
+  margin-bottom:16px;
+}
+
+.page-content-simple{
+  margin-bottom:8px;
+  @include page-boxformatting;
+}
+
+.page-dropshadow{
+  @include page-dropshadow;
+}
+.page-content-box{
+  @include page-contentborder;
+  @include page-dropshadow;
+  @include page-boxcorners;
+  @include page-spaceafter;
+  @include page-boxformatting;
+}
+
+.page-content-rnd{
+  @include page-dropshadow;
+  @include page-roundcorners;
+  @include page-spaceafter;
+  @include page-boxformatting;
+
+  .box-header{
+    background: $nav__top-level-color;
+    padding:0;
+    border-bottom: 0;
+    color:#ffffff;
+    font-size:16px;
+    @include page-roundcorners;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    margin-top:-30px;
+    margin-bottom:20px;
+   }
+   .box-content{
+    padding:0;
+    text-align:center;
+    @include mediaQuery(small) {
+      padding: .2em 1.8em;
+      text-align:left;
+    }
+  }
+}
+
+.right-border{
+  border-right: 1px solid $color--grey-90;
+}
+
+
+.text-intro,.text-outro{
+    color: $color--grey-80;
+    font-size: 12px;
+    text-transform: capitalize;
+    font-weight: 600;
+    padding: 5px 5px 0 0;
+    float:right;
+    a{
+      color: $color--grey-80;
+    }
+}
+.text-intro>div{
+  display: inline-block;
+}
+.text-outro,.text-outro a{
+    padding-bottom:5px;
+}
+
+.padding-right{
+  padding-right: 10px;
+}
+
+.padding-left{
+  padding-left: 10px;
+}
+
+.align-right{
+  text-align: right;
+}
+
+.align-left{
+  text-align: left;
+}
+
+.trim-text-large{
+  display:none;
+  @include mediaQuery(large) {
+    display:inherit;
+  }
+}
+
+.trim-text{
+  @include mediaQuery(x-small) {
+    display:none;
+  }
+  @include mediaQuery(small) {
+    display:inherit;
+  }
+}
+
+.trim-text-xsmall{
+  display:none;
+  @include mediaQuery(x-small) {
+    display:block;
+  }
+}
+
+.text-intro .trim-text-large,.trim-text-large, .trim-text-large>div{
+  display:none;
+  @include mediaQuery(large) {
+    display:block;
+  }
+  &.inline{
+    @include mediaQuery(large) {
+      display:inline;
+    }
+  }
+}
+
+.text-intro .trim-text-medium,.trim-text-medium, .trim-text-medium>div{
+  display:none;
+  @include mediaQuery(medium) {
+    display:block;
+  }
+  &.inline{
+    @include mediaQuery(medium) {
+      display:inline;
+    }
+  }
+}
+
+  .trim-text-small,.trim-text-small, .trim-text-small>div{
+    display:none;
+    @include mediaQuery(small) {
+      display:block;
+    }
+    &.inline{
+      @include mediaQuery(small) {
+        display:inline;
+      }
+    }
+  }

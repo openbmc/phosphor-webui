@@ -14,28 +14,20 @@ window.angular && (function(angular) {
           function($scope) {
             $scope.cancel = function() {
               $scope.confirm = false;
+              window.alert('just set confirm to ' + $scope.confirm);
               $scope.$parent.confirm = false;
+              $scope.$parent.confirmReboot = false;
+              $scope.$parent.confirmShutdown = false;
+              window.alert(
+                  'just set parent confirm to ' + $scope.$parent.confirm);
             };
             $scope.accept = function() {
+              window.alert('if accepted');
               $scope.callback();
               $scope.cancel();
             };
           }
-        ],
-        link: function(scope, e) {
-          scope.$watch('confirm', function() {
-            if (scope.confirm) {
-              $timeout(function() {
-                angular.element(e[0].parentNode).css({
-                  'min-height':
-                      e[0].querySelector('.inline__confirm').offsetHeight + 'px'
-                });
-              }, 0);
-            } else {
-              angular.element(e[0].parentNode).css({'min-height': 0 + 'px'});
-            }
-          });
-        }
+        ]
       };
     }
   ]);

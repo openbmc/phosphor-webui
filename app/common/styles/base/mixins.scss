@@ -152,6 +152,60 @@
   }
 }
 
+
+
+@mixin running-bar {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(174, 251, 197, 0.35),
+    rgba(140, 216, 144, 0.35) 25px,
+    rgba(50, 160, 55, 0.45) 25px,
+    rgba(50, 160, 55, 0.45) 50px
+  );
+  -webkit-animation: progress 2s linear infinite;
+  -moz-animation: progress 2s linear infinite;
+  animation: progress 2s linear infinite;
+  background-size: 165% 100%;
+
+  @-webkit-keyframes progress {
+    0% {
+      background-position: -70px 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+
+  @-moz-keyframes progress {
+    0% {
+      background-position: -70px 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+
+  @-ms-keyframes progress {
+    0% {
+      background-position: -70px 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+
+  @keyframes progress {
+    0% {
+      background-position: -70px 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+}
+
+
+
 @mixin table-row-save {
   @-webkit-keyframes row-flash {
     from {

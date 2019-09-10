@@ -1,129 +1,294 @@
 // Power Operations SCSS
+#power-operations{
 
-.power-operations {
-  // Power Current status wrapper
-  .power__current-status {
-    border-bottom: 1px solid $border-color-01;
-    margin: 1.3em 0 1.2em 0;
+  label{
+    font-size:14px;
+    color: $primary-dark;
+    @include mediaQuery(small) {
+      font-size:18px;
+    }
+    @include mediaQuery(medium) {
+      font-size:18px;
+    }
+    .helper-text{
+      font-size:13px;
+      line-height: 1.3;
+    }
   }
 
-  // Power state indicator on/off
-  .power__state {
-    font-weight: 700;
-    margin-top: -0.3em;
+  .status-wrapper {
+    margin: 8px 0 0 5px;
+    span{
+      color: $color--grey-70;
+    }
+    transition-delay: 1s;
+    .hide{
+      display:none;
+    }
+    .status-label{
+      background: $color--red-50;
+      color: white;
+      text-transform: uppercase;
+      font-size:12px;
+      border-radius: 2px;
+      margin:0;
+      padding:1px 5px 1px 5px;
+      box-sizing: content-box;
+      display:inline;
+      span{
+        color: white;
+      }
+      &.disabled{
+        background: $color--grey-60;
+      }
+    }
+  }
+
+  button:focus{
+    outline:0;
+    border:0;
+  }
+  button.btn-power{
+    width:100%;
+    padding:0;
+    margin-top: -1px;
+    margin-bottom: 1px;
+    :focus{
+      outline:0;
+      border:0;
+    }
+    :hover{
+      opacity: .8;
+    }
+  }
+  .btn-power img{
+      width: inherit;
+      height: inherit;
+      width: 100%;
+      max-width: 94px;
+      margin: 0;
+      padding: 0;
+      outline: 0;
+  }
+
+  .reboot-header{
+    background-color: $color--blue-40;
   }
 
   // Power bar indicator
   .power__indicator-bar {
-    font-weight: bold;
-    width: 100%;
-    padding: 1em 2em 0.7em;
-    margin-bottom: 3em;
-    background-size: 200% 100%;
-    background-image: linear-gradient(to right, darken($background-02, 3%) 50%, $accent-02--02 50%);
-    background-position: 0;
-    transition: background-position 2s ease;
+    width: 1%;
+    transition: all 1s linear;
+    height: 45px;
+    border-radius: 6px;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+
+
+  .power__state {
+    span:before {
+      content: "";
+      position: absolute;
+      @extend .icon__off !optional;
+      margin-left: -25px;
+    }
+  }
+
+  .power__indicator-wrapper{
+    transition: all 1s linear;
+    width: 1%;
     overflow: hidden;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    p {
-      padding: 0;
-      margin: 0;
-      font-size: 1.2em;
+    opacity: 0;
+    margin: 10px 10px 20px 10px;
+    @include page-dropshadow;
+    @include page-contentborder;
+    @include page-boxformatting;
+    @include page-spaceafter;
+    &.power__state-off,&.power__state-on,&.power__state-indet,&.power__state-error{
+      margin: 10px 10px 20px 10px;
+      border-radius: 8px;
+      padding:3px;
+      background: #ffffff;
+      width: 100%;
+      opacity: 1;
+      .power-indicator-status{
+        opacity: 1;
+      }
+      .power-indicator-status div:first-child{
+        overflow: hidden;
+        max-height: 36px;
+      }
     }
+    .power__state {
+      span:before {
+        color: $status-warn;
+        content: "";
+        @include whitefilter;
+        margin-top:5px;
+      }
+    }
+
+    &.basic_power__state-on {
+      .power__indicator-bar{
+        width: 100%;
+        background-color: $color-status-success;
+        border-radius: 6px;
+      }
+      .power__state {
+        span:before {
+          content: "";
+          @extend .icon__good !optional;
+          @include greentowhitefilter;
+          margin-top:5px;
+        }
+      }
+    }
+
     &.power__state-on {
-      background-position: -100%;
+      .power__indicator-bar{
+        width: 100%;
+        background-color: $color-status-success;
+        border-radius: 6px;
+      }
+      color: $text-02;
+      @include running-bar;
+      .power__state {
+        span:before {
+          color: $status-ok;
+          content: "";
+          @extend .icon__good !optional;
+          @include greentowhitefilter;
+          margin-top:5px;
+        }
+      }
     }
+
     &.power__state-off {
-      background-position: 0;
-      color: $primary-dark;
+      .power__indicator-bar{
+        width: 100%;
+        background-color: $primary-dark;
+        border-radius: 6px;
+      }
+      .power__state {
+        span:before {
+          content: "";
+
+          @extend .icon__off !optional;
+          @include greentowhitefilter;
+          margin-top:5px;
+        }
+      }
     }
+
     &.power__state-indet {
+      .power__indicator-bar{
+        width: 100%;
+        background-color: $color-status-warning;
+        border-radius: 6px;
+      }
       color: $text-02;
       @include indeterminate-bar;
+      .power__state {
+        span:before {
+          color: $status-warn;
+          content: "";
+          @extend .icon__warning !optional;
+          @include whitefilter;
+          margin-top:5px;
+        }
+      }
     }
+
     &.power__state-error {
-      background-position: 0;
-      color: $primary-dark;
-    }
-  }
-
-  .boot-options,
-  .boot-operations {
-    margin-bottom: 1em;
-  }
-
-  .boot-options {
-    .control-check {
-      padding-top: 4px;
-    }
-    .boot-checkbox {
-      padding-left: 2em;
-      text-transform: none;
-      font-weight: 400;
-      font-size: 16px;
-      color: $primary-dark;
-    }
-  }
-
-  .boot-options-wrapper {
-    padding: 0 2em 2em 0;
-  }
-
-  .operations-wrapper {
-    .reboot__operations,
-    .shutdown__operations {
-      margin-bottom: 1.5em;
-      .control-radio {
-        padding: 0.3em 1em 0 2em;
-        text-transform: none;
-        font-weight: 400;
-        font-size: 16px;
-        color: $primary-dark;
+      .power__indicator-bar{
+        width: 100%;
+        background-color: $color-status-error;
+        border-radius: 6px;
       }
-    }
-
-    .alert-warning {
-      border: 1px solid $accent-03--01;
-      padding: 1em;
-      margin-bottom: 1em;
-      display: flex;
-      align-items: center;
-      .pending-icon {
-        padding: 0 1em 0 0;
-      }
-      .alert-pending {
-        margin-top: 0.3em;
-        margin-bottom: 0;
+      .power__state {
+        span:before {
+          content: "";
+          @extend .icon__critical !optional;
+          @include whitefilter;
+          margin-top:5px;
+        }
       }
     }
   }
 
-  .boot-settings-form {
-    background-color: $base-02--06;
-    padding: 2em;
-    .boot-form-actions {
-      margin-bottom: 4em;
+
+  .power-indicator-status{
+    margin-top: -35px;
+    display:block;
+    margin-bottom: 35px;
+    padding: 0 20px;
+    font-size: 20px;
+    opacity: 0;
+    color:#ffffff;
+    font-weight: normal;
+    transition: all 1s linear;
+    transition-delay: 1s;
+  }
+
+  @-webkit-keyframes progress-bar-stripes {
+    from {
+      background-position: 0 0;
     }
-    .btn {
-      display: block;
-      float: right;
-      margin: 0.5em 0 0 1em;
+    to {
+      background-position: 4rem 0;
     }
   }
 
-  .control-radio .control__indicator-on {
-    width: 20px;
-    height: 20px;
-    top: 3px;
-    left: 3px;
+  @keyframes progress-bar-stripes {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 4rem 0;
+    }
   }
 
-  .control-radio .control__indicator-on:after {
-    top: 3px;
-    left: 3px;
-    width: 10px;
-    height: 10px;
+  .progress-bar-striped {
+    background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    background-size: 4rem 4rem;
   }
-} //end power-operations
+
+  .icon__warning {
+    width: 24px;
+  }
+
+}
+
+
+// Boot settings form
+.boot-settings-form {
+  .row:nth-child(2){
+    margin-top:30px;
+  }
+
+  .one-time-boot-setting{
+    padding-top:5px;
+  }
+
+  p.alert-pending{
+    padding-left: 40px;
+  }
+  .alert-message{
+    margin:12px;
+    width:inherit;
+    padding:1.4em;
+  }
+
+  .boot-checkbox{
+    margin: .2em 0 0 2em;
+    font-size:14px;
+    &.disabled{
+      color:$base-02--04;
+    }
+  }
+  .toggle-container{
+    margin-top:10px;
+  }
+}

@@ -16,6 +16,11 @@ window.angular && (function(angular) {
         $scope, APIUtils, dataService, Constants, $interval, $q, toastService,
         $uibModal) {
       $scope.dataService = dataService;
+
+      // Is a || of the other 4 "confirm" variables to ensure only
+      // one confirm is shown at a time.
+      $scope.dataService = dataService;
+
       $scope.loading = true;
       $scope.oneTimeBootEnabled = false;
       $scope.bootOverrideError = false;
@@ -50,16 +55,19 @@ window.angular && (function(angular) {
           (statusType, timeout = 300000, error = 'Time out.') => {
             const deferred = $q.defer();
             const start = new Date();
-            const checkHostStatusInverval = $interval(() => {
+            const checkHostStatusInterval = $interval(() => {
+              if (!dataService.server_unreachable) {
+                $scope.operationPending = false;
+              }
               let now = new Date();
               let timePassed = now.getTime() - start.getTime();
               if (timePassed > timeout) {
                 deferred.reject(error);
-                $interval.cancel(checkHostStatusInverval);
+                $interval.cancel(checkHostStatusInterval);
               }
               if (dataService.server_state === statusType) {
                 deferred.resolve();
-                $interval.cancel(checkHostStatusInverval);
+                $interval.cancel(checkHostStatusInterval);
               }
             }, Constants.POLL_INTERVALS.POWER_OP);
             return deferred.promise;
@@ -130,7 +138,7 @@ window.angular && (function(angular) {
       };
 
       /**
-       * Initiate Orderly shutdown
+       * Initiate any shutdown
        * Attempts to stop all software
        */
       const orderlyShutdown = () => {
@@ -203,6 +211,34 @@ window.angular && (function(angular) {
             });
       };
 
+      /**
+       * Callback when 'Boot settings' button clicked
+       */
+      $scope.onClickBootSettings = () => {
+        initBootSettingsModal();
+      };
+
+      /**
+       * Initiate account settings modal
+       */
+      function initBootSettingsModal() {
+        const template = require('./power-operations-settings-modal.html');
+        $uibModal
+            .open({
+              template,
+              windowTopClass: 'uib-modal',
+              scope: $scope,
+              ariaLabelledBy: 'modal-operation',
+            })
+            .result
+            .then((form) => {
+              saveBootSettings();
+            })
+            .catch(
+                () => {
+                    // do nothing
+                })
+      }
       /*
        *  Power operations modal
        */
@@ -318,24 +354,34 @@ window.angular && (function(angular) {
       };
 
       /*
+       *   Prettify boot Target
+       */
+      $scope.prettifyBootTarget = function(bootTarget) {
+        if (bootTarget != 'None' && bootTarget != null) {
+          return bootTarget.replace('Cd', 'CD')
+              .replace('Pxe', 'PXE')
+              .replace('Hdd', 'Hard Drive')
+              .replace('Diags', 'Diagnostics')
+              .replace('BiosSetup', 'Bios Setup')
+        };
+      };
+
+      /*
        *   Save boot settings
        */
-      $scope.saveBootSettings = function() {
-        if ($scope.hostBootSettings.bootSelected.$dirty ||
-            $scope.hostBootSettings.oneTime.$dirty) {
+      $scope.saveBootSettings = function(bootSelectedDirty, oneTimeDirty) {
+        if (bootSelectedDirty || oneTimeDirty) {
           const data = {};
           data.Boot = {};
 
           let isOneTimeBoot = $scope.boot.oneTimeBootEnabled;
           let overrideTarget = $scope.boot.BootSourceOverrideTarget || 'None';
           let overrideEnabled = 'Disabled';
-
           if (isOneTimeBoot) {
             overrideEnabled = 'Once';
           } else if (overrideTarget !== 'None') {
             overrideEnabled = 'Continuous';
           }
-
           data.Boot.BootSourceOverrideEnabled = overrideEnabled;
           data.Boot.BootSourceOverrideTarget = overrideTarget;
 
@@ -354,8 +400,9 @@ window.angular && (function(angular) {
       /*
        *   Save TPM required policy
        */
-      $scope.saveTPMPolicy = function() {
-        if ($scope.hostBootSettings.toggle.$dirty) {
+      $scope.saveTPMPolicy = function(toggleDirty) {
+        //  if ($scope.hostBootSettings.toggle.$dirty) {
+        if (toggleDirty) {
           const tpmEnabled = $scope.TPMToggle.TPMEnable;
 
           if (tpmEnabled === undefined) {
@@ -373,16 +420,6 @@ window.angular && (function(angular) {
                     toastService.error('Unable to update TPM required policy.');
                     console.log(JSON.stringify(error));
                   });
-        }
-      };
-
-      /**
-       * Callback when boot setting option changed
-       */
-      $scope.onChangeBootSetting = function() {
-        const bootSetting = $scope.hostBootSettings.bootSelected.$viewValue;
-        if (bootSetting === 'None') {
-          $scope.boot.oneTimeBootEnabled = false;
         }
       };
 
