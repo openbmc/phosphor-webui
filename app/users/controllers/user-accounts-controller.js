@@ -362,7 +362,7 @@ window.angular && (function(angular) {
        * Callback when action emitted from table
        * @param {*} value
        */
-      $scope.onEmitAction = (value) => {
+      $scope.onEmitRowAction = (value) => {
         switch (value.action) {
           case 'Edit':
             initUserModal(value.row);
