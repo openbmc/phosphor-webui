@@ -56,6 +56,10 @@ textarea {
   }
 }
 
+[type="checkbox"] {
+  cursor: pointer;
+}
+
 //input validation
 .ng-invalid.ng-touched {
   box-shadow: 0 -3px $status-error inset;

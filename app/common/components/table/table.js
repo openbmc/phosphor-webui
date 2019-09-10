@@ -18,9 +18,12 @@ window.angular && (function(angular) {
    * Each row object can optionally have an 'expandContent' property
    * that should be a string value and can contain valid HTML. To render
    * the expanded content, set 'expandable' attribute to true.
+   * Each row object can optionally have a 'selectable' property. Defaults
+   * to true if table is selectable. If a particular row should not
+   * be selectable, set to false.
    *
    * data = [
-   *  { uiData: ['root', 'Admin', 'enabled' ] },
+   *  { uiData: ['root', 'Admin', 'enabled' ], selectable: false },
    *  { uiData: ['user1', 'User', 'disabled' ] }
    * ]
    *
@@ -47,6 +50,10 @@ window.angular && (function(angular) {
    * The 'expandable' attribute should be a boolean value. If true each
    * row object in data array should contain a 'expandContent' property
    *
+   * The 'selectable' attribute should be a boolean value.
+   * If 'selectable' is true, include 'batch-actions' property that should
+   * be an array of actions to provide <table-toolbar> component.
+   *
    * The 'size' attribute which can be set to 'small' which will
    * render a smaller font size in the table.
    *
@@ -56,6 +63,11 @@ window.angular && (function(angular) {
     this.sortAscending = true;
     this.activeSort;
     this.expandedRows = new Set();
+    this.selectedRows = new Set();
+    this.selectHeaderCheckbox = false;
+    this.someSelected = false;
+
+    let selectableRowCount = 0;
 
     /**
      * Sorts table data
@@ -89,17 +101,63 @@ window.angular && (function(angular) {
           return column;
         })
       }
-      if (this.rowActionsEnabled) {
-        // If table actions are enabled push an empty
-        // string to the header array to account for additional
-        // table actions cell
-        this.header.push({label: '', sortable: false});
+    };
+
+    /**
+     * Prep data
+     * When data binding changes, make adjustments to account for
+     * optional configurations
+     */
+    const prepData = () => {
+      if (this.sortable) {
+        if (this.activeSort !== undefined || this.defaultSort !== undefined) {
+          // apply default or active sort if one is defined
+          this.activeSort = this.defaultSort !== undefined ? this.defaultSort :
+                                                             this.activeSort;
+          sortData();
+        }
       }
-      if (this.expandable) {
-        // If table is expandable, push an empty string to the
-        // header array to account for additional expansion cell
-        this.header.unshift({label: '', sortable: false});
+      if (this.selectable) {
+        selectableRowCount = 0;
+        for (let row of this.data) {
+          row.selectable = row.selectable === undefined ? true : row.selectable;
+          if (row.selectable) {
+            selectableRowCount++;
+            row.selected = false;
+          }
+        }
       }
+    };
+
+    /**
+     * Select all rows
+     * Sets each selectable row selected property to true
+     * and adds index to selectedRow Set
+     */
+    const selectAllRows = () => {
+      this.selectHeaderCheckbox = true;
+      this.data.forEach((row, index) => {
+        if (!row.selected && row.selectable) {
+          row.selected = true;
+          this.selectedRows.add(index);
+        }
+      })
+    };
+
+    /**
+     * Deselect all rows
+     * Sets each row selected property to false
+     * and clears selectedRow Set
+     */
+    const deselectAllRows = () => {
+      this.selectHeaderCheckbox = false;
+      this.someSelected = false;
+      this.selectedRows.clear();
+      this.data.forEach((row) => {
+        if (row.selectable) {
+          row.selected = false;
+        }
+      })
     };
 
     /**
@@ -109,11 +167,23 @@ window.angular && (function(angular) {
      * @param {string} action : action type
      * @param {any} row : user object
      */
-    this.onEmitTableAction = (action, row) => {
+    this.onEmitRowAction = (action, row) => {
       if (action !== undefined && row !== undefined) {
         const value = {action, row};
-        this.emitAction({value});
+        this.emitRowAction({value});
       }
+    };
+
+    /**
+     * Callback when batch action clicked from toolbar
+     * Emits the action type and the selected row data to
+     * parent controller
+     * @param {string} action : action type
+     */
+    this.onEmitBatchAction = (action) => {
+      const filteredRows = this.data.filter((row) => row.selected);
+      const value = {action, filteredRows};
+      this.emitBatchAction({value});
     };
 
     /**
@@ -146,6 +216,47 @@ window.angular && (function(angular) {
     };
 
     /**
+     * Callback when select checkbox clicked
+     * @param {number} row : index of selected row
+     */
+    this.onRowSelectChange = (row) => {
+      if (this.selectedRows.has(row)) {
+        this.selectedRows.delete(row);
+      } else {
+        this.selectedRows.add(row);
+      }
+      if (this.selectedRows.size === 0) {
+        this.someSelected = false;
+        this.selectHeaderCheckbox = false;
+      } else if (this.selectedRows.size === selectableRowCount) {
+        this.someSelected = false;
+        this.selectHeaderCheckbox = true;
+      } else {
+        this.someSelected = true;
+      }
+    };
+
+    /**
+     * Callback when header select box value changes
+     */
+    this.onHeaderSelectChange = (checked) => {
+      this.selectHeaderCheckbox = checked;
+      if (this.selectHeaderCheckbox) {
+        selectAllRows();
+      } else {
+        deselectAllRows();
+      }
+    };
+
+    /**
+     * Callback when cancel/close button closed
+     * from toolbar
+     */
+    this.onToolbarClose = () => {
+      deselectAllRows();
+    };
+
+    /**
      * onInit Component lifecycle hook
      * Checking for undefined values
      */
@@ -158,7 +269,8 @@ window.angular && (function(angular) {
       this.size = this.size === undefined ? '' : this.size;
       this.expandable = this.expandable === undefined ? false : this.expandable;
 
-      // Check for undefined 'uiData' property for each item in data array
+      // Check for undefined 'uiData' property for each item in data
+      // array
       this.data = this.data.map((row) => {
         if (row.uiData === undefined) {
           row.uiData = [];
@@ -170,17 +282,11 @@ window.angular && (function(angular) {
 
     /**
      * onChanges Component lifecycle hook
-     * Check for changes in the data array and apply
-     * default or active sort if one is defined
      */
     this.$onChanges = (onChangesObj) => {
       const dataChange = onChangesObj.data;
       if (dataChange) {
-        if (this.activeSort !== undefined || this.defaultSort !== undefined) {
-          this.activeSort = this.defaultSort !== undefined ? this.defaultSort :
-                                                             this.activeSort;
-          sortData();
-        }
+        prepData();
       }
     }
   };
@@ -199,7 +305,10 @@ window.angular && (function(angular) {
       sortable: '<',           // boolean
       defaultSort: '<',        // number (index of sort)
       expandable: '<',         // boolean
-      emitAction: '&'
+      selectable: '<',         // boolean
+      batchActions: '<',       // Array
+      emitRowAction: '&',
+      emitBatchAction: '&'
     }
   })
 })(window.angular);

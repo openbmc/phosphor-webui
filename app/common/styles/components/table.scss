@@ -147,6 +147,10 @@
   }
 }
 
+.bmc-table__container {
+  position: relative;
+}
+
 .bmc-table {
   width: 100%;
   &.small {
@@ -223,4 +227,66 @@
 
 .bmc-table__row-actions {
   text-align: right;
+}
+
+.bmc-table__checkbox {
+  margin: 0;
+}
+
+.bmc-table__toolbar {
+  position: absolute;
+  left: 0;
+  right:0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: $text-03;
+  background-color: $primary-accent;
+  max-height: 40px;
+  padding-left: 1em;
+  padding-top: 0.5em;
+  padding-right: 0;
+  padding-bottom: 0.5em;
+  transform: translateY(-40px);
+  &.ng-animate {
+    transition: transform $duration--moderate-02 $standard-easing--productive;
+  }
+  &.ng-enter {
+    transform: translateY(0);
+  }
+  &.ng-enter.ng-enter-active {
+    transform: translateY(-40px);
+  }
+  &.ng-leave {
+    transform: translateY(-40px);
+  }
+  &.ng-leave.ng-leave-active {
+    transform: translateY(0);
+  }
+  .btn-tertiary {
+    color: $text-03;
+    padding-top:0;
+    padding-bottom:0;
+    position: relative;
+    margin-left: 1.5em;
+    .icon {
+      fill: $text-03;
+      margin: 0;
+      position: absolute;
+      transform: translate(-1.8em, -2px);
+    }
+  }
+}
+
+.toolbar__batch-actions {
+  .btn-close {
+    border-top: none;
+    border-bottom: none;
+    border-left: 2px solid $primary-light;
+    margin-left: 0.5em;
+  }
+}
+
+.toolbar__selection-count {
+  margin: 0;
 }

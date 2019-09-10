@@ -9,7 +9,7 @@
 }
 
 .local-users__actions,
-.local-users__table .bmc-table {
+.local-users__table .bmc-table__container {
   max-width: 900px;
 }
 
@@ -36,7 +36,7 @@
 
 .role-table {
   margin-top: 30px;
-  .bmc-table {
+  .bmc-table__container {
     max-width: 750px;
   }
   .bmc-table__cell:not(:first-of-type) {
