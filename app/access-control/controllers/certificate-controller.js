@@ -9,26 +9,21 @@
 window.angular && (function(angular) {
   'use strict';
 
-  angular.module('app.accessControl').controller('certificateController', [
-    '$scope', 'APIUtils', '$q', 'Constants', 'toastService',
-    function($scope, APIUtils, $q, Constants, toastService) {
+  angular.module('app.configuration').controller('certificateController', [
+    '$scope', 'APIUtils', '$q', 'Constants', 'toastService', '$timeout',
+    '$uibModal',
+    function(
+        $scope, APIUtils, $q, Constants, toastService, $timeout, $uibModal) {
       $scope.loading = false;
       $scope.certificates = [];
       $scope.availableCertificateTypes = [];
       $scope.allCertificateTypes = Constants.CERTIFICATE_TYPES;
-      $scope.addCertificateModal = false;
-      $scope.addCSRModal = false;
       $scope.newCertificate = {};
       $scope.newCSR = {};
-      $scope.submitted = false;
-      $scope.csrSubmitted = false;
-      $scope.csrCode = '';
-      $scope.displayCSRCode = false;
       $scope.keyBitLength = Constants.CERTIFICATE.KEY_BIT_LENGTH;
       $scope.keyPairAlgorithm = Constants.CERTIFICATE.KEY_PAIR_ALGORITHM;
       $scope.keyCurveId = Constants.CERTIFICATE.KEY_CURVE_ID;
       $scope.countryList = Constants.COUNTRIES;
-
 
       $scope.$on('$viewContentLoaded', () => {
         getBmcTime();
@@ -70,7 +65,6 @@ window.angular && (function(angular) {
           toastService.error('Certificate must be a .pem file.');
           return;
         }
-        $scope.addCertificateModal = false;
         APIUtils
             .addNewCertificate(
                 $scope.newCertificate.file, $scope.newCertificate.selectedType)
@@ -131,7 +125,6 @@ window.angular && (function(angular) {
         }
       };
 
-
       // create a CSR object to send to the backend
       $scope.getCSRCode = function() {
         var addCSR = {};
@@ -142,7 +135,6 @@ window.angular && (function(angular) {
         $scope.newCSR.firstAlternativeName ?
             alternativeNames.push($scope.newCSR.firstAlternativeName) :
             $scope.newCSR.firstAlternativeName = '';
-
 
         addCSR.CertificateCollection = {
           '@odata.id': $scope.newCSR.certificateCollection.location
@@ -163,21 +155,72 @@ window.angular && (function(angular) {
 
         APIUtils.createCSRCertificate(addCSR).then(
             function(data) {
-              $scope.displayCSRCode = true;
               $scope.csrCode = data;
+              openDownloadCsrModal();
             },
             function(error) {
-              $scope.addCSRModal = false;
               toastService.error('Unable to generate CSR. Try again.');
               console.log(JSON.stringify(error));
             })
       };
 
+      function openDownloadCsrModal() {
+        const modalTemplateCsrDownload =
+            require('./certificate-modal-csr-download.html');
+        $uibModal
+            .open({
+              template: modalTemplateCsrDownload,
+              windowTopClass: 'uib-modal',
+              scope: $scope,
+              ariaLabelledBy: 'modal_label',
+              size: 'lg',
+            })
+            .result.catch(function() {
+              resetCSRModal();
+            });
+      };
+
+      $scope.addCertModal = function() {
+        openAddCertModal();
+      };
+
+      function openAddCertModal() {
+        const modalTemplateAddCert =
+            require('./certificate-modal-add-cert.html');
+        $uibModal
+            .open({
+              template: modalTemplateAddCert,
+              windowTopClass: 'uib-modal',
+              scope: $scope,
+              ariaLabelledBy: 'modal_label',
+            })
+            .result.catch(function() {
+              // do nothing
+            });
+      };
+
+      $scope.addCsrModal = function() {
+        openCsrModal();
+      };
+
+      function openCsrModal() {
+        const modalTemplateCsrGen = require('./certificate-modal-csr-gen.html');
+        $uibModal
+            .open({
+              template: modalTemplateCsrGen,
+              windowTopClass: 'uib-modal',
+              scope: $scope,
+              ariaLabelledBy: 'modal_label',
+              size: 'lg',
+            })
+            .result.catch(function() {
+              resetCSRModal();
+            });
+      };
+
       // resetting the modal when user clicks cancel/closes the
       // modal
-      $scope.resetCSRModal = function() {
-        $scope.addCSRModal = false;
-        $scope.displayCSRCode = false;
+      const resetCSRModal = function() {
         $scope.newCSR.certificateCollection = $scope.selectOption;
         $scope.newCSR.commonName = '';
         $scope.newCSR.contactPerson = '';

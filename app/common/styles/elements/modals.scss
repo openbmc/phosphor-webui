@@ -83,9 +83,45 @@
   }
 }
 
+/**
+  * Markup  for bootstrap modal
+  <div class="uib-modal__content">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal_label">
+        Title here
+      </h2>
+      <button
+        type="button"
+        class="btn  btn--close"
+        ng-click="$dismiss()"
+        aria-label="close">
+        <icon file="icon-close.svg" aria-hidden="true"></icon>
+      </button>
+    </div>
+    <div class="modal-body">
+      Body content
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        ng-click="$dismiss()">
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        ng-click="function()">
+        Save
+      </button>
+    </div>
+  </div>
+*/
+
 .uib-modal.fade.in {
   opacity: 1;
 }
+
 .uib-modal.in .modal-dialog {
   transform: translate(0, 10vh);
   margin-top: 50px;
@@ -99,14 +135,10 @@
   }
 }
 
-.uib-modal .modal-dialog {
-  // override bootstrap max-width set at 500px
-  max-width: 550px;
-}
-
 .modal-backdrop.in {
   opacity: 0.5;
 }
+
 .uib-modal__content {
   padding: 1em;
   .modal-header {
