@@ -1,4 +1,5 @@
-<div class="table__row-value row column">
+<!-- TODO: Replace table with resusable table component -->
+<div class="table__row-value row">
   <div class="certificate__type-cell bold">
     {{getCertificateName(cert.Description)}}
   </div>
@@ -39,35 +40,55 @@
     {{cert.ValidNotAfter | date:medium}}
   </div>
   <div class="certificate__buttons-cell">
-    <button type="button" ng-click="cert.upload = true" aria-label="Replace certificate" class="btn  btn-tertiary certificate__button">
+    <button
+      type="button"
+      ng-click="cert.upload = true"
+      aria-label="Replace certificate"
+      class="btn  btn-tertiary certificate__button">
       <icon file="icon-replace.svg" aria-hidden="true"></icon>
     </button>
   </div>
   <div ng-show="cert.upload === true" class="upload__certificate">
-    <div class="certificate__upload-chooser row">
-      <div class="small-1 column">
-        <button type="button" ng-click="cert.upload=false" aria-label="close replace certificate upload form">
-          <icon file="icon-close.svg" aria-hidden="true"></icon>
-        </button>
-      </div>
-      <div class="small-2 column">
-        <label>
-          <input id="upload_{{cert.Description + cert.Id}}" type="file" file="cert.file" class="input-file" />
-          <span class="btn btn-secondary">Choose file</span>
-        </label>
-      </div>
-      <div class="small-6 column">
-        <span ng-if="!cert.file">No file selected</span>
-        <span>{{cert.file.name}}</span>
-        <button type="reset" ng-if="cert.file.name" ng-click="cert.file = '';" aria-label="remove selected file">
-          <icon file="icon-close.svg" aria-hidden="true"></icon>
-        </button>
-      </div>
-      <div class="small-3 column">
-        <button type="submit" ng-class="{disabled:!cert.file}" class="btn btn-primary" ng-click="replaceCertificate(cert)">
-          Replace
-        </button>
-      </div>
+    <div class="close-btn">
+      <button
+        type="button"
+        ng-click="cert.upload=false"
+        aria-label="close replace certificate upload form">
+        <icon file="icon-close.svg" aria-hidden="true"></icon>
+      </button>
+    </div>
+    <div class="file-upload">
+      <label
+        for="upload_{{ cert.Description + cert.Id }}"
+        class="file-upload-btn btn btn-secondary"
+        tabindex="0">Choose file</label>
+      <input
+        name="upload_{{ cert.Description + cert.Id }}"
+        id="upload_{{ cert.Description + cert.Id }}"
+        type="file"
+        file="cert.file"
+        class="file-upload-input"/>
+    </div>
+    <div class="file-upload-container file-upload-field">
+      <span ng-if="!cert.file">No file selected</span>
+      <span>{{ cert.file.name }}</span>
+      <button
+        type="reset"
+        class="btn file-upload-reset"
+        ng-if="cert.file.name"
+        ng-click="cert.file = '';"
+        aria-label="remove selected file">
+        <icon file="icon-close.svg" aria-hidden="true"></icon>
+      </button>
+    </div>
+    <div class="replace-btn">
+      <button
+        type="submit"
+        ng-disabled="!cert.file"
+        class="btn btn-primary"
+        ng-click="replaceCertificate(cert)">
+        Replace
+      </button>
     </div>
   </div>
 </div>
