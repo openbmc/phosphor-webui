@@ -1,38 +1,18 @@
-<primary>
-  <h1>Virtual media</h1>
-  <p class="vm__page-description"  ng-if="devices.length >= 1">Specify image file location to start session.</p>
-  <p ng-if="devices.length < 1">
-    There are no Virtual Media devices available.
-  </primary>
-  <div ng-repeat="device in devices track by $index" class="vm__upload">
-    <h2 class="h3">{{device.deviceName}}</h2>
-    <div class="vm__upload-chooser">
-      <!-- name and error message -->
-      <div class="vm__upload-content">
-        <div class="vm__upload-controls">
-          <!-- Button -->
-          <label class="vm__upload-choose-label">
-            <input id="file-upload" type="file" file="device.file" class="hide" ng-disabled="device.isActive"/>
-            <span class="vm__upload-choose-button btn btn-secondary" ng-class="{disabled:device.isActive}">Choose file</span>
-          </label>
-          <div class="vm__upload-name">
-            <span ng-if="!device.file">No file selected</span>
-            <span ng-if="device.file.name !== undefined">{{device.file.name}}</span>
-            <span class="icon__exit" ng-if="device.file && !device.isActive" ng-click="resetFile($index);">
-              <icon file="icon-close.svg"></icon>
-            </span>
-          </div>
-        </div>
-        <div class="vm__active-text vm__active-border" ng-if="device.isActive">
-          <span>Active Session</span>
-        </div>
-        <div class="vm__active-text vm__error-border" ng-if="device.hasError">
-          <span>Error in connecting to the selected file</span>
-        </div>
-      </div>
-      <div class="vm__upload-start">
-        <input type="button" ng-value="device.isActive ? 'Stop' : 'Start'" ng-class="{disabled:!device.file}" class="btn btn-primary" ng-click="device.isActive? stopVM($index) : startVM($index)"/>
-      </div>
+<div>
+<h2 class="h2">Serve image in a web browser</h2>
+  <div id="virtual_media-proxy" class="vm__upload ng-scope">
+    <div ng-repeat="dev in proxyDevices track by $index" class="row column">
+    <div id="vm_{{dev.name}}" class="column">
+      <!-- name and error message -->              
+	  <label class="inline column"><span class="h3">{{dev.name}}</span><span ng-if="dev.isActive">(Active)</span> </label>
+        <!-- Button -->
+        <label class="inline firmware__upload-chooser">
+            <input id="vm_{{dev.name}}_file-upload" type="file" file="dev.file" class="hide" ng-disabled="dev.isActive"/>
+            <span class="button btn-secondary" ng-class="{disabled:dev.isActive}">{{dev.file ? dev.file.name : 'Choose file'}}</span>        
+            <span class="inline firmware__upload-file-name"><span ng-if="dev.message" id="vm_{{dev.name}}_message" ng-bind="dev.message"></span></span>
+        </label>            
+		<input id="vm_{{dev.name}}_start_stop" type="button" ng-value="dev.isActive ? 'Stop' : 'Start'" ng-disabled="!dev.file" ng-class="{disabled:!dev.file}" class="btn btn-primary float-right" ng-click="dev.isActive? stopVM($index) : startVM($index)"/>
+    </div>
     </div>
   </div>
-</div>
+ </div>
