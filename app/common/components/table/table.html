@@ -99,6 +99,7 @@
         <td ng-if="$ctrl.rowActionsEnabled"
             class="bmc-table__cell  bmc-table__row-actions">
           <table-actions
+            ng-if="row.actions"
             actions="row.actions"
             emit-action="$ctrl.onEmitRowAction(action, row)">
           </table-actions>

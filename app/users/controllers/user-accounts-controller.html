@@ -26,7 +26,10 @@
         data="tableData"
         header="tableHeader"
         row-actions-enabled="true"
+        selectable="true"
+        batch-actions="tableBatchActions"
         emit-row-action="onEmitRowAction(value)"
+        emit-batch-action="onEmitBatchAction(value)"
         class="local-users__table">
       </bmc-table>
     </div>

@@ -10,8 +10,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.users').controller('userAccountsController', [
-    '$scope', 'APIUtils', 'toastService', '$uibModal',
-    function($scope, APIUtils, toastService, $uibModal) {
+    '$scope', 'APIUtils', 'toastService', '$uibModal', '$q',
+    function($scope, APIUtils, toastService, $uibModal, $q) {
       $scope.loading;
       $scope.accountSettings;
       $scope.userRoles;
@@ -21,6 +21,19 @@ window.angular && (function(angular) {
       $scope.tableHeader = [
         {label: 'Username'}, {label: 'Privilege'}, {label: 'Account status'}
       ];
+      $scope.tableBatchActions = [
+        {type: 'delete', label: 'Remove'},
+        {type: 'enable', label: 'Enable'},
+        {type: 'disable', label: 'Disable'},
+      ];
+
+      /**
+       * Returns true if username is 'root'
+       * @param {*} user
+       */
+      function checkIfRoot(user) {
+        return user.UserName === 'root' ? true : false;
+      }
 
       /**
        * Data table mapper
@@ -33,10 +46,10 @@ window.angular && (function(angular) {
         const editAction = {type: 'Edit', enabled: true, file: 'icon-edit.svg'};
         const deleteAction = {
           type: 'Delete',
-          enabled: user.UserName === 'root' ? false : true,
+          enabled: checkIfRoot(user) ? false : true,
           file: 'icon-trashcan.svg'
         };
-
+        user.selectable = checkIfRoot(user) ? false : true;
         user.actions = [editAction, deleteAction];
         user.uiData = [user.UserName, user.RoleId, accountStatus];
         return user;
@@ -144,21 +157,74 @@ window.angular && (function(angular) {
       }
 
       /**
-       * API call to delete user
-       * @param {*} username
+       * API call to delete users
+       * @param {*} users : Array of users to delete
        */
-      function deleteUser(username) {
+      function deleteUsers(users = []) {
         $scope.loading = true;
-        APIUtils.deleteUser(username)
+        const promises =
+            users.map((user) => APIUtils.deleteUser(user.UserName));
+        $q.all(promises)
             .then(() => {
-              getLocalUsers();
-              toastService.success(`User '${username}' has been deleted.`);
+              let message;
+              if (users.length > 1) {
+                message = 'Users have been removed.'
+              } else {
+                message = `User '${users[0].UserName}' has been removed.`
+              }
+              toastService.success(message);
             })
             .catch((error) => {
               console.log(JSON.stringify(error));
-              toastService.error(`Failed to delete user '${username}'.`);
+              let message;
+              if (users.length > 1) {
+                message = 'Failed to remove users.'
+              } else {
+                message = `Failed to remove user '${users[0].UserName}'.`
+              }
+              toastService.error(message);
             })
             .finally(() => {
+              getLocalUsers();
+              $scope.loading = false;
+            });
+      }
+
+      /**
+       * API call to update user status enabled/disabled
+       * @param {*} users : Array of users to update
+       * @param {boolean} enabled : status
+       */
+      function updateUserStatus(users = [], enabled = true) {
+        $scope.loading = true;
+        const promises = users.map(
+            (user) => APIUtils.updateUser(
+                user.UserName, null, null, null, enabled, null));
+        $q.all(promises)
+            .then(() => {
+              let message;
+              let statusLabel = enabled ? 'enabled' : 'disabled';
+              if (users.length > 1) {
+                message = `Users ${statusLabel}.`
+              } else {
+                message = `User '${users[0].UserName}' ${statusLabel}.`;
+              }
+              toastService.success(message);
+            })
+            .catch((error) => {
+              console.log(JSON.stringify(error));
+              let message;
+              let statusLabel = enabled ? 'enable' : 'disable';
+              if (users.length > 1) {
+                message = `Failed to ${statusLabel} users.`
+              } else {
+                message =
+                    `Failed to ${statusLabel} user '${users[0].UserName}'.`
+              }
+              toastService.error(message);
+            })
+            .finally(() => {
+              getLocalUsers();
               $scope.loading = false;
             });
       }
@@ -257,7 +323,7 @@ window.angular && (function(angular) {
                 // Some form controls will be disabled for root users:
                 // edit enabled status, edit username, edit role
                 const isRoot =
-                    newUser ? false : user.UserName === 'root' ? true : false;
+                    newUser ? false : checkIfRoot(user) ? true : false;
                 // Array of existing usernames (excluding current user instance)
                 const existingUsernames =
                     $scope.localUsers.reduce((acc, val) => {
@@ -328,10 +394,10 @@ window.angular && (function(angular) {
       }
 
       /**
-       * Intiate remove user modal
-       * @param {*} user
+       * Intiate remove users modal
+       * @param {*} users
        */
-      function initRemoveModal(user) {
+      function initRemoveModal(users) {
         const template = require('./user-accounts-modal-remove.html');
         $uibModal
             .open({
@@ -340,17 +406,12 @@ window.angular && (function(angular) {
               ariaLabelledBy: 'dialog_label',
               controllerAs: 'modalCtrl',
               controller: function() {
-                this.user = user.UserName;
+                this.users = users;
               }
             })
             .result
             .then(() => {
-              const isRoot = user.UserName === 'root' ? true : false;
-              if (isRoot) {
-                toastService.error(`Cannot delete 'root' user.`)
-                return;
-              }
-              deleteUser(user.UserName);
+              deleteUsers(users);
             })
             .catch(
                 () => {
@@ -368,9 +429,28 @@ window.angular && (function(angular) {
             initUserModal(value.row);
             break;
           case 'Delete':
-            initRemoveModal(value.row);
+            initRemoveModal([value.row]);
             break;
           default:
+        }
+      };
+
+      /**
+       * Callback when batch action emitted from table
+       */
+      $scope.onEmitBatchAction = (value) => {
+        switch (value.action) {
+          case 'delete':
+            initRemoveModal(value.filteredRows);
+            break;
+          case 'enable':
+            updateUserStatus(value.filteredRows, true)
+            break;
+          case 'disable':
+            updateUserStatus(value.filteredRows, false)
+            break;
+          default:
+            break;
         }
       };
 
