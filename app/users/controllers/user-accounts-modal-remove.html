@@ -8,7 +8,8 @@
     </button>
   </div>
   <div class="modal-body">
-    <p>Are you sure you want to remove user '{{modalCtrl.user}}'? This action cannot be undone.</p>
+    <p ng-if="modalCtrl.users.length > 1">Are you sure you want to remove {{modalCtrl.users.length}} users? This action cannot be undone.</p>
+    <p ng-if="modalCtrl.users.length === 1">Are you sure you want to remove user '{{modalCtrl.users[0].UserName}}'? This action cannot be undone.</p>
   </div>
   <div class="modal-footer">
     <button class="btn btn-secondary" ng-click="$dismiss()" type="button">
