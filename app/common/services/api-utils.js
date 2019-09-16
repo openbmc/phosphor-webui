@@ -1799,6 +1799,27 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        getVMCollection: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                       '/redfish/v1/Managers/bmc/VirtualMedia',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        getRedfishObject: function(objectPath) {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + objectPath,
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
       };
       return SERVICE;
     }
