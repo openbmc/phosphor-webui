@@ -288,6 +288,7 @@ window.angular && (function(angular) {
       const dataChange = onChangesObj.data;
       if (dataChange) {
         prepData();
+        deselectAllRows();
       }
     };
   };
