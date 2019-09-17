@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef154c52_8cebc644",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2019-09-17T19:58:44Z",
+      "side": 1,
+      "message": "can you remove the trailing spaces?",
+      "range": {
+        "startLine": 6,
+        "startChar": 37,
+        "endLine": 6,
+        "endChar": 51
+      },
+      "revId": "bc57cdb1e0a74fdbce273740d876002efee6b9a8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102731e9_221f2983",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2019-09-17T19:58:44Z",
+      "side": 1,
+      "message": "can you remove the tabs?",
+      "range": {
+        "startLine": 14,
+        "startChar": 1,
+        "endLine": 14,
+        "endChar": 2
+      },
+      "revId": "bc57cdb1e0a74fdbce273740d876002efee6b9a8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "126f0a37_f5bf69af",
+        "filename": "app/server-control/controllers/virtual-media-controller.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2019-09-17T19:58:44Z",
+      "side": 1,
+      "message": "I think clang-format will flag these trailing spaces",
+      "revId": "bc57cdb1e0a74fdbce273740d876002efee6b9a8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
