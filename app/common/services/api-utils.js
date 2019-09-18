@@ -659,6 +659,26 @@ window.angular && (function(angular) {
             withCredentials: true,
           });
         },
+        removeUserFromIpmi: function(username) {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                       `/xyz/openbmc_project/user/${username}/attr/UserGroups`,
+                   withCredentials: true
+                 })
+              .then((res) => {
+                const userGroups = res.data.data;
+                return userGroups.filter((group) => group !== 'ipmi');
+              })
+              .then(
+                  (data) => {return $http({
+                    method: 'PUT',
+                    url: DataService.getHost() +
+                        `/xyz/openbmc_project/user/${username}/attr/UserGroups`,
+                    withCredentials: true,
+                    data: {'data': data}
+                  })})
+        },
         chassisPowerOff: function() {
           var deferred = $q.defer();
           $http({
