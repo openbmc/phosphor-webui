@@ -11,6 +11,8 @@ window.angular && (function(angular) {
           '$rootScope', '$scope', 'dataService', '$location',
           function($rootScope, $scope, dataService, $location) {
             $scope.dataService = dataService;
+            $scope.supportsDateInput = true;
+
             $scope.toggleSeverityAll = function() {
               $scope.selectedSeverity.all = !$scope.selectedSeverity.all;
 
@@ -46,6 +48,17 @@ window.angular && (function(angular) {
                 $scope.selectedSeverity.all = false;
               }
             };
+
+            const testDateInputSupport = () => {
+              const firstDateInput =
+                  document.querySelector('input[type=date]');
+
+              if (firstDateInput && firstDateInput.type == 'text') {
+                $scope.supportsDateInput = false;
+              }
+            };
+
+            testDateInputSupport();
           }
         ]
       };
