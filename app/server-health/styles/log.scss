@@ -36,6 +36,7 @@ $priority-resolve--light: $base-02--04;
   }
 }
 
+// Event Filter
 #event-filter {
   .filter-label {
     color: $text-02;
@@ -47,7 +48,6 @@ $priority-resolve--light: $base-02--04;
   .event__severity-filter {
     margin-right: 2em;
     margin-bottom: 1em;
-    font-size: 0.9em;
     .btn {
       width: 100px;
       float: left;
@@ -63,10 +63,6 @@ $priority-resolve--light: $base-02--04;
     input {
       width: 170px;
     }
-    label {
-      height: 0;
-      text-indent: -9999px;
-    }
   }
   .event__status-filter {
     float: left;
@@ -79,6 +75,30 @@ $priority-resolve--light: $base-02--04;
       text-align: left;
     }
   }
+}
+
+.event-filter__content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-top: 1em;
+
+  > fieldset {
+    flex: 0 0 auto;
+  }
+
+  .error {
+    margin-bottom: 0;
+  }
+}
+
+.event__date-filter-content {
+  display: flex;
+  align-items: flex-start;
+}
+
+.event__date-filter-divider {
+  margin: .25rem .5rem 0 .5rem;
 }
 
 .event-log__filters {
