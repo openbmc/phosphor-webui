@@ -651,6 +651,15 @@ window.angular && (function(angular) {
             withCredentials: true,
           });
         },
+        removeUserFromIpmi: function(username) {
+          return $http({
+            method: 'PUT',
+            url: DataService.getHost() +
+                `/xyz/openbmc_project/user/${username}/attr/UserGroups`,
+            withCredentials: true,
+            data: {'data': ['redfish', 'ssh', 'web']}
+          })
+        },
         chassisPowerOff: function() {
           var deferred = $q.defer();
           $http({
