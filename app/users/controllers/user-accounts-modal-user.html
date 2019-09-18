@@ -16,6 +16,7 @@
                aria-live="polite"
                ng-class="{'notification-banner--warning': !form.lock.$dirty,
                           'notification-banner--information': form.lock.$dirty}">
+            <icon file="icon-warning.svg" aria-hidden="true" ng-if="!form.lock.$dirty"></icon>
             <p class="notification-banner__text" ng-if="!form.lock.$dirty">Account locked</p>
             <p class="notification-banner__text" ng-if="form.lock.$dirty">Click "Save" to unlock account</p>
           </div>
@@ -105,13 +106,23 @@
         <div class="column medium-6">
            <!-- Password -->
            <div class="field-group-container">
-            <label for="password">User password</label>
-            <p class="label__helper-text">Password must between <span class="nowrap">{{modalCtrl.minPasswordLength}} – {{modalCtrl.maxPasswordLength}}</span> characters</p>
+            <label for="password">User password
+              <span ng-if="modalCtrl.user.new">
+                <icon ng-file="icon-information.svg"
+                      role="tooltip"
+                      class="icon__info-tooltip"
+                      aria-label="Once a user has been created, their password can be updated to more than 20 characters."
+                      uib-tooltip="Once a user has been created, their password can be updated to more than 20 characters.">
+                </icon>
+              </span>
+            </label>
+            <p class="label__helper-text" ng-if="modalCtrl.user.new">Password must between <span class="nowrap">{{modalCtrl.minPasswordLength}} – {{modalCtrl.maxPasswordLength}}</span> characters</p>
+            <p class="label__helper-text" ng-if="!modalCtrl.user.new">Password must be at least {{modalCtrl.minPasswordLength}} characters</p>
             <input id="password"
                    name="password"
                    type="password"
                    ng-minlength="modalCtrl.minPasswordLength"
-                   ng-maxlength="modalCtrl.maxPasswordLength"
+                   ng-maxlength="modalCtrl.user.new ? modalCtrl.maxPasswordLength : null"
                    autocomplete="new-password"
                    ng-required="modalCtrl.user.new || form.password.$touched || form.passwordConfirm.$touched"
                    ng-model="modalCtrl.user.password"
@@ -124,8 +135,10 @@
             <div ng-if="form.password.$invalid && form.password.$dirty" class="form__validation-message">
               <span ng-show="form.password.$error.required">
                 Field is required</span>
-              <span ng-show="form.password.$error.minlength || form.password.$error.maxlength">
+              <span ng-show="modalCtrl.user.new && (form.password.$error.minlength || form.password.$error.maxlength)">
                 Length must be between <span class="nowrap">{{modalCtrl.minPasswordLength}} – {{modalCtrl.maxPasswordLength}}</span> characters</span>
+              <span ng-show="!modalCtrl.user.new && form.password.$error.minlength">
+                Length must be at least {{modalCtrl.minPasswordLength}} characters</span>
             </div>
           </div>
           <!-- Password confirm -->
@@ -154,6 +167,14 @@
               <span ng-show="form.passwordConfirm.$error.minlength || form.passwordConfirm.$error.maxlength">
                 Length must be between <span class="nowrap">1 – 16</span> characters</span>
             </div>
+          </div>
+          <!-- Notification if user will lose IPMI access -->
+          <!-- Only visible when modifying an existing user's password to more than 20 characters -->
+          <div class="notification-banner notification-banner--warning"
+               ng-show="!modalCtrl.user.new && form.password.$viewValue.length > 20"
+               aria-live="polite">
+            <icon file="icon-warning.svg" aria-hidden="true"></icon>
+            <p class="notification-banner__text">User will lose IPMI access if updated password length is more than 20 characters.</p>
           </div>
         </div>
       </div>

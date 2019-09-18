@@ -163,6 +163,18 @@ window.angular && (function(angular) {
       }
 
       /**
+       * API call to remove user
+       * @param {string} username
+       */
+      function removeUserFromIpmi(username) {
+        return APIUtils.removeUserFromIpmi(username).catch((error) => {
+          console.log(JSON.stringify(error));
+          toastService.error(
+              `Failed to remove user '${username}' from IPMI group.`);
+        })
+      }
+
+      /**
        * API call to save account policy settings
        * @param {number} lockoutDuration
        * @param {number} lockoutThreshold
@@ -311,9 +323,20 @@ window.angular && (function(angular) {
                     null;
 
                 if (!newUser) {
-                  updateUser(
-                      originalUsername, username, password, role, enabled,
-                      locked);
+                  if (password !== null && password.length > 20) {
+                    // If the password field was updated and the password length
+                    // is greater than 20, remove the user from IPMI group then
+                    // proceed to update new user properties
+                    removeUserFromIpmi(originalUsername).then(() => {
+                      updateUser(
+                          originalUsername, username, password, role, enabled,
+                          locked);
+                    })
+                  } else {
+                    updateUser(
+                        originalUsername, username, password, role, enabled,
+                        locked);
+                  }
                 } else {
                   createUser(
                       username, password, role, form.accountStatus.$modelValue);
