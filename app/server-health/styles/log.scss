@@ -24,7 +24,7 @@ $priority-resolve--light: $base-02--04;
     position: relative;
     text-transform: uppercase;
     color: $primary-accent;
-    font-size: 0.9em;
+    font-size: 0.9rem;
     font-weight: 700;
     border: 0;
   }
@@ -36,18 +36,19 @@ $priority-resolve--light: $base-02--04;
   }
 }
 
+// Event Filter
 #event-filter {
   .filter-label {
     color: $text-02;
     text-transform: uppercase;
     font-weight: 700;
-    font-size: 0.75em;
+    font-size: 0.75rem; // using REM to keep it consistent
     margin-bottom: 3px;
   }
   .event__severity-filter {
     margin-right: 2em;
     margin-bottom: 1em;
-    font-size: 0.9em;
+    font-size: 0.9rem;
     .btn {
       width: 100px;
       float: left;
@@ -63,10 +64,6 @@ $priority-resolve--light: $base-02--04;
     input {
       width: 170px;
     }
-    label {
-      height: 0;
-      text-indent: -9999px;
-    }
   }
   .event__status-filter {
     float: left;
@@ -79,6 +76,30 @@ $priority-resolve--light: $base-02--04;
       text-align: left;
     }
   }
+}
+
+.event-filter__content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-top: 1em;
+
+  > fieldset {
+    flex: 0 0 auto;
+  }
+
+  .error {
+    margin-bottom: 0;
+  }
+}
+
+.event__date-filter-content {
+  display: flex;
+  align-items: flex-start;
+}
+
+.event__date-filter-divider {
+  margin: .25rem .5rem 0 .5rem;
 }
 
 .event-log__filters {
@@ -175,7 +196,7 @@ $priority-resolve--light: $base-02--04;
   //Event priorities
   .event__priority {
     color: $primary-light;
-    font-size: 0.8em;
+    font-size: 0.8rem;
     text-transform: uppercase;
     padding: 2px 2em;
     font-weight: 700;
@@ -206,7 +227,7 @@ $priority-resolve--light: $base-02--04;
 
   //Event Severity
   .event__severity {
-    font-size: 0.7em;
+    font-size: 0.7rem;
     text-transform: uppercase;
     font-weight: 700;
     min-width: 103px;
@@ -227,7 +248,7 @@ $priority-resolve--light: $base-02--04;
   //Event ID
   .event__id {
     @include fontCourierBold;
-    font-size: 0.9em;
+    font-size: 0.9rem;
     color: $text-02;
     margin-right: 1em;
   }
@@ -235,7 +256,7 @@ $priority-resolve--light: $base-02--04;
   .event__timestamp {
     text-align: left;
     @include fontCourierBold;
-    font-size: 0.9em;
+    font-size: 0.9rem;
     color: $text-02;
     max-width: 18em;
     @include mediaQuery(medium) {

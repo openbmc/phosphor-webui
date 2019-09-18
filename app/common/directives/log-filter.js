@@ -11,6 +11,8 @@ window.angular && (function(angular) {
           '$rootScope', '$scope', 'dataService', '$location',
           function($rootScope, $scope, dataService, $location) {
             $scope.dataService = dataService;
+            $scope.supportsDateInput = true;
+
             $scope.toggleSeverityAll = function() {
               $scope.selectedSeverity.all = !$scope.selectedSeverity.all;
 
@@ -46,6 +48,24 @@ window.angular && (function(angular) {
                 $scope.selectedSeverity.all = false;
               }
             };
+
+            /**
+             * Handle browsers that don't support the native date input element
+             * IE 11 and Safari do not support this native date element and
+             * users cannot select a date from a browser generated date picker.
+             * This is a test so that we can indicate to the user the proper
+             * date format based on date input element support.
+             */
+            const testDateInputSupport = () => {
+              const firstDateInput =
+                  document.querySelector('input[type=date]');
+
+              if (firstDateInput && firstDateInput.type == 'text') {
+                $scope.supportsDateInput = false;
+              }
+            };
+
+            testDateInputSupport();
           }
         ]
       };
