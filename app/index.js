@@ -82,6 +82,7 @@ import power_usage_controller from './server-control/controllers/power-usage-con
 import remote_console_window_controller from './server-control/controllers/remote-console-window-controller.js';
 import server_led_controller from './server-control/controllers/server-led-controller.js';
 import kvm_controller from './server-control/controllers/kvm-controller.js';
+import vm_controller from './server-control/controllers/virtual-media-controller.js';
 
 import server_health_index from './server-health/index.js';
 import inventory_overview_controller from './server-health/controllers/inventory-overview-controller.js';
@@ -99,7 +100,6 @@ import certificate_controller from './configuration/controllers/certificate-cont
 import network_controller from './configuration/controllers/network-controller.js';
 import snmp_controller from './configuration/controllers/snmp-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
-import vm_controller from './configuration/controllers/virtual-media-controller.js';
 
 import users_index from './users/index.js';
 import user_accounts_controller from './users/controllers/user-accounts-controller.js';
