@@ -40,7 +40,9 @@ window.angular && (function(angular) {
           angular.element(document.querySelector('#noVNC_container'))[0];
 
       try {
-        rfb = new RFB(target, 'wss://' + host + ':' + port + '/kvm/0', {});
+        rfb = new RFB(
+            target, 'wss://' + host + ':' + port + '/kvm/0',
+            [sessionStorage.getItem('X-AUTH-TOKEN')], {});
 
         rfb.addEventListener('connect', connected);
         rfb.addEventListener('disconnect', disconnected);
