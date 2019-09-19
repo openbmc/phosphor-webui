@@ -53,6 +53,12 @@ window.angular && (function(angular) {
                 'controller': 'kvmController',
                 authenticated: true
               })
+              .when('/configuration/virtual-media', {
+                'template':
+                    require('./controllers/virtual-media-controller.html'),
+                'controller': 'virtualMediaController',
+                authenticated: true
+              })
               .when('/server-control', {
                 'template':
                     require('./controllers/power-operations-controller.html'),
