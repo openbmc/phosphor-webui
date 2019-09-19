@@ -1531,6 +1531,16 @@ window.angular && (function(angular) {
                   delete content.data[key].associations;
                 }
 
+                // Remove the Purpose property from any inventory item.
+                // The purpose property isn't useful to a user.
+                // E.g. in a Power Supply:
+                // Purpose
+                // xyz.openbmc_project.Software.Version.VersionPurpose.Other
+                // Remove when we move inventory to Redfish
+                if (content.data[key].hasOwnProperty('Purpose')) {
+                  delete content.data[key].Purpose;
+                }
+
                 data = camelcaseToLabel(content.data[key]);
                 searchText = getSearchText(data);
                 title = key.split('/').pop();
