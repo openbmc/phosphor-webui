@@ -480,14 +480,13 @@ window.angular && (function(angular) {
         login: function(username, password, callback) {
           $http({
             method: 'POST',
-            url: DataService.getHost() + '/login',
-            withCredentials: true,
-            data: JSON.stringify({'data': [username, password]})
+            url: DataService.getHost() + '/redfish/v1/SessionService/Sessions',
+            data: JSON.stringify({'UserName': username, 'Password': password}),
           })
               .then(
                   function(response) {
                     if (callback) {
-                      callback(response.data);
+                      callback(response);
                     }
                   },
                   function(error) {
@@ -501,17 +500,19 @@ window.angular && (function(angular) {
                     console.log(error);
                   });
         },
-        logout: function(callback) {
+        logout: function(id, callback) {
           $http({
-            method: 'POST',
-            url: DataService.getHost() + '/logout',
+            method: 'DELETE',
+            url: DataService.getHost() +
+                '/redfish/v1/SessionService/Sessions/' + id,
             withCredentials: true,
             data: JSON.stringify({'data': []})
           })
               .then(
                   function(response) {
                     if (callback) {
-                      callback(response.data);
+                      console.log(response);
+                      callback(response);
                     }
                   },
                   function(error) {

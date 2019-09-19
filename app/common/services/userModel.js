@@ -17,9 +17,12 @@ window.angular && (function(angular) {
         login: function(username, password, callback) {
           APIUtils.login(username, password, function(response, error) {
             if (response &&
-                (response.status == APIUtils.API_RESPONSE.SUCCESS_STATUS ||
-                 response.status === undefined)) {
+                (response.status == 201 || response.status === undefined)) {
+              const responseHeader = response.headers();
+              const xsrfToken = responseHeader['x-auth-token'];
               sessionStorage.setItem('LOGIN_ID', username);
+              sessionStorage.setItem('SESSION_ID', response.data.Id);
+              sessionStorage.setItem('X-AUTH-TOKEN', xsrfToken);
               callback(true);
             } else if (
                 response && response.data && response.data.data &&
@@ -41,18 +44,18 @@ window.angular && (function(angular) {
           return true;
         },
         logout: function(callback) {
-          APIUtils.logout(function(response, error) {
-            if (response &&
-                response.status == APIUtils.API_RESPONSE.SUCCESS_STATUS) {
-              sessionStorage.removeItem('LOGIN_ID');
-              sessionStorage.removeItem(APIUtils.HOST_SESSION_STORAGE_KEY);
-              callback(true);
-            } else if (response.status == APIUtils.API_RESPONSE.ERROR_STATUS) {
-              callback(false);
-            } else {
-              callback(false, error);
-            }
-          });
+          APIUtils.logout(
+              sessionStorage.getItem('SESSION_ID'), function(response, error) {
+                if (response) {
+                  sessionStorage.removeItem('LOGIN_ID');
+                  sessionStorage.removeItem('SESSION_ID');
+                  sessionStorage.removeItem('X-AUTH-TOKEN');
+                  sessionStorage.removeItem(APIUtils.HOST_SESSION_STORAGE_KEY);
+                  callback(true);
+                } else {
+                  callback(false, error);
+                }
+              });
         }
       };
     }

@@ -15,7 +15,8 @@ window.angular && (function(angular) {
     'dataService',
     'userModel',
     '$location',
-    function($scope, $window, dataService, userModel, $location) {
+    '$http',
+    function($scope, $window, dataService, userModel, $location, $http) {
       $scope.dataService = dataService;
       $scope.serverUnreachable = false;
       $scope.invalidCredentials = false;
@@ -38,6 +39,7 @@ window.angular && (function(angular) {
           $scope.dataService.setHost(host);
           userModel.login(username, password, function(status, description) {
             if (status) {
+              const xAuthToken = sessionStorage.getItem('X-AUTH-TOKEN');
               $scope.$emit('user-logged-in', {});
               var next = $location.search().next;
               if (next === undefined || next == null) {
@@ -45,6 +47,9 @@ window.angular && (function(angular) {
               } else {
                 $window.location.href = next;
               }
+
+              //$http service adding the X-Auth-Token header
+              $http.defaults.headers.common['X-Auth-Token'] = xAuthToken;
             } else {
               if (description === 'Unauthorized') {
                 $scope.invalidCredentials = true;
