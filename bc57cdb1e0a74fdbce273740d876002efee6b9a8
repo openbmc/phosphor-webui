@@ -62,6 +62,23 @@
       "revId": "bc57cdb1e0a74fdbce273740d876002efee6b9a8",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034495e2_6425c3b6",
+        "filename": "app/server-control/index.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2019-09-19T19:37:55Z",
+      "side": 1,
+      "message": "I noticed this the other day and meant to fix the virtual media files and route. \nI did this here: https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-webui/+/25384\nSorry if I stepped on your toes. \nI think moving the virtual media files and route in a separate commit, makes this commit a lot easier to review.",
+      "revId": "bc57cdb1e0a74fdbce273740d876002efee6b9a8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
