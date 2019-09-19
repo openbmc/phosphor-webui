@@ -1,7 +1,7 @@
 /**
  * Controller for virtual-media
  *
- * @module app/configuration
+ * @module app/serverControl
  * @exports virtualMediaController
  * @name virtualMediaController
  */
@@ -9,7 +9,7 @@
 window.angular && (function(angular) {
   'use strict';
 
-  angular.module('app.configuration').controller('virtualMediaController', [
+  angular.module('app.serverControl').controller('virtualMediaController', [
     '$scope', 'APIUtils', 'toastService', 'dataService', 'nbdServerService',
     function($scope, APIUtils, toastService, dataService, nbdServerService) {
       $scope.devices = [];
