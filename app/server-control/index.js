@@ -50,7 +50,6 @@ window.angular && (function(angular) {
               })
               .when('/server-control/kvm', {
                 'template': require('./controllers/kvm-controller.html'),
-                'controller': 'kvmController',
                 authenticated: true
               })
               .when('/server-control/virtual-media', {
