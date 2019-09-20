@@ -55,8 +55,8 @@ window.angular && (function(angular) {
         'template': require('./serial-console.html'),
         'scope': {'path': '=', 'showTabBtn': '=?'},
         'controller': [
-          '$scope', '$window', 'dataService',
-          function($scope, $window, dataService) {
+          '$scope', '$window', 'dataService', '$element',
+          function($scope, $window, dataService, $element) {
             $scope.dataService = dataService;
 
             // See https://github.com/xtermjs/xterm.js/ for available xterm
@@ -67,7 +67,8 @@ window.angular && (function(angular) {
 
             var border = 10;
             var term = new Terminal();
-            var terminal = document.getElementById('terminal');
+            // Should be a reference to <div id="terminal"></div>
+            var terminal = $element[0].firstElementChild.firstElementChild;
             var customConsole;
             var charSize;
             var termContainer;
