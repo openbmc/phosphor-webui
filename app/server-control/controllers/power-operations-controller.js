@@ -376,6 +376,16 @@ window.angular && (function(angular) {
         }
       };
 
+      /**
+       * Callback when boot setting option changed
+       */
+      $scope.onChangeBootSetting = function() {
+        const bootSetting = $scope.hostBootSettings.bootSelected.$viewValue;
+        if (bootSetting === 'None') {
+          $scope.boot.oneTimeBootEnabled = false;
+        }
+      };
+
       /*
        *   Emitted every time the view is reloaded
        */

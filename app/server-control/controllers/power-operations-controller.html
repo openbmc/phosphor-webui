@@ -31,8 +31,11 @@
           <div class="boot-options">
             <label for="boot-selected">
               Boot setting override</label>
-            <select id="boot-selected" name="bootSelected" id="boot-selected" ng-disabled="dataService.server_unreachable || bootOverrideError"
-              ng-model="boot.BootSourceOverrideTarget">
+            <select name="bootSelected"
+                    id="boot-selected"
+                    ng-disabled="dataService.server_unreachable || bootOverrideError"
+                    ng-model="boot.BootSourceOverrideTarget"
+                    ng-change="onChangeBootSetting()">
               <option class="courier-bold" value="{{bootSource}}" ng-repeat="bootSource in bootSources">
                 {{ bootSource }}
               </option>
@@ -40,9 +43,12 @@
           <div class="boot-options one-time-boot-setting">
             <div class="align-self-center">
               <label class="control-check" id="one-time-label"> <span class="inline boot-checkbox">Enable one time boot</span>
-                <input type="checkbox" name="oneTime"
-                  ng-disabled="dataService.server_unreachable || bootOverrideError || boot.BootSourceOverrideTarget =='None' " ng-model="boot.oneTimeBootEnabled"
-                  ng-change="oneTimeBootEnabled" />
+                <input type="checkbox"
+                       name="oneTime"
+                       ng-disabled="dataService.server_unreachable ||
+                                    bootOverrideError ||
+                                    boot.BootSourceOverrideTarget =='None'"
+                       ng-model="boot.oneTimeBootEnabled"/>
                 <span class="control__indicator"> </span>
               </label>
             </div>
