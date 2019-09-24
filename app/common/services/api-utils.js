@@ -612,6 +612,7 @@ window.angular && (function(angular) {
             data: properties
           });
         },
+
         createUser: function(user, passwd, role, enabled) {
           var data = {};
           data['UserName'] = user;
