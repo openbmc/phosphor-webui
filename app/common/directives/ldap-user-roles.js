@@ -158,7 +158,7 @@ window.angular && (function(angular) {
             $scope.roleGroupIsSelectedChanged = () => {
               let groupSelected = false;
               $scope.roleGroups.forEach(group => {
-                if (group['isSelected']) {
+                if (group && group['isSelected']) {
                   groupSelected = true;
                 }
               });
