@@ -16,6 +16,7 @@
                aria-live="polite"
                ng-class="{'notification-banner--warning': !form.lock.$dirty,
                           'notification-banner--information': form.lock.$dirty}">
+            <icon file="icon-warning.svg" aria-hidden="true" ng-if="!form.lock.$dirty"></icon>
             <p class="notification-banner__text" ng-if="!form.lock.$dirty">Account locked</p>
             <p class="notification-banner__text" ng-if="form.lock.$dirty">Click "Save" to unlock account</p>
           </div>
