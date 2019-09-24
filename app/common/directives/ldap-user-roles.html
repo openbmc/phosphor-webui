@@ -84,7 +84,7 @@
   <!-- LDAP Disabled Role Groups Table Row -->
   <div class="empty__logs" ng-if="roleGroups.length < 1 || !enabled">
     <p
-      ng-if="roleGroups.length < 1 && roleGroupType === 'ad' ||  roleGroupType === 'ldap'"
+      ng-if="!roleGroups.length && roleGroupType"
     >
       No role groups have been created yet.
     </p>
