@@ -72,9 +72,6 @@ $thresh-normal: $accent-02--02;
   background: $background-02;
   padding: 0.5rem 1rem;
   font-weight: 700;
-  .icon.icon__normal {
-    display: none;
-  }
 
   @include mediaQuery(medium) {
     flex: 1;
