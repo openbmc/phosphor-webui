@@ -24,22 +24,29 @@
       >
         <icon aria-hidden="true" file="icon-chevron-right.svg"></icon>
       </button>
-      <a href="#/server-health/event-log" class="header__action"
-        >Server health
-        <icon aria-hidden="true" file="icon-chevron-right.svg"></icon
-        ><span
-          ng-class="{'status-light__error': dataService.server_health == 'Critical', 'status-light__warn': dataService.server_health == 'Warning', 'status-light__good': dataService.server_health == 'Good'}"
-          >{{ dataService.server_health }}</span
-        ></a
-      >
-      <a href="#/server-control/power-operations" class="header__action"
-        >Server power
-        <icon aria-hidden="true" file="icon-chevron-right.svg"></icon
-        ><span
-          ng-class="{'status-light__off': dataService.server_state == 'Off', 'status-light__disabled': dataService.server_state == 'Unreachable', 'status-light__good': dataService.server_state == 'Running', 'status-light__error': dataService.server_state == 'Quiesced'}"
-          >{{ dataService.server_state | quiescedToError }}</span
-        ></a
-      >
+      <a href="#/server-health/event-log" class="header__action">
+        Server health
+        <icon aria-hidden="true" file="icon-chevron-right.svg"></icon>
+        <span>
+            <status-icon status="{{ dataService.server_health == 'Critical' ? 'error' :
+                                    dataService.server_health == 'Warning' ? 'warn' :
+                                    dataService.server_health == 'Good' ? 'on' : null }}">
+            </status-icon>
+          {{ dataService.server_health }}
+        </span>
+      </a>
+      <a href="#/server-control/power-operations" class="header__action">
+        Server power
+        <icon aria-hidden="true" file="icon-chevron-right.svg"></icon>
+        <span>
+          <status-icon status="{{ dataService.server_state == 'Quiesced' ? 'error' :
+                                  dataService.server_state == 'Running' ? 'on' :
+                                  dataService.server_state == 'Off' ? 'off' :
+                                  dataService.server_state == 'Unreachable' ? 'off' : null }}">
+          </status-icon>
+          {{ dataService.server_state | quiescedToError }}
+        </span>
+      </a>
       <p class="header__refresh">
         Data last refreshed<span>{{
           dataService.last_updated | localeDate

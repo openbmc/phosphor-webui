@@ -11,12 +11,6 @@
   .power__state {
     font-weight: 700;
     margin-top: -0.3em;
-    span:before {
-      content: "";
-      position: absolute;
-      @extend .icon__off;
-      margin-left: -25px;
-    }
   }
 
   // Power bar indicator
@@ -40,43 +34,18 @@
     }
     &.power__state-on {
       background-position: -100%;
-      .power__state {
-        span:before {
-          content: "";
-          @extend .icon__good;
-        }
-      }
     }
     &.power__state-off {
       background-position: 0;
       color: $primary-dark;
-      .power__state {
-        span:before {
-          content: "";
-          @extend .icon__off;
-        }
-      }
     }
     &.power__state-indet {
       color: $text-02;
       @include indeterminate-bar;
-      .power__state {
-        span:before {
-          color: $status-warn;
-          content: "";
-          @extend .icon__warning;
-        }
-      }
     }
     &.power__state-error {
       background-position: 0;
       color: $primary-dark;
-      .power__state {
-        span:before {
-          content: "";
-          @extend .icon__critical;
-        }
-      }
     }
   }
 
@@ -156,9 +125,5 @@
     left: 3px;
     width: 10px;
     height: 10px;
-  }
-
-  .icon__warning {
-    width: 24px;
   }
 } //end power-operations

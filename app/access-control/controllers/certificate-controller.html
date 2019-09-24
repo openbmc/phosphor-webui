@@ -12,7 +12,7 @@
   </div>
   <div ng-repeat="certificate in certificates|filter:{isExpired:true}" class="row column">
     <div class="small-12 alert alert-danger" role="alert">
-      <div class="icon__critical inline"></div> The uploaded {{certificate.name}} has expired! Consider replacing it with a new certificate.
+      <icon file="icon-critical.svg" aria-hidden="true"></icon> The uploaded {{certificate.name}} has expired! Consider replacing it with a new certificate.
     </div>
   </div>
   <div class="row column">
