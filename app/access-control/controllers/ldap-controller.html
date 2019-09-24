@@ -32,6 +32,7 @@
           <div class="large-3 column ldap__ssl-column">
             <label class="control-check" ng-class="{'disabled' : certificates.length < 1}">
               <input id="secure-ldap-ssl" aria-labelledby="use-ssl" type="checkbox"
+                ng-change="ldap__configuration.ldap__uri.$touched = true"
                 ng-model="ldapProperties.useSSL" ng-checked="ldapProperties.useSSL"
                 ng-disabled="certificates.length < 1" />
               <span class="control__indicator"></span>
@@ -44,10 +45,10 @@
                   {{clientCertificateExpires ? (clientCertificateExpires | localeDate) : 'none available'}}</small>
               </div>
             </div>
-            <div class="ldap__certificate-info" ng-if="data.ValidNotAfter='' || !ldapProperties.ServiceEnabled">
-              <span>SSL certificates must be uploaded to secure LDAP using SSL.</span>
+            <div class="ldap__certificate-info" ng-if="certificates.length < 1 && ldapProperties.ServiceEnabled">
+              <span>{{data.ValidNotAfter}}SSL certificates must be uploaded to secure LDAP using SSL.</span>
             </div>
-            <div class="ldap__certificate-info">
+            <div ng-if="ldapProperties.ServiceEnabled" class="ldap__certificate-info">
               <a href="#/access-control/ssl-certificates">Go to SSL certificates</a>
             </div>
           </div>
@@ -74,11 +75,14 @@
             <div class="medium-6 large-4 columns">
               <label for="ldap__uri">Server uri</label>
               <input id="ldap__uri" name="ldap__uri" type="text"
-                ng-change="ldapProperties.ServiceAddressesUpdated = true" ng-model="ldapProperties.ServiceAddresses[0]"
+                ng-change="ldapProperties.ServiceAddressesUpdated = true"
+                ng-model="ldapProperties.ServiceAddresses[0]"
+                ng-pattern="ldapProperties.useSSL ? '^ldaps://.*' : '^ldap://.*'"
                 required />
               <div ng-messages="ldap__configuration.ldap__uri.$error" class="form-error"
-                ng-class="{'visible' : ldap__configuration.ldap__uri.$touched || submitted}">
+                ng-class="{'visible' : ldap__configuration.ldap__uri.$touched || submitted}" role="alert">
                 <p ng-message="required">Field is required</p>
+                <p ng-message="pattern">Must start with {{ldapProperties.useSSL ? 'ldaps://' : 'ldap://'}}</p>
               </div>
             </div>
             <div class="medium-6 large-4 columns">
@@ -86,7 +90,7 @@
               <input id="ldap__bind__dn" name="ldap__bind__dn" type="text"
                 ng-change="ldapProperties.UsernameUpdated = true" ng-model="ldapProperties.Username" required />
               <div ng-messages="ldap__configuration.ldap__bind__dn.$error" class="form-error"
-                ng-class="{'visible' : ldap__configuration.ldap__bind__dn.$touched || submitted}">
+                ng-class="{'visible' : ldap__configuration.ldap__bind__dn.$touched || submitted}" role="alert">
                 <p ng-message="required">Field is required</p>
               </div>
             </div>
@@ -101,7 +105,7 @@
                 <span ng-show="togglePassword">Hide</span>
               </button>
               <div ng-messages="ldap__configuration.ldap__bind_pw.$error" class="form-error"
-                ng-class="{'visible' : ldap__configuration.ldap__bind_pw.$touched || submitted}">
+                ng-class="{'visible' : ldap__configuration.ldap__bind_pw.$touched || submitted}" role="alert">
                 <p ng-message="required">Field is required</p>
               </div>
             </div>
@@ -111,7 +115,7 @@
                 ng-change="ldapProperties.BaseDistinguishedNamesUpdated = true"
                 ng-model="ldapProperties.BaseDistinguishedNames[0]" required />
               <div ng-messages="ldap__configuration.ldap__base__dn.$error" class="form-error"
-                ng-class="{'visible' : ldap__configuration.ldap__base__dn.$touched || submitted}">
+                ng-class="{'visible' : ldap__configuration.ldap__base__dn.$touched || submitted}" role="alert">
                 <p ng-message="required">Field is required</p>
               </div>
             </div>
