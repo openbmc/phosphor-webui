@@ -149,6 +149,10 @@ $logoMaxWidth: 125px;
       width: 1rem;
     }
 
+    .status-icon {
+      vertical-align: text-top;
+    }
+
     &:hover {
       background: $background-01;
     }

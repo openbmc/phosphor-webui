@@ -57,7 +57,10 @@
     <tbody class="sensors__tbody">
       <tr class="sensors__tbody-row" ng-repeat="sensor in data|filter:filterBySeverity|filter:filterBySearchTerms|orderBy:'+custom_order' as filteredSensorData">
         <th class="sensors__tbody-header">
-          <span class="icon" ng-class="{'icon__critical': sensor.status == 'critical', 'icon__warning': sensor.status == 'warning', 'icon__normal': sensor.status == 'normal'}" aria-label="Sensor status: {{sensor.status}}" ></span>
+          <status-icon status="{{ sensor.status == 'critical' ? 'error' :
+                                  sensor.status == 'warning'  ? 'warn' : null }}"
+                       aria-label="Sensor status: {{sensor.status}}">
+          </status-icon>
           <span>{{sensor.title}}</span>
         </th>
         <td class="sensors__tbody-cell">
