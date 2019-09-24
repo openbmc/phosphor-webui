@@ -28,7 +28,7 @@ window.angular && (function(angular) {
       $scope.loadLdap = function() {
         $scope.loading = true;
         $scope.submitted = false;
-        var getLdapProperties =
+        const getLdapProperties =
             APIUtils.getAllUserAccountProperties()
                 .then(function(data) {
                   $scope.ldapProperties = {
@@ -109,7 +109,7 @@ window.angular && (function(angular) {
                             },
                             function(error) {
                               console.log(JSON.stringify(error));
-                            })
+                            });
                   }
                 })
                 .catch(function(error) {
@@ -118,107 +118,142 @@ window.angular && (function(angular) {
 
         var promises = [getLdapProperties, getClientCertificate];
         $q.all(promises).finally(function() {
+          $scope.originalProperties = angular.copy($scope.ldapProperties);
           $scope.loading = false;
         });
       };
 
+      /**
+       * Save LDAP settings
+       * Will be making two calls every time to accomodate the backend design
+       * LDAP and ActiveDirectory changes can not be sent together when changing
+       * from AD to LDAP
+       */
       $scope.saveLdapSettings = function() {
-        for (var i in $scope.ldapProperties.ServiceAddresses) {
-          if ($scope.ldapProperties.useSSL !==
-              $scope.isSSL($scope.ldapProperties.ServiceAddresses[i])) {
-            toastService.error(
-                'Server URI ' + $scope.ldapProperties.ServiceAddresses[i] +
-                ' must begin with ' +
-                ($scope.ldapProperties.useSSL ? 'ldaps:// ' : 'ldap:// ') +
-                'when SSL is ' +
-                ($scope.ldapProperties.useSSL ? 'configured. ' :
-                                                'not configured.'));
-          }
-        }
+        const enabledServiceType = $scope.ldapProperties.EnabledServiceType;
+        const enabledServicePayload = getLdapRequest(enabledServiceType, true);
+        const disabledServiceType =
+            enabledServiceType == 'ldap' ? 'ad' : 'ldap';
+        const disabledServicePayload =
+            getLdapRequest(disabledServiceType, false);
 
-        // Default LDAP and AD Attributes
-        let LDAP = {};
-
-        let ActiveDirectory = {};
-
-        // Data to pass to request
-        let data = {};
-        data.LDAP = LDAP;
-        data.ActiveDirectory = ActiveDirectory;
-
-        // Values to update the service type object
-        let Authentication = {};
-        Authentication.Username = $scope.ldapProperties.Username;
-        Authentication.Password = $scope.ldapProperties.Password;
-        Authentication.AuthenticationType =
-            $scope.ldapProperties.AuthenticationType;
-
-        let LDAPService = {};
-        LDAPService.SearchSettings = {};
-        LDAPService.SearchSettings.BaseDistinguishedNames =
-            $scope.ldapProperties.BaseDistinguishedNames;
-        LDAPService.SearchSettings.GroupsAttribute =
-            $scope.ldapProperties.GroupsAttribute;
-        LDAPService.SearchSettings.UsernameAttribute =
-            $scope.ldapProperties.UsernameAttribute;
-
-        let ServiceAddresses = $scope.ldapProperties.ServiceAddresses;
-        if ($scope.ldapProperties.EnabledServiceType == 'ldap') {
-          ActiveDirectory.ServiceEnabled = false;
-          LDAP.ServiceEnabled = true;
-          LDAP.Authentication = Authentication;
-          LDAP.LDAPService = LDAPService;
-          LDAP.ServiceAddresses = ServiceAddresses;
-        } else if ($scope.ldapProperties.EnabledServiceType == 'ad') {
-          ActiveDirectory.ServiceEnabled = true;
-          LDAP.ServiceEnabled = false;
-          ActiveDirectory.Authentication = Authentication;
-          ActiveDirectory.LDAPService = LDAPService;
-          ActiveDirectory.ServiceAddresses = ServiceAddresses;
-        }
-
-        APIUtils.saveLdapProperties(data).then(
-            function(response) {
-              if (!response.data.hasOwnProperty('error')) {
-                toastService.success('Successfully updated LDAP settings.');
-                $scope.loadLdap();
-              } else {
-                toastService.error('Unable to update LDAP settings.');
-                console.log(JSON.stringify(response.data.error.message));
-              }
-            },
-            function(error) {
-              toastService.error('Unable to update LDAP settings.');
-              console.log(JSON.stringify(error));
-            });
+        APIUtils.saveLdapProperties(disabledServicePayload)
+            .then(function(response) {
+              return APIUtils.saveLdapProperties(enabledServicePayload);
+            })
+            .then(
+                function(response) {
+                  if (!response.data.hasOwnProperty('error')) {
+                    toastService.success('Successfully updated LDAP settings.');
+                    $scope.loadLdap();
+                  } else {
+                    toastService.error('Unable to update all LDAP settings.');
+                    console.log(response.data.error.message);
+                  }
+                },
+                function(error) {
+                  toastService.error('Unable to update LDAP settings.');
+                  console.log(JSON.stringify(error));
+                });
       };
+
+
 
       $scope.isSSL = function(uri) {
         return uri.startsWith('ldaps://');
       };
-      $scope.updateServiceEnabled = function() {
-        if (!$scope.ldapProperties.ServiceEnabled) {
-          $scope.ldapProperties.EnabledServiceType = '';
-          let data = {};
-          let LDAP = {};
-          data.LDAP = LDAP;
-          LDAP.ServiceEnabled = false;
-          let ActiveDirectory = {};
-          data.ActiveDirectory = ActiveDirectory;
-          ActiveDirectory.ServiceEnabled = false;
 
-          APIUtils.saveLdapProperties(data).then(
-              function(response) {
-                toastService.success('Successfully disabled LDAP.');
-                $scope.roleGroups = [];
-                $scope.loadLdap();
-              },
-              function(error) {
-                toastService.error('Unable to disable LDAP.');
-                console.log(JSON.stringify(error));
-              });
+      /**
+       * Sends a reqeust to disable the LDAP Service if the user
+       * toggled the service enabled checkbox in the UI and if
+       * there was a previously saved service type. This prevents
+       * unnecessary calls to the backend if the user toggled
+       * the service enabled, but never actually had saved settings.
+       */
+      $scope.updateServiceEnabled = () => {
+        const originalEnabledServiceType =
+            $scope.originalProperties.EnabledServiceType;
+
+        if (!$scope.ldapProperties.ServiceEnabled &&
+            originalEnabledServiceType) {
+          $scope.ldapProperties.EnabledServiceType = '';
+
+          const requestPayload =
+              getLdapRequest(originalEnabledServiceType, false);
+          APIUtils.saveLdapProperties(requestPayload)
+              .then(
+                  function(response) {
+                    toastService.success('Successfully disabled LDAP.');
+                    $scope.roleGroups = [];
+                    $scope.loadLdap();
+                  },
+                  function(error) {
+                    toastService.error('Unable to update LDAP settings.');
+                    console.log(JSON.stringify(error));
+                  });
         }
-      }
+      };
+
+      /**
+       * Create the object to send as the payload in the LDAP API call
+       * @param {string} serviceType - 'ldap' or 'ad'
+       * @param {boolean} serviceEnabled
+       */
+      function getLdapRequest(serviceType, serviceEnabled) {
+        let ldapProperties = {};
+
+        // If ServiceEnabled send the full LDAP or AD object
+        // If not enabled, we can only send the ServiceEnabled
+        // property in the LDAP or ActiveDirectory objects or
+        // the request will fail
+        if (serviceEnabled) {
+          const Authentication = {
+            Username: $scope.ldapProperties.Password,
+            AuthenticationType: $scope.ldapProperties.AuthenticationType
+          };
+
+          const LDAPService = {
+            SearchSettings: {
+              BaseDistinguishedNames:
+                  $scope.ldapProperties.BaseDistinguishedNames,
+              GroupsAttribute: $scope.ldapProperties.GroupsAttribute,
+              UsernameAttribute: $scope.ldapProperties.UsernameAttribute
+            }
+          };
+
+          const ServiceAddresses = $scope.ldapProperties.ServiceAddresses;
+
+          if (serviceType == 'ldap') {
+            ldapProperties = {
+              LDAP: {
+                ServiceEnabled: serviceEnabled,
+                Authentication,
+                LDAPService,
+                ServiceAddresses
+              }
+            };
+          } else {
+            ldapProperties = {
+              ActiveDirectory: {
+                ServiceEnabled: serviceEnabled,
+                Authentication,
+                LDAPService,
+                ServiceAddresses
+              }
+            };
+          }
+        } else {
+          if (serviceType == 'ldap') {
+            ldapProperties = {LDAP: {ServiceEnabled: serviceEnabled}};
+          } else {
+            ldapProperties = {
+              ActiveDirectory: {ServiceEnabled: serviceEnabled}
+            };
+          }
+        }
+
+        return ldapProperties;
+      };
     }
   ]);
 })(angular);
