@@ -29,14 +29,22 @@
 
 .ldap__ssl-column {
   padding-left: 1.5em;
+
   .control__label {
     text-transform: none;
     font-weight: 400;
     font-size: 16px;
     color: $primary-dark;
   }
+
   .control__indicator {
     top: 5px;
+  }
+
+  // using !important due to being a state and need to have higer specificity
+  &.disabled *,
+  .disabled {
+    color: $base-02--02 !important;
   }
 }
 
@@ -70,16 +78,22 @@
 }
 
 .ldap__certificate-info {
-  padding-top: 0.5em;
-  small {
-    font-size: 14px;
-  }
-  p {
-    color: $base-02--02;
+  margin-top: 0.5em;
+
+  dt {
     text-transform: uppercase;
+    color: $base-02--02;
     font-weight: 700;
-    font-size: 0.75em;
-    margin-bottom: 0;
+    font-size: 12px;
+  }
+
+  dd {
+    font-size: 14px;
+    margin-top: 0.25em;
+  }
+
+  .disabled {
+    color: $base-02--02;
   }
 }
 

@@ -41,22 +41,19 @@ window.angular && (function(angular) {
             };
 
             $scope.addRoleGroup = () => {
+              $scope.loading = true;
+
               const newGroup = {};
               newGroup.RemoteGroup = $scope.newGroup.RemoteGroup;
               newGroup.LocalRole = $scope.newGroup.LocalRole;
 
-              $scope.loading = true;
               const data = {};
-
-              if ($scope.roleGroupType == 'ldap') {
-                data.LDAP = {};
-                data.LDAP.RemoteRoleMapping = $scope.roleGroups;
-                data.LDAP.RemoteRoleMapping.push(newGroup);
-              } else {
-                data.ActiveDirectory = {};
-                data.ActiveDirectory.RemoteRoleMapping = $scope.roleGroups;
-                data.ActiveDirectory.RemoteRoleMapping.push(newGroup);
-              }
+              const roleGroups = $scope.roleGroups;
+              const roleGroupType = $scope.roleGroupType;
+              data[roleGroupType] = {};
+              data[roleGroupType]['RemoteRoleMapping'] = roleGroups;
+              data[roleGroupType]['RemoteRoleMapping'][roleGroups.length] =
+                  newGroup;
 
               APIUtils.saveLdapProperties(data)
                   .then(
@@ -82,19 +79,14 @@ window.angular && (function(angular) {
             $scope.editRoleGroup = () => {
               $scope.loading = true;
               const data = {};
-
-              if ($scope.roleGroupType == 'ldap') {
-                data.LDAP = {};
-                data.LDAP.RemoteRoleMapping = $scope.roleGroups;
-                data.LDAP.RemoteRoleMapping[$scope.selectedGroupIndex]
-                    .LocalRole = $scope.newGroup.LocalRole;
-              } else {
-                data.ActiveDirectory = {};
-                data.ActiveDirectory.RemoteRoleMapping = $scope.roleGroups;
-                data.ActiveDirectory
-                    .RemoteRoleMapping[$scope.selectedGroupIndex]
-                    .LocalRole = $scope.newGroup.LocalRole;
-              }
+              const roleGroupType = $scope.roleGroupType;
+              const roleGroups = $scope.roleGroups;
+              const localRole = $scope.newGroup.LocalRole;
+              const selectedIndex = $scope.selectedGroupIndex;
+              data[roleGroupType] = {};
+              data[roleGroupType]['RemoteRoleMapping'] = roleGroups;
+              data[roleGroupType]['RemoteRoleMapping'][selectedIndex]['LocalRole'] =
+                  localRole;
 
               APIUtils.saveLdapProperties(data)
                   .then(
@@ -111,29 +103,21 @@ window.angular && (function(angular) {
               $scope.editGroup = false;
             };
 
-            $scope.removeGroupFn = (index) => {
+            $scope.removeGroupFn = index => {
               $scope.removeGroup = true;
               $scope.selectedGroupIndex = index;
             };
 
             $scope.removeRoleGroup = () => {
               $scope.loading = true;
+              const roleGroupType = $scope.roleGroupType;
+              const roleGroups = $scope.roleGroups;
+              const selectedGroupIndex = $scope.selectedGroupIndex;
               const data = {};
-
-              if ($scope.roleGroupType == 'ldap') {
-                data.LDAP = {};
-                data.LDAP.RemoteRoleMapping = $scope.roleGroups;
-                data.LDAP.RemoteRoleMapping[$scope.selectedGroupIndex] =
-                    $scope.newGroup;
-              } else {
-                data.ActiveDirectory = {};
-                data.ActiveDirectory.RemoteRoleMapping = $scope.roleGroups;
-                data.ActiveDirectory
-                    .RemoteRoleMapping[$scope.selectedGroupIndex] =
-                    $scope.newGroup;
-              }
-
-              $scope.roleGroups[$scope.selectedGroupIndex] = null;
+              data[roleGroupType] = {};
+              data[roleGroupType]['RemoteRoleMapping'] = roleGroups;
+              data[roleGroupType]['RemoteRoleMapping'][selectedGroupIndex] =
+                  null;
 
               APIUtils.saveLdapProperties(data)
                   .then(
@@ -158,7 +142,7 @@ window.angular && (function(angular) {
             $scope.roleGroupIsSelectedChanged = () => {
               let groupSelected = false;
               $scope.roleGroups.forEach(group => {
-                if (group['isSelected']) {
+                if (group && group['isSelected']) {
                   groupSelected = true;
                 }
               });
@@ -167,28 +151,18 @@ window.angular && (function(angular) {
 
             $scope.removeMultipleRoleGroups = () => {
               $scope.loading = true;
+              const roleGroupType = $scope.roleGroupType;
+              const roleGroups = $scope.roleGroups;
               const data = {};
-
-              if ($scope.roleGroupType == 'ldap') {
-                data.LDAP = {};
-                data.LDAP.RemoteRoleMapping = $scope.roleGroups.map((group) => {
-                  if (group['isSelected']) {
-                    return null;
-                  } else {
-                    return group;
-                  }
-                });
-              } else {
-                data.ActiveDirectory = {};
-                data.ActiveDirectory.RemoteRoleMapping =
-                    $scope.roleGroups.map((group) => {
-                      if (group['isSelected']) {
-                        return null;
-                      } else {
-                        return group;
-                      }
-                    });
-              }
+              data[roleGroupType] = {};
+              data[roleGroupType]['RemoteRoleMapping'] =
+                  roleGroups.map((group) => {
+                    if (group['isSelected']) {
+                      return null;
+                    } else {
+                      return group;
+                    }
+                  });
 
               APIUtils.saveLdapProperties(data)
                   .then(
