@@ -50,39 +50,6 @@
     color: $text-02;
   }
 }
-//Status icons
-@mixin status-icon {
-  background-repeat: no-repeat;
-  vertical-align: middle;
-  width: 16px;
-  height: 16px;
-  margin-right: .4em;
-}
-
-.icon__warning {
-  @include status-icon;
-  background-image: url(../assets/images/icon-warning.svg);
-}
-
-.modal .icon__warning {
-  width: 30px;
-  height: 30px;
-}
-
-.icon__critical {
-  @include status-icon;
-  background-image: url(../assets/images/icon-critical.svg);
-}
-
-.icon__good {
-  @include status-icon;
-  background-image: url(../assets/images/icon-on.svg);
-}
-
-.icon__off {
-  @include status-icon;
-  background-image: url(../assets/images/icon-off.svg);
-}
 
 .icon__info{
   margin-top: -4px;
@@ -107,4 +74,10 @@
 .icon__down-arrow {
   @extend .icon__up-arrow;
   transform: rotate(180deg);
+}
+
+.status-icon {
+  width: 1rem;
+  vertical-align: text-bottom;
+  margin-right: 0.25em;
 }
