@@ -144,11 +144,10 @@ $nav__second-level-text-color: $base-02--01;
     margin: 0;
     list-style-type: none;
     display: block;
-    @include fastTransition-all;
+    transition: left $duration--slow-01 $standard-easing--productive;
     &.opened {
       left: $nav__toplvlWidth;
       box-shadow: 7px 0 28px -10px $base-02--02;
-      @include fastTransition-all;
     }
     a {
       padding: 1.2em 1em 1.2em 1em;
