@@ -10,8 +10,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.configuration').controller('dateTimeController', [
-    '$scope', '$window', 'APIUtils', '$route', '$q', 'toastService',
-    function($scope, $window, APIUtils, $route, $q, toastService) {
+    '$scope', 'APIUtils', '$route', '$q', 'toastService', '$timeout',
+    function($scope, APIUtils, $route, $q, toastService, $timeout) {
       $scope.bmc = {};
       // Only used when the owner is "Split"
       $scope.host = {};
@@ -73,69 +73,82 @@ window.angular && (function(angular) {
             console.log(JSON.stringify(error));
           });
 
-      var promises = [
-        getTimePromise,
-        getNTPPromise,
-      ];
+      var promises = [getTimePromise, getNTPPromise];
 
       $q.all(promises).finally(function() {
         $scope.loading = false;
       });
 
-      $scope.setTime = function() {
+      /**
+       * https://github.com/openbmc/phosphor-time-manager/blob/master/README.md#special-note-on-changing-ntp-setting
+       * When time mode is initially set to Manual from NTP,
+       * NTP service is disabled and the NTP service is
+       * stopping but not stopped, setting time will return an error.
+       * There are no responses from backend to notify when NTP is stopped.
+       * To work around, a timeout is set to allow NTP to fully stop
+       */
+      $scope.saveDateTimeSettings = function() {
         $scope.loading = true;
-        var promises = [setTimeMode(), setTimeOwner(), setNTPServers()];
+        if ($scope.time.mode == 'Manual' || $scope.time.owner == 'Split') {
+          setTimeMode()
+              .then(setTimeOwner)
+              .then(setNTPServers)
+              .then($timeout(setDateTime, 20000));
+        } else {
+          setTimeMode()
+              .then(setTimeOwner)
+              .then(setNTPServers)
+              .then(
+                  function() {
+                    toastService.success('Date and time settings saved');
+                  },
+                  function(errors) {
+                    console.log(JSON.stringify(errors));
+                    toastService.error(
+                        'Date and time settings could not be saved');
+                  })
+              .finally(function() {
+                $scope.loading = false;
+              });
+        }
+      };
 
-        $q.all(promises).then(
-            function() {
-              // Have to set the time mode and time owner first to avoid a
-              // insufficient permissions if the time mode or time owner had
-              // changed.
-              var manual_promises = [];
-              if ($scope.time.mode == 'Manual') {
-                // If owner is 'Split' set both.
-                // If owner is 'Host' set only it.
-                // Else set BMC only. See:
-                // https://github.com/openbmc/phosphor-time-manager/blob/master/README.md
-                if ($scope.time.owner != 'Host') {
-                  manual_promises.push(
-                      setBMCTime($scope.bmc.date.getTime() * 1000));
-                }
-                // Even though we are setting Host time, we are setting from
-                // the BMC date and time fields labeled "BMC and Host Time"
-                // currently.
-                if ($scope.time.owner == 'Host') {
-                  manual_promises.push(
-                      setHostTime($scope.bmc.date.getTime() * 1000));
-                }
-              }
-              // Set the Host if Split even if NTP. In split mode, the host has
-              // its own date and time field. Set from it.
-              if ($scope.time.owner == 'Split') {
-                manual_promises.push(
-                    setHostTime($scope.host.date.getTime() * 1000));
-              }
+      const setDateTime = function() {
+        var manualPromises = [];
+        if ($scope.time.mode == 'Manual') {
+          // If owner is 'Split' set both.
+          // If owner is 'Host' set only it.
+          if ($scope.time.owner != 'Host') {
+            manualPromises.push(setBMCTime($scope.bmc.date.getTime() * 1000));
+          }
+          // Even though we are setting Host time, we are setting from
+          // the BMC date and time fields labeled "BMC and Host Time"
+          // currently.
+          if ($scope.time.owner == 'Host') {
+            manualPromises.push(setHostTime($scope.bmc.date.getTime() * 1000));
+          }
+        }
+        // Set the Host if Split even if NTP. In split mode, the host has
+        // its own date and time field set from it.
+        if ($scope.time.owner == 'Split') {
+          manualPromises.push(setHostTime($scope.host.date.getTime() * 1000));
+        }
 
-              $q.all(manual_promises)
-                  .then(
-                      function() {
-                        toastService.success('Date and time settings saved');
-                      },
-                      function(errors) {
-                        console.log(JSON.stringify(errors));
-                        toastService.error(
-                            'Date and time settings could not be saved');
-                      })
-                  .finally(function() {
-                    $scope.loading = false;
-                  });
-            },
-            function(errors) {
-              console.log(JSON.stringify(errors));
-              toastService.error('Date and time settings could not be saved');
+        $q.all(manualPromises)
+            .then(
+                function() {
+                  toastService.success('Date and time settings saved');
+                },
+                function(errors) {
+                  console.log(JSON.stringify(errors));
+                  toastService.error(
+                      'Date and time settings could not be saved');
+                })
+            .finally(function() {
               $scope.loading = false;
             });
       };
+
       $scope.refresh = function() {
         $route.reload();
       };
