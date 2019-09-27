@@ -52,6 +52,11 @@ window.angular && (function(angular) {
                 'template': require('./controllers/kvm-controller.html'),
                 authenticated: true
               })
+              .when('/server-control/kvm-window', {
+                'template': require('./controllers/kvm-window-controller.html'),
+                'controller': 'kvmWindowController',
+                authenticated: true
+              })
               .when('/server-control/virtual-media', {
                 'template':
                     require('./controllers/virtual-media-controller.html'),
