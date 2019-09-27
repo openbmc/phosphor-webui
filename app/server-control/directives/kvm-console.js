@@ -16,7 +16,7 @@ window.angular && (function(angular) {
     function($log, $location) {
       return {
         restrict: 'E', template: require('./kvm-console.html'),
-            link: function(scope, element) {
+            scope: {newWindowBtn: '=?'}, link: function(scope, element) {
               var rfb;
 
               element.on('$destroy', function() {
@@ -33,6 +33,7 @@ window.angular && (function(angular) {
               function connected(e) {
                 $log.debug('RFB Connected');
               }
+
               function disconnected(e) {
                 $log.debug('RFB disconnected');
               }
@@ -52,6 +53,12 @@ window.angular && (function(angular) {
                     null, 'fatal', null,
                     'Unable to create RFB client -- ' + exc);
                 return;  // don't continue trying to connect
+              };
+
+              scope.openWindow = function() {
+                window.open(
+                    '#/server-control/kvm-window', 'Kvm Window',
+                    'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=1125,height=900');
               };
             }
       }
