@@ -87,6 +87,7 @@ import remote_console_window_controller from './server-control/controllers/remot
 import server_led_controller from './server-control/controllers/server-led-controller.js';
 import vm_controller from './server-control/controllers/virtual-media-controller.js';
 import kvm_console from './server-control/directives/kvm-console.js';
+import kvm_window_controller from './server-control/controllers/kvm-window-controller.js';
 
 import server_health_index from './server-health/index.js';
 import inventory_overview_controller from './server-health/controllers/inventory-overview-controller.js';
