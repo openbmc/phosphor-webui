@@ -11,25 +11,32 @@ window.angular && (function(angular) {
 
   angular.module('app.serverControl').controller('virtualMediaController', [
     '$scope', 'APIUtils', '$q', 'toastService', 'dataService',
-    'nbdServerService',
+    'nbdServerService', 'virtualMediaModel', '$uibModal',
     function(
-        $scope, APIUtils, $q, toastService, dataService, nbdServerService) {
+        $scope, APIUtils, $q, toastService, dataService, nbdServerService,
+        virtualMediaModel, $uibModal) {
       var vms = [];
+      $scope.showModal = false;
+      const modalTemplate = require('./virtual-media-modal.html');
+
       $scope.proxyDevices = [];
+      $scope.legacyDevices = [];
+
       APIUtils.getVMCollection().then(
           function(res) {
             vms = res.Members;
-
-            for (let dev in vms) {
+            for (let dev of vms) {
               APIUtils.getRedfishObject(dev['@odata.id'])
                   .then(
                       function(res) {
                         if (res.TransferProtocolType == 'OEM') {
                           $scope.proxyDevices.push(createVMDevice(res));
-                          console.log(
-                              'Virtual Media Proxy device ' + dev['@odata.id'] +
-                              ' created.');
+                        } else {
+                          $scope.legacyDevices.push(createVMDevice(res));
                         }
+                        console.log(
+                            'Virtual Media ' + dev['@odata.id'] +
+                            ' device created.');
                       },
                       function(error) {
                         console.log(JSON.stringify(error));
@@ -64,21 +71,107 @@ window.angular && (function(angular) {
       };
 
       $scope.stopVM = function(index) {
-        console.log('Stop serving file ' + index.toString());
+        console.log('Stop serving file ' + $scope.proxyDevices[index].name);
         var server = $scope.proxyDevices[index].nbdServer;
         server.stop();
       };
 
+      $scope.startLegacy = function(index) {
+        console.log(
+            'Start serving file ' + $scope.legacyDevices[index].name +
+            ' in legacy mode');
+        var data = {};
+        data.Image = $scope.legacyDevices[index].Image;
+        data.UserName = $scope.legacyDevices[index].UserName;
+        data.Password = $scope.legacyDevices[index].Password;
+        APIUtils.mountImage($scope.legacyDevices[index].name, data)
+            .then(
+                function(res) {
+                  $scope.legacyDevices[index].isActive = true;
+                },
+                function(error) {
+                  console.log(JSON.stringify(error));
+                  $scope.legacyDevices[index].message = 'Error mounting.';
+                });
+      };
+
+      $scope.stopLegacy = function(index) {
+        APIUtils.unmountImage($scope.legacyDevices[index].name)
+            .then(
+                function(res) {
+                  $scope.legacyDevices[index].isActive = false;
+                },
+                function(error) {
+                  console.log(JSON.stringify(error));
+                  $scope.legacyDevices[index].message = 'Error unmounting.';
+                });
+      };
+
+      const saveConfig = function(configModal) {
+        const uri = configModal.uri;
+        const usr = configModal.username;
+        const pass = configModal.password;
+        if (uri != undefined && uri != '' && usr != undefined && usr != '' &&
+            pass != undefined && pass != '') {
+          var index = $scope.currentIdx;
+          $scope.legacyDevices[index].configured = true;
+          $scope.legacyDevices[index].Image = uri;
+          $scope.legacyDevices[index].UserName = usr;
+          $scope.legacyDevices[index].Password = pass;
+          virtualMediaModel.saveConfig(
+              $scope.legacyDevices[index].id, $scope.legacyDevices[index]);
+          console.log('Legacy endpoint configured');
+        } else {
+          toastService.error('Wrong configuration.');
+        }
+        console.log('Configured ' + uri);
+      };
+
+      const openVMModal = function() {
+        $uibModal
+            .open({
+              template: modalTemplate,
+              windowTopClass: 'uib-modal',
+              scope: $scope,
+              ariaLabelledBy: 'modal-vm'
+            })
+            .result
+            .then(function(config) {
+              console.log(config);
+              saveConfig(config);
+            })
+            .catch(function() {
+              // do nothing
+            });
+      };
+
+      $scope.legacyConfigModal = function(index) {
+        $scope.currentIdx = index;
+        openVMModal();
+      };
+
       function findExistingConnection(vmDevice) {
-        // Checks with existing connections kept in nbdServerService for an open
-        // Websocket connection.
-        var existingConnectionsMap = nbdServerService.getExistingConnections();
-        if (existingConnectionsMap.hasOwnProperty(vmDevice.id)) {
-          // Open ws will have a ready state of 1
-          if (existingConnectionsMap[vmDevice.id].server.ws.readyState === 1) {
-            vmDevice.isActive = true;
-            vmDevice.file = existingConnectionsMap[vmDevice.id].file;
-            vmDevice.nbdServer = existingConnectionsMap[vmDevice.id].server;
+        if (vmDevice.TransferProtocolType == 'OEM') {
+          // Checks with existing connections kept in nbdServerService for an
+          // open Websocket connection.
+          var existingConnectionsMap =
+              nbdServerService.getExistingConnections();
+          if (existingConnectionsMap.hasOwnProperty(vmDevice.id)) {
+            // Open ws will have a ready state of 1
+            if (existingConnectionsMap[vmDevice.id].server.ws.readyState ===
+                1) {
+              vmDevice.isActive = true;
+              vmDevice.file = existingConnectionsMap[vmDevice.id].file;
+              vmDevice.nbdServer = existingConnectionsMap[vmDevice.id].server;
+            }
+          }
+        } else {
+          var devConfig = virtualMediaModel.getDeviceConfig(vmDevice.id);
+          if (devConfig != undefined) {
+            vmDevice.configured = true;
+            vmDevice.Image = devConfig.Image;
+            vmDevice.UserName = devConfig.UserName;
+            vmDevice.Password = devConfig.Password;
           }
         }
         return vmDevice;
@@ -137,8 +230,10 @@ window.angular && (function(angular) {
             $scope.proxyDevices[index].isActive = true;
           };
           this.stop = function() {
-            this.ws.close();
-            this.state = NBD_STATE_UNKNOWN;
+            if ($scope.proxyDevices[index].isActive) {
+              this.ws.close();
+              this.state = NBD_STATE_UNKNOWN;
+            }
           };
           this._on_ws_error = function(ev) {
             $scope.$apply(function() {
