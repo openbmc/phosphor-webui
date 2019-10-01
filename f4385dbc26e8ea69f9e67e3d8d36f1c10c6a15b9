@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe5aa0c2_a9ed583e",
+        "filename": "app/server-control/controllers/virtual-media-controller.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2019-10-01T17:05:49Z",
+      "side": 1,
+      "message": "debug traces?",
+      "revId": "f4385dbc26e8ea69f9e67e3d8d36f1c10c6a15b9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
