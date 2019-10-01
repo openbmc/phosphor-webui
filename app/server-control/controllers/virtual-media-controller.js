@@ -15,33 +15,35 @@ window.angular && (function(angular) {
     function(
         $scope, APIUtils, $q, toastService, dataService, nbdServerService) {
       var vms = [];
+      $scope.showModal = false;
       $scope.proxyDevices = [];
+      $scope.legacyDevices = [];
       APIUtils.getVMCollection().then(
           function(res) {
             vms = res.Members;
-
             for (var idx in vms) {
               APIUtils.getVirtualMedia(vms[idx]['@odata.id'])
                   .then(
                       function(res) {
                         if (res.TransferProtocolType == 'OEM') {
                           $scope.proxyDevices.push(createVMDevice(res));
-                          console.log(
-                              'Virtual Media Proxy device ' +
-                              vms[idx]['@odata.id'] + ' created.');
+                        } else {
+                          $scope.legacyDevices.push(createVMDevice(res));
                         }
+                        console.log(
+                          'Virtual Media ' + vms[idx]['@odata.id'] + ' device created.');
                       },
                       function(error) {
                         console.log(error);
-                        toastService.error(error);
+                        toastService.error(error.message);
                       });
-            }
-          },
+              }
+            },
           function(error) {
             console.log(error);
-            toastService.error(error);
+            toastService.error(error.message);
           });
-
+        
       function createVMDevice(redfishData) {
         var vmDevice = {};
         vmDevice.id = redfishData.Id;
@@ -67,6 +69,64 @@ window.angular && (function(angular) {
         console.log('Stop serving file ' + index.toString());
         var server = $scope.proxyDevices[index].nbdServer;
         server.stop();
+      };
+
+      $scope.startLegacy = function(index) {
+        console.log(
+            'Start serving file ' + index.toString() + ' in legacy mode');
+        var data = {};
+        data.Image = $scope.legacyDevices[index].Image;
+        data.UserName = $scope.legacyDevices[index].UserName;
+        data.Password = $scope.legacyDevices[index].Password;
+        APIUtils.mountImage(index, data)
+            .then(
+                function(res) {
+                  $scope.legacyDevices[index].isActive = true;
+                },
+                function(error) {
+                  console.log(JSON.stringify(error));
+                  $scope.legacyDevices[index].message = error.status;
+                });
+      };
+
+      $scope.stopLegacy = function(index) {
+        APIUtils.unmountImage(index).then(
+            function(res) {
+              $scope.legacyDevices[index].isActive = false;
+            },
+            function(error) {
+              console.log(JSON.stringify(error));
+              $scope.legacyDevices[index].message = error.status;
+            });
+      };
+
+      $scope.configureLegacy = function(index) {
+        $scope.showModal = true;
+        document.getElementById('configureModal').style.display = 'inline';
+      };
+
+      $scope.ok = function(index) {
+        $scope.showModal = false;
+        document.getElementById('configureModal').style.display = 'none';
+        var uri = document.getElementById('uri').value;
+        var usr = document.getElementById('username').value;
+        var pass = document.getElementById('pass').value;
+
+        if (uri != undefined && uri != '' && usr != undefined && usr != '' &&
+            pass != undefined && pass != '') {
+          $scope.legacyDevices[index].configured = true;
+          $scope.legacyDevices[index].Image = uri;
+          $scope.legacyDevices[index].UserName = usr;
+          $scope.legacyDevices[index].Password = pass;
+          console.log('Legacy endpoint configured');
+        } else {
+          toastService.error('Wrong configuration.');
+        }
+      };
+
+      $scope.cancel = function(index) {
+        $scope.showModal = false;
+        document.getElementById('configureModal').style.display = 'none';
       };
 
       function findExistingConnection(vmDevice) {
