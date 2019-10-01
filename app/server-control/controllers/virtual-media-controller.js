@@ -11,35 +11,43 @@ window.angular && (function(angular) {
 
   angular.module('app.serverControl').controller('virtualMediaController', [
     '$scope', 'APIUtils', '$q', 'toastService', 'dataService',
-    'nbdServerService',
+    'nbdServerService', '$uibModal',
     function(
-        $scope, APIUtils, $q, toastService, dataService, nbdServerService) {
+        $scope, APIUtils, $q, toastService, dataService, nbdServerService,
+        $uibModal) {
       var vms = [];
+      $scope.showModal = false;
+      const modalTemplate = require('./virtual-media-modal.html');
+
       $scope.proxyDevices = [];
+      $scope.legacyDevices = [];
+      $scope.legacyDevices.push(
+          createVMDevice({Oem: {WebSocketEndpoint: 'nbd0'}, Id: 'nbd0'}));
       APIUtils.getVMCollection().then(
           function(res) {
             vms = res.Members;
-
             for (var idx in vms) {
               APIUtils.getVirtualMedia(vms[idx]['@odata.id'])
                   .then(
                       function(res) {
                         if (res.TransferProtocolType == 'OEM') {
                           $scope.proxyDevices.push(createVMDevice(res));
-                          console.log(
-                              'Virtual Media Proxy device ' +
-                              vms[idx]['@odata.id'] + ' created.');
+                        } else {
+                          $scope.legacyDevices.push(createVMDevice(res));
                         }
+                        console.log(
+                            'Virtual Media ' + vms[idx]['@odata.id'] +
+                            ' device created.');
                       },
                       function(error) {
-                        console.log(error);
-                        toastService.error(error);
+                        console.log(JSON.stringify(error));
+                        toastService.error('Retrieving VM device failed.');
                       });
             }
           },
           function(error) {
-            console.log(error);
-            toastService.error(error);
+            console.log(JSON.stringify(error));
+            toastService.error('Retrieving VM collection failed.');
           });
 
       function createVMDevice(redfishData) {
@@ -50,6 +58,7 @@ window.angular && (function(angular) {
         vmDevice.file = '';
         vmDevice.wsURI = dataService.getHost().replace('https://', 'wss://') +
             redfishData.Oem.WebSocketEndpoint;
+        console.log(vmDevice);
         return findExistingConnection(vmDevice);
       }
 
@@ -67,6 +76,72 @@ window.angular && (function(angular) {
         console.log('Stop serving file ' + index.toString());
         var server = $scope.proxyDevices[index].nbdServer;
         server.stop();
+      };
+
+      $scope.startLegacy = function(index) {
+        console.log(
+            'Start serving file ' + index.toString() + ' in legacy mode');
+        var data = {};
+        data.Image = $scope.legacyDevices[index].Image;
+        data.UserName = $scope.legacyDevices[index].UserName;
+        data.Password = $scope.legacyDevices[index].Password;
+        APIUtils.mountImage(index, data)
+            .then(
+                function(res) {
+                  $scope.legacyDevices[index].isActive = true;
+                },
+                function(error) {
+                  console.log(JSON.stringify(error));
+                  $scope.legacyDevices[index].message = error.status;
+                });
+      };
+
+      $scope.stopLegacy = function(index) {
+        APIUtils.unmountImage(index).then(
+            function(res) {
+              $scope.legacyDevices[index].isActive = false;
+            },
+            function(error) {
+              console.log(JSON.stringify(error));
+              $scope.legacyDevices[index].message = error.status;
+            });
+      };
+
+      const saveConfig = function(configModal) {
+        var uri = configModal.uri;
+        var usr = configModal.username;
+        var pass = configModal.password;
+        if (uri != undefined && uri != '' && usr != undefined && usr != '' &&
+            pass != undefined && pass != '') {
+          var index = $scope.currentIdx;
+          $scope.legacyDevices[index].configured = true;
+          $scope.legacyDevices[index].Image = uri;
+          $scope.legacyDevices[index].UserName = usr;
+          $scope.legacyDevices[index].Password = pass;
+          console.log('Legacy endpoint configured');
+        } else {
+          toastService.error('Wrong configuration.');
+        }
+        console.log('Configured ' + uri);
+      };
+
+      const openVMModal = function() {
+        $uibModal
+            .open({
+              template: modalTemplate,
+              windowTopClass: 'uib-modal',
+              scope: $scope,
+              ariaLabelledBy: 'modal-vm'
+            })
+            .result.then(function(config) {
+              console.log(config);
+              saveConfig(config);
+            });
+      };
+
+      $scope.legacyConfigModal = function(index) {
+        $scope.currentIdx = index;
+        openVMModal();
       };
 
       function findExistingConnection(vmDevice) {
@@ -193,7 +268,6 @@ window.angular && (function(angular) {
                 console.log(
                     'handler[state=' + this.state + '] returned error ' +
                     consumed);
-                toastService.error('handler error ' + consumed);
                 this.stop();
                 break;
               }
@@ -263,7 +337,7 @@ window.angular && (function(angular) {
                 break;
               default:
                 console.log('handle_option: Unsupported option: ' + opt);
-                toastService.error('handle_option: Unsupported option: ' + opt);
+                toastService.error('NBD Server error');
                 /* reject other options */
                 var resp = new ArrayBuffer(20);
                 var view = new DataView(resp, 0, 20);
@@ -339,7 +413,7 @@ window.angular && (function(angular) {
             }
             if (err) {
               console.log('error handle_cmd: ' + err);
-              toastService.error('error handle_cmd: ' + err);
+              toastService.error('NBD Server error');
               var resp = this._create_cmd_response(req, err);
               this.ws.send(resp);
             }
@@ -364,7 +438,7 @@ window.angular && (function(angular) {
                 (function(ev) {
                   var reader = ev.target;
                   console.log('error reading file: ' + reader.error);
-                  toastService.error('error reading file: ' + reader.error);
+                  toastService.error('NBD Server error');
                   var resp = this._create_cmd_response(req, EIO);
                   this.ws.send(resp);
                 }).bind(this);

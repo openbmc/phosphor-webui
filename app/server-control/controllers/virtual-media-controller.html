@@ -23,6 +23,31 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
+    <section class="section">
+      <div class="section-header">
+        <h2 class="h2">Load image from external server</h2>
+      </div>
+      <div class="section-content">
+      <div id="virtual_media-legacy" class="vm__upload ng-scope">
+        <p ng-if="legacyDevices.length < 1">
+            There are no Virtual Media legacy devices available.
+        </p>
+        <div ng-repeat="dev in legacyDevices track by $index" class="row column">
+        <div id="vm_{{dev.name}}" class="column">
+          <!-- name and error message -->
+            <h3 class="inline column">{{dev.name}}</h3>
+            <label class="inline firmware__upload-chooser">
+                <span ng-if="dev.message" id="vm_{{dev.name}}_message">dev.message</span>
+            </label>
+            <button id="vm_{{dev.name}}_start_stop" type="button" class="btn btn-primary float-right" ng-click="dev.configured ? (dev.isActive? stopLegacy($index) : startLegacy($index)) : legacyConfigModal($index)">
+              <span ng-if="!dev.configured">Configure connection</span>
+              <span ng-if="dev.configured && !dev.isActive">Start</span>
+              <span ng-if="dev.configured && dev.isActive">Stop</span>
+            </button>
+        </div>
+        </div>
+      </div>
+      </div>
  </section>
 </div>

@@ -1,0 +1,30 @@
+<!-- Legacy mode configuration modal -->
+<div class="uib-modal__content">
+    <div class="modal-header" id="modal-vm">
+        <h2>Legacy mode configuration</h2>
+    </div>
+    <div class="modal-body" >
+        <form name="configModal">
+            <label for="uri">External server URI</label>
+            <p><input type="text" id="uri" name="uri" ng-model="config.uri"/></p>
+            <label for="username">Username</label>
+            <p><input type="text" id="username" name="username" ng-model="config.username"/></p>
+            <label for="password">Password</label>
+            <p><input type="password" id="password" name="password" ng-model="config.password"/></p>
+        </form>
+    </div>
+    <div class="modal-footer">
+      <!-- Save VM config button -->
+      <button
+        type="submit"
+        class="btn btn-primary"
+        ng-click="$close(config)"
+      >
+        Save
+      </button>
+      <!-- Cancel button-->
+      <button type="button" class="btn btn-secondary" ng-click="$dismiss()">
+        Cancel
+      </button>
+    </div>
+</div>
