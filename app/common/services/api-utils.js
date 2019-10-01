@@ -1820,6 +1820,29 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        mountImage: function(index, data) {
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() + index +
+                       '/Actions/VirtualMedia.InsertMedia',
+                   data: data,
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        unmountImage: function(index) {
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() + index +
+                       '/Actions/VirtualMedia.EjectMedia',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
       };
       return SERVICE;
     }
