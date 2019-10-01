@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73770491_10b95da4",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000396
+      },
+      "writtenOn": "2019-10-01T15:52:10Z",
+      "side": 1,
+      "message": "Same here, can you update with the section pattern. \n\n https://github.com/openbmc/phosphor-webui/blob/master/app/common/styles/layout/section.scss",
+      "revId": "113e6ac10e2556c83352f1bc3eaad437e84a899e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "647b9ece_d019e58a",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000396
+      },
+      "writtenOn": "2019-10-01T15:52:10Z",
+      "side": 1,
+      "message": "This is the current pattern for file upload \n\nhttps://github.com/openbmc/phosphor-webui/blob/master/app/common/styles/elements/input-file.scss\n\nThe pattern will change when https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-webui/+/25218 is approved and pushed up.",
+      "revId": "113e6ac10e2556c83352f1bc3eaad437e84a899e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
