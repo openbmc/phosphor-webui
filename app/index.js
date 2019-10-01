@@ -40,6 +40,7 @@ import api_utils from './common/services/api-utils.js';
 import userModel from './common/services/userModel.js';
 import apiInterceptor from './common/services/apiInterceptor.js';
 import nbdServerService from './common/services/nbdServerService.js';
+import virtualMediaModel from './common/services/virtualMediaModel.js';
 
 import filters_index from './common/filters/index.js';
 
