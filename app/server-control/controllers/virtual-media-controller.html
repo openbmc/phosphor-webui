@@ -15,4 +15,35 @@
     </div>
     </div>
   </div>
+  <h2 class="h2">Load image from external server</h2>
+  <div id="virtual_media-legacy" class="vm__upload ng-scope">
+    <div ng-repeat="dev in legacyDevices track by $index" class="row column">
+    <div id="vm_{{dev.name}}" class="column">
+      <!-- name and error message -->
+        <label class="inline h3 column">{{dev.name}}</label>
+        <label class="inline firmware__upload-chooser">
+            <span ng-if="!dev.configured">Click configure to provide connection details.</span>
+            <span ng-if="dev.message" id="vm_{{dev.name}}_message">dev.message</span>
+        </label>
+        <input id="vm_{{dev.name}}_start_stop" type="button" ng-value="dev.configured ? (dev.isActive ? 'Stop' : 'Start') : 'Configure'" class="btn btn-primary float-right" ng-click="dev.configured ? (dev.isActive? stopLegacy($index) : startLegacy($index)) : configureLegacy($index)"/>
+    </div>
+    
+    <div class="modal" id="configureModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <h2>Legacy mode configuration</h2>
+              <p>URI: <input type="text"/></p>
+              <p>username: <input type="text"/></p>
+              <p>password: <input type="password"/></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel($index)">Cancel</button>
+              <button type="button" class="btn btn-primary" ng-click="ok($index)">Ok</button>
+            </div>
+           </div>
+         </div>
+       </div>
+    </div>
+   </div>
  </div>
