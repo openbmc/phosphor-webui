@@ -47,7 +47,7 @@
               <dd>{{ldapCertificate.ValidNotAfter | localeDate }}</dd>
             </dl>
             <p class="ldap__certificate-info" ng-if="!ldapCertificate || !caCertificate">
-              <span>{{data.ValidNotAfter}}CA certificate and a LDAP certificate are required. One or more are missing.</span>
+              <span>A CA certificate and LDAP certificate are required. One or more are missing.</span>
             </p>
             <p ng-if="!ldapCertificate || !caCertificate" class="ldap__certificate-info">
               <a ng-class="{'disabled': !ldapProperties.ServiceEnabled}" ng-href="{{ldapProperties.ServiceEnabled ? '#/access-control/ssl-certificates' : ''}}">Go to SSL certificates</a>
