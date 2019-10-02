@@ -110,22 +110,34 @@ window.angular && (function(angular) {
           };
 
           $scope.filterBySearchTerms = function(log) {
-            if (!$scope.searchItems.length) return true;
+            const searchableProperties = [
+              'eventID', 'severity_code', 'description', 'priority',
+              'additional_data', 'type', 'logId'
+            ];
+            let matched = false;
 
-            for (var i = 0, length = $scope.searchItems.length; i < length;
-                 i++) {
-              if (log.search_text.indexOf(
-                      $scope.searchItems[i].toLowerCase()) == -1)
-                return false;
+            if (!$scope.searchItems.length) return true;
+            for (const searchTerm of $scope.searchItems) {
+              if (matched) {
+                break;
+              }
+              for (const prop of searchableProperties) {
+                const propVal = log[prop];
+                if (propVal &&
+                    propVal.toLowerCase().indexOf(searchTerm) !== -1) {
+                  matched = true;
+                  break;
+                }
+              }
             }
-            return true;
+            return matched;
           };
 
           $scope.addSearchItem = function(searchTerms) {
             var terms = searchTerms.split(' ');
             terms.forEach(function(searchTerm) {
               if ($scope.searchItems.indexOf(searchTerm) == -1) {
-                $scope.searchItems.push(searchTerm);
+                $scope.searchItems.push(searchTerm.toLowerCase());
               }
             });
           };
