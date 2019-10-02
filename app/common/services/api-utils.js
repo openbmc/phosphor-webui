@@ -886,18 +886,12 @@ window.angular && (function(angular) {
                                   content.data[key].AdditionalData.join('\n'),
                               type: content.data[key].Message,
                               selected: false,
-                              search_text:
-                                  ('#' + content.data[key].Id + ' ' +
-                                   severityCode + ' ' +
-                                   content.data[key].Message + ' ' +
-                                   content.data[key].Severity + ' ' +
-                                   content.data[key].AdditionalData.join(' '))
-                                      .toLowerCase(),
                               meta: false,
                               confirm: false,
                               related_items: relatedItems,
                               eventID: eventID,
                               description: description,
+                              logId: '#' + content.data[key].Id,
                               data: {key: key, value: content.data[key]}
                             },
                             content.data[key]));
