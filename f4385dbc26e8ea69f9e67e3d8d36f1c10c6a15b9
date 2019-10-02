@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "78be2ccc_8d8907a0",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-02T01:02:15Z",
+      "side": 1,
+      "message": "Label elements should only be used to associate descriptive text with an input. \n\nWhy not an \u003ch3\u003e element? \u003clabel class\u003d\"inline h3 column\"\u003e{{dev.name}}\u003c/label\u003e",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 60
+      },
+      "revId": "f4385dbc26e8ea69f9e67e3d8d36f1c10c6a15b9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b3f692_87b7b29d",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-02T01:02:15Z",
+      "side": 1,
+      "message": "Label elements should only be used to associate descriptive text with an input. \n\nIs this helper text needed? It is better to use the action text in the button rather having to explain to the user. This solution works for sighted users only since there is no association with the action element this text is describing.",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "f4385dbc26e8ea69f9e67e3d8d36f1c10c6a15b9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77e3784_e92dd578",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-02T01:02:15Z",
+      "side": 1,
+      "message": "Is there a reason we need to use the input button type rather than a button element? It would be preferred remain consistent throughout the app, but that is a small nitpick.",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 285
+      },
+      "revId": "f4385dbc26e8ea69f9e67e3d8d36f1c10c6a15b9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c8033f_09b4f7bd",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-02T01:02:15Z",
+      "side": 1,
+      "message": "All input elements require associated \u003clabel\u003e elements to meet accessibility requirements. Can you add labels for these inputs, please?",
+      "range": {
+        "startLine": 36,
+        "startChar": 13,
+        "endLine": 38,
+        "endChar": 55
+      },
+      "revId": "f4385dbc26e8ea69f9e67e3d8d36f1c10c6a15b9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5728d428_8a2fa66e",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-02T01:02:15Z",
+      "side": 1,
+      "message": "This isn\u0027t a class we use in the app, btn-secondary would be the class to use for this button. :)",
+      "range": {
+        "startLine": 41,
+        "startChar": 46,
+        "endLine": 41,
+        "endChar": 58
+      },
+      "revId": "f4385dbc26e8ea69f9e67e3d8d36f1c10c6a15b9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe5aa0c2_a9ed583e",
         "filename": "app/server-control/controllers/virtual-media-controller.js",
         "patchSetId": 1
