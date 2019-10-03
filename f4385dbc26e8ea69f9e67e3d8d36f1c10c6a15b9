@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a686c5ef_c2b2c04b",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000495
+      },
+      "writtenOn": "2019-10-03T11:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78be2ccc_8d8907a0",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 60
+      },
+      "revId": "f4385dbc26e8ea69f9e67e3d8d36f1c10c6a15b9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61b3f692_87b7b29d",
         "filename": "app/server-control/controllers/virtual-media-controller.html",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "f4385dbc26e8ea69f9e67e3d8d36f1c10c6a15b9",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e4726d_51574c0c",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000495
+      },
+      "writtenOn": "2019-10-03T11:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61b3f692_87b7b29d",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "f4385dbc26e8ea69f9e67e3d8d36f1c10c6a15b9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b94fce5f_70f1b1e6",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000495
+      },
+      "writtenOn": "2019-10-03T11:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f77e3784_e92dd578",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 285
+      },
+      "revId": "f4385dbc26e8ea69f9e67e3d8d36f1c10c6a15b9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2c8033f_09b4f7bd",
         "filename": "app/server-control/controllers/virtual-media-controller.html",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c9b35250_69e55ac0",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000495
+      },
+      "writtenOn": "2019-10-03T11:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2c8033f_09b4f7bd",
+      "range": {
+        "startLine": 36,
+        "startChar": 13,
+        "endLine": 38,
+        "endChar": 55
+      },
+      "revId": "f4385dbc26e8ea69f9e67e3d8d36f1c10c6a15b9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5728d428_8a2fa66e",
         "filename": "app/server-control/controllers/virtual-media-controller.html",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "f4385dbc26e8ea69f9e67e3d8d36f1c10c6a15b9",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ec9953_579ecdb6",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000495
+      },
+      "writtenOn": "2019-10-03T11:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5728d428_8a2fa66e",
+      "range": {
+        "startLine": 41,
+        "startChar": 46,
+        "endLine": 41,
+        "endChar": 58
+      },
+      "revId": "f4385dbc26e8ea69f9e67e3d8d36f1c10c6a15b9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
