@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e56af31_b231bc5d",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2019-10-03T16:01:10Z",
+      "side": 1,
+      "message": "why capitalize? Other pages, only the first word is capitalized. E.g. Server power operations, Manage power operations, Network settings",
+      "range": {
+        "startLine": 2,
+        "startChar": 33,
+        "endLine": 2,
+        "endChar": 38
+      },
+      "revId": "eade9e4652e1e0323580c41c88802581e3ca9ca6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "943cfb74_e024ca9d",
+        "filename": "app/server-control/controllers/virtual-media-controller.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2019-10-03T16:01:10Z",
+      "side": 1,
+      "message": "Do we need all these traces? A lot with 30, 40, 41.\nCould we just have 1 trace, maybe line 30, that logs Which Device was created ?",
+      "revId": "eade9e4652e1e0323580c41c88802581e3ca9ca6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
