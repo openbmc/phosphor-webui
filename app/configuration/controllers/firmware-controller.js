@@ -59,12 +59,18 @@ window.angular && (function(angular) {
         pollActivationTimer = $interval(function() {
           APIUtils.getActivation(imageId).then(
               function(state) {
-                //@TODO: display an error message if image "Failed"
-                if (((/\.Active$/).test(state.data)) ||
-                    ((/\.Failed$/).test(state.data))) {
+                let imageStateActive = (/\.Active$/).test(state.data);
+                let imageStateFailed = (/\.Failed$/).test(state.data);
+                if (imageStateActive || imageStateFailed) {
                   $interval.cancel(pollActivationTimer);
                   pollActivationTimer = undefined;
+                }
+                if (imageStateActive) {
                   deferred.resolve(state);
+                } else if (imageStateFailed) {
+                  console.log('Image failed to activate: ', imageStateFailed);
+                  toastService.error('Image failed to activate.');
+                  deferred.reject(error);
                 }
               },
               function(error) {
