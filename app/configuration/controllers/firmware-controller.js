@@ -57,22 +57,27 @@ window.angular && (function(angular) {
         var deferred = $q.defer();
         var startTime = new Date();
         pollActivationTimer = $interval(function() {
-          APIUtils.getActivation(imageId).then(
-              function(state) {
-                //@TODO: display an error message if image "Failed"
-                if (((/\.Active$/).test(state.data)) ||
-                    ((/\.Failed$/).test(state.data))) {
-                  $interval.cancel(pollActivationTimer);
-                  pollActivationTimer = undefined;
-                  deferred.resolve(state);
-                }
-              },
+          APIUtils.getActivation(imageId).then(function(state) {
+            let imageStateActive = (/\.Active$/).test(state.data);
+            let imageStateFailed = (/\.Failed$/).test(state.data);
+            if (imageStateActive || imageStateFailed) {
+              $interval.cancel(pollActivationTimer);
+              pollActivationTimer = undefined;
+            }
+            if (imageStateActive) {
+              deferred.resolve(state);
+            } else if (imageStateFailed) {
+              console.log('Image failed to activate: ', imageStateFailed);
+              toastService.error('Image failed to activate.');
+              deferred.reject(error);
+            }
+          }),
               function(error) {
                 $interval.cancel(pollActivationTimer);
                 pollActivationTimer = undefined;
                 console.log(error);
                 deferred.reject(error);
-              });
+              };
           var now = new Date();
           if ((now.getTime() - startTime.getTime()) >=
               Constants.TIMEOUT.ACTIVATION) {
