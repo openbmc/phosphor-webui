@@ -85,3 +85,25 @@
   vertical-align: text-bottom;
   margin-right: 0.25em;
 }
+
+.icon__info-tooltip {
+  fill: $primary-accent;
+}
+
+.tooltip {
+  @include fontFamily;
+  font-weight: normal;
+  line-height: 1.3;
+}
+
+.tooltip-inner {
+  color: $text-01;
+  background-color: $primary-light;
+  border-radius: 0;
+  border: 1px solid $primary-dark;
+  text-align: left;
+}
+
+.tooltip.in {
+  opacity: 1!important;
+}
