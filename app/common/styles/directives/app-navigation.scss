@@ -61,8 +61,8 @@ $nav__second-level-text-color: $base-02--01;
       height: auto;
     }
   }
-  .nav-icon__control {
-    margin-bottom: 1em;
+  .nav-icon__control,
+  .nav-icon__key {
     svg {
       width: 30px;
     }
