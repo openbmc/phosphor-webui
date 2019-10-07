@@ -2,13 +2,13 @@
   <ul id="nav__top-level" ng-style="navStyle">
     <li>
       <a class="btn-overview" ng-class="{opened: firstLevel == 'overview'}" href="#/overview/server" ng-click="change('overview')">
-        <icon class="nav-icon" file="icon-overview.svg"></icon>
+        <icon class="nav-icon" file="icon-overview.svg" aria-hidden="true"></icon>
         Server overview
       </a>
     </li>
     <li>
       <button class="btn-health" ng-class="{opened: firstLevel == 'server-health'}" ng-click="change('server-health')">
-        <icon class="nav-icon" file="icon-health.svg"></icon>
+        <icon class="nav-icon" file="icon-health.svg" aria-hidden="true"></icon>
         Server health
       </button>
       <ul class="nav__second-level btn-health" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'server-health')}">
@@ -28,7 +28,7 @@
     </li>
     <li>
       <button class="btn-control" ng-class="{opened: firstLevel == 'server-control'}" ng-click="change('server-control')">
-        <icon class="nav-icon  nav-icon__control" file="icon-control.svg"></icon>
+        <icon class="nav-icon  nav-icon__control" file="icon-control.svg" aria-hidden="true"></icon>
         Server control
       </button>
       <ul class="nav__second-level btn-control" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'server-control')}">
@@ -58,7 +58,7 @@
     </li>
     <li>
       <button class="btn-config" ng-class="{opened: firstLevel == 'configuration'}" ng-click="change('configuration')">
-        <icon class="nav-icon" file="icon-config.svg"></icon>
+        <icon class="nav-icon" file="icon-config.svg" aria-hidden="true"></icon>
         Server configuration
       </button>
       <ul class="nav__second-level btn-firmware" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'configuration')}">
@@ -78,10 +78,8 @@
     </li>
     <li>
       <button class="btn-access-control" ng-class="{opened: firstLevel == 'access-control'}" ng-click="change('access-control')">
-        <span>
-          <icon class="nav-icon" file="icon-key.svg"></icon>
+          <icon class="nav-icon nav-icon__key" file="icon-key.svg" aria-hidden="true"></icon>
           Access control
-        </span>
       </button>
       <ul class="nav__second-level btn-access-control" ng-style="navStyle" ng-class="{opened: (showSubMenu && firstLevel == 'access-control')}">
         <li ng-class="{'active': (path == '/access-control' || path == '/access-control/ldap')}">

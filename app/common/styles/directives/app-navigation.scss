@@ -56,13 +56,14 @@ $nav__second-level-text-color: $base-02--01;
   .nav-icon {
     @include navIcons;
     width: 100%;
+    height: 100%;
     svg {
       width: 36px;
       height: auto;
     }
   }
-  .nav-icon__control {
-    margin-bottom: 1em;
+  .nav-icon__control,
+  .nav-icon__key {
     svg {
       width: 30px;
     }
