@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "338278de_00aa7d41",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000402
+      },
+      "writtenOn": "2019-10-08T16:20:52Z",
+      "side": 1,
+      "message": "Can we change this to use a Bootstrap modal? There are accessibility/usability issues with our custom modals. There are examples of the Bootstrap modal on the power operations and user account page https://angular-ui.github.io/bootstrap/#!#modal",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 14
+      },
+      "revId": "051c4099b4bbeaaaad520254089b60c9f820eabc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
