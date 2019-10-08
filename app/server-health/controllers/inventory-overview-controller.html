@@ -45,7 +45,7 @@
             <div class="row column">
               <h5 class="small-12 content-label">Subcomponents</h5>
               <p ng-repeat="sub_component in inventory.sub_components" class="large-6 small-3 courier-bold" ng-if="sub_component.Present">
-                <icon file="icon-warning" aria-hidden="true" ng-if="!sub_component.Functional"></icon>
+                <icon file="icon-warning.svg" aria-hidden="true" ng-if="!sub_component.Functional"></icon>
                 {{sub_component.title}}
               </p>
             </div>
