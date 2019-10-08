@@ -105,7 +105,8 @@ window.angular && (function(angular) {
               $scope.loading = false;
               return;
             }
-            if (!APIUtils.validIPV4IP(
+            if ($scope.interface.ipv4.values[i].Gateway &&
+                !APIUtils.validIPV4IP(
                     $scope.interface.ipv4.values[i].Gateway)) {
               toastService.error(
                   $scope.interface.ipv4.values[i].Address +
