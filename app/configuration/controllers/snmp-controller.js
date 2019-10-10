@@ -62,7 +62,7 @@ window.angular && (function(angular) {
 
         // Validate that no field are empty and port is valid. Port value is
         // undefined if it is an invalid number.
-        for (var i in $scope.managers) {
+        for (let i in $scope.managers) {
           if (!$scope.managers[i].address || !$scope.managers[i].port) {
             $scope.loading = false;
             toastService.error('Cannot save. Please resolve errors on page.');
@@ -71,34 +71,35 @@ window.angular && (function(angular) {
         }
         // Iterate in reverse so can splice
         // https://stackoverflow.com/questions/9882284/looping-through-array-and-removing-items-without-breaking-for-loop
-        var i = $scope.managers.length;
-        while (i--) {
+        let managersLength = $scope.managers.length;
+        while (managersLength--) {
           // If the manager does not have a 'path', it is a new manager
           // and needs to be created
-          if (!$scope.managers[i].path) {
+          if (!$scope.managers[managersLength].path) {
             promises.push(addManager(
-                $scope.managers[i].address, $scope.managers[i].port));
+                $scope.managers[managersLength].address, $scope.managers[managersLength].port));
           } else {
-            if ($scope.managers[i].updateAddress) {
+            if ($scope.managers[managersLength].updateAddress) {
               promises.push(setManagerAddress(
-                  $scope.managers[i].path, $scope.managers[i].address));
+                  $scope.managers[managersLength].path, $scope.managers[managersLength].address));
             }
-            if ($scope.managers[i].updatePort) {
+            if ($scope.managers[managersLength].updatePort) {
               promises.push(setManagerPort(
-                  $scope.managers[i].path, $scope.managers[i].port));
+                  $scope.managers[managersLength].path, $scope.managers[managersLength].port));
             }
           }
         }
 
         // Add delete promises last since we might be adding to
         // managersToDelete above
-        for (var i in $scope.managersToDelete) {
+        for (let i in $scope.managersToDelete) {
           promises.push(deleteManager($scope.managersToDelete[i]));
         }
 
         $q.all(promises)
             .then(
                 function() {
+                  $scope.refresh();
                   toastService.success('SNMP settings have been saved.');
                 },
                 function(errors) {
