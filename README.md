@@ -5,13 +5,19 @@ firmware stack. The WebUI uses AngularJS. Features include:
 
 - View system overview data such as model information and serial number
 - View and manage event logs
-- View inventory data
-- View sensor data
+- Inventory data
+- Sensor data
 - Power On/Off server operations
 - Reboot BMC
-- Manage and update BMC and Host firmware
+- SOL console
+- Remote KVM
+- Virtual media
+- Date and time settings
 - IPv4 network settings
-- SoL console
+- Manage and update BMC and Host firmware
+- LDAP
+- SSL certificates
+- Local user management
 
 ## Requirements
 
