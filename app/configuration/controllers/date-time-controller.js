@@ -164,15 +164,10 @@ window.angular && (function(angular) {
       };
 
       function setNTPServers() {
-        // Remove any empty strings from the array. Important because we add an
-        // empty string to the end so the user can add a new NTP server, if the
+        // Remove any empty strings from the array. If the
         // user doesn't fill out the field, we don't want to add.
         $scope.ntp.servers = $scope.ntp.servers.filter(Boolean);
-        // NTP servers does not allow an empty array, since we remove all empty
-        // strings above, could have an empty array. TODO: openbmc/openbmc#3240
-        if ($scope.ntp.servers.length == 0) {
-          $scope.ntp.servers.push('');
-        }
+
         return APIUtils.setNTPServers($scope.ntp.servers);
       }
 
