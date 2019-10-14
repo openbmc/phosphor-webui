@@ -17,7 +17,7 @@
     text-decoration: none;
   }
 
-  p {
+  p, dl, dd {
     margin-bottom: 0;
   }
 
@@ -30,6 +30,10 @@
   padding: 1em 0 1em 0;
   border-bottom: 1px solid $border-color-01;
   position: relative;
+
+  .icon {
+    height: 1.5rem;
+  }
 
   &.no-icon {
     overflow: auto;
