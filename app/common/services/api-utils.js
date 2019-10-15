@@ -863,10 +863,11 @@ window.angular && (function(angular) {
                             Constants.SEVERITY_TO_PRIORITY_MAP[severityCode];
                         severityFlags[priority.toLowerCase()] = true;
                         relatedItems = [];
-                        content.data[key].associations.forEach(function(item) {
-                          relatedItems.push(item[2]);
-                        });
-
+                        if (content.data[key].hasOwnProperty(['Associations'])) {
+                          content.data[key].Associations.forEach(function(item) {
+                            relatedItems.push(item[2]);
+                          });
+                        }
                         if (content.data[key].hasOwnProperty(['EventID'])) {
                           eventID = content.data[key].EventID;
                         }
