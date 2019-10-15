@@ -1528,14 +1528,6 @@ window.angular && (function(angular) {
                   delete content.data[key].Associations;
                 }
 
-                // Support old Associations interface property
-                // https://github.com/openbmc/phosphor-logging/blob/master/org/openbmc/Associations.interface.yaml
-                // Remove when we move to new Associations interface
-                // openbmc/openbmc#3584
-                if (content.data[key].hasOwnProperty('associations')) {
-                  delete content.data[key].associations;
-                }
-
                 // Remove the Purpose property from any inventory item.
                 // The purpose property isn't useful to a user.
                 // E.g. in a Power Supply:
