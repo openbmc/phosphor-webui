@@ -475,6 +475,10 @@ window.angular && (function(angular) {
         getLocalUsers();
         getUserRoles();
         getAccountSettings();
+        toastService.error('some error some error some error some error some error');
+        toastService.success('some error some error some error some error some error');
+        toastService.warn('some error some error some error some error some error');
+        toastService.info('BMC rebooting', 'some error some error some error some error some error');
       })
     }
   ]);
