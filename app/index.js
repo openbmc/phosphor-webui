@@ -174,6 +174,8 @@ window.angular && (function(angular) {
             animation: 'fade',
             timeout: 10000,
             dismissButton: true,
+            dismissOnTimeout: false,
+            dismissOnClick: false,
             maxNumber: 6
           });
         }
