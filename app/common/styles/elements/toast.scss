@@ -1,18 +1,55 @@
 // Overrides style for ngToast notifications
 .ng-toast {
-  margin-top: 9em;
+  margin-top: 9rem;
   .close {
-    margin: .3em;
-  }
-  .title {
-    font-weight: bold;
-  }
-  .ng-toast__message {
-    max-width: 400px;
+    color: $text-01;
+    opacity: 1;
+    font-size: 1.2rem;
+    font-weight: 400;
   }
   .alert {
-    color: $text-01;
+    border: none; //override inherited border styles
     border-radius: 0;
+    border-left-width: 3px;
+    border-left-style: solid;
     text-align: left;
+    color: $text-01;
+    padding-left: 1rem;
+    width: 350px;
+  }
+  .alert-content-container {
+    display: flex;
+    flex-direction: row;
+  }
+  .alert-content__header {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0;
+    line-height:1.5;
+  }
+  .alert-content__body {
+    margin:0;
+    line-height: 1.2;
+  }
+  .alert-danger {
+    background-color: $color--red-10;
+    border-left-color: $color--red-50;
+  }
+  .alert-success {
+    background-color: $color--green-10;
+    border-left-color: $color--green-50;
+  }
+  .alert-warning {
+    background-color: $color--yellow-10;
+    border-left-color: $color--yellow-50;
+  }
+  .alert-info {
+    background-color: $color--blue-10;
+    border-left-color: $color--blue-40;
+  }
+  .status-icon {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 0.8rem;
   }
 }
