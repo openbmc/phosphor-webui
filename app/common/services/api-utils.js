@@ -1513,7 +1513,7 @@ window.angular && (function(angular) {
                 // that the mapper created on the inventory panel.
                 // Example: An association from the BMC inventory item to the
                 // BMC firmware images. See:
-                // https://github.com/openbmc/docs/blob/master/object-mapper.md#associations
+                // https://github.com/openbmc/docs/blob/master/architecture/object-mapper.md#associations
                 if (content.data[key].hasOwnProperty('endpoints')) {
                   continue;
                 }
