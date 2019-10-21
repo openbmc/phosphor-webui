@@ -21,14 +21,14 @@ window.angular && (function(angular) {
               $sce.trustAsHtml(`<span class="icon__check-mark">${svg}<span>`);
 
           this.tableHeader = [
-            {label: ''}, {label: 'Admin'}, {label: 'Operator'}, {label: 'User'},
-            {label: 'Callback'}
+            {label: ''}, {label: 'Admin'}, {label: 'Operator'},
+            {label: 'ReadOnly'}, {label: 'Callback'}
           ];
 
           // TODO: When API changed from D-Bus to Redfish, 'Operator' role
           // should have 'Configure components managed by this service'
           // privilege checked
-          // TODO: When 'Operator' and 'User' roles have ability to change
+          // TODO: When 'Operator' and 'ReadOnly' roles have ability to change
           // own account's passwords, should have 'Update password for
           // current user account' privilege checked
           // TODO: Update Callback privileges when backend removes privileges
