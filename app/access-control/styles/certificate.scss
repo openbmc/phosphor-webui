@@ -90,10 +90,18 @@
     @include mediaQuery(small) {
       width: 10%;
       padding-top: 0.5em;
+      .btn {
+        padding-left: 40px;
+        padding-right: 5px;
+      }
     }
-    width: 100%;
+    width: 20%;
     text-align: right;
     padding: 0 1.5em 0 0;
+    .btn {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
   }
   .certificate__title-inline {
     @include mediaQuery(small) {
