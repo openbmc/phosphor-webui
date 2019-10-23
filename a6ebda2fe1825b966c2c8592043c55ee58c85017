@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "21cb5d40_9ce0de67",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000396
+      },
+      "writtenOn": "2019-10-23T15:28:11Z",
+      "side": 1,
+      "message": "typo in class name",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1fd35b4_0d0d96f4",
         "filename": "app/login/controllers/login-controller.html",
         "patchSetId": 2
