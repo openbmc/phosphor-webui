@@ -39,13 +39,23 @@
   <div class="certificate__date-cell">
     {{cert.ValidNotAfter | date:medium}}
   </div>
-  <div class="certificate__buttons-cell">
+  <div class="certificate__title-inline">
+    Actions:
+  </div>
+  <div class="certificate__buttons-cell row">
     <button
       type="button"
       ng-click="cert.upload = true"
       aria-label="Replace certificate"
       class="btn  btn-tertiary certificate__button">
       <icon file="icon-replace.svg" aria-hidden="true"></icon>
+    </button>
+    <button type="button"
+      ng-click="confirmDeleteCert(cert)"
+      aria-label="Delete certificate"
+      class="btn  btn-tertiary certificate__button"
+      ng-disabled="!isDeletable(cert)">
+      <icon file="icon-trashcan.svg" aria-hidden="true"></icon>
     </button>
   </div>
   <div ng-show="cert.upload === true" class="upload__certificate">
