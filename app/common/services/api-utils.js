@@ -487,7 +487,7 @@ window.angular && (function(angular) {
               .then(
                   function(response) {
                     if (callback) {
-                      callback(response.data);
+                      callback(response);
                     }
                   },
                   function(error) {
@@ -520,6 +520,19 @@ window.angular && (function(angular) {
                     }
                     console.log(error);
                   });
+        },
+
+        changePassword: function(username, password) {
+          var data = {};
+          data['Password'] = password;
+
+          return $http({
+            method: 'PATCH',
+            url: DataService.getHost() +
+                '/redfish/v1/AccountService/Accounts/' + username,
+            withCredentials: true,
+            data: data
+          })
         },
         getAccountServiceRoles: function() {
           var roles = [];
