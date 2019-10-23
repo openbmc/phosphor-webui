@@ -16,11 +16,16 @@ window.angular && (function(angular) {
       return {
         login: function(username, password, callback) {
           APIUtils.login(username, password, function(response, error) {
-            if (response &&
-                (response.status == APIUtils.API_RESPONSE.SUCCESS_STATUS ||
-                 response.status === undefined)) {
+            // if extendedMessage is present in the response, the password is
+            // expired
+            if (response.data['extendedMessage']) {
+              callback(false, false, response.statusText);
+            } else if (
+                response.data &&
+                (response.data.status == APIUtils.API_RESPONSE.SUCCESS_STATUS ||
+                 response.data.status === undefined)) {
               sessionStorage.setItem('LOGIN_ID', username);
-              callback(true);
+              callback(true, true, response.statusText);
             } else if (
                 response && response.data && response.data.data &&
                 response.data.data.description) {

@@ -4,7 +4,6 @@
     @include fastTransition-all;
   }
 }
-
 .login__wrapper {
   position: relative;
   padding-top: 1em;
@@ -28,7 +27,6 @@
       margin: 0 auto;
     }
   }
-
   // Must be applied to the <main> element in the app
   // Required to create an elegant page transition
   @include page-transition;
@@ -37,13 +35,16 @@
     @include page-transition-visibility;
   }
 }
-
-#login__form {
+#login__form,
+.login__passsword-expired {
   color: $primary-dark;
   background: transparent;
   padding: 1em 0;
   display: block;
   overflow: hidden;
+  .btn-password-toggle {
+    padding-top: 0;
+  }
   @include mediaQuery(small) {
     max-width: 50%;
     margin: 0 auto;
@@ -56,7 +57,6 @@
     padding: 0 0 0 6em;
   }
   @include fastTransition-all;
-
   input:disabled,
   input:disabled:hover {
     background-color: $background-03;
@@ -64,13 +64,26 @@
   }
 }
 
+#expiredPasswordForm {
+  label {
+    margin-bottom: 0;
+  }
+
+  input {
+    height: 3em;
+    max-height: none;
+  }
+}
+
+.login__password-expired-host {
+  margin-bottom: .5rem;
+}
 .login__desc {
   text-align: center;
   font-size: 2em;
   margin: 0.5em 0 2em;
   font-weight: bold;
 }
-
 .login__server-info {
   margin-top: 2em;
   margin-left: 0;
@@ -98,10 +111,28 @@
     @include fontFamily;
   }
 }
-
 .login__status {
   color: $status-ok;
   &.error {
     color: $status-error;
   }
+}
+
+.expired-password__btns {
+  padding-top: 1rem;
+  float: right;
+  margin-bottom: 1rem;
+}
+.login__passwordExpiredReadOnly {
+  margin-bottom: 1rem;
+}
+.expired-password-status-icon {
+  width: 1.2em;
+  svg {
+    margin-bottom: .2em;
+  }
+}
+
+.expired__password__success {
+  margin-right: .5em;
 }
