@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ac99b56_b90b8bb1",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000402
+      },
+      "writtenOn": "2019-10-23T15:20:11Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 67
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1fd35b4_0d0d96f4",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000402
+      },
+      "writtenOn": "2019-10-23T15:20:11Z",
+      "side": 1,
+      "message": "I think these values are dynamic? can we show this here?",
+      "range": {
+        "startLine": 62,
+        "startChar": 10,
+        "endLine": 62,
+        "endChar": 76
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb100f8_5b57216c",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000402
+      },
+      "writtenOn": "2019-10-23T15:20:11Z",
+      "side": 1,
+      "message": "maybe add a message when passwords don\u0027t match. Also not sure the other validations are needed here as long as the new password field is valid and this input matches",
+      "range": {
+        "startLine": 81,
+        "startChar": 10,
+        "endLine": 85,
+        "endChar": 16
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb0bdb09_0c597083",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000402
+      },
+      "writtenOn": "2019-10-23T15:20:11Z",
+      "side": 1,
+      "message": "Are you checking the form is valid before making the call to change password? The markup doesn\u0027t seem to disable the submit button and there are no checks here",
+      "range": {
+        "startLine": 65,
+        "startChar": 5,
+        "endLine": 65,
+        "endChar": 42
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f718e86f_bacca9b0",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000402
+      },
+      "writtenOn": "2019-10-23T15:20:11Z",
+      "side": 1,
+      "message": "I haven\u0027t tested the flow in the GUI, but are we redirecting the user back to login or logging them into the server overview?",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35053228_926e7ecc",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000402
+      },
+      "writtenOn": "2019-10-23T15:20:11Z",
+      "side": 1,
+      "message": "Is there anyway to map backend error here to a more useful message in the GUI? this seems like an important part of the flow to provide meaningful feedback",
+      "range": {
+        "startLine": 78,
+        "startChar": 14,
+        "endLine": 78,
+        "endChar": 63
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd36d8c9_17afce5c",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000402
+      },
+      "writtenOn": "2019-10-23T15:20:11Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 80,
+        "startChar": 12,
+        "endLine": 80,
+        "endChar": 31
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49d2d68b_27aa3a08",
+        "filename": "app/login/styles/index.scss",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000402
+      },
+      "writtenOn": "2019-10-23T15:20:11Z",
+      "side": 1,
+      "message": "classname?",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 7
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
