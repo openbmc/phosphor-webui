@@ -1,10 +1,11 @@
 <div>
   <div class="row">
     <div class="columns large-6">
-      <img src="../../assets/images/logo.svg" class="login__logo" alt="OpenBMC logo"/>
+      <img src="../../assets/images/logo.svg" class="login__logo" alt="OpenBMC logo" />
       <h1 class="login__desc">OpenBMC</h1>
     </div>
-    <div class="columns large-6">
+    <!-- Login UI-->
+    <div class="columns large-6" ng-if="isPasswordValid==true">
       <form id="login__form" name="login__form" action="" ng-class="{'submitted' : submitted}">
         <fieldset ng-disabled="dataService.loading">
           <div class="alert alert-danger" role="alert" ng-if="invalidCredentials">
@@ -12,27 +13,90 @@
             <br>Please try again.
           </div>
           <label for="host">BMC Host or BMC IP Address</label>
-          <input type="text" id="host" name="host" class="validate-input" ng-model="host" has-error="serverUnreachable && login__form.host.$pristine" required  autofocus ng-keydown="tryLogin(host, username, password, $event)">
+          <input type="text" id="host" name="host" class="validate-input" ng-model="host" has-error="serverUnreachable && login__form.host.$pristine"
+            required autofocus>
           <div ng-messages="login__form.host.$error" class="form-error" ng-class="{'visible' : login__form.host.$touched || submitted}">
             <p ng-message="required">Field is required</p>
             <p ng-message="hasError">Server unreachable</p>
           </div>
-
+          ​
           <label for="username">Username</label>
-          <input type="text" id="username" name="username" has-error="invalidCredentials && login__form.$pristine" required ng-model="username" ng-keydown="tryLogin(host, username, password, $event)" autocomplete="off">
+          <input type="text" id="username" name="username" has-error="invalidCredentials && login__form.$pristine" required ng-model="username"
+            ng-keydown="tryLogin(host, username, password, $event)" autocomplete="off">
           <div ng-messages="login__form.username.$error" class="form-error" ng-class="{'visible' : login__form.username.$touched || submitted}">
             <p ng-message="required">Field is required</p>
           </div>
-
+          ​
           <label for="password">Password</label>
-          <input type="password" id="password" name="password" has-error="invalidCredentials && login__form.$pristine" required  ng-model="password" ng-keydown="tryLogin(host, username, password, $event)" autocomplete="off">
+          <input type="password" id="password" name="password" has-error="invalidCredentials && login__form.$pristine" required ng-model="password"
+            autocomplete="off">
           <div ng-messages="login__form.password.$error" class="form-error" ng-class="{'visible': login__form.password.$touched || submitted}">
             <p ng-message="required">Field is required</p>
           </div>
-
-          <input id="login__submit" class="btn  btn-primary full-width" type="button" value="Log in" role="button" ng-click="login(host, username, password); submitted = true; login__form.$setPristine()" ng-class="{error: error}" ng-disabled="dataService.loading">
+          ​
+          <input id="login__submit" class="btn  btn-primary full-width" type="button" value="Log in" role="button" ng-click="login(host, username, password); submitted = true; login__form.$setPristine()"
+            ng-class="{error: error}" ng-disabled="dataService.loading">
         </fieldset>
       </form>
+    </div>
+    ​
+    <!-- Change password UI: Expired password state-->
+    <div class="columns medium-6" ng-if="isPasswordValid==false">
+      <form id="expiredPassword__form" name="expiredPassword__form" action="" ng-class="{'submitted': submitted}" class="login__passswordExpired">
+        <!--Password error banner-->
+        <div class="small-12 alert alert-danger" role="alert">
+          <icon file="icon-critical.svg" aria-hidden="true" class="expired__passwrod__status-icon"></icon>
+          The password has expired and must be changed.
+        </div>
+        <div class="login__passwordExpiredReadOnly">
+          <label for="host">BMC Host or BMC IP Address</label>
+          <div class="login__passwordExpiredHost">
+            {{host}}
+          </div>
+          <label for="username">Username</label>
+          <div>{{username}}</div>
+        </div>
+        ​
+        <div class="field-group-container">
+          <label for="newPassword">New Password</label>
+          <p class="label__helper-text">Must be between 8-20 characters.</p>
+          <input id="newPassword" name="newPassword" type="password" ng-minlength="8" ng-maxlength="20" ng-model="newPassword" ng-click="expiredPassword__form.newPassword.$setTouched()"
+            password-visibility-toggle placeholder="{{
+            (
+              expiredPassword__form.newPassword.$touched ||
+              expiredPassword__form.confirmNewPassword.$touched) ? '' : '******'}}" required />
+          <div ng-messages="expiredPassword__form.newPassword.$error" class="form-error" ng-class="{'visible': expiredPassword__form.newPassword.$touched || submitted}">
+            <p ng-message="required">Field is required</p>
+            <p ng-show="expiredPassword__form.newPassword.$error.minlength">Length must be between 8-20 characters</p>
+            <p ng-show="expiredPassword__form.newPassword.$error.maxlength">Length must be between 8-20 characters</p>
+          </div>
+        </div>
+        <div class="field-group-container">
+          <label for="confirmNewPassword">Confirm New Password</label>
+          <input id="confirmPassword" name="confirmPassword" type="password" ng-model="passwordReset.confirmPassword" ng-click="expiredPassword__form.confirmPassword.$setTouched()"
+            password-visibility-toggle password-confirm first-password="expiredPassword__form.newPassword.$modelValue" placeholder="{{
+              (
+                expiredPassword__form.newPassword.$touched ||
+                expiredPassword__form.confirmNewPassword.$touched) ? '' : '******'}}" required />
+          <div ng-messages="expiredPassword__form.confirmNewPassword.$error" class="form-error" ng-class="{'visible': expiredPassword__form.confirmNewPassword.$touched || submitted}">
+            <p ng-message="required">Field is required</p>
+            <p ng-show="expiredPassword__form.confirmNewPassword.$error.minlength">Length must be between 8-20 characters</p>
+            <p ng-show="expiredPassword__form.confirmNewPassword.$error.maxlength">Length must be between 8-20 characters</p>
+          </div>
+        </div>
+        ​
+        <div class="row expiredPassword__btns">
+          <div class="column small-4">
+            <input id="login__submit" class="btn  btn-tertiary full-width" type="button" value="Go back" role="button" ng-class="{error: error}"
+              ng-disabled="dataService.loading" ng-click="back()">
+          </div>
+          <div class="column small-8">
+            <input id="login__submit" class="btn  btn-primary full-width" type="button" value="Change password" role="button" ng-class="{error: error}"
+              ng-disabled="dataService.loading" ng-click="changePassword()">
+          </div>
+        </div>
+      </form>
+      ​
     </div>
   </div>
 </div>
