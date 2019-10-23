@@ -1,107 +1,143 @@
-#login {
-  @include mediaQuery(medium) {
-    background: linear-gradient(to right, $background-01 49.999%, $background-02 50%);
-    @include fastTransition-all;
-  }
+$loginfield-min-width: 210px;
+$loginfield-max-width: 310px;
+
+@mixin bg-roundcorners{
+  border-radius: 8px;
 }
 
-.login__wrapper {
-  position: relative;
-  padding-top: 1em;
-  color: $primary-dark;
-  .row {
-    max-width: 1080px;
+#login {
+  .login-content-box{
+    @include page-contentborder;
+    @include page-dropshadow;
+    @include bg-roundcorners;
+    @include page-spaceafter;
+    @include bg-gradient;
+
+    margin: 20px auto;
+    text-align: center;
+    width: 50%;
+    padding: 50px 0 25px 0;
+    min-width: 250px;
+    max-width: 410px;
   }
-  @include mediaQuery(small) {
-    top: 50%;
-    transform: translateY(-50%);
+
+  .logo_wrapper{
+    width: 180px;
   }
-  @include mediaQuery(medium) {
-    left: 0;
-    margin-left: 0;
+
+  fieldset{
+    padding-bottom: 20px;
   }
-  .login__logo {
-    max-width: 200px;
-    display: block;
-    margin: 0 auto 2em;
-    @include mediaQuery(small) {
-      margin: 0 auto;
+
+  .login-content-box form{
+    background-color:#ffffff;
+    text-align:center;
+  }
+
+  .login-content-box .alert-danger, #login__submit{
+    min-width: $loginfield-min-width;
+    max-width: $loginfield-max-width;
+    height: 40px;
+  }
+
+  .input-wrapper{
+    min-width: $loginfield-min-width;
+    max-width: $loginfield-max-width;
+    position: relative;
+    margin:auto;
+  }
+
+  .input-wrapper::before{
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-repeat:no-repeat;
+      background-position: top 8px left 5px;
+      background-size: 24px;
+      min-height:44px;
+      max-height:none;
+      @include Greyfilter;
+  }
+
+  .input-ip.input-wrapper::before{
+    background-image: url(../assets/icons/icon-ipfield.svg);
+  }
+  .input-login.input-wrapper::before{
+    background-image: url(../assets/icons/icon-user.svg);
+  }
+  .input-pwd.input-wrapper::before{
+    background-image:url(../assets/icons/icon-passwordfield.svg);
+  }
+
+  .login-content-box input[type='text'],.login-content-box input[type='password']{
+    position: relative;
+    background-color: rgba(0, 0, 0, 0);
+    width:100%;
+    @include form-inputs(icon);
+    &:focus{
+      @include form-inputs(icon);
     }
   }
 
-  // Must be applied to the <main> element in the app
-  // Required to create an elegant page transition
-  @include page-transition;
-  &.ng-leave-active,
-  &.ng-enter {
-    @include page-transition-visibility;
+  .login-content-box button{
+    width:87%;
+    font-weight:600;
+    font-size:40px;
   }
-}
 
-#login__form {
-  color: $primary-dark;
-  background: transparent;
-  padding: 1em 0;
-  display: block;
-  overflow: hidden;
-  @include mediaQuery(small) {
-    max-width: 50%;
-    margin: 0 auto;
+  .login__wrapper {
+      // Must be applied to the <main> element in the app
+    // Required to create an elegant page transition
+    @include page-transition;
+    &.ng-leave-active,
+    &.ng-enter {
+      @include page-transition-visibility;
+    }
   }
-  @include mediaQuery(medium) {
-    padding: 0 3em;
-    max-width: 100%;
-  }
-  @include mediaQuery(large) {
-    padding: 0 0 0 6em;
-  }
-  @include fastTransition-all;
 
-  input:disabled,
-  input:disabled:hover {
-    background-color: $background-03;
-    cursor: default;
+  .login__desc {
+    text-align: center;
+    font-size: 2em;
+    margin: 0.5em 0 2em;
+    font-weight: bold;
   }
-}
 
-.login__desc {
-  text-align: center;
-  font-size: 2em;
-  margin: 0.5em 0 2em;
-  font-weight: bold;
-}
+  .login__server-info {
+    margin-top: 2em;
+    margin-left: 0;
+    padding-left: 0;
+    list-style-type: none;
+    @include mediaQuery(small) {
+      max-width: 50%;
+    }
+    @include mediaQuery(medium) {
+      max-width: 90%;
+    }
+    li {
+      padding: 1em 0;
+      border-top: 1px solid $border-color-01;
+    }
+    p {
+      margin-bottom: 0;
+      display: inline-block;
+      font-family: "Courier New", helvetica, arial, sans-serif;
+      font-weight: 700;
+    }
+    .login__info-label {
+      display: inline-block;
+      min-width: 200px;
+      @include fontFamily;
+    }
+  }
 
-.login__server-info {
-  margin-top: 2em;
-  margin-left: 0;
-  padding-left: 0;
-  list-style-type: none;
-  @include mediaQuery(small) {
-    max-width: 50%;
+  .login__status {
+    color: $status-ok;
+    &.error {
+      color: $status-error;
+    }
   }
-  @include mediaQuery(medium) {
-    max-width: 90%;
-  }
-  li {
-    padding: 1em 0;
-    border-top: 1px solid $border-color-01;
-  }
-  p {
-    margin-bottom: 0;
-    display: inline-block;
-    font-family: "Courier New", helvetica, arial, sans-serif;
-    font-weight: 700;
-  }
-  .login__info-label {
-    display: inline-block;
-    min-width: 200px;
-    @include fontFamily;
-  }
-}
 
-.login__status {
-  color: $status-ok;
-  &.error {
-    color: $status-error;
-  }
 }

@@ -19,7 +19,7 @@ window.angular && (function(angular) {
       $scope.dataService = dataService;
       $scope.serverUnreachable = false;
       $scope.invalidCredentials = false;
-      $scope.host = $scope.dataService.host.replace(/^https?\:\/\//ig, '');
+      $scope.host = $scope.dataService.host;
 
       $scope.tryLogin = function(host, username, password, event) {
         // keyCode 13 is the 'Enter' button. If the user hits 'Enter' while in
