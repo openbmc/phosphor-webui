@@ -1432,6 +1432,16 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        deleteCertificate: function(objectPath) {
+          return $http({
+                   method: 'DELETE',
+                   url: DataService.getHost() + objectPath,
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
         getHardwares: function(callback) {
           $http({
             method: 'GET',

@@ -9,8 +9,8 @@ window.angular && (function(angular) {
         'template': require('./certificate.html'),
         'scope': {'cert': '=', 'reload': '&'},
         'controller': [
-          '$scope', 'APIUtils', 'toastService', 'Constants',
-          function($scope, APIUtils, toastService, Constants) {
+          '$scope', 'APIUtils', 'toastService', 'Constants', '$uibModal',
+          function($scope, APIUtils, toastService, Constants, $uibModal) {
             var certificateType = 'PEM';
             var availableCertificateTypes = Constants.CERTIFICATE_TYPES;
 
@@ -33,6 +33,65 @@ window.angular && (function(angular) {
               } else {
                 return matched.name;
               }
+            };
+
+            $scope.isDeletable = function(certificate) {
+              return certificate.Description == 'TrustStore Certificate';
+            };
+
+            $scope.confirmDeleteCert = function(certificate) {
+              initRemoveModal(certificate);
+            };
+
+            /**
+             * Intiate remove certificate modal
+             * @param {*} certificate
+             */
+            function initRemoveModal(certificate) {
+              const template = require('./certificate-modal-remove.html');
+              $uibModal
+                  .open({
+                    template,
+                    windowTopClass: 'uib-modal',
+                    ariaLabelledBy: 'dialog_label',
+                    controllerAs: 'modalCtrl',
+                    controller: function() {
+                      this.certificate = certificate;
+                    }
+                  })
+                  .result
+                  .then(() => {
+                    deleteCert(certificate);
+                  })
+                  .catch(
+                      () => {
+                          // do nothing
+                      })
+            };
+
+            /**
+             * Removes certificate
+             * @param {*} certificate
+             */
+            function deleteCert(certificate) {
+              $scope.confirm_delete = false;
+              APIUtils.deleteCertificate(certificate['@odata.id'])
+                  .then(
+                      function(data) {
+                        $scope.loading = false;
+                        toastService.success(
+                            $scope.getCertificateName(certificate.Description) +
+                            ' was deleted.');
+                        $scope.reload();
+                      },
+                      function(error) {
+                        console.log(error);
+                        $scope.loading = false;
+                        toastService.error(
+                            'Unable to delete ' +
+                            $scope.getCertificateName(certificate.Description));
+                      });
+              return;
             };
 
             $scope.replaceCertificate = function(certificate) {
