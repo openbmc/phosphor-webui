@@ -11,7 +11,6 @@ legend {
     font-size: 0.9em;
   }
 }
-
 // TODO: Start replacing use of label__helper-text
 .label__helper-text,
 .form__helper-text {
@@ -20,7 +19,6 @@ legend {
   font-size: 0.9em;
   margin-bottom: 0.4em;
 }
-
 input[type="email"],
 input[type="number"],
 input[type="password"],
@@ -55,7 +53,6 @@ textarea {
     }
   }
 }
-
 //input validation
 .ng-invalid.ng-touched {
   box-shadow: 0 -3px $status-error inset;
@@ -71,7 +68,6 @@ textarea {
     box-shadow: 0 -3px $status-error inset;
   }
 }
-
 .form-error {
   margin-bottom: 0.7em;
   font-size: 0.8rem;
@@ -102,25 +98,21 @@ textarea {
 textarea {
   border-color: $border-color-02;
 }
-
 input[readonly],
 input[readonly]:focus {
   box-shadow: 0 0 0;
   background: $background-03;
   border: 1px solid $border-color-02;
 }
-
 textarea {
   padding: 0.2em;
   height: auto;
 }
-
 input[type="submit"],
 .submit {
   margin: 1em 0;
   width: 100%;
 }
-
 // Custom select
 select {
   border-radius: 0px;
@@ -136,7 +128,6 @@ select {
     @include bgImage__arrowDown-disabled;
   }
 }
-
 #login__form {
   input {
     height: 3em;
@@ -149,7 +140,6 @@ select {
   line-height: 1.1;
   padding-top: 2px;
 }
-
 .radio-label {
   text-transform: none;
   font-weight: normal;
@@ -161,7 +151,6 @@ select {
     margin-bottom: 0;
   }
 }
-
 /**
  * Used for basic vertically stacked forms
  * that do not need a grid for layout
@@ -178,30 +167,25 @@ select {
       </div>
     </div>
   */
-
 .form__field {
   min-width: 150px;
   max-width: 240px;
 }
-
 .form__field--large {
   max-width: 330px;
 }
-
 // TODO Replace form-actions with form__actions. see below
 .form-actions {
   width: 100%;
   margin-top: 3rem;
   padding-top: 1rem;
   border-top: 1px solid $border-color-01;
-
   button {
     display: block;
     float: right;
     margin: 0.5em 0 0 1em;
   }
 }
-
 /**
  * Use to wrap the cancel and submit buttons on
  * a form to create the top border and white space
@@ -215,31 +199,26 @@ select {
     </button>
   </div>
  */
-
 .form__actions {
   margin-top: 3rem;
   padding-top: 1rem;
   border-top: 1px solid $border-color-01;
   display: flex;
   justify-content: flex-end;
-
   button:first-of-type {
     order: 1;
     margin-left: 1rem;
   }
 }
-
 .radio-option__input-field-group {
   margin-left: 1.5em;
 }
-
 .field-group-container {
   margin-bottom: 30px;
   position: relative;
   &:last-child {
     margin-bottom: 12px;
   }
-
   input + .form__validation-message {
     position: absolute;
   }

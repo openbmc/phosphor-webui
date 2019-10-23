@@ -9,6 +9,7 @@
 
     <base href="/">
 </head>
+
 <body ng-style="dataService.bodyStyle" ng-attr-id="{{!dataService.showNavigation ? 'login': ''}}">
 
     <app-header ng-if="dataService.showNavigation" path="dataService.path"></app-header>
@@ -18,4 +19,5 @@
     <main ng-view ng-class="{'content__container': dataService.showNavigation, 'login__wrapper': !dataService.showNavigation}">
     </main>
 </body>
+
 </html>
