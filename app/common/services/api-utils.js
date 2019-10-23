@@ -487,7 +487,7 @@ window.angular && (function(angular) {
               .then(
                   function(response) {
                     if (callback) {
-                      callback(response.data);
+                      callback(response);
                     }
                   },
                   function(error) {

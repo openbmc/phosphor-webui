@@ -17,6 +17,17 @@
   }
 }
 
+.alert-success {
+  background-color: $accent-02--02;
+  border-color: $accent-02--01;
+  border-radius: 0;
+  color: $primary-dark;
+  text-align: left;
+  .icon {
+    vertical-align: bottom;
+  }
+}
+
 .message-container {
   background-color: $background-02;
   padding: 1em 1.5em;
