@@ -35,6 +35,36 @@ window.angular && (function(angular) {
               }
             };
 
+            $scope.isDeletable = function(certificate) {
+              return certificate.Description == 'TrustStore Certificate';
+            };
+
+            $scope.confirmDeleteCert = function(certificate) {
+              $scope.confirm_delete = true;
+              return;
+            };
+
+            $scope.deleteCert = function(certificate) {
+              $scope.confirm_delete = false;
+              APIUtils.deleteCertificate(certificate['@odata.id'])
+                  .then(
+                      function(data) {
+                        $scope.loading = false;
+                        toastService.success(
+                            $scope.getCertificateName(certificate.Description) +
+                            ' was deleted.');
+                        $scope.reload();
+                      },
+                      function(error) {
+                        console.log(error);
+                        $scope.loading = false;
+                        toastService.error(
+                            'Unable to delete ' +
+                            $scope.getCertificateName(certificate.Description));
+                      });
+              return;
+            };
+
             $scope.replaceCertificate = function(certificate) {
               $scope.loading = true;
               if (certificate.file.name.split('.').pop() !==

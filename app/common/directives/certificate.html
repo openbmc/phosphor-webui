@@ -39,13 +39,23 @@
   <div class="certificate__date-cell">
     {{cert.ValidNotAfter | date:medium}}
   </div>
-  <div class="certificate__buttons-cell">
+  <div class="certificate__title-inline">
+    Actions:
+  </div>
+  <div class="certificate__buttons-cell row">
     <button
       type="button"
       ng-click="cert.upload = true"
       aria-label="Replace certificate"
       class="btn  btn-tertiary certificate__button">
       <icon file="icon-replace.svg" aria-hidden="true"></icon>
+    </button>
+    <button type="button"
+      ng-click="confirmDeleteCert(cert)"
+      aria-label="Delete certificate"
+      class="btn  btn-tertiary certificate__button"
+      ng-disabled="!isDeletable(cert)">
+      <icon file="icon-trashcan.svg" aria-hidden="true"></icon>
     </button>
   </div>
   <div ng-show="cert.upload === true" class="upload__certificate">
@@ -91,4 +101,22 @@
       </button>
     </div>
   </div>
+  <section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog"
+    ng-class="{'active': confirm_delete}">
+    <div class="modal__tftp-unreachable" role="document">
+        <div class="screen-reader-offscreen modal-description">Delete certificate</div>
+        <div class="page-header ">
+            <icon file="icon-warning.svg" aria-hidden="true"></icon><span class="accessible-text" role="alert">Warning</span>
+            <h3 class="modal-title inline">Delete certificate</h3>
+        </div>
+        <div class="modal__content">
+            <p>Are you sure you want to delete certificate issued by {{cert.Issuer.CommonName}} ?</p>
+        </div>
+        <div class="modal__button-wrapper">
+            <button class="btn  btn-secondary" ng-click="confirm_delete=false;">Cancel</button>
+            <button class="btn  btn-primary" ng-click="deleteCert(cert)">Continue</button>
+        </div>
+    </div>
+  </section>
+  <div class="modal-overlay" tabindex="-1" ng-class="{'active': (confirm_delete)}"></div>
 </div>
