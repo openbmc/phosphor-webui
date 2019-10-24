@@ -153,6 +153,52 @@
     },
     {
       "key": {
+        "uuid": "26b846a5_84d932b8",
+        "filename": "app/common/styles/base/forms.scss",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-24T19:12:58Z",
+      "side": 1,
+      "message": "The format should be to stack grouped selectors\n\n#login__form,\n#expiredPassword__form {...}\n\nAlso, naming convention is not to use cameCase in selector naming. Can we update to #expired-password__form.\n\nBased on the BEM syntax, it would appear there is an expiredPassword Block level element that contains a form. If that is not true, I would rename to expired-password-form.\n\nWhy are we using an id selector rather than a class selector? It is a best practice to avoid styling id\u0027s. I see it throughout the app, but we shouldn\u0027t continue that practice.",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 38
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d917f6_400b85df",
+        "filename": "app/index.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-24T19:12:58Z",
+      "side": 1,
+      "message": "Roll this back once you have converted to using a page alert instead of a toast message.",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 19
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ac99b56_b90b8bb1",
         "filename": "app/login/controllers/login-controller.html",
         "patchSetId": 2
@@ -169,6 +215,29 @@
         "startChar": 12,
         "endLine": 25,
         "endChar": 67
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba57696e_24e52c1a",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-24T19:12:58Z",
+      "side": 1,
+      "message": "Unless we are targeting the DOM node using the id, we can change this to a class element. I \"think\" the only purpose of this is to associate CSS styles. If that is true, I would change the id attribute to a class attribute and update the naming since we don\u0027t use cameCase naming for selectors. Also, I don\u0027t see an expiredPassword block level containers, so this form is the block and the the element. BEM (Block, Element, Modifier) naming convention indicates this is a child element of a block container titled expiredPassword and I don\u0027t believe that is true. \n\nI suggest changing the value to expired-password-form.",
+      "range": {
+        "startLine": 45,
+        "startChar": 15,
+        "endLine": 45,
+        "endChar": 37
       },
       "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
@@ -263,6 +332,29 @@
     },
     {
       "key": {
+        "uuid": "81d171f9_8f1f88c1",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-24T19:12:58Z",
+      "side": 1,
+      "message": "We don\u0027t need the toast service on this page any longer.",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 22,
+        "endChar": 20
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c77e93b4_bfa983d0",
         "filename": "app/login/controllers/login-controller.js",
         "patchSetId": 2
@@ -274,6 +366,24 @@
       "writtenOn": "2019-10-23T19:45:26Z",
       "side": 1,
       "message": "I would recommend:\n\n// If the password is expired\nif (!isPasswordValid) {\n\n}\nelse if (status) {\n\n\n}",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a084d3b_7723f253",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-24T19:12:58Z",
+      "side": 1,
+      "message": "I agree and also, I am wondering if isPasswordValid the right name. If we are checking if the password is expired, would it be better to name the parameter isPasswordExpired?",
+      "parentUuid": "c77e93b4_bfa983d0",
       "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
@@ -314,6 +424,24 @@
       "writtenOn": "2019-10-23T15:20:11Z",
       "side": 1,
       "message": "I haven\u0027t tested the flow in the GUI, but are we redirecting the user back to login or logging them into the server overview?",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19014db3_e3a9a095",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-24T19:12:58Z",
+      "side": 1,
+      "message": "Redirecting to login is what I saw in the demo",
+      "parentUuid": "f718e86f_bacca9b0",
       "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
@@ -367,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "934f2acb_2f02dd21",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-24T19:12:58Z",
+      "side": 1,
+      "message": "We do need to remove the toast and replace with an alert.",
+      "parentUuid": "bb3b0bea_f59f4071",
+      "range": {
+        "startLine": 78,
+        "startChar": 14,
+        "endLine": 78,
+        "endChar": 63
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd36d8c9_17afce5c",
         "filename": "app/login/controllers/login-controller.js",
         "patchSetId": 2
@@ -406,6 +558,52 @@
         "startChar": 2,
         "endLine": 66,
         "endChar": 7
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "821f8e65_68ce30a0",
+        "filename": "app/login/styles/index.scss",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-24T19:12:58Z",
+      "side": 1,
+      "message": ".expired-password-error\n\n.login__password-expired-host",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 2
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c3c1f0_4dbd9741",
+        "filename": "app/login/styles/index.scss",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-24T19:12:58Z",
+      "side": 1,
+      "message": "Resolve any use of camelCase in the naming and validate the BEM naming, please. :)\n\n.expired__password__status-icon means status-icon is an Element of password, which is an Element of expired. I suggest expired-password-status-icon.",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 1
       },
       "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
