@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "3a9a3ce4_6bb3a145",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-24T19:15:17Z",
+      "side": 1,
+      "message": "Mira, the easiest way to do this is to use VS Code to create the message. It will alert you when you have gone over and then you can just paste into the terminal window when the commit message is shown.",
+      "parentUuid": "63ed1961_7dd68054",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00a7eda9_96acdd3b",
         "filename": "app/common/services/api-utils.js",
         "patchSetId": 2
