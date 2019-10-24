@@ -112,6 +112,47 @@
     },
     {
       "key": {
+        "uuid": "3be13528_3cea4a4d",
+        "filename": "app/common/services/userModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-24T18:48:18Z",
+      "side": 1,
+      "message": "I realize Redfish isn\u0027t important now, but it would be much nicer to have an ID for us to determine what the extended message is for. It\u0027s great that we are sending a message from the backend for this, e.g. \"The password for this account must be changed\", if we are expecting to display it to the user in the GUI. If so, we couldn\u0027t change the message without having to update the check. Also, we will be adding language translation and may need to map these extended messages to strings that we can translate on the client-side. \n\nIf the extended message is not supposed to a message that is displayed to the user and is just to indicate the password needs to be changed, seems like the string could be shortened to remove any possibility for typo errors, i.e. I like PasswordChangeRequired. :)",
+      "parentUuid": "0610747d_0e82667a",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e704a2c8_fc5ef49a",
+        "filename": "app/common/services/userModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-24T18:48:18Z",
+      "side": 1,
+      "message": "If extendedMessage is included and has a value, we should take advantage of this being truthy/falsy and use the  following if block:\n\nif (response.data[\u0027extendedMessage\u0027]) {...}\n\nThis will return false if the extendedMessage property is not defined or if it is defined, but is an empty string. In the implemented if block, we are asking if the value is defined by testing if it is NOT undefined, which is harder to follow.",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 63
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ac99b56_b90b8bb1",
         "filename": "app/login/controllers/login-controller.html",
         "patchSetId": 2
