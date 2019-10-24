@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a14e088b_b3c58c4e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000235
+      },
+      "writtenOn": "2019-10-24T17:22:36Z",
+      "side": 1,
+      "message": "I like toast.",
+      "range": {
+        "startLine": 10,
+        "startChar": 88,
+        "endLine": 10,
+        "endChar": 93
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00a7eda9_96acdd3b",
         "filename": "app/common/services/api-utils.js",
         "patchSetId": 2
@@ -19,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "92b4f741_b51e5575",
+        "filename": "app/common/services/api-utils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1000235
+      },
+      "writtenOn": "2019-10-24T17:22:36Z",
+      "side": 1,
+      "message": "FYA, if the session has PasswordChangeRequired, the underlying REST API (PATCH /redfish/v1/AccountService/Accounts/\u003cuser\u003e) only allows the \"Password\" property to be updated.  I am not familiar with the updateUser function; if it limits itself to supplying only the \"Password\" property, then using should be okay.",
+      "parentUuid": "00a7eda9_96acdd3b",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc0dfbf2_02b13fc3",
         "filename": "app/common/services/userModel.js",
         "patchSetId": 2
@@ -30,6 +71,24 @@
       "writtenOn": "2019-10-23T19:45:26Z",
       "side": 1,
       "message": "Any thougths on refactoring this?\nMaybe a future commit?",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0610747d_0e82667a",
+        "filename": "app/common/services/userModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000235
+      },
+      "writtenOn": "2019-10-24T17:22:36Z",
+      "side": 1,
+      "message": "This ought to check the content of the extendedMessage field.  For example, check if the message begins with: \"The password for this account must be changed\"...\nOn the other hand, the extendedMessage is only used for this one purpose, and is not likely to have any other content.  I would prefer to see this check added, but will allow the code as-is.\n\nWhen the webui switches over to Redfish (but not now!), this code will need to change .  It will need to check for the Redfish message like:\nif (response.data[\"@Message.ExtendedInfo\"][\"MessageId\"] ends with \"PasswordChangeRequired\")",
+      "parentUuid": "cc0dfbf2_02b13fc3",
       "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
@@ -122,6 +181,30 @@
     },
     {
       "key": {
+        "uuid": "46087028_976493ec",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000235
+      },
+      "writtenOn": "2019-10-24T17:22:36Z",
+      "side": 1,
+      "message": "I agree with this comment.",
+      "parentUuid": "dbb100f8_5b57216c",
+      "range": {
+        "startLine": 81,
+        "startChar": 10,
+        "endLine": 85,
+        "endChar": 16
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c77e93b4_bfa983d0",
         "filename": "app/login/controllers/login-controller.js",
         "patchSetId": 2
@@ -190,6 +273,30 @@
       "writtenOn": "2019-10-23T15:20:11Z",
       "side": 1,
       "message": "Is there anyway to map backend error here to a more useful message in the GUI? this seems like an important part of the flow to provide meaningful feedback",
+      "range": {
+        "startLine": 78,
+        "startChar": 14,
+        "endLine": 78,
+        "endChar": 63
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb3b0bea_f59f4071",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000235
+      },
+      "writtenOn": "2019-10-24T17:22:36Z",
+      "side": 1,
+      "message": "Sorry, at this time the change password REST API is not able to provide any details about what went wrong.  I\u0027ve noted this in https://github.com/openbmc/bmcweb/issues/103 but we might want more focus on this.",
+      "parentUuid": "35053228_926e7ecc",
       "range": {
         "startLine": 78,
         "startChar": 14,
