@@ -104,6 +104,7 @@ import date_time_controller from './configuration/controllers/date-time-controll
 import network_controller from './configuration/controllers/network-controller.js';
 import snmp_controller from './configuration/controllers/snmp-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
+import card from './configuration/components/card.js';
 
 import access_control from './access-control/index.js';
 import user_controller from './access-control/controllers/user-controller.js';
