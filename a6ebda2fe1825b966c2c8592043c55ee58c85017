@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "63ed1961_7dd68054",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2019-10-24T18:13:10Z",
+      "side": 1,
+      "message": "Haven\u0027t been super strict with this, but can you follow the 50/72 rule for commit msgs. \n50 chars for the subject line / 72 chars for the body of the commmit msg. \n\nhttps://chris.beams.io/posts/git-commit/\n    Separate subject from body with a blank line\n    Limit the subject line to 50 characters\n    Capitalize the subject line\n    Do not end the subject line with a period\n    Use the imperative mood in the subject line\n    Wrap the body at 72 characters\n    Use the body to explain what and why vs. how",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00a7eda9_96acdd3b",
         "filename": "app/common/services/api-utils.js",
         "patchSetId": 2
