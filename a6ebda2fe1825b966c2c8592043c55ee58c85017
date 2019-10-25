@@ -148,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "775ca9ec_2a5924a5",
+        "filename": "app/common/services/userModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000235
+      },
+      "writtenOn": "2019-10-25T19:32:12Z",
+      "side": 1,
+      "message": "Agreed.  A message id (such as PasswordChangeRequired) would have been nice.  The design is re-opened for review, here: https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/25413/2/designs/expired-password.md#178\n\nHowever, I understand the /login URI is deprecated, and the webui is moving to use Redfish SessionService for an upcoming release.  IMHO we should just keep the code on line 21 as-is.",
+      "parentUuid": "3be13528_3cea4a4d",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e704a2c8_fc5ef49a",
         "filename": "app/common/services/userModel.js",
         "patchSetId": 2
@@ -402,6 +420,24 @@
       "side": 1,
       "message": "I agree and also, I am wondering if isPasswordValid the right name. If we are checking if the password is expired, would it be better to name the parameter isPasswordExpired?",
       "parentUuid": "c77e93b4_bfa983d0",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034ef21e_1dcae2ec",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000235
+      },
+      "writtenOn": "2019-10-25T19:32:12Z",
+      "side": 1,
+      "message": "FYA, Redfish started calling this condition passwordExpired and changed it to the more generic term PasswordChangeRequired.  Going forward, that\u0027s what the Redfish APIs will tell us.\n\nHowever, OpenBMC currently only has passwordExpired which maps to PasswordChangeRequired.  This will only become important if we ever have another way to induce the PasswordChangeRequired condition.",
+      "parentUuid": "9a084d3b_7723f253",
       "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
