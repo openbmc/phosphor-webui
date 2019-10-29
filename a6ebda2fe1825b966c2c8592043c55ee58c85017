@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "af04467c_df3b7403",
+        "filename": "app/common/services/userModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-10-29T15:01:13Z",
+      "side": 1,
+      "message": "Are you sure about the login URI being deprecated? According to Ed, we were not going to be able to handle the auth cookies with Redfish, so I didn\u0027t think there was a plan for login to be moved to redfish.",
+      "parentUuid": "775ca9ec_2a5924a5",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e704a2c8_fc5ef49a",
         "filename": "app/common/services/userModel.js",
         "patchSetId": 2
