@@ -1,0 +1,21 @@
+<div class="uib-modal__content">
+    <div class="modal-header">
+      <h2 class="modal-title" id="dialog_label">
+        Delete image
+      </h2>
+      <button type="button" class="btn  btn--close" ng-click="$dismiss()" aria-label="Close">
+        <icon file="icon-close.svg" aria-hidden="true"></icon>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Are you sure you want to delete image <span class="nowrap">{{modalCtrl.imageVersion}}</span>? This action cannot be undone.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" ng-click="$dismiss()" type="button">
+        Cancel
+      </button>
+      <button class="btn btn-primary" ng-click="$close()" type="button">
+        Delete
+      </button>
+    </div>
+  </div>

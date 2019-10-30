@@ -1,0 +1,46 @@
+<div class="uib-modal__content firmware-modal__activate">
+    <div class="modal-header">
+      <h2 class="modal-title" id="dialog_label">Confirm firmware file activation</h2>
+      <button type="button" class="btn  btn--close  float-right" ng-click="$dismiss()" aria-label="Close">
+        <icon file="icon-close.svg" aria-hidden="true"></icon>
+      </button>
+    </div>
+    <form name="form">
+      <div class="modal-body">
+        <div class="row">
+          <div class="column small-12">
+            <fieldset class="field-group-container">
+              <!-- Activate only -->
+              <label>
+                <input name="reboot"
+                       type="radio"
+                       required
+                       ng-value="false"
+                       ng-model="modalCtrl.reboot">
+                Activate without rebooting
+                <p class="radio-label">When activating the firmware file, the new firmware will not operate until the next reboot. The host should be powered off before rebooting.</p>
+              </label>
+              <!-- Activate and reboot -->
+              <label>
+                <input name="reboot"
+                       type="radio"
+                       required
+                       ng-value="true"
+                       ng-model="modalCtrl.reboot">
+                Activate and reboot
+                <p class="radio-label">When rebooting, the BMC will be unavailable for several minutes and you must log in again. If the host is powered on it will be powered off.</p>
+              </label>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" ng-click="$dismiss()" type="button">Cancel</button>
+        <button class="btn btn-primary"
+                type="submit"
+                ng-click="$close(form.reboot.$viewValue)">
+          Continue
+        </button>
+      </div>
+    </form>
+  </div>
