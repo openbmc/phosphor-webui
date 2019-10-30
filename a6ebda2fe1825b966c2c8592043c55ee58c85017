@@ -184,6 +184,24 @@
     },
     {
       "key": {
+        "uuid": "164843df_bf00854f",
+        "filename": "app/common/services/userModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000235
+      },
+      "writtenOn": "2019-10-30T21:58:18Z",
+      "side": 1,
+      "message": "Oops, that was my error.  The /login URI is not deprecated.  (I had conflated it with the   legacy REST APIs, which I understand are deprecated and being replaced by Redfish APIs.)\n\nHowever, the CSRF (aka XSRF) cookie is only needed to protect cookie-based session authentication (such as used by the phosphor-webui).  XSRF protection is not needed for Token based session authentication, such as using X-Auth-Token headers per the REDFISH cheatsheet.  So ... if phosphor-webui switched to login Redfish SessionService, and used the resulting X-Auth-Token to perform operations during that session, then XSRF cookies are not needed.\nI\u0027m working to explain authentication topics in the openbmc email list.\n\nMeanwhile, back to the question about what to check: The openbmctool performs checking similar to the check performed here: lines 284 and 285 here: https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-tools/+/26123/4/thalerj/openbmctool.py#284\nThat is, I think the check should be:\nif ((response.data[\u0027extendedMessage\u0027]) and (response.data[\u0027extendedMessage\u0027].begins_with(\u0027The password for this account must be changed\u0027))) ...",
+      "parentUuid": "af04467c_df3b7403",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e704a2c8_fc5ef49a",
         "filename": "app/common/services/userModel.js",
         "patchSetId": 2
