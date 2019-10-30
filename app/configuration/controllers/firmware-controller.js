@@ -10,11 +10,11 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.configuration').controller('firmwareController', [
-    '$scope', '$window', 'APIUtils', 'dataService', '$location',
-    '$anchorScroll', 'Constants', '$interval', '$q', '$timeout', 'toastService',
+    '$scope', 'APIUtils', 'dataService', '$location', '$anchorScroll',
+    'Constants', '$interval', '$q', 'toastService', '$sce', '$uibModal',
     function(
-        $scope, $window, APIUtils, dataService, $location, $anchorScroll,
-        Constants, $interval, $q, $timeout, toastService) {
+        $scope, APIUtils, dataService, $location, $anchorScroll, Constants,
+        $interval, $q, toastService, $sce, $uibModal) {
       $scope.dataService = dataService;
 
       // Scroll to target anchor
@@ -23,35 +23,19 @@ window.angular && (function(angular) {
         $anchorScroll();
       };
 
+      $scope.tableData = [];
+      $scope.tableHeader =
+          [{label: 'Next Boot'}, {label: 'Image State'}, {label: 'Version'}];
+      $scope.activeSystemImages;
+
       $scope.firmwares = [];
-      $scope.bmcActiveVersion = '';
-      $scope.hostActiveVersion = '';
-      $scope.activate_confirm = false;
-      $scope.delete_image_id = '';
-      $scope.delete_image_version = '';
-      $scope.activate_image_id = '';
-      $scope.activate_image_version = '';
-      $scope.activate_image_type = '';
-      $scope.priority_image_id = '';
-      $scope.priority_image_version = '';
-      $scope.priority_from = -1;
-      $scope.priority_to = -1;
-      $scope.confirm_priority = false;
+
       $scope.file_empty = true;
       $scope.uploading = false;
       $scope.activate = {reboot: true};
 
       var pollActivationTimer = undefined;
       var pollDownloadTimer = undefined;
-
-      $scope.error = {modal_title: '', title: '', desc: '', type: 'warning'};
-
-      $scope.activateImage = function(imageId, imageVersion, imageType) {
-        $scope.activate_image_id = imageId;
-        $scope.activate_image_version = imageVersion;
-        $scope.activate_image_type = imageType;
-        $scope.activate_confirm = true;
-      };
 
       function waitForActive(imageId) {
         var deferred = $q.defer();
@@ -90,99 +74,9 @@ window.angular && (function(angular) {
           }
         }, Constants.POLL_INTERVALS.ACTIVATION);
         return deferred.promise;
-      }
+      };
 
-      $scope.activateConfirmed = function() {
-        APIUtils.activateImage($scope.activate_image_id)
-            .then(
-                function(state) {
-                  $scope.loadFirmwares();
-                  return state;
-                },
-                function(error) {
-                  console.log(JSON.stringify(error));
-                  toastService.error('Unable to activate image');
-                })
-            .then(function(activationState) {
-              waitForActive($scope.activate_image_id)
-                  .then(
-                      function(state) {
-                        $scope.loadFirmwares();
-                      },
-                      function(error) {
-                        console.log(JSON.stringify(error));
-                        toastService.error('Unable to activate image');
-                      })
-                  .then(function(state) {
-                    if ($scope.activate.reboot &&
-                        ($scope.activate_image_type == 'BMC')) {
-                      // Despite the new image being active, issue,
-                      // https://github.com/openbmc/openbmc/issues/2764, can
-                      // cause a system to brick, if the system reboots before
-                      // the service to set the U-Boot variables is complete.
-                      // Wait 10 seconds before rebooting to ensure this service
-                      // is complete. This issue is fixed in newer images, but
-                      // the user may be updating from an older image that does
-                      // not that have this fix.
-                      // TODO: remove this timeout after sufficient time has
-                      // passed.
-                      $timeout(function() {
-                        APIUtils.bmcReboot().then(
-                            function(response) {
-                              toastService.success('BMC is rebooting.')
-                            },
-                            function(error) {
-                              console.log(JSON.stringify(error));
-                              toastService.error('Unable to reboot BMC.');
-                            });
-                      }, 10000);
-                    }
-                    if ($scope.activate.reboot &&
-                        ($scope.activate_image_type == 'Host')) {
-                      // If image type being activated is a host image, the
-                      // current power status of the server determines if the
-                      // server should power on or reboot.
-                      if ($scope.isServerOff()) {
-                        powerOn();
-                      } else {
-                        warmReboot();
-                      }
-                    }
-                  });
-            });
-        $scope.activate_confirm = false;
-      };
-      function powerOn() {
-        dataService.setUnreachableState();
-        APIUtils.hostPowerOn()
-            .then(function(response) {
-              return response;
-            })
-            .then(function(lastStatus) {
-              return APIUtils.pollHostStatusTillOn();
-            })
-            .catch(function(error) {
-              console.log(JSON.stringify(error));
-              toastService.error(Constants.MESSAGES.POWER_OP.POWER_ON_FAILED);
-            });
-      };
-      function warmReboot() {
-        $scope.uploading = true;
-        dataService.setUnreachableState();
-        APIUtils.hostReboot()
-            .then(function(response) {
-              return response;
-            })
-            .then(function(lastStatus) {
-              return APIUtils.pollHostStatusTilReboot();
-            })
-            .catch(function(error) {
-              console.log(JSON.stringify(error));
-              toastService.error(
-                  Constants.MESSAGES.POWER_OP.WARM_REBOOT_FAILED);
-            });
-      };
-      $scope.isServerOff = function() {
+      const isServerOff = () => {
         return dataService.server_state === Constants.HOST_STATE_TEXT.off;
       };
 
@@ -240,7 +134,7 @@ window.angular && (function(angular) {
         }, Constants.POLL_INTERVALS.DOWNLOAD_IMAGE);
 
         return deferred.promise;
-      }
+      };
 
       $scope.download = function() {
         if (!$scope.download_host || !$scope.download_filename) {
@@ -281,53 +175,206 @@ window.angular && (function(angular) {
                 });
       };
 
-      $scope.changePriority = function(imageId, imageVersion, from, to) {
-        $scope.priority_image_id = imageId;
-        $scope.priority_image_version = imageVersion;
-        $scope.priority_from = from;
-        $scope.priority_to = to;
-        $scope.confirm_priority = true;
+      $scope.loadFirmwares = function() {
+        APIUtils.getFirmwares().then(function(result) {
+          const svg = require('../../assets/icons/icon-check.svg');
+          const check =
+              $sce.trustAsHtml(`<span class="icon__check-mark">${svg}<span>`);
+
+          // Temporarily showing both System and BMC imageTypes
+          // Currently after System imageType becomes functional once
+          // the type is changed to 'BMC'. For now we will show System and BMC
+          // images in a single table.
+          const systemImageList = result.data.filter(
+              image =>
+                  image.imageType === 'System' || image.imageType === 'BMC');
+          $scope.activeSystemImages = systemImageList.filter(
+              image => (image.activationStatus === 'Active') ||
+                  (image.activationStatus === 'Functional'));
+
+          $scope.tableData = systemImageList.map((image) => {
+            image.actions = [{type: 'Delete'}];
+
+            // Only enable image delete action if the image activation
+            // status is not Functional or Activating
+            const deleteEnabled = image.activationStatus === 'Functional' ?
+                false :
+                image.activationStatus === 'Activating' ? false : true;
+            image.actions = [{type: 'Delete', enabled: deleteEnabled}];
+
+            if (image.activationStatus === 'Ready') {
+              // If the activation status is 'Ready' (dirty) add the option to
+              // activate image
+              image.actions.unshift({type: 'Activate'})
+            }
+            // TODO: check for highest priority (lowest number)
+            const nextBoot = image.Priority === 0 ? check : '';
+            image.uiData = [nextBoot, image.activationStatus, image.Version];
+            return image;
+          });
+
+          $scope.firmwares = result.data;
+        });
       };
 
-      $scope.confirmChangePriority = function() {
-        $scope.loading = true;
-        APIUtils.changePriority($scope.priority_image_id, $scope.priority_to)
-            .then(function(response) {
-              $scope.loading = false;
-              if (response.status == 'error') {
-                toastService.error('Unable to update boot priority');
-              } else {
-                $scope.loadFirmwares();
-              }
-            });
-        $scope.confirm_priority = false;
+      $scope.onEmitRowAction = (value) => {
+        switch (value.action) {
+          case 'Delete':
+            initDeleteModal(value.row);
+            break;
+          case 'Activate':
+            initActivateModal(value.row)
+            break;
+          default:
+        }
       };
-      $scope.deleteImage = function(imageId, imageVersion) {
-        $scope.delete_image_id = imageId;
-        $scope.delete_image_version = imageVersion;
-        $scope.confirm_delete = true;
+
+      $scope.onClickChangeNextBoot = () => {
+        initNextBootModal();
       };
-      $scope.confirmDeleteImage = function() {
-        $scope.loading = true;
-        APIUtils.deleteImage($scope.delete_image_id).then(function(response) {
-          $scope.loading = false;
+
+      const checkHostOff = () => {
+        const deferred = $q.defer();
+        const start = new Date();
+        const checkHostStatusInverval = $interval(() => {
+          let now = new Date();
+          let timePassed = now.getTime() - start.getTime();
+          if (timePassed > Constants.TIMEOUT.HOST_OFF) {
+            deferred.reject(Constants.MESSAGES.POLL.HOST_OFF_TIMEOUT);
+            $interval.cancel(checkHostStatusInverval);
+          }
+          if (isServerOff()) {
+            deferred.resolve();
+            $interval.cancel(checkHostStatusInverval);
+          }
+        }, Constants.POLL_INTERVALS.POWER_OP);
+        return deferred.promise;
+      };
+
+      const activateSystemImage = (imageId) => {
+        return APIUtils.activateImage(imageId)
+            .then(() => $scope.loadFirmwares())
+            .then(() => waitForActive(imageId))
+            .then(() => {
+              toastService.success('Successfully activated image.');
+              $scope.loadFirmwares();
+            })
+      };
+
+      const deleteSystemImage = (imageId) => {
+        APIUtils.deleteImage(imageId)
+            .then(() => {
+              toastService.success('Successfully deleted image.');
+              $scope.loadFirmwares();
+            })
+            .catch(err => {
+              console.log(err);
+              toastService.error('Failed to delete image.');
+            })
+      };
+
+      const changeImagePriority = (imageId) => {
+        APIUtils.changePriority(imageId, 0).then((response) => {
           if (response.status == 'error') {
-            toastService.error('Unable to delete image');
+            toastService.error('Unable to update boot priority.');
           } else {
+            toastService.success('Successfully changed boot priority.')
             $scope.loadFirmwares();
           }
         });
-        $scope.confirm_delete = false;
       };
 
-      $scope.filters = {bmc: {imageType: 'BMC'}, host: {imageType: 'Host'}};
+      const initNextBootModal = () => {
+        const template = require('./firmware-modal-next-boot.html');
+        const functionalImage = $scope.activeSystemImages.find(
+            image => image.activationStatus === 'Functional');
+        const activeImage = $scope.activeSystemImages.find(
+            image => image.activationStatus === 'Active');
+        // TODO: check for highest priority (lowest number)
+        const currentNextBoot =
+            $scope.activeSystemImages.find(image => image.Priority === 0);
+        $uibModal
+            .open({
+              template,
+              windowTopClass: 'uib-modal',
+              ariaLabelledBy: 'dialog_label',
+              controllerAs: 'modalCtrl',
+              controller: function() {
+                this.functionalImage = functionalImage;
+                this.activeImage = activeImage;
+                this.nextBootModel = currentNextBoot.imageId;
+              }
+            })
+            .result
+            .then((form) => {
+              if (form.$valid) {
+                const nextBootImageId = form.nextBoot.$modelValue;
+                changeImagePriority(nextBootImageId);
+              }
+            })
+            .catch(
+                () => {
+                    // do nothing
+                })
+      };
 
-      $scope.loadFirmwares = function() {
-        APIUtils.getFirmwares().then(function(result) {
-          $scope.firmwares = result.data;
-          $scope.bmcActiveVersion = result.bmcActiveVersion;
-          $scope.hostActiveVersion = result.hostActiveVersion;
-        });
+      const initDeleteModal = (image) => {
+        const template = require('./firmware-modal-delete.html');
+        $uibModal
+            .open({
+              template,
+              windowTopClass: 'uib-modal',
+              ariaLabelledBy: 'dialog_label',
+              controllerAs: 'modalCtrl',
+              controller: function() {
+                this.imageVersion = image.Version;
+              }
+            })
+            .result
+            .then(() => {
+              deleteSystemImage(image.imageId);
+            })
+            .catch(
+                () => {
+                    // do nothing
+                })
+      };
+
+      const initActivateModal = (image) => {
+        const template = require('./firmware-modal-activate.html');
+        $uibModal
+            .open({
+              template,
+              windowTopClass: 'uib-modal',
+              ariaLabelledBy: 'dialog_label',
+              controllerAs: 'modalCtrl',
+              controller: function() {
+                this.reboot = true;
+              }
+            })
+            .result
+            .then((reboot) => {
+              if (reboot) {
+                if (isServerOff()) {
+                  activateSystemImage(image.imageId)
+                      .then(() => APIUtils.bmcReboot())
+                      .then(() => toastService.success('BMC is rebooting.'))
+                } else {
+                  // If host powered on, power off before reboot
+                  activateSystemImage(image.imageId)
+                      .then(() => APIUtils.hostPowerOff())
+                      .then(() => checkHostOff())
+                      .then(() => APIUtils.bmcReboot())
+                      .then(() => toastService.success('BMC is rebooting.'))
+                }
+              } else {
+                activateSystemImage(image.imageId)
+              }
+            })
+            .catch(
+                () => {
+                    // do nothing
+                })
       };
 
       $scope.loadFirmwares();

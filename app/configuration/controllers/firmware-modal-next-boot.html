@@ -1,0 +1,50 @@
+<div class="uib-modal__content">
+    <div class="modal-header">
+      <h2 class="modal-title" id="dialog_label">Image used on next boot</h2>
+      <button type="button" class="btn  btn--close  float-right" ng-click="$dismiss()" aria-label="Close">
+        <icon file="icon-close.svg" aria-hidden="true"></icon>
+      </button>
+    </div>
+    <form name="form">
+      <div class="modal-body">
+        <div class="row">
+          <div class="column small-12">
+            <fieldset class="field-group-container">
+              <legend>Image on next boot</legend>
+              <!-- Active running -->
+              <label class="radio-label">
+                <input name="nextBoot"
+                       type="radio"
+                       required
+                       ng-value="modalCtrl.functionalImage.imageId"
+                       ng-model="modalCtrl.nextBootModel">
+                <span class="nowrap">{{modalCtrl.functionalImage.Version}}</span>
+                <span ng-if="modalCtrl.functionalImage.Priority === 0" class="nowrap"> (current next boot)</span>
+              </label>
+              <!-- Active not running -->
+              <label class="radio-label">
+                <input name="nextBoot"
+                       type="radio"
+                       required
+                       ng-value="modalCtrl.activeImage.imageId"
+                       ng-model="modalCtrl.nextBootModel">
+                <span class="nowrap">{{modalCtrl.activeImage.Version}}</span>
+                <span ng-if="modalCtrl.activeImage.Priority === 0" class="nowrap"> (current next boot)</span>
+                <span></span>
+              </label>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" ng-click="$dismiss()" type="button">Cancel</button>
+        <button class="btn btn-primary"
+                type="submit"
+                ng-click="$close(form)"
+                ng-disabled="form.$invalid || form.$pristine"
+                ng-class="{'disabled': form.$invalid}">
+          Save
+        </button>
+      </div>
+    </form>
+  </div>

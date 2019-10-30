@@ -143,4 +143,19 @@
   }
 }
 
+.system-firmware__table {
+  margin-bottom: 50px;
+  .bmc-table__cell:first-of-type {
+    text-align: center;
+  }
+}
 
+.firmware-modal__activate {
+  .radio-label {
+    font-size: 1rem;
+    margin-top: -0.2rem;
+    margin-bottom: 2rem;
+    margin-left: 1.5rem;
+    line-height: 1.3;
+  }
+}
