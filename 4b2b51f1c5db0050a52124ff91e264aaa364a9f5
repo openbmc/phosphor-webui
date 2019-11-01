@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67b96daf_8d45e401",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-11-01T21:00:56Z",
+      "side": 1,
+      "message": "What element is this label associated with? If there isn\u0027t one, let\u0027s change the element type to an h3 since that is the style it looks like it is using and may make more sense semantically.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 126
+      },
+      "revId": "4b2b51f1c5db0050a52124ff91e264aaa364a9f5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91a6cad4_ced23c20",
+        "filename": "app/server-control/controllers/virtual-media-controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-11-01T21:00:56Z",
+      "side": 1,
+      "message": "for...in statements are better used on objects. A for...of is a better statement for arrays. You can grab the id in a similar way, but instead of an index, you get the item. We are moving towards using let and const to scope loop and other variables.\n\nfor (let item of vms) {\n  APIUtils.getVirtualMedia(item[\u0027@odata.id\u0027]).then...\n}\n\nhttps://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of",
+      "range": {
+        "startLine": 23,
+        "startChar": 11,
+        "endLine": 23,
+        "endChar": 34
+      },
+      "revId": "4b2b51f1c5db0050a52124ff91e264aaa364a9f5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0679912d_aab8cefc",
+        "filename": "app/server-control/controllers/virtual-media-controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-11-01T21:00:56Z",
+      "side": 1,
+      "message": "If it\u0027s more readable we can use template literals here. Your call, just sharing. :)\n\nconsole.log(`${endpoint} closed with code ${ev.code} reason: ${ev.reason}`);",
+      "range": {
+        "startLine": 151,
+        "startChar": 14,
+        "endLine": 152,
+        "endChar": 41
+      },
+      "revId": "4b2b51f1c5db0050a52124ff91e264aaa364a9f5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e398098_9672c445",
+        "filename": "app/server-control/controllers/virtual-media-controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-11-01T21:00:56Z",
+      "side": 1,
+      "message": "If this is scoped to this if block, can we use const instead so it isn\u0027t hoisted and stays scoped to this block?",
+      "range": {
+        "startLine": 178,
+        "startChar": 14,
+        "endLine": 178,
+        "endChar": 17
+      },
+      "revId": "4b2b51f1c5db0050a52124ff91e264aaa364a9f5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
