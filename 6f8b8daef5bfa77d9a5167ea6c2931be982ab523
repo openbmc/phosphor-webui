@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94454ffa_b14573af",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-11-01T21:54:11Z",
+      "side": 1,
+      "message": "The label element is meant for associating a form element like an input to it\u0027s label text. If this message is not associated with a label, it is the the semantic element to use. I think a \u003cp\u003e element would be a better semantic choice.\n\nhttps://developer.mozilla.org/en-US/docs/Web/HTML/Element/label",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 20
+      },
+      "revId": "6f8b8daef5bfa77d9a5167ea6c2931be982ab523",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32e07d0_3a9d4808",
+        "filename": "app/server-control/controllers/virtual-media-controller.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-11-01T21:54:11Z",
+      "side": 1,
+      "message": "why var instead of const since these are not changed after being assigned?",
+      "range": {
+        "startLine": 111,
+        "startChar": 7,
+        "endLine": 113,
+        "endChar": 39
+      },
+      "revId": "6f8b8daef5bfa77d9a5167ea6c2931be982ab523",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9b82590_7911e7d2",
+        "filename": "app/server-control/controllers/virtual-media-modal.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-11-01T21:54:11Z",
+      "side": 1,
+      "message": "Using \u003cp\u003e elements is fine, but I would expect the label and associated input to be contained in each \u003cp\u003e element. We have not done a good job of creating reusable forms. There is a base started, but it needs to be expanded upon. What is important here is that the spacing between the sections is 1.5rem. Using a label above an input should inherit the proper spacing above the input.",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 100
+      },
+      "revId": "6f8b8daef5bfa77d9a5167ea6c2931be982ab523",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
