@@ -79,6 +79,30 @@
       "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78e8a5fc_d4700f71",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2019-11-04T16:49:50Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "12659b88_29e6400c",
+      "range": {
+        "startLine": 68,
+        "startChar": 13,
+        "endLine": 68,
+        "endChar": 27
+      },
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
