@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5566eade_6c9643fc",
+        "filename": "app/common/services/userModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-11-04T21:17:24Z",
+      "side": 1,
+      "message": "Isn\u0027t this just a truthy check?\n\nif (response.data[\u0027extendedMessage\u0027]) {...}",
+      "range": {
+        "startLine": 21,
+        "startChar": 16,
+        "endLine": 21,
+        "endChar": 62
+      },
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "934f77d7_750e49c2",
         "filename": "app/common/styles/base/forms.scss",
         "patchSetId": 3
@@ -30,6 +53,75 @@
       "writtenOn": "2019-11-04T16:13:22Z",
       "side": 1,
       "message": "remove file from commit",
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6147f26_1c48cdb0",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-11-04T21:17:24Z",
+      "side": 1,
+      "message": "This is a boolean check...truthy check would be:\n\nng-if\u003d\"isPasswordValid\"\n\nTesting for the boolean is not needed. Same on all the other\u0027s below on line 15.",
+      "range": {
+        "startLine": 8,
+        "startChar": 33,
+        "endLine": 8,
+        "endChar": 63
+      },
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816ee268_382181d5",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-11-04T21:17:24Z",
+      "side": 1,
+      "message": "Same as the other statement, but in this case to test as falsy:\n\nng-if\u003d\"!isPasswordValid\"\n\nNo need to test for the boolean. This is true in every ng-if statement on the page where the boolean of true or false is being evaluated.",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 65
+      },
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c90df5_eb6782e8",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-11-04T21:17:24Z",
+      "side": 1,
+      "message": "Is this else if needed? It seems like we can set $scope.isPasswordValid \u003d isPasswordValid in the first line of the function.",
+      "range": {
+        "startLine": 46,
+        "startChar": 18,
+        "endLine": 46,
+        "endChar": 59
+      },
       "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
@@ -99,6 +191,75 @@
         "startChar": 13,
         "endLine": 68,
         "endChar": 27
+      },
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db430e8a_4f1f38ee",
+        "filename": "app/login/styles/index.scss",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-11-04T21:17:24Z",
+      "side": 1,
+      "message": "Can you move the selectors to separate lines, please?\n\n#login__form,\n.login__passwordExpired {\n...\n}\n\nis there a reason we are still camelCasing the name? Can we change this from passwordExpired to password-expired?",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0618552_6a03fb4e",
+        "filename": "app/login/styles/index.scss",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-11-04T21:17:24Z",
+      "side": 1,
+      "message": "Can we update this to follow best practices?\n\n- Change the selector to a class instead of an id\n- Use a dash (-) to separate words. expiredPasswordForm \u003d expired-password-form",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 1
+      },
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d65092c_c7dc20f0",
+        "filename": "app/login/styles/index.scss",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-11-04T21:17:24Z",
+      "side": 1,
+      "message": ".expired-password__btns? Line 33 is using the same naming and they should follow the same naming contention and be consistent.",
+      "range": {
+        "startLine": 118,
+        "startChar": 1,
+        "endLine": 118,
+        "endChar": 22
       },
       "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
