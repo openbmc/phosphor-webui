@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "277e1992_685e41ca",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000495
+      },
+      "writtenOn": "2019-11-04T12:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94454ffa_b14573af",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 20
+      },
+      "revId": "6f8b8daef5bfa77d9a5167ea6c2931be982ab523",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e32e07d0_3a9d4808",
         "filename": "app/server-control/controllers/virtual-media-controller.js",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "aea8fac8_6075fc17",
+        "filename": "app/server-control/controllers/virtual-media-controller.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000495
+      },
+      "writtenOn": "2019-11-04T12:13:56Z",
+      "side": 1,
+      "message": "I changed these to const.",
+      "parentUuid": "e32e07d0_3a9d4808",
+      "range": {
+        "startLine": 111,
+        "startChar": 7,
+        "endLine": 113,
+        "endChar": 39
+      },
+      "revId": "6f8b8daef5bfa77d9a5167ea6c2931be982ab523",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9b82590_7911e7d2",
         "filename": "app/server-control/controllers/virtual-media-modal.html",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "6f8b8daef5bfa77d9a5167ea6c2931be982ab523",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e376390_0413ccf9",
+        "filename": "app/server-control/controllers/virtual-media-modal.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000495
+      },
+      "writtenOn": "2019-11-04T12:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9b82590_7911e7d2",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 100
+      },
+      "revId": "6f8b8daef5bfa77d9a5167ea6c2931be982ab523",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
