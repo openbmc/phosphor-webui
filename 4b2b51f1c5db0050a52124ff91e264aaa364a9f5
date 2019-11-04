@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d5fea80_e182c0c8",
+        "filename": "app/server-control/controllers/virtual-media-controller.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000495
+      },
+      "writtenOn": "2019-11-04T16:14:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67b96daf_8d45e401",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 126
+      },
+      "revId": "4b2b51f1c5db0050a52124ff91e264aaa364a9f5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91a6cad4_ced23c20",
         "filename": "app/server-control/controllers/virtual-media-controller.js",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "4b2b51f1c5db0050a52124ff91e264aaa364a9f5",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f011bb1e_637a2042",
+        "filename": "app/server-control/controllers/virtual-media-controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000495
+      },
+      "writtenOn": "2019-11-04T16:14:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91a6cad4_ced23c20",
+      "range": {
+        "startLine": 23,
+        "startChar": 11,
+        "endLine": 23,
+        "endChar": 34
+      },
+      "revId": "4b2b51f1c5db0050a52124ff91e264aaa364a9f5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "101de4a4_4bfc15f5",
+        "filename": "app/server-control/controllers/virtual-media-controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000495
+      },
+      "writtenOn": "2019-11-04T16:14:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0679912d_aab8cefc",
+      "range": {
+        "startLine": 151,
+        "startChar": 14,
+        "endLine": 152,
+        "endChar": 41
+      },
+      "revId": "4b2b51f1c5db0050a52124ff91e264aaa364a9f5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e398098_9672c445",
         "filename": "app/server-control/controllers/virtual-media-controller.js",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "4b2b51f1c5db0050a52124ff91e264aaa364a9f5",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150aaeb9_687b8359",
+        "filename": "app/server-control/controllers/virtual-media-controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000495
+      },
+      "writtenOn": "2019-11-04T16:14:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e398098_9672c445",
+      "range": {
+        "startLine": 178,
+        "startChar": 14,
+        "endLine": 178,
+        "endChar": 17
+      },
+      "revId": "4b2b51f1c5db0050a52124ff91e264aaa364a9f5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
