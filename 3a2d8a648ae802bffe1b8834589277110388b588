@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44b7f03e_a9138b71",
+        "filename": "app/common/services/api-utils.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2019-11-05T19:10:12Z",
+      "side": 1,
+      "message": "I don\u0027t think you are using this now.",
+      "revId": "3a2d8a648ae802bffe1b8834589277110388b588",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d120030f_7c2b2762",
+        "filename": "app/index.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2019-11-05T19:10:12Z",
+      "side": 1,
+      "message": "Can you rebase this change?",
+      "revId": "3a2d8a648ae802bffe1b8834589277110388b588",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
