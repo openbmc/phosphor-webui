@@ -37,6 +37,40 @@
     },
     {
       "key": {
+        "uuid": "44cd8f5c_0e077e30",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000396
+      },
+      "writtenOn": "2019-11-05T22:08:31Z",
+      "side": 0,
+      "message": "If you delete this empty line it fixes the spaces between the input fields (tested in chrome and firefox)",
+      "revId": "d11b9277aea0baeafa4488084d27cfef0e607480",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd44bdfc_4c8ebb4d",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000396
+      },
+      "writtenOn": "2019-11-05T22:08:31Z",
+      "side": 0,
+      "message": "If you delete this empty line it fixes the spaces between the input fields (tested in chrome and firefox)",
+      "revId": "d11b9277aea0baeafa4488084d27cfef0e607480",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50764022_8b98951a",
         "filename": "app/login/styles/index.scss",
         "patchSetId": 2
