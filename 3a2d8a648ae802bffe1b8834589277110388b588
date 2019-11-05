@@ -33,6 +33,29 @@
       "revId": "3a2d8a648ae802bffe1b8834589277110388b588",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "300d52ac_98a1d572",
+        "filename": "app/login/styles/index.scss",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000281
+      },
+      "writtenOn": "2019-11-05T20:50:46Z",
+      "side": 1,
+      "message": "why .expired__password when you are using .expired-password selector in other rulesets?",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 27
+      },
+      "revId": "3a2d8a648ae802bffe1b8834589277110388b588",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
