@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "940b4561_c7d7fe60",
+        "filename": "app/server-control/controllers/virtual-media-controller.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000402
+      },
+      "writtenOn": "2019-11-05T15:34:14Z",
+      "side": 1,
+      "message": "sorry, kind of annoying with this bootstrap modal, but we\u0027ve been adding an empty catch here because bootstrap throws an error whenever the modal is $dismiss-ed or if the overlay is clicked (which also closes the modal). Would you mind just adding the empty catch? Only the $close method seems to resolve the promise. \n\n.result.then().catch(function(){ //do nothing })",
+      "range": {
+        "startLine": 136,
+        "startChar": 1,
+        "endLine": 139,
+        "endChar": 15
+      },
+      "revId": "9b11a917366ce14d6deba521a901015a88f21fcb",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f92f11a_80c75c66",
+        "filename": "app/server-control/controllers/virtual-media-modal.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000402
+      },
+      "writtenOn": "2019-11-05T15:34:14Z",
+      "side": 1,
+      "message": "Could you add a \u0027X\u0027 close button?",
+      "revId": "9b11a917366ce14d6deba521a901015a88f21fcb",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
