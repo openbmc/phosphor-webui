@@ -95,6 +95,24 @@
     },
     {
       "key": {
+        "uuid": "cde40a1b_5ff559c6",
+        "filename": "app/common/services/api-utils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "92b4f741_b51e5575",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc0dfbf2_02b13fc3",
         "filename": "app/common/services/userModel.js",
         "patchSetId": 2
@@ -202,6 +220,24 @@
     },
     {
       "key": {
+        "uuid": "b9344f01_69dcec6a",
+        "filename": "app/common/services/userModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "164843df_bf00854f",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e704a2c8_fc5ef49a",
         "filename": "app/common/services/userModel.js",
         "patchSetId": 2
@@ -222,6 +258,30 @@
       "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d731bcb_1e6f8ebd",
+        "filename": "app/common/services/userModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e704a2c8_fc5ef49a",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 63
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -248,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "745388da_a6a1642d",
+        "filename": "app/common/styles/base/forms.scss",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26b846a5_84d932b8",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 38
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78d917f6_400b85df",
         "filename": "app/index.html",
         "patchSetId": 2
@@ -268,6 +352,30 @@
       "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31a0eda_f549f860",
+        "filename": "app/index.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78d917f6_400b85df",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 19
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -294,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "64cfb72f_2003cfc8",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7ac99b56_b90b8bb1",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 67
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba57696e_24e52c1a",
         "filename": "app/login/controllers/login-controller.html",
         "patchSetId": 2
@@ -317,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "5e8ff6d9_87bac743",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ba57696e_24e52c1a",
+      "range": {
+        "startLine": 45,
+        "startChar": 15,
+        "endLine": 45,
+        "endChar": 37
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21cb5d40_9ce0de67",
         "filename": "app/login/controllers/login-controller.html",
         "patchSetId": 2
@@ -331,6 +487,24 @@
       "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d475aa5d_a10326da",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "21cb5d40_9ce0de67",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -354,6 +528,30 @@
       "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d67c4b51_4418934b",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1fd35b4_0d0d96f4",
+      "range": {
+        "startLine": 62,
+        "startChar": 10,
+        "endLine": 62,
+        "endChar": 76
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -404,6 +602,30 @@
     },
     {
       "key": {
+        "uuid": "dc5d736c_5b5fa917",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46087028_976493ec",
+      "range": {
+        "startLine": 81,
+        "startChar": 10,
+        "endLine": 85,
+        "endChar": 16
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81d171f9_8f1f88c1",
         "filename": "app/login/controllers/login-controller.js",
         "patchSetId": 2
@@ -424,6 +646,30 @@
       "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49429b32_f18c1045",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "81d171f9_8f1f88c1",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 22,
+        "endChar": 20
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -480,6 +726,24 @@
     },
     {
       "key": {
+        "uuid": "921b4e29_2d72c872",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "034ef21e_1dcae2ec",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb0bdb09_0c597083",
         "filename": "app/login/controllers/login-controller.js",
         "patchSetId": 2
@@ -500,6 +764,30 @@
       "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f6d137_62ec3b8a",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Great point -- I disabled the button when the form isn\u0027t touched or is invalid.",
+      "parentUuid": "cb0bdb09_0c597083",
+      "range": {
+        "startLine": 65,
+        "startChar": 5,
+        "endLine": 65,
+        "endChar": 42
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -535,6 +823,24 @@
       "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1732bada_142cc36e",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Yup -- redirecting to login.",
+      "parentUuid": "19014db3_e3a9a095",
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -609,6 +915,30 @@
     },
     {
       "key": {
+        "uuid": "b5897423_7aed7e60",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "934f2acb_2f02dd21",
+      "range": {
+        "startLine": 78,
+        "startChar": 14,
+        "endLine": 78,
+        "endChar": 63
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd36d8c9_17afce5c",
         "filename": "app/login/controllers/login-controller.js",
         "patchSetId": 2
@@ -632,6 +962,30 @@
     },
     {
       "key": {
+        "uuid": "2ade6b82_f5c9d120",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd36d8c9_17afce5c",
+      "range": {
+        "startLine": 80,
+        "startChar": 12,
+        "endLine": 80,
+        "endChar": 31
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49d2d68b_27aa3a08",
         "filename": "app/login/styles/index.scss",
         "patchSetId": 2
@@ -643,6 +997,30 @@
       "writtenOn": "2019-10-23T15:20:11Z",
       "side": 1,
       "message": "classname?",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 7
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "706b7302_9bf4d23f",
+        "filename": "app/login/styles/index.scss",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "I wanted to target all the labels within this form, so used label instead of classname",
+      "parentUuid": "49d2d68b_27aa3a08",
       "range": {
         "startLine": 66,
         "startChar": 2,
@@ -678,6 +1056,30 @@
     },
     {
       "key": {
+        "uuid": "4c3e15bc_8dd76801",
+        "filename": "app/login/styles/index.scss",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "821f8e65_68ce30a0",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 2
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68c3c1f0_4dbd9741",
         "filename": "app/login/styles/index.scss",
         "patchSetId": 2
@@ -698,6 +1100,30 @@
       "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab05a831_ca383eb2",
+        "filename": "app/login/styles/index.scss",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "68c3c1f0_4dbd9741",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 1
+      },
+      "revId": "a6ebda2fe1825b966c2c8592043c55ee58c85017",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
