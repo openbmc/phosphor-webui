@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d36a1ed_b91ecedb",
+        "filename": "app/common/services/userModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "good point -- I will change it, thank you!",
+      "parentUuid": "5566eade_6c9643fc",
+      "range": {
+        "startLine": 21,
+        "startChar": 16,
+        "endLine": 21,
+        "endChar": 62
+      },
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "934f77d7_750e49c2",
         "filename": "app/common/styles/base/forms.scss",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "7112516c_891b16c8",
+        "filename": "app/common/styles/base/forms.scss",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "934f77d7_750e49c2",
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "571bb698_c1fb6920",
         "filename": "app/index.html",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada83760_47544a51",
+        "filename": "app/index.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "571bb698_c1fb6920",
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "1b42507b_7252ea66",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6147f26_1c48cdb0",
+      "range": {
+        "startLine": 8,
+        "startChar": 33,
+        "endLine": 8,
+        "endChar": 63
+      },
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "816ee268_382181d5",
         "filename": "app/login/controllers/login-controller.html",
         "patchSetId": 3
@@ -102,6 +186,30 @@
       "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d05cd24_df31d4d1",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "816ee268_382181d5",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 65
+      },
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "1f316fa8_fc4ada2f",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "it is needed, because I don\u0027t want the other if and else statements to be executed if the password is not valid.",
+      "parentUuid": "74c90df5_eb6782e8",
+      "range": {
+        "startLine": 46,
+        "startChar": 18,
+        "endLine": 46,
+        "endChar": 59
+      },
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86425737_f8ca7ff4",
         "filename": "app/login/controllers/login-controller.js",
         "patchSetId": 3
@@ -139,6 +271,30 @@
       "writtenOn": "2019-11-04T16:13:22Z",
       "side": 1,
       "message": "are you using this variable?",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 49
+      },
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "954f10c0_a138e100",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "no, good catch!",
+      "parentUuid": "86425737_f8ca7ff4",
       "range": {
         "startLine": 63,
         "startChar": 0,
@@ -198,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "907d29b4_e4187c3f",
+        "filename": "app/login/controllers/login-controller.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "that works! I updated it -- thanks!!",
+      "parentUuid": "78e8a5fc_d4700f71",
+      "range": {
+        "startLine": 68,
+        "startChar": 13,
+        "endLine": 68,
+        "endChar": 27
+      },
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db430e8a_4f1f38ee",
         "filename": "app/login/styles/index.scss",
         "patchSetId": 3
@@ -221,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "e2112f20_501acac0",
+        "filename": "app/login/styles/index.scss",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db430e8a_4f1f38ee",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0618552_6a03fb4e",
         "filename": "app/login/styles/index.scss",
         "patchSetId": 3
@@ -232,6 +436,30 @@
       "writtenOn": "2019-11-04T21:17:24Z",
       "side": 1,
       "message": "Can we update this to follow best practices?\n\n- Change the selector to a class instead of an id\n- Use a dash (-) to separate words. expiredPasswordForm \u003d expired-password-form",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 1
+      },
+      "revId": "6a6262cdf2bd4ce45dc33da0afd4504fcf168c55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ff42df1_4eed0797",
+        "filename": "app/login/styles/index.scss",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 1,
+      "message": "I am having issues changing the id to include dashes in its name.",
+      "parentUuid": "d0618552_6a03fb4e",
       "range": {
         "startLine": 65,
         "startChar": 0,

@@ -86,6 +86,24 @@
       "revId": "d11b9277aea0baeafa4488084d27cfef0e607480",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583ffc21_93ed3d04",
+        "filename": "app/login/styles/index.scss",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T19:03:47Z",
+      "side": 0,
+      "message": "I thought I had removed that",
+      "parentUuid": "9b6531f9_8cb76ed0",
+      "revId": "d11b9277aea0baeafa4488084d27cfef0e607480",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
