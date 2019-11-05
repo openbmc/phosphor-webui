@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9b849afb_d844afdd",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T23:41:07Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "44cd8f5c_0e077e30",
+      "revId": "d11b9277aea0baeafa4488084d27cfef0e607480",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd44bdfc_4c8ebb4d",
         "filename": "app/login/controllers/login-controller.html",
         "patchSetId": 4
@@ -68,6 +86,24 @@
       "revId": "d11b9277aea0baeafa4488084d27cfef0e607480",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2006e6be_68f415be",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T23:41:07Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "fd44bdfc_4c8ebb4d",
+      "revId": "d11b9277aea0baeafa4488084d27cfef0e607480",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cc9b5d76_464f9e29",
+        "filename": "app/common/services/api-utils.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T23:41:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44b7f03e_a9138b71",
+      "revId": "3a2d8a648ae802bffe1b8834589277110388b588",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d120030f_7c2b2762",
         "filename": "app/index.html",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "15a45687_42ae90a4",
+        "filename": "app/index.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T23:41:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d120030f_7c2b2762",
+      "revId": "3a2d8a648ae802bffe1b8834589277110388b588",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0458b1c2_3df2fe1f",
         "filename": "app/login/controllers/login-controller.html",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "3a2d8a648ae802bffe1b8834589277110388b588",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7518f8d2_94df2d81",
+        "filename": "app/login/controllers/login-controller.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T23:41:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0458b1c2_3df2fe1f",
+      "revId": "3a2d8a648ae802bffe1b8834589277110388b588",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "3a2d8a648ae802bffe1b8834589277110388b588",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02a4ecb_3515f4a3",
+        "filename": "app/login/styles/index.scss",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000403
+      },
+      "writtenOn": "2019-11-05T23:41:07Z",
+      "side": 1,
+      "message": "Realized I am not even using this, so removed it -- thanks.",
+      "parentUuid": "300d52ac_98a1d572",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 27
+      },
+      "revId": "3a2d8a648ae802bffe1b8834589277110388b588",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
