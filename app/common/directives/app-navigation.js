@@ -10,18 +10,42 @@ window.angular && (function(angular) {
           'controller': [
             '$scope', '$location', 'dataService',
             function($scope, $location, dataService) {
+              $scope.showHealthMenu = false;
+              $scope.showControlMenu = false;
+              $scope.showConfigMenu = false;
+              $scope.showAccessMenu = false;
+              $scope.hoverState = false;
+
               $scope.dataService = dataService;
-              $scope.showSubMenu = false;
+              $scope.showSubMenu = true;
+
               $scope.change = function(firstLevel) {
-                if (firstLevel != $scope.firstLevel) {
-                  $scope.firstLevel = firstLevel;
-                  $scope.showSubMenu = true;
-                } else {
-                  $scope.showSubMenu = !$scope.showSubMenu;
+                switch (firstLevel) {
+                  case 'server-health':
+                    $scope.showHealthMenu = !$scope.showHealthMenu;
+                    break;
+                  case 'server-control':
+                    $scope.showControlMenu = !$scope.showControlMenu;
+                    break;
+                  case 'configuration':
+                    $scope.showConfigMenu = !$scope.showConfigMenu;
+                    break;
+                  case 'access-control':
+                    $scope.showAccessMenu = !$scope.showAccessMenu;
+                    break;
+                };
+
+                if (1 == 2) {
+                  if (firstLevel != $scope.firstLevel) {
+                    $scope.firstLevel = firstLevel;
+                    $scope.showSubMenu = true;
+                  } else {
+                    $scope.showSubMenu = !$scope.showSubMenu;
+                  }
                 }
               };
-              $scope.closeSubnav = function() {
-                $scope.showSubMenu = false;
+              $scope.RedirectToURL = function(destinationURL) {
+                $location.url(destinationURL);
               };
               $scope.$watch('path', function() {
                 var urlRoot = $location.path().split('/')[1];
@@ -30,22 +54,15 @@ window.angular && (function(angular) {
                 } else {
                   $scope.firstLevel = 'overview';
                 }
-                $scope.showSubMenu = false;
+                $scope.showSubMenu = true;
               });
               $scope.$watch('showNavigation', function() {
-                var paddingTop = 0;
                 var urlRoot = $location.path().split('/')[1];
                 if (urlRoot != '') {
                   $scope.firstLevel = urlRoot;
                 } else {
                   $scope.firstLevel = 'overview';
                 }
-
-                if ($scope.showNavigation) {
-                  paddingTop = document.getElementById('header').offsetHeight;
-                }
-                dataService.bodyStyle = {'padding-top': paddingTop + 'px'};
-                $scope.navStyle = {'top': paddingTop + 'px'};
               });
             }
           ],
@@ -56,7 +73,7 @@ window.angular && (function(angular) {
 
               if (scope.showSubMenu) {
                 scope.$apply(function() {
-                  scope.showSubMenu = false;
+                  scope.showSubMenu = true;
                 });
               }
             });
