@@ -38,9 +38,6 @@ window.angular && (function(angular) {
             if (action.type === undefined) {
               return;
             }
-            if (action.file === undefined) {
-              action.file = null;
-            }
             if (action.enabled === undefined) {
               action.enabled = true;
             }
@@ -76,8 +73,8 @@ window.angular && (function(angular) {
       ng-repeat="action in $ctrl.actions track by $index"
       ng-disabled="!action.enabled"
       ng-click="$ctrl.onClick(action.type)">
-      <icon ng-if="action.file !== null" ng-file="{{action.file}}"></icon>
-      <span ng-if="action.file === null">{{action.type}}</span>
+      <icon ng-if="action.file" ng-file="{{action.file}}"></icon>
+      <span ng-if="!action.file">{{action.type}}</span>
     </button>`
 
   /**
