@@ -1,12 +1,11 @@
 // Content layout styles
-$nav__toplvlWidth: 120px;
-$nav__seclvlWidth: 240px;
+$nav__toplvlWidth: 240px;
 
 // Main element class
 .content__container {
   margin-left: $nav__toplvlWidth;
   padding: 1em 0.1em;
-
+  margin-top: 130px;
   @include mediaQuery(x-small) {
     padding: 1rem 2rem;
   }
