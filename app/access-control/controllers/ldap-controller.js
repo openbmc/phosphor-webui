@@ -56,6 +56,7 @@ window.angular && (function(angular) {
                     'ServiceAddresses': serviceAddresses,
                     'useSSL': useSSL,
                     'Username': userName,
+                    'Password': null,
                     'BaseDistinguishedNames': baseDistinguishedNames,
                     'GroupsAttribute': groupsAttribute,
                     'UsernameAttribute': usernameAttribute,
@@ -322,6 +323,7 @@ window.angular && (function(angular) {
         const ServiceEnabled = true;
         const Authentication = {
           Username: ldapProperties.Username,
+          Password: ldapProperties.Password,
           AuthenticationType: ldapProperties.AuthenticationType
         };
         const LDAPService = {
