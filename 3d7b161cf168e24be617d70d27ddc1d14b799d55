@@ -34,6 +34,24 @@
       "revId": "3d7b161cf168e24be617d70d27ddc1d14b799d55",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97aa3e06_579084be",
+        "filename": "app/common/services/api-utils.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 1816,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2019-11-12T16:40:26Z",
+      "side": 1,
+      "message": "I would prefer this be renamed to like getRedfishObject(objectPath) since this more generic than VirtualMedia",
+      "parentUuid": "955f533c_3cf898a1",
+      "revId": "3d7b161cf168e24be617d70d27ddc1d14b799d55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
