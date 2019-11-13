@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8c2bdde_0b6c7a01",
+        "filename": "app/common/services/virtualMediaModel.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000495
+      },
+      "writtenOn": "2019-11-13T13:29:12Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "c5390cd3_48f03743",
+      "revId": "31640ab62d6c9e6fd94167afe114a54acdd05bb9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a84ce4a0_d085720f",
         "filename": "app/server-control/controllers/virtual-media-controller.js",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "31640ab62d6c9e6fd94167afe114a54acdd05bb9",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca1fb84_2930a303",
+        "filename": "app/server-control/controllers/virtual-media-controller.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000495
+      },
+      "writtenOn": "2019-11-13T13:29:12Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "a84ce4a0_d085720f",
+      "revId": "31640ab62d6c9e6fd94167afe114a54acdd05bb9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
