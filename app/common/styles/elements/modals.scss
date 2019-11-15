@@ -125,10 +125,6 @@
 .uib-modal.in .modal-dialog {
   transform: translate(0, 10vh);
   margin-top: 50px;
-  .icon__close {
-    margin: 0;
-    padding: 0;
-  }
   .modal-content {
     border-radius: 0;
     border-color: $primary-dark;
@@ -143,12 +139,6 @@
   padding: 1em;
   .modal-header {
     display: block;
-  }
-  .btn--close {
-    padding: 0;
-    svg {
-      height: 1.6em;
-    }
   }
 }
 
