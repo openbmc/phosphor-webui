@@ -1,4 +1,4 @@
-// Loader
+// Loader Spinner
 
 @keyframes rotate {
   0% {  transform: rotate(0deg);}
@@ -16,28 +16,32 @@
   z-index: 91;
 }
 
-.loader{
+.icon__loader {
   width:100%;
   height:100%;
   transform: translateZ(0) rotate(360deg);
   transform-origin: center center;
   -moz-transform-origin: center center; /* firefox requires fixed values */
   animation: rotate 1s linear infinite;
+  svg circle {
+    stroke-dasharray: 80px;
+    stroke-dashoffset: 9.7px;
+    fill: transparent;
+    stroke: $base-01--02;
+    stroke-width: 5px;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s cubic-bezier(.5,.08,0,1);
+    -webkit-animation: a 4s ease-out infinite;
+    animation: a 4s ease-out infinite;
+  }
 }
 
-.loader__path{
-  stroke-dasharray: 80px;
-  stroke-dashoffset: 9.7px;
-  r: 16px;
-  cx: 50px;
-  cy: 50px;
-  fill: transparent;
-  stroke: $base-01--02;
-  stroke-width: 5px;
-  stroke-linecap: round;
-  transition: stroke-dashoffset 1s cubic-bezier(.5,.08,0,1);
-  -webkit-animation: a 4s ease-out infinite;
-  animation: a 4s ease-out infinite;
+.icon__loader-sm {
+  width: 1.4rem;
+  height: 1.4rem;
+  vertical-align: text-bottom;
+  border-width: .2em;
+  line-height:0;
 }
 
 .loader__overlay {
