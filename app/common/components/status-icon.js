@@ -32,7 +32,13 @@ window.angular && (function(angular) {
                           file="icon-critical.svg"
                           aria-hidden="true"
                           class="status-icon">
-                    </icon>`
+                    </icon>
+                    <icon ng-if="$ctrl.status === 'loading'"
+                          file="icon-loader.svg"
+                          aria-hidden="true"
+                          class="icon__loader icon__loader-sm">
+                    </icon>
+                    `
 
   /**
    * Register statusIcon component
