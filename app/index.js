@@ -73,6 +73,7 @@ import table_toolbar_component from './common/components/table/table-toolbar.js'
 import table_checkbox from './common/components/table/table-checkbox.js';
 import status_icon from './common/components/status-icon.js';
 import alert_banner from './common/components/alert-banner.js';
+import file_upload from './common/components/file-upload.js';
 
 import login_index from './login/index.js';
 import login_controller from './login/controllers/login-controller.js';
