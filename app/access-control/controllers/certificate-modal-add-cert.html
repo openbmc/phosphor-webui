@@ -53,9 +53,9 @@
           type="file"
           file="newCertificate.file"
           class="file-upload-input"/>
-        <div class="form__field file-upload-container">
-          <span ng-hide="newCertificate.file">No file selected</span>
-          <span>{{ newCertificate.file.name }}</span>
+        <div class="file-upload-container">
+          <span class="file-filename" ng-hide="newCertificate.file">No file selected</span>
+          <span class="file-filename">{{ newCertificate.file.name }}</span>
           <button
             type="reset"
             class="btn file-upload-reset"
