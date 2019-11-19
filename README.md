@@ -54,5 +54,4 @@ The default username and password are `root`/`0penBmc`.
 **Note** that some OpenBMC implementations use [bmcweb](https://github.com/openbmc/bmcweb)
 for its backend. For security reasons, bmcweb will need to be recompiled and
 loaded onto the target BMC Host before the above redirect command will work. The
-option to turn on within bmcweb is `BMCWEB_INSECURE_DISABLE_XSS_PREVENTION`. In
-order to test locally, you will also need to disable CSRF by turning on `BMCWEB_INSECURE_DISABLE_CSRF_PREVENTION`.
+option to turn on within bmcweb is `BMCWEB_INSECURE_DISABLE_XSS_PREVENTION`.
