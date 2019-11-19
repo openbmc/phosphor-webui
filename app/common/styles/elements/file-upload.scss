@@ -1,29 +1,3 @@
-/**
-  * Used for file upload
-  * Markup
-      <div class="file-upload">
-        <label for="upload_cert_new" class="file-upload-btn btn btn-secondary" tabindex="0">Choose file</label>
-        <input
-          name="upload_cert_new"
-          id="upload_cert_new"
-          type="file"
-          file="newCertificate.file"
-          class="file-upload-input"/>
-        <div class="form__field file-upload-container">
-          <span ng-hide="newCertificate.file">No file selected</span>
-          <span>{{ newCertificate.file.name }}</span>
-          <button
-            type="reset"
-            class="btn file-upload-reset"
-            ng-if="newCertificate.file.name"
-            ng-click="newCertificate.file = '';"
-            aria-label="remove selected file">
-            <icon file="icon-close.svg" aria-hidden="true"></icon>
-          </button>
-        </div>
-      </div>
-*/
-
 // Choose/upload button
 .file-upload-input {
   width: 1px;
@@ -38,19 +12,33 @@
   outline: 0.2rem solid $base-02--04;
 }
 
-// File name of uploaded file field
-.file-upload-container {
-  background: $background-02;
-  padding: 0.5rem;
-  span {
-    padding-left: .5rem;
-  }
-  .file-upload-reset {
-    float: right;
-    margin-top: -.5rem;
-    icon {
-      margin-right: -1.7em;
-      margin-left: -1.5em;
+.file-filename {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 300px;
+  white-space: nowrap;
+  padding-right: 0.5rem;
+}
+
+.file-upload-error {
+  border-bottom: 2px solid $notification-error--dark;
+}
+
+.file-upload {
+  min-width: 240px;
+  max-width: 330px;
+  .file-upload-container {
+    align-items: center;
+    background: $background-02;
+    display: flex;
+    height: 2.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    .file-upload-reset {
+      padding: 0;
+      icon {
+        margin: 0;
+      }
     }
   }
 }
