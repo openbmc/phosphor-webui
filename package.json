@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "@novnc/novnc": "1.1.0",
-    "angular": "1.7.8",
+    "angular": "1.7.9",
     "angular-animate": "1.7.8",
     "angular-clipboard": "1.7.0",
     "angular-cookies": "1.7.8",
@@ -50,8 +50,8 @@
     "ng-toast": "2.0.0",
     "pkg-dir": "4.2.0",
     "regenerator-runtime": "0.13.3",
-    "xterm": "3.14.5",
-    "text-encoding": "0.7.0"
+    "text-encoding": "0.7.0",
+    "xterm": "3.14.5"
   },
   "peerDependencies": {},
   "devDependencies": {
