@@ -50,6 +50,24 @@ window.angular && (function(angular) {
                   })
                   .finally(function() {
                     $scope.loading = false;
+                    $scope.certificates.sort(function(a, b) {
+                      if (a.Name > b.Name) {
+                        return 1;
+                      }
+                      if (a.Name < b.Name) {
+                        return -1;
+                      }
+                      if (a.Issuer.CommonName > b.Issuer.CommonName) {
+                        return 1;
+                      }
+                      if (a.Issuer.CommonName < b.Issuer.CommonName) {
+                        return -1;
+                      }
+                      return (Date.parse(a.ValidNotBefore) >
+                              Date.parse(b.ValidNotBefore)) ?
+                          1 :
+                          -1;
+                    });
                   });
             },
             function(error) {
