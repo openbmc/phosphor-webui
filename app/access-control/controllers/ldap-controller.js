@@ -44,7 +44,6 @@ window.angular && (function(angular) {
                       getBaseDistinguishedNames(data);
                   const groupsAttribute = getGroupsAttribute(data);
                   const usernameAttribute = getUsernameAttribute(data);
-                  const authenticationType = getAuthenticationType(data);
                   const roleGroups = getRoleGroups(data);
 
 
@@ -60,7 +59,6 @@ window.angular && (function(angular) {
                     'BaseDistinguishedNames': baseDistinguishedNames,
                     'GroupsAttribute': groupsAttribute,
                     'UsernameAttribute': usernameAttribute,
-                    'AuthenticationType': authenticationType,
                     'RoleGroups': roleGroups
                   };
                 },
@@ -268,7 +266,6 @@ window.angular && (function(angular) {
         return groupsAttribute;
       }
 
-
       /**
        *
        * @param {Object} ldapProperties
@@ -282,21 +279,6 @@ window.angular && (function(angular) {
               ldapProperties[serviceType]['LDAPService']['SearchSettings']['UsernameAttribute'];
         }
         return userNameAttribute;
-      }
-
-      /**
-       *
-       * @param {Object} ldapProperties
-       * @returns {null | string}
-       */
-      function getAuthenticationType(ldapProperties) {
-        let authenticationType = null;
-        let serviceType = getEnabledServiceType(ldapProperties);
-        if (serviceType) {
-          authenticationType =
-              ldapProperties[serviceType]['Authentication']['AuthenticationType'];
-        }
-        return authenticationType;
       }
 
       /**
@@ -323,8 +305,7 @@ window.angular && (function(angular) {
         const ServiceEnabled = true;
         const Authentication = {
           Username: ldapProperties.Username,
-          Password: ldapProperties.Password,
-          AuthenticationType: ldapProperties.AuthenticationType
+          Password: ldapProperties.Password
         };
         const LDAPService = {
           SearchSettings: {
