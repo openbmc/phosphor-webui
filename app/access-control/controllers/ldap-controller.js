@@ -44,7 +44,6 @@ window.angular && (function(angular) {
                       getBaseDistinguishedNames(data);
                   const groupsAttribute = getGroupsAttribute(data);
                   const usernameAttribute = getUsernameAttribute(data);
-                  const authenticationType = getAuthenticationType(data);
                   const roleGroups = getRoleGroups(data);
 
 
@@ -60,7 +59,6 @@ window.angular && (function(angular) {
                     'BaseDistinguishedNames': baseDistinguishedNames,
                     'GroupsAttribute': groupsAttribute,
                     'UsernameAttribute': usernameAttribute,
-                    'AuthenticationType': authenticationType,
                     'RoleGroups': roleGroups
                   };
                 },
@@ -157,6 +155,7 @@ window.angular && (function(angular) {
                   });
         }
       };
+
 
       /**
        *
@@ -287,21 +286,6 @@ window.angular && (function(angular) {
       /**
        *
        * @param {Object} ldapProperties
-       * @returns {null | string}
-       */
-      function getAuthenticationType(ldapProperties) {
-        let authenticationType = null;
-        let serviceType = getEnabledServiceType(ldapProperties);
-        if (serviceType) {
-          authenticationType =
-              ldapProperties[serviceType]['Authentication']['AuthenticationType'];
-        }
-        return authenticationType;
-      }
-
-      /**
-       *
-       * @param {Object} ldapProperties
        * @returns {Array} A list of role groups
        */
       function getRoleGroups(ldapProperties) {
@@ -323,8 +307,7 @@ window.angular && (function(angular) {
         const ServiceEnabled = true;
         const Authentication = {
           Username: ldapProperties.Username,
-          Password: ldapProperties.Password,
-          AuthenticationType: ldapProperties.AuthenticationType
+          Password: ldapProperties.Password
         };
         const LDAPService = {
           SearchSettings: {
