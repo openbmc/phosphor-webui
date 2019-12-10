@@ -11,8 +11,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.common.services').service('userModel', [
-    'APIUtils',
-    function(APIUtils) {
+    '$cookies', 'APIUtils',
+    function($cookies, APIUtils) {
       return {
         login: function(username, password, callback) {
           APIUtils.login(username, password, function(response, error) {
@@ -35,7 +35,7 @@ window.angular && (function(angular) {
           });
         },
         isLoggedIn: function() {
-          if (sessionStorage.getItem('LOGIN_ID') === null) {
+          if ((sessionStorage.getItem('LOGIN_ID') === null) && ($cookies.get("XSRF-TOKEN") === undefined)) {
             return false;
           }
           return true;
