@@ -11,8 +11,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.common.services').service('userModel', [
-    'APIUtils',
-    function(APIUtils) {
+    '$cookies', 'APIUtils',
+    function($cookies, APIUtils) {
       return {
         login: function(username, password, callback) {
           APIUtils.login(username, password, function(response, error) {
@@ -35,7 +35,8 @@ window.angular && (function(angular) {
           });
         },
         isLoggedIn: function() {
-          if (sessionStorage.getItem('LOGIN_ID') === null) {
+          if ((sessionStorage.getItem('LOGIN_ID') === null) &&
+              ($cookies.get('XSRF-TOKEN') === undefined)) {
             return false;
           }
           return true;
@@ -46,6 +47,7 @@ window.angular && (function(angular) {
                 response.status == APIUtils.API_RESPONSE.SUCCESS_STATUS) {
               sessionStorage.removeItem('LOGIN_ID');
               sessionStorage.removeItem(APIUtils.HOST_SESSION_STORAGE_KEY);
+              $cookies.remove('XSRF-TOKEN');
               callback(true);
             } else if (response.status == APIUtils.API_RESPONSE.ERROR_STATUS) {
               callback(false);

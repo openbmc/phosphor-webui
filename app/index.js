@@ -126,7 +126,7 @@ window.angular && (function(angular) {
             // Dependencies
             'ngRoute', 'angular-clipboard', 'ngToast', 'ngAnimate',
             'ngMessages', 'app.common.directives.dirPagination', 'ngSanitize',
-            'ui.bootstrap',
+            'ui.bootstrap', 'ngCookies',
             // Basic resources
             'app.common.services', 'app.common.directives',
             'app.common.filters', 'app.common.components',
