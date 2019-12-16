@@ -53,7 +53,7 @@ window.angular && (function(angular) {
             },
             {uiData: ['IPMI access point', check, check, check, '']},
             {uiData: ['Redfish access point', check, check, check, '']},
-            {uiData: ['SSH access point', check, check, check, '']},
+            {uiData: ['SSH access point', check, '', '', '']},
             {uiData: ['WebUI access point', check, check, check, '']},
           ];
 
