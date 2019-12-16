@@ -22,7 +22,7 @@ window.angular && (function(angular) {
 
           this.tableHeader = [
             {label: ''}, {label: 'Admin'}, {label: 'Operator'},
-            {label: 'ReadOnly'}, {label: 'Callback'}
+            {label: 'ReadOnly'}, {label: 'NoAccess'}
           ];
 
           // TODO: When API changed from D-Bus to Redfish, 'Operator' role
@@ -31,8 +31,6 @@ window.angular && (function(angular) {
           // TODO: When 'Operator' and 'ReadOnly' roles have ability to change
           // own account's passwords, should have 'Update password for
           // current user account' privilege checked
-          // TODO: Update Callback privileges when backend removes privileges
-          // for Callback role.
           this.tableData = [
             {
               uiData: [
@@ -50,13 +48,13 @@ window.angular && (function(angular) {
             {
               uiData: [
                 'Log in to the service and read resources', check, check, check,
-                check
+                ''
               ]
             },
-            {uiData: ['IPMI access point', check, check, check, check]},
-            {uiData: ['Redfish access point', check, check, check, check]},
-            {uiData: ['SSH access point', check, check, check, check]},
-            {uiData: ['WebUI access point', check, check, check, check]},
+            {uiData: ['IPMI access point', check, check, check, '']},
+            {uiData: ['Redfish access point', check, check, check, '']},
+            {uiData: ['SSH access point', check, check, check, '']},
+            {uiData: ['WebUI access point', check, check, check, '']},
           ];
 
           this.isCollapsed = true;
