@@ -21,35 +21,40 @@ $logoMaxWidth: 125px;
   z-index: 300;
 }
 
-.header__title {
-  margin-left: 1em;
-  display: none;
-  float: left;
-  @include mediaQuery(x-small) {
-    display: inline-block;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-}
-
 .header__info-section {
   position: relative;
   background: $primary-dark;
   color: $primary-light;
-  overflow: hidden;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  .dropdown-menu {
+    left: unset;
+    right: 0;
+    border-radius: 0;
+    font-size: 0.9rem;
+    .btn {
+      color: $primary-dark;
+    }
+  }
+  .dropdown-toggle {
+    color: $primary-light;
+    fill: $primary-light;
+    text-decoration: none;
+    font-weight: 400;
+    margin-right: 0.5rem;
+    height: 50px; //to vertically align in 50px header
+    &::after {
+      display: none; //hiding dropdown caret inserted by bootstrap
+    }
+  }
 }
 
-.header__logout {
-  float: right;
-  color: $primary-light;
-  font-size: 0.9em;
-  text-decoration: none;
-  padding: 1em;
-  font-weight: 400;
-  &:visited {
-    color: $primary-light;
-  }
+.header__title {
+  margin-left: 1rem;
+  display: block;
+  line-height: 50px //to vertically align in 50px header
 }
 
 .header__functions-section {
