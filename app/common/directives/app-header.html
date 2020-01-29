@@ -2,7 +2,16 @@
   <!-- HEADER -->
   <div class="header__info-section">
     <span class="header__title">OpenBMC</span>
-    <a href="" class="header__logout" ng-click="logout()">Log out</a>
+    <div class="header__actions" uib-dropdown>
+      <button id="user-actions" type="button" uib-dropdown-toggle>
+        <icon class="icon-user" file="icon-avatar.svg"></icon>
+        {{username}}
+      </button>
+      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="user-actions">
+        <li role="menuitem"><a href="#/profile-settings" class="btn" tabindex="0">Profile settings</a></li>
+        <li role="menuitem"><button ng-click="logout()" type="button" class="btn">Log out</button></li>
+      </ul>
+    </div>
   </div>
   <div class="header__functions-section">
     <div class="logo__wrapper">

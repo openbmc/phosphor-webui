@@ -14,6 +14,7 @@ window.angular && (function(angular) {
           function(
               $rootScope, $scope, dataService, userModel, $location, $route) {
             $scope.dataService = dataService;
+            $scope.username = '';
 
             try {
               // Create a secure websocket with URL as /subscribe
@@ -118,6 +119,7 @@ window.angular && (function(angular) {
               $scope.loadNetworkInfo();
               $scope.loadServerHealth();
               $scope.loadSystemName();
+              $scope.username = dataService.getUser();
             }
 
             loadData();
