@@ -40,7 +40,9 @@ window.angular && (function(angular) {
             if (status) {
               $scope.$emit('user-logged-in', {});
               var next = $location.search().next;
-              if (next === undefined || next == null) {
+              // don't allow forwarding to non-local urls
+              if (next === undefined || next == null ||
+                  next.indexOf('//') >= 0) {
                 $window.location.hash = '#/overview/server';
               } else {
                 $window.location.href = next;
