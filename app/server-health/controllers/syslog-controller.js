@@ -59,9 +59,9 @@ window.angular && (function(angular) {
                 });
           };
 
-          $scope.clearSystemLogEntries = function() {
+          $scope.clearSystemLogEntries = function(selectedRecordType) {
             $scope.confirm = false;
-            APIUtils.clearSystemLogs()
+            APIUtils.clearSystemLogs(selectedRecordType)
                 .then(
                     function(res) {
                       console.log(JSON.stringify(res));
