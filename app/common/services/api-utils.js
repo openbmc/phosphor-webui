@@ -53,6 +53,10 @@ window.angular && (function(angular) {
         getSystemLogs: function(recordType) {
           var uri = '/redfish/v1/Systems/' + DataService.systemName +
               '/LogServices/EventLog/Entries';
+          if (recordType == 'Oem') {
+            var uri = '/redfish/v1/Systems/' + DataService.systemName +
+                '/LogServices/Crashdump/Entries';
+          }
           return $http({
                    method: 'GET',
                    url: DataService.getHost() + uri,
@@ -74,9 +78,13 @@ window.angular && (function(angular) {
                     console.log(JSON.stringify(error));
                   });
         },
-        clearSystemLogs: function() {
+        clearSystemLogs: function(selectedRecordType) {
           var uri = '/redfish/v1/Systems/' + DataService.systemName +
               '/LogServices/EventLog/Actions/LogService.ClearLog';
+          if (selectedRecordType == 'Oem') {
+            var uri = '/redfish/v1/Systems/' + DataService.systemName +
+                '/LogServices/Crashdump/Actions/LogService.ClearLog';
+          }
           return $http({
             method: 'POST',
             url: DataService.getHost() + uri,
