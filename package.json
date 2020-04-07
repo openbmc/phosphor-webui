@@ -24,7 +24,8 @@
     "Iftekharul Islam <iffy.ryan@ibm.com>",
     "Michael Davis <michael.s.davis@ibm.com>",
     "Ed Tanous <ed.tanous@intel.com>",
-    "Gunnar Mills <gmills@us.ibm.com>"
+    "Gunnar Mills <gmills@us.ibm.com>",
+    "James Feist <james.feist@linux.intel.com>"
   ],
   "files": [
     "dist"
@@ -34,7 +35,7 @@
     "node"
   ],
   "dependencies": {
-    "@novnc/novnc": "1.1.0",
+    "@novnc/novnc": "git+https://github.com/novnc/noVNC.git#25b3d49d322b0a7c9ee1e071d93042d70f5176b7",
     "angular": "1.7.9",
     "angular-animate": "1.7.8",
     "angular-clipboard": "1.7.0",
