@@ -42,7 +42,7 @@ window.angular && (function(angular) {
               var next = $location.search().next;
               // don't allow forwarding to non-local urls
               if (next === undefined || next == null ||
-                  next.indexOf('//') >= 0) {
+                  next.indexOf(':') >= 0) {
                 $window.location.hash = '#/overview/server';
               } else {
                 $window.location.href = next;
