@@ -12,7 +12,7 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.serverControl').directive('kvmConsole', [
-    '$log', '$location',
+    '$log', '$cookies', '$location',
     function($log, $location) {
       return {
         restrict: 'E', template: require('./kvm-console.html'),
@@ -42,9 +42,10 @@ window.angular && (function(angular) {
               var port = $location.port();
               var target = element[0].firstElementChild;
               try {
+                var token = $cookies.get('XSRF-TOKEN');
                 rfb = new RFB(
-                    target, 'wss://' + host + ':' + port + '/kvm/0', {});
-
+                    target, 'wss://' + host + '/kvm/0',
+                    {'wsProtocols': [token]});
                 rfb.addEventListener('connect', connected);
                 rfb.addEventListener('disconnect', disconnected);
               } catch (exc) {
