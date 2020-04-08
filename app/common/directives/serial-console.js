@@ -55,8 +55,8 @@ window.angular && (function(angular) {
         'template': require('./serial-console.html'),
         'scope': {'path': '=', 'showTabBtn': '=?'},
         'controller': [
-          '$scope', '$window', 'dataService', '$element',
-          function($scope, $window, dataService, $element) {
+          '$scope', '$cookies', '$window', 'dataService', '$element',
+          function($scope, $cookies, $window, dataService, $element) {
             $scope.dataService = dataService;
 
             // See https://github.com/xtermjs/xterm.js/ for available xterm
@@ -102,8 +102,9 @@ window.angular && (function(angular) {
             term.setOption('theme', SOL_THEME);
             var hostname = dataService.getHost().replace('https://', '');
             var host = 'wss://' + hostname + '/console0';
+            var token = $cookies.get('XSRF-TOKEN');
             try {
-              var ws = new WebSocket(host);
+              var ws = new WebSocket(host, [token]);
               term.attach(ws);
               ws.onopen = function() {
                 console.log('websocket opened');
