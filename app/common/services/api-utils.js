@@ -9,8 +9,8 @@
 window.angular && (function(angular) {
   'use strict';
   angular.module('app.common.services').factory('APIUtils', [
-    '$http', 'Constants', '$q', 'dataService', '$interval',
-    function($http, Constants, $q, DataService, $interval) {
+    '$http', '$cookies', 'Constants', '$q', 'dataService', '$interval',
+    function($http, $cookies, Constants, $q, DataService, $interval) {
       var getScaledValue = function(value, scale) {
         scale = scale + '';
         scale = parseInt(scale, 10);
@@ -139,9 +139,9 @@ window.angular && (function(angular) {
             ws.close();
             deferred.reject(new Error(Constants.MESSAGES.POLL.HOST_ON_TIMEOUT));
           }, Constants.TIMEOUT.HOST_ON);
-
-          var ws =
-              new WebSocket('wss://' + DataService.server_id + '/subscribe');
+          var token = $cookies.get('XSRF-TOKEN');
+          var ws = new WebSocket(
+              'wss://' + DataService.server_id + '/subscribe', [token]);
           var data = JSON.stringify({
             'paths': ['/xyz/openbmc_project/state/host0'],
             'interfaces': ['xyz.openbmc_project.State.Host']
@@ -175,8 +175,9 @@ window.angular && (function(angular) {
               deferred.reject(new Error(message));
             }, timeout);
           };
-          var ws =
-              new WebSocket('wss://' + DataService.server_id + '/subscribe');
+          var token = $cookies.get('XSRF-TOKEN');
+          var ws = new WebSocket(
+              'wss://' + DataService.server_id + '/subscribe', [token]);
           var data = JSON.stringify({
             'paths': ['/xyz/openbmc_project/state/host0'],
             'interfaces': ['xyz.openbmc_project.State.Host']
@@ -220,8 +221,9 @@ window.angular && (function(angular) {
                 new Error(Constants.MESSAGES.POLL.HOST_OFF_TIMEOUT));
           }, Constants.TIMEOUT.HOST_OFF);
 
-          var ws =
-              new WebSocket('wss://' + DataService.server_id + '/subscribe');
+          var token = $cookies.get('XSRF-TOKEN');
+          var ws = new WebSocket(
+              'wss://' + DataService.server_id + '/subscribe', [token]);
           var data = JSON.stringify({
             'paths': ['/xyz/openbmc_project/state/host0'],
             'interfaces': ['xyz.openbmc_project.State.Host']
