@@ -10,8 +10,11 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.serverControl').controller('virtualMediaController', [
-    '$scope', 'APIUtils', 'toastService', 'dataService', 'nbdServerService',
-    function($scope, APIUtils, toastService, dataService, nbdServerService) {
+    '$scope', '$cookies', 'APIUtils', 'toastService', 'dataService',
+    'nbdServerService',
+    function(
+        $scope, $cookies, APIUtils, toastService, dataService,
+        nbdServerService) {
       $scope.devices = [];
 
       // Only one Virtual Media WebSocket device is currently available.
@@ -31,7 +34,9 @@ window.angular && (function(angular) {
         var file = $scope.devices[index].file;
         var id = $scope.devices[index].id;
         var host = dataService.getHost().replace('https://', '');
-        var server = new NBDServer('wss://' + host + '/vm/0/' + id, file, id);
+        var token = $cookies.get('XSRF-TOKEN');
+        var server =
+            new NBDServer('wss://' + host + '/vm/0/' + id, token, file, id);
         $scope.devices[index].nbdServer = server;
         nbdServerService.addConnection(id, server, file);
         server.start();
@@ -97,7 +102,7 @@ const NBD_STATE_WAIT_CFLAGS = 3;
 const NBD_STATE_WAIT_OPTION = 4;
 const NBD_STATE_TRANSMISSION = 5;
 
-function NBDServer(endpoint, file, id) {
+function NBDServer(endpoint, token, file, id) {
   this.file = file;
   this.id = id;
   this.endpoint = endpoint;
@@ -106,7 +111,7 @@ function NBDServer(endpoint, file, id) {
   this.msgbuf = null;
 
   this.start = function() {
-    this.ws = new WebSocket(this.endpoint);
+    this.ws = new WebSocket(this.endpoint, [token]);
     this.state = NBD_STATE_OPEN;
     this.ws.binaryType = 'arraybuffer';
     this.ws.onmessage = this._on_ws_message.bind(this);
