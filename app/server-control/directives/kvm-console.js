@@ -13,7 +13,7 @@ window.angular && (function(angular) {
 
   angular.module('app.serverControl').directive('kvmConsole', [
     '$log', '$cookies', '$location',
-    function($log, $location) {
+    function($log, $cookies, $location) {
       return {
         restrict: 'E', template: require('./kvm-console.html'),
             scope: {newWindowBtn: '=?'}, link: function(scope, element) {
