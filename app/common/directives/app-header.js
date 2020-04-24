@@ -9,10 +9,11 @@ window.angular && (function(angular) {
         'template': require('./app-header.html'),
         'scope': {'path': '='},
         'controller': [
-          '$rootScope', '$scope', 'dataService', 'userModel', '$location',
-          '$route',
+          '$rootScope', '$cookies', '$scope', 'dataService', 'userModel',
+          '$location', '$route',
           function(
-              $rootScope, $scope, dataService, userModel, $location, $route) {
+              $rootScope, $cookies, $scope, dataService, userModel, $location,
+              $route) {
             $scope.dataService = dataService;
             $scope.username = '';
 
@@ -20,8 +21,9 @@ window.angular && (function(angular) {
               // Create a secure websocket with URL as /subscribe
               // TODO: Need to put in a generic APIUtils to avoid duplicate
               // controller
+              var token = $cookies.get('XSRF-TOKEN');
               var ws = new WebSocket(
-                  'wss://' + dataService.server_id + '/subscribe');
+                  'wss://' + dataService.server_id + '/subscribe', [token]);
             } catch (error) {
               console.log('WebSocket', error);
             }
