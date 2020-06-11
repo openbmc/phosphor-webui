@@ -85,7 +85,7 @@ window.angular && (function(angular) {
       SENSOR_SORT_ORDER: [
         'xyz.openbmc_project.Sensor.Value.Unit.DegreesC',
         'xyz.openbmc_project.Sensor.Value.Unit.RPMS',
-        'xyz.openbmc_project.Sensor.Value.Unit.Meters',
+        'xyz.openbmc_project.Sensor.Value.Unit.Watts',
         'xyz.openbmc_project.Sensor.Value.Unit.Volts',
         'xyz.openbmc_project.Sensor.Value.Unit.Amperes',
         'xyz.openbmc_project.Sensor.Value.Unit.Joules',
