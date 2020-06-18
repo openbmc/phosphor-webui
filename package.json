@@ -36,7 +36,7 @@
   ],
   "dependencies": {
     "@novnc/novnc": "git+https://github.com/novnc/noVNC.git#25b3d49d322b0a7c9ee1e071d93042d70f5176b7",
-    "angular": "1.7.9",
+    "angular": "1.8.0",
     "angular-animate": "1.7.9",
     "angular-clipboard": "1.7.0",
     "angular-cookies": "1.7.9",
