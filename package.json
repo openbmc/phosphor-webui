@@ -51,7 +51,6 @@
     "ng-toast": "2.0.0",
     "pkg-dir": "4.2.0",
     "regenerator-runtime": "0.13.5",
-    "text-encoding": "0.7.0",
     "xterm": "3.14.5"
   },
   "peerDependencies": {},
@@ -77,8 +76,8 @@
     "html-webpack-plugin": "4.2.0",
     "ignore-assets-webpack-plugin": "2.0.1",
     "mini-css-extract-plugin": "0.9.0",
-    "node-sass": "4.13.1",
     "node-gyp": "6.1.0",
+    "node-sass": "4.13.1",
     "null-loader": "4.0.0",
     "raw-loader": "4.0.1",
     "rimraf": "3.0.2",
