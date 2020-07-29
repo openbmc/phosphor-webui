@@ -11,18 +11,6 @@ window.angular && (function(angular) {
   angular.module('app.common.services').factory('APIUtils', [
     '$http', '$cookies', 'Constants', '$q', 'dataService', '$interval',
     function($http, $cookies, Constants, $q, DataService, $interval) {
-      var getScaledValue = function(value, scale) {
-        scale = scale + '';
-        scale = parseInt(scale, 10);
-        var power = Math.abs(parseInt(scale, 10));
-
-        if (scale > 0) {
-          value = value * Math.pow(10, power);
-        } else if (scale < 0) {
-          value = value / Math.pow(10, power);
-        }
-        return value;
-      };
       var SERVICE = {
         API_CREDENTIALS: Constants.API_CREDENTIALS,
         API_RESPONSE: Constants.API_RESPONSE,
@@ -1013,20 +1001,6 @@ window.angular && (function(angular) {
                                       return prev + ' ' + el;
                                     });
 
-                        content.data[key].Value = getScaledValue(
-                            content.data[key].Value, content.data[key].Scale);
-                        content.data[key].CriticalLow = getScaledValue(
-                            content.data[key].CriticalLow,
-                            content.data[key].Scale);
-                        content.data[key].CriticalHigh = getScaledValue(
-                            content.data[key].CriticalHigh,
-                            content.data[key].Scale);
-                        content.data[key].WarningLow = getScaledValue(
-                            content.data[key].WarningLow,
-                            content.data[key].Scale);
-                        content.data[key].WarningHigh = getScaledValue(
-                            content.data[key].WarningHigh,
-                            content.data[key].Scale);
                         if (Constants.SENSOR_SORT_ORDER.indexOf(
                                 content.data[key].Unit) > -1) {
                           customOrder = Constants.SENSOR_SORT_ORDER.indexOf(
@@ -1748,9 +1722,7 @@ window.angular && (function(angular) {
                     var json = JSON.stringify(response.data);
                     var content = JSON.parse(json);
 
-                    return getScaledValue(
-                               content.data.Value, content.data.Scale) +
-                        ' ' +
+                    return content.data.Value + ' ' +
                         Constants.POWER_CONSUMPTION_TEXT[content.data.Unit];
                   },
                   function(error) {
