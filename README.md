@@ -1,7 +1,10 @@
 # OpenBMC Web User Interface
 
-The OpenBMC WebUI is a Web-based user interface for the OpenBMC
-firmware stack. The WebUI uses AngularJS. Features include:
+phosphor-webui is a Web-based user interface for the OpenBMC firmware stack.
+The WebUI uses AngularJS.
+[AngularJS goes End of Life](https://www.convective.com/angularjs-end-of-life/)
+June 30, 2021, a possible replacement is the [webui-vue repository](https://github.com/openbmc/webui-vue).
+Features of this repository include:
 
 - View system overview data such as model information and serial number
 - View and manage event logs
