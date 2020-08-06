@@ -39,9 +39,8 @@ function measureChar(term) {
 // that anymore? Grabbed from
 // https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder#Polyfill
 if (typeof TextEncoder === 'undefined') {
-  TextEncoder = function TextEncoder() {};
+  let TextEncoder = function TextEncoder() {};
   TextEncoder.prototype.encode = function encode(str) {
-    'use strict';
     var Len = str.length, resPos = -1;
     // The Uint8Array's length must be at least 3x the length of the string
     // because an invalid UTF-16
