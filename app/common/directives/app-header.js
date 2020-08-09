@@ -10,10 +10,10 @@ window.angular && (function(angular) {
         'scope': {'path': '='},
         'controller': [
           '$rootScope', '$cookies', '$scope', 'dataService', 'userModel',
-          '$location', '$route',
+          '$location', '$route', '$window',
           function(
               $rootScope, $cookies, $scope, dataService, userModel, $location,
-              $route) {
+              $route, $window) {
             $scope.dataService = dataService;
             $scope.username = '';
 
@@ -127,9 +127,13 @@ window.angular && (function(angular) {
             loadData();
 
             $scope.logout = function() {
-              userModel.logout(function(status, error) {
+              userModel.logout(function(status, isBackendAuthenticated, error) {
                 if (status) {
-                  $location.path('/logout');
+                  if (isBackendAuthenticated) {
+                    $window.location.href = '/login';
+                  } else {
+                    $location.path('/logout');
+                  }
                 } else {
                   console.log(error);
                 }

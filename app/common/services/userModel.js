@@ -44,16 +44,21 @@ window.angular && (function(angular) {
         },
         logout: function(callback) {
           APIUtils.logout(function(response, error) {
+            const isBackendAuthenticated =
+                $cookies.get('IsAuthenticated') == 'true';
             if (response &&
                 response.status == APIUtils.API_RESPONSE.SUCCESS_STATUS) {
               sessionStorage.removeItem('LOGIN_ID');
               sessionStorage.removeItem(APIUtils.HOST_SESSION_STORAGE_KEY);
+
               $cookies.remove('IsAuthenticated');
-              callback(true);
-            } else if (response.status == APIUtils.API_RESPONSE.ERROR_STATUS) {
-              callback(false);
+              callback(true, isBackendAuthenticated);
+            } else if (
+                response &&
+                response.status == APIUtils.API_RESPONSE.ERROR_STATUS) {
+              callback(false, isBackendAuthenticated);
             } else {
-              callback(false, error);
+              callback(false, isBackendAuthenticated, error);
             }
           });
         }

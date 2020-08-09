@@ -224,9 +224,15 @@ window.angular && (function(angular) {
           $rootScope.$on('timedout-user', function() {
             console.log('timedout-user event triggered');
             sessionStorage.removeItem('LOGIN_ID');
+            // If the backend is storing our auth credentials, redirect to its
+            // login page, instead of the angular route
+            if ($cookies.get('IsAuthenticated') == 'true') {
+              $window.location.href = '/login';
+              return;
+            } else {
+              $location.path('/login');
+            }
             $cookies.remove('IsAuthenticated');
-
-            $location.path('/login');
           });
         }
       ]);
