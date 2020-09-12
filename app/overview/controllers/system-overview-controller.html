@@ -46,17 +46,22 @@
                 {{ dataService.hostname }}
               </dd>
             </dl>
-            <dl class="list-pair">
-              <dt>IP addresses</dt>
-              <dd class="courier-bold" ng-repeat="ip_address in bmc_ip_addresses">
-                {{ ip_address }}
+            <dl class="list-pair" ng-repeat="(ifaceName,iface) in dataService.network_interfaces">
+              <dt>{{ifaceName | uppercase}} IP addresses</dt>
+              <dd class="courier-bold" ng-repeat="ipv4 in iface.ipv4.values">
+                IPv4: <span>{{ ipv4.Address }}</span>
+              </dd>
+              <dd class="courier-bold" ng-repeat="ipv6 in iface.ipv6.values">
+                IPv6: <span>{{ ipv6.Address | uppercase }}</span>
               </dd>
             </dl>
           </div>
           <div class="column large-6">
-            <dl class="list-pair">
-              <dt>Mac address</dt>
-              <dd class="courier-bold">{{ dataService.mac_address }}</dd>
+            <dl class="list-pair" ng-repeat="(ifaceName,iface) in dataService.network_interfaces">
+              <dt>{{ifaceName | uppercase}} Mac address</dt>
+              <dd>
+                <span>{{iface.MACAddress | uppercase}}</span>
+              </dd>
             </dl>
             <dl class="list-pair">
               <dt>Firmware Version</dt>
