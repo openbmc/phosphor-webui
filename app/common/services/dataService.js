@@ -63,6 +63,10 @@ window.angular && (function(angular) {
         this.reloadServerId();
       };
 
+      this.getUriHost = function() {
+        return new URL(this.getHost());
+      };
+
       this.getUser = function() {
         return sessionStorage.getItem('LOGIN_ID');
       };

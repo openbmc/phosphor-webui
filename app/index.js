@@ -54,6 +54,7 @@ import log_search_control from './common/directives/log-search-control.js';
 import ldap_user_roles from './common/directives/ldap-user-roles.js';
 import toggle_flag from './common/directives/toggle-flag.js';
 import firmware_list from './common/directives/firmware-list.js';
+import fullscreen_provider from './common/directives/fullscreen-provider.js';
 import file from './common/directives/file.js';
 import input from './common/directives/input.js';
 import click_outside from './common/directives/click-outside.js';
