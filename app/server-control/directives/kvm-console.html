@@ -1,13 +1,44 @@
 <div id="noVNC_container">
-  <div id="noVNC_status_bar">
-    <div id="noVNC_left_dummy_elem"></div>
+  <div class="noVNC_control_bar_anchor noVNC_vcenter">
+    <div class="noVNC_control_bar">
+      <div class="noVNC_vcenter">
+        <div class="noVNC_modifiers noVNC_panel">
+
+          <div type="image" class="noVNC_button icon__toggle-extra-keys" title="Expand FNs panel"
+            ng-click="fnsPanelExpanded=!fnsPanelExpanded"></div>
+
+          <div class="noVNC_button_separator"></div>
+
+          <div class="noVNC_button" title="Toggle Shift" ng-click="controlKeys.Shift.tooglePullUpDown(true)"
+            ng-class="{'noVNC_selected': controlKeys.Shift.selected}">Shft</div>
+          <div class="noVNC_button noVNC_toggle_ctrl_button" title="Toggle Ctrl"
+            ng-click="controlKeys.Ctrl.tooglePullUpDown(true)" ng-class="{'noVNC_selected': controlKeys.Ctrl.selected}">Ctrl
+          </div>
+          <div class="noVNC_button" title="Toggle Alt" ng-click="controlKeys.Alt.tooglePullUpDown(true)"
+            ng-class="{'noVNC_selected': controlKeys.Alt.selected}">Alt</div>
+
+          <div class="noVNC_button_separator"></div>
+
+          <div class="noVNC_button" title="Send Tab" ng-click="specialKeys.Tab.pressKey()">Tab</div>
+          <div class="noVNC_button" title="Send Escape" ng-click="specialKeys.Escape.pressKey()">Esc</div>
+          <div class="noVNC_button" title="Send Delete" ng-click="specialKeys.Del.pressKey()">Del</div>
+
+          <div class="noVNC_button_separator"></div>
+          <div class="noVNC_button icon__ctrl-alt-del" ng-click="sendCtrlAltDel()" title="Send Ctrl-Alt-Del"> </div>
+          <div class="noVNC_button icon__fullscreen" title="Fullscreen" fullscreen-btn target="#noVNC_container"
+            ng-class="{'noVNC_selected' : isFullscreen}"></div>
+        </div>
+
+          <div class="noVNC_modifiers noVNC_panel noVNC_subpanel" ng-class="{'noVNC_hidden': !fnsPanelExpanded}">
+            <div class="noVNC_button" ng-repeat="(alt,key) in fnsKeys"
+              title="Send {{alt}}" ng-click="key.pressKey()">{{alt}}</div>
+          </div>
+      </div>
+    </div>
   </div>
 </div>
 <div class="kvm__actions float-right">
-  <button
-    class="btn  btn-tertiary"
-    ng-click="openWindow()"
-    ng-show="newWindowBtn === true">
+  <button class="btn  btn-tertiary" ng-click="openWindow()" ng-show="newWindowBtn === true">
     <icon file="icon-launch.svg" aria-hidden="true"></icon>Open in new window
   </button>
 </div>

@@ -1,8 +1,70 @@
+.noVNC_control_bar_anchor {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  .noVNC_vcenter{
+    justify-content: center;
+  }
+  .noVNC_control_bar {
+    .noVNC_vcenter {
+      .noVNC_panel {
+        display: flex;
+        justify-content: end;
+        &.noVNC_subpanel {
+          flex-wrap: wrap;
+        }
+        .noVNC_button_separator {
+          width: 8px;
+          display: flex;
+          flex: 1;
+        }
+        .icon__toggle-extra-keys {
+          background: url(../assets/images/icon-toggleextrakeys.svg) center center no-repeat;
+          height: 30px;
+          width: 30px;
+        }
+        .icon__ctrl-alt-del {
+          background: url(../assets/images/icon-ctrlaltdel.svg) center center no-repeat;
+          height: 30px;
+          width: 30px;
+        }
+        .icon__fullscreen {
+          background: url(../assets/images/icon-fullscreen.svg) center center no-repeat;
+          height: 30px;
+          width: 30px;
+        }
+        .noVNC_button {
+          background-color: #0f0957;
+          margin: 0px 0 0.1rem 0.1rem;
+          color: white;
+          min-width: 30px;
+          height: 30px;
+          width: 30px;
+          line-height: 30px;
+          padding: 0px 3px;
+          font-size: 0.8rem;
+          flex: 1;
+          text-align: center;
+          &:hover{
+            cursor: pointer;
+          }
+          &:active{
+            background-color: #0e6c91;
+          }
+          &.noVNC_selected {
+            background-color: #0e6c91;
+          }
+        }
+      }
+    }
+  }
+}
+
 .noNVC_shown {
   display: inline;
 }
 .noVNC_hidden {
-  display: none;
+  display: none !important;
 }
 
 #noVNC_left_dummy_elem {
