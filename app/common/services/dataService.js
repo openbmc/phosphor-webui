@@ -71,9 +71,11 @@ window.angular && (function(angular) {
       this.server_id = this.getServerId();
 
       this.setNetworkInfo = function(data) {
+        var formatted = data.formatted_data || {};
         this.hostname = data.hostname;
         this.defaultgateway = data.defaultgateway;
         this.mac_address = data.mac_address;
+        this.network_interfaces = formatted.interfaces || [];
       };
 
       this.setPowerOnState = function() {
