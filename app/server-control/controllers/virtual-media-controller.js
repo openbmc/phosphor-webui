@@ -17,6 +17,8 @@ window.angular && (function(angular) {
         nbdServerService) {
       $scope.devices = [];
 
+      // virtual media type: usb|hdd|cdrom
+      $scope.vmTypes = ['USB', 'HDD', 'CDROM'];
       // Only one Virtual Media WebSocket device is currently available.
       // Path is /vm/0/0.
       // TODO: Support more than 1 VM device, when backend support is added.
@@ -24,6 +26,8 @@ window.angular && (function(angular) {
       // Hardcode to 0 since /vm/0/0. Last 0 is the device ID.
       // To support more than 1 device ID, replace with a call to get the
       // device IDs and names.
+      // default usb
+      vmDevice.type = $scope.vmTypes[0];
       vmDevice.id = 0;
       vmDevice.deviceName = 'Virtual media device';
       findExistingConnection(vmDevice);
@@ -31,12 +35,14 @@ window.angular && (function(angular) {
 
       $scope.startVM = function(index) {
         $scope.devices[index].isActive = true;
+        var type = $scope.devices[index].type;
         var file = $scope.devices[index].file;
         var id = $scope.devices[index].id;
         var host = dataService.getHost().replace('https://', '');
         var token = $cookies.get('XSRF-TOKEN');
-        var server =
-            new NBDServer('wss://' + host + '/vm/0/' + id, token, file, id);
+        var server = new NBDServer(
+            'wss://' + host + '/vm/0/' + id + '/' + type.toLowerCase(), token,
+            file, id);
         $scope.devices[index].nbdServer = server;
         nbdServerService.addConnection(id, server, file);
         server.start();

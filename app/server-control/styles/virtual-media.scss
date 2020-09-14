@@ -18,7 +18,8 @@
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: auto;
-  margin-right: 4px;
+  margin-right: 0.25em;
+  margin-bottom: 0;
 }
 
 .vm__upload-choose-button {
@@ -41,6 +42,14 @@
   }
 }
 
+.vm_upload-type-select {
+  width: 115px;
+  display: block;
+  margin-right: 0.25em;
+  top: 0.1em;
+  position: relative;
+}
+
 .vm__upload-controls {
   display: flex;
   align-items: center;
@@ -49,7 +58,7 @@
 .vm__upload-name {
   flex: 1 0 220px;
   background-color: $background-03;
-  padding: 0.5em;
+  padding: 0.38em;
 }
 
 .vm__error-border,
@@ -77,6 +86,6 @@
   @media screen and (min-width: 760px) {
     flex-basis: auto;
     margin-top: 0;
-    margin-left: 0.75em;
+    margin-left: 0.25em;
   }
 }

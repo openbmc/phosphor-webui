@@ -8,6 +8,12 @@
     <h2 class="h3">{{device.deviceName}}</h2>
     <div class="vm__upload-chooser">
       <!-- name and error message -->
+      <div class="vm_upload-type">
+        <select id="vm_upload-type-select" class="vm_upload-type-select" ng-model="device.type" ng-disabled="device.isActive"
+          aria-label="Virtual Media Type">
+          <option class="courier-bold" ng-repeat="type in vmTypes">{{type}}</option>
+        </select>
+      </div>
       <div class="vm__upload-content">
         <div class="vm__upload-controls">
           <!-- Button -->
