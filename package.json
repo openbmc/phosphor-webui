@@ -50,7 +50,7 @@
     "is-path-inside": "3.0.2",
     "ng-toast": "2.0.0",
     "pkg-dir": "4.2.0",
-    "regenerator-runtime": "0.13.5",
+    "regenerator-runtime": "0.13.7",
     "xterm": "3.14.5"
   },
   "peerDependencies": {},
