@@ -44,7 +44,7 @@
     "angular-route": "1.7.9",
     "angular-sanitize": "1.7.9",
     "angular-ui-bootstrap": "2.5.6",
-    "angular-ui-router": "1.0.25",
+    "angular-ui-router": "1.0.28",
     "bootstrap": "4.4.1",
     "core-js": "3.6.5",
     "is-path-inside": "3.0.2",
