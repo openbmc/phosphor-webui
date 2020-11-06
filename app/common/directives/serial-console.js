@@ -148,22 +148,6 @@ window.angular && (function(angular) {
             var termContainer;
 
             term.open(terminal);
-            customConsole = configJSON.customConsoleDisplaySize;
-
-            if (customConsole != null) {
-              charSize = measureChar(term);
-              termContainer = document.getElementById('term-container');
-              if (termContainer != null) {
-                if (customConsole.width) {
-                  termContainer.style.width =
-                      (charSize.width * customConsole.width + border) + 'px';
-                }
-                if (customConsole.height) {
-                  terminal.style.height =
-                      (charSize.height * customConsole.height + border) + 'px';
-                }
-              }
-            }
             term.fit();
             if (configJSON.customKeyEnable == true) {
               term.attachCustomKeyEventHandler(customKeyHandlers);
@@ -191,11 +175,26 @@ window.angular && (function(angular) {
             } catch (error) {
               console.log(JSON.stringify(error));
             }
+
+            $window.onresize = function() {
+              termContainer = document.getElementById('term-container');
+              termContainer.style.width = window.innerWidth;
+              termContainer.style.height = window.innerHeight;
+              term.fit();
+            };
+
             $scope.openTerminalWindow = function() {
-              $window.open(
+              var sol_window = $window.open(
                   '#/server-control/remote-console-window',
                   'Remote Console Window',
                   'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=600,height=550');
+
+              sol_window.onresize = function() {
+                termContainer = document.getElementById('term-container');
+                termContainer.style.width = sol_window.innerWidth;
+                termContainer.style.height = sol_window.innerHeight;
+                term.fit();
+              };
             };
           }
         ]
