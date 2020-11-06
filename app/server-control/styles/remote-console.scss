@@ -3,6 +3,7 @@
   .btn-export {
     margin: 1.8em 0 1.8em 2em;
   }
+  height: 100%;
 }
 
 .serial-lan__copy {
@@ -18,13 +19,15 @@
 .terminal-container {
   position: relative;
   width: 100%;
+  height: 25em;
 }
 
 .window-terminal-container {
   position: relative;
-  max-width: 70em;
+  max-width: 100%;
+  height: 80vh;
 }
 
 #terminal{
-  height:25em;
+  height: 100%;
 }
