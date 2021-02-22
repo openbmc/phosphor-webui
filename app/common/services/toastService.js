@@ -15,9 +15,10 @@ window.angular && (function(angular) {
     function(ngToast, $sce) {
       function initToast(
           type = 'create', title = '', message = '', dismissOnTimeout = false) {
-        const iconStatus = type === 'success' ?
-            'on' :
-            type === 'danger' ? 'error' : type === 'warning' ? 'warn' : null;
+        const iconStatus = type === 'success' ? 'on' :
+            type === 'danger'                 ? 'error' :
+            type === 'warning'                ? 'warn' :
+                                                null;
         const content = $sce.trustAsHtml(`
           <div role="alert" class="alert-content-container">
             <status-icon ng-if="${iconStatus !== null}"

@@ -41,8 +41,9 @@ window.angular && (function(angular) {
        * @returns user
        */
       function mapTableData(user) {
-        const accountStatus =
-            user.Locked ? 'Locked' : user.Enabled ? 'Enabled' : 'Disabled';
+        const accountStatus = user.Locked ? 'Locked' :
+            user.Enabled                  ? 'Enabled' :
+                                            'Disabled';
         const editAction = {type: 'Edit', enabled: true, file: 'icon-edit.svg'};
         const deleteAction = {
           type: 'Delete',
@@ -322,8 +323,9 @@ window.angular && (function(angular) {
                 // Check if UserName is root
                 // Some form controls will be disabled for root users:
                 // edit enabled status, edit username, edit role
-                const isRoot =
-                    newUser ? false : checkIfRoot(user) ? true : false;
+                const isRoot = newUser ? false :
+                    checkIfRoot(user)  ? true :
+                                         false;
                 // Array of existing usernames (excluding current user instance)
                 const existingUsernames =
                     $scope.localUsers.reduce((acc, val) => {
