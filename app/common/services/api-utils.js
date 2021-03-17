@@ -748,6 +748,26 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        getLastRebootCause: function() {
+          var deferred = $q.defer();
+          $http({
+            method: 'GET',
+            url: DataService.getHost() +
+                '/xyz/openbmc_project/state/bmc0/attr/LastRebootCause',
+            withCredentials: true
+          })
+              .then(
+                  function(response) {
+                    var json = JSON.stringify(response.data);
+                    var content = JSON.parse(json);
+                    deferred.resolve(content.data);
+                  },
+                  function(error) {
+                    console.log(error);
+                    deferred.reject(error);
+                  });
+          return deferred.promise;
+        },
         hostPowerOn: function() {
           var deferred = $q.defer();
           $http({

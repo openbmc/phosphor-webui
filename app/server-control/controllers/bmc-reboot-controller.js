@@ -14,6 +14,22 @@ window.angular && (function(angular) {
     function($scope, $window, APIUtils, dataService, toastService) {
       $scope.dataService = dataService;
       $scope.confirm = false;
+      APIUtils.getLastRebootCause().then(
+          function(status) {
+            if (status ==
+                'xyz.openbmc_project.State.BMC.RebootCause.POR') {
+              $scope.reboot_cause = 'Power-On-Reset';
+            } else if (
+                status ==
+                'xyz.openbmc_project.State.BMC.RebootCause.Watchdog') {
+              $scope.reboot_cause = 'Watchdog';
+            } else {
+              $scope.reboot_cause = 'Unknown';
+            }
+          },
+          function(error) {
+            console.log(error);
+          });
       APIUtils.getLastRebootTime().then(
           function(data) {
             $scope.reboot_time = data.data;
