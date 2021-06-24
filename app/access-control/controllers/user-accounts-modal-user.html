@@ -43,7 +43,7 @@
                        name="accountStatus"
                        ng-value="true"
                        ng-model="modalCtrl.user.accountStatus"
-                       ng-disabled="modalCtrl.user.isRoot">
+                       ng-disabled="modalCtrl.user.isRoot || modalCtrl.user.isSame">
                 Enabled
               </label>
               <label class="radio-label">
@@ -51,7 +51,7 @@
                        name="accountStatus1"
                        ng-value="false"
                        ng-model="modalCtrl.user.accountStatus"
-                       ng-disabled="modalCtrl.user.isRoot">
+                       ng-disabled="modalCtrl.user.isRoot || modalCtrl.user.isSame">
                 Disabled
               </label>
             </fieldset>
@@ -67,7 +67,7 @@
                      minlength="1"
                      maxlength="16"
                      ng-pattern="'^([a-zA-Z_][a-zA-Z0-9_]*)'"
-                     ng-readonly="modalCtrl.user.isRoot"
+                     ng-readonly="modalCtrl.user.isRoot || modalCtrl.user.isSame"
                      ng-model="modalCtrl.user.username"
                      username-validator
                      existing-usernames="modalCtrl.existingUsernames"/>
@@ -88,7 +88,7 @@
               <select id="privilege"
                       name="privilege"
                       required
-                      ng-disabled="modalCtrl.user.isRoot"
+                      ng-disabled="modalCtrl.user.isRoot || modalCtrl.user.isSame"
                       ng-model="modalCtrl.user.privilege">
                 <option ng-if="modalCtrl.user.new"
                         ng-selected="modalCtrl.user.new"

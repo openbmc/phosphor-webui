@@ -10,8 +10,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.accessControl').controller('userController', [
-    '$scope', 'APIUtils', 'toastService', '$uibModal', '$q',
-    function($scope, APIUtils, toastService, $uibModal, $q) {
+    '$scope', 'APIUtils', 'dataService', 'toastService', '$uibModal', '$q',
+    function($scope, APIUtils, dataService, toastService, $uibModal, $q) {
       $scope.loading;
       $scope.accountSettings;
       $scope.userRoles;
@@ -35,6 +35,13 @@ window.angular && (function(angular) {
         return user.UserName === 'root' ? true : false;
       }
 
+      /**
+       * Returns true if username is same
+       * @param {*} user
+       */
+      function checkIfSame(user) {
+        return user.UserName === dataService.getUser() ? true : false;
+      }
       /**
        * Data table mapper
        * @param {*} user
@@ -326,6 +333,8 @@ window.angular && (function(angular) {
                 const isRoot = newUser ? false :
                     checkIfRoot(user)  ? true :
                                          false;
+                const isSame =
+                    newUser ? false : checkIfSame(user) ? true : false;
                 // Array of existing usernames (excluding current user instance)
                 const existingUsernames =
                     $scope.localUsers.reduce((acc, val) => {
@@ -338,6 +347,7 @@ window.angular && (function(angular) {
 
                 this.user = {};
                 this.user.isRoot = isRoot;
+                this.user.isSame = isSame;
                 this.user.new = newUser;
                 this.user.accountStatus = status;
                 this.user.username = newUser ? '' : user.UserName;
