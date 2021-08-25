@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae8db0d3_f49a8659",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2021-08-25T01:59:17Z",
+      "side": 1,
+      "message": "Why can\u0027t a user change their username? Or lower their privilege ?",
+      "revId": "d01801bfd5b188d83390e177dbaccc4f3d4e5809",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
