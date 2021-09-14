@@ -70,6 +70,30 @@
       "revId": "856dd45ab2f48597de65989417e0177355eae7f1",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80bae928_057b4bc1",
+        "filename": "app/common/services/api-utils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1000294
+      },
+      "writtenOn": "2021-09-14T00:06:38Z",
+      "side": 1,
+      "message": "Is it possible add this new property through Redfish call?\nThen we can use Redfish call instead of REST-API for this feature in Webui or Webui-vue.",
+      "parentUuid": "8c0f6768_3a7e17b4",
+      "range": {
+        "startLine": 751,
+        "startChar": 0,
+        "endLine": 758,
+        "endChar": 12
+      },
+      "revId": "856dd45ab2f48597de65989417e0177355eae7f1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
