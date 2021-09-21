@@ -18,7 +18,9 @@ window.angular && (function(angular) {
       $scope.dataService = dataService;
       $scope.network = {};
       $scope.oldInterface = {};
+      $scope.oldDHCPDNSEnabled = false;
       $scope.interface = {};
+      $scope.dhcp = {};
       $scope.networkDevice = false;
       $scope.hostname = '';
       $scope.defaultGateway = '';
@@ -39,10 +41,11 @@ window.angular && (function(angular) {
 
       $scope.addDNSField = function() {
         $scope.interface.Nameservers.push('');
+        $scope.interface.StaticNameServers.push('');
       };
 
       $scope.removeDNSField = function(index) {
-        $scope.interface.Nameservers.splice(index, 1);
+        $scope.interface.StaticNameServers.splice(index, 1);
       };
 
       $scope.addIpv4Field = function() {
@@ -83,12 +86,16 @@ window.angular && (function(angular) {
         // Remove any empty strings from the array. Important because we add an
         // empty string to the end so the user can add a new DNS server, if the
         // user doesn't fill out the field, we don't want to add.
-        $scope.interface.Nameservers =
-            $scope.interface.Nameservers.filter(Boolean);
+        $scope.interface.StaticNameServers =
+            $scope.interface.StaticNameServers.filter(Boolean);
         // toString() is a cheap way to compare 2 string arrays
-        if ($scope.interface.Nameservers.toString() !=
-            $scope.oldInterface.Nameservers.toString()) {
-          promises.push(setNameservers());
+        if ($scope.interface.StaticNameServers.toString() !=
+            $scope.oldInterface.StaticNameServers.toString()) {
+          promises.push(setStaticNameServers());
+        }
+
+        if ($scope.oldDHCPDNSEnabled != $scope.dhcp.DNSEnabled) {
+          promises.push(setDHCPDNSEnabled());
         }
 
         // Set IPV4 IP Addresses, Netmask Prefix Lengths, and Gateways
@@ -210,10 +217,22 @@ window.angular && (function(angular) {
                 });
       }
 
-      function setNameservers() {
+      function setStaticNameServers() {
         return APIUtils
-            .setNameservers(
-                $scope.selectedInterface, $scope.interface.Nameservers)
+            .setStaticNameServers(
+                $scope.selectedInterface, $scope.interface.StaticNameServers)
+            .then(
+                function(data) {},
+                function(error) {
+                  console.log(JSON.stringify(error));
+                  return $q.reject();
+                });
+      }
+
+      function setDHCPDNSEnabled() {
+        return APIUtils
+            .setDHCPDNSEnabled(
+                $scope.dhcp.DNSEnabled)
             .then(
                 function(data) {},
                 function(error) {
@@ -287,6 +306,8 @@ window.angular && (function(angular) {
           $scope.network = data.formatted_data;
           $scope.hostname = data.hostname;
           $scope.defaultGateway = data.defaultgateway;
+          $scope.dhcp = data.dhcp;
+          $scope.oldDHCPDNSEnabled = $scope.dhcp.DNSEnabled;
           if ($scope.network.interface_ids.length) {
             // Use the first network interface if the user hasn't chosen one
             if (!$scope.selectedInterface ||

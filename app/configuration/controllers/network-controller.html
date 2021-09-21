@@ -33,6 +33,12 @@
           <label for="net-config__domain">Default Gateway</label>
           <input id="net-config__domain" type="text" ng-model="defaultGateway" />
         </div>
+        <div class="row column">
+          <label class="control-check" for="dhcp-dns-enable">Use DNS servers obtained from DHCP
+            <input type="checkbox" name="dhcp-dns-enable" id="dhcp-dns-enable" ng-model="dhcp.DNSEnabled">
+            <span class="control__indicator control__indicator-on"></span>
+          </label>
+        </div>
       </div>
     </fieldset>
     <fieldset class="net-config__fieldset row column">
@@ -88,12 +94,15 @@
         DNS settings
       </legend>
       <div class="net-config__fieldset-content">
-        <!-- Call Nameservers "DNS Servers" on the GUI -->
-        <div class="net-config__static-ip-wrap" ng-repeat="dns in interface.Nameservers track by $index">
+        <label>DNS Servers in Use</label>
+        <ol>
+          <li class="courier-bold" ng-repeat="dns in interface.Nameservers" ng-if="dns">{{dns}}</li>
+        </ol>
+        <!-- Call StaticNameServers "Static DNS Servers" on the GUI -->
+        <div class="net-config__static-ip-wrap" ng-repeat="dns in interface.StaticNameServers track by $index">
           <div class="column small-12">
-            <label for="net-config__prime-dns{{$index+1}}">DNS Server {{$index+1}}</label>
-            <input id="net-config__prime-dns{{$index+1}}" class="network-input column small-6 large-4 inline"
-              type="text" ng-model="dns" ng-blur="interface.Nameservers[$index] = dns" set-focus-on-new-input />
+            <label for="net-config__prime-dns{{$index+1}}">Static DNS Server {{$index+1}}</label>
+            <input id="net-config__prime-dns{{$index+1}}" name="netdns{{$index+1}}" class="network-input column small-6 large-4 inline" type="text" ng-model="dns" ng-blur="interface.StaticNameServers[$index] = dns" set-focus-on-new-input />
             <button type="button" class="btn  btn-tertiary  network-config_remove-button" ng-click="removeDNSField($index)">Remove</button>
           </div>
         </div>

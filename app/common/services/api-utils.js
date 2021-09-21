@@ -279,6 +279,7 @@ window.angular && (function(angular) {
                     var hostname = '';
                     var defaultgateway = '';
                     var macAddress = '';
+                    var dhcp = {};
 
                     function parseNetworkData(content) {
                       var data = {
@@ -298,6 +299,7 @@ window.angular && (function(angular) {
                               DomainName: '',
                               MACAddress: '',
                               Nameservers: [],
+                              StaticNameServers: [],
                               DHCPEnabled: 0,
                               ipv4: {ids: [], values: []},
                               ipv6: {ids: [], values: []}
@@ -308,6 +310,8 @@ window.angular && (function(angular) {
                                 content.data[key].DomainName.join(' ');
                             data.interfaces[interfaceId].Nameservers =
                                 content.data[key].Nameservers;
+                            data.interfaces[interfaceId].StaticNameServers =
+                                content.data[key].StaticNameServers;
                             data.interfaces[interfaceId].DHCPEnabled =
                                 content.data[key].DHCPEnabled;
                           }
@@ -350,6 +354,34 @@ window.angular && (function(angular) {
                     }
 
                     if (content.data.hasOwnProperty(
+                            '/xyz/openbmc_project/network/config/dhcp')) {
+                      if (content.data['/xyz/openbmc_project/network/config/dhcp']
+                              .hasOwnProperty('DNSEnabled')) {
+                        dhcp['DNSEnabled'] =
+                          content.data['/xyz/openbmc_project/network/config/dhcp']
+                            .DNSEnabled;
+                      }
+                      if (content.data['/xyz/openbmc_project/network/config/dhcp']
+                              .hasOwnProperty('HostNameEnabled')) {
+                        dhcp['HostNameEnabled'] =
+                          content.data['/xyz/openbmc_project/network/config/dhcp']
+                            .HostNameEnabled;
+                      }
+                      if (content.data['/xyz/openbmc_project/network/config/dhcp']
+                              .hasOwnProperty('NTPEnabled')) {
+                        dhcp['NTPEnabled'] =
+                          content.data['/xyz/openbmc_project/network/config/dhcp']
+                            .NTPEnabled;
+                      }
+                      if (content.data['/xyz/openbmc_project/network/config/dhcp']
+                              .hasOwnProperty('SendHostNameEnabled')) {
+                        dhcp['SendHostNameEnabled'] =
+                          content.data['/xyz/openbmc_project/network/config/dhcp']
+                            .SendHostNameEnabled;
+                      }
+                    }
+
+                    if (content.data.hasOwnProperty(
                             '/xyz/openbmc_project/network/eth0') &&
                         content.data['/xyz/openbmc_project/network/eth0']
                             .hasOwnProperty('MACAddress')) {
@@ -363,6 +395,7 @@ window.angular && (function(angular) {
                       hostname: hostname,
                       defaultgateway: defaultgateway,
                       mac_address: macAddress,
+                      dhcp: dhcp,
                       formatted_data: parseNetworkData(content)
                     });
                   },
@@ -410,14 +443,26 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
-        setNameservers: function(interfaceName, dnsServers) {
+        setStaticNameServers: function(interfaceName, dnsServers) {
           return $http({
                    method: 'PUT',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/network/' + interfaceName +
-                       '/attr/Nameservers',
+                       '/attr/StaticNameServers',
                    withCredentials: true,
                    data: JSON.stringify({'data': dnsServers})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        setDHCPDNSEnabled: function(enabled) {
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/network/config/dhcp/attr/DNSEnabled',
+                   withCredentials: true,
+                   data: JSON.stringify({'data': enabled})
                  })
               .then(function(response) {
                 return response.data;
