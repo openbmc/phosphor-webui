@@ -32,15 +32,18 @@ window.angular && (function(angular) {
 
               function connected(e) {
                 $log.debug('RFB Connected');
+                sessionStorage.setItem('kvmState', 'active');
               }
 
               function disconnected(e) {
                 $log.debug('RFB disconnected');
+                sessionStorage.setItem('kvmState', 'closed');
               }
 
               var host = $location.host();
               var port = $location.port();
               var target = element[0].firstElementChild;
+              sessionStorage.setItem('kvmState', 'active');
               try {
                 var token = $cookies.get('XSRF-TOKEN');
                 rfb = new RFB(

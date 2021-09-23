@@ -11,8 +11,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.common.services').service('dataService', [
-    'Constants',
-    function(Constants) {
+    'Constants', 'nbdServerService',
+    function(Constants, nbdServerService) {
       this.server_health = Constants.SERVER_HEALTH.unknown;
       this.server_state = 'Unreachable';
       this.LED_state = Constants.LED_STATE_TEXT.off;
@@ -112,6 +112,35 @@ window.angular && (function(angular) {
       this.setSystemName = function(sysName) {
         this.systemName = sysName;
       };
+
+      this.getLoggedOutVM =
+          function() {
+        var vmDevice = {};
+        this.devices = [];
+        vmDevice.id = 0;
+        vmDevice.deviceName = 'Virtual media device';
+        this.findExistingConnectionService(vmDevice);
+        this.devices.push(vmDevice);
+        this.devices[sessionStorage.getItem('vmIndex')].isActive = false;
+        var server = this.devices[sessionStorage.getItem('vmIndex')].nbdServer;
+        server.stop();
+        this.devices[sessionStorage.getItem('vmIndex')].file = '';
+      }
+
+          this.findExistingConnectionService = function(vmDevice) {
+        // Checks with existing connections kept in nbdServerService for an open
+        // Websocket connection.
+        var existingConnectionsMap = nbdServerService.getExistingConnections();
+        if (existingConnectionsMap.hasOwnProperty(vmDevice.id)) {
+          // Open ws will have a ready state of 1
+          if (existingConnectionsMap[vmDevice.id].server.ws.readyState === 1) {
+            vmDevice.isActive = true;
+            vmDevice.file = existingConnectionsMap[vmDevice.id].file;
+            vmDevice.nbdServer = existingConnectionsMap[vmDevice.id].server;
+          }
+        }
+        return vmDevice;
+      }
     }
   ]);
 })(window.angular);

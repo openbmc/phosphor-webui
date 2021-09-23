@@ -30,6 +30,7 @@ window.angular && (function(angular) {
       $scope.devices.push(vmDevice);
 
       $scope.startVM = function(index) {
+        sessionStorage.setItem('vmIndex', index);
         $scope.devices[index].isActive = true;
         var file = $scope.devices[index].file;
         var id = $scope.devices[index].id;
@@ -53,18 +54,23 @@ window.angular && (function(angular) {
       };
 
       function findExistingConnection(vmDevice) {
-        // Checks with existing connections kept in nbdServerService for an open
-        // Websocket connection.
-        var existingConnectionsMap = nbdServerService.getExistingConnections();
-        if (existingConnectionsMap.hasOwnProperty(vmDevice.id)) {
-          // Open ws will have a ready state of 1
-          if (existingConnectionsMap[vmDevice.id].server.ws.readyState === 1) {
-            vmDevice.isActive = true;
-            vmDevice.file = existingConnectionsMap[vmDevice.id].file;
-            vmDevice.nbdServer = existingConnectionsMap[vmDevice.id].server;
-          }
-        }
-        return vmDevice;
+        /* Moved this code to dataService */
+        /* // Checks with existing connections kept in nbdServerService for an
+         open
+           // Websocket connection.
+           var existingConnectionsMap =
+         nbdServerService.getExistingConnections(); if
+         (existingConnectionsMap.hasOwnProperty(vmDevice.id)) {
+             // Open ws will have a ready state of 1
+             if (existingConnectionsMap[vmDevice.id].server.ws.readyState ===
+         1) { vmDevice.isActive = true; vmDevice.file =
+         existingConnectionsMap[vmDevice.id].file; vmDevice.nbdServer =
+         existingConnectionsMap[vmDevice.id].server;
+             }
+           }
+          return vmDevice;
+         **/
+        return dataService.findExistingConnectionService(vmDevice);
       }
     }
   ]);
@@ -113,6 +119,7 @@ function NBDServer(endpoint, token, file, id) {
   this.start = function() {
     this.ws = new WebSocket(this.endpoint, [token]);
     this.state = NBD_STATE_OPEN;
+    sessionStorage.setItem('vmState', this.state);
     this.ws.binaryType = 'arraybuffer';
     this.ws.onmessage = this._on_ws_message.bind(this);
     this.ws.onopen = this._on_ws_open.bind(this);
@@ -123,6 +130,7 @@ function NBDServer(endpoint, token, file, id) {
   this.stop = function() {
     this.ws.close();
     this.state = NBD_STATE_UNKNOWN;
+    sessionStorage.setItem('vmState', this.state);
   };
 
   this._on_ws_error = function(ev) {
