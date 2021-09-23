@@ -16,6 +16,7 @@ window.angular && (function(angular) {
         $scope, $cookies, APIUtils, toastService, dataService,
         nbdServerService) {
       $scope.devices = [];
+      $scope.HD_devices = [];
 
       // Only one Virtual Media WebSocket device is currently available.
       // Path is /vm/0/0.
@@ -26,30 +27,148 @@ window.angular && (function(angular) {
       // device IDs and names.
       vmDevice.id = 0;
       vmDevice.deviceName = 'Virtual media device';
+
+      var vmDeviceHD = {};
+      vmDeviceHD.id = 1;
+      vmDeviceHD.deviceName = 'Virtual media device';
+
       findExistingConnection(vmDevice);
+      findExistingConnection(vmDeviceHD);
       $scope.devices.push(vmDevice);
+      $scope.HD_devices.push(vmDeviceHD);
 
       $scope.startVM = function(index) {
+        if (dataService.session_id != null ||
+            dataService.session_id != undefined) {
+          $scope.start_cd_redirection(index, dataService.session_id);
+        } else {
+          APIUtils.getMediaSession().then(
+              function(response) {
+                if (response.data.Media_session_id >= 0) {
+                  $scope.start_cd_redirection(
+                      index, response.data.Media_session_id);
+                } else {
+                  toastService.error(
+                      'Something went wrong!! Couldn\'t start the Redirection.');
+                }
+              },
+              function(error) {
+                toastService.error(
+                    'Something went wrong!! Couldn\'t start the Redirection.');
+              });
+        }
+      };
+      $scope.startVMHD = function(index) {
+        if (dataService.session_id != null ||
+            dataService.session_id != undefined) {
+          $scope.start_hd_redirection(index, dataService.session_id);
+        } else {
+          APIUtils.getMediaSession().then(
+              function(response) {
+                if (response.data.Media_session_id >= 0) {
+                  $scope.start_hd_redirection(
+                      index, response.data.Media_session_id);
+                } else {
+                  toastService.error(
+                      'Something went wrong!! Couldn\'t start the Redirection.');
+                }
+              },
+              function(error) {
+                toastService.error(
+                    'Something went wrong!! Couldn\'t start the Redirection.');
+              });
+        }
+      };
+      $scope.start_cd_redirection = function(index, sessionID) {
+        dataService.session_id = sessionID;
         $scope.devices[index].isActive = true;
         var file = $scope.devices[index].file;
-        var id = $scope.devices[index].id;
-        var host = dataService.getHost().replace('https://', '');
-        var token = $cookies.get('XSRF-TOKEN');
-        var server =
-            new NBDServer('wss://' + host + '/vm/0/' + id, token, file, id);
-        $scope.devices[index].nbdServer = server;
-        nbdServerService.addConnection(id, server, file);
-        server.start();
+        var validate_file_name = document.getElementById('file-upload').value;
+
+        var reg = /(.*?)\.(nrg|iso|ISO|NRG)$/;
+        if (!validate_file_name.match(reg)) {
+          toastService.error(
+              'File_Name "' + validate_file_name +
+              '" It is not supported format, Please browse valid type of file..');
+          $scope.resetFile('cd', index);
+          $scope.stopVM('cd', index);
+        } else {
+          var id = $scope.devices[index].id;
+          var host = dataService.getHost().replace('https://', '');
+          var token = $cookies.get('XSRF-TOKEN');
+          var server = new NBDServer(
+              'wss://' + host + '/vm/' + dataService.session_id + '/' + id,
+              token, file, id);
+          $scope.devices[index].nbdServer = server;
+          nbdServerService.addConnection(id, server, file);
+          server.start();
+        }
       };
-      $scope.stopVM = function(index) {
-        $scope.devices[index].isActive = false;
-        var server = $scope.devices[index].nbdServer;
-        server.stop();
+      $scope.start_hd_redirection = function(index, sessionID) {
+        dataService.session_id = sessionID;
+        $scope.HD_devices[index].isActive = true;
+        var file = $scope.HD_devices[index].file;
+        var validate_file_name =
+            document.getElementById('hd-file-upload').value;
+
+        var reg = /(.*?)\.(img|ima|IMG|IMA)$/;
+        if (!validate_file_name.match(reg)) {
+          toastService.error(
+              'File_Name "' + validate_file_name +
+              '" It is not supported format, Please browse valid type of file..');
+          $scope.resetFile('hd', index);
+          $scope.stopVM('hd', index);
+        } else {
+          var id = $scope.HD_devices[index].id;
+          var host = dataService.getHost().replace('https://', '');
+          var token = $cookies.get('XSRF-TOKEN');
+          var server = new NBDServer(
+              'wss://' + host + '/vm/' + dataService.session_id + '/' + id,
+              token, file, id);
+          $scope.HD_devices[index].nbdServer = server;
+          nbdServerService.addConnection(id, server, file);
+          server.start();
+        }
       };
 
-      $scope.resetFile = function(index) {
-        document.getElementById('file-upload').value = '';
-        $scope.devices[index].file = '';
+      $scope.stopVMCD =
+          function(type, index) {
+        $scope.CdStatus = true;
+        $scope.stopVM(type, index);
+      }
+
+          $scope.stopVMHD =
+              function(type, index) {
+        $scope.HdStatus = true;
+        $scope.stopVM(type, index);
+      }
+
+              $scope.stopVM = function(type, index) {
+        if (!($scope.devices[index].isActive &&
+              $scope.HD_devices[index].isActive)) {
+          dataService.session_id = null;
+        }
+        if (type == 'cd') {
+          $scope.devices[index].isActive = false;
+          var server = $scope.devices[index].nbdServer;
+        } else {
+          $scope.HD_devices[index].isActive = false;
+          var server = $scope.HD_devices[index].nbdServer;
+        }
+        server.stop();
+        $scope.resetFile(type, index);
+      };
+
+      $scope.resetFile = function(type, index) {
+        if (window.location.href.indexOf('virtual-media') != -1) {
+          if (type == 'cd') {
+            document.getElementById('file-upload').value = '';
+            $scope.devices[index].file = '';
+          } else {
+            document.getElementById('hd-file-upload').value = '';
+            $scope.HD_devices[index].file = '';
+          }
+        }
       };
 
       function findExistingConnection(vmDevice) {

@@ -4,15 +4,16 @@
   <p ng-if="devices.length < 1">
     There are no Virtual Media devices available.
   </primary>
-  <div ng-repeat="device in devices track by $index" class="vm__upload">
-    <h2 class="h3">{{device.deviceName}}</h2>
+  <!-- CD Media Starts-->
+  <div ng-repeat="device in devices track by $index" class="vm__upload" id="VmWrap">
+    <h2 class="h3">{{device.deviceName}} - CD</h2>
     <div class="vm__upload-chooser">
       <!-- name and error message -->
       <div class="vm__upload-content">
         <div class="vm__upload-controls">
           <!-- Button -->
           <label class="vm__upload-choose-label">
-            <input id="file-upload" type="file" file="device.file" class="hide" ng-disabled="device.isActive"/>
+            <input id="file-upload" type="file" file="device.file" class="hide" ng-disabled="device.isActive" accept=".nrg,.iso,.ISO,.NRG"/>
             <span class="vm__upload-choose-button btn btn-secondary" ng-class="{disabled:device.isActive}">Choose file</span>
           </label>
           <div class="vm__upload-name">
@@ -31,8 +32,44 @@
         </div>
       </div>
       <div class="vm__upload-start">
-        <input type="button" ng-value="device.isActive ? 'Stop' : 'Start'" ng-class="{disabled:!device.file}" class="btn btn-primary" ng-click="device.isActive? stopVM($index) : startVM($index)"/>
+        <input type="button" ng-value="device.isActive ? 'Stop' : 'Start'" ng-class="{disabled:!device.file}" class="btn btn-primary" ng-click="device.isActive? stopVMCD('cd', $index) : startVM($index)"/>
       </div>
     </div>
   </div>
+  <!-- CD Media Ends-->
+
+  <!-- HD Media starts-->
+  <div ng-repeat="hd_device in HD_devices track by $index" class="vm__upload" id="VmWrapHD">
+    <h2 class="h3">{{hd_device.deviceName}} - HD</h2>
+    <div class="vm__upload-chooser">
+      <!-- name and error message -->
+      <div class="vm__upload-content">
+        <div class="vm__upload-controls">
+          <!-- Button -->
+          <label class="vm__upload-choose-label">
+            <input id="hd-file-upload" type="file" file="hd_device.file" class="hide" ng-disabled="hd_device.isActive" accept=".img,.ima,.IMG,.IMA"/>
+            <span class="vm__upload-choose-button btn btn-secondary" ng-class="{disabled:hd_device.isActive}">Choose file</span>
+          </label>
+          <div class="vm__upload-name">
+            <span ng-if="!hd_device.file">No file selected</span>
+            <span ng-if="hd_device.file.name !== undefined">{{hd_device.file.name}}</span>
+            <span class="icon__exit" ng-if="hd_device.file && !hd_device.isActive" ng-click="resetFile($index);">
+              <icon file="icon-close.svg"></icon>
+            </span>
+          </div>
+        </div>
+        <div class="vm__active-text vm__active-border" ng-if="hd_device.isActive">
+          <span>Active Session</span>
+        </div>
+        <div class="vm__active-text vm__error-border" ng-if="hd_device.hasError">
+          <span>Error in connecting to the selected file</span>
+        </div>
+      </div>
+      <div class="vm__upload-start">
+        <input type="button" ng-value="hd_device.isActive ? 'Stop' : 'Start'" ng-class="{disabled:!hd_device.file}" class="btn btn-primary" ng-click="hd_device.isActive? stopVMHD('hd',$index) : startVMHD($index)"/>
+      </div>
+    </div>
+  </div>
+  <!--HD Media Ends-->
+
 </div>

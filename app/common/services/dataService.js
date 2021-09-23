@@ -30,6 +30,7 @@ window.angular && (function(angular) {
 
       this.ignoreHttpError = false;
       this.systemName = '';
+      this.session_id = null;
 
       this.configJson = require('../../../config.json');
 

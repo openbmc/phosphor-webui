@@ -38,6 +38,20 @@ window.angular && (function(angular) {
                     console.log(JSON.stringify(error));
                   });
         },
+        getMediaSession: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + '/vmedia/client_Id',
+                   withCredentials: true
+                 })
+              .then(
+                  function(response) {
+                    return response;
+                  },
+                  function(error) {
+                    return error;
+                  });
+        },
         getSystemLogs: function(recordType) {
           var uri = '/redfish/v1/Systems/' + DataService.systemName +
               '/LogServices/EventLog/Entries';
