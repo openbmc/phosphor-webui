@@ -2,8 +2,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.common.directives').directive('appHeader', [
-    'APIUtils',
-    function(APIUtils) {
+    'APIUtils', 'dataService',
+    function(APIUtils, dataService) {
       return {
         'restrict': 'E',
         'template': require('./app-header.html'),
@@ -126,7 +126,7 @@ window.angular && (function(angular) {
 
             loadData();
 
-            $scope.logout = function() {
+            function doLogOut() {
               userModel.logout(function(status, error) {
                 if (status) {
                   $location.path('/logout');
@@ -134,6 +134,45 @@ window.angular && (function(angular) {
                   console.log(error);
                 }
               });
+            }
+
+            $scope.logout = function() {
+              var ret;
+              if (((sessionStorage.getItem('kvmState') == 'active') ||
+                   (dataService.kvmWinObj != null)) &&
+                  (sessionStorage.getItem('vmState') == 2)) {
+                ret = window.confirm(
+                    'KVM & Virtual Media sessions are running, If you logout then it will stop both the sessions!');
+                if (ret == true) {
+                  sessionStorage.setItem('kvmState', 'closed');
+                  sessionStorage.setItem('vmState', 1);
+                  dataService.getLoggedOutVM();
+                  dataService.kvmWinObj.close();
+                  dataService.kvmWinObj = null
+                  doLogOut();
+                }
+              } else if (
+                  (sessionStorage.getItem('kvmState') == 'active') ||
+                  (dataService.kvmWinObj != null)) {
+                ret = window.confirm(
+                    'KVM session is running, If you logout then it will stop the KVM session!');
+                if (ret == true) {
+                  sessionStorage.setItem('kvmState', 'closed');
+                  dataService.kvmWinObj.close();
+                  dataService.kvmWinObj = null;
+                  doLogOut();
+                }
+              } else if (sessionStorage.getItem('vmState') == 2) {
+                ret = window.confirm(
+                    'Virtual Media session is running, If you logout then it will stop the Virtual Media session!');
+                if (ret == true) {
+                  sessionStorage.setItem('vmState', 'closed');
+                  dataService.getLoggedOutVM();
+                  doLogOut();
+                }
+              } else {
+                doLogOut();
+              }
             };
 
             $scope.refresh = function() {

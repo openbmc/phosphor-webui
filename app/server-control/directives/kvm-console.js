@@ -12,8 +12,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.serverControl').directive('kvmConsole', [
-    '$log', '$cookies', '$location',
-    function($log, $cookies, $location) {
+    '$log', '$cookies', '$location', 'dataService',
+    function($log, $cookies, $location, dataService) {
       return {
         restrict: 'E', template: require('./kvm-console.html'),
             scope: {newWindowBtn: '=?'}, link: function(scope, element) {
@@ -32,15 +32,18 @@ window.angular && (function(angular) {
 
               function connected(e) {
                 $log.debug('RFB Connected');
+                sessionStorage.setItem('kvmState', 'active');
               }
 
               function disconnected(e) {
                 $log.debug('RFB disconnected');
+                sessionStorage.setItem('kvmState', 'closed');
               }
 
               var host = $location.host();
               var port = $location.port();
               var target = element[0].firstElementChild;
+              sessionStorage.setItem('kvmState', 'active');
               try {
                 var token = $cookies.get('XSRF-TOKEN');
                 rfb = new RFB(
@@ -57,9 +60,16 @@ window.angular && (function(angular) {
               };
 
               scope.openWindow = function() {
-                window.open(
+                var kvmWin = window.open(
                     '#/server-control/kvm-window', 'Kvm Window',
                     'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=1125,height=900');
+                dataService.kvmWinObj = kvmWin
+                var interval = setInterval(function() {
+                  if (kvmWin.closed) {
+                    clearInterval(interval);
+                    dataService.kvmWinObj = null;
+                  }
+                }, 1000);
               };
             }
       }
