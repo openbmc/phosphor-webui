@@ -11,3 +11,13 @@
     <icon file="icon-launch.svg" aria-hidden="true"></icon>Open in new window
   </button>
 </div>
+<div class="inline dropdown__wrapper float-right" >
+  <button type="button" class="btn btn-tertiary" ng-click="showMacroDropdown = !showMacroDropdown">
+  Send Macro
+  </button>
+  <ul class="dropdown__list__upward inline" ng-show="showMacroDropdown">
+    <li ng-repeat="macro in macroList">
+      <button type="button" ng-click="sendMacro(macro);">{{macro}}</button>
+    </li>
+  </ul>
+</div>

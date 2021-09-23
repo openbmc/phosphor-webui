@@ -48,6 +48,36 @@
 .dropdown__list {
   min-width: 230px;
 }
+
+.dropdown__list__upward {
+  position: absolute;
+  z-index: 100;
+  right: 0;
+  bottom: 50%;
+  background: $primary-light;
+  padding: 0;
+  width: 100%;
+  border: 1px solid $border-color-02;
+  margin-top: -5px;
+  box-shadow: 0 4px 10px -2px $base-02--02;
+  li {
+    list-style-type: none;
+  }
+  button {
+    padding: 0.2em 0.2em 0.2em 0.2em;
+    text-align: center;
+    width: 100%;
+    font-weight: 400;
+    &:hover {
+      background: $background-02;
+    }
+  }
+}
+
+.dropdown__list__upward {
+  min-width: 100px;
+}
+
 .dropdown__list.multi-select {
   > .active {
     position: relative;
