@@ -188,7 +188,9 @@ window.angular && (function(angular) {
       ])
       .run([
         '$rootScope', '$location', 'dataService', 'userModel', '$cookies',
-        function($rootScope, $location, dataService, userModel, $cookies) {
+        '$window',
+        function(
+            $rootScope, $location, dataService, userModel, $cookies, $window) {
           $rootScope.dataService = dataService;
           dataService.path = $location.path();
           $rootScope.$on('$routeChangeStart', function(event, next, current) {
@@ -198,6 +200,29 @@ window.angular && (function(angular) {
                 $location.path('/login');
               }
             }
+
+            $window.addEventListener('unload', function() {
+              sessionStorage.clear();
+              $cookies.remove('IsAuthenticated');
+              $location.path('/login');
+            });
+
+            $window.addEventListener('beforeunload', function(evt) {
+              // Check for the virtual media session,
+              // if running, then show the popup message.
+              if ((sessionStorage.getItem('vmState') == 2) &&
+                  (navigator.onLine)) {
+                var message =
+                    'Virtual Media Session is running, are you sure you want to leave?';
+                if (typeof evt == 'undefined') {
+                  evt = window.event;
+                }
+                if (evt) {
+                  evt.returnValue = message;
+                }
+                return message;
+              }
+            });
 
             if (next.$$route.originalPath == '/' ||
                 next.$$route.originalPath == '/login') {

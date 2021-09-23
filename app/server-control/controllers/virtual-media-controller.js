@@ -113,6 +113,7 @@ function NBDServer(endpoint, token, file, id) {
   this.start = function() {
     this.ws = new WebSocket(this.endpoint, [token]);
     this.state = NBD_STATE_OPEN;
+    sessionStorage.setItem('vmState', this.state);
     this.ws.binaryType = 'arraybuffer';
     this.ws.onmessage = this._on_ws_message.bind(this);
     this.ws.onopen = this._on_ws_open.bind(this);
@@ -123,6 +124,7 @@ function NBDServer(endpoint, token, file, id) {
   this.stop = function() {
     this.ws.close();
     this.state = NBD_STATE_UNKNOWN;
+    sessionStorage.setItem('vmState', this.state);
   };
 
   this._on_ws_error = function(ev) {
