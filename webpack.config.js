@@ -54,7 +54,11 @@ module.exports = (env, options) => {
 
     // Filename for non-entry points
     // Only adds hash in build mode
-    chunkFilename: '[name].bundle.js'
+    chunkFilename: '[name].bundle.js',
+
+    // OpenSSL does not support the default MD4
+    // Use sha256 since it is already included
+    hashFunction: 'sha256'
   };
 
   /**
