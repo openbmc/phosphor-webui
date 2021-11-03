@@ -1,5 +1,13 @@
 'use strict';
 
+// OpenSSL 3 does not support md4, webpack 4 hardcodes md4 in many places
+// https://github.com/webpack/webpack/issues/13572#issuecomment-923736472
+// As the issue suggests we should update to webpack 5, doing so requires a lot of changes
+// TODO: Remove after updating to webpack v5.54.0+ 
+const crypto = require("crypto");
+const crypto_orig_createHash = crypto.createHash;
+crypto.createHash = algorithm => crypto_orig_createHash(algorithm == "md4" ? "sha256" : algorithm);
+
 // Modules
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
