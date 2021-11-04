@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "388e4d51_ddcc8f8f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2021-11-04T21:08:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f7bf689_b2d9d911",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "6986c46df8fbc931954569b6dc2d136693f1d26e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b7cb656_c32d26a8",
         "filename": "webpack.config.js",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "6986c46df8fbc931954569b6dc2d136693f1d26e",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf6fa04d_afa8b506",
+        "filename": "webpack.config.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2021-11-04T21:08:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b7cb656_c32d26a8",
+      "range": {
+        "startLine": 3,
+        "startChar": 64,
+        "endLine": 3,
+        "endChar": 69
+      },
+      "revId": "6986c46df8fbc931954569b6dc2d136693f1d26e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
