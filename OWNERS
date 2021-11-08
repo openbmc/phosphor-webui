@@ -35,14 +35,10 @@ owners:
 - gmills@linux.vnet.ibm.com
 
 reviewers:
-- derick.montague@ibm.com
 
 matches:
 
 openbmc:
-- name: Derick Montague
-  email: derick.montague@ibm.com
-  discord: derick
 - name: Gunnar Mills
   email: gmills@linux.vnet.ibm.com
   discord: GunnarM
