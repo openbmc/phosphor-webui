@@ -22,6 +22,30 @@
       "revId": "85884002164aacfeac8ca40e6fd169b0a2de43f0",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff8b032_a50e78b4",
+        "filename": "webpack.config.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2021-11-08T22:38:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "86d1346e_4b9a93d7",
+      "range": {
+        "startLine": 10,
+        "startChar": 41,
+        "endLine": 10,
+        "endChar": 44
+      },
+      "revId": "85884002164aacfeac8ca40e6fd169b0a2de43f0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
