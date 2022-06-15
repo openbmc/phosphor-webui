@@ -1,9 +1,20 @@
 # OpenBMC Web User Interface
 
 phosphor-webui is a Web-based user interface for the OpenBMC firmware stack.
-The WebUI uses AngularJS.
-[AngularJS goes End of Life](https://www.convective.com/angularjs-end-of-life/)
-June 30, 2021, a possible replacement is the [webui-vue repository](https://github.com/openbmc/webui-vue).
+
+[webui-vue repository](https://github.com/openbmc/webui-vue) is a replacement
+for phosphor-webui.
+
+If you haven't switched to webui-vue, it is strongly recommended you do so now.
+Reasons for switching:
+ - phosphor-webui uses AngularJS which has gone [End of
+     Life](https://en.wikipedia.org/wiki/AngularJS)
+ - phosphor-webui uses the REST D-BUS API which has been [disabled by default in
+     bmcweb](https://github.com/openbmc/bmcweb/commit/47c9e106e0057dd70133d50e928e48cbc68e709a)
+ - webui-vue has many additional features not present in phosphor-webui
+ - Very little active development is happening in phosphor-webui and at a later
+     date phosphor-webui will move to ReadOnly
+
 Features of this repository include:
 
 - View system overview data such as model information and serial number
