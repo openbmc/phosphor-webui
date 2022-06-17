@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d396744_c6dc5365",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001233
+      },
+      "writtenOn": "2022-06-17T18:02:57Z",
+      "side": 1,
+      "message": "The updated info seems correct and the links go to the right place.",
+      "revId": "0acdba8b866fd43f2916b64769edd8118d6ca380",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
