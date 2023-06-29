@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "da250efd_365f229e",
         "filename": "app/common/services/api-utils.js",
@@ -20,10 +21,10 @@
         "endChar": 12
       },
       "revId": "856dd45ab2f48597de65989417e0177355eae7f1",
-      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
-      "unresolved": true
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "b43b6483_f578a860",
         "filename": "app/common/services/api-utils.js",
@@ -44,10 +45,10 @@
         "endChar": 12
       },
       "revId": "856dd45ab2f48597de65989417e0177355eae7f1",
-      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
-      "unresolved": false
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "8c0f6768_3a7e17b4",
         "filename": "app/common/services/api-utils.js",
@@ -68,10 +69,10 @@
         "endChar": 12
       },
       "revId": "856dd45ab2f48597de65989417e0177355eae7f1",
-      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
-      "unresolved": true
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "80bae928_057b4bc1",
         "filename": "app/common/services/api-utils.js",
@@ -92,8 +93,8 @@
         "endChar": 12
       },
       "revId": "856dd45ab2f48597de65989417e0177355eae7f1",
-      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
-      "unresolved": false
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
-  ]
+  ],
+  "submitRequirementResults": []
 }
