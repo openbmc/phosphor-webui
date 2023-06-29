@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "bbd45ae0_c2c791f6",
         "filename": "app/server-control/controllers/virtual-media-controller.js",
@@ -20,8 +21,8 @@
         "endChar": 70
       },
       "revId": "2ae8e5abe2808083e72361745648506765f44bab",
-      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
-      "unresolved": true
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
-  ]
+  ],
+  "submitRequirementResults": []
 }
