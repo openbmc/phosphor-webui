@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "72b0e2c3_251a738d",
         "filename": "app/common/services/api-utils.js",
@@ -14,10 +15,10 @@
       "side": 1,
       "message": "remove?",
       "revId": "371e630e915dd9db21cedcd7bc8c88eea461828b",
-      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
-      "unresolved": true
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "0670b66a_a7802e4e",
         "filename": "app/server-health/controllers/sensors-overview-controller.js",
@@ -37,10 +38,10 @@
         "endChar": 32
       },
       "revId": "371e630e915dd9db21cedcd7bc8c88eea461828b",
-      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
-      "unresolved": true
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "c1e30f58_a0fd4087",
         "filename": "app/server-health/controllers/sensors-overview-controller.js",
@@ -54,8 +55,8 @@
       "side": 1,
       "message": "There is also a SensorCollection. \nhttps://github.com/openbmc/bmcweb/commit/95a3ecada41219555c5efe4080d6589dc2aaa411",
       "revId": "371e630e915dd9db21cedcd7bc8c88eea461828b",
-      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
-      "unresolved": true
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
-  ]
+  ],
+  "submitRequirementResults": []
 }
